@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.LargeInstance
         public string ProximityPlacementGroup { get { throw null; } }
         public Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProfile StorageProfile { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.LargeInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.LargeInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.LargeInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.LargeInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.LargeInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -102,6 +103,7 @@ namespace Azure.ResourceManager.LargeInstance
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProperties StorageProperties { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.LargeStorageInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.LargeStorageInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.LargeStorageInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.LargeStorageInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.LargeStorageInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -181,6 +183,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public int? DiskSizeGB { get { throw null; } }
         public int? Lun { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -209,6 +212,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
     {
         public LargeInstanceForceState() { }
         public Azure.ResourceManager.LargeInstance.Models.LargeInstanceForcePowerState? ForceState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceForceState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceForceState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceForceState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceForceState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceForceState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -220,6 +224,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         internal LargeInstanceHardwareProfile() { }
         public Azure.ResourceManager.LargeInstance.Models.LargeInstanceSizeName? AzureLargeInstanceSize { get { throw null; } }
         public Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareTypeName? HardwareType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -249,6 +254,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
     {
         internal LargeInstanceIPAddress() { }
         public string IPAddress { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceIPAddress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceIPAddress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceIPAddress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceIPAddress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceIPAddress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -260,6 +266,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         internal LargeInstanceNetworkProfile() { }
         public string CircuitId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.LargeInstance.Models.LargeInstanceIPAddress> NetworkInterfaces { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceNetworkProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceNetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceNetworkProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceNetworkProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceNetworkProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -278,6 +285,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceOperationStatusResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceOperationStatusResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceOperationStatusResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceOperationStatusResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceOperationStatusResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -291,6 +299,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public string OSType { get { throw null; } }
         public string SshPublicKey { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceOSProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceOSProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceOSProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceOSProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceOSProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -301,6 +310,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
     {
         public LargeInstancePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstancePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstancePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstancePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstancePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.Models.LargeInstancePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -419,6 +429,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         internal LargeInstanceStorageBillingProperties() { }
         public string BillingMode { get { throw null; } }
         public string Sku { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageBillingProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageBillingProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageBillingProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageBillingProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageBillingProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -430,6 +441,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         internal LargeInstanceStorageProfile() { }
         public string NfsIPAddress { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.LargeInstance.Models.LargeInstanceDisk> OSDisks { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -446,6 +458,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageBillingProperties StorageBillingProperties { get { throw null; } }
         public string StorageType { get { throw null; } }
         public string WorkloadType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -456,6 +469,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
     {
         public LargeStorageInstancePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeStorageInstancePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeStorageInstancePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.Models.LargeStorageInstancePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LargeInstance.Models.LargeStorageInstancePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.Models.LargeStorageInstancePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlFlexibleServerReplicationRole left, PostgreSqlFlexibleServerReplicationRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerReplicationRole"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerReplicationRole left, PostgreSqlFlexibleServerReplicationRole right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerReplicationRole"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerReplicationRole"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerReplicationRole(string value) => new PostgreSqlFlexibleServerReplicationRole(value);
 
         /// <inheritdoc />

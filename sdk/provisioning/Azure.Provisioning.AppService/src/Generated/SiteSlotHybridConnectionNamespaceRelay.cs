@@ -98,9 +98,8 @@ public partial class SiteSlotHybridConnectionNamespaceRelay : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SiteSlotHybridConnectionNamespaceRelay.</param>
     /// <param name="resourceVersion">Version of the SiteSlotHybridConnectionNamespaceRelay.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteSlotHybridConnectionNamespaceRelay(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/hybridConnectionNamespaces/relays", resourceVersion, context)
+    public SiteSlotHybridConnectionNamespaceRelay(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/slots/hybridConnectionNamespaces/relays", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _relayName = BicepValue<string>.DefineProperty(this, "RelayName", ["properties", "relayName"], isRequired: true);

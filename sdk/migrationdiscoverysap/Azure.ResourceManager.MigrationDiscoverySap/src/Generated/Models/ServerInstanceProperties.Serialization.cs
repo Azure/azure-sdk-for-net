@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 
         void IJsonModel<ServerInstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ServerInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServerInstanceProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
@@ -91,7 +99,6 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ServerInstanceProperties IJsonModel<ServerInstanceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

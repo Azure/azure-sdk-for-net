@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static bool operator ==(MongoClusterCreateMode left, MongoClusterCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoClusterCreateMode"/> values are not the same. </summary>
         public static bool operator !=(MongoClusterCreateMode left, MongoClusterCreateMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MongoClusterCreateMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterCreateMode"/>. </summary>
         public static implicit operator MongoClusterCreateMode(string value) => new MongoClusterCreateMode(value);
 
         /// <inheritdoc />

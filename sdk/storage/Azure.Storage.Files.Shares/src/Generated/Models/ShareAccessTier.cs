@@ -39,7 +39,7 @@ namespace Azure.Storage.Files.Shares.Models
         public static bool operator ==(ShareAccessTier left, ShareAccessTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShareAccessTier"/> values are not the same. </summary>
         public static bool operator !=(ShareAccessTier left, ShareAccessTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ShareAccessTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ShareAccessTier"/>. </summary>
         public static implicit operator ShareAccessTier(string value) => new ShareAccessTier(value);
 
         /// <inheritdoc />

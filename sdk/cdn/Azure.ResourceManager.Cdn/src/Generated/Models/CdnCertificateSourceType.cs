@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(CdnCertificateSourceType left, CdnCertificateSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CdnCertificateSourceType"/> values are not the same. </summary>
         public static bool operator !=(CdnCertificateSourceType left, CdnCertificateSourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CdnCertificateSourceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CdnCertificateSourceType"/>. </summary>
         public static implicit operator CdnCertificateSourceType(string value) => new CdnCertificateSourceType(value);
 
         /// <inheritdoc />

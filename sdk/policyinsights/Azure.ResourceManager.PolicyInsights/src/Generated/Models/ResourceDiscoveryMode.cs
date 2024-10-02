@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static bool operator ==(ResourceDiscoveryMode left, ResourceDiscoveryMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceDiscoveryMode"/> values are not the same. </summary>
         public static bool operator !=(ResourceDiscoveryMode left, ResourceDiscoveryMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourceDiscoveryMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceDiscoveryMode"/>. </summary>
         public static implicit operator ResourceDiscoveryMode(string value) => new ResourceDiscoveryMode(value);
 
         /// <inheritdoc />

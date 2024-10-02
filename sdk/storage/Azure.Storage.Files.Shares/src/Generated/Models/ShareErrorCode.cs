@@ -234,7 +234,7 @@ namespace Azure.Storage.Files.Shares.Models
         public static bool operator ==(ShareErrorCode left, ShareErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShareErrorCode"/> values are not the same. </summary>
         public static bool operator !=(ShareErrorCode left, ShareErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ShareErrorCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ShareErrorCode"/>. </summary>
         public static implicit operator ShareErrorCode(string value) => new ShareErrorCode(value);
 
         /// <inheritdoc />

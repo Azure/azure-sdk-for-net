@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(FileShareRecoveryType left, FileShareRecoveryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FileShareRecoveryType"/> values are not the same. </summary>
         public static bool operator !=(FileShareRecoveryType left, FileShareRecoveryType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FileShareRecoveryType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FileShareRecoveryType"/>. </summary>
         public static implicit operator FileShareRecoveryType(string value) => new FileShareRecoveryType(value);
 
         /// <inheritdoc />

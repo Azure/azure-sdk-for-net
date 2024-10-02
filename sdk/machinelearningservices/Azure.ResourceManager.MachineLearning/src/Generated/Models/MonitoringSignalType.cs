@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MonitoringSignalType left, MonitoringSignalType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitoringSignalType"/> values are not the same. </summary>
         public static bool operator !=(MonitoringSignalType left, MonitoringSignalType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitoringSignalType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitoringSignalType"/>. </summary>
         public static implicit operator MonitoringSignalType(string value) => new MonitoringSignalType(value);
 
         /// <inheritdoc />

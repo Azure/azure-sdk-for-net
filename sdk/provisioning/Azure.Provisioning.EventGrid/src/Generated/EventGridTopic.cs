@@ -169,9 +169,8 @@ public partial class EventGridTopic : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventGridTopic.</param>
     /// <param name="resourceVersion">Version of the EventGridTopic.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventGridTopic(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/topics", resourceVersion ?? "2022-06-15", context)
+    public EventGridTopic(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/topics", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

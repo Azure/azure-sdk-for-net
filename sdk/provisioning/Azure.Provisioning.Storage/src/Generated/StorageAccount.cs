@@ -363,9 +363,8 @@ public partial class StorageAccount : Resource
     /// </summary>
     /// <param name="resourceName">Name of the StorageAccount.</param>
     /// <param name="resourceVersion">Version of the StorageAccount.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StorageAccount(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts", resourceVersion ?? "2023-01-01", context)
+    public StorageAccount(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Storage/storageAccounts", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<StorageKind>.DefineProperty(this, "Kind", ["kind"], isRequired: true);
@@ -569,13 +568,13 @@ public partial class StorageAccount : Resource
             new MemberExpression(new FunctionCallExpression(new MemberExpression(new IdentifierExpression(ResourceName), "listKeys")), "keys"));
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// StorageAccount.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this StorageAccount.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(StorageBuiltInRole role, UserAssignedIdentity identity) =>
+    public RoleAssignment CreateRoleAssignment(StorageBuiltInRole role, UserAssignedIdentity identity) =>
         new($"{ResourceName}_{identity.ResourceName}_{StorageBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
@@ -586,14 +585,16 @@ public partial class StorageAccount : Resource
         };
 
     /// <summary>
-    /// Assign a role to a principal that grants access to this StorageAccount.
+    /// Creates a role assignment for a principal that grants access to this
+    /// StorageAccount.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="resourceNameSuffix">Optional role assignment resource name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(StorageBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{ResourceName}_{StorageBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(StorageBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? resourceNameSuffix = default) =>
+        new($"{ResourceName}_{StorageBuiltInRole.GetBuiltInRoleName(role)}{(resourceNameSuffix is null ? "" : "_")}{resourceNameSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(ResourceName),

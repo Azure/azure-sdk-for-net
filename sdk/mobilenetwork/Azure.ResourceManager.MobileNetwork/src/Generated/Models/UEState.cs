@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator ==(UEState left, UEState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UEState"/> values are not the same. </summary>
         public static bool operator !=(UEState left, UEState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UEState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UEState"/>. </summary>
         public static implicit operator UEState(string value) => new UEState(value);
 
         /// <inheritdoc />

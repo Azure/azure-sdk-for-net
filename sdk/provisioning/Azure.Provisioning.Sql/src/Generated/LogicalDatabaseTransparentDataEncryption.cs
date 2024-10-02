@@ -52,9 +52,8 @@ public partial class LogicalDatabaseTransparentDataEncryption : Resource
     /// </summary>
     /// <param name="resourceName">Name of the LogicalDatabaseTransparentDataEncryption.</param>
     /// <param name="resourceVersion">Version of the LogicalDatabaseTransparentDataEncryption.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public LogicalDatabaseTransparentDataEncryption(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/transparentDataEncryption", resourceVersion ?? "2021-11-01", context)
+    public LogicalDatabaseTransparentDataEncryption(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/databases/transparentDataEncryption", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<TransparentDataEncryptionState>.DefineProperty(this, "State", ["properties", "state"]);

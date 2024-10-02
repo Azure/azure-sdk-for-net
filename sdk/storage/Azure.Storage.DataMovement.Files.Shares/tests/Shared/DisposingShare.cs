@@ -5,6 +5,7 @@ extern alias BaseShares;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests

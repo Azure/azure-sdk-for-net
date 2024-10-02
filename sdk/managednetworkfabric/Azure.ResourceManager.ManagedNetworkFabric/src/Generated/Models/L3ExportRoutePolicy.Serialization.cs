@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         void IJsonModel<L3ExportRoutePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<L3ExportRoutePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(L3ExportRoutePolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ExportIPv4RoutePolicyId))
             {
                 writer.WritePropertyName("exportIpv4RoutePolicyId"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         L3ExportRoutePolicy IJsonModel<L3ExportRoutePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

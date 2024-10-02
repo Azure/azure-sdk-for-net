@@ -145,9 +145,8 @@ public partial class ApplicationInsightsWebTest : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ApplicationInsightsWebTest.</param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsWebTest.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ApplicationInsightsWebTest(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Insights/webtests", resourceVersion ?? "2022-06-15", context)
+    public ApplicationInsightsWebTest(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Insights/webtests", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

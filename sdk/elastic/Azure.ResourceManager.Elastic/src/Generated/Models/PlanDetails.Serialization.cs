@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Elastic.Models
 
         void IJsonModel<PlanDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PlanDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PlanDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerID"u8);
@@ -66,7 +74,6 @@ namespace Azure.ResourceManager.Elastic.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PlanDetails IJsonModel<PlanDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

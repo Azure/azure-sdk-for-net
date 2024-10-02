@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(SecurityInsightsIncidentOwnerType left, SecurityInsightsIncidentOwnerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentOwnerType"/> values are not the same. </summary>
         public static bool operator !=(SecurityInsightsIncidentOwnerType left, SecurityInsightsIncidentOwnerType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityInsightsIncidentOwnerType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsIncidentOwnerType"/>. </summary>
         public static implicit operator SecurityInsightsIncidentOwnerType(string value) => new SecurityInsightsIncidentOwnerType(value);
 
         /// <inheritdoc />

@@ -59,9 +59,8 @@ public partial class LedgerDigestUpload : Resource
     /// </summary>
     /// <param name="resourceName">Name of the LedgerDigestUpload.</param>
     /// <param name="resourceVersion">Version of the LedgerDigestUpload.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public LedgerDigestUpload(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/ledgerDigestUploads", resourceVersion ?? "2021-11-01", context)
+    public LedgerDigestUpload(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/databases/ledgerDigestUploads", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _digestStorageEndpoint = BicepValue<string>.DefineProperty(this, "DigestStorageEndpoint", ["properties", "digestStorageEndpoint"]);

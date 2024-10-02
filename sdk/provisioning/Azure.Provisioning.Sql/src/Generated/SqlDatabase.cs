@@ -478,9 +478,8 @@ public partial class SqlDatabase : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlDatabase.</param>
     /// <param name="resourceVersion">Version of the SqlDatabase.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlDatabase(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases", resourceVersion ?? "2021-11-01", context)
+    public SqlDatabase(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/databases", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

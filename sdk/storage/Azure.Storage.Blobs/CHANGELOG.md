@@ -7,6 +7,11 @@
 - Added GenerateUserDelegationSasUri() to BlobBaseClient and BlobContainerClient.
 - Added BlobErrorCode.BlobAccessTierNotSupportedForAccountType enum value.
 
+## 12.22.1 (2024-09-25)
+
+### Other Changes
+- Integrated decryption for CSE v2.1
+
 ## 12.22.0 (2024-09-18)
 
 ### Features Added

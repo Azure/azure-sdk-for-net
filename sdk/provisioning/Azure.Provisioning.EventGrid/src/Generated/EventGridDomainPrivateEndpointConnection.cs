@@ -71,9 +71,8 @@ public partial class EventGridDomainPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventGridDomainPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the EventGridDomainPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventGridDomainPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/domains/privateEndpointConnections", resourceVersion, context)
+    public EventGridDomainPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/domains/privateEndpointConnections", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<EventGridPrivateEndpointConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -83,6 +82,37 @@ public partial class EventGridDomainPrivateEndpointConnection : Resource
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<EventGridDomain>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported EventGridDomainPrivateEndpointConnection resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-06-01-preview.
+        /// </summary>
+        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
+
+        /// <summary>
+        /// 2022-06-15.
+        /// </summary>
+        public static readonly string V2022_06_15 = "2022-06-15";
+
+        /// <summary>
+        /// 2021-12-01.
+        /// </summary>
+        public static readonly string V2021_12_01 = "2021-12-01";
+
+        /// <summary>
+        /// 2020-06-01.
+        /// </summary>
+        public static readonly string V2020_06_01 = "2020-06-01";
+
+        /// <summary>
+        /// 2019-06-01.
+        /// </summary>
+        public static readonly string V2019_06_01 = "2019-06-01";
     }
 
     /// <summary>

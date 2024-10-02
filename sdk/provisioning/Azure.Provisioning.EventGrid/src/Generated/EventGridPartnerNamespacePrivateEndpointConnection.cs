@@ -71,9 +71,8 @@ public partial class EventGridPartnerNamespacePrivateEndpointConnection : Resour
     /// </summary>
     /// <param name="resourceName">Name of the EventGridPartnerNamespacePrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the EventGridPartnerNamespacePrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventGridPartnerNamespacePrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/partnerNamespaces/privateEndpointConnections", resourceVersion, context)
+    public EventGridPartnerNamespacePrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/partnerNamespaces/privateEndpointConnections", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<EventGridPrivateEndpointConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -83,6 +82,23 @@ public partial class EventGridPartnerNamespacePrivateEndpointConnection : Resour
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<PartnerNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported EventGridPartnerNamespacePrivateEndpointConnection resource
+    /// versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-06-01-preview.
+        /// </summary>
+        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
+
+        /// <summary>
+        /// 2022-06-15.
+        /// </summary>
+        public static readonly string V2022_06_15 = "2022-06-15";
     }
 
     /// <summary>

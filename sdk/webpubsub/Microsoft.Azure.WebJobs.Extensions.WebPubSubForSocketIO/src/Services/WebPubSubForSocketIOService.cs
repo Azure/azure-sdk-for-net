@@ -5,8 +5,6 @@ using Azure;
 using Azure.Core;
 using Azure.Messaging.WebPubSub;
 using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Text;
 using System.Web;
 
@@ -16,30 +14,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
     {
         private readonly WebPubSubServiceClient _client;
         private readonly bool _useConnectionStrings;
-        private readonly Uri _endpoint;
         private readonly AzureKeyCredential _keyCredential;
-        private readonly string _hub;
 
         public WebPubSubForSocketIOService(Uri endpoint, AzureKeyCredential keyCredential, string hub)
+            : this(new WebPubSubServiceClient(endpoint, hub, keyCredential), keyCredential)
         {
-            _client = new WebPubSubServiceClient(endpoint, hub, keyCredential);
-            _endpoint = endpoint;
-            _keyCredential = keyCredential;
-            _hub = hub;
-            _useConnectionStrings = true;
         }
 
         public WebPubSubForSocketIOService(Uri endpoint, TokenCredential credential, string hub)
+            : this(new WebPubSubServiceClient(endpoint, hub, credential))
         {
-            _client = new WebPubSubServiceClient(endpoint, hub, credential);
-            _hub = hub;
-            _useConnectionStrings = false;
         }
 
         // For tests.
-        public WebPubSubForSocketIOService(WebPubSubServiceClient client)
+        internal WebPubSubForSocketIOService(WebPubSubServiceClient client, AzureKeyCredential keyCredential = null)
         {
             _client = client;
+            if (keyCredential != null)
+            {
+                _keyCredential = keyCredential;
+                _useConnectionStrings = true;
+            }
         }
 
         public WebPubSubServiceClient Client => _client;
@@ -50,17 +45,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             {
                 var expireAfter = TimeSpan.FromHours(1);
                 var token = GenerateTokenFromAzureKeyCredential(userId, DateTimeOffset.UtcNow.Add(expireAfter));
-                return new SocketIONegotiationResult(new Uri($"{_endpoint}clients/socketio/hubs/{_hub}?access_token={token}"));
+                return new SocketIONegotiationResult(new Uri($"{_client.Endpoint.AbsoluteUri.TrimEnd('/')}/clients/socketio/hubs/{_client.Hub}?access_token={token}"));
             }
             else
             {
-                // For managed identity, the service can handle it.
-                // TODO: Currently, there's a bug in `GetClientAccessUri` and we need to get url by ourselves.
+                // For managed identity, the service can generate token for you.
+                // TODO: Currently, there's a bug in `GetClientAccessUri` that the path in url is for wps not for socketio but the token is correct
+                // We need to concat them manually.
                 var url = _client.GetClientAccessUri(userId: userId);
                 var token = HttpUtility.ParseQueryString(url.Query)["access_token"];
-                // The `aud` in token is correct, we use it as the endpoint.
-                var endpoint = new JwtSecurityTokenHandler().ReadJwtToken(token).Claims.First(c => c.Type == "aud").Value.TrimEnd('/'); // Must have
-                return new SocketIONegotiationResult(new Uri($"{endpoint}?access_token={token}"));
+                return new SocketIONegotiationResult(new Uri($"{_client.Endpoint.AbsoluteUri.TrimEnd('/')}/clients/socketio/hubs/{_client.Hub}?access_token={token}"));
             }
         }
 
@@ -71,12 +65,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             var jwt = new JwtBuilder(keyBytes);
             var now = DateTimeOffset.UtcNow;
 
-            string endpoint = _endpoint.AbsoluteUri;
-            if (!endpoint.EndsWith("/", StringComparison.Ordinal))
-            {
-                endpoint += "/";
-            }
-            var audience = $"{endpoint}clients/socketio/hubs/{_hub}";
+            string endpoint = _client.Endpoint.AbsoluteUri;
+            var audience = $"{endpoint.TrimEnd('/')}/clients/socketio/hubs/{_client.Hub}";
 
             jwt.AddClaim(JwtBuilder.Nbf, now);
             jwt.AddClaim(JwtBuilder.Exp, expiresAt);

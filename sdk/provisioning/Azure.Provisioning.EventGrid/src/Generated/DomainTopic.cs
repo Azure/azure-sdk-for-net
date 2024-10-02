@@ -53,9 +53,8 @@ public partial class DomainTopic : Resource
     /// </summary>
     /// <param name="resourceName">Name of the DomainTopic.</param>
     /// <param name="resourceVersion">Version of the DomainTopic.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public DomainTopic(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/domains/topics", resourceVersion ?? "2022-06-15", context)
+    public DomainTopic(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/domains/topics", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
