@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task UpdateAutoUpgrade()
+        public async Task UpdateAutoupgrade()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
