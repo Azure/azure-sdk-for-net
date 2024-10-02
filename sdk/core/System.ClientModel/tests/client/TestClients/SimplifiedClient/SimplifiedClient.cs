@@ -6,29 +6,28 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using ClientModel.ReferenceClients.Models;
 
-namespace ClientModel.ReferenceClients;
+namespace ClientModel.ReferenceClients.SimplifiedClient;
 
-public class RequestResponseClient
+public class SimplifiedClient
 {
     private readonly Uri _endpoint;
     private readonly ApiKeyCredential _credential;
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
 
-    public RequestResponseClient(RequestResponseClientOptions? options = default)
+    public SimplifiedClient(SimplifiedClientOptions? options = default)
         : this(new Uri("https://www.example.com"), new ApiKeyCredential("fake_key"))
     {
         // Provided to make test illustrations simpler - not typical for a client implementation
     }
 
-    public RequestResponseClient(Uri endpoint, ApiKeyCredential credential, RequestResponseClientOptions? options = default)
+    public SimplifiedClient(Uri endpoint, ApiKeyCredential credential, SimplifiedClientOptions? options = default)
     {
         Argument.AssertNotNull(endpoint, nameof(endpoint));
         Argument.AssertNotNull(credential, nameof(credential));
 
-        options ??= new RequestResponseClientOptions();
+        options ??= new SimplifiedClientOptions();
 
         _endpoint = endpoint;
         _credential = credential;

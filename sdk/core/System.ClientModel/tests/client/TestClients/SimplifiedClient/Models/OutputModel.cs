@@ -5,7 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace ClientModel.ReferenceClients.Models;
+namespace ClientModel.ReferenceClients.SimplifiedClient;
 
 public class OutputModel : IJsonModel<OutputModel>
 {

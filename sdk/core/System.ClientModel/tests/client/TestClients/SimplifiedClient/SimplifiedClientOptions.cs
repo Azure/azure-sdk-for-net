@@ -4,9 +4,9 @@
 using System;
 using System.ClientModel.Primitives;
 
-namespace ClientModel.ReferenceClients;
+namespace ClientModel.ReferenceClients.SimplifiedClient;
 
-public class RequestResponseClientOptions : ClientPipelineOptions
+public class SimplifiedClientOptions : ClientPipelineOptions
 {
     private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
@@ -17,7 +17,7 @@ public class RequestResponseClientOptions : ClientPipelineOptions
 
     internal string Version { get; }
 
-    public RequestResponseClientOptions(ServiceVersion version = LatestVersion)
+    public SimplifiedClientOptions(ServiceVersion version = LatestVersion)
     {
         Version = version switch
         {
