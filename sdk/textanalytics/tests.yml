@@ -12,12 +12,18 @@ extends:
     ServiceDirectory: textanalytics
     CloudConfig:
       Public:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        ServiceConnection: azure-sdk-tests
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzurePublicMsft.json
         Location: '${{ parameters.Location }}'
       UsGov:
-        SubscriptionConfiguration: $(sub-config-gov-test-resources)
+        ServiceConnection: usgov_azure-sdk-tests
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzureUsGovMsft.json
       China:
-        SubscriptionConfiguration: $(sub-config-cn-test-resources)
+        ServiceConnection: china_azure-sdk-tests
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzureChinaMsft.json
     SupportedClouds: 'Public,UsGov,China'
     # temporary env vars for custom text features
     EnvVars:
