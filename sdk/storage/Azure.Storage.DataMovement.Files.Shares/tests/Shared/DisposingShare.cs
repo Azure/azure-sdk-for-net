@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseShares::Azure.Storage.Files.Shares;
 using Azure.Storage.Test.Shared;
-using BaseShares::Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -18,7 +17,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
         public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata)
         {
-            ShareCreateOptions options = new ShareCreateOptions
+            BaseShares::Azure.Storage.Files.Shares.Models.ShareCreateOptions options = new()
             {
                 Metadata = metadata
             };
