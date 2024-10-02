@@ -10,6 +10,7 @@ using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
+using System.ComponentModel;
 
 namespace Azure.Provisioning.PostgreSql;
 
@@ -255,4 +256,12 @@ public partial class PostgreSqlFlexibleServer : Resource
     /// <returns>The existing PostgreSqlFlexibleServer resource.</returns>
     public static PostgreSqlFlexibleServer FromExisting(string resourceName, string? resourceVersion = default) =>
         new(resourceName, resourceVersion) { IsExistingResource = true };
+
+    /// <summary>
+    /// Get the requirements for naming this PostgreSqlFlexibleServer resource.
+    /// </summary>
+    /// <returns>Naming requirements.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ResourceNameRequirements GetResourceNameRequirements() =>
+        new(minLength: 3, maxLength: 63, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 }
