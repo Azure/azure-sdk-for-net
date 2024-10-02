@@ -5,13 +5,12 @@
       Azure OpenAI's official extension package for using OpenAI's .NET library with the Azure OpenAI Service.
     </Description>
     <AssemblyTitle>Azure.AI.OpenAI Client Library</AssemblyTitle>
-    <VersionPrefix>2.0.0</VersionPrefix>
-    <VersionSuffix>beta.6</VersionSuffix>
+    <VersionPrefix>2.1.0</VersionPrefix>
     <PackageTags>Microsoft Azure OpenAI</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0102;CS8002;CS0436;AZC0112;OPENAI001</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0102;CS8002;CS0436;AZC0112;OPENAI001;OPENAI002</NoWarn>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>preview</LangVersion>
     <Nullable>disable</Nullable>
@@ -22,6 +21,20 @@
       <PublicKey>0024000004800000940000000602000000240000525341310004000001000100d15ddcb29688295338af4b7686603fe614abd555e09efba8fb88ee09e1f7b1ccaeed2e8f823fa9eef3fdd60217fc012ea67d2479751a0b8c087a4185541b851bd8b16f8d91b840e51b1cb0ba6fe647997e57429265e85ef62d565db50a69ae1647d54d7bd855e4db3d8a91510e5bcbd0edfbbecaa20a7bd9ae74593daa7b11b4</PublicKey>
     </InternalsVisibleTo>
   </ItemGroup>
+
+  <Choose>
+    <When Condition="'$(GAServiceVersionLabel)' != ''">
+      <PropertyGroup>
+        <DefineConstants>AZURE_OPENAI_GA</DefineConstants>
+        <VersionSuffix />
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <VersionSuffix>beta.1</VersionSuffix>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
 
   <!-- Which Azure.Core library/code should we use? -->
   <Choose>
@@ -48,6 +61,9 @@
       <ItemGroup>
         <ProjectReference Include="$(ExternalOpenAISource)" />
       </ItemGroup>
+      <PropertyGroup>
+        <NoWarn>$(NoWarn);NU5104</NoWarn>
+      </PropertyGroup>
     </When>
     <When Condition="'$(ExternalOpenAILibrary)' != ''">
       <ItemGroup>

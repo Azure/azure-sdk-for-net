@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static bool operator ==(ArtifactStoreType left, ArtifactStoreType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArtifactStoreType"/> values are not the same. </summary>
         public static bool operator !=(ArtifactStoreType left, ArtifactStoreType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ArtifactStoreType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ArtifactStoreType"/>. </summary>
         public static implicit operator ArtifactStoreType(string value) => new ArtifactStoreType(value);
 
         /// <inheritdoc />

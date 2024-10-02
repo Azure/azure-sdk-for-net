@@ -65,9 +65,8 @@ public partial class SqlServerVirtualNetworkRule : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlServerVirtualNetworkRule.</param>
     /// <param name="resourceVersion">Version of the SqlServerVirtualNetworkRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerVirtualNetworkRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/virtualNetworkRules", resourceVersion ?? "2021-11-01", context)
+    public SqlServerVirtualNetworkRule(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/virtualNetworkRules", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _ignoreMissingVnetServiceEndpoint = BicepValue<bool>.DefineProperty(this, "IgnoreMissingVnetServiceEndpoint", ["properties", "ignoreMissingVnetServiceEndpoint"]);

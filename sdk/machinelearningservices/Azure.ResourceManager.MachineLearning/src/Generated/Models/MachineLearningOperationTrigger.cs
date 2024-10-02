@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningOperationTrigger left, MachineLearningOperationTrigger right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningOperationTrigger"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningOperationTrigger left, MachineLearningOperationTrigger right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningOperationTrigger"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningOperationTrigger"/>. </summary>
         public static implicit operator MachineLearningOperationTrigger(string value) => new MachineLearningOperationTrigger(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(ParameterOptionalityStatus left, ParameterOptionalityStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParameterOptionalityStatus"/> values are not the same. </summary>
         public static bool operator !=(ParameterOptionalityStatus left, ParameterOptionalityStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ParameterOptionalityStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ParameterOptionalityStatus"/>. </summary>
         public static implicit operator ParameterOptionalityStatus(string value) => new ParameterOptionalityStatus(value);
 
         /// <inheritdoc />

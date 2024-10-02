@@ -102,9 +102,8 @@ public partial class ContainerRegistryWebhook : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerRegistryWebhook.</param>
     /// <param name="resourceVersion">Version of the ContainerRegistryWebhook.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerRegistryWebhook(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/webhooks", resourceVersion ?? "2023-07-01", context)
+    public ContainerRegistryWebhook(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ContainerRegistry/registries/webhooks", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

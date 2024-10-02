@@ -53,15 +53,75 @@ public partial class CassandraDataCenter : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CassandraDataCenter.</param>
     /// <param name="resourceVersion">Version of the CassandraDataCenter.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CassandraDataCenter(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/cassandraClusters/dataCenters", resourceVersion, context)
+    public CassandraDataCenter(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/cassandraClusters/dataCenters", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<CassandraDataCenterProperties>.DefineProperty(this, "Properties", ["properties"]);
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<CassandraCluster>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported CassandraDataCenter resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-09-01-preview.
+        /// </summary>
+        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
+
+        /// <summary>
+        /// 2024-08-15.
+        /// </summary>
+        public static readonly string V2024_08_15 = "2024-08-15";
+
+        /// <summary>
+        /// 2024-05-15.
+        /// </summary>
+        public static readonly string V2024_05_15 = "2024-05-15";
+
+        /// <summary>
+        /// 2023-11-15.
+        /// </summary>
+        public static readonly string V2023_11_15 = "2023-11-15";
+
+        /// <summary>
+        /// 2023-09-15.
+        /// </summary>
+        public static readonly string V2023_09_15 = "2023-09-15";
+
+        /// <summary>
+        /// 2023-04-15.
+        /// </summary>
+        public static readonly string V2023_04_15 = "2023-04-15";
+
+        /// <summary>
+        /// 2023-03-15.
+        /// </summary>
+        public static readonly string V2023_03_15 = "2023-03-15";
+
+        /// <summary>
+        /// 2022-11-15.
+        /// </summary>
+        public static readonly string V2022_11_15 = "2022-11-15";
+
+        /// <summary>
+        /// 2022-08-15.
+        /// </summary>
+        public static readonly string V2022_08_15 = "2022-08-15";
+
+        /// <summary>
+        /// 2022-05-15.
+        /// </summary>
+        public static readonly string V2022_05_15 = "2022-05-15";
+
+        /// <summary>
+        /// 2021-10-15.
+        /// </summary>
+        public static readonly string V2021_10_15 = "2021-10-15";
     }
 
     /// <summary>

@@ -155,9 +155,8 @@ public partial class KubernetesFluxConfiguration : Resource
     /// </summary>
     /// <param name="resourceName">Name of the KubernetesFluxConfiguration.</param>
     /// <param name="resourceVersion">Version of the KubernetesFluxConfiguration.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public KubernetesFluxConfiguration(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.KubernetesConfiguration/fluxConfigurations", resourceVersion ?? "2023-05-01", context)
+    public KubernetesFluxConfiguration(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.KubernetesConfiguration/fluxConfigurations", resourceVersion ?? "2023-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _azureBlob = BicepValue<KubernetesAzureBlob>.DefineProperty(this, "AzureBlob", ["properties", "azureBlob"]);
@@ -222,13 +221,13 @@ public partial class KubernetesFluxConfiguration : Resource
         new(resourceName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// KubernetesFluxConfiguration.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this KubernetesFluxConfiguration.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(KubernetesConfigurationBuiltInRole role, UserAssignedIdentity identity) =>
+    public RoleAssignment CreateRoleAssignment(KubernetesConfigurationBuiltInRole role, UserAssignedIdentity identity) =>
         new($"{ResourceName}_{identity.ResourceName}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
@@ -239,15 +238,16 @@ public partial class KubernetesFluxConfiguration : Resource
         };
 
     /// <summary>
-    /// Assign a role to a principal that grants access to this
+    /// Creates a role assignment for a principal that grants access to this
     /// KubernetesFluxConfiguration.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="resourceNameSuffix">Optional role assignment resource name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(KubernetesConfigurationBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{ResourceName}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(KubernetesConfigurationBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? resourceNameSuffix = default) =>
+        new($"{ResourceName}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}{(resourceNameSuffix is null ? "" : "_")}{resourceNameSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(ResourceName),

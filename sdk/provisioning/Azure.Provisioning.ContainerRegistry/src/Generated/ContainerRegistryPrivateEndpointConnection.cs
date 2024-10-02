@@ -65,9 +65,8 @@ public partial class ContainerRegistryPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerRegistryPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the ContainerRegistryPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerRegistryPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/privateEndpointConnections", resourceVersion ?? "2023-07-01", context)
+    public ContainerRegistryPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ContainerRegistry/registries/privateEndpointConnections", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<ContainerRegistryPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);

@@ -45,7 +45,7 @@ namespace Azure.DigitalTwins.Core
         public static bool operator ==(ImportJobStatus left, ImportJobStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImportJobStatus"/> values are not the same. </summary>
         public static bool operator !=(ImportJobStatus left, ImportJobStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ImportJobStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ImportJobStatus"/>. </summary>
         public static implicit operator ImportJobStatus(string value) => new ImportJobStatus(value);
 
         /// <inheritdoc />

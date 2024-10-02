@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(NetworkSecurityPerimeterConfigurationIssueType left, NetworkSecurityPerimeterConfigurationIssueType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkSecurityPerimeterConfigurationIssueType"/> values are not the same. </summary>
         public static bool operator !=(NetworkSecurityPerimeterConfigurationIssueType left, NetworkSecurityPerimeterConfigurationIssueType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterConfigurationIssueType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkSecurityPerimeterConfigurationIssueType"/>. </summary>
         public static implicit operator NetworkSecurityPerimeterConfigurationIssueType(string value) => new NetworkSecurityPerimeterConfigurationIssueType(value);
 
         /// <inheritdoc />

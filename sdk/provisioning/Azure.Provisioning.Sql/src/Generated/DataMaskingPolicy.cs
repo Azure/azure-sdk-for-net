@@ -86,9 +86,8 @@ public partial class DataMaskingPolicy : Resource
     /// </summary>
     /// <param name="resourceName">Name of the DataMaskingPolicy.</param>
     /// <param name="resourceVersion">Version of the DataMaskingPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public DataMaskingPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/dataMaskingPolicies", resourceVersion ?? "2021-11-01", context)
+    public DataMaskingPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/databases/dataMaskingPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _dataMaskingState = BicepValue<DataMaskingState>.DefineProperty(this, "DataMaskingState", ["properties", "dataMaskingState"]);

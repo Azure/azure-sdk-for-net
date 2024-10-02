@@ -90,9 +90,8 @@ public partial class EventHubsSchemaGroup : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventHubsSchemaGroup.</param>
     /// <param name="resourceVersion">Version of the EventHubsSchemaGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventHubsSchemaGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/schemagroups", resourceVersion, context)
+    public EventHubsSchemaGroup(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventHub/namespaces/schemagroups", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _groupProperties = BicepDictionary<string>.DefineProperty(this, "GroupProperties", ["properties", "groupProperties"]);
@@ -105,6 +104,42 @@ public partial class EventHubsSchemaGroup : Resource
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _updatedAtUtc = BicepValue<DateTimeOffset>.DefineProperty(this, "UpdatedAtUtc", ["properties", "updatedAtUtc"], isOutput: true);
         _parent = ResourceReference<EventHubsNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported EventHubsSchemaGroup resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2024-01-01.
+        /// </summary>
+        public static readonly string V2024_01_01 = "2024-01-01";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2017-04-01.
+        /// </summary>
+        public static readonly string V2017_04_01 = "2017-04-01";
+
+        /// <summary>
+        /// 2015-08-01.
+        /// </summary>
+        public static readonly string V2015_08_01 = "2015-08-01";
+
+        /// <summary>
+        /// 2014-09-01.
+        /// </summary>
+        public static readonly string V2014_09_01 = "2014-09-01";
     }
 
     /// <summary>

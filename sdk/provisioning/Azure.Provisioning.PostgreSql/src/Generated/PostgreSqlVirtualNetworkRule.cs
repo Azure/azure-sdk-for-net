@@ -66,9 +66,8 @@ public partial class PostgreSqlVirtualNetworkRule : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PostgreSqlVirtualNetworkRule.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlVirtualNetworkRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlVirtualNetworkRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/virtualNetworkRules", resourceVersion ?? "2017-12-01", context)
+    public PostgreSqlVirtualNetworkRule(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/virtualNetworkRules", resourceVersion ?? "2017-12-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _ignoreMissingVnetServiceEndpoint = BicepValue<bool>.DefineProperty(this, "IgnoreMissingVnetServiceEndpoint", ["properties", "ignoreMissingVnetServiceEndpoint"]);

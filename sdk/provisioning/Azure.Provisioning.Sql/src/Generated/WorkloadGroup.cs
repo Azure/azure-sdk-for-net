@@ -82,9 +82,8 @@ public partial class WorkloadGroup : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WorkloadGroup.</param>
     /// <param name="resourceVersion">Version of the WorkloadGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WorkloadGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/workloadGroups", resourceVersion ?? "2021-11-01", context)
+    public WorkloadGroup(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/databases/workloadGroups", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _importance = BicepValue<string>.DefineProperty(this, "Importance", ["properties", "importance"]);

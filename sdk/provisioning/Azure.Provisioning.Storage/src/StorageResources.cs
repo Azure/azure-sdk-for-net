@@ -26,7 +26,6 @@ public class StorageResources
     /// The friendly name of the Storage account that by default is used as
     /// a prefix for the Azure name.
     /// </param>
-    /// <param name="context">An optional ProvisioningContext.</param>
     /// <param name="infrastructureVersion">
     /// Determines the version of the resource to create.  It always defaults
     /// to the latest, but you can hard code it for long term stability.
@@ -34,18 +33,17 @@ public class StorageResources
     /// <returns></returns>
     public static StorageAccount CreateAccount(
         string resourceName,
-        ProvisioningContext? context = default,
         int? infrastructureVersion = 2) =>
         // TODO: Generate examples of v1 and v2 in the <remarks> to better explain
         infrastructureVersion == 1 ?
-            new(resourceName, context: context)
+            new(resourceName, StorageAccount.ResourceVersions.V2022_09_01)
             {
                 // Let the resolvers default the Name and Location
                 Kind = StorageKind.StorageV2,
                 Sku = new StorageSku { Name = StorageSkuName.StandardLrs }
             } :
         infrastructureVersion == 2 ?
-            new(resourceName, context: context)
+            new(resourceName, StorageAccount.ResourceVersions.V2023_01_01)
             {
                 Kind = StorageKind.StorageV2,
                 Sku = new StorageSku { Name = StorageSkuName.StandardLrs },

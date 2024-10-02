@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Support.Models
         public static bool operator ==(SupportTicketCommunicationDirection left, SupportTicketCommunicationDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SupportTicketCommunicationDirection"/> values are not the same. </summary>
         public static bool operator !=(SupportTicketCommunicationDirection left, SupportTicketCommunicationDirection right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SupportTicketCommunicationDirection"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SupportTicketCommunicationDirection"/>. </summary>
         public static implicit operator SupportTicketCommunicationDirection(string value) => new SupportTicketCommunicationDirection(value);
 
         /// <inheritdoc />

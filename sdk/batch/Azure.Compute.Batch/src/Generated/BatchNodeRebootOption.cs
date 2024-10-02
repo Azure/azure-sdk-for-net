@@ -39,7 +39,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(BatchNodeRebootOption left, BatchNodeRebootOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchNodeRebootOption"/> values are not the same. </summary>
         public static bool operator !=(BatchNodeRebootOption left, BatchNodeRebootOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BatchNodeRebootOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchNodeRebootOption"/>. </summary>
         public static implicit operator BatchNodeRebootOption(string value) => new BatchNodeRebootOption(value);
 
         /// <inheritdoc />

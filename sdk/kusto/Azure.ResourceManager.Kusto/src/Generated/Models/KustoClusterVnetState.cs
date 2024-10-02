@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator ==(KustoClusterVnetState left, KustoClusterVnetState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoClusterVnetState"/> values are not the same. </summary>
         public static bool operator !=(KustoClusterVnetState left, KustoClusterVnetState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KustoClusterVnetState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoClusterVnetState"/>. </summary>
         public static implicit operator KustoClusterVnetState(string value) => new KustoClusterVnetState(value);
 
         /// <inheritdoc />

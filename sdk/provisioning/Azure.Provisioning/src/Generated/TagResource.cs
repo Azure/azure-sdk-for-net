@@ -49,14 +49,54 @@ public partial class TagResource : Resource
     /// </summary>
     /// <param name="resourceName">Name of the TagResource.</param>
     /// <param name="resourceVersion">Version of the TagResource.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public TagResource(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Resources/tags", resourceVersion, context)
+    public TagResource(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Resources/tags", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _tagValues = BicepDictionary<string>.DefineProperty(this, "TagValues", ["properties", "tags"]);
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported TagResource resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2023-07-01.
+        /// </summary>
+        public static readonly string V2023_07_01 = "2023-07-01";
+
+        /// <summary>
+        /// 2022-09-01.
+        /// </summary>
+        public static readonly string V2022_09_01 = "2022-09-01";
+
+        /// <summary>
+        /// 2019-10-01.
+        /// </summary>
+        public static readonly string V2019_10_01 = "2019-10-01";
+
+        /// <summary>
+        /// 2019-05-01.
+        /// </summary>
+        public static readonly string V2019_05_01 = "2019-05-01";
+
+        /// <summary>
+        /// 2019-04-01.
+        /// </summary>
+        public static readonly string V2019_04_01 = "2019-04-01";
+
+        /// <summary>
+        /// 2019-03-01.
+        /// </summary>
+        public static readonly string V2019_03_01 = "2019-03-01";
+
+        /// <summary>
+        /// 2018-11-01.
+        /// </summary>
+        public static readonly string V2018_11_01 = "2018-11-01";
     }
 
     /// <summary>

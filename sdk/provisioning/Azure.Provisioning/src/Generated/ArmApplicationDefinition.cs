@@ -173,9 +173,8 @@ public partial class ArmApplicationDefinition : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ArmApplicationDefinition.</param>
     /// <param name="resourceVersion">Version of the ArmApplicationDefinition.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ArmApplicationDefinition(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Solutions/applicationDefinitions", resourceVersion ?? "2021-07-01", context)
+    public ArmApplicationDefinition(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Solutions/applicationDefinitions", resourceVersion ?? "2021-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
