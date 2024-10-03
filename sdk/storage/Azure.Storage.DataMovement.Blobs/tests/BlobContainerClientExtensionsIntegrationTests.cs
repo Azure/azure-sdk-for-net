@@ -1,16 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseBlobs;
 extern alias DMBlobs;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Storage.Blobs;
 using Azure.Storage.DataMovement.Tests;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test.Shared;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Specialized;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using DMBlobs::Azure.Storage.Blobs;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
@@ -35,7 +36,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             ClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, _serviceVersion);
         }
 
-        private async Task<BlockBlobClient> CreateBlockBlob(
+        private async Task<BlockBlobClient> CreateBlockBlobAsync(
             BlobContainerClient containerClient,
             string blobName,
             long size,
@@ -49,7 +50,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         #region StartUploadDirectoryAsyncTests
-        private async Task CreateTempDirectoryStructure(
+        private async Task CreateTempDirectoryStructureAsync(
             string directoryPath,
             int size)
         {
@@ -69,7 +70,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             DataTransferOptions options = default,
             int size = Constants.KB)
         {
-            await CreateTempDirectoryStructure(directoryPath, size);
+            await CreateTempDirectoryStructureAsync(directoryPath, size);
             BlobContainerClientTransferOptions transferOptions = new BlobContainerClientTransferOptions
             {
                 TransferOptions = options,
@@ -78,7 +79,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // If we want a failure condition to happen
             if (createFailedCondition)
             {
-                await CreateBlockBlob(
+                await CreateBlockBlobAsync(
                     containerClient: containerClient,
                     blobName: "blob0",
                     size: size);
@@ -93,7 +94,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string blobDirectoryPrefix = default,
             int size = Constants.KB)
         {
-            await CreateTempDirectoryStructure(directoryPath, size);
+            await CreateTempDirectoryStructureAsync(directoryPath, size);
             return await containerClient.StartUploadDirectoryAsync(directoryPath, blobDirectoryPrefix);
         }
 
@@ -252,18 +253,18 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             string blobName0 = Path.Combine(sourceBlobDirectoryName, "blob0");
             string blobName1 = Path.Combine(sourceBlobDirectoryName, "blob1");
-            await CreateBlockBlob(client, blobName0, size);
-            await CreateBlockBlob(client, blobName1, size);
+            await CreateBlockBlobAsync(client, blobName0, size);
+            await CreateBlockBlobAsync(client, blobName1, size);
 
             string subDirName = "bar";
             CreateRandomDirectory(sourceLocalFolderPath, subDirName);
             string blobName2 = Path.Combine(sourceBlobDirectoryName, subDirName, "blob2");
-            await CreateBlockBlob(client, blobName2, size);
+            await CreateBlockBlobAsync(client, blobName2, size);
 
             string subDirName2 = "pik";
             CreateRandomDirectory(sourceLocalFolderPath, subDirName2);
             string blobName3 = Path.Combine(sourceBlobDirectoryName, subDirName2, "blob3");
-            await CreateBlockBlob(client, blobName3, size);
+            await CreateBlockBlobAsync(client, blobName3, size);
         }
 
         private async Task<DataTransfer> CreateStartDownloadToDirectoryAsync_WithOptions(
