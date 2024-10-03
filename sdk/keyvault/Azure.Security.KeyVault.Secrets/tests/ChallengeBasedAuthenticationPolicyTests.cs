@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -227,12 +227,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 caeChallenge,
 
                 // Second CAE Challenge
-                caeChallenge,
-
-                new MockResponse(200)
-                {
-                    ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
-                },
+                caeChallenge
             });
 
             MockTransport credentialTransport = new(new[]
@@ -255,17 +250,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                         "resource": "https://vault.azure.net",
                         "access_token": "foo"
                     }
-                    """),
-
-                new MockResponse(200)
-                    .WithJson("""
-                    {
-                        "token_type": "Bearer",
-                        "expires_in": 3599,
-                        "resource": "https://vault.azure.net",
-                        "access_token": "foo"
-                    }
-                    """),
+                    """)
             });
 
             SecretClient client = new(
