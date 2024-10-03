@@ -64,9 +64,8 @@ public partial class ManagedServerDnsAlias : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedServerDnsAlias.</param>
     /// <param name="resourceVersion">Version of the ManagedServerDnsAlias.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedServerDnsAlias(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/dnsAliases", resourceVersion ?? "2021-11-01", context)
+    public ManagedServerDnsAlias(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/dnsAliases", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _createDnsRecord = BicepValue<bool>.DefineProperty(this, "CreateDnsRecord", ["createDnsRecord"]);

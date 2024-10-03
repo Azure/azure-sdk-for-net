@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(WafMatchVariable left, WafMatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafMatchVariable"/> values are not the same. </summary>
         public static bool operator !=(WafMatchVariable left, WafMatchVariable right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WafMatchVariable"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WafMatchVariable"/>. </summary>
         public static implicit operator WafMatchVariable(string value) => new WafMatchVariable(value);
 
         /// <inheritdoc />

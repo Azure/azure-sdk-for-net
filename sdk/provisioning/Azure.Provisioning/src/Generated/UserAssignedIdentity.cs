@@ -74,9 +74,8 @@ public partial class UserAssignedIdentity : Resource
     /// </summary>
     /// <param name="resourceName">Name of the UserAssignedIdentity.</param>
     /// <param name="resourceVersion">Version of the UserAssignedIdentity.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public UserAssignedIdentity(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ManagedIdentity/userAssignedIdentities", resourceVersion ?? "2023-01-31", context)
+    public UserAssignedIdentity(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ManagedIdentity/userAssignedIdentities", resourceVersion ?? "2023-01-31")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

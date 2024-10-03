@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(OriginProvisioningState left, OriginProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OriginProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(OriginProvisioningState left, OriginProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OriginProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OriginProvisioningState"/>. </summary>
         public static implicit operator OriginProvisioningState(string value) => new OriginProvisioningState(value);
 
         /// <inheritdoc />

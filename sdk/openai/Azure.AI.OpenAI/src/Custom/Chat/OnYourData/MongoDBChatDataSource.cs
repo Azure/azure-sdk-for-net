@@ -3,16 +3,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
 [CodeGenModel("MongoDBChatDataSource")]
-public partial class MongoDBChatDataSource : AzureChatDataSource
+[Experimental("AOAI001")]
+#if AZURE_OPENAI_GA
+[EditorBrowsable(EditorBrowsableState.Never)]
+#endif
+public partial class MongoDBChatDataSource : ChatDataSource
 {
     [CodeGenMember("Parameters")]
     internal InternalMongoDBChatDataSourceParameters InternalParameters { get; }
 
+#if !AZURE_OPENAI_GA
     /// <inheritdoc cref="InternalMongoDBChatDataSourceParameters.Authentication"/>
     required public DataSourceAuthentication Authentication
     {
@@ -77,17 +83,17 @@ public partial class MongoDBChatDataSource : AzureChatDataSource
     }
 
     /// <inheritdoc cref="InternalMongoDBChatDataSourceParameters.AllowPartialResult"/>
-    public bool? AllowPartialResult
+    public bool? AllowPartialResults
     {
         get => InternalParameters.AllowPartialResult;
         set => InternalParameters.AllowPartialResult = value;
     }
 
-    /// <inheritdoc cref="InternalMongoDBChatDataSourceParameters.OutputContextFlags"/>
-    public DataSourceOutputContexts? OutputContextFlags
+    /// <inheritdoc cref="InternalMongoDBChatDataSourceParameters.OutputContexts"/>
+    public DataSourceOutputContexts? OutputContexts
     {
-        get => InternalParameters.OutputContextFlags;
-        set => InternalParameters.OutputContextFlags = value;
+        get => InternalParameters.OutputContexts;
+        set => InternalParameters.OutputContexts = value;
     }
 
     /// <inheritdoc cref="InternalAzureSearchChatDataSourceParameters.VectorizationSource"/>
@@ -104,6 +110,14 @@ public partial class MongoDBChatDataSource : AzureChatDataSource
     {
         InternalParameters = new();
     }
+
+#else
+    public MongoDBChatDataSource()
+    {
+        throw new InvalidOperationException($"MongoDB data sources are not supported in this GA version. Please use a preview library and service version for this integration.");
+    }
+
+#endif
 
     // CUSTOM: Made internal.
     /// <summary> Initializes a new instance of <see cref="MongoDBChatDataSource"/>. </summary>

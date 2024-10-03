@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(TriggeredAnalyticsRuleRunProvisioningState left, TriggeredAnalyticsRuleRunProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TriggeredAnalyticsRuleRunProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(TriggeredAnalyticsRuleRunProvisioningState left, TriggeredAnalyticsRuleRunProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TriggeredAnalyticsRuleRunProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TriggeredAnalyticsRuleRunProvisioningState"/>. </summary>
         public static implicit operator TriggeredAnalyticsRuleRunProvisioningState(string value) => new TriggeredAnalyticsRuleRunProvisioningState(value);
 
         /// <inheritdoc />

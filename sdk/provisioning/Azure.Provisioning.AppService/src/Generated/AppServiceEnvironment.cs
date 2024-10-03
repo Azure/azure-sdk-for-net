@@ -186,9 +186,8 @@ public partial class AppServiceEnvironment : Resource
     /// </summary>
     /// <param name="resourceName">Name of the AppServiceEnvironment.</param>
     /// <param name="resourceVersion">Version of the AppServiceEnvironment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AppServiceEnvironment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/hostingEnvironments", resourceVersion ?? "2023-12-01", context)
+    public AppServiceEnvironment(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/hostingEnvironments", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -223,6 +222,11 @@ public partial class AppServiceEnvironment : Resource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
         /// <summary>
         /// 2023-12-01.
         /// </summary>

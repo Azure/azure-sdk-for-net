@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(CurrentClusterPoolAksVersionStatus left, CurrentClusterPoolAksVersionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CurrentClusterPoolAksVersionStatus"/> values are not the same. </summary>
         public static bool operator !=(CurrentClusterPoolAksVersionStatus left, CurrentClusterPoolAksVersionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CurrentClusterPoolAksVersionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CurrentClusterPoolAksVersionStatus"/>. </summary>
         public static implicit operator CurrentClusterPoolAksVersionStatus(string value) => new CurrentClusterPoolAksVersionStatus(value);
 
         /// <inheritdoc />

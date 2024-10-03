@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(DBServerPatchingStatus left, DBServerPatchingStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DBServerPatchingStatus"/> values are not the same. </summary>
         public static bool operator !=(DBServerPatchingStatus left, DBServerPatchingStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DBServerPatchingStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DBServerPatchingStatus"/>. </summary>
         public static implicit operator DBServerPatchingStatus(string value) => new DBServerPatchingStatus(value);
 
         /// <inheritdoc />

@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>Azure SDK client library for the WebPubSub service</Description>
     <AssemblyTitle>Azure SDK for WebPubSub</AssemblyTitle>
-    <Version>1.4.0</Version>
+    <Version>1.5.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.3.0</ApiCompatVersion>
+    <ApiCompatVersion>1.4.0</ApiCompatVersion>
     <PackageTags>Azure, WebPubSub</PackageTags>
     <RequiredTargetFrameworks>netcoreapp3.1</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -27,14 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.WebPubSub.Common" />
     <!--
       TODO:Changing to a PackageReference since we only want to depend on the already GA'ed version of WebPubSub.  Change back after release.
-
-    <PackageReference Include="Microsoft.Azure.WebPubSub.Common" />
         -->
     <!--<ProjectReference Include="..\..\Azure.Messaging.WebPubSub\src\Azure.Messaging.WebPubSub.csproj" />-->
     <PackageReference Include="Azure.Messaging.WebPubSub" />
-    <ProjectReference Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" />
   </ItemGroup>
 
 </Project>

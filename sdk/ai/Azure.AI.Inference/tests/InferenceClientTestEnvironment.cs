@@ -18,7 +18,6 @@ namespace Azure.AI.Inference.Tests
         public string AoaiEmbeddingsEndpoint => GetRecordedVariable("AOAI_EMBEDDINGS_ENDPOINT");
         public string AoaiEmbeddingsKey => GetRecordedVariable("AOAI_EMBEDDINGS_KEY", options => options.IsSecret());
         public string TestImageJpgInputPath => GetRecordedVariable("AZUREAI_TEST_IMAGE_JPG_INPUT_PATH");
-
         // Add other client paramters here as above.
     }
 }

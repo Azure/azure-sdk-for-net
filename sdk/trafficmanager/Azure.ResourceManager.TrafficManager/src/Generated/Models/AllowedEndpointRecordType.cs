@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static bool operator ==(AllowedEndpointRecordType left, AllowedEndpointRecordType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AllowedEndpointRecordType"/> values are not the same. </summary>
         public static bool operator !=(AllowedEndpointRecordType left, AllowedEndpointRecordType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AllowedEndpointRecordType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AllowedEndpointRecordType"/>. </summary>
         public static implicit operator AllowedEndpointRecordType(string value) => new AllowedEndpointRecordType(value);
 
         /// <inheritdoc />

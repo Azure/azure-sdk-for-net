@@ -1,4 +1,4 @@
-# Simple Chat Completions Targetting Azure OpenAI
+# Simple chat completions targeting Azure OpenAI
 
 This sample demonstrates how to get a chat completions response from the service using a synchronous call, targetting an Azure OpenAI (AOAI) endpoint.
 

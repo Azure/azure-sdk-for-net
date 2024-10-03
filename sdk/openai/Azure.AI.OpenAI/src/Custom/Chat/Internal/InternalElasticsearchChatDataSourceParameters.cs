@@ -2,27 +2,30 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
+[Experimental("AOAI001")]
 [CodeGenModel("ElasticsearchChatDataSourceParameters")]
 internal partial class InternalElasticsearchChatDataSourceParameters
 {
     [CodeGenMember("IncludeContexts")]
     private IList<string> _internalIncludeContexts = new ChangeTrackingList<string>();
-    private DataSourceOutputContexts? _outputContextFlags;
+    private DataSourceOutputContexts? _outputContexts;
 
     /// <inheritdoc cref="DataSourceOutputContexts"/>
-    public DataSourceOutputContexts? OutputContextFlags
+    public DataSourceOutputContexts? OutputContexts
     {
-        get => DataSourceOutputContextFlagsExtensions.FromStringList(_internalIncludeContexts);
+        get => DataSourceOutputContextsExtensions.FromStringList(_internalIncludeContexts);
         internal set
         {
-            _outputContextFlags = value;
-            _internalIncludeContexts = _outputContextFlags?.ToStringList();
+            _outputContexts = value;
+            _internalIncludeContexts = _outputContexts?.ToStringList();
         }
     }
 
+#if !AZURE_OPENAI_GA
     /// <summary>
     /// The authentication options to use with the Elasticsearch data source.
     /// </summary>
@@ -33,6 +36,8 @@ internal partial class InternalElasticsearchChatDataSourceParameters
     /// <item><see cref="DataSourceAuthentication.FromKeyAndKeyId(string,string)"/></item>
     /// </list>
     /// </remarks>
+#else
+#endif
     [CodeGenMember("Authentication")]
     public DataSourceAuthentication Authentication { get; set; }
 
@@ -44,7 +49,7 @@ internal partial class InternalElasticsearchChatDataSourceParameters
     /// <item><see cref="DataSourceFieldMappings.ContentFieldSeparator"/></item>
     /// <item><see cref="DataSourceFieldMappings.TitleFieldName"/></item>
     /// <item><see cref="DataSourceFieldMappings.UrlFieldName"/></item>
-    /// <item><see cref="DataSourceFieldMappings.FilepathFieldName"/></item>
+    /// <item><see cref="DataSourceFieldMappings.FilePathFieldName"/></item>
     /// <item><see cref="DataSourceFieldMappings.VectorFieldNames"/></item>
     /// </list>
     /// </remarks>
@@ -59,6 +64,8 @@ internal partial class InternalElasticsearchChatDataSourceParameters
     /// </remarks>
     [CodeGenMember("QueryType")]
     public DataSourceQueryType? QueryType { get; set; }
+
+#if !AZURE_OPENAI_GA
     /// <summary>
     /// The vectorization dependency used for embeddings.
     /// </summary>
@@ -70,6 +77,18 @@ internal partial class InternalElasticsearchChatDataSourceParameters
     /// <item><see cref="DataSourceVectorizer.FromModelId(string)"/></item>
     /// </list>
     /// </remarks>
+#else
+    /// <summary>
+    /// The vectorization dependency used for embeddings.
+    /// </summary>
+    /// <remarks>
+    /// Supported vectorization dependencies for Elasticsearch data sources include:
+    /// <list type="bullet">
+    /// <item><see cref="DataSourceVectorizer.FromEndpoint(Uri, DataSourceAuthentication)"/></item>
+    /// <item><see cref="DataSourceVectorizer.FromDeploymentName(string)"/></item>
+    /// </list>
+    /// </remarks>
+#endif
     [CodeGenMember("EmbeddingDependency")]
     public DataSourceVectorizer VectorizationSource { get; set; }
 }

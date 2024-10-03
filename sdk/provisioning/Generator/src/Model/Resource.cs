@@ -16,6 +16,7 @@ public class Resource(Specification spec, Type armType)
         spec: spec)
 {
     public string? ResourceType { get; set; }
+    public string? ResourceNamespace { get; set; }
     public string? DefaultResourceVersion { get; set; }
     public IList<string>? ResourceVersions { get; set; }
     public NameRequirements? NameRequirements { get; set; }
@@ -30,8 +31,8 @@ public class Resource(Specification spec, Type armType)
     {
         base.Lint();
         //if (NameRequirements is null) { Warn($"{GetTypeReference()} has no {nameof(NameRequirements)}."); }
-        //if (ResourceVersions is null) { Warn($"{GetTypeReference()} has no {nameof(ResourceVersions)}."); }
-        //else if (DefaultResourceVersion is null) { Warn($"{GetTypeReference()} has no {nameof(DefaultResourceVersion)}."); }
+        if (DefaultResourceVersion is null) { Warn($"{ResourceType} has no {nameof(DefaultResourceVersion)}."); }
+        else if (ResourceVersions is null) { Warn($"{ResourceType} has no {nameof(ResourceVersions)}."); }
     }
 
     public override void Generate()
@@ -117,14 +118,13 @@ public class Resource(Specification spec, Type armType)
                     writer.WriteLine($"/// </summary>");
                     writer.WriteLine($"/// <param name=\"resourceName\">Name of the {Name}.</param>");
                     writer.WriteLine($"/// <param name=\"resourceVersion\">Version of the {Name}.</param>");
-                    writer.WriteLine($"/// <param name=\"context\">Provisioning context for this resource.</param>");
-                    writer.WriteLine($"public {Name}(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)");
+                    writer.WriteLine($"public {Name}(string resourceName, string? resourceVersion = default)");
                     writer.Write($"    : base(resourceName, \"{ResourceType}\", resourceVersion");
                     if (DefaultResourceVersion is not null)
                     {
                         writer.Write($" ?? \"{DefaultResourceVersion}\"");
                     }
-                    writer.WriteLine(", context)");
+                    writer.WriteLine(")");
                     using (writer.Scope("{", "}"))
                     {
                         foreach (Property property in Properties)
@@ -269,12 +269,12 @@ public class Resource(Specification spec, Type armType)
                     {
                         if (fence.RequiresSeparator) { writer.WriteLine(); }
                         writer.WriteLine($"/// <summary>");
-                        writer.WriteWrapped($"Assign a role to a user-assigned identity that grants access to this {Name}.");
+                        writer.WriteWrapped($"Creates a role assignment for a user-assigned identity that grants access to this {Name}.");
                         writer.WriteLine($"/// </summary>");
                         writer.WriteLine($"/// <param name=\"role\">The role to grant.</param>");
                         writer.WriteLine($"/// <param name=\"identity\">The <see cref=\"UserAssignedIdentity\"/>.</param>");
                         writer.WriteLine($"/// <returns>The <see cref=\"RoleAssignment\"/>.</returns>");
-                        writer.WriteLine($"public RoleAssignment AssignRole({Spec!.Name}BuiltInRole role, UserAssignedIdentity identity) =>");
+                        writer.WriteLine($"public RoleAssignment CreateRoleAssignment({Spec!.Name}BuiltInRole role, UserAssignedIdentity identity) =>");
                         using (writer.Scope())
                         {
                             writer.WriteLine($"new($\"{{ResourceName}}_{{identity.ResourceName}}_{{{Spec!.Name}BuiltInRole.GetBuiltInRoleName(role)}}\")");
@@ -292,16 +292,17 @@ public class Resource(Specification spec, Type armType)
 
                         if (fence.RequiresSeparator) { writer.WriteLine(); }
                         writer.WriteLine($"/// <summary>");
-                        writer.WriteWrapped($"Assign a role to a principal that grants access to this {Name}.");
+                        writer.WriteWrapped($"Creates a role assignment for a principal that grants access to this {Name}.");
                         writer.WriteLine($"/// </summary>");
                         writer.WriteLine($"/// <param name=\"role\">The role to grant.</param>");
                         writer.WriteLine($"/// <param name=\"principalType\">The type of the principal to assign to.</param>");
                         writer.WriteLine($"/// <param name=\"principalId\">The principal to assign to.</param>");
+                        writer.WriteLine($"/// <param name=\"resourceNameSuffix\">Optional role assignment resource name suffix.</param>");
                         writer.WriteLine($"/// <returns>The <see cref=\"RoleAssignment\"/>.</returns>");
-                        writer.WriteLine($"public RoleAssignment AssignRole({Spec!.Name}BuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>");
+                        writer.WriteLine($"public RoleAssignment CreateRoleAssignment({Spec!.Name}BuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? resourceNameSuffix = default) =>");
                         using (writer.Scope())
                         {
-                            writer.WriteLine($"new($\"{{ResourceName}}_{{{Spec!.Name}BuiltInRole.GetBuiltInRoleName(role)}}\")");
+                            writer.WriteLine($"new($\"{{ResourceName}}_{{{Spec!.Name}BuiltInRole.GetBuiltInRoleName(role)}}{{(resourceNameSuffix is null ? \"\" : \"_\")}}{{resourceNameSuffix}}\")");
                             using (writer.Scope("{", "};"))
                             {
                                 writer.Write($"Name = BicepFunction.CreateGuid(");

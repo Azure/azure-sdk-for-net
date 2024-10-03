@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(SqlMetricPrimaryAggregationType left, SqlMetricPrimaryAggregationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlMetricPrimaryAggregationType"/> values are not the same. </summary>
         public static bool operator !=(SqlMetricPrimaryAggregationType left, SqlMetricPrimaryAggregationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlMetricPrimaryAggregationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlMetricPrimaryAggregationType"/>. </summary>
         public static implicit operator SqlMetricPrimaryAggregationType(string value) => new SqlMetricPrimaryAggregationType(value);
 
         /// <inheritdoc />

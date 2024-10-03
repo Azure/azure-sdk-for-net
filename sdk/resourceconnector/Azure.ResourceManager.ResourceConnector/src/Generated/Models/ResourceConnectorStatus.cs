@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         public static bool operator ==(ResourceConnectorStatus left, ResourceConnectorStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceConnectorStatus"/> values are not the same. </summary>
         public static bool operator !=(ResourceConnectorStatus left, ResourceConnectorStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourceConnectorStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceConnectorStatus"/>. </summary>
         public static implicit operator ResourceConnectorStatus(string value) => new ResourceConnectorStatus(value);
 
         /// <inheritdoc />

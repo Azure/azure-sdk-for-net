@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(InboundSecurityRulesProtocol left, InboundSecurityRulesProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InboundSecurityRulesProtocol"/> values are not the same. </summary>
         public static bool operator !=(InboundSecurityRulesProtocol left, InboundSecurityRulesProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InboundSecurityRulesProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InboundSecurityRulesProtocol"/>. </summary>
         public static implicit operator InboundSecurityRulesProtocol(string value) => new InboundSecurityRulesProtocol(value);
 
         /// <inheritdoc />

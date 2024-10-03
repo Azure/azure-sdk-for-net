@@ -10,6 +10,7 @@ using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
+using System.ComponentModel;
 
 namespace Azure.Provisioning.PostgreSql;
 
@@ -194,9 +195,8 @@ public partial class PostgreSqlFlexibleServer : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PostgreSqlFlexibleServer.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServer.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlFlexibleServer(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers", resourceVersion ?? "2022-12-01", context)
+    public PostgreSqlFlexibleServer(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -233,9 +233,9 @@ public partial class PostgreSqlFlexibleServer : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-privatepreview.
+        /// 2024-08-01.
         /// </summary>
-        public static readonly string V2024_05_01_privatepreview = "2024-05-01-privatepreview";
+        public static readonly string V2024_08_01 = "2024-08-01";
 
         /// <summary>
         /// 2022-12-01.
@@ -256,4 +256,12 @@ public partial class PostgreSqlFlexibleServer : Resource
     /// <returns>The existing PostgreSqlFlexibleServer resource.</returns>
     public static PostgreSqlFlexibleServer FromExisting(string resourceName, string? resourceVersion = default) =>
         new(resourceName, resourceVersion) { IsExistingResource = true };
+
+    /// <summary>
+    /// Get the requirements for naming this PostgreSqlFlexibleServer resource.
+    /// </summary>
+    /// <returns>Naming requirements.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ResourceNameRequirements GetResourceNameRequirements() =>
+        new(minLength: 3, maxLength: 63, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 }

@@ -33,7 +33,7 @@ namespace Azure.Security.Attestation
         public static bool operator ==(PolicyCertificateResolution left, PolicyCertificateResolution right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyCertificateResolution"/> values are not the same. </summary>
         public static bool operator !=(PolicyCertificateResolution left, PolicyCertificateResolution right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PolicyCertificateResolution"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyCertificateResolution"/>. </summary>
         public static implicit operator PolicyCertificateResolution(string value) => new PolicyCertificateResolution(value);
 
         /// <inheritdoc />

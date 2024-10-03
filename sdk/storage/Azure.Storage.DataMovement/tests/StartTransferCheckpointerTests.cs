@@ -72,7 +72,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(disposingLocalDirectory.DirectoryPath)
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(disposingLocalDirectory.DirectoryPath)
             };
             TransferManager transferManager = new TransferManager(managerOptions);
 

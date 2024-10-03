@@ -33,7 +33,7 @@ namespace Azure.AI.Vision.Face
         public static bool operator ==(LivenessOperationMode left, LivenessOperationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LivenessOperationMode"/> values are not the same. </summary>
         public static bool operator !=(LivenessOperationMode left, LivenessOperationMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LivenessOperationMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LivenessOperationMode"/>. </summary>
         public static implicit operator LivenessOperationMode(string value) => new LivenessOperationMode(value);
 
         /// <inheritdoc />

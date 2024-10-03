@@ -85,9 +85,8 @@ public partial class MigrationConfiguration : Resource
     /// </summary>
     /// <param name="resourceName">Name of the MigrationConfiguration.</param>
     /// <param name="resourceVersion">Version of the MigrationConfiguration.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public MigrationConfiguration(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/migrationConfigurations", resourceVersion ?? "2024-01-01", context)
+    public MigrationConfiguration(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ServiceBus/namespaces/migrationConfigurations", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
         _postMigrationName = BicepValue<string>.DefineProperty(this, "PostMigrationName", ["properties", "postMigrationName"]);

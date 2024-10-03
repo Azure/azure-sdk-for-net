@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static bool operator ==(OperationalInsightsWorkspaceEntityStatus left, OperationalInsightsWorkspaceEntityStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsWorkspaceEntityStatus"/> values are not the same. </summary>
         public static bool operator !=(OperationalInsightsWorkspaceEntityStatus left, OperationalInsightsWorkspaceEntityStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OperationalInsightsWorkspaceEntityStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsWorkspaceEntityStatus"/>. </summary>
         public static implicit operator OperationalInsightsWorkspaceEntityStatus(string value) => new OperationalInsightsWorkspaceEntityStatus(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(IndexerExecutionStatusDetail left, IndexerExecutionStatusDetail right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IndexerExecutionStatusDetail"/> values are not the same. </summary>
         public static bool operator !=(IndexerExecutionStatusDetail left, IndexerExecutionStatusDetail right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IndexerExecutionStatusDetail"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IndexerExecutionStatusDetail"/>. </summary>
         public static implicit operator IndexerExecutionStatusDetail(string value) => new IndexerExecutionStatusDetail(value);
 
         /// <inheritdoc />

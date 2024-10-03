@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(QueryTimeGrainType left, QueryTimeGrainType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryTimeGrainType"/> values are not the same. </summary>
         public static bool operator !=(QueryTimeGrainType left, QueryTimeGrainType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QueryTimeGrainType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryTimeGrainType"/>. </summary>
         public static implicit operator QueryTimeGrainType(string value) => new QueryTimeGrainType(value);
 
         /// <inheritdoc />
