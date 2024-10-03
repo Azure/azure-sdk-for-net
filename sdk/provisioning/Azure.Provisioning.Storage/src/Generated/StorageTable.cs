@@ -60,10 +60,15 @@ public partial class StorageTable : Resource
     /// <summary>
     /// Creates a new StorageTable.
     /// </summary>
-    /// <param name="resourceName">Name of the StorageTable.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StorageTable resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StorageTable.</param>
-    public StorageTable(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/tableServices/tables", resourceVersion ?? "2024-01-01")
+    public StorageTable(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Storage/storageAccounts/tableServices/tables", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _signedIdentifiers = BicepList<StorageTableSignedIdentifier>.DefineProperty(this, "SignedIdentifiers", ["properties", "signedIdentifiers"]);
@@ -192,11 +197,16 @@ public partial class StorageTable : Resource
     /// <summary>
     /// Creates a reference to an existing StorageTable.
     /// </summary>
-    /// <param name="resourceName">Name of the StorageTable.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StorageTable resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StorageTable.</param>
     /// <returns>The existing StorageTable resource.</returns>
-    public static StorageTable FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StorageTable FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this StorageTable resource.

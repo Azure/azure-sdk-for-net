@@ -63,10 +63,15 @@ public partial class WebSitePrivateAccess : Resource
     /// <summary>
     /// Creates a new WebSitePrivateAccess.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSitePrivateAccess.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the WebSitePrivateAccess resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSitePrivateAccess.</param>
-    public WebSitePrivateAccess(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/privateAccess", resourceVersion ?? "2024-04-01")
+    public WebSitePrivateAccess(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/sites/privateAccess", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _isEnabled = BicepValue<bool>.DefineProperty(this, "IsEnabled", ["properties", "enabled"]);
@@ -241,9 +246,14 @@ public partial class WebSitePrivateAccess : Resource
     /// <summary>
     /// Creates a reference to an existing WebSitePrivateAccess.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSitePrivateAccess.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the WebSitePrivateAccess resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSitePrivateAccess.</param>
     /// <returns>The existing WebSitePrivateAccess resource.</returns>
-    public static WebSitePrivateAccess FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebSitePrivateAccess FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

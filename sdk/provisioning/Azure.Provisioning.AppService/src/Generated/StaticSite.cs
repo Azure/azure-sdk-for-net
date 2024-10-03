@@ -186,10 +186,15 @@ public partial class StaticSite : Resource
     /// <summary>
     /// Creates a new StaticSite.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSite.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StaticSite resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSite.</param>
-    public StaticSite(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/staticSites", resourceVersion ?? "2024-04-01")
+    public StaticSite(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/staticSites", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -298,9 +303,14 @@ public partial class StaticSite : Resource
     /// <summary>
     /// Creates a reference to an existing StaticSite.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSite.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StaticSite resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSite.</param>
     /// <returns>The existing StaticSite resource.</returns>
-    public static StaticSite FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StaticSite FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

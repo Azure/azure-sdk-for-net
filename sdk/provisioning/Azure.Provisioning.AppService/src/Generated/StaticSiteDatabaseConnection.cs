@@ -85,10 +85,15 @@ public partial class StaticSiteDatabaseConnection : Resource
     /// <summary>
     /// Creates a new StaticSiteDatabaseConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteDatabaseConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StaticSiteDatabaseConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteDatabaseConnection.</param>
-    public StaticSiteDatabaseConnection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/staticSites/databaseConnections", resourceVersion ?? "2024-04-01")
+    public StaticSiteDatabaseConnection(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/staticSites/databaseConnections", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionIdentity = BicepValue<string>.DefineProperty(this, "ConnectionIdentity", ["properties", "connectionIdentity"]);
@@ -181,9 +186,14 @@ public partial class StaticSiteDatabaseConnection : Resource
     /// <summary>
     /// Creates a reference to an existing StaticSiteDatabaseConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteDatabaseConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StaticSiteDatabaseConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteDatabaseConnection.</param>
     /// <returns>The existing StaticSiteDatabaseConnection resource.</returns>
-    public static StaticSiteDatabaseConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StaticSiteDatabaseConnection FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

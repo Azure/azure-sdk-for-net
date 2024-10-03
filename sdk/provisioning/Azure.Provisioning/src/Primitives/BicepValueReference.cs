@@ -25,7 +25,7 @@ public class BicepValueReference(ProvisioningConstruct construct, string propert
             throw new NotImplementedException("Cannot reference a construct without a name yet.");
         }
 
-        Expression target = BicepSyntax.Var(named.ResourceName);
+        Expression target = BicepSyntax.Var(named.IdentifierName);
         if (BicepPath is not null)
         {
             foreach (string segment in BicepPath)

@@ -82,10 +82,15 @@ public partial class StorageInsight : Resource
     /// <summary>
     /// Creates a new StorageInsight.
     /// </summary>
-    /// <param name="resourceName">Name of the StorageInsight.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StorageInsight resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StorageInsight.</param>
-    public StorageInsight(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.OperationalInsights/workspaces/storageInsightConfigs", resourceVersion ?? "2023-09-01")
+    public StorageInsight(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.OperationalInsights/workspaces/storageInsightConfigs", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _containers = BicepList<string>.DefineProperty(this, "Containers", ["properties", "containers"]);
@@ -123,9 +128,14 @@ public partial class StorageInsight : Resource
     /// <summary>
     /// Creates a reference to an existing StorageInsight.
     /// </summary>
-    /// <param name="resourceName">Name of the StorageInsight.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StorageInsight resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StorageInsight.</param>
     /// <returns>The existing StorageInsight resource.</returns>
-    public static StorageInsight FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StorageInsight FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

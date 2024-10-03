@@ -69,10 +69,15 @@ public partial class CassandraViewThroughputSetting : Resource
     /// <summary>
     /// Creates a new CassandraViewThroughputSetting.
     /// </summary>
-    /// <param name="resourceName">Name of the CassandraViewThroughputSetting.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CassandraViewThroughputSetting
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CassandraViewThroughputSetting.</param>
-    public CassandraViewThroughputSetting(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/views/throughputSettings", resourceVersion ?? "2024-08-15")
+    public CassandraViewThroughputSetting(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/views/throughputSettings", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -223,9 +228,14 @@ public partial class CassandraViewThroughputSetting : Resource
     /// <summary>
     /// Creates a reference to an existing CassandraViewThroughputSetting.
     /// </summary>
-    /// <param name="resourceName">Name of the CassandraViewThroughputSetting.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CassandraViewThroughputSetting
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CassandraViewThroughputSetting.</param>
     /// <returns>The existing CassandraViewThroughputSetting resource.</returns>
-    public static CassandraViewThroughputSetting FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CassandraViewThroughputSetting FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }
