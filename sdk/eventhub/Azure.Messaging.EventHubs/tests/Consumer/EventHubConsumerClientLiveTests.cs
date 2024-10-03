@@ -2490,7 +2490,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Give the consumer a moment to ensure that it is established and then send events for it to read.
 
-                    await Task.Delay(1250);
+                    await Task.Delay(1500);
                     await SendEventsToAllPartitionsAsync(scope.EventHubName, sourceEvents, partitions, cancellationSource.Token);
 
                     // Read the events and validate the resulting state.
