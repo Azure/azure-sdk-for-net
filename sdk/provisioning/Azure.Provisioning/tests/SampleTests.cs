@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -342,5 +343,17 @@ internal class SampleTests(bool async)
             """)
         .Lint()
         .ValidateAndDeployAsync();
+    }
+
+    [Test]
+    public void ValidNames()
+    {
+        Assert.Throws<ArgumentNullException>(() => new StorageAccount(null!));
+        Assert.Throws<ArgumentException>(() => new StorageAccount(""));
+        Assert.Throws<ArgumentException>(() => new StorageAccount("my-storage"));
+        Assert.Throws<ArgumentException>(() => new StorageAccount("my storage"));
+        Assert.Throws<ArgumentException>(() => new StorageAccount("my:storage"));
+        Assert.Throws<ArgumentException>(() => new StorageAccount("storage$"));
+        _ = new StorageAccount("ABCdef123_");
     }
 }
