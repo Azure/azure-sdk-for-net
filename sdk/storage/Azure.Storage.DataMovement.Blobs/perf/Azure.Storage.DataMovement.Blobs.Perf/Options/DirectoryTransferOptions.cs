@@ -20,6 +20,9 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
         [Option("chunk-size", HelpText = "The chunk/block size to use during transfers (in bytes)")]
         public long? ChunkSize { get; set; }
 
+        [Option("disable-checkpointer", HelpText = "Set to disable checkpointing.")]
+        public bool DisableCheckpointer { get; set; }
+
         // Override warmup to set default to 0
         [Option('w', "warmup", Default = 0, HelpText = "Duration of warmup in seconds")]
         public new int Warmup { get; set; }
