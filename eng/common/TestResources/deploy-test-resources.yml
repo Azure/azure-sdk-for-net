@@ -59,9 +59,9 @@ steps:
             ${{ parameters.SubscriptionConfiguration }}
           '@ | ConvertFrom-Json -AsHashtable;
 
-          $context = (Get-AzContext)
+          $context = Get-AzContext
           $subscriptionConfiguration["SubscriptionId"] = $context.Subscription.Id
-          $subscriptionConfiguration["TenantId"] =$context.Subscription.TenantId
+          $subscriptionConfiguration["TenantId"] = $context.Subscription.TenantId
           $subscriptionConfiguration["TestApplicationId"] = $context.Account.Id
           $subscriptionConfiguration["ProvisionerApplicationId"] = $context.Account.Id
 
