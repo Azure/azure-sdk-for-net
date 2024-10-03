@@ -29,26 +29,4 @@ public static class MessagingServices
         sender.SendMessageAsync(message).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
     }
-
-    public static void StrartReceiving<T>(this CloudMachineClient cm, Action<T> handler)
-    {
-        throw new NotImplementedException();
-    }
-
-    public static void StrartReceiving<T>(this CloudMachineClient cm, Action<CloudMachineClient, T> handler)
-    {
-        ServiceBusReceiver receiver = cm.ClientCache.Get("cm_default_topic_receiver", () =>
-        {
-            ServiceBusClient sb = cm.ClientCache.Get(cm.Properties.ServiceBusNamespace, () =>
-            {
-                ServiceBusClient sb = new(cm.Properties.ServiceBusNamespace, cm.Credential);
-                return sb;
-            });
-
-            ServiceBusReceiver receiver = sb.CreateReceiver("cm_default_topic_receiver");
-            return receiver;
-        });
-
-        throw new NotImplementedException();
-    }
 }
