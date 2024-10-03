@@ -1,17 +1,92 @@
 scenarios:
 - image: Dockerfile
   imageBuildDir: ../../../..
-  testScenario: uploadsingleblockblob
   Scenario: uploadsingleblockblob
+  testScenario: uploadsingleblockblob
   imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
 - image: Dockerfile
   imageBuildDir: ../../../..
-  testScenario: uploaddirectoryblockBlob
   Scenario: uploaddirectoryblockBlob
+  testScenario: uploaddirectoryblockBlob
   imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
 - image: Dockerfile
   imageBuildDir: ../../../..
-  testScenario: downloadsingleblockblob
   Scenario: downloadsingleblockblob
+  testScenario: downloadsingleblockblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
+- image: Dockerfile
+  imageBuildDir: ../../../..
+  Scenario: downloaddirectoryblockblob
+  testScenario: downloaddirectoryblockblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
+- image: Dockerfile
+  imageBuildDir: ../../../..
+  Scenario: copysingleblockblob
+  testScenario: copysingleblockblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
+- image: Dockerfile
+  imageBuildDir: ../../../..
+  Scenario: copydirectoryblockblob
+  testScenario: copydirectoryblockblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
+- image: Dockerfile
+  imageBuildDir: ../../../..
+  Scenario: uploadsingleappendblob
+  testScenario: uploadsingleappendblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
+- image: Dockerfile
+  imageBuildDir: ../../../..
+  Scenario: uploaddirectoryappendblob
+  testScenario: uploaddirectoryappendblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
+- image: Dockerfile
+  imageBuildDir: ../../../..
+  Scenario: downloadsingleappendblob
+  testScenario: downloadsingleappendblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
+- image: Dockerfile
+  imageBuildDir: ../../../..
+  Scenario: downloaddirectoryappendblob
+  testScenario: downloaddirectoryappendblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
+- image: Dockerfile
+  imageBuildDir: ../../../..
+  Scenario: copysingleappendblob
+  testScenario: copysingleappendblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
+- image: Dockerfile
+  imageBuildDir: ../../../..
+  Scenario: copydirectoryappendblob
+  testScenario: copydirectoryappendblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
+- image: Dockerfile
+  imageBuildDir: ../../../..
+  Scenario: uploadsinglepageblob
+  testScenario: uploadsinglepageblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
+- image: Dockerfile
+  imageBuildDir: ../../../..
+  Scenario: uploaddirectorypageblob
+  testScenario: uploaddirectorypageblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
+- image: Dockerfile
+  imageBuildDir: ../../../..
+  Scenario: downloadsinglepageblob
+  testScenario: downloadsinglepageblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
+- image: Dockerfile
+  imageBuildDir: ../../../..
+  Scenario: downloaddirectorypageblob
+  testScenario: downloaddirectorypageblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
+- image: Dockerfile
+  imageBuildDir: ../../../..
+  Scenario: copysinglepageblob
+  testScenario: copysinglepageblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
+- image: Dockerfile
+  imageBuildDir: ../../../..
+  Scenario: copydirectorypageblob
+  testScenario: copydirectorypageblob
   imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
 
