@@ -10,17 +10,18 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Terraform.Tests
 {
-    public class terraformManagementTestBase : ManagementRecordedTestBase<terraformManagementTestEnvironment>
+    public class TerraformManagementTestBase : ManagementRecordedTestBase<TerraformManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
+        protected ResourceGroupCollection ResourceGroupCollection { get; private set; }
 
-        protected terraformManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected TerraformManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected terraformManagementTestBase(bool isAsync)
+        protected TerraformManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }
@@ -30,13 +31,14 @@ namespace Azure.ResourceManager.Terraform.Tests
         {
             Client = GetArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            ResourceGroupCollection = DefaultSubscription.GetResourceGroups();
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            ArmOperation<ResourceGroupResource> lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
     }

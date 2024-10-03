@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.Terraform.Tests
 {
-    public class terraformManagementTestEnvironment : TestEnvironment
+    public class TerraformManagementTestEnvironment : TestEnvironment
     {
     }
 }
