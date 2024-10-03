@@ -71,10 +71,5 @@ namespace Azure.AI.Inference
         public ChatRole? Role { get; }
         /// <summary> The content of the message. </summary>
         public string Content { get; }
-        /// <summary>
-        /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
-        /// completions request to resolve as configured.
-        /// </summary>
-        public IReadOnlyList<StreamingChatResponseToolCallUpdate> ToolCalls { get; }
     }
 }

@@ -1,0 +1,201 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com/chat/completions?api-version=2024-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "678",
+        "Content-Type": "application/json",
+        "traceparent": "00-8835e09d29f6affff7aae200ad04ab9c-82c99a17f18148aa-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20241002.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "content": "You are a helpful assistant.",
+            "role": "system"
+          },
+          {
+            "content": "What should I wear in Honolulu in 3 days?",
+            "role": "user"
+          }
+        ],
+        "max_tokens": 512,
+        "stream": true,
+        "tools": [
+          {
+            "type": "function",
+            "function": {
+              "name": "get_future_temperature",
+              "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "locationName": {
+                    "type": "string",
+                    "description": "the name or brief description of a location for weather information"
+                  },
+                  "daysInAdvance": {
+                    "type": "integer",
+                    "description": "the number of days in the future for which to retrieve weather information"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "azureml-model-group": "offer-mistral-bundled-paygo",
+        "azureml-model-session": "dep-eus-mis-bundle-240905055151",
+        "Content-Type": "text/event-stream; charset=utf-8",
+        "Date": "Thu, 03 Oct 2024 21:12:32 GMT",
+        "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-rai-invoked": "true",
+        "X-Request-ID": "3c0e8915-987b-4885-82e6-2e48864aa991"
+      },
+      "ResponseBody": [
+        "data: {\"choices\":[{\"delta\":{\"content\":\"\",\"role\":\"assistant\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989952,\"id\":\"79322585582646c4ae34173edc327013\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":null,\"tool_calls\":[{\"function\":{\"arguments\":\"{\\\"locationName\\\": \\\"Honolulu\\\", \\\"daysInAdvance\\\": 3}\",\"name\":\"get_future_temperature\"},\"id\":\"hYS7Dib7t\"}]},\"finish_reason\":\"tool_calls\",\"index\":0,\"logprobs\":null}],\"created\":1727989952,\"id\":\"79322585582646c4ae34173edc327013\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\",\"usage\":{\"completion_tokens\":36,\"prompt_tokens\":143,\"total_tokens\":179}}\n\n",
+        "data: [DONE]\n\n"
+      ]
+    },
+    {
+      "RequestUri": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com/chat/completions?api-version=2024-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "955",
+        "Content-Type": "application/json",
+        "traceparent": "00-045d6f381564f89d78ee3211eea4e2c9-b6917d0743341aa1-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20241002.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "content": "You are a helpful assistant.",
+            "role": "system"
+          },
+          {
+            "content": "What should I wear in Honolulu in 3 days?",
+            "role": "user"
+          },
+          {
+            "tool_calls": [
+              {
+                "id": "hYS7Dib7t",
+                "type": "function",
+                "function": {
+                  "name": "get_future_temperature",
+                  "arguments": "{\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}"
+                }
+              }
+            ],
+            "role": "assistant"
+          },
+          {
+            "content": "31 celsius",
+            "tool_call_id": "hYS7Dib7t",
+            "role": "tool"
+          }
+        ],
+        "max_tokens": 512,
+        "stream": true,
+        "tools": [
+          {
+            "type": "function",
+            "function": {
+              "name": "get_future_temperature",
+              "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "locationName": {
+                    "type": "string",
+                    "description": "the name or brief description of a location for weather information"
+                  },
+                  "daysInAdvance": {
+                    "type": "integer",
+                    "description": "the number of days in the future for which to retrieve weather information"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "azureml-model-group": "offer-mistral-bundled-paygo",
+        "azureml-model-session": "dep-eus-mis-bundle-240905033003",
+        "Content-Type": "text/event-stream; charset=utf-8",
+        "Date": "Thu, 03 Oct 2024 21:12:32 GMT",
+        "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-rai-invoked": "true",
+        "X-Request-ID": "d079f542-9ca4-44b7-934d-bbc132eb1e8b"
+      },
+      "ResponseBody": [
+        "data: {\"choices\":[{\"delta\":{\"content\":\"\",\"role\":\"assistant\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"The\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" anticipated\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" temperature\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" in\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" Hon\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"ol\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"ulu\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" in\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" \"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"3\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" days\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" is\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" \"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"3\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"1\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" degrees\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" C\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"els\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"ius\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\".\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" You\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" might\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" want\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" to\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" consider\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" packing\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" light\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\",\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" breath\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"able\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" clothing\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" and\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" don\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"'\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"t\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" forget\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" your\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" sun\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"screen\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"!\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"\"},\"finish_reason\":\"stop\",\"index\":0,\"logprobs\":null}],\"created\":1727989953,\"id\":\"68b7f37990d74c5799ef35f2a34b162d\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\",\"usage\":{\"completion_tokens\":40,\"prompt_tokens\":220,\"total_tokens\":260}}\n\n",
+        "data: [DONE]\n\n"
+      ]
+    }
+  ],
+  "Variables": {
+    "AZUREAI_MISTRAL_SMALL_KEY": "Sanitized",
+    "AZUREAI_MISTRAL_SMALL_URL": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com",
+    "RandomSeed": "292623026"
+  }
+}

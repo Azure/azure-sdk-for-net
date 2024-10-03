@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "760",
         "Content-Type": "application/json",
-        "traceparent": "00-6f24cd8279d850d309f78835acd5c545-7d8a0f9fd2a3fd05-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240920.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9557df9a30b833761feb1d420bdc09d8-e92442017344221f-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20241002.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -57,25 +57,25 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3209e2da-3d8e-4d69-96f8-6e88372407eb",
-        "azureml-model-session": "d092-20240921195754",
+        "apim-request-id": "d38434bd-6e9a-41be-82ff-94e76a24cf71",
+        "azureml-model-session": "d197-20240930010144",
         "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Mon, 23 Sep 2024 20:53:58 GMT",
+        "Date": "Thu, 03 Oct 2024 21:13:20 GMT",
         "request-context": "appId=",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "Vary": "Accept-Encoding",
-        "x-aml-cluster": "int-02",
+        "x-aml-cluster": "int-01",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "242",
+        "x-envoy-upstream-service-time": "1700",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
         "x-ms-region": "East US",
         "x-ratelimit-remaining-requests": "29",
-        "x-ratelimit-remaining-tokens": "27339",
-        "X-Request-ID": "67859c72-de45-4268-971d-ed5d832d6589",
-        "x-request-time": "0.332"
+        "x-ratelimit-remaining-tokens": "25209",
+        "X-Request-ID": "e2e80070-ff5e-4bd6-9606-2fc584765d44",
+        "x-request-time": "1.778"
       },
       "ResponseBody": {
         "choices": [
@@ -93,15 +93,15 @@
                     "arguments": "{\"locationName\":\"Honolulu\",\"daysInAdvance\":3}",
                     "name": "get_future_temperature"
                   },
-                  "id": "call_amzIMnZfxOwyNp6L53Y05Ooz",
+                  "id": "call_KGoZ2zcLDOSbbtTt9R7DszdZ",
                   "type": "function"
                 }
               ]
             }
           }
         ],
-        "created": 1727124838,
-        "id": "chatcmpl-AAkMAOby906Uc1nBqBWtWYSOgcvbu",
+        "created": 1727989998,
+        "id": "chatcmpl-AENQMWRrCakJ5wxwN6GvDeuDF2see",
         "model": "gpt-4o-2024-05-13",
         "object": "chat.completion",
         "prompt_filter_results": [
@@ -126,8 +126,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "995",
         "Content-Type": "application/json",
-        "traceparent": "00-b3e69b600b835bd8a86549587a9f2b7d-ef2e9e97710eecd2-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240920.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-4a5221590d645988af278f1a7bbc9f0b-c2acf461d6a9de98-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20241002.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -144,7 +144,7 @@
           {
             "tool_calls": [
               {
-                "id": "call_amzIMnZfxOwyNp6L53Y05Ooz",
+                "id": "call_KGoZ2zcLDOSbbtTt9R7DszdZ",
                 "type": "function",
                 "function": {
                   "name": "get_future_temperature",
@@ -156,7 +156,7 @@
           },
           {
             "content": "31 celsius",
-            "tool_call_id": "call_amzIMnZfxOwyNp6L53Y05Ooz",
+            "tool_call_id": "call_KGoZ2zcLDOSbbtTt9R7DszdZ",
             "role": "tool"
           }
         ],
@@ -187,25 +187,25 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4b1b85bd-e787-404f-a23d-2fc5b402280a",
-        "azureml-model-session": "d086-20240922142528",
+        "apim-request-id": "91c55e79-bd55-4146-84aa-6d242eeda9ea",
+        "azureml-model-session": "d080-20240926025606",
         "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Mon, 23 Sep 2024 20:54:01 GMT",
+        "Date": "Thu, 03 Oct 2024 21:13:21 GMT",
         "request-context": "appId=",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "Vary": "Accept-Encoding",
-        "x-aml-cluster": "int-02",
+        "x-aml-cluster": "int-01",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "2472",
+        "x-envoy-upstream-service-time": "1492",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
         "x-ms-region": "East US",
         "x-ratelimit-remaining-requests": "28",
-        "x-ratelimit-remaining-tokens": "26805",
-        "X-Request-ID": "95b46d2b-6be4-4feb-b9c4-0f94061df87c",
-        "x-request-time": "2.563"
+        "x-ratelimit-remaining-tokens": "24675",
+        "X-Request-ID": "d3861a8a-9fd1-4db6-b405-1ddf8132af8c",
+        "x-request-time": "1.582"
       },
       "ResponseBody": {
         "choices": [
@@ -232,13 +232,13 @@
             "index": 0,
             "logprobs": null,
             "message": {
-              "content": "In Honolulu, the forecasted temperature in 3 days will be around 31°C (88°F). Here are some recommendations for what to wear:\n\n- **Lightweight Clothing**: Opt for breathable fabrics like cotton or linen to stay cool and comfortable.\n- **Shorts and T-shirts**: Casual and comfortable are key. You'll want shorts and short-sleeve shirts or tank tops.\n- **Swimwear**: If you plan to hit the beach or pool, don't forget your swimsuit.\n- **Sunglasses and Hat**: Protect yourself from the strong sun with UV-protective sunglasses and a wide-brimmed hat.\n- **Comfortable Footwear**: Flip-flops or sandals work well for the beach, but if you're exploring more, consider comfortable walking shoes.\n\nDon't forget sunscreen to protect your skin from the sun's rays! Enjoy your time in Honolulu.",
+              "content": "In 3 days, it is forecasted to be about 31°C (88°F) in Honolulu. Given the warm temperature, you might want to consider wearing light, breathable clothing such as:\n\n- Shorts or lightweight pants\n- A t-shirt or a tank top\n- Comfortable sandals or shoes\n- A hat or sunglasses for sun protection\n- Light layers in case it cools down a bit in the evening\n\nDon't forget to also apply sunscreen to protect your skin from the sun!",
               "role": "assistant"
             }
           }
         ],
-        "created": 1727124838,
-        "id": "chatcmpl-AAkMAxu68lGDfc4KeHl2sHGyItczN",
+        "created": 1727990000,
+        "id": "chatcmpl-AENQORPpPpAwtZJiPBig2Dk8nItT2",
         "model": "gpt-4o-2024-05-13",
         "object": "chat.completion",
         "prompt_filter_results": [
@@ -249,9 +249,9 @@
         ],
         "system_fingerprint": "fp_67802d9a6d",
         "usage": {
-          "completion_tokens": 180,
+          "completion_tokens": 100,
           "prompt_tokens": 144,
-          "total_tokens": 324
+          "total_tokens": 244
         }
       }
     }
@@ -259,6 +259,6 @@
   "Variables": {
     "AZUREAI_GITHUB_TOKEN": "Sanitized",
     "AZUREAI_GITHUB_URL": "https://int.api.azureml-test.ms/nexus",
-    "RandomSeed": "953658786"
+    "RandomSeed": "1243652935"
   }
 }

@@ -76,58 +76,6 @@ namespace Azure.AI.Inference
             return DeserializeStreamingChatResponseMessageUpdate(document.RootElement, options);
         }
 
-        internal static StreamingChatResponseMessageUpdate DeserializeStreamingChatResponseMessageUpdate(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            ChatRole? role = default;
-            string content = default;
-            IReadOnlyList<StreamingChatResponseToolCallUpdate> toolCalls = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("role"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    role = new ChatRole(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("content"u8))
-                {
-                    content = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tool_calls"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<StreamingChatResponseToolCallUpdate> array = new List<StreamingChatResponseToolCallUpdate>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(StreamingChatResponseToolCallUpdate.DeserializeStreamingChatResponseToolCallUpdate(item, options));
-                    }
-                    toolCalls = array;
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new StreamingChatResponseMessageUpdate(role, content, toolCalls ?? new ChangeTrackingList<StreamingChatResponseToolCallUpdate>(), serializedAdditionalRawData);
-        }
-
         BinaryData IPersistableModel<StreamingChatResponseMessageUpdate>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StreamingChatResponseMessageUpdate>)this).GetFormatFromOptions(options) : options.Format;

@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "130",
         "Content-Type": "application/json",
-        "traceparent": "00-4f6266a848ac9730b57a8374780dd72d-beebaca48fbcd604-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240920.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-764a1eac0b7df9d7368d9346096ba9ed-049b43af55e17d34-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20241002.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -27,20 +27,20 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3ae82547-0d28-47cb-ac42-35a9be9353f7",
-        "azureml-model-session": "d057-20240921114239",
-        "Content-Length": "842",
+        "apim-request-id": "13123678-f504-44d7-8d8b-6edcde3eafdc",
+        "azureml-model-session": "d061-20240921160159",
+        "Content-Length": "656",
         "Content-Type": "application/json",
-        "Date": "Mon, 23 Sep 2024 20:54:50 GMT",
+        "Date": "Thu, 03 Oct 2024 21:14:05 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
         "x-ms-region": "Sweden Central",
-        "x-ratelimit-remaining-requests": "7",
-        "x-ratelimit-remaining-tokens": "2232",
-        "X-Request-ID": "60502eac-9d91-43cc-8190-86c42e2d70e3"
+        "x-ratelimit-remaining-requests": "9",
+        "x-ratelimit-remaining-tokens": "1167",
+        "X-Request-ID": "32a5963e-d88a-4d33-b553-66dbeca32bab"
       },
       "ResponseBody": {
         "choices": [
@@ -72,31 +72,14 @@
             }
           }
         ],
-        "created": 1727124891,
-        "id": "chatcmpl-AAkN1w1Dh1osFL05RUI6nRDc0SsIh",
+        "created": 1727990046,
+        "id": "chatcmpl-AENR8dQx5Ted4OLp9ZrTVRiCKZhuW",
         "model": "gpt-4o-2024-08-06",
         "object": "chat.completion",
         "prompt_filter_results": [
           {
             "prompt_index": 0,
-            "content_filter_results": {
-              "hate": {
-                "filtered": false,
-                "severity": "safe"
-              },
-              "self_harm": {
-                "filtered": false,
-                "severity": "safe"
-              },
-              "sexual": {
-                "filtered": false,
-                "severity": "safe"
-              },
-              "violence": {
-                "filtered": false,
-                "severity": "safe"
-              }
-            }
+            "content_filter_results": {}
           }
         ],
         "system_fingerprint": "fp_67802d9a6d",
@@ -110,6 +93,6 @@
   ],
   "Variables": {
     "AOAI_CHAT_COMPLETIONS_ENDPOINT": "https://openai-sdk-test-automation-account-sweden-central.openai.azure.com/openai/deployments/gpt-4o",
-    "RandomSeed": "705972718"
+    "RandomSeed": "282999636"
   }
 }

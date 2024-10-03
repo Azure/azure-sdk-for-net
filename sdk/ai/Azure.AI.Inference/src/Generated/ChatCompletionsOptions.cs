@@ -118,15 +118,6 @@ namespace Azure.AI.Inference
         }
 
         /// <summary>
-        /// The collection of context messages associated with this chat completions request.
-        /// Typical usage begins with a chat message for the System role that provides instructions for
-        /// the behavior of the assistant, followed by alternating messages between the User and
-        /// Assistant roles.
-        /// Please note <see cref="ChatRequestMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
-        /// </summary>
-        public IList<ChatRequestMessage> Messages { get; }
-        /// <summary>
         /// A value that influences the probability of generated tokens appearing based on their cumulative
         /// frequency in generated text.
         /// Positive values will make tokens less likely to appear as their frequency increases and

@@ -25,7 +25,7 @@ namespace Azure.AI.Inference
             string model = default;
             DateTimeOffset created = default;
             string systemFingerprint = null;
-            List<StreamingChoiceData> choiceEntries = new();
+            List<StreamingChatChoiceUpdate> choiceEntries = new();
 
             foreach (JsonProperty property in element.EnumerateObject())
             {
@@ -53,7 +53,7 @@ namespace Azure.AI.Inference
                 {
                     foreach (JsonElement choiceElement in property.Value.EnumerateArray())
                     {
-                        choiceEntries.Add(StreamingChoiceData.DeserializeStreamingChoiceData(choiceElement));
+                        choiceEntries.Add(StreamingChatChoiceUpdate.DeserializeStreamingChatChoiceUpdate(choiceElement));
                     }
                 }
             }
@@ -61,7 +61,7 @@ namespace Azure.AI.Inference
             // If a chunk has no choices, we infer an empty one to aid traversal/expansion
             if (choiceEntries.Count == 0)
             {
-                choiceEntries.Add(StreamingChoiceData.Empty);
+                choiceEntries.Add(new StreamingChatChoiceUpdate());
             }
 
             // We inflate the possible combination of information into one StreamingChatCompletionsUpdate per tool
@@ -69,20 +69,17 @@ namespace Azure.AI.Inference
 
             List<StreamingChatCompletionsUpdate> results = new();
 
-            foreach (StreamingChoiceData choiceData in choiceEntries)
+            foreach (StreamingChatChoiceUpdate choiceData in choiceEntries)
             {
-                foreach (StreamingToolCallUpdate toolCallUpdate in choiceData.Delta.ToolCallUpdates)
+                foreach (StreamingChatResponseToolCallUpdate toolCallUpdate in choiceData.Delta.ToolCalls)
                 {
                     results.Add(new(
                         id,
                         model,
                         created,
                         choiceData.Delta.Role,
-                        choiceData.Delta.AuthorName,
-                        choiceData.Delta.ContentUpdate,
+                        choiceData.Delta.Content,
                         choiceData.FinishReason,
-                        choiceData.Delta.FunctionName,
-                        choiceData.Delta.FunctionArgumentsUpdate,
                         toolCallUpdate));
                 }
             }

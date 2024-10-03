@@ -116,6 +116,7 @@ namespace Azure.AI.Inference
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EmbeddingsClient.xml" path="doc/members/member[@name='EmbedAsync(RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> EmbedAsync(RequestContent content, string extraParams = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -160,6 +161,7 @@ namespace Azure.AI.Inference
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EmbeddingsClient.xml" path="doc/members/member[@name='Embed(RequestContent,string,RequestContext)']/*" />
         public virtual Response Embed(RequestContent content, string extraParams = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -185,6 +187,7 @@ namespace Azure.AI.Inference
         /// It will not work for GitHub Models endpoint or Azure OpenAI endpoint.
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EmbeddingsClient.xml" path="doc/members/member[@name='GetModelInfoAsync(CancellationToken)']/*" />
         public virtual async Task<Response<ModelInfo>> GetModelInfoAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -199,6 +202,7 @@ namespace Azure.AI.Inference
         /// It will not work for GitHub Models endpoint or Azure OpenAI endpoint.
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EmbeddingsClient.xml" path="doc/members/member[@name='GetModelInfo(CancellationToken)']/*" />
         public virtual Response<ModelInfo> GetModelInfo(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -227,6 +231,7 @@ namespace Azure.AI.Inference
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EmbeddingsClient.xml" path="doc/members/member[@name='GetModelInfoAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetModelInfoAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("EmbeddingsClient.GetModelInfo");
@@ -264,6 +269,7 @@ namespace Azure.AI.Inference
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EmbeddingsClient.xml" path="doc/members/member[@name='GetModelInfo(RequestContext)']/*" />
         public virtual Response GetModelInfo(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("EmbeddingsClient.GetModelInfo");

@@ -86,7 +86,5 @@ namespace Azure.AI.Inference
         public int Index { get; }
         /// <summary> The reason that this chat completions choice completed its generated. </summary>
         public CompletionsFinishReason? FinishReason { get; }
-        /// <summary> An update to the chat message for a given chat completions prompt. </summary>
-        public StreamingChatResponseMessageUpdate Delta { get; }
     }
 }

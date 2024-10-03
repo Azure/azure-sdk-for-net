@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "664",
         "Content-Type": "application/json",
-        "traceparent": "00-09f5fe043e5351f9a1fd5dcfb931e7b9-491d58616ebebed3-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240920.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-f09be22ddc3105f2c1189c738baae6fe-ebf69af778fb51e3-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20241002.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -22,120 +22,6 @@
           {
             "content": "What should I wear in Honolulu in 3 days?",
             "role": "user"
-          }
-        ],
-        "max_tokens": 512,
-        "tools": [
-          {
-            "type": "function",
-            "function": {
-              "name": "get_future_temperature",
-              "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
-              "parameters": {
-                "type": "object",
-                "properties": {
-                  "locationName": {
-                    "type": "string",
-                    "description": "the name or brief description of a location for weather information"
-                  },
-                  "daysInAdvance": {
-                    "type": "integer",
-                    "description": "the number of days in the future for which to retrieve weather information"
-                  }
-                }
-              }
-            }
-          }
-        ]
-      },
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "azureml-model-group": "offer-mistral-bundled-paygo",
-        "azureml-model-session": "dep-eus-mis-bundle-240905055151",
-        "Content-Length": "464",
-        "Content-Type": "application/json",
-        "Date": "Mon, 23 Sep 2024 20:53:54 GMT",
-        "prompt_token_len": "143",
-        "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
-        "sampling_token_len": "36",
-        "x-ms-client-request-id": "Sanitized",
-        "x-ms-rai-invoked": "true",
-        "X-Request-ID": "07bc3b94-ae56-4dcd-b3f9-b0741c761f63"
-      },
-      "ResponseBody": {
-        "choices": [
-          {
-            "finish_reason": "tool_calls",
-            "index": 0,
-            "message": {
-              "content": "",
-              "role": "assistant",
-              "tool_calls": [
-                {
-                  "function": {
-                    "arguments": "{\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}",
-                    "call_id": null,
-                    "name": "get_future_temperature"
-                  },
-                  "id": "DrnnU8z74",
-                  "type": "function"
-                }
-              ]
-            }
-          }
-        ],
-        "created": 1727124833,
-        "id": "8f6c325f0fc34a0382ecb7dabc8755f3",
-        "model": "mistral-small",
-        "object": "chat.completion",
-        "usage": {
-          "completion_tokens": 36,
-          "prompt_tokens": 143,
-          "total_tokens": 179
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com/chat/completions?api-version=2024-05-01-preview",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "954",
-        "Content-Type": "application/json",
-        "traceparent": "00-9b4f2495d2a15dd9855d7e8bd2d36b2e-7e776be2498131a1-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240920.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "Sanitized",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "messages": [
-          {
-            "content": "You are a helpful assistant.",
-            "role": "system"
-          },
-          {
-            "content": "What should I wear in Honolulu in 3 days?",
-            "role": "user"
-          },
-          {
-            "content": "",
-            "tool_calls": [
-              {
-                "id": "DrnnU8z74",
-                "type": "function",
-                "function": {
-                  "name": "get_future_temperature",
-                  "arguments": "{\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}"
-                }
-              }
-            ],
-            "role": "assistant"
-          },
-          {
-            "content": "31 celsius",
-            "tool_call_id": "DrnnU8z74",
-            "role": "tool"
           }
         ],
         "max_tokens": 512,
@@ -166,15 +52,129 @@
       "ResponseHeaders": {
         "azureml-model-group": "offer-mistral-bundled-paygo",
         "azureml-model-session": "dep-eus-mis-bundle-240905033003",
-        "Content-Length": "469",
+        "Content-Length": "464",
         "Content-Type": "application/json",
-        "Date": "Mon, 23 Sep 2024 20:53:54 GMT",
-        "prompt_token_len": "218",
+        "Date": "Thu, 03 Oct 2024 21:13:12 GMT",
+        "prompt_token_len": "143",
         "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
-        "sampling_token_len": "48",
+        "sampling_token_len": "36",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
-        "X-Request-ID": "9b07f523-c62d-428b-b946-dc38872dc708"
+        "X-Request-ID": "58957784-c157-41dd-91f7-d1f0658b5474"
+      },
+      "ResponseBody": {
+        "choices": [
+          {
+            "finish_reason": "tool_calls",
+            "index": 0,
+            "message": {
+              "content": "",
+              "role": "assistant",
+              "tool_calls": [
+                {
+                  "function": {
+                    "arguments": "{\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}",
+                    "call_id": null,
+                    "name": "get_future_temperature"
+                  },
+                  "id": "1mP594QdF",
+                  "type": "function"
+                }
+              ]
+            }
+          }
+        ],
+        "created": 1727989992,
+        "id": "afc97f472d5e483dbc695b3659a65fda",
+        "model": "mistral-small",
+        "object": "chat.completion",
+        "usage": {
+          "completion_tokens": 36,
+          "prompt_tokens": 143,
+          "total_tokens": 179
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com/chat/completions?api-version=2024-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "954",
+        "Content-Type": "application/json",
+        "traceparent": "00-f1c8e91bd08b8f0e9933bfe95b328f10-84ec19b0a52328d3-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20241002.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "content": "You are a helpful assistant.",
+            "role": "system"
+          },
+          {
+            "content": "What should I wear in Honolulu in 3 days?",
+            "role": "user"
+          },
+          {
+            "content": "",
+            "tool_calls": [
+              {
+                "id": "1mP594QdF",
+                "type": "function",
+                "function": {
+                  "name": "get_future_temperature",
+                  "arguments": "{\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}"
+                }
+              }
+            ],
+            "role": "assistant"
+          },
+          {
+            "content": "31 celsius",
+            "tool_call_id": "1mP594QdF",
+            "role": "tool"
+          }
+        ],
+        "max_tokens": 512,
+        "tools": [
+          {
+            "type": "function",
+            "function": {
+              "name": "get_future_temperature",
+              "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "locationName": {
+                    "type": "string",
+                    "description": "the name or brief description of a location for weather information"
+                  },
+                  "daysInAdvance": {
+                    "type": "integer",
+                    "description": "the number of days in the future for which to retrieve weather information"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "azureml-model-group": "offer-mistral-bundled-paygo",
+        "azureml-model-session": "dep-eus-mis-bundle-240905055151",
+        "Content-Length": "543",
+        "Content-Type": "application/json",
+        "Date": "Thu, 03 Oct 2024 21:13:14 GMT",
+        "prompt_token_len": "222",
+        "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
+        "sampling_token_len": "64",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-rai-invoked": "true",
+        "X-Request-ID": "4669076f-b00c-4df7-a60d-0cb26afe4acc"
       },
       "ResponseBody": {
         "choices": [
@@ -182,20 +182,20 @@
             "finish_reason": "stop",
             "index": 0,
             "message": {
-              "content": "Based on the forecast, it will be 31 degrees Celsius in Honolulu in 3 days. You might want to wear light, breathable clothing, and don't forget your sunscreen and sunglasses.",
+              "content": "Based on the anticipated temperature of 31 degrees Celsius in Honolulu in 3 days, I would recommend wearing light, breathable clothing such as shorts, a t-shirt, and sandals. Don't forget sunscreen and sunglasses as it will be quite warm and sunny.",
               "role": "assistant",
               "tool_calls": null
             }
           }
         ],
-        "created": 1727124834,
-        "id": "0c94c1270a084e26986c5a59775f5279",
+        "created": 1727989993,
+        "id": "05004f4fd3224307a01829257fe13033",
         "model": "mistral-small",
         "object": "chat.completion",
         "usage": {
-          "completion_tokens": 48,
-          "prompt_tokens": 218,
-          "total_tokens": 266
+          "completion_tokens": 64,
+          "prompt_tokens": 222,
+          "total_tokens": 286
         }
       }
     }
@@ -203,6 +203,6 @@
   "Variables": {
     "AZUREAI_MISTRAL_SMALL_KEY": "Sanitized",
     "AZUREAI_MISTRAL_SMALL_URL": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com",
-    "RandomSeed": "1461533134"
+    "RandomSeed": "12822880"
   }
 }

@@ -43,7 +43,7 @@ namespace Azure.AI.Inference.Tests
             UsingBinaryData,
         }
 
-        public ChatCompletionsClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ChatCompletionsClientTest(bool isAsync) : base(isAsync)
         {
             JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
         }
@@ -131,7 +131,10 @@ namespace Azure.AI.Inference.Tests
             var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
             var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 
-            var clientOptions = new AzureAIInferenceClientOptions();
+            CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+            clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
+
             var client = CreateClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
 
             var requestOptions = new ChatCompletionsOptions()
@@ -144,13 +147,26 @@ namespace Azure.AI.Inference.Tests
                 MaxTokens = 512,
             };
 
-            StreamingResponse<StreamingChatCompletionsUpdate> response = await client.CompleteStreamingAsync(requestOptions);
+            StreamingResponse<StreamingChatCompletionsUpdate> response = null;
+            try
+            {
+                response = await client.CompleteStreamingAsync(requestOptions);
+            }
+            catch (Exception ex)
+            {
+                var requestPayload = captureRequestPayloadPolicy._requestContent;
+                var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
+                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+            }
+
             Assert.That(response, Is.Not.Null);
 
             StringBuilder contentBuilder = new();
             string id = null;
             string model = null;
             bool gotRole = false;
+
+            // await ProcessStreamingResponse(response, messages);
 
             await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
             {
@@ -431,6 +447,7 @@ namespace Azure.AI.Inference.Tests
                 var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
                 Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
+            var requestPayload1 = captureRequestPayloadPolicy._requestContent;
 
             Assert.That(followupResponse, Is.Not.Null);
             Assert.That(followupResponse.Value, Is.Not.Null);
@@ -539,6 +556,277 @@ namespace Azure.AI.Inference.Tests
             captureRequestPayloadPolicy._requestHeaders.TryGetValue("User-Agent", out userAgent);
             Assert.That(userAgent, Is.Not.Null.Or.Empty);
             Assert.That(userAgent.StartsWith("MyAppId"));
+        }
+
+        [RecordedTest]
+        public async Task ManualTest()
+        {
+            FunctionDefinition futureTemperatureFunction = new FunctionDefinition("get_future_temperature")
+            {
+                Description = "requests the anticipated future temperature at a provided location to help inform "
+                + "advice about topics like choice of attire",
+                Parameters = BinaryData.FromObjectAsJson(new
+                {
+                    Type = "object",
+                    Properties = new
+                    {
+                        LocationName = new
+                        {
+                            Type = "string",
+                            Description = "the name or brief description of a location for weather information"
+                        },
+                        DaysInAdvance = new
+                        {
+                            Type = "integer",
+                            Description = "the number of days in the future for which to retrieve weather information"
+                        }
+                    }
+                },
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
+            };
+
+            ChatCompletionsToolDefinition functionToolDef = new ChatCompletionsToolDefinition(futureTemperatureFunction);
+
+            var endpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
+            var credential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
+
+            CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+            clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
+
+            var client = CreateClient(endpoint, credential, clientOptions);
+
+            var toolCalls = new List<ChatCompletionsToolCall>() {
+                ChatCompletionsToolCall.CreateFunctionToolCall("6A5FmRJI4", "get_future_temperature", "{\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}")
+            };
+
+            var messages = new List<ChatRequestMessage>()
+            {
+                new ChatRequestSystemMessage("You are a helpful assistant."),
+                new ChatRequestUserMessage("What should I wear in Honolulu in 3 days?"),
+                new ChatRequestAssistantMessage(toolCalls),
+                new ChatRequestToolMessage("31 celsius", "6A5FmRJI4")
+            };
+
+            var requestOptions = new ChatCompletionsOptions(messages)
+            {
+                MaxTokens = 512,
+                // Tools = { functionToolDef },
+                // ToolChoice = ChatCompletionsToolChoice.Auto
+            };
+
+            StreamingResponse<StreamingChatCompletionsUpdate> response = null;
+            //Response<ChatCompletions> response = null;
+            string requestPayload = null;
+            Dictionary<string, string> requestHeaders = null;
+            try
+            {
+                response = await client.CompleteStreamingAsync(requestOptions);
+                //response = await client.CompleteAsync(requestOptions);
+            }
+            catch (Exception ex)
+            {
+                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+            }
+            finally
+            {
+                requestPayload = captureRequestPayloadPolicy._requestContent;
+                requestHeaders = captureRequestPayloadPolicy._requestHeaders;
+            }
+
+            await ProcessStreamingResponse(response, messages);
+            Assert.That(messages.Count() > 4);
+        }
+
+        [RecordedTest]
+        [TestCase(ToolChoiceTestType.DoNotSpecifyToolChoice, TargetModel.MistralSmall)]
+        [TestCase(ToolChoiceTestType.UseAutoPresetToolChoice, TargetModel.MistralSmall)]
+        [TestCase(ToolChoiceTestType.UseNonePresetToolChoice, TargetModel.MistralSmall)]
+        [TestCase(ToolChoiceTestType.UseRequiredPresetToolChoice, TargetModel.MistralSmall, IgnoreReason = "Endpoint needs to be updated to support")]
+        [TestCase(ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice, TargetModel.GitHubGpt4o)]
+        [TestCase(ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice, TargetModel.AoaiGpt4Turbo)]
+        [TestCase(ToolChoiceTestType.UseFunctionByImplicitToolDefinitionForToolChoice, TargetModel.GitHubGpt4o)]
+        public async Task TestChatCompletionsFunctionToolHandlingWithStreaming(ToolChoiceTestType toolChoiceType, TargetModel targetModel)
+        {
+            FunctionDefinition futureTemperatureFunction = new FunctionDefinition("get_future_temperature")
+            {
+                Description = "requests the anticipated future temperature at a provided location to help inform "
+                + "advice about topics like choice of attire",
+                Parameters = BinaryData.FromObjectAsJson(new
+                {
+                    Type = "object",
+                    Properties = new
+                    {
+                        LocationName = new
+                        {
+                            Type = "string",
+                            Description = "the name or brief description of a location for weather information"
+                        },
+                        DaysInAdvance = new
+                        {
+                            Type = "integer",
+                            Description = "the number of days in the future for which to retrieve weather information"
+                        }
+                    }
+                },
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
+            };
+
+            ChatCompletionsToolDefinition functionToolDef = new ChatCompletionsToolDefinition(futureTemperatureFunction);
+
+            var endpoint = targetModel switch
+            {
+                TargetModel.MistralSmall => new Uri(TestEnvironment.MistralSmallEndpoint),
+                TargetModel.GitHubGpt4o => new Uri(TestEnvironment.GithubEndpoint),
+                TargetModel.AoaiGpt4Turbo => new Uri(TestEnvironment.AoaiEndpoint),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
+
+            var credential = targetModel switch
+            {
+                TargetModel.MistralSmall => new AzureKeyCredential(TestEnvironment.MistralSmallApiKey),
+                TargetModel.GitHubGpt4o => new AzureKeyCredential(TestEnvironment.GithubToken),
+                TargetModel.AoaiGpt4Turbo => new AzureKeyCredential("foo"),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
+
+            var githubModelName = "gpt-4o";
+
+            CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+            clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
+
+            if (targetModel == TargetModel.AoaiGpt4Turbo)
+            {
+                clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(TestEnvironment), HttpPipelinePosition.PerCall);
+            }
+
+            // Uncomment the following lines to enable enhanced log output
+            // AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
+            // clientOptions.Diagnostics.IsLoggingContentEnabled = true;
+
+            var client = CreateClient(endpoint, credential, clientOptions);
+
+            #region
+            var messages = new List<ChatRequestMessage>()
+            {
+                new ChatRequestSystemMessage("You are a helpful assistant."),
+                new ChatRequestUserMessage("What should I wear in Honolulu in 3 days?"),
+            };
+
+            var requestOptions = new ChatCompletionsOptions(messages)
+            {
+                MaxTokens = 512,
+                Tools = { functionToolDef },
+            };
+
+            if (targetModel == TargetModel.GitHubGpt4o)
+            {
+                requestOptions.Model = githubModelName;
+            }
+
+            requestOptions.ToolChoice = toolChoiceType switch
+            {
+                ToolChoiceTestType.UseAutoPresetToolChoice => ChatCompletionsToolChoice.Auto,
+                ToolChoiceTestType.UseNonePresetToolChoice => ChatCompletionsToolChoice.None,
+                ToolChoiceTestType.UseRequiredPresetToolChoice => ChatCompletionsToolChoice.Required,
+                ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice => new ChatCompletionsToolChoice(functionToolDef),
+                ToolChoiceTestType.UseFunctionByImplicitToolDefinitionForToolChoice => functionToolDef,
+                _ => null,
+            };
+            #endregion
+
+            #region
+
+            StreamingResponse<StreamingChatCompletionsUpdate> response = null;
+            string requestPayload = null;
+            Dictionary<string, string> requestHeaders = null;
+            try
+            {
+                response = await client.CompleteStreamingAsync(requestOptions);
+            }
+            catch (Exception ex)
+            {
+                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+            }
+            finally
+            {
+                requestPayload = captureRequestPayloadPolicy._requestContent;
+                requestHeaders = captureRequestPayloadPolicy._requestHeaders;
+            }
+
+            await ProcessStreamingResponse(response, messages);
+
+            if (toolChoiceType == ToolChoiceTestType.UseNonePresetToolChoice)
+            {
+                Assert.That(messages.Count == 3);
+                // We finish the test here as there's no further exercise for 'none' beyond ensuring we didn't do what we
+                // weren't meant to
+                return;
+            }
+
+            ChatCompletionsOptions followupOptions = new ChatCompletionsOptions(messages)
+            {
+                Tools = { functionToolDef },
+                MaxTokens = 512,
+            };
+
+            if (targetModel == TargetModel.GitHubGpt4o)
+            {
+                followupOptions.Model = githubModelName;
+            }
+
+            try
+            {
+                response = await client.CompleteStreamingAsync(followupOptions);
+            }
+            catch (Exception ex)
+            {
+                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+            }
+            finally
+            {
+                requestPayload = captureRequestPayloadPolicy._requestContent;
+                requestHeaders = captureRequestPayloadPolicy._requestHeaders;
+            }
+
+            await ProcessStreamingResponse(response, messages);
+            #endregion
+
+            Assert.That(messages.Count() > 4);
+
+            #region
+            foreach (ChatRequestMessage requestMessage in messages)
+            {
+                switch (requestMessage)
+                {
+                    case ChatRequestSystemMessage systemMessage:
+                        Console.WriteLine($"[SYSTEM]:");
+                        Console.WriteLine($"{systemMessage.Content}");
+                        Console.WriteLine();
+                        break;
+
+                    case ChatRequestUserMessage userMessage:
+                        Console.WriteLine($"[USER]:");
+                        Console.WriteLine($"{userMessage.Content}");
+                        Console.WriteLine();
+                        break;
+
+                    case ChatRequestAssistantMessage assistantMessage:
+                        Console.WriteLine($"[ASSISTANT]:");
+                        Console.WriteLine($"{assistantMessage.Content}");
+                        Console.WriteLine();
+                        break;
+
+                    case ChatRequestToolMessage:
+                        // Do not print any tool messages; let the assistant summarize the tool results instead.
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            #endregion
         }
 
         #region Helpers
@@ -682,6 +970,220 @@ namespace Azure.AI.Inference.Tests
 
         private BinaryData GetTestImageData(string mimeType)
             => BinaryData.FromStream(GetTestImageStream(mimeType));
+
+        private async Task ProcessStreamingResponse(StreamingResponse<StreamingChatCompletionsUpdate> response, List<ChatRequestMessage> messages)
+        {
+            string toolCallId = null;
+            string functionName = null;
+            StringBuilder functionArguments = null;
+            StringBuilder contentBuilder = new();
+
+            await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
+            {
+                // Accumulate the text content as new updates arrive.
+                contentBuilder.Append(chatUpdate.ContentUpdate);
+
+                // Build the tool calls as new updates arrive.
+                StreamingChatResponseToolCallUpdate toolCallUpdate = chatUpdate.ToolCallUpdate;
+
+                if (toolCallUpdate != null)
+                {
+                    if (toolCallUpdate.Id != null)
+                    {
+                        toolCallId = toolCallUpdate.Id;
+                    }
+
+                    // Keep track of which function name belongs to this update id.
+                    if (toolCallUpdate.Function.Name is not null)
+                    {
+                        functionName = toolCallUpdate.Function.Name;
+                    }
+
+                    // Keep track of which function arguments belong to this update index,
+                    // and accumulate the arguments string as new updates arrive.
+                    if (toolCallUpdate.Function.Arguments is not null)
+                    {
+                        functionArguments ??= new StringBuilder();
+                        functionArguments.Append(toolCallUpdate.Function.Arguments);
+                    }
+                }
+
+                if (chatUpdate.FinishReason == CompletionsFinishReason.Stopped || chatUpdate.FinishReason == CompletionsFinishReason.ToolCalls)
+                {
+                    ProcessToolArguments(messages, contentBuilder, functionArguments, toolCallId, functionName);
+                }
+                else if (chatUpdate.FinishReason == CompletionsFinishReason.TokenLimitReached)
+                {
+                    throw new NotImplementedException("Incomplete model output due to MaxTokens parameter or token limit exceeded.");
+                }
+                else if (chatUpdate.FinishReason == CompletionsFinishReason.ContentFiltered)
+                {
+                    throw new NotImplementedException("Omitted content due to a content filter flag.");
+                }
+            }
+        }
+
+        private async Task ProcessMultiToolStreamingResponse(StreamingResponse<StreamingChatCompletionsUpdate> response, List<ChatRequestMessage> messages)
+        {
+            Dictionary<string, string> idToFunctionName = new Dictionary<string, string>();
+            Dictionary<string, StringBuilder> idToFunctionArguments = new Dictionary<string, StringBuilder>();
+            StringBuilder contentBuilder = new();
+
+            await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
+            {
+                // Accumulate the text content as new updates arrive.
+                contentBuilder.Append(chatUpdate.ContentUpdate);
+
+                // Build the tool calls as new updates arrive.
+                StreamingChatResponseToolCallUpdate toolCallUpdate = chatUpdate.ToolCallUpdate;
+
+                if (toolCallUpdate != null)
+                {
+                    // Keep track of which function name belongs to this update id.
+                    if (toolCallUpdate.Function.Name is not null)
+                    {
+                        idToFunctionName[toolCallUpdate.Id] = toolCallUpdate.Function.Name;
+                    }
+
+                    // Keep track of which function arguments belong to this update index,
+                    // and accumulate the arguments string as new updates arrive.
+                    if (toolCallUpdate.Function.Arguments is not null)
+                    {
+                        StringBuilder argumentsBuilder
+                            = idToFunctionArguments.TryGetValue(toolCallUpdate.Id, out StringBuilder existingBuilder)
+                                ? existingBuilder
+                                : new StringBuilder();
+                        argumentsBuilder.Append(toolCallUpdate.Function.Arguments);
+                        idToFunctionArguments[toolCallUpdate.Id] = argumentsBuilder;
+                    }
+                }
+
+                if (chatUpdate.FinishReason == CompletionsFinishReason.Stopped)
+                {
+                    // Add the assistant message to the conversation history.
+                    messages.Add(new ChatRequestAssistantMessage(contentBuilder.ToString()));
+                }
+                else if (chatUpdate.FinishReason == CompletionsFinishReason.ToolCalls)
+                {
+                    // First, collect the accumulated function arguments into complete tool calls to be processed
+                    List<ChatCompletionsToolCall> toolCalls = new();
+                    foreach (var id in idToFunctionName.Keys)
+                    {
+                        ChatCompletionsToolCall toolCall = ChatCompletionsToolCall.CreateFunctionToolCall(
+                            id,
+                            idToFunctionName[id],
+                            idToFunctionArguments[id].ToString());
+
+                        toolCalls.Add(toolCall);
+                    }
+
+                    // Next, add the assistant message with tool calls to the conversation history.
+                    string content = contentBuilder.Length > 0 ? contentBuilder.ToString() : null;
+                    messages.Add(new ChatRequestAssistantMessage(toolCalls, content));
+
+                    // Then, add a new tool message for each tool call to be resolved.
+                    foreach (ChatCompletionsToolCall toolCall in toolCalls)
+                    {
+                        switch (toolCall.Name)
+                        {
+                            case "get_future_temperature":
+                                {
+                                    // The arguments that the model wants to use to call the function are specified as a
+                                    // stringified JSON object based on the schema defined in the tool definition. Note that
+                                    // the model may hallucinate arguments too. Consequently, it is important to do the
+                                    // appropriate parsing and validation before calling the function.
+                                    using JsonDocument argumentsJson = JsonDocument.Parse(toolCall.Arguments);
+                                    bool hasLocation = argumentsJson.RootElement.TryGetProperty("locationName", out JsonElement location);
+                                    bool hasDaysInAdvance = argumentsJson.RootElement.TryGetProperty("daysInAdvance", out JsonElement daysInAdvance);
+
+                                    if (!hasLocation)
+                                    {
+                                        throw new ArgumentNullException(nameof(location), "The location argument is required.");
+                                    }
+                                    else if (!hasDaysInAdvance)
+                                    {
+                                        throw new ArgumentNullException(nameof(daysInAdvance), "The daysInAdvance argument is required.");
+                                    }
+
+                                    messages.Add(new ChatRequestToolMessage(
+                                        toolCallId: toolCall.Id,
+                                        content: "31 celsius"));
+                                    break;
+                                }
+                            default:
+                                {
+                                    // Handle other unexpected calls.
+                                    throw new NotImplementedException();
+                                }
+                        }
+                    }
+                }
+                else if (chatUpdate.FinishReason == CompletionsFinishReason.TokenLimitReached)
+                {
+                    throw new NotImplementedException("Incomplete model output due to MaxTokens parameter or token limit exceeded.");
+                }
+                else if (chatUpdate.FinishReason == CompletionsFinishReason.ContentFiltered)
+                {
+                    throw new NotImplementedException("Omitted content due to a content filter flag.");
+                }
+            }
+        }
+
+        private void ProcessToolArguments(List<ChatRequestMessage> messages, StringBuilder contentBuilder, StringBuilder functionArguments, string toolId, string toolName)
+        {
+            if (toolId is null && toolName is null)
+            {
+                string content = contentBuilder.Length > 0 ? contentBuilder.ToString() : null;
+                messages.Add(new ChatRequestAssistantMessage(content));
+            }
+            else
+            {
+                // First, collect the accumulated function arguments into complete tool calls to be processed
+                ChatCompletionsToolCall toolCall = ChatCompletionsToolCall.CreateFunctionToolCall(
+                    toolId,
+                    toolName,
+                    functionArguments.ToString());
+
+                // Next, add the assistant message with tool calls to the conversation history.
+                string content = contentBuilder.Length > 0 ? contentBuilder.ToString() : null;
+                messages.Add(new ChatRequestAssistantMessage(new List<ChatCompletionsToolCall>() { toolCall }, content));
+
+                // Then, add a new tool message for each tool call to be resolved.
+                switch (toolCall.Name)
+                {
+                    case "get_future_temperature":
+                        {
+                            // The arguments that the model wants to use to call the function are specified as a
+                            // stringified JSON object based on the schema defined in the tool definition. Note that
+                            // the model may hallucinate arguments too. Consequently, it is important to do the
+                            // appropriate parsing and validation before calling the function.
+                            using JsonDocument argumentsJson = JsonDocument.Parse(toolCall.Arguments);
+                            bool hasLocation = argumentsJson.RootElement.TryGetProperty("locationName", out JsonElement location);
+                            bool hasDaysInAdvance = argumentsJson.RootElement.TryGetProperty("daysInAdvance", out JsonElement daysInAdvance);
+
+                            if (!hasLocation)
+                            {
+                                throw new ArgumentNullException(nameof(location), "The location argument is required.");
+                            }
+                            else if (!hasDaysInAdvance)
+                            {
+                                throw new ArgumentNullException(nameof(daysInAdvance), "The daysInAdvance argument is required.");
+                            }
+
+                            messages.Add(new ChatRequestToolMessage(
+                                toolCallId: toolCall.Id,
+                                content: "31 celsius"));
+                            break;
+                        }
+                    default:
+                        {
+                            // Handle other unexpected calls.
+                            throw new NotImplementedException();
+                        }
+                }
+            }
+        }
+
         #endregion
     }
 }
