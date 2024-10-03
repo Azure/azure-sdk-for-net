@@ -74,8 +74,8 @@ namespace Azure.Monitor.Query.Tests
             var resourceId = TestEnvironment.StorageAccountId;
 
             var timeRange = new QueryTimeRange(
-                start: DateTimeOffset.UtcNow,
-                end: DateTimeOffset.UtcNow.AddHours(4)
+                start: Recording.UtcNow,
+                end: Recording.UtcNow.AddHours(4)
             );
 
             Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
@@ -99,7 +99,7 @@ namespace Azure.Monitor.Query.Tests
             var resourceId = TestEnvironment.StorageAccountId;
 
             var timeRange = new QueryTimeRange(
-                start: DateTimeOffset.UtcNow,
+                start: Recording.UtcNow,
                 duration: TimeSpan.FromHours(4)
             );
 
@@ -124,7 +124,7 @@ namespace Azure.Monitor.Query.Tests
             var resourceId = TestEnvironment.StorageAccountId;
 
             var timeRange = new QueryTimeRange(
-                end: DateTimeOffset.UtcNow,
+                end: Recording.UtcNow,
                 duration: TimeSpan.FromHours(4)
             );
 
