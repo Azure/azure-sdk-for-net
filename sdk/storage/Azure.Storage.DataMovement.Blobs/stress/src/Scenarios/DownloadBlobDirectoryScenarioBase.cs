@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             string testRunId) :
             base(destinationBlobUri, blobSize, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
         {
-            _blobCount = blobCount != default ? blobCount.Value : DataMovementBlobStressConstants.DefaultObjectCount;
+            _blobCount = blobCount ?? DataMovementBlobStressConstants.DefaultObjectCount;
         }
 
         public async Task RunTestInternalAsync(BlobType blobType, CancellationToken cancellationToken)

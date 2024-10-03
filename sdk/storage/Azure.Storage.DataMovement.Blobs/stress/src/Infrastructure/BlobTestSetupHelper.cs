@@ -58,19 +58,12 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             CancellationToken cancellationToken = default)
         {
             using Stream originalStream = await TestSetupHelper.CreateLimitedMemoryStream(objectLength.Value, cancellationToken: cancellationToken);
-            if (originalStream != default)
+            var data = new byte[0];
+            using (var stream = new MemoryStream(data))
             {
-                await blockBlobClient.UploadAsync(originalStream, cancellationToken: cancellationToken);
-            }
-            else
-            {
-                var data = new byte[0];
-                using (var stream = new MemoryStream(data))
-                {
-                    await blockBlobClient.UploadAsync(
-                        content: stream,
-                        cancellationToken: cancellationToken);
-                }
+                await blockBlobClient.UploadAsync(
+                    content: stream,
+                    cancellationToken: cancellationToken);
             }
         }
 
@@ -79,10 +72,10 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             long? objectLength = Constants.KB * 4,
             CancellationToken cancellationToken = default)
         {
-            using Stream originalStream = await TestSetupHelper.CreateLimitedMemoryStream(objectLength.Value, cancellationToken: cancellationToken);
             await appendBlobClient.CreateIfNotExistsAsync();
-            if (originalStream != default)
+            if (objectLength.Value > 0)
             {
+                using Stream originalStream = await TestSetupHelper.CreateLimitedMemoryStream(objectLength.Value, cancellationToken: cancellationToken);
                 long offset = 0;
                 long blockSize = Math.Min(DefaultBufferSize, objectLength.Value);
                 while (offset < objectLength.Value)
@@ -100,10 +93,10 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             CancellationToken cancellationToken = default)
         {
             Assert.IsTrue(objectLength.Value % (Constants.KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
-            using Stream originalStream = await TestSetupHelper.CreateLimitedMemoryStream(objectLength.Value, cancellationToken: cancellationToken);
             await pageBlobClient.CreateIfNotExistsAsync(objectLength.Value);
-            if (originalStream != default)
+            if (objectLength.Value > 0)
             {
+                using Stream originalStream = await TestSetupHelper.CreateLimitedMemoryStream(objectLength.Value, cancellationToken: cancellationToken);
                 long offset = 0;
                 long blockSize = Math.Min(DefaultBufferSize, objectLength.Value);
                 while (offset < objectLength.Value)

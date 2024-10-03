@@ -78,7 +78,6 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                     fileStream,
                     bufferSize,
                     cancellationToken: cancellationToken);
-                fileStream.Close();
             }
             LocalFilesStorageResourceProvider files = new();
             return files.FromFile(localSourceFile);
