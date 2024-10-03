@@ -59,6 +59,20 @@ steps:
             ${{ parameters.SubscriptionConfiguration }}
           '@ | ConvertFrom-Json -AsHashtable;
 
+          $context = (Get-AzContext)
+          $subscriptionConfiguration["SubscriptionId"] = $context.Subscription.Id
+          $subscriptionConfiguration["TenantId"] =$context.Subscription.TenantId
+          $subscriptionConfiguration["TestApplicationId"] = $context.Account.Id
+          $subscriptionConfiguration["ProvisionerApplicationId"] = $context.Account.Id
+
+          $principal = Get-AzADServicePrincipal -ApplicationId $context.Account.Id
+          $subscriptionConfiguration["TestApplicationOid"] = $principal.Id
+          $subscriptionConfiguration["ProvisionerApplicationOid"] = $principal.Id
+
+          Write-Host ($subscriptionConfiguration | ConvertTo-Json)
+          # Write the new SubscriptionConfiguration to be used by the remove test resources
+          Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$($subscriptionConfiguration | ConvertTo-Json -Compress)"
+
           # The subscriptionConfiguration may have ArmTemplateParameters defined, so
           # pass those in via the ArmTemplateParameters flag, and handle any
           # additional parameters from the pipelines via AdditionalParameters
