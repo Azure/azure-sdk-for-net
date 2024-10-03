@@ -38,7 +38,7 @@ namespace Azure.AI.Inference
                 writer.WriteNull("finish_reason");
             }
             writer.WritePropertyName("delta"u8);
-            writer.WriteObjectValue(Delta, options);
+            writer.WriteObjectValue<StreamingChatResponseMessageUpdate>(Delta, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

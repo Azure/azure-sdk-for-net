@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -42,7 +41,7 @@ namespace Azure.AI.Inference
                 writer.WriteStartArray();
                 foreach (var item in ToolCalls)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<StreamingChatResponseToolCallUpdate>(item, options);
                 }
                 writer.WriteEndArray();
             }

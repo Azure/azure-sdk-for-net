@@ -116,7 +116,6 @@ namespace Azure.AI.Inference
             Model = model;
             AdditionalProperties = additionalProperties;
         }
-
         /// <summary>
         /// A value that influences the probability of generated tokens appearing based on their cumulative
         /// frequency in generated text.
