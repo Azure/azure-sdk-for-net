@@ -50,10 +50,15 @@ public partial class SqlServerAzureADOnlyAuthentication : Resource
     /// <summary>
     /// Creates a new SqlServerAzureADOnlyAuthentication.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerAzureADOnlyAuthentication.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerAzureADOnlyAuthentication
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerAzureADOnlyAuthentication.</param>
-    public SqlServerAzureADOnlyAuthentication(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/azureADOnlyAuthentications", resourceVersion ?? "2021-11-01")
+    public SqlServerAzureADOnlyAuthentication(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/azureADOnlyAuthentications", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _isAzureADOnlyAuthenticationEnabled = BicepValue<bool>.DefineProperty(this, "IsAzureADOnlyAuthenticationEnabled", ["properties", "azureADOnlyAuthentication"]);
@@ -91,9 +96,14 @@ public partial class SqlServerAzureADOnlyAuthentication : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerAzureADOnlyAuthentication.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerAzureADOnlyAuthentication.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerAzureADOnlyAuthentication
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerAzureADOnlyAuthentication.</param>
     /// <returns>The existing SqlServerAzureADOnlyAuthentication resource.</returns>
-    public static SqlServerAzureADOnlyAuthentication FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerAzureADOnlyAuthentication FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

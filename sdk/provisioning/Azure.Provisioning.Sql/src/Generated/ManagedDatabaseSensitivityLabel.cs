@@ -100,10 +100,15 @@ public partial class ManagedDatabaseSensitivityLabel : Resource
     /// <summary>
     /// Creates a new ManagedDatabaseSensitivityLabel.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedDatabaseSensitivityLabel.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ManagedDatabaseSensitivityLabel
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedDatabaseSensitivityLabel.</param>
-    public ManagedDatabaseSensitivityLabel(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/databases/schemas/tables/columns/sensitivityLabels", resourceVersion)
+    public ManagedDatabaseSensitivityLabel(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/managedInstances/databases/schemas/tables/columns/sensitivityLabels", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _informationType = BicepValue<string>.DefineProperty(this, "InformationType", ["properties", "informationType"]);
@@ -123,9 +128,14 @@ public partial class ManagedDatabaseSensitivityLabel : Resource
     /// <summary>
     /// Creates a reference to an existing ManagedDatabaseSensitivityLabel.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedDatabaseSensitivityLabel.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ManagedDatabaseSensitivityLabel
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedDatabaseSensitivityLabel.</param>
     /// <returns>The existing ManagedDatabaseSensitivityLabel resource.</returns>
-    public static ManagedDatabaseSensitivityLabel FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedDatabaseSensitivityLabel FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

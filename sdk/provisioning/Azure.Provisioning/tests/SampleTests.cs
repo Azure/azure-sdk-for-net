@@ -179,7 +179,7 @@ internal class SampleTests(bool async)
                             new StringLiteral("Microsoft.App/managedEnvironments/dotNetComponents@2024-02-02-preview"),
                             new ObjectExpression(
                                 new PropertyExpression("name", "aspire-dashboard"),
-                                new PropertyExpression("parent", new IdentifierExpression(cae.ResourceName)),
+                                new PropertyExpression("parent", new IdentifierExpression(cae.IdentifierName)),
                                 new PropertyExpression("properties",
                                     new ObjectExpression(
                                         new PropertyExpression("componentType", new StringLiteral("AspireDashboard")))))));

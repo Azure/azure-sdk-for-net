@@ -83,10 +83,15 @@ public partial class Tenant : Resource
     /// <summary>
     /// Creates a new Tenant.
     /// </summary>
-    /// <param name="resourceName">Name of the Tenant.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the Tenant resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the Tenant.</param>
-    public Tenant(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Resources/tenants", resourceVersion ?? "2020-01-01")
+    public Tenant(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Resources/tenants", resourceVersion ?? "2020-01-01")
     {
         _country = BicepValue<string>.DefineProperty(this, "Country", ["country"], isOutput: true);
         _countryCode = BicepValue<string>.DefineProperty(this, "CountryCode", ["countryCode"], isOutput: true);

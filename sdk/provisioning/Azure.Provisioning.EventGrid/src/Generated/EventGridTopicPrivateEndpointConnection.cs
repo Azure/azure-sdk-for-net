@@ -69,10 +69,15 @@ public partial class EventGridTopicPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new EventGridTopicPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the EventGridTopicPrivateEndpointConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// EventGridTopicPrivateEndpointConnection resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventGridTopicPrivateEndpointConnection.</param>
-    public EventGridTopicPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/topics/privateEndpointConnections", resourceVersion ?? "2022-06-15")
+    public EventGridTopicPrivateEndpointConnection(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.EventGrid/topics/privateEndpointConnections", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<EventGridPrivateEndpointConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -129,9 +134,14 @@ public partial class EventGridTopicPrivateEndpointConnection : Resource
     /// Creates a reference to an existing
     /// EventGridTopicPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the EventGridTopicPrivateEndpointConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// EventGridTopicPrivateEndpointConnection resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventGridTopicPrivateEndpointConnection.</param>
     /// <returns>The existing EventGridTopicPrivateEndpointConnection resource.</returns>
-    public static EventGridTopicPrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EventGridTopicPrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

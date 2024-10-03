@@ -99,10 +99,15 @@ public partial class SqlDatabaseSecurityAlertPolicy : Resource
     /// <summary>
     /// Creates a new SqlDatabaseSecurityAlertPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlDatabaseSecurityAlertPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlDatabaseSecurityAlertPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlDatabaseSecurityAlertPolicy.</param>
-    public SqlDatabaseSecurityAlertPolicy(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/securityAlertPolicies", resourceVersion ?? "2021-11-01")
+    public SqlDatabaseSecurityAlertPolicy(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/databases/securityAlertPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _disabledAlerts = BicepList<string>.DefineProperty(this, "DisabledAlerts", ["properties", "disabledAlerts"]);
@@ -147,9 +152,14 @@ public partial class SqlDatabaseSecurityAlertPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing SqlDatabaseSecurityAlertPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlDatabaseSecurityAlertPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlDatabaseSecurityAlertPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlDatabaseSecurityAlertPolicy.</param>
     /// <returns>The existing SqlDatabaseSecurityAlertPolicy resource.</returns>
-    public static SqlDatabaseSecurityAlertPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlDatabaseSecurityAlertPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }
