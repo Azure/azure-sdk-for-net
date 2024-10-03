@@ -18,22 +18,32 @@ namespace Azure.Provisioning.CloudMachine;
 
 public class CloudMachineInfrastructure
 {
+    private readonly string _cmid;
+
     private Infrastructure _infrastructure = new Infrastructure("cm");
     private List<Provisionable> _resources = new();
-    private readonly string _cmid;
+
+    // storage
     private StorageAccount _storage;
     private BlobService _blobs;
     private BlobContainer _container;
+
+    // servicebus
     private ServiceBusNamespace _serviceBusNamespace;
     private ServiceBusNamespaceAuthorizationRule _serviceBusNamespaceAuthorizationRule;
-    private ServiceBusTopic _serviceBusTopic_main;
-    private ServiceBusTopic _serviceBusTopic_app;
-    private ServiceBusSubscription _serviceBusSubscription_main;
-    private ServiceBusSubscription _serviceBusSubscription_app;
-    private SystemTopic _eventGridTopic_Blobs;
-    private SystemTopicEventSubscription _systemTopicEventSubscription;
+
+    private ServiceBusTopic _serviceBusTopic_default;
+    private ServiceBusSubscription _serviceBusSubscription_default;
+
+    private ServiceBusTopic _serviceBusTopic_private;
+    private ServiceBusSubscription _serviceBusSubscription_private;
+
+    // eventgrid
+    private SystemTopic _eventGridTopic_blobs;
+    private SystemTopicEventSubscription _eventGridSubscription_blobs;
 
     public UserAssignedIdentity Identity { get; private set; }
+    public string Id => _cmid;
 
     /// <summary>
     /// The common principalId parameter.
@@ -50,35 +60,35 @@ public class CloudMachineInfrastructure
     ///// </summary>
     //public ProvisioningParameter PrincipalNameParameter => new BicepParameter("principalName", typeof(string));
 
-    public CloudMachineInfrastructure(string cloudMachineId)
+    public CloudMachineInfrastructure(string cmId)
     {
-        _cmid = cloudMachineId;
-        Identity = new("cm_identity");
+        _cmid = cmId;
+
+        // setup CM identity
+        Identity = new UserAssignedIdentity("cm_identity");
         Identity.Name = _cmid;
-
         _infrastructure.Add(new ProvisioningOutput($"cm_managed_identity_id", typeof(string)) { Value = Identity.Id });
-
         ManagedServiceIdentity managedServiceIdentity = new()
         {
             ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned,
             UserAssignedIdentities = { { BicepFunction.Interpolate($"{Identity.Id}").Compile().ToString(), new UserAssignedIdentityDetails() } }
         };
 
-        _storage = StorageResources.CreateAccount($"cm_sa");
+        _storage = StorageResources.CreateAccount("cm_storage");
         _storage.Identity = managedServiceIdentity;
         _storage.Name = _cmid;
 
-        _blobs = new("cm_blobs")
+        _blobs = new("cm_storage_blobs")
         {
             Parent = _storage,
         };
-        _container = new BlobContainer("cm_container", "2023-01-01")
+        _container = new BlobContainer("cm_storage_blobs_container", "2023-01-01")
         {
             Parent = _blobs,
             Name = "default"
         };
 
-        _serviceBusNamespace = new("cm_sb")
+        _serviceBusNamespace = new("cm_servicebus")
         {
             Sku = new ServiceBusSku
             {
@@ -87,14 +97,14 @@ public class CloudMachineInfrastructure
             },
             Name = _cmid,
         };
-        _serviceBusNamespaceAuthorizationRule = new($"cm_sb_auth_rule", "2021-11-01")
+        _serviceBusNamespaceAuthorizationRule = new($"cm_servicebus_auth_rule", "2021-11-01")
         {
             Parent = _serviceBusNamespace,
             Rights = [ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send, ServiceBusAccessRight.Manage]
         };
-        _serviceBusTopic_main = new("cm_internal_topic", "2021-11-01")
+        _serviceBusTopic_private = new("cm_servicebus_topic_private", "2021-11-01")
         {
-            Name = "cm_internal_topic",
+            Name = "cm_servicebus_topic_private",
             Parent = _serviceBusNamespace,
             MaxMessageSizeInKilobytes = 256,
             DefaultMessageTimeToLive = new StringLiteral("P14D"),
@@ -103,9 +113,9 @@ public class CloudMachineInfrastructure
             SupportOrdering = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusSubscription_main = new("cm_internal_subscription", "2021-11-01")
+        _serviceBusSubscription_private = new("cm_servicebus_subscription_private", "2021-11-01")
         {
-            Parent = _serviceBusTopic_main,
+            Parent = _serviceBusTopic_private,
             IsClientAffine = false,
             LockDuration = new StringLiteral("PT30S"),
             RequiresSession = false,
@@ -116,9 +126,9 @@ public class CloudMachineInfrastructure
             EnableBatchedOperations = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusTopic_app = new("cm_default_topic", "2021-11-01")
+        _serviceBusTopic_default = new("cm_servicebus_topic_default", "2021-11-01")
         {
-            Name = "cm_default_topic",
+            Name = "cm_servicebus_default_topic",
             Parent = _serviceBusNamespace,
             MaxMessageSizeInKilobytes = 256,
             DefaultMessageTimeToLive = new StringLiteral("P14D"),
@@ -127,10 +137,10 @@ public class CloudMachineInfrastructure
             SupportOrdering = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusSubscription_app = new("cm_default_subscription", "2021-11-01")
+        _serviceBusSubscription_default = new("cm_servicebus_subscription_default", "2021-11-01")
         {
-            Name = "cm_default_subscription",
-            Parent = _serviceBusTopic_app,
+            Name = "cm_servicebus_subscription_default",
+            Parent = _serviceBusTopic_default,
             IsClientAffine = false,
             LockDuration = new StringLiteral("PT30S"),
             RequiresSession = false,
@@ -141,16 +151,16 @@ public class CloudMachineInfrastructure
             EnableBatchedOperations = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _eventGridTopic_Blobs = new("cm_eg_blob", "2022-06-15")
+        _eventGridTopic_blobs = new("cm_eventgrid_topic_blob", "2022-06-15")
         {
             TopicType = "Microsoft.Storage.StorageAccounts",
             Source = _storage.Id,
             Identity = managedServiceIdentity,
             Name = _cmid
         };
-        _systemTopicEventSubscription = new($"cm_eg_blob_sub", "2022-06-15")
+        _eventGridSubscription_blobs = new("cm_eventgrid_subscription_blob", "2022-06-15")
         {
-            Parent = _eventGridTopic_Blobs,
+            Parent = _eventGridTopic_blobs,
             DeliveryWithResourceIdentity = new DeliveryWithResourceIdentity
             {
                 Identity = new EventSubscriptionIdentity
@@ -160,7 +170,7 @@ public class CloudMachineInfrastructure
                 },
                 Destination = new ServiceBusTopicEventSubscriptionDestination
                 {
-                    ResourceId = _serviceBusTopic_main.Id
+                    ResourceId = _serviceBusTopic_private.Id
                 }
             },
             Filter = new EventSubscriptionFilter
@@ -215,18 +225,18 @@ public class CloudMachineInfrastructure
         _infrastructure.Add(_serviceBusNamespace);
         _infrastructure.Add(_serviceBusNamespace.CreateRoleAssignment(ServiceBusBuiltInRole.AzureServiceBusDataOwner, RoleManagementPrincipalType.User, PrincipalIdParameter));
         _infrastructure.Add(_serviceBusNamespaceAuthorizationRule);
-        _infrastructure.Add(_serviceBusTopic_main);
-        _infrastructure.Add(_serviceBusTopic_app);
-        _infrastructure.Add(_serviceBusSubscription_main);
-        _infrastructure.Add(_serviceBusSubscription_app);
+        _infrastructure.Add(_serviceBusTopic_private);
+        _infrastructure.Add(_serviceBusTopic_default);
+        _infrastructure.Add(_serviceBusSubscription_private);
+        _infrastructure.Add(_serviceBusSubscription_default);
 
-        RoleAssignment roleAssignment = _serviceBusNamespace.CreateRoleAssignment(ServiceBusBuiltInRole.AzureServiceBusDataSender, Identity);
+        RoleAssignment roleAssignment = _serviceBusNamespace.CreateRoleAssignment(ServiceBusBuiltInRole.AzureServiceBusDataSender, RoleManagementPrincipalType.User, PrincipalIdParameter);
         _infrastructure.Add(roleAssignment);
         // the role assignment must exist before the system topic event subscription is created.
-        _systemTopicEventSubscription.DependsOn.Add(roleAssignment);
+        _eventGridSubscription_blobs.DependsOn.Add(roleAssignment);
 
-        _infrastructure.Add(_systemTopicEventSubscription);
-        _infrastructure.Add(_eventGridTopic_Blobs);
+        _infrastructure.Add(_eventGridSubscription_blobs);
+        _infrastructure.Add(_eventGridTopic_blobs);
 
         // Placeholders for now.
         _infrastructure.Add(new ProvisioningOutput($"storage_name", typeof(string)) { Value = _storage.Name });

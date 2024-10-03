@@ -16,15 +16,25 @@ public class KeyVaultFeature : CloudMachineFeature
     public override void AddTo(CloudMachineInfrastructure cm)
     {
         // Add a KeyVault to the CloudMachine infrastructure.
-        KeyVaultService _keyVault = new($"cm_kv")
+        KeyVaultService _keyVault = new("cm_kv")
         {
+            Name = cm.Id,
             Properties =
                 new KeyVaultProperties
                 {
                     Sku = this.Sku,
                     TenantId = BicepFunction.GetSubscription().TenantId,
                     EnabledForDeployment = true,
-                }
+                    AccessPolicies = [
+                        new KeyVaultAccessPolicy() {
+                            ObjectId = cm.PrincipalIdParameter,
+                            Permissions = new IdentityAccessPermissions() {
+                                Secrets =  [IdentityAccessSecretPermission.Get, IdentityAccessSecretPermission.Set]
+                            },
+                            TenantId = cm.Identity.TenantId
+                        }
+                    ]
+                },
         };
 
         cm.AddResource(_keyVault);

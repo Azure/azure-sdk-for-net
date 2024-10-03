@@ -45,7 +45,7 @@ public class CloudMachineTests
 
         CloudMachineClient cm = new();
         SecretClient secrets = cm.GetKeyVaultSecretClient();
-        secrets.SetSecret("test_secret", "don't tell anybody");
+        secrets.SetSecret("testsecret", "don't tell anybody");
     }
 
     [Ignore("no recordings yet")]
