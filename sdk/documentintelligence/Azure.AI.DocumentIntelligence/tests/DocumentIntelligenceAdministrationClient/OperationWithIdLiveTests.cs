@@ -198,7 +198,6 @@ namespace Azure.AI.DocumentIntelligence.Tests
         [RecordedTest]
         [TestCase(WaitUntil.Started)]
         [TestCase(WaitUntil.Completed)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/45476")]
         public async Task CopyClassifierToOperationCanParseOperationId(WaitUntil waitUntil)
         {
             var client = CreateDocumentIntelligenceAdministrationClient();
