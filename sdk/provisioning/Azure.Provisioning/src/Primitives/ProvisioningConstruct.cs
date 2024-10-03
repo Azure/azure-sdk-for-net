@@ -12,14 +12,15 @@ namespace Azure.Provisioning.Primitives;
 /// <summary>
 /// A named Bicep entity, like a resource or parameter.
 /// </summary>
-public abstract class NamedProvisioningConstruct(string resourceName) : ProvisioningConstruct
+public abstract class NamedProvisioningConstruct(string identifierName) : ProvisioningConstruct
 {
     /// <summary>
-    /// Gets or sets the the Bicep name of the resource.  This can be used to
-    /// refer to the resource in expressions, but isn't the Azure name of the
-    /// resource.  This value can contain letters, numbers, and underscores.
+    /// Gets or sets the the Bicep identifier name of the resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
     /// </summary>
-    public string ResourceName { get; set; } = resourceName;
+    public string IdentifierName { get; set; } = identifierName;
 }
 
 public abstract class ProvisioningConstruct : Provisionable
