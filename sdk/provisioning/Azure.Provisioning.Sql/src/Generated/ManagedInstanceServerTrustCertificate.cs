@@ -64,9 +64,8 @@ public partial class ManagedInstanceServerTrustCertificate : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedInstanceServerTrustCertificate.</param>
     /// <param name="resourceVersion">Version of the ManagedInstanceServerTrustCertificate.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceServerTrustCertificate(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/serverTrustCertificates", resourceVersion, context)
+    public ManagedInstanceServerTrustCertificate(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/serverTrustCertificates", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _publicBlob = BicepValue<string>.DefineProperty(this, "PublicBlob", ["properties", "publicBlob"]);
@@ -75,6 +74,22 @@ public partial class ManagedInstanceServerTrustCertificate : Resource
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _thumbprint = BicepValue<string>.DefineProperty(this, "Thumbprint", ["properties", "thumbprint"], isOutput: true);
         _parent = ResourceReference<ManagedInstance>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported ManagedInstanceServerTrustCertificate resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
     }
 
     /// <summary>

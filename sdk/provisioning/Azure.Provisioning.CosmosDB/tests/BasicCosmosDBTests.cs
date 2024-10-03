@@ -21,8 +21,13 @@ public class BasicCosmosDBTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter dbName = new(nameof(dbName), typeof(string)) { Value = "orders" };
-                BicepParameter containerName = new(nameof(containerName), typeof(string)) { Value = "products" };
+                Infrastructure infra = new();
+
+                ProvisioningParameter dbName = new(nameof(dbName), typeof(string)) { Value = "orders" };
+                infra.Add(dbName);
+
+                ProvisioningParameter containerName = new(nameof(containerName), typeof(string)) { Value = "products" };
+                infra.Add(containerName);
 
                 CosmosDBAccount cosmos =
                     new(nameof(cosmos))
@@ -37,6 +42,7 @@ public class BasicCosmosDBTests(bool async)
                             new CosmosDBAccountLocation { LocationName = BicepFunction.GetResourceGroup().Location }
                         }
                     };
+                infra.Add(cosmos);
 
                 CosmosDBSqlDatabase db =
                     new(nameof(db), CosmosDBAccount.ResourceVersions.V2023_11_15)
@@ -52,6 +58,7 @@ public class BasicCosmosDBTests(bool async)
                             Throughput = 400
                         }
                     };
+                infra.Add(db);
 
                 CosmosDBSqlContainer container =
                     new(nameof(container), CosmosDBAccount.ResourceVersions.V2023_11_15)
@@ -67,9 +74,12 @@ public class BasicCosmosDBTests(bool async)
                             }
                         },
                     };
+                infra.Add(container);
 
-                _ = new BicepOutput("containerName", typeof(string)) { Value = container.Name };
-                _ = new BicepOutput("containerId", typeof(string)) { Value = container.Id };
+                infra.Add(new ProvisioningOutput("containerName", typeof(string)) { Value = container.Name });
+                infra.Add(new ProvisioningOutput("containerId", typeof(string)) { Value = container.Id });
+
+                return infra;
             })
         .Compare(
             """
@@ -80,7 +90,7 @@ public class BasicCosmosDBTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource cosmos 'Microsoft.DocumentDB/databaseAccounts@2024-05-15-preview' = {
+            resource cosmos 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
               name: take('cosmos-${uniqueString(resourceGroup().id)}', 44)
               location: location
               properties: {

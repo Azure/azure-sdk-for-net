@@ -34,6 +34,7 @@ public class ArmSpecification : Specification
         CustomizeResource<ResourceGroupResource>(r => r.FromExpression = true);
         CustomizeModel<GenericResource>(m => m.Name = "GenericResource");
         CustomizeModel<TagResource>(m => m.Name = "TagResource");
+        CustomizeModel<WritableSubResource>(m => m.Name = "WritableSubResource");
         CustomizeModel<ExtendedLocation>(m => m.Name = "ExtendedAzureLocation");
         CustomizeModel<UserAssignedIdentity>(m => m.Name = "UserAssignedIdentityDetails");
         CustomizeResource<SubscriptionResource>(r => r.FromExpression = true);

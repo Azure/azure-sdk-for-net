@@ -12,7 +12,6 @@ using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Roles;
-using Azure.ResourceManager.Resources.Models;
 using System;
 using System.ComponentModel;
 using System.Net;
@@ -217,9 +216,8 @@ public partial class RedisResource : Resource
     /// </summary>
     /// <param name="resourceName">Name of the RedisResource.</param>
     /// <param name="resourceVersion">Version of the RedisResource.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public RedisResource(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Cache/redis", resourceVersion, context)
+    public RedisResource(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Cache/redis", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -252,6 +250,97 @@ public partial class RedisResource : Resource
     }
 
     /// <summary>
+    /// Supported RedisResource resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-04-01-preview.
+        /// </summary>
+        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
+
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
+        /// <summary>
+        /// 2023-04-01.
+        /// </summary>
+        public static readonly string V2023_04_01 = "2023-04-01";
+
+        /// <summary>
+        /// 2022-06-01.
+        /// </summary>
+        public static readonly string V2022_06_01 = "2022-06-01";
+
+        /// <summary>
+        /// 2022-05-01.
+        /// </summary>
+        public static readonly string V2022_05_01 = "2022-05-01";
+
+        /// <summary>
+        /// 2021-06-01.
+        /// </summary>
+        public static readonly string V2021_06_01 = "2021-06-01";
+
+        /// <summary>
+        /// 2020-12-01.
+        /// </summary>
+        public static readonly string V2020_12_01 = "2020-12-01";
+
+        /// <summary>
+        /// 2020-06-01.
+        /// </summary>
+        public static readonly string V2020_06_01 = "2020-06-01";
+
+        /// <summary>
+        /// 2019-07-01.
+        /// </summary>
+        public static readonly string V2019_07_01 = "2019-07-01";
+
+        /// <summary>
+        /// 2018-03-01.
+        /// </summary>
+        public static readonly string V2018_03_01 = "2018-03-01";
+
+        /// <summary>
+        /// 2017-10-01.
+        /// </summary>
+        public static readonly string V2017_10_01 = "2017-10-01";
+
+        /// <summary>
+        /// 2017-02-01.
+        /// </summary>
+        public static readonly string V2017_02_01 = "2017-02-01";
+
+        /// <summary>
+        /// 2016-04-01.
+        /// </summary>
+        public static readonly string V2016_04_01 = "2016-04-01";
+
+        /// <summary>
+        /// 2015-08-01.
+        /// </summary>
+        public static readonly string V2015_08_01 = "2015-08-01";
+
+        /// <summary>
+        /// 2015-03-01.
+        /// </summary>
+        public static readonly string V2015_03_01 = "2015-03-01";
+
+        /// <summary>
+        /// 2014-04-01.
+        /// </summary>
+        public static readonly string V2014_04_01 = "2014-04-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing RedisResource.
     /// </summary>
     /// <param name="resourceName">Name of the RedisResource.</param>
@@ -277,13 +366,13 @@ public partial class RedisResource : Resource
             new FunctionCallExpression(new MemberExpression(new IdentifierExpression(ResourceName), "listKeys")));
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// RedisResource.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this RedisResource.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(RedisBuiltInRole role, UserAssignedIdentity identity) =>
+    public RoleAssignment CreateRoleAssignment(RedisBuiltInRole role, UserAssignedIdentity identity) =>
         new($"{ResourceName}_{identity.ResourceName}_{RedisBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
@@ -294,14 +383,16 @@ public partial class RedisResource : Resource
         };
 
     /// <summary>
-    /// Assign a role to a principal that grants access to this RedisResource.
+    /// Creates a role assignment for a principal that grants access to this
+    /// RedisResource.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="resourceNameSuffix">Optional role assignment resource name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(RedisBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{ResourceName}_{RedisBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(RedisBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? resourceNameSuffix = default) =>
+        new($"{ResourceName}_{RedisBuiltInRole.GetBuiltInRoleName(role)}{(resourceNameSuffix is null ? "" : "_")}{resourceNameSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(ResourceName),

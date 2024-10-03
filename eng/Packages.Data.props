@@ -89,7 +89,7 @@
     <PackageReference Update="System.ClientModel" Version="1.1.0" />
     <PackageReference Update="System.IO.Hashing" Version="6.0.0" />
     <PackageReference Update="System.Memory" Version="4.5.5" />
-    <PackageReference Update="System.Memory.Data" Version="1.0.2" />
+    <PackageReference Update="System.Memory.Data" Version="6.0.0" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="6.0.1" />
@@ -153,13 +153,9 @@
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.7" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.4.0" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.62.0" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.62.0" />
-    <!--
-      TODO: This package needs to be released as GA and arch-board approved before taking a dependency in any stable SDK library.
-      Currently, it is referenced by Azure.Identity.Broker which is still in beta
-    -->
-    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.62.0" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.65.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.65.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.65.0" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
@@ -179,7 +175,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
-    <PackageReference Update="OpenAI" Version="2.0.0-beta.12" />
+    <PackageReference Update="OpenAI" Version="2.1.0-beta.1" />
   </ItemGroup>
 
   <!--
@@ -344,7 +340,10 @@
     <PackageReference Update="NUnit" Version="3.13.2" />
     <PackageReference Update="NUnit3TestAdapter" Version="4.4.2" />
     <PackageReference Update="OpenTelemetry" Version="1.9.0" />
+    <PackageReference Update="OpenTelemetry.Exporter.Console" Version="1.9.0" />
     <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.9.0" />
+    <PackageReference Update="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.9.0" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
     <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.9.0-beta.1" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />

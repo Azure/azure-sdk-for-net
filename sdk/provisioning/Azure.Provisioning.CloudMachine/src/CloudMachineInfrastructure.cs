@@ -33,17 +33,17 @@ public class CloudMachineInfrastructure : Infrastructure
     /// <summary>
     /// The common principalId parameter.
     /// </summary>
-    public BicepParameter PrincipalIdParameter => new BicepParameter("principalId", typeof(string));
+    public ProvisioningParameter PrincipalIdParameter => new ProvisioningParameter("principalId", typeof(string));
 
     ///// <summary>
     ///// The common principalType parameter.
     ///// </summary>
-    //public BicepParameter PrincipalTypeParameter => new BicepParameter("principalType", typeof(string));
+    //public ProvisioningParameter PrincipalTypeParameter => new BicepParameter("principalType", typeof(string));
 
     ///// <summary>
     ///// The common principalName parameter.
     ///// </summary>
-    //public BicepParameter PrincipalNameParameter => new BicepParameter("principalName", typeof(string));
+    //public ProvisioningParameter PrincipalNameParameter => new BicepParameter("principalName", typeof(string));
 
     public CloudMachineInfrastructure(string cloudMachineId) : base("cm")
     {
@@ -179,7 +179,7 @@ public class CloudMachineInfrastructure : Infrastructure
         // Always add a default location parameter.
         // azd assumes there will be a location parameter for every module.
         // The Infrastructure location resolver will resolve unset Location properties to this parameter.
-        Add(new BicepParameter("location", typeof(string))
+        Add(new ProvisioningParameter("location", typeof(string))
         {
             Description = "The location for the resource(s) to be deployed.",
             Value = BicepFunction.GetResourceGroup().Location
@@ -191,26 +191,19 @@ public class CloudMachineInfrastructure : Infrastructure
 
         Add(_identity);
         Add(_storage);
-        Add(_storage.AssignRole(StorageBuiltInRole.StorageBlobDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
-        Add(_storage.AssignRole(StorageBuiltInRole.StorageTableDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
+        Add(_storage.CreateRoleAssignment(StorageBuiltInRole.StorageBlobDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
+        Add(_storage.CreateRoleAssignment(StorageBuiltInRole.StorageTableDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
         Add(_container);
         Add(_blobs);
         Add(_serviceBusNamespace);
-        Add(_serviceBusNamespace.AssignRole(ServiceBusBuiltInRole.AzureServiceBusDataOwner, RoleManagementPrincipalType.User, PrincipalIdParameter));
+        Add(_serviceBusNamespace.CreateRoleAssignment(ServiceBusBuiltInRole.AzureServiceBusDataOwner, RoleManagementPrincipalType.User, PrincipalIdParameter));
         Add(_serviceBusNamespaceAuthorizationRule);
         Add(_serviceBusTopic_main);
         Add(_serviceBusTopic_app);
         Add(_serviceBusSubscription_main);
         Add(_serviceBusSubscription_app);
 
-        // This is necessary until SystemTopic adds an AssignRole method.
-        var role = ServiceBusBuiltInRole.AzureServiceBusDataSender;
-        RoleAssignment roleAssignment = new RoleAssignment(_serviceBusNamespace.ResourceName + "_" + _identity.ResourceName + "_" + ServiceBusBuiltInRole.GetBuiltInRoleName(role));
-        roleAssignment.Name = BicepFunction.CreateGuid(_serviceBusNamespace.Id, _identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()));
-        roleAssignment.Scope = new IdentifierExpression(_serviceBusNamespace.ResourceName);
-        roleAssignment.PrincipalType = RoleManagementPrincipalType.ServicePrincipal;
-        roleAssignment.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString());
-        roleAssignment.PrincipalId = _identity.PrincipalId;
+        RoleAssignment roleAssignment = _serviceBusNamespace.CreateRoleAssignment(ServiceBusBuiltInRole.AzureServiceBusDataSender, _identity);
         Add(roleAssignment);
         // the role assignment must exist before the system topic event subscription is created.
         _systemTopicEventSubscription.DependsOn.Add(roleAssignment);
@@ -219,8 +212,8 @@ public class CloudMachineInfrastructure : Infrastructure
         Add(_eventGridTopic_Blobs);
 
         // Placeholders for now.
-        Add(new BicepOutput($"storage_name", typeof(string)) { Value = _storage.Name });
-        Add(new BicepOutput($"servicebus_name", typeof(string)) { Value = _serviceBusNamespace.Name });
+        Add(new ProvisioningOutput($"storage_name", typeof(string)) { Value = _storage.Name });
+        Add(new ProvisioningOutput($"servicebus_name", typeof(string)) { Value = _serviceBusNamespace.Name });
 
         return base.Build(context);
     }

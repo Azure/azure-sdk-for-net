@@ -197,9 +197,8 @@ public partial class EventGridDomain : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventGridDomain.</param>
     /// <param name="resourceVersion">Version of the EventGridDomain.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventGridDomain(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/domains", resourceVersion ?? "2022-06-15", context)
+    public EventGridDomain(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/domains", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

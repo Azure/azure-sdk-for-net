@@ -60,9 +60,8 @@ public partial class ServerAdvancedThreatProtection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ServerAdvancedThreatProtection.</param>
     /// <param name="resourceVersion">Version of the ServerAdvancedThreatProtection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ServerAdvancedThreatProtection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/advancedThreatProtectionSettings", resourceVersion ?? "2021-11-01", context)
+    public ServerAdvancedThreatProtection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/advancedThreatProtectionSettings", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<AdvancedThreatProtectionState>.DefineProperty(this, "State", ["properties", "state"]);

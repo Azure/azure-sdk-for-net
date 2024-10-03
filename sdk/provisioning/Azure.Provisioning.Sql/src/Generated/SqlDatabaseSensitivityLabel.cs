@@ -102,9 +102,8 @@ public partial class SqlDatabaseSensitivityLabel : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlDatabaseSensitivityLabel.</param>
     /// <param name="resourceVersion">Version of the SqlDatabaseSensitivityLabel.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlDatabaseSensitivityLabel(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/schemas/tables/columns/sensitivityLabels", resourceVersion, context)
+    public SqlDatabaseSensitivityLabel(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/databases/schemas/tables/columns/sensitivityLabels", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _informationType = BicepValue<string>.DefineProperty(this, "InformationType", ["properties", "informationType"]);

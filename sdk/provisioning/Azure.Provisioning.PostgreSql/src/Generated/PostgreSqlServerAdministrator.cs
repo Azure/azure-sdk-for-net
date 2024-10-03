@@ -70,9 +70,8 @@ public partial class PostgreSqlServerAdministrator : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PostgreSqlServerAdministrator.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlServerAdministrator.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlServerAdministrator(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/administrators", resourceVersion, context)
+    public PostgreSqlServerAdministrator(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/administrators", resourceVersion ?? "2017-12-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _administratorType = BicepValue<PostgreSqlAdministratorType>.DefineProperty(this, "AdministratorType", ["properties", "administratorType"]);
@@ -82,6 +81,22 @@ public partial class PostgreSqlServerAdministrator : Resource
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<PostgreSqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported PostgreSqlServerAdministrator resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2017-12-01-preview.
+        /// </summary>
+        public static readonly string V2017_12_01_preview = "2017-12-01-preview";
+
+        /// <summary>
+        /// 2017-12-01.
+        /// </summary>
+        public static readonly string V2017_12_01 = "2017-12-01";
     }
 
     /// <summary>
