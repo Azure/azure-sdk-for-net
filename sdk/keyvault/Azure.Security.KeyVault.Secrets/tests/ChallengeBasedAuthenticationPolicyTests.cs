@@ -212,60 +212,6 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         }
 
         [Test]
-        public void HandlesCaeChallenges(){
-            MockTransport keyVaultTransport = new(new[]
-            {
-                // Initial scope challlenge
-                new MockResponse(401)
-                    .WithHeader("WWW-Authenticate", @"Bearer authorization=""https://login.windows.net/de763a21-49f7-4b08-a8e1-52c8fbc103b4"", resource=""https://vault.azure.net"""),
-
-                // CAE Challenge
-                new MockResponse(401)
-                    .WithHeader("WWW-Authenticate", @"Bearer realm="""", authorization_uri=""https://login.microsoftonline.com/common/oauth2/authorize"", error=""insufficient_claims"", claims=""eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk1In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjEwMDEyIn19fQ=="""),
-
-                new MockResponse(200)
-                {
-                    ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
-                },
-            });
-
-            MockTransport credentialTransport = new(new[]
-            {
-                new MockResponse(200)
-                    .WithJson("""
-                    {
-                        "token_type": "Bearer",
-                        "expires_in": 3599,
-                        "resource": "https://vault.azure.net",
-                        "access_token": "ZGU3NjNhMjEtNDlmNy00YjA4LWE4ZTEtNTJjOGZiYzEwM2I0"
-                    }
-                    """),
-
-                new MockResponse(200)
-                    .WithJson("""
-                    {
-                        "token_type": "Bearer",
-                        "expires_in": 3599,
-                        "resource": "https://vault.azure.net",
-                        "access_token": "NzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3"
-                    }
-                    """),
-            });
-
-            SecretClient client = new(
-                VaultUri,
-                new MockCredential(credentialTransport),
-                new SecretClientOptions()
-                {
-                    Transport = keyVaultTransport,
-                });
-
-            Response<KeyVaultSecret> response = client.GetSecret("test-secret");
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("secret-value", response.Value.Value);
-        }
-
-        [Test]
         public void ThrowsWithTwoConsecutiveCaeChallenges()
         {
             MockResponse caeChallenge = new MockResponse(401)
@@ -349,11 +295,11 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
         [Test]
         [TestCase(@"Bearer realm="""", authorization_uri=""https://login.microsoftonline.com/common/oauth2/authorize"", error=""insufficient_claims"", claims=""eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk1In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjEwMDEyIn19fQ==""", """{"access_token":{"nbf":{"essential":true,"value":"1726077595"},"xms_caeerror":{"value":"10012"}}}""")]
-        public async Task VerifyClaimsInToken(string challenge, string expectedClaims)
+        public async Task VerifyCaeClaims(string challenge, string expectedClaims)
         {
             string claims = null;
             int callCount = 0;
-            Stream content = new KeyVaultSecret("test-secret", "secret-value").ToStream();
+            string content = "{\"value\":\"secret-value\"}";
 
             MockTransport keyVaultTransport = new(new[]
             {
@@ -366,9 +312,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                     .WithHeader("WWW-Authenticate", challenge),
 
                 new MockResponse(200)
-                {
-                    ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
-                },
+                    .WithContent(content)
             });
 
             var credential = new TokenCredentialStub((r, c) =>
@@ -398,8 +342,10 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 Transport = keyVaultTransport,
             });
 
-            var FooResponse = await client.GetSecretAsync("test-secret");
+            Response<KeyVaultSecret> response = await client.GetSecretAsync("test-secret");
             Assert.AreEqual(expectedClaims, claims);
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual("secret-value", response.Value.Value);
         }
 
         private class TokenCredentialStub : TokenCredential
