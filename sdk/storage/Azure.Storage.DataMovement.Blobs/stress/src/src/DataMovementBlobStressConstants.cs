@@ -5,6 +5,9 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
 {
     internal class DataMovementBlobStressConstants
     {
+        public const int DefaultObjectSize = Constants.KB * 4;
+        public const int DefaultObjectCount = 50;
+
         public static partial class EnvironmentVariables
         {
             // Shared Resources
@@ -40,6 +43,21 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             public const string UploadSingleBlockBlob = "uploadsingleblockblob";
             public const string UploadDirectoryBlockBlob = "uploaddirectoryblockBlob";
             public const string DownloadSingleBlockBlob = "downloadsingleblockblob";
+            public const string DownloadDirectoryBlockBlob = "downloaddirectoryblockblob";
+            public const string CopySingleBlockBlob = "copysingleblockblob";
+            public const string CopyDirectoryBlockBlob = "copydirectoryblockblob";
+            public const string UploadSingleAppendBlob = "uploadsingleappendblob";
+            public const string UploadDirectoryAppendBlob = "uploaddirectoryappendblob";
+            public const string DownloadSingleAppendBlob = "downloadsingleappendblob";
+            public const string DownloadDirectoryAppendBlob = "downloaddirectoryappendblob";
+            public const string CopySingleAppendBlob = "copysingleappendblob";
+            public const string CopyDirectoryAppendBlob = "copydirectoryappendblob";
+            public const string UploadSinglePageBlob = "uploadsinglepageblob";
+            public const string UploadDirectoryPageBlob = "uploaddirectorypageblob";
+            public const string DownloadSinglePageBlob = "downloadsinglepageblob";
+            public const string DownloadDirectoryPageBlob = "downloaddirectorypageblob";
+            public const string CopySinglePageBlob = "copysinglepageblob";
+            public const string CopyDirectoryPageBlob = "copydirectorypageblob";
         }
     }
 }
