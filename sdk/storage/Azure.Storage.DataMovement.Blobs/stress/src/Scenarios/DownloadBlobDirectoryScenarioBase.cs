@@ -55,9 +55,6 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             // Create Destination Storage Resource
             StorageResource destinationResource = _blobsStorageResourceProvider.FromClient(sourceContainerClient, new() { BlobDirectoryPrefix = pathPrefix });
 
-            // Initialize TransferManager
-            TransferManager transferManager = new TransferManager();
-
             // Start Transfer
             await new TransferValidator()
             {

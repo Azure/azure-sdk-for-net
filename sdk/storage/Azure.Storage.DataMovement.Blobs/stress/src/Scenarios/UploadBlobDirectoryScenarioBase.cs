@@ -58,9 +58,6 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                     BlobType = new(blobType)
                 });
 
-            // Initialize TransferManager
-            TransferManager transferManager = new TransferManager();
-
             // Upload
             await new TransferValidator()
             {

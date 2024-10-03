@@ -67,13 +67,13 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             // Start Transfer
             await new TransferValidator()
             {
-                TransferManager = new()//new(_transferManagerOptions)
+                TransferManager = new(_transferManagerOptions)
             }.TransferAndVerifyAsync(
                 sourceResource,
                 destinationResource,
                 cToken => Task.FromResult(File.OpenRead(sourceResource.Uri.AbsolutePath) as Stream),
                 async cToken => await destinationBaseBlob.OpenReadAsync(default, cToken),
-                options: new(),//_dataTransferOptions,
+                options: _dataTransferOptions,
                 cancellationToken: cancellationToken);
         }
     }

@@ -76,7 +76,6 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             StorageResource destinationResource = _localFilesStorageResourceProvider.FromFile(Path.Combine(disposingLocalDirectory.DirectoryPath, blobName));
 
             // Start Transfer
-            TransferManager transferManager = new TransferManager(_transferManagerOptions);
             await new TransferValidator()
             {
                 TransferManager = new(_transferManagerOptions)
