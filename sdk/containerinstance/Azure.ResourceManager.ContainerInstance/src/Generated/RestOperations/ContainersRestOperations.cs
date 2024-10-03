@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-01";
+            _apiVersion = apiVersion ?? "2024-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> Get the logs for a specified container instance in a specified resource group and container group. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="containerName"> The name of the container instance. </param>
         /// <param name="tail"> The number of lines to show from the tail of the container instance log. If not provided, all available logs are shown up to 4mb. </param>
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> Get the logs for a specified container instance in a specified resource group and container group. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="containerName"> The name of the container instance. </param>
         /// <param name="tail"> The number of lines to show from the tail of the container instance log. If not provided, all available logs are shown up to 4mb. </param>
@@ -203,8 +203,8 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> Executes a command for a specific container instance in a specified resource group and container group. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="containerName"> The name of the container instance. </param>
         /// <param name="content"> The request for the exec command. </param>
@@ -236,8 +236,8 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> Executes a command for a specific container instance in a specified resource group and container group. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="containerName"> The name of the container instance. </param>
         /// <param name="content"> The request for the exec command. </param>
@@ -309,8 +309,8 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> Attach to the output stream of a specific container instance in a specified resource group and container group. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="containerName"> The name of the container instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -340,8 +340,8 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> Attach to the output stream of a specific container instance in a specified resource group and container group. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="containerName"> The name of the container instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
