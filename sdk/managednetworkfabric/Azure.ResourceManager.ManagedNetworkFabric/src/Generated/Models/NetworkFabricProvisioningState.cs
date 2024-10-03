@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(NetworkFabricProvisioningState left, NetworkFabricProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkFabricProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(NetworkFabricProvisioningState left, NetworkFabricProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkFabricProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricProvisioningState"/>. </summary>
         public static implicit operator NetworkFabricProvisioningState(string value) => new NetworkFabricProvisioningState(value);
 
         /// <inheritdoc />

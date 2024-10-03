@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(RoutingRuleNextHopType left, RoutingRuleNextHopType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoutingRuleNextHopType"/> values are not the same. </summary>
         public static bool operator !=(RoutingRuleNextHopType left, RoutingRuleNextHopType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RoutingRuleNextHopType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RoutingRuleNextHopType"/>. </summary>
         public static implicit operator RoutingRuleNextHopType(string value) => new RoutingRuleNextHopType(value);
 
         /// <inheritdoc />

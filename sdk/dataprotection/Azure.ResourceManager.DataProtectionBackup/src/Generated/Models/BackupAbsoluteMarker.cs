@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static bool operator ==(BackupAbsoluteMarker left, BackupAbsoluteMarker right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupAbsoluteMarker"/> values are not the same. </summary>
         public static bool operator !=(BackupAbsoluteMarker left, BackupAbsoluteMarker right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupAbsoluteMarker"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupAbsoluteMarker"/>. </summary>
         public static implicit operator BackupAbsoluteMarker(string value) => new BackupAbsoluteMarker(value);
 
         /// <inheritdoc />

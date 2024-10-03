@@ -129,9 +129,8 @@ public partial class TemplateSpecVersion : Resource
     /// </summary>
     /// <param name="resourceName">Name of the TemplateSpecVersion.</param>
     /// <param name="resourceVersion">Version of the TemplateSpecVersion.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public TemplateSpecVersion(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Resources/templateSpecs/versions", resourceVersion, context)
+    public TemplateSpecVersion(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Resources/templateSpecs/versions", resourceVersion ?? "2022-02-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -144,6 +143,22 @@ public partial class TemplateSpecVersion : Resource
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<TemplateSpec>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported TemplateSpecVersion resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2022-02-01.
+        /// </summary>
+        public static readonly string V2022_02_01 = "2022-02-01";
+
+        /// <summary>
+        /// 2021-05-01.
+        /// </summary>
+        public static readonly string V2021_05_01 = "2021-05-01";
     }
 
     /// <summary>

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(PipelineVariableType left, PipelineVariableType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PipelineVariableType"/> values are not the same. </summary>
         public static bool operator !=(PipelineVariableType left, PipelineVariableType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PipelineVariableType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PipelineVariableType"/>. </summary>
         public static implicit operator PipelineVariableType(string value) => new PipelineVariableType(value);
 
         /// <inheritdoc />

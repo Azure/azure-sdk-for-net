@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(NsxPublicIPQuotaRaisedEnum left, NsxPublicIPQuotaRaisedEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NsxPublicIPQuotaRaisedEnum"/> values are not the same. </summary>
         public static bool operator !=(NsxPublicIPQuotaRaisedEnum left, NsxPublicIPQuotaRaisedEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NsxPublicIPQuotaRaisedEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NsxPublicIPQuotaRaisedEnum"/>. </summary>
         public static implicit operator NsxPublicIPQuotaRaisedEnum(string value) => new NsxPublicIPQuotaRaisedEnum(value);
 
         /// <inheritdoc />

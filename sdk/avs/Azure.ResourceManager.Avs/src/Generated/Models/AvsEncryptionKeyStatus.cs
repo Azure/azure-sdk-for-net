@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(AvsEncryptionKeyStatus left, AvsEncryptionKeyStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsEncryptionKeyStatus"/> values are not the same. </summary>
         public static bool operator !=(AvsEncryptionKeyStatus left, AvsEncryptionKeyStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvsEncryptionKeyStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsEncryptionKeyStatus"/>. </summary>
         public static implicit operator AvsEncryptionKeyStatus(string value) => new AvsEncryptionKeyStatus(value);
 
         /// <inheritdoc />

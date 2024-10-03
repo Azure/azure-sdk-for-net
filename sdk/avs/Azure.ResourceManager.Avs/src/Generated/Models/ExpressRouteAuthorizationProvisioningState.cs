@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(ExpressRouteAuthorizationProvisioningState left, ExpressRouteAuthorizationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteAuthorizationProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ExpressRouteAuthorizationProvisioningState left, ExpressRouteAuthorizationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExpressRouteAuthorizationProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRouteAuthorizationProvisioningState"/>. </summary>
         public static implicit operator ExpressRouteAuthorizationProvisioningState(string value) => new ExpressRouteAuthorizationProvisioningState(value);
 
         /// <inheritdoc />

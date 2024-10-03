@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(AvsSubscriptionQuotaEnabled left, AvsSubscriptionQuotaEnabled right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsSubscriptionQuotaEnabled"/> values are not the same. </summary>
         public static bool operator !=(AvsSubscriptionQuotaEnabled left, AvsSubscriptionQuotaEnabled right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvsSubscriptionQuotaEnabled"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsSubscriptionQuotaEnabled"/>. </summary>
         public static implicit operator AvsSubscriptionQuotaEnabled(string value) => new AvsSubscriptionQuotaEnabled(value);
 
         /// <inheritdoc />

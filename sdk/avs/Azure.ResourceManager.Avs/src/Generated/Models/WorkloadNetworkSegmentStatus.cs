@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(WorkloadNetworkSegmentStatus left, WorkloadNetworkSegmentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkSegmentStatus"/> values are not the same. </summary>
         public static bool operator !=(WorkloadNetworkSegmentStatus left, WorkloadNetworkSegmentStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkloadNetworkSegmentStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadNetworkSegmentStatus"/>. </summary>
         public static implicit operator WorkloadNetworkSegmentStatus(string value) => new WorkloadNetworkSegmentStatus(value);
 
         /// <inheritdoc />

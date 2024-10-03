@@ -83,9 +83,8 @@ public partial class EventHubsApplicationGroup : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventHubsApplicationGroup.</param>
     /// <param name="resourceVersion">Version of the EventHubsApplicationGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventHubsApplicationGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/applicationGroups", resourceVersion ?? "2024-01-01", context)
+    public EventHubsApplicationGroup(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventHub/namespaces/applicationGroups", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _clientAppGroupIdentifier = BicepValue<string>.DefineProperty(this, "ClientAppGroupIdentifier", ["properties", "clientAppGroupIdentifier"]);

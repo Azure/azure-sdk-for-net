@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(ImdsAttestationState left, ImdsAttestationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImdsAttestationState"/> values are not the same. </summary>
         public static bool operator !=(ImdsAttestationState left, ImdsAttestationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ImdsAttestationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ImdsAttestationState"/>. </summary>
         public static implicit operator ImdsAttestationState(string value) => new ImdsAttestationState(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(AvsPlacementPolicyAffinityType left, AvsPlacementPolicyAffinityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsPlacementPolicyAffinityType"/> values are not the same. </summary>
         public static bool operator !=(AvsPlacementPolicyAffinityType left, AvsPlacementPolicyAffinityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvsPlacementPolicyAffinityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsPlacementPolicyAffinityType"/>. </summary>
         public static implicit operator AvsPlacementPolicyAffinityType(string value) => new AvsPlacementPolicyAffinityType(value);
 
         /// <inheritdoc />

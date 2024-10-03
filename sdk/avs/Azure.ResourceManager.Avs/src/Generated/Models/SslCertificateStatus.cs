@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(SslCertificateStatus left, SslCertificateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SslCertificateStatus"/> values are not the same. </summary>
         public static bool operator !=(SslCertificateStatus left, SslCertificateStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SslCertificateStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SslCertificateStatus"/>. </summary>
         public static implicit operator SslCertificateStatus(string value) => new SslCertificateStatus(value);
 
         /// <inheritdoc />

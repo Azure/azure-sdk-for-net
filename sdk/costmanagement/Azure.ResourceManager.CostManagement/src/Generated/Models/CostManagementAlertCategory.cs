@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(CostManagementAlertCategory left, CostManagementAlertCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CostManagementAlertCategory"/> values are not the same. </summary>
         public static bool operator !=(CostManagementAlertCategory left, CostManagementAlertCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CostManagementAlertCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CostManagementAlertCategory"/>. </summary>
         public static implicit operator CostManagementAlertCategory(string value) => new CostManagementAlertCategory(value);
 
         /// <inheritdoc />

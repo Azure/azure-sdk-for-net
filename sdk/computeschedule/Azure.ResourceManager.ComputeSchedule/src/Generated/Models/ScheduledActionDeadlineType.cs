@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static bool operator ==(ScheduledActionDeadlineType left, ScheduledActionDeadlineType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduledActionDeadlineType"/> values are not the same. </summary>
         public static bool operator !=(ScheduledActionDeadlineType left, ScheduledActionDeadlineType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScheduledActionDeadlineType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionDeadlineType"/>. </summary>
         public static implicit operator ScheduledActionDeadlineType(string value) => new ScheduledActionDeadlineType(value);
 
         /// <inheritdoc />

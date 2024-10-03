@@ -30,7 +30,7 @@ namespace Azure.Communication.Messages
         public static bool operator ==(CommunicationMessagesChannel left, CommunicationMessagesChannel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationMessagesChannel"/> values are not the same. </summary>
         public static bool operator !=(CommunicationMessagesChannel left, CommunicationMessagesChannel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CommunicationMessagesChannel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CommunicationMessagesChannel"/>. </summary>
         public static implicit operator CommunicationMessagesChannel(string value) => new CommunicationMessagesChannel(value);
 
         /// <inheritdoc />

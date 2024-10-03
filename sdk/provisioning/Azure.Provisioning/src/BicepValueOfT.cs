@@ -114,8 +114,8 @@ public class BicepValue<T> : BicepValue
         return new(value);
     }
     public static implicit operator BicepValue<T>(Expression expression) => new(expression);
-    public static implicit operator BicepValue<T>(BicepVariable reference) =>
-        new(new BicepValueReference(reference, "<value>"), BicepSyntax.Var(reference.ResourceName)) { IsSecure = reference is BicepParameter p && p.IsSecure };
+    public static implicit operator BicepValue<T>(ProvisioningVariable reference) =>
+        new(new BicepValueReference(reference, "<value>"), BicepSyntax.Var(reference.ResourceName)) { IsSecure = reference is ProvisioningParameter p && p.IsSecure };
 
     // Special case conversions to string for things like Uri, AzureLocation, etc.
     public static implicit operator BicepValue<string>(BicepValue<T> value) =>

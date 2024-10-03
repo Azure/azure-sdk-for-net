@@ -70,9 +70,8 @@ public partial class TopicSpace : Resource
     /// </summary>
     /// <param name="resourceName">Name of the TopicSpace.</param>
     /// <param name="resourceVersion">Version of the TopicSpace.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public TopicSpace(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/topicSpaces", resourceVersion, context)
+    public TopicSpace(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/namespaces/topicSpaces", resourceVersion ?? "2024-06-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
@@ -81,6 +80,17 @@ public partial class TopicSpace : Resource
         _provisioningState = BicepValue<TopicSpaceProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<EventGridNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported TopicSpace resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-06-01-preview.
+        /// </summary>
+        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
     }
 
     /// <summary>

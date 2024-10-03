@@ -104,9 +104,8 @@ public partial class AgentPoolSnapshot : Resource
     /// </summary>
     /// <param name="resourceName">Name of the AgentPoolSnapshot.</param>
     /// <param name="resourceVersion">Version of the AgentPoolSnapshot.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AgentPoolSnapshot(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerService/snapshots", resourceVersion ?? "2024-07-01", context)
+    public AgentPoolSnapshot(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ContainerService/snapshots", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -129,9 +128,14 @@ public partial class AgentPoolSnapshot : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-07-02-preview.
+        /// 2024-08-02-preview.
         /// </summary>
-        public static readonly string V2024_07_02_preview = "2024-07-02-preview";
+        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
+
+        /// <summary>
+        /// 2024-08-01.
+        /// </summary>
+        public static readonly string V2024_08_01 = "2024-08-01";
 
         /// <summary>
         /// 2024-07-01.

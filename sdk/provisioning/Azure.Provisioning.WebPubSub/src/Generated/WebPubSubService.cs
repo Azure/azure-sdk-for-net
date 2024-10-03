@@ -176,9 +176,8 @@ public partial class WebPubSubService : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WebPubSubService.</param>
     /// <param name="resourceVersion">Version of the WebPubSubService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WebPubSubService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.SignalRService/webPubSub", resourceVersion, context)
+    public WebPubSubService(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.SignalRService/webPubSub", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -203,6 +202,37 @@ public partial class WebPubSubService : Resource
         _sharedPrivateLinkResources = BicepList<WebPubSubSharedPrivateLinkData>.DefineProperty(this, "SharedPrivateLinkResources", ["properties", "sharedPrivateLinkResources"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _version = BicepValue<string>.DefineProperty(this, "Version", ["properties", "version"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported WebPubSubService resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-04-01-preview.
+        /// </summary>
+        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
+
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2023-02-01.
+        /// </summary>
+        public static readonly string V2023_02_01 = "2023-02-01";
+
+        /// <summary>
+        /// 2021-10-01.
+        /// </summary>
+        public static readonly string V2021_10_01 = "2021-10-01";
+
+        /// <summary>
+        /// 2020-05-01.
+        /// </summary>
+        public static readonly string V2020_05_01 = "2020-05-01";
     }
 
     /// <summary>
@@ -231,13 +261,13 @@ public partial class WebPubSubService : Resource
             new FunctionCallExpression(new MemberExpression(new IdentifierExpression(ResourceName), "listKeys")));
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// WebPubSubService.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this WebPubSubService.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(WebPubSubBuiltInRole role, UserAssignedIdentity identity) =>
+    public RoleAssignment CreateRoleAssignment(WebPubSubBuiltInRole role, UserAssignedIdentity identity) =>
         new($"{ResourceName}_{identity.ResourceName}_{WebPubSubBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
@@ -248,15 +278,16 @@ public partial class WebPubSubService : Resource
         };
 
     /// <summary>
-    /// Assign a role to a principal that grants access to this
+    /// Creates a role assignment for a principal that grants access to this
     /// WebPubSubService.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="resourceNameSuffix">Optional role assignment resource name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(WebPubSubBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{ResourceName}_{WebPubSubBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(WebPubSubBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? resourceNameSuffix = default) =>
+        new($"{ResourceName}_{WebPubSubBuiltInRole.GetBuiltInRoleName(role)}{(resourceNameSuffix is null ? "" : "_")}{resourceNameSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(ResourceName),

@@ -60,9 +60,8 @@ public partial class DatabaseAdvancedThreatProtection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the DatabaseAdvancedThreatProtection.</param>
     /// <param name="resourceVersion">Version of the DatabaseAdvancedThreatProtection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public DatabaseAdvancedThreatProtection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/advancedThreatProtectionSettings", resourceVersion ?? "2021-11-01", context)
+    public DatabaseAdvancedThreatProtection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/databases/advancedThreatProtectionSettings", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<AdvancedThreatProtectionState>.DefineProperty(this, "State", ["properties", "state"]);

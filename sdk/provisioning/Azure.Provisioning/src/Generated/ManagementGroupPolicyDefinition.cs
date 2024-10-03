@@ -115,9 +115,8 @@ public partial class ManagementGroupPolicyDefinition : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagementGroupPolicyDefinition.</param>
     /// <param name="resourceVersion">Version of the ManagementGroupPolicyDefinition.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagementGroupPolicyDefinition(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Authorization/policyDefinitions", resourceVersion ?? "2023-04-01", context)
+    public ManagementGroupPolicyDefinition(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Authorization/policyDefinitions", resourceVersion ?? "2023-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);

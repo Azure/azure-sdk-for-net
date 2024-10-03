@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(ChurnOptionSelected left, ChurnOptionSelected right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChurnOptionSelected"/> values are not the same. </summary>
         public static bool operator !=(ChurnOptionSelected left, ChurnOptionSelected right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChurnOptionSelected"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ChurnOptionSelected"/>. </summary>
         public static implicit operator ChurnOptionSelected(string value) => new ChurnOptionSelected(value);
 
         /// <inheritdoc />

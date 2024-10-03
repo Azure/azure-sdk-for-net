@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(WorkloadNetworkDnsServiceProvisioningState left, WorkloadNetworkDnsServiceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkDnsServiceProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(WorkloadNetworkDnsServiceProvisioningState left, WorkloadNetworkDnsServiceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkloadNetworkDnsServiceProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadNetworkDnsServiceProvisioningState"/>. </summary>
         public static implicit operator WorkloadNetworkDnsServiceProvisioningState(string value) => new WorkloadNetworkDnsServiceProvisioningState(value);
 
         /// <inheritdoc />

@@ -70,9 +70,8 @@ public partial class ManagedInstanceLongTermRetentionPolicy : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedInstanceLongTermRetentionPolicy.</param>
     /// <param name="resourceVersion">Version of the ManagedInstanceLongTermRetentionPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceLongTermRetentionPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies", resourceVersion ?? "2021-11-01", context)
+    public ManagedInstanceLongTermRetentionPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _monthlyRetention = BicepValue<string>.DefineProperty(this, "MonthlyRetention", ["properties", "monthlyRetention"]);

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(WorkloadNetworkVmType left, WorkloadNetworkVmType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkVmType"/> values are not the same. </summary>
         public static bool operator !=(WorkloadNetworkVmType left, WorkloadNetworkVmType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkloadNetworkVmType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadNetworkVmType"/>. </summary>
         public static implicit operator WorkloadNetworkVmType(string value) => new WorkloadNetworkVmType(value);
 
         /// <inheritdoc />
