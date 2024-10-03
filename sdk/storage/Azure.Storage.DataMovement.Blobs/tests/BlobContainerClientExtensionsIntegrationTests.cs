@@ -251,19 +251,19 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string sourceBlobDirectoryName,
             int size)
         {
-            string blobName0 = Path.Combine(sourceBlobDirectoryName, "blob0");
-            string blobName1 = Path.Combine(sourceBlobDirectoryName, "blob1");
+            string blobName0 = string.Concat(sourceBlobDirectoryName, "/blob0");
+            string blobName1 = string.Concat(sourceBlobDirectoryName, "/blob1");
             await CreateBlockBlobAsync(client, blobName0, size);
             await CreateBlockBlobAsync(client, blobName1, size);
 
             string subDirName = "bar";
             CreateRandomDirectory(sourceLocalFolderPath, subDirName);
-            string blobName2 = Path.Combine(sourceBlobDirectoryName, subDirName, "blob2");
+            string blobName2 = string.Concat(sourceBlobDirectoryName, "/", subDirName, "/blob2");
             await CreateBlockBlobAsync(client, blobName2, size);
 
             string subDirName2 = "pik";
             CreateRandomDirectory(sourceLocalFolderPath, subDirName2);
-            string blobName3 = Path.Combine(sourceBlobDirectoryName, subDirName2, "blob3");
+            string blobName3 = string.Concat(sourceBlobDirectoryName, "/", subDirName2, "/blob3");
             await CreateBlockBlobAsync(client, blobName3, size);
         }
 
