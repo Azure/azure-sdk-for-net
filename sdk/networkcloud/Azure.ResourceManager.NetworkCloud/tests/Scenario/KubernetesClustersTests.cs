@@ -51,7 +51,6 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                             "pool1"
                         })
                         {
-                            AdvertiseToFabric = AdvertiseToFabric.True,
                             Communities = { "64512:100" },
                             Peers = { "peer1" },
                         }
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             InitialAgentPoolConfiguration[] initialAgentPoolConfigurationsArray = new InitialAgentPoolConfiguration[]
             {
-                new InitialAgentPoolConfiguration(1, NetworkCloudAgentPoolMode.System, "agentPoolConfig", "NC_G4_v1")
+                new InitialAgentPoolConfiguration(1, NetworkCloudAgentPoolMode.System, "agentPoolConfig", "NC_G2_8_v1")
                 {
                     AgentOptions = new NetworkCloudAgentConfiguration(4)
                     {
@@ -96,17 +95,17 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             NetworkCloudKubernetesClusterData createData = new NetworkCloudKubernetesClusterData(
                 TestEnvironment.Location,
                 new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"),
-                new ControlPlaneNodeConfiguration(1, "NC_G4_v1")
+                new ControlPlaneNodeConfiguration(1, "NC_G2_8_v1")
                 {
                     AdministratorConfiguration = administratorConfiguration,
                 },
                 initialAgentPoolConfigurationsArray,
-                "1.24.9",
+                TestEnvironment.KubernetesVersion,
                 networkConfiguration)
             {
                 AadAdminGroupObjectIds = new List<string>() { "3d4c8620-ac8c-4bd6-9a92-f2b75923ef9f" },
                 AdministratorConfiguration = administratorConfiguration,
-                ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration(new AzureLocation("East US"), kubernetesClusterName + "-MRG", null)
+                ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration(new AzureLocation(TestEnvironment.Location), kubernetesClusterName + "-MRG", null)
             };
 
             ArmOperation<NetworkCloudKubernetesClusterResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kubernetesClusterName, createData);
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             NetworkCloudKubernetesClusterPatch updateData = new NetworkCloudKubernetesClusterPatch()
             {
                 ControlPlaneNodeCount = 3,
-                KubernetesVersion = "1.25.4-1",
+                KubernetesVersion = TestEnvironment.KubernetesVersion,
                 Tags = { { "test", "patch" } },
             };
             ArmOperation<NetworkCloudKubernetesClusterResource> updateResult = await kubernetesCluster.UpdateAsync(WaitUntil.Completed, updateData);

@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public string KubernetesClusterName => GetRecordedVariable("KUBERNETES_CLUSTER_NAME");
         public string KubernetesClusterRG => GetRecordedVariable("KUBERNETES_CLUSTER_RG");
         public ResourceIdentifier KubernetesClusterId => new ResourceIdentifier(GetRecordedVariable("KUBERNETES_CLUSTER_ID"));
+        public string KubernetesVersion => GetRecordedVariable("KUBERNETES_VERSION");
 
         // Virtual Machine
 
