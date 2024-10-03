@@ -268,6 +268,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [Test]
         public void ThrowsWithTwoConsecutiveCaeChallenges()
         {
+            MockResponse caeChallenge = new MockResponse(401)
+                .WithHeader("WWW-Authenticate", @"Bearer realm="""", authorization_uri=""https://login.microsoftonline.com/common/oauth2/authorize"", error=""insufficient_claims"", claims=""eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk1In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjEwMDEyIn19fQ==""");
+
             MockTransport keyVaultTransport = new(new[]
             {
                 // Initial scope challlenge
@@ -275,12 +278,10 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                     .WithHeader("WWW-Authenticate", @"Bearer authorization=""https://login.windows.net/de763a21-49f7-4b08-a8e1-52c8fbc103b4"", resource=""https://vault.azure.net"""),
 
                 // CAE Challenge
-                new MockResponse(401)
-                    .WithHeader("WWW-Authenticate", @"Bearer realm="""", authorization_uri=""https://login.microsoftonline.com/common/oauth2/authorize"", error=""insufficient_claims"", claims=""eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk1In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjEwMDEyIn19fQ=="""),
+                caeChallenge,
 
                 // Second CAE Challenge
-                new MockResponse(401)
-                    .WithHeader("WWW-Authenticate", @"Bearer realm="""", authorization_uri=""https://login.microsoftonline.com/common/oauth2/authorize"", error=""insufficient_claims"", claims=""eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk1In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjEwMDEyIn19fQ=="""),
+                caeChallenge,
 
                 new MockResponse(200)
                 {
@@ -296,7 +297,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                         "token_type": "Bearer",
                         "expires_in": 3599,
                         "resource": "https://vault.azure.net",
-                        "access_token": "ZGU3NjNhMjEtNDlmNy00YjA4LWE4ZTEtNTJjOGZiYzEwM2I0"
+                        "access_token": "foo"
                     }
                     """),
 
@@ -306,7 +307,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                         "token_type": "Bearer",
                         "expires_in": 3599,
                         "resource": "https://vault.azure.net",
-                        "access_token": "NzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3"
+                        "access_token": "foo"
                     }
                     """),
 
@@ -316,7 +317,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                         "token_type": "Bearer",
                         "expires_in": 3599,
                         "resource": "https://vault.azure.net",
-                        "access_token": GUID.NewGuid().ToString()
+                        "access_token": "foo"
                     }
                     """),
             });
@@ -336,19 +337,23 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             catch (RequestFailedException ex)
             {
                 Assert.AreEqual(401, ex.Status);
+                return;
             }
             catch (Exception ex)
             {
                 Assert.Fail($"Expected RequestFailedException, but got {ex.GetType()}");
+                return;
             }
+            Assert.Fail("Expected RequestFailedException, but no exception was thrown.");
         }
 
         [Test]
-        [TestCase("""Bearer realm="", authorization_uri="https://login.microsoftonline.com/common/oauth2/authorize", error="insufficient_claims", claims="eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk1In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjEwMDEyIn19fQ==" """, """{"access_token":{"nbf":{"essential":true,"value":"1726077595"},"xms_caeerror":{"value":"10012"}}}""")]
+        [TestCase(@"Bearer realm="""", authorization_uri=""https://login.microsoftonline.com/common/oauth2/authorize"", error=""insufficient_claims"", claims=""eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk1In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjEwMDEyIn19fQ==""", """{"access_token":{"nbf":{"essential":true,"value":"1726077595"},"xms_caeerror":{"value":"10012"}}}""")]
         public async Task VerifyClaimsInToken(string challenge, string expectedClaims)
         {
             string claims = null;
             int callCount = 0;
+            Stream content = new KeyVaultSecret("test-secret", "secret-value").ToStream();
 
             MockTransport keyVaultTransport = new(new[]
             {
@@ -369,6 +374,15 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             var credential = new TokenCredentialStub((r, c) =>
             {
                 claims = r.Claims;
+                if (callCount == 0)
+                {
+                    // The first challenge should not have any claims.
+                    Assert.IsNull(claims);
+                }
+                else if (callCount == 1)
+                {
+                    Assert.AreEqual(expectedClaims, claims);
+                }
                 Interlocked.Increment(ref callCount);
                 Assert.AreEqual(true, r.IsCaeEnabled);
 
