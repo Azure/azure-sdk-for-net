@@ -232,7 +232,7 @@ public partial class Subscription : Resource
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static Subscription FromExpression(Expression expression)
     {
-        Subscription resource = new(expression.ToString());
+        Subscription resource = new(nameof(Subscription));
         resource.OverrideWithExpression(expression);
         return resource;
     }

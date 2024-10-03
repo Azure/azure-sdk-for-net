@@ -206,7 +206,7 @@ public class Resource(Specification spec, Type armType)
                         writer.WriteLine($"public static {Name} FromExpression(Expression expression)");
                         using (writer.Scope("{", "}"))
                         {
-                            writer.WriteLine($"{Name} resource = new(expression.ToString());");
+                            writer.WriteLine($"{Name} resource = new(nameof({Name}));");
                             writer.WriteLine($"resource.OverrideWithExpression(expression);");
                             writer.WriteLine($"return resource;");
                         }

@@ -237,7 +237,7 @@ public partial class Tenant : Resource
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static Tenant FromExpression(Expression expression)
     {
-        Tenant resource = new(expression.ToString());
+        Tenant resource = new(nameof(Tenant));
         resource.OverrideWithExpression(expression);
         return resource;
     }

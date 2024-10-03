@@ -253,7 +253,7 @@ public partial class ArmDeployment : Resource
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static ArmDeployment FromExpression(Expression expression)
     {
-        ArmDeployment resource = new(expression.ToString());
+        ArmDeployment resource = new(nameof(ArmDeployment));
         resource.OverrideWithExpression(expression);
         return resource;
     }

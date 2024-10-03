@@ -42,6 +42,8 @@ public abstract class NamedProvisioningConstruct : ProvisioningConstruct
     // TODO: Relax this in the future when we make identifier names optional
     private static string ValidateIdentifierName(string identifierName, string paramName)
     {
+        // TODO: Enable when Aspire is ready
+        /*
         if (identifierName is null)
         {
             throw new ArgumentNullException(paramName, $"{nameof(IdentifierName)} cannot be null.");
@@ -58,6 +60,7 @@ public abstract class NamedProvisioningConstruct : ProvisioningConstruct
                 throw new ArgumentException($"{nameof(IdentifierName)} \"{identifierName}\" should only contain letters, numbers, and underscores.", paramName);
             }
         }
+        /**/
         return identifierName;
     }
 }

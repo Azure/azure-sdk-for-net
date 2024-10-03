@@ -333,7 +333,7 @@ public partial class ResourceGroup : Resource
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static ResourceGroup FromExpression(Expression expression)
     {
-        ResourceGroup resource = new(expression.ToString());
+        ResourceGroup resource = new(nameof(ResourceGroup));
         resource.OverrideWithExpression(expression);
         return resource;
     }

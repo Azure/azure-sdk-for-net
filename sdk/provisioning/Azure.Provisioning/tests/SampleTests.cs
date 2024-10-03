@@ -324,7 +324,7 @@ internal class SampleTests(bool async)
                 // the resource group
                 Infrastructure infra = new() { TargetScope = "subscription" };
 
-                ResourceGroup rg = new("rg-test", "2024-03-01");
+                ResourceGroup rg = new("rg_test", "2024-03-01");
                 infra.Add(rg);
 
                 return infra;
@@ -336,8 +336,8 @@ internal class SampleTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = deployment().location
 
-            resource rg-test 'Microsoft.Resources/resourceGroups@2024-03-01' = {
-              name: take('rg-test-${uniqueString(deployment().id)}', 90)
+            resource rg_test 'Microsoft.Resources/resourceGroups@2024-03-01' = {
+              name: take('rg_test-${uniqueString(deployment().id)}', 90)
               location: location
             }
             """)
