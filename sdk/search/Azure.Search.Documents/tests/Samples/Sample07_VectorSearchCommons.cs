@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         {
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
             string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
-            ApiKeyCredential credential = new ApiKeyCredential(key);
+            AzureKeyCredential credential = new AzureKeyCredential(key);
 
             AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
             EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-ada-002");
