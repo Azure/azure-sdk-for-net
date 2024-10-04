@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -179,7 +180,7 @@ internal class SampleTests(bool async)
                             new StringLiteral("Microsoft.App/managedEnvironments/dotNetComponents@2024-02-02-preview"),
                             new ObjectExpression(
                                 new PropertyExpression("name", "aspire-dashboard"),
-                                new PropertyExpression("parent", new IdentifierExpression(cae.ResourceName)),
+                                new PropertyExpression("parent", new IdentifierExpression(cae.IdentifierName)),
                                 new PropertyExpression("properties",
                                     new ObjectExpression(
                                         new PropertyExpression("componentType", new StringLiteral("AspireDashboard")))))));
@@ -323,7 +324,7 @@ internal class SampleTests(bool async)
                 // the resource group
                 Infrastructure infra = new() { TargetScope = "subscription" };
 
-                ResourceGroup rg = new("rg-test", "2024-03-01");
+                ResourceGroup rg = new("rg_test", "2024-03-01");
                 infra.Add(rg);
 
                 return infra;
@@ -335,12 +336,24 @@ internal class SampleTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = deployment().location
 
-            resource rg-test 'Microsoft.Resources/resourceGroups@2024-03-01' = {
-              name: take('rg-test-${uniqueString(deployment().id)}', 90)
+            resource rg_test 'Microsoft.Resources/resourceGroups@2024-03-01' = {
+              name: take('rg_test-${uniqueString(deployment().id)}', 90)
               location: location
             }
             """)
         .Lint()
         .ValidateAndDeployAsync();
+    }
+
+    [Test]
+    public void ValidNames()
+    {
+        Assert.Throws<ArgumentNullException>(() => new StorageAccount(null!));
+        Assert.Throws<ArgumentException>(() => new StorageAccount(""));
+        Assert.Throws<ArgumentException>(() => new StorageAccount("my-storage"));
+        Assert.Throws<ArgumentException>(() => new StorageAccount("my storage"));
+        Assert.Throws<ArgumentException>(() => new StorageAccount("my:storage"));
+        Assert.Throws<ArgumentException>(() => new StorageAccount("storage$"));
+        _ = new StorageAccount("ABCdef123_");
     }
 }

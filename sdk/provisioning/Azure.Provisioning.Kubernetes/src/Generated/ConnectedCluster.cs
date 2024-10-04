@@ -151,10 +151,15 @@ public partial class ConnectedCluster : Resource
     /// <summary>
     /// Creates a new ConnectedCluster.
     /// </summary>
-    /// <param name="resourceName">Name of the ConnectedCluster.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ConnectedCluster resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ConnectedCluster.</param>
-    public ConnectedCluster(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Kubernetes/connectedClusters", resourceVersion ?? "2024-01-01")
+    public ConnectedCluster(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Kubernetes/connectedClusters", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _agentPublicKeyCertificate = BicepValue<string>.DefineProperty(this, "AgentPublicKeyCertificate", ["properties", "agentPublicKeyCertificate"], isRequired: true);
@@ -207,11 +212,16 @@ public partial class ConnectedCluster : Resource
     /// <summary>
     /// Creates a reference to an existing ConnectedCluster.
     /// </summary>
-    /// <param name="resourceName">Name of the ConnectedCluster.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ConnectedCluster resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ConnectedCluster.</param>
     /// <returns>The existing ConnectedCluster resource.</returns>
-    public static ConnectedCluster FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ConnectedCluster FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ConnectedCluster resource.
@@ -229,10 +239,10 @@ public partial class ConnectedCluster : Resource
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
     public RoleAssignment CreateRoleAssignment(KubernetesBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{ResourceName}_{identity.ResourceName}_{KubernetesBuiltInRole.GetBuiltInRoleName(role)}")
+        new($"{IdentifierName}_{identity.IdentifierName}_{KubernetesBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(IdentifierName),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
@@ -245,13 +255,13 @@ public partial class ConnectedCluster : Resource
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
-    /// <param name="resourceNameSuffix">Optional role assignment resource name suffix.</param>
+    /// <param name="identifierNameSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment CreateRoleAssignment(KubernetesBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? resourceNameSuffix = default) =>
-        new($"{ResourceName}_{KubernetesBuiltInRole.GetBuiltInRoleName(role)}{(resourceNameSuffix is null ? "" : "_")}{resourceNameSuffix}")
+    public RoleAssignment CreateRoleAssignment(KubernetesBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? identifierNameSuffix = default) =>
+        new($"{IdentifierName}_{KubernetesBuiltInRole.GetBuiltInRoleName(role)}{(identifierNameSuffix is null ? "" : "_")}{identifierNameSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(IdentifierName),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

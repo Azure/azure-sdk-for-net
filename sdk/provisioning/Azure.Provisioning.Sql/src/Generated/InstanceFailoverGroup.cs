@@ -82,10 +82,15 @@ public partial class InstanceFailoverGroup : Resource
     /// <summary>
     /// Creates a new InstanceFailoverGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the InstanceFailoverGroup.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the InstanceFailoverGroup resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the InstanceFailoverGroup.</param>
-    public InstanceFailoverGroup(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/locations/instanceFailoverGroups", resourceVersion ?? "2021-11-01")
+    public InstanceFailoverGroup(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/locations/instanceFailoverGroups", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _managedInstancePairs = BicepList<ManagedInstancePairInfo>.DefineProperty(this, "ManagedInstancePairs", ["properties", "managedInstancePairs"]);
@@ -118,9 +123,14 @@ public partial class InstanceFailoverGroup : Resource
     /// <summary>
     /// Creates a reference to an existing InstanceFailoverGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the InstanceFailoverGroup.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the InstanceFailoverGroup resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the InstanceFailoverGroup.</param>
     /// <returns>The existing InstanceFailoverGroup resource.</returns>
-    public static InstanceFailoverGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static InstanceFailoverGroup FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

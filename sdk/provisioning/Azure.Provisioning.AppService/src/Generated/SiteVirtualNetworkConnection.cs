@@ -96,10 +96,15 @@ public partial class SiteVirtualNetworkConnection : Resource
     /// <summary>
     /// Creates a new SiteVirtualNetworkConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteVirtualNetworkConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SiteVirtualNetworkConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteVirtualNetworkConnection.</param>
-    public SiteVirtualNetworkConnection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/virtualNetworkConnections", resourceVersion ?? "2024-04-01")
+    public SiteVirtualNetworkConnection(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/sites/virtualNetworkConnections", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _certBlob = BicepValue<string>.DefineProperty(this, "CertBlob", ["properties", "certBlob"]);
@@ -279,9 +284,14 @@ public partial class SiteVirtualNetworkConnection : Resource
     /// <summary>
     /// Creates a reference to an existing SiteVirtualNetworkConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteVirtualNetworkConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SiteVirtualNetworkConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteVirtualNetworkConnection.</param>
     /// <returns>The existing SiteVirtualNetworkConnection resource.</returns>
-    public static SiteVirtualNetworkConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SiteVirtualNetworkConnection FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

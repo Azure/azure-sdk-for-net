@@ -12,14 +12,57 @@ namespace Azure.Provisioning.Primitives;
 /// <summary>
 /// A named Bicep entity, like a resource or parameter.
 /// </summary>
-public abstract class NamedProvisioningConstruct(string resourceName) : ProvisioningConstruct
+public abstract class NamedProvisioningConstruct : ProvisioningConstruct
 {
     /// <summary>
-    /// Gets or sets the the Bicep name of the resource.  This can be used to
-    /// refer to the resource in expressions, but isn't the Azure name of the
-    /// resource.  This value can contain letters, numbers, and underscores.
+    /// Gets or sets the the Bicep identifier name of the resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
     /// </summary>
-    public string ResourceName { get; set; } = resourceName;
+    public string IdentifierName
+    {
+        get => _identifierName;
+        set => _identifierName = ValidateIdentifierName(value, nameof(value));
+    }
+    private string _identifierName;
+    // TODO: Listen for feedback, but discuss IdentifierName vs. ProvisioningName in the Arch Board
+
+    /// <summary>
+    /// Creates a named Bicep entity, like a resource or parameter.
+    /// </summary>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
+    protected NamedProvisioningConstruct(string identifierName) =>
+        _identifierName = ValidateIdentifierName(identifierName, nameof(identifierName));
+
+    // TODO: Relax this in the future when we make identifier names optional
+    private static string ValidateIdentifierName(string identifierName, string paramName)
+    {
+        // TODO: Enable when Aspire is ready
+        /*
+        if (identifierName is null)
+        {
+            throw new ArgumentNullException(paramName, $"{nameof(IdentifierName)} cannot be null.");
+        }
+        else if (identifierName.Length == 0)
+        {
+            throw new ArgumentException($"{nameof(IdentifierName)} cannot be empty.", paramName);
+        }
+
+        foreach (var ch in identifierName)
+        {
+            if (!char.IsLetterOrDigit(ch) && ch != '_')
+            {
+                throw new ArgumentException($"{nameof(IdentifierName)} \"{identifierName}\" should only contain letters, numbers, and underscores.", paramName);
+            }
+        }
+        /**/
+        return identifierName;
+    }
 }
 
 public abstract class ProvisioningConstruct : Provisionable

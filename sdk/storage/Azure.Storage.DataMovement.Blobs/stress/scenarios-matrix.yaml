@@ -7,3 +7,71 @@ matrix:
       testScenario: uploadsingleblockblob
       image: Dockerfile
       imageBuildDir: "../../../.."
+    uploaddirectoryblockblob:
+      testScenario: uploaddirectoryblockblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    downloadsingleblockblob:
+      testScenario: downloadsingleblockblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    downloaddirectoryblockblob:
+      testScenario: downloaddirectoryblockblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    copysingleblockblob:
+      testScenario: copysingleblockblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    copydirectoryblockblob:
+      testScenario: copydirectoryblockblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    uploadsingleappendblob:
+      testScenario: uploadsingleappendblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    uploaddirectoryappendblob:
+      testScenario: uploaddirectoryappendblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    downloadsingleappendblob:
+      testScenario: downloadsingleappendblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    downloaddirectoryappendblob:
+      testScenario: downloaddirectoryappendblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    copysingleappendblob:
+      testScenario: copysingleappendblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    copydirectoryappendblob:
+      testScenario: copydirectoryappendblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    uploadsinglepageblob:
+      testScenario: uploadsinglepageblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    uploaddirectorypageblob:
+      testScenario: uploaddirectorypageblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    downloadsinglepageblob:
+      testScenario: downloadsinglepageblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    downloaddirectorypageblob:
+      testScenario: downloaddirectorypageblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    copysinglepageblob:
+      testScenario: copysinglepageblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    copydirectorypageblob:
+      testScenario: copydirectorypageblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."

@@ -5,9 +5,24 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
 {
     public enum TestScenarioName
     {
-        UploadSingleBlockBlobTest,
-        UploadDirectoryBlockBlobTest,
-        DownloadSingleBlockBlobTest,
+        UploadSingleBlockBlob,
+        UploadDirectoryBlockBlob,
+        DownloadSingleBlockBlob,
+        DownloadDirectoryBlockBlob,
+        CopySingleBlockBlob,
+        CopyDirectoryBlockBlob,
+        UploadSingleAppendBlob,
+        UploadDirectoryAppendBlob,
+        DownloadSingleAppendBlob,
+        DownloadDirectoryAppendBlob,
+        CopySingleAppendBlob,
+        CopyDirectoryAppendBlob,
+        UploadSinglePageBlob,
+        UploadDirectoryPageBlob,
+        DownloadSinglePageBlob,
+        DownloadDirectoryPageBlob,
+        CopySinglePageBlob,
+        CopyDirectoryPageBlob,
         None = default
     }
 }

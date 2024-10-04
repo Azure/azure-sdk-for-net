@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    internal class TrainingOperation : Operation<BinaryData>
+    internal class OperationWithId : Operation<BinaryData>
     {
         private const string OperationIdNotFoundErrorMessage = "The operation ID was not present in the service response.";
 
@@ -20,7 +21,7 @@ namespace Azure.AI.DocumentIntelligence
 
         private readonly string _operationId;
 
-        internal TrainingOperation(Operation<BinaryData> internalOperation)
+        internal OperationWithId(Operation<BinaryData> internalOperation)
         {
             _internalOperation = internalOperation;
             _operationId = GetOperationId();
@@ -53,16 +54,37 @@ namespace Azure.AI.DocumentIntelligence
         {
             var response = GetRawResponse();
 
+            // The "operation-location" header may or may not be present depending on the type of
+            // request that was sent to the service. It depends on whether it was a GET or a POST
+            // request, as well as whether this is an analysis or a training operation. In case the
+            // header is missing, the operation ID must be extracted from the response body. We're
+            // contemplating both scenarios in the code below.
+
             if (response.Headers.TryGetValue("operation-location", out string operationLocation))
             {
                 var match = s_locationHeaderRegex.Match(operationLocation);
 
-                if (!match.Success || !match.Groups[1].Success)
+                if (match.Success && match.Groups[1].Success)
                 {
-                    return null;
+                    return match.Groups[1].Value;
                 }
+            }
+            else if (response.Content is not null)
+            {
+                try
+                {
+                    using var document = JsonDocument.Parse(response.Content);
 
-                return match.Groups[1].Value;
+                    if (document.RootElement.TryGetProperty("operationId", out JsonElement operationIdProperty))
+                    {
+                        return operationIdProperty.GetString();
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception. Failing to extract the ID should not prevent users from
+                    // using most of this class' functionality.
+                }
             }
 
             return null;
