@@ -15,10 +15,13 @@ namespace Azure.Communication
     /// </summary>
     internal sealed class EntraTokenCredential : ICommunicationTokenCredential
     {
-        private readonly HttpPipeline _pipeline;
+        private HttpPipeline _pipeline;
         private string _resourceEndpoint;
         private TokenCredential _tokenCredential;
         private string[] _scopes;
+        private AccessToken _currentToken;
+        private readonly object _syncLock = new object();
+        private bool _someThreadIsExchanging;
 
         /// <summary>
         /// Initializes a new instance of <see cref="EntraTokenCredential"/>.
@@ -41,7 +44,8 @@ namespace Azure.Communication
         /// <inheritdoc />
         public void Dispose()
         {
-            //_pipeline.Dispose();
+            _currentToken = default;
+            _pipeline = default;
         }
 
         /// <summary>
@@ -63,8 +67,70 @@ namespace Azure.Communication
         /// </returns>
         public ValueTask<AccessToken> GetTokenAsync(CancellationToken cancellationToken)
         {
-            return ExchangeEntraToken(cancellationToken);
+            return GetValueAsync(cancellationToken);
         }
+
+        private async ValueTask<AccessToken> GetValueAsync(CancellationToken cancellationToken)
+        {
+            if (IsTokenValid(_currentToken))
+                return _currentToken;
+
+            var shouldThisThreadExchange = false;
+            lock (_syncLock)
+            {
+                while (!IsTokenValid(_currentToken))
+                {
+                    if (_someThreadIsExchanging)
+                    {
+                        if (IsTokenValid(_currentToken))
+                            return _currentToken;
+
+                        WaitForInProgressThreadFinish();
+                    }
+                    else
+                    {
+                        shouldThisThreadExchange = true;
+                        _someThreadIsExchanging = true;
+                        break;
+                    }
+                }
+            }
+
+            if (shouldThisThreadExchange)
+            {
+                try
+                {
+                    AccessToken result = await ExchangeEntraToken(cancellationToken).ConfigureAwait(false);
+                    lock (_syncLock)
+                    {
+                        _currentToken = result;
+                        Thread.MemoryBarrier();
+                        _someThreadIsExchanging = false;
+                        NotifyTokenExchangeDone();
+                    }
+                }
+                catch
+                {
+                    lock (_syncLock)
+                    {
+                        _someThreadIsExchanging = false;
+                        NotifyTokenExchangeDone();
+                    }
+                    throw;
+                }
+            }
+
+            return _currentToken;
+
+            void WaitForInProgressThreadFinish()
+                => Monitor.Wait(_syncLock);
+
+            void NotifyTokenExchangeDone()
+                => Monitor.PulseAll(_syncLock);
+        }
+
+        private bool IsTokenValid(AccessToken? token)
+            => token != null && DateTimeOffset.UtcNow < token?.ExpiresOn;
 
         private async ValueTask<AccessToken> ExchangeEntraToken(CancellationToken cancellationToken)
         {
@@ -96,17 +162,24 @@ namespace Azure.Communication
             switch (response.Status)
             {
                 case 200:
-                    var json = JsonDocument.Parse(response.Content);
-                    var accessTokenJson = json.RootElement.GetProperty("accessToken").GetRawText();
-                    var acsToken = JsonSerializer.Deserialize<AcsToken>(accessTokenJson);
-                    if (acsToken != null)
+                    try
                     {
+                        var json = JsonDocument.Parse(response.Content);
+                        var accessTokenJson = json.RootElement.GetProperty("accessToken").GetRawText();
+                        var acsToken = JsonSerializer.Deserialize<AcsToken>(accessTokenJson);
                         return new AccessToken(acsToken.token, acsToken.expiresOn);
                     }
-                    throw new RequestFailedException(response);
+                    catch (Exception)
+                    {
+                        throw new RequestFailedException(response);
+                    }
                 default:
                     throw new RequestFailedException(response);
             }
+        }
+        public void SetPipeline(HttpPipeline pipeline)
+        {
+            _pipeline = pipeline;
         }
 
         private partial class AcsToken

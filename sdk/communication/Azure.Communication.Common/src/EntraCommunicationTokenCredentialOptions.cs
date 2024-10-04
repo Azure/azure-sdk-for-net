@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -39,7 +36,7 @@ namespace Azure.Communication
             TokenCredential entraTokenCredential,
             string[] scopes)
         {
-            Argument.AssertNotNull(resourceEndpoint, nameof(resourceEndpoint));
+            Argument.AssertNotNullOrEmpty(resourceEndpoint, nameof(resourceEndpoint));
             Argument.AssertNotNull(entraTokenCredential, nameof(entraTokenCredential));
             Argument.AssertNotNullOrEmpty(scopes, nameof(scopes));
 
