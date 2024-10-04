@@ -723,7 +723,7 @@
 # ServiceOwners:                                                   @netwatchsuppgithub
 
 # PRLabel: %Network - DNS
-/sdk/dns*/                                                         @dnssuppgithub
+/sdk/dns/                                                         @dnssuppgithub
 
 # ServiceLabel: %Network - DNS
 # ServiceOwnerS:                                                   @dnssuppgithub
@@ -742,6 +742,9 @@
 
 # ServiceLabel: %Notification Hub
 # ServiceOwners:                                                   @tjsomasundaram
+
+# PRLabel: %Network - DNS
+/sdk/dnsresolver/                                                  @jamesvoongms @jotrivet @harmen-msft @anilpuvvadi @arpit-gagneja
 
 # PRLabel: %OpenAI
 /sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash @ralph-msft

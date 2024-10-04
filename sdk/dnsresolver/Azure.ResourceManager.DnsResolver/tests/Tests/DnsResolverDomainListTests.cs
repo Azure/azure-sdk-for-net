@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsResolverDomainListName = Recording.GenerateAssetName("dnsResolverDomainList-");
             await CreateDnsResolverDomainListCollectionAsync();
-            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation, new List<string>() { "test.com.", "env.com." });
+            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation, new List<string>() { "example.com.", "contoso.com." });
 
             // ACT
             var dnsResolverDomainList = await _dnsResolverDomainListCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverDomainListName, dnsResolverDomainListData);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsResolverDomainListName = Recording.GenerateAssetName("dnsResolverDomainList-");
             await CreateDnsResolverDomainListCollectionAsync();
-            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation, new List<string>() { "test.com.", "env.com." });
+            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation, new List<string>() { "example.com.", "contoso.com." });
 
             await _dnsResolverDomainListCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverDomainListName, dnsResolverDomainListData);
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
             await CreateDnsResolverDomainListCollectionAsync();
-            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation, new List<string>() { "test.com.", "env.com." });
+            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation, new List<string>() { "example.com.", "contoso.com." });
 
             var createdDnsResolverDomainList = await _dnsResolverDomainListCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverDomainListName, dnsResolverDomainListData);
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsResolverDomainListName = Recording.GenerateAssetName("dnsResolverDomainList-");
             await CreateDnsResolverDomainListCollectionAsync();
-            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation, new List<string>() { "test.com." , "env.com."});
+            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation, new List<string>() { "example.com." , "contoso.com."});
 
             var dnsResolverDomainList = await _dnsResolverDomainListCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverDomainListName, dnsResolverDomainListData);
 
