@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs.Perf", "Azure.Storage.DataMovement.Blobs\perf\Azure.Storage.DataMovement.Blobs.Perf\Azure.Storage.DataMovement.Blobs.Perf.csproj", "{8626A2CD-6208-4E25-BA56-726730F40AE6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{06787AFE-CA94-46EE-8F6F-0FD0C057022B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{8626A2CD-6208-4E25-BA56-726730F40AE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8626A2CD-6208-4E25-BA56-726730F40AE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8626A2CD-6208-4E25-BA56-726730F40AE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06787AFE-CA94-46EE-8F6F-0FD0C057022B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06787AFE-CA94-46EE-8F6F-0FD0C057022B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06787AFE-CA94-46EE-8F6F-0FD0C057022B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06787AFE-CA94-46EE-8F6F-0FD0C057022B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
