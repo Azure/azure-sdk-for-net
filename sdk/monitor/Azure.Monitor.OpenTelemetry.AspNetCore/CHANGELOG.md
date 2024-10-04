@@ -21,6 +21,9 @@
 * Fixed a bug in LiveMetrics that counted all manually created Dependencies as failures.
   ([#45103](https://github.com/Azure/azure-sdk-for-net/pull/45103))
 
+* Fixed a bug in LiveMetrics that caused incorrect counts for telemetry.
+  ([#46429](https://github.com/Azure/azure-sdk-for-net/pull/46429))
+
 ### Other Changes
 
 * Updated the code of vendored resource detector library `OpenTelemetry.Resources.Azure` from the OpenTelemetry .NET contrib repository.
