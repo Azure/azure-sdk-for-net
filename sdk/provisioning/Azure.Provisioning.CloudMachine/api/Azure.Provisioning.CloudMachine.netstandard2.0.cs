@@ -74,3 +74,15 @@ namespace Azure.Provisioning.CloudMachine.KeyVault
         public override void AddTo(Azure.Provisioning.CloudMachine.CloudMachineInfrastructure cm) { }
     }
 }
+namespace Azure.Provisioning.CloudMachine.OpenAI
+{
+    public partial class OpenAIFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
+    {
+        public OpenAIFeature() { }
+        public override void AddTo(Azure.Provisioning.CloudMachine.CloudMachineInfrastructure cm) { }
+    }
+    public static partial class OpenAIFeatureExtensions
+    {
+        public static Azure.Security.KeyVault.Secrets.SecretClient GetOpenAIClient(this Azure.CloudMachine.CloudMachineClient client) { throw null; }
+    }
+}
