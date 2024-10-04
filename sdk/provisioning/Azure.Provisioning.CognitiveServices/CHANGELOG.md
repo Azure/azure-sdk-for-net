@@ -1,7 +1,7 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2025-10-04)
 
 ### Features Added
 
-- Initial beta release of new Azure.Provisioning.CognitiveServices.
+- Preview of the new Azure.Provisioning experience.
