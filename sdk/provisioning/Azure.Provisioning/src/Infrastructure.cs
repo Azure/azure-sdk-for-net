@@ -94,6 +94,11 @@ public class Infrastructure(string name = "main") : Provisionable
         }
     }
 
+    private static bool IsAsciiLetterOrDigit(char ch) =>
+        'a' <= ch && ch <= 'z' ||
+        'A' <= ch && ch <= 'Z' ||
+        '0' <= ch && ch <= '9';
+
     /// <summary>
     /// Checks whether an name is a valid bicep identifier name comprised of
     /// letters, digits, and underscores.
@@ -106,7 +111,7 @@ public class Infrastructure(string name = "main") : Provisionable
         if (char.IsDigit(identifierName![0])) { return false; }
         foreach (char ch in identifierName)
         {
-            if (!char.IsLetterOrDigit(ch) && ch != '_')
+            if (!IsAsciiLetterOrDigit(ch) && ch != '_')
             {
                 return false;
             }
@@ -119,28 +124,30 @@ public class Infrastructure(string name = "main") : Provisionable
     /// letters, numbers, and underscores.
     /// </summary>
     /// <param name="identifierName">The proposed bicep identifier name.</param>
+    /// <param name="paramName">Optional parameter name to use for exceptions.</param>
     /// <exception cref="ArgumentNullException">Throws if null.</exception>
     /// <exception cref="ArgumentException">Throws if empty or invalid.</exception>
-    public static void ValidateIdentifierName(string? identifierName)
+    public static void ValidateIdentifierName(string? identifierName, string? paramName = default)
     {
+        paramName ??= nameof(identifierName);
         if (identifierName is null)
         {
-            throw new ArgumentNullException(nameof(identifierName), $"{nameof(identifierName)} cannot be null.");
+            throw new ArgumentNullException(paramName, $"{paramName} cannot be null.");
         }
         else if (identifierName.Length == 0)
         {
-            throw new ArgumentException($"{nameof(identifierName)} cannot be empty.", nameof(identifierName));
+            throw new ArgumentException($"{paramName} cannot be empty.", paramName);
         }
         else if (char.IsDigit(identifierName[0]))
         {
-            throw new ArgumentException($"{nameof(identifierName)} cannot start with a number: \"{identifierName}\"", nameof(identifierName));
+            throw new ArgumentException($"{paramName} cannot start with a number: \"{identifierName}\"", paramName);
         }
 
         foreach (var ch in identifierName)
         {
-            if (!char.IsLetterOrDigit(ch) && ch != '_')
+            if (!IsAsciiLetterOrDigit(ch) && ch != '_')
             {
-                throw new ArgumentException($"{nameof(identifierName)} should only contain letters, numbers, and underscores: \"{identifierName}\"", nameof(identifierName));
+                throw new ArgumentException($"{paramName} should only contain letters, numbers, and underscores: \"{identifierName}\"", paramName);
             }
         }
     }
@@ -155,6 +162,11 @@ public class Infrastructure(string name = "main") : Provisionable
     /// <exception cref="ArgumentException">Throws if empty.</exception>
     public static string NormalizeIdentifierName(string? identifierName)
     {
+        if (IsValidIdentifierName(identifierName))
+        {
+            return identifierName!;
+        }
+
         if (identifierName is null)
         {
             // TODO: This may be relaxed in the future to generate an automatic
@@ -179,7 +191,7 @@ public class Infrastructure(string name = "main") : Provisionable
         {
             // TODO: Consider opening this up to other naming strategies if
             // someone can do something more intelligent for their usage/domain
-            builder.Append(char.IsLetterOrDigit(ch) ? ch : '_');
+            builder.Append(IsAsciiLetterOrDigit(ch) ? ch : '_');
         }
 
         return builder.ToString();

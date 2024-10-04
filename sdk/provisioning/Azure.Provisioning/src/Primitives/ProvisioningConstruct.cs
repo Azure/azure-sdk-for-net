@@ -23,7 +23,11 @@ public abstract class NamedProvisioningConstruct : ProvisioningConstruct
     public string IdentifierName
     {
         get => _identifierName;
-        set => _identifierName = ValidateIdentifierName(value, nameof(value));
+        set
+        {
+            Infrastructure.ValidateIdentifierName(value, nameof(value));
+            _identifierName = value;
+        }
     }
     private string _identifierName;
     // TODO: Listen for customer feedback and discuss IdentifierName vs.
@@ -37,25 +41,13 @@ public abstract class NamedProvisioningConstruct : ProvisioningConstruct
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
-    protected NamedProvisioningConstruct(string identifierName) =>
+    protected NamedProvisioningConstruct(string identifierName)
+    {
         // TODO: In the near future we'll make this optional and only validate
         // if the value passed in isn't null.
-        _identifierName = ValidateIdentifierName(identifierName, nameof(identifierName));
-
-    // Throw an exception relative to the .ctor param name or setter value
-    private static string ValidateIdentifierName(string identifierName, string paramName) =>
-        identifierName switch
-        {
-            null => throw new ArgumentNullException(paramName, $"{paramName} cannot be null."),
-            "" => throw new ArgumentException($"{paramName} cannot be empty.", paramName),
-            _ when !Infrastructure.IsValidIdentifierName(identifierName) =>
-                throw new ArgumentException(
-                    char.IsDigit(identifierName[0]) ?
-                        $"{paramName} cannot start with a number: \"{identifierName}\"" :
-                        $"{paramName} should only contain letters, numbers, and underscores: \"{identifierName}\"",
-                    paramName),
-            _ => identifierName
-        };
+        Infrastructure.ValidateIdentifierName(identifierName, nameof(identifierName));
+        _identifierName = identifierName;
+    }
 }
 
 public abstract class ProvisioningConstruct : Provisionable

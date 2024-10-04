@@ -103,7 +103,7 @@ namespace Azure.Provisioning
         public virtual void Remove(Azure.Provisioning.Primitives.Provisionable resource) { }
         protected internal override void Resolve(Azure.Provisioning.ProvisioningContext? context = null) { }
         protected internal override void Validate(Azure.Provisioning.ProvisioningContext? context = null) { }
-        public static void ValidateIdentifierName(string? identifierName) { }
+        public static void ValidateIdentifierName(string? identifierName, string? paramName = null) { }
     }
     public partial class ProvisioningContext
     {

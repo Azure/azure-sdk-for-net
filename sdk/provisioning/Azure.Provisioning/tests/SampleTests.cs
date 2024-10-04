@@ -355,7 +355,7 @@ internal class SampleTests(bool async)
         Assert.Throws<ArgumentNullException>(() => new StorageAccount(null!));
 
         // Check invalid names
-        List<string> invalid = ["", "my-storage", "my storage", "my:storage", "storage$", "1storage"];
+        List<string> invalid = ["", "my-storage", "my storage", "my:storage", "storage$", "1storage", "KforKelvin"];
         foreach (string name in invalid)
         {
             Assert.IsFalse(Infrastructure.IsValidIdentifierName(name));
