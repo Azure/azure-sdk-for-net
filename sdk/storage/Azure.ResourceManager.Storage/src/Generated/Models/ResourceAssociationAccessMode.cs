@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(ResourceAssociationAccessMode left, ResourceAssociationAccessMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceAssociationAccessMode"/> values are not the same. </summary>
         public static bool operator !=(ResourceAssociationAccessMode left, ResourceAssociationAccessMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourceAssociationAccessMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceAssociationAccessMode"/>. </summary>
         public static implicit operator ResourceAssociationAccessMode(string value) => new ResourceAssociationAccessMode(value);
 
         /// <inheritdoc />

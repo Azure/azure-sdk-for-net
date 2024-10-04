@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(ExtractiveSummarizationSortingCriteria left, ExtractiveSummarizationSortingCriteria right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExtractiveSummarizationSortingCriteria"/> values are not the same. </summary>
         public static bool operator !=(ExtractiveSummarizationSortingCriteria left, ExtractiveSummarizationSortingCriteria right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExtractiveSummarizationSortingCriteria"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExtractiveSummarizationSortingCriteria"/>. </summary>
         public static implicit operator ExtractiveSummarizationSortingCriteria(string value) => new ExtractiveSummarizationSortingCriteria(value);
 
         /// <inheritdoc />

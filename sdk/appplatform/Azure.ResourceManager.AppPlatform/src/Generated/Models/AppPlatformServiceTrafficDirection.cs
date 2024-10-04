@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static bool operator ==(AppPlatformServiceTrafficDirection left, AppPlatformServiceTrafficDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformServiceTrafficDirection"/> values are not the same. </summary>
         public static bool operator !=(AppPlatformServiceTrafficDirection left, AppPlatformServiceTrafficDirection right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppPlatformServiceTrafficDirection"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppPlatformServiceTrafficDirection"/>. </summary>
         public static implicit operator AppPlatformServiceTrafficDirection(string value) => new AppPlatformServiceTrafficDirection(value);
 
         /// <inheritdoc />

@@ -15,30 +15,58 @@ namespace Azure.Provisioning.Primitives;
 public abstract class NamedProvisioningConstruct : ProvisioningConstruct
 {
     /// <summary>
-    /// Gets the the Bicep name of the resource.  This can be used to refer to
-    /// the resource in expressions, but isn't the Azure name of the resource.
+    /// Gets or sets the the Bicep identifier name of the resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
     /// </summary>
-    public string ResourceName { get; private set; }
-
-    public NamedProvisioningConstruct(string resourceName, ProvisioningContext? context = default)
-        : base(context)
+    public string IdentifierName
     {
-        ResourceName = resourceName;
+        get => _identifierName;
+        set => _identifierName = ValidateIdentifierName(value, nameof(value));
+    }
+    private string _identifierName;
+    // TODO: Listen for feedback, but discuss IdentifierName vs. ProvisioningName in the Arch Board
 
-        // Named entities get added to the default infrastructure automatically
-        DefaultProvisioningContext.DefaultInfrastructure.Add(this);
+    /// <summary>
+    /// Creates a named Bicep entity, like a resource or parameter.
+    /// </summary>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
+    protected NamedProvisioningConstruct(string identifierName) =>
+        _identifierName = ValidateIdentifierName(identifierName, nameof(identifierName));
+
+    // TODO: Relax this in the future when we make identifier names optional
+    private static string ValidateIdentifierName(string identifierName, string paramName)
+    {
+        // TODO: Enable when Aspire is ready
+        /*
+        if (identifierName is null)
+        {
+            throw new ArgumentNullException(paramName, $"{nameof(IdentifierName)} cannot be null.");
+        }
+        else if (identifierName.Length == 0)
+        {
+            throw new ArgumentException($"{nameof(IdentifierName)} cannot be empty.", paramName);
+        }
+
+        foreach (var ch in identifierName)
+        {
+            if (!char.IsLetterOrDigit(ch) && ch != '_')
+            {
+                throw new ArgumentException($"{nameof(IdentifierName)} \"{identifierName}\" should only contain letters, numbers, and underscores.", paramName);
+            }
+        }
+        /**/
+        return identifierName;
     }
 }
 
-public abstract class ProvisioningConstruct(ProvisioningContext? context = default) : Provisionable
+public abstract class ProvisioningConstruct : Provisionable
 {
-    /// <summary>
-    /// Gets the default <see cref="ProvisioningContext"/> provided or obtained
-    /// at construction time.
-    /// </summary>
-    protected ProvisioningContext DefaultProvisioningContext { get; private set; } =
-        context ?? ProvisioningContext.Provider.GetProvisioningContext();
-
     /// <summary>
     /// Gets the parent infrastructure construct, if any.
     /// </summary>
@@ -106,7 +134,7 @@ public abstract class ProvisioningConstruct(ProvisioningContext? context = defau
     /// <inheritdoc/>
     protected internal override void Resolve(ProvisioningContext? context = null)
     {
-        context ??= DefaultProvisioningContext;
+        context ??= new();
         base.Resolve(context);
 
         // Resolve any property values
@@ -119,7 +147,7 @@ public abstract class ProvisioningConstruct(ProvisioningContext? context = defau
     /// <inheritdoc/>
     protected internal override void Validate(ProvisioningContext? context = null)
     {
-        context ??= DefaultProvisioningContext;
+        context ??= new();
         base.Validate(context);
     }
 
@@ -140,14 +168,12 @@ public abstract class ProvisioningConstruct(ProvisioningContext? context = defau
     }
 
     /// <inheritdoc/>
-    protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = null) =>
-        [new ExprStatement(CompileProperties(context))];
+    protected internal override IEnumerable<Statement> Compile() =>
+        [new ExprStatement(CompileProperties())];
 
-    private protected Expression CompileProperties(ProvisioningContext? context = null)
+    private protected Expression CompileProperties()
     {
         if (ExpressionOverride is not null) { return ExpressionOverride; }
-
-        context ??= DefaultProvisioningContext;
 
         // Aggregate all the properties into a single nested dictionary
         Dictionary<string, object> body = [];
@@ -172,7 +198,7 @@ public abstract class ProvisioningConstruct(ProvisioningContext? context = defau
 
         // Collapse those nested dictionaries into nested ObjectExpressions,
         // compiling values along the way
-        ObjectExpression CompileValues(IDictionary<string, object> dict)
+        static ObjectExpression CompileValues(IDictionary<string, object> dict)
         {
             Dictionary<string, Expression> bicep = [];
             foreach (KeyValuePair<string, object> pair in dict)
@@ -187,7 +213,7 @@ public abstract class ProvisioningConstruct(ProvisioningContext? context = defau
                 }
                 else if (pair.Value is ProvisioningConstruct construct)
                 {
-                    IList<Statement> statements = [..construct.Compile(context)];
+                    IList<Statement> statements = [..construct.Compile()];
                     if (statements.Count != 1 || statements[0] is not ExprStatement expr)
                     {
                         throw new InvalidOperationException($"Expected a single expression statement for {pair.Key}.");

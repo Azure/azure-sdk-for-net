@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(SsisObjectMetadataType left, SsisObjectMetadataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SsisObjectMetadataType"/> values are not the same. </summary>
         public static bool operator !=(SsisObjectMetadataType left, SsisObjectMetadataType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SsisObjectMetadataType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SsisObjectMetadataType"/>. </summary>
         public static implicit operator SsisObjectMetadataType(string value) => new SsisObjectMetadataType(value);
 
         /// <inheritdoc />

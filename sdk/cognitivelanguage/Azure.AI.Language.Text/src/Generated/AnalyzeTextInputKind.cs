@@ -48,7 +48,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(AnalyzeTextInputKind left, AnalyzeTextInputKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeTextInputKind"/> values are not the same. </summary>
         public static bool operator !=(AnalyzeTextInputKind left, AnalyzeTextInputKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnalyzeTextInputKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalyzeTextInputKind"/>. </summary>
         public static implicit operator AnalyzeTextInputKind(string value) => new AnalyzeTextInputKind(value);
 
         /// <inheritdoc />

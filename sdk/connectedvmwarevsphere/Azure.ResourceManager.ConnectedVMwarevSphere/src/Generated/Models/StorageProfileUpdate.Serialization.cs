@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         void IJsonModel<StorageProfileUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StorageProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StorageProfileUpdate IJsonModel<StorageProfileUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

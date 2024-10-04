@@ -37,6 +37,18 @@ namespace Azure.Search.Documents.Models
                     writer.WriteNull("defaultOversampling");
                 }
             }
+            if (Optional.IsDefined(TruncationDimension))
+            {
+                if (TruncationDimension != null)
+                {
+                    writer.WritePropertyName("truncationDimension"u8);
+                    writer.WriteNumberValue(TruncationDimension.Value);
+                }
+                else
+                {
+                    writer.WriteNull("truncationDimension");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -50,6 +62,7 @@ namespace Azure.Search.Documents.Models
             VectorSearchCompressionKind kind = "Unknown";
             bool? rerankWithOriginalVectors = default;
             double? defaultOversampling = default;
+            int? truncationDimension = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -81,8 +94,18 @@ namespace Azure.Search.Documents.Models
                     defaultOversampling = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("truncationDimension"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        truncationDimension = null;
+                        continue;
+                    }
+                    truncationDimension = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new UnknownVectorSearchCompression(name, kind, rerankWithOriginalVectors, defaultOversampling);
+            return new UnknownVectorSearchCompression(name, kind, rerankWithOriginalVectors, defaultOversampling, truncationDimension);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

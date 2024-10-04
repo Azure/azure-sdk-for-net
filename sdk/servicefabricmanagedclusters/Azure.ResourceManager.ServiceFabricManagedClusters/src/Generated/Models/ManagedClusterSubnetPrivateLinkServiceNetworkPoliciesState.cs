@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator ==(ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState left, ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState"/> values are not the same. </summary>
         public static bool operator !=(ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState left, ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState"/>. </summary>
         public static implicit operator ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(string value) => new ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(value);
 
         /// <inheritdoc />

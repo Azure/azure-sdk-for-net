@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlFlexibleServerZoneRedundantRestricted left, PostgreSqlFlexibleServerZoneRedundantRestricted right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerZoneRedundantRestricted"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerZoneRedundantRestricted left, PostgreSqlFlexibleServerZoneRedundantRestricted right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerZoneRedundantRestricted"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerZoneRedundantRestricted"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerZoneRedundantRestricted(string value) => new PostgreSqlFlexibleServerZoneRedundantRestricted(value);
 
         /// <inheritdoc />

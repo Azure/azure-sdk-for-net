@@ -58,6 +58,11 @@ internal static class SemanticConventions
     public const string AttributeDbRedisDatabaseIndex = "db.redis.database_index";
     public const string AttributeDbMongoDbCollection = "db.mongodb.collection";
 
+    public const string AttributeRpcSystem = "rpc.system";
+    public const string AttributeRpcService = "rpc.service";
+    public const string AttributeRpcMethod = "rpc.method";
+    public const string AttributeRpcGrpcStatusCode = "rpc.grpc.status_code";
+
     public const string AttributeMessageType = "message.type";
     public const string AttributeMessageId = "message.id";
     public const string AttributeMessageCompressedSize = "message.compressed_size";
@@ -111,5 +116,25 @@ internal static class SemanticConventions
     public const string AttributeServerAddress = "server.address"; // replaces: "net.host.name" (AttributeNetHostName)
     public const string AttributeServerPort = "server.port"; // replaces: "net.host.port" (AttributeNetHostPort)
     public const string AttributeUserAgentOriginal = "user_agent.original"; // replaces: http.user_agent (AttributeHttpUserAgent)
+
+    // v1.24.0 Messaging spans
+    // https://github.com/open-telemetry/semantic-conventions/blob/v1.24.0/docs/messaging/messaging-spans.md
+    public const string AttributeMessagingClientId = "messaging.client_id";
+    public const string AttributeMessagingDestinationName = "messaging.destination.name";
+
+    // v1.24.0 Messaging metrics
+    // https://github.com/open-telemetry/semantic-conventions/blob/v1.24.0/docs/messaging/messaging-metrics.md
+    public const string MetricMessagingPublishDuration = "messaging.publish.duration";
+    public const string MetricMessagingPublishMessages = "messaging.publish.messages";
+    public const string MetricMessagingReceiveDuration = "messaging.receive.duration";
+    public const string MetricMessagingReceiveMessages = "messaging.receive.messages";
+
+    // v1.24.0 Messaging (Kafka)
+    // https://github.com/open-telemetry/semantic-conventions/blob/v1.24.0/docs/messaging/kafka.md
+    public const string AttributeMessagingKafkaConsumerGroup = "messaging.kafka.consumer.group";
+    public const string AttributeMessagingKafkaDestinationPartition = "messaging.kafka.destination.partition";
+    public const string AttributeMessagingKafkaMessageKey = "messaging.kafka.message.key";
+    public const string AttributeMessagingKafkaMessageOffset = "messaging.kafka.message.offset";
+
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(WebHookActivityMethod left, WebHookActivityMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebHookActivityMethod"/> values are not the same. </summary>
         public static bool operator !=(WebHookActivityMethod left, WebHookActivityMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WebHookActivityMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebHookActivityMethod"/>. </summary>
         public static implicit operator WebHookActivityMethod(string value) => new WebHookActivityMethod(value);
 
         /// <inheritdoc />

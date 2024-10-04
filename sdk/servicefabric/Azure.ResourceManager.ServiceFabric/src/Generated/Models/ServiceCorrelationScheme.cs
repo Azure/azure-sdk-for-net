@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static bool operator ==(ServiceCorrelationScheme left, ServiceCorrelationScheme right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceCorrelationScheme"/> values are not the same. </summary>
         public static bool operator !=(ServiceCorrelationScheme left, ServiceCorrelationScheme right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceCorrelationScheme"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceCorrelationScheme"/>. </summary>
         public static implicit operator ServiceCorrelationScheme(string value) => new ServiceCorrelationScheme(value);
 
         /// <inheritdoc />

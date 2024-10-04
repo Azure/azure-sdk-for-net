@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator ==(KeyVaultProvisioningState left, KeyVaultProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(KeyVaultProvisioningState left, KeyVaultProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KeyVaultProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KeyVaultProvisioningState"/>. </summary>
         public static implicit operator KeyVaultProvisioningState(string value) => new KeyVaultProvisioningState(value);
 
         /// <inheritdoc />

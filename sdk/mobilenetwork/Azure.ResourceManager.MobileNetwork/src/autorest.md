@@ -18,6 +18,7 @@ sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
 use-model-reader-writer: true
+use-write-core: true
 client-side-validation: false
 enable-bicep-serialization: true
 

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         void IJsonModel<MachineExtensionUpgrade>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionUpgrade>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineExtensionUpgrade)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ExtensionTargets))
             {
                 writer.WritePropertyName("extensionTargets"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MachineExtensionUpgrade IJsonModel<MachineExtensionUpgrade>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
