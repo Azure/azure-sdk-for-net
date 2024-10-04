@@ -9,7 +9,7 @@ Azure.Provisioning makes it easy to declaratively specify Azure infrastructure n
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning
+dotnet add package Azure.Provisioning --prerelease
 ```
 
 ### Prerequisites
