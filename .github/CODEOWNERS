@@ -744,7 +744,10 @@
 # ServiceOwners:                                                   @tjsomasundaram
 
 # PRLabel: %Network - DNS
-/sdk/dnsresolver/                                                  @jamesvoongms @jotrivet @harmen-msft @anilpuvvadi @arpit-gagneja
+/sdk/dnsresolver/                                                  @jamesvoongms @jotrivet
+
+# ServiceLabel: %Network - DNS Resolver
+# ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %OpenAI
 /sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash @ralph-msft
@@ -1017,6 +1020,12 @@
 
 # ServiceLabel: %Network - Mobile %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
+
+# PRLabel: %Network - DNS Resolver
+/sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
+
+# ServiceLabel: %Network - DNS Resolver
+# ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %Network - Cloud
 /sdk/networkcloud/Azure.ResourceManager.*/                         @Azure/azure-sdk-write-networkcloud
