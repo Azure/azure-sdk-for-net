@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +11,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication
 {
     /// <summary>
-    /// Represents a credential that exchanges an Entra token for an Azure Communication Services (ACS) token, , enabling access to ACS resources.
+    /// Represents a credential that exchanges an Entra token for an Azure Communication Services (ACS) token, enabling access to ACS resources.
     /// </summary>
     internal sealed class EntraTokenCredential : ICommunicationTokenCredential
     {
@@ -31,6 +30,12 @@ namespace Azure.Communication
             this._resourceEndpoint = options.ResourceEndpoint;
             this._scopes = options.Scopes;
             _pipeline = CreatePipelineFromOptions(options);
+        }
+
+        private HttpPipeline CreatePipelineFromOptions(EntraCommunicationTokenCredentialOptions options)
+        {
+            var authenticationPolicy = new BearerTokenAuthenticationPolicy(options.TokenCredential, options.Scopes);
+            return HttpPipelineBuilder.Build(ClientOptions.Default, authenticationPolicy);
         }
 
         /// <inheritdoc />
@@ -61,76 +66,51 @@ namespace Azure.Communication
 
         private async ValueTask<AccessToken> ExchangeEntraToken(CancellationToken cancellationToken)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
+            var message = CreateRequestMessage();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            return ParseAccessTokenFromResponse(message.Response);
+        }
+
+        private HttpMessage CreateRequestMessage()
+        {
             var uri = new RequestUriBuilder();
             uri.Reset(new Uri(_resourceEndpoint));
             uri.AppendPath("/access/entra/:exchangeAccessToken", false);
             uri.AppendQuery("api-version", "2024-04-01-preview", true);
+
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            request.Content = "{}";
 
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            return message;
+        }
+
+        private AccessToken ParseAccessTokenFromResponse(Response response)
+        {
+            switch (response.Status)
             {
                 case 200:
+                    var json = JsonDocument.Parse(response.Content);
+                    var accessTokenJson = json.RootElement.GetProperty("accessToken").GetRawText();
+                    var acsToken = JsonSerializer.Deserialize<AcsToken>(accessTokenJson);
+                    if (acsToken != null)
                     {
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        var accessToken = DeserializeCommunicationUserIdentifierAndToken(document.RootElement);
-                        if (accessToken != null)
-                        {
-                            return (AccessToken)accessToken;
-                        }
-                        throw new RequestFailedException(message.Response);
+                        return new AccessToken(acsToken.token, acsToken.expiresOn);
                     }
+                    throw new RequestFailedException(response);
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw new RequestFailedException(response);
             }
         }
 
-        private AccessToken? DeserializeCommunicationUserIdentifierAndToken(JsonElement element)
+        private partial class AcsToken
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            AccessToken accessToken = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("accessToken"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    string token = default;
-                    DateTimeOffset expiresOn = default;
-                    foreach (var tokenProperty in property.Value.EnumerateObject())
-                    {
-                        if (property.NameEquals("token"u8))
-                        {
-                            token = tokenProperty.Value.GetString();
-                            continue;
-                        }
-                        if (property.NameEquals("expiresOn"u8))
-                        {
-                            //expiresOn = property.Value;
-                            continue;
-                        }
-                    }
-                    accessToken = new AccessToken(token, expiresOn);
-                    continue;
-                }
-            }
-            return accessToken;
-        }
-
-        private HttpPipeline CreatePipelineFromOptions(EntraCommunicationTokenCredentialOptions options)
-        {
-            var authenticationPolicy = new BearerTokenAuthenticationPolicy(options.TokenCredential,options.Scopes);
-            return HttpPipelineBuilder.Build(ClientOptions.Default, authenticationPolicy);
+            public string token { get; set; }
+            public DateTimeOffset expiresOn { get; set; }
         }
     }
 }
