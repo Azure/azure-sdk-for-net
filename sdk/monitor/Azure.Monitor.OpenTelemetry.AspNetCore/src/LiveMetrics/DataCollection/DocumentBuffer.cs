@@ -7,12 +7,11 @@ using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
 {
     /// <summary>
-    /// Manages a thread-safe collection of DocumentIngress objects with a fixed capacity.
+    /// Manages a thread-safe collection of DocumentIngress objects.
     /// </summary>
     internal class DocumentBuffer
     {
         private readonly ConcurrentQueue<DocumentIngress> _documents = new();
-        private readonly int _capacity = 20;
         // ConcurrentQueue<T>.Count is not used because it is not an O(1) operation. Instead, we use a separate counter.
         // Atomic counter for the number of documents in the queue.
         private int _count = 0;
@@ -20,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
         public void Add(DocumentIngress document)
         {
             // Ensure the queue does not exceed capacity.
-            if (Interlocked.CompareExchange(ref _count, 0, 0) < _capacity)
+            if (Interlocked.CompareExchange(ref _count, 0, 0) < int.MaxValue)
             {
                 _documents.Enqueue(document);
                 Interlocked.Increment(ref _count);
