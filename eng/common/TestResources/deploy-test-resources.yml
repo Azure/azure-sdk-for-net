@@ -60,6 +60,7 @@ steps:
           '@ | ConvertFrom-Json -AsHashtable;
 
           $context = Get-AzContext
+          $subscriptionConfiguration["Environment"] = $context.Environment.Name
           $subscriptionConfiguration["SubscriptionId"] = $context.Subscription.Id
           $subscriptionConfiguration["TenantId"] = $context.Subscription.TenantId
           $subscriptionConfiguration["TestApplicationId"] = $context.Account.Id
