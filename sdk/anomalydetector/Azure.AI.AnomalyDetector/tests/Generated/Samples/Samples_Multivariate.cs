@@ -18,13 +18,13 @@ namespace Azure.AI.AnomalyDetector.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_GetMultivariateBatchDetectionResult_ShortVersion()
+        public void Example_Multivariate_GetMultivariateBatchDetectionResult_GetMultivariateBatchDetectionResult()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            Response response = client.GetMultivariateBatchDetectionResult(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+            Response response = client.GetMultivariateBatchDetectionResult(Guid.Parse("663884e6-b117-11ea-b3de-0242ac130004"), null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resultId").ToString());
@@ -37,13 +37,13 @@ namespace Azure.AI.AnomalyDetector.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_GetMultivariateBatchDetectionResult_ShortVersion_Async()
+        public async Task Example_Multivariate_GetMultivariateBatchDetectionResult_GetMultivariateBatchDetectionResult_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            Response response = await client.GetMultivariateBatchDetectionResultAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+            Response response = await client.GetMultivariateBatchDetectionResultAsync(Guid.Parse("663884e6-b117-11ea-b3de-0242ac130004"), null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resultId").ToString());
@@ -56,131 +56,48 @@ namespace Azure.AI.AnomalyDetector.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_GetMultivariateBatchDetectionResult_ShortVersion_Convenience()
+        public void Example_Multivariate_GetMultivariateBatchDetectionResult_GetMultivariateBatchDetectionResult_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            Response<MultivariateDetectionResult> response = client.GetMultivariateBatchDetectionResult(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response<MultivariateDetectionResult> response = client.GetMultivariateBatchDetectionResult(Guid.Parse("663884e6-b117-11ea-b3de-0242ac130004"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_GetMultivariateBatchDetectionResult_ShortVersion_Convenience_Async()
+        public async Task Example_Multivariate_GetMultivariateBatchDetectionResult_GetMultivariateBatchDetectionResult_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            Response<MultivariateDetectionResult> response = await client.GetMultivariateBatchDetectionResultAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response<MultivariateDetectionResult> response = await client.GetMultivariateBatchDetectionResultAsync(Guid.Parse("663884e6-b117-11ea-b3de-0242ac130004"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_GetMultivariateBatchDetectionResult_AllParameters()
+        public void Example_Multivariate_TrainMultivariateModel_CreateAndTrainMultivariateModel()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            Response response = client.GetMultivariateBatchDetectionResult(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("resultId").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("dataSource").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("topContributorCount").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("isAnomaly").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("severity").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("score").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("contributionScore").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("correlationChanges").GetProperty("changedVariables")[0].ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("message").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_GetMultivariateBatchDetectionResult_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            Response response = await client.GetMultivariateBatchDetectionResultAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("resultId").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("dataSource").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("topContributorCount").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("isAnomaly").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("severity").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("score").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("contributionScore").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("correlationChanges").GetProperty("changedVariables")[0].ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("message").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_GetMultivariateBatchDetectionResult_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            Response<MultivariateDetectionResult> response = client.GetMultivariateBatchDetectionResult(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_GetMultivariateBatchDetectionResult_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            Response<MultivariateDetectionResult> response = await client.GetMultivariateBatchDetectionResultAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_TrainMultivariateModel_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
             using RequestContent content = RequestContent.Create(new
             {
-                dataSource = "http://localhost:3000",
-                startTime = "2022-05-10T18:57:31.2311892Z",
-                endTime = "2022-05-10T18:57:31.2311892Z",
+                slidingWindow = 20,
+                alignPolicy = new
+                {
+                    alignMode = "Outer",
+                    fillNAMethod = "Linear",
+                    paddingValue = 0,
+                },
+                dataSource = "https://multiadsample.blob.core.windows.net/data/sample_data_2_1000.csv",
+                dataSchema = "OneTable",
+                startTime = "2019-04-01T00:00:00Z",
+                endTime = "2019-04-02T00:00:00Z",
+                displayName = "Devops-MultiAD",
             });
             Response response = client.TrainMultivariateModel(content);
 
@@ -192,17 +109,26 @@ namespace Azure.AI.AnomalyDetector.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_TrainMultivariateModel_ShortVersion_Async()
+        public async Task Example_Multivariate_TrainMultivariateModel_CreateAndTrainMultivariateModel_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
             using RequestContent content = RequestContent.Create(new
             {
-                dataSource = "http://localhost:3000",
-                startTime = "2022-05-10T18:57:31.2311892Z",
-                endTime = "2022-05-10T18:57:31.2311892Z",
+                slidingWindow = 20,
+                alignPolicy = new
+                {
+                    alignMode = "Outer",
+                    fillNAMethod = "Linear",
+                    paddingValue = 0,
+                },
+                dataSource = "https://multiadsample.blob.core.windows.net/data/sample_data_2_1000.csv",
+                dataSchema = "OneTable",
+                startTime = "2019-04-01T00:00:00Z",
+                endTime = "2019-04-02T00:00:00Z",
+                displayName = "Devops-MultiAD",
             });
             Response response = await client.TrainMultivariateModelAsync(content);
 
@@ -214,150 +140,22 @@ namespace Azure.AI.AnomalyDetector.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_TrainMultivariateModel_ShortVersion_Convenience()
+        public void Example_Multivariate_TrainMultivariateModel_CreateAndTrainMultivariateModel_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            ModelInfo modelInfo = new ModelInfo(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
-            Response<AnomalyDetectionModel> response = client.TrainMultivariateModel(modelInfo);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_TrainMultivariateModel_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            ModelInfo modelInfo = new ModelInfo(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
-            Response<AnomalyDetectionModel> response = await client.TrainMultivariateModelAsync(modelInfo);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_TrainMultivariateModel_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                dataSource = "http://localhost:3000",
-                dataSchema = "OneTable",
-                startTime = "2022-05-10T18:57:31.2311892Z",
-                endTime = "2022-05-10T18:57:31.2311892Z",
-                displayName = "<displayName>",
-                slidingWindow = 1234,
-                alignPolicy = new
-                {
-                    alignMode = "Inner",
-                    fillNAMethod = "Previous",
-                    paddingValue = 123.45F,
-                },
-            });
-            Response response = client.TrainMultivariateModel(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("createdTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSource").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSchema").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("slidingWindow").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("alignMode").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("fillNAMethod").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("paddingValue").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("epochIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("trainLosses")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("validationLosses")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("latenciesInSeconds")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_TrainMultivariateModel_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                dataSource = "http://localhost:3000",
-                dataSchema = "OneTable",
-                startTime = "2022-05-10T18:57:31.2311892Z",
-                endTime = "2022-05-10T18:57:31.2311892Z",
-                displayName = "<displayName>",
-                slidingWindow = 1234,
-                alignPolicy = new
-                {
-                    alignMode = "Inner",
-                    fillNAMethod = "Previous",
-                    paddingValue = 123.45F,
-                },
-            });
-            Response response = await client.TrainMultivariateModelAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("createdTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSource").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSchema").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("slidingWindow").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("alignMode").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("fillNAMethod").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("paddingValue").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("epochIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("trainLosses")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("validationLosses")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("latenciesInSeconds")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_TrainMultivariateModel_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            ModelInfo modelInfo = new ModelInfo(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"))
+            ModelInfo modelInfo = new ModelInfo(new Uri("https://multiadsample.blob.core.windows.net/data/sample_data_2_1000.csv"), DateTimeOffset.Parse("2019-04-01T00:00:00Z"), DateTimeOffset.Parse("2019-04-02T00:00:00Z"))
             {
                 DataSchema = DataSchema.OneTable,
-                DisplayName = "<displayName>",
-                SlidingWindow = 1234,
+                DisplayName = "Devops-MultiAD",
+                SlidingWindow = 20,
                 AlignPolicy = new AlignPolicy
                 {
-                    AlignMode = AlignMode.Inner,
-                    FillNAMethod = FillNAMethod.Previous,
-                    PaddingValue = 123.45F,
+                    AlignMode = AlignMode.Outer,
+                    FillNAMethod = FillNAMethod.Linear,
+                    PaddingValue = 0,
                 },
             };
             Response<AnomalyDetectionModel> response = client.TrainMultivariateModel(modelInfo);
@@ -365,22 +163,22 @@ namespace Azure.AI.AnomalyDetector.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_TrainMultivariateModel_AllParameters_Convenience_Async()
+        public async Task Example_Multivariate_TrainMultivariateModel_CreateAndTrainMultivariateModel_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            ModelInfo modelInfo = new ModelInfo(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"))
+            ModelInfo modelInfo = new ModelInfo(new Uri("https://multiadsample.blob.core.windows.net/data/sample_data_2_1000.csv"), DateTimeOffset.Parse("2019-04-01T00:00:00Z"), DateTimeOffset.Parse("2019-04-02T00:00:00Z"))
             {
                 DataSchema = DataSchema.OneTable,
-                DisplayName = "<displayName>",
-                SlidingWindow = 1234,
+                DisplayName = "Devops-MultiAD",
+                SlidingWindow = 20,
                 AlignPolicy = new AlignPolicy
                 {
-                    AlignMode = AlignMode.Inner,
-                    FillNAMethod = FillNAMethod.Previous,
-                    PaddingValue = 123.45F,
+                    AlignMode = AlignMode.Outer,
+                    FillNAMethod = FillNAMethod.Linear,
+                    PaddingValue = 0,
                 },
             };
             Response<AnomalyDetectionModel> response = await client.TrainMultivariateModelAsync(modelInfo);
@@ -388,65 +186,39 @@ namespace Azure.AI.AnomalyDetector.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_DeleteMultivariateModel_ShortVersion()
+        public void Example_Multivariate_DeleteMultivariateModel_DeleteMultivariateModel()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            Response response = client.DeleteMultivariateModel("<modelId>");
+            Response response = client.DeleteMultivariateModel("45aad126-aafd-11ea-b8fb-d89ef3400c5f");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_DeleteMultivariateModel_ShortVersion_Async()
+        public async Task Example_Multivariate_DeleteMultivariateModel_DeleteMultivariateModel_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            Response response = await client.DeleteMultivariateModelAsync("<modelId>");
+            Response response = await client.DeleteMultivariateModelAsync("45aad126-aafd-11ea-b8fb-d89ef3400c5f");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_DeleteMultivariateModel_AllParameters()
+        public void Example_Multivariate_GetMultivariateModel_GetAMultivariateModel()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            Response response = client.DeleteMultivariateModel("<modelId>");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_DeleteMultivariateModel_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            Response response = await client.DeleteMultivariateModelAsync("<modelId>");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_GetMultivariateModel_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            Response response = client.GetMultivariateModel("<modelId>", null);
+            Response response = client.GetMultivariateModel("45aad126-aafd-11ea-b8fb-d89ef3400c5f", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("modelId").ToString());
@@ -456,13 +228,13 @@ namespace Azure.AI.AnomalyDetector.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_GetMultivariateModel_ShortVersion_Async()
+        public async Task Example_Multivariate_GetMultivariateModel_GetAMultivariateModel_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            Response response = await client.GetMultivariateModelAsync("<modelId>", null);
+            Response response = await client.GetMultivariateModelAsync("45aad126-aafd-11ea-b8fb-d89ef3400c5f", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("modelId").ToString());
@@ -472,137 +244,42 @@ namespace Azure.AI.AnomalyDetector.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_GetMultivariateModel_ShortVersion_Convenience()
+        public void Example_Multivariate_GetMultivariateModel_GetAMultivariateModel_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            Response<AnomalyDetectionModel> response = client.GetMultivariateModel("<modelId>");
+            Response<AnomalyDetectionModel> response = client.GetMultivariateModel("45aad126-aafd-11ea-b8fb-d89ef3400c5f");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_GetMultivariateModel_ShortVersion_Convenience_Async()
+        public async Task Example_Multivariate_GetMultivariateModel_GetAMultivariateModel_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            Response<AnomalyDetectionModel> response = await client.GetMultivariateModelAsync("<modelId>");
+            Response<AnomalyDetectionModel> response = await client.GetMultivariateModelAsync("45aad126-aafd-11ea-b8fb-d89ef3400c5f");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_GetMultivariateModel_AllParameters()
+        public void Example_Multivariate_DetectMultivariateBatchAnomaly_DetectMultivariateBatchAnomaly()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            Response response = client.GetMultivariateModel("<modelId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("createdTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSource").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSchema").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("slidingWindow").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("alignMode").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("fillNAMethod").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("paddingValue").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("epochIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("trainLosses")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("validationLosses")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("latenciesInSeconds")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_GetMultivariateModel_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            Response response = await client.GetMultivariateModelAsync("<modelId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("createdTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSource").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSchema").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("slidingWindow").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("alignMode").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("fillNAMethod").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("paddingValue").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("epochIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("trainLosses")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("validationLosses")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("latenciesInSeconds")[0].ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_GetMultivariateModel_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            Response<AnomalyDetectionModel> response = client.GetMultivariateModel("<modelId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_GetMultivariateModel_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            Response<AnomalyDetectionModel> response = await client.GetMultivariateModelAsync("<modelId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_DetectMultivariateBatchAnomaly_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
             using RequestContent content = RequestContent.Create(new
             {
-                dataSource = "http://localhost:3000",
-                startTime = "2022-05-10T18:57:31.2311892Z",
-                endTime = "2022-05-10T18:57:31.2311892Z",
+                dataSource = "https://multiadsample.blob.core.windows.net/data/sample_data_2_1000.csv",
+                topContributorCount = 10,
+                startTime = "2019-04-01T00:15:00Z",
+                endTime = "2019-04-01T00:40:00Z",
             });
-            Response response = client.DetectMultivariateBatchAnomaly("<modelId>", content);
+            Response response = client.DetectMultivariateBatchAnomaly("45aad126-aafd-11ea-b8fb-d89ef3400c5f", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resultId").ToString());
@@ -615,19 +292,20 @@ namespace Azure.AI.AnomalyDetector.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_DetectMultivariateBatchAnomaly_ShortVersion_Async()
+        public async Task Example_Multivariate_DetectMultivariateBatchAnomaly_DetectMultivariateBatchAnomaly_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
             using RequestContent content = RequestContent.Create(new
             {
-                dataSource = "http://localhost:3000",
-                startTime = "2022-05-10T18:57:31.2311892Z",
-                endTime = "2022-05-10T18:57:31.2311892Z",
+                dataSource = "https://multiadsample.blob.core.windows.net/data/sample_data_2_1000.csv",
+                topContributorCount = 10,
+                startTime = "2019-04-01T00:15:00Z",
+                endTime = "2019-04-01T00:40:00Z",
             });
-            Response response = await client.DetectMultivariateBatchAnomalyAsync("<modelId>", content);
+            Response response = await client.DetectMultivariateBatchAnomalyAsync("45aad126-aafd-11ea-b8fb-d89ef3400c5f", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resultId").ToString());
@@ -640,147 +318,39 @@ namespace Azure.AI.AnomalyDetector.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_DetectMultivariateBatchAnomaly_ShortVersion_Convenience()
+        public void Example_Multivariate_DetectMultivariateBatchAnomaly_DetectMultivariateBatchAnomaly_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
-            Response<MultivariateDetectionResult> response = client.DetectMultivariateBatchAnomaly("<modelId>", options);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_DetectMultivariateBatchAnomaly_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
-            Response<MultivariateDetectionResult> response = await client.DetectMultivariateBatchAnomalyAsync("<modelId>", options);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_DetectMultivariateBatchAnomaly_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            using RequestContent content = RequestContent.Create(new
+            MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("https://multiadsample.blob.core.windows.net/data/sample_data_2_1000.csv"), DateTimeOffset.Parse("2019-04-01T00:15:00Z"), DateTimeOffset.Parse("2019-04-01T00:40:00Z"))
             {
-                dataSource = "http://localhost:3000",
-                topContributorCount = 1234,
-                startTime = "2022-05-10T18:57:31.2311892Z",
-                endTime = "2022-05-10T18:57:31.2311892Z",
-            });
-            Response response = client.DetectMultivariateBatchAnomaly("<modelId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("resultId").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("dataSource").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("topContributorCount").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("isAnomaly").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("severity").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("score").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("contributionScore").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("correlationChanges").GetProperty("changedVariables")[0].ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("message").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_DetectMultivariateBatchAnomaly_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                dataSource = "http://localhost:3000",
-                topContributorCount = 1234,
-                startTime = "2022-05-10T18:57:31.2311892Z",
-                endTime = "2022-05-10T18:57:31.2311892Z",
-            });
-            Response response = await client.DetectMultivariateBatchAnomalyAsync("<modelId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("resultId").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("dataSource").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("topContributorCount").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("isAnomaly").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("severity").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("score").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("contributionScore").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("correlationChanges").GetProperty("changedVariables")[0].ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("message").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_DetectMultivariateBatchAnomaly_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"))
-            {
-                TopContributorCount = 1234,
+                TopContributorCount = 10,
             };
-            Response<MultivariateDetectionResult> response = client.DetectMultivariateBatchAnomaly("<modelId>", options);
+            Response<MultivariateDetectionResult> response = client.DetectMultivariateBatchAnomaly("45aad126-aafd-11ea-b8fb-d89ef3400c5f", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_DetectMultivariateBatchAnomaly_AllParameters_Convenience_Async()
+        public async Task Example_Multivariate_DetectMultivariateBatchAnomaly_DetectMultivariateBatchAnomaly_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"))
+            MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("https://multiadsample.blob.core.windows.net/data/sample_data_2_1000.csv"), DateTimeOffset.Parse("2019-04-01T00:15:00Z"), DateTimeOffset.Parse("2019-04-01T00:40:00Z"))
             {
-                TopContributorCount = 1234,
+                TopContributorCount = 10,
             };
-            Response<MultivariateDetectionResult> response = await client.DetectMultivariateBatchAnomalyAsync("<modelId>", options);
+            Response<MultivariateDetectionResult> response = await client.DetectMultivariateBatchAnomalyAsync("45aad126-aafd-11ea-b8fb-d89ef3400c5f", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_DetectMultivariateLastAnomaly_ShortVersion()
+        public void Example_Multivariate_DetectMultivariateLastAnomaly_DetectMultivariateLastAnomaly()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
@@ -790,19 +360,218 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
 new
 {
-variable = "<variable>",
+variable = "Variable_1",
 timestamps = new object[]
 {
-"<timestamps>"
+"2021-01-01T00:00:00Z",
+"2021-01-01T00:01:00Z",
+"2021-01-01T00:02:00Z",
+"2021-01-01T00:03:00Z",
+"2021-01-01T00:04:00Z",
+"2021-01-01T00:05:00Z",
+"2021-01-01T00:06:00Z",
+"2021-01-01T00:07:00Z",
+"2021-01-01T00:08:00Z",
+"2021-01-01T00:09:00Z",
+"2021-01-01T00:10:00Z",
+"2021-01-01T00:11:00Z",
+"2021-01-01T00:12:00Z",
+"2021-01-01T00:13:00Z",
+"2021-01-01T00:14:00Z",
+"2021-01-01T00:15:00Z",
+"2021-01-01T00:16:00Z",
+"2021-01-01T00:17:00Z",
+"2021-01-01T00:18:00Z",
+"2021-01-01T00:19:00Z",
+"2021-01-01T00:20:00Z",
+"2021-01-01T00:21:00Z",
+"2021-01-01T00:22:00Z",
+"2021-01-01T00:23:00Z",
+"2021-01-01T00:24:00Z",
+"2021-01-01T00:25:00Z",
+"2021-01-01T00:26:00Z",
+"2021-01-01T00:27:00Z",
+"2021-01-01T00:28:00Z",
+"2021-01-01T00:29:00Z"
 },
 values = new object[]
 {
-123.45F
+0.4551378545933972,
+0.7388603950488748,
+0.201088255984052,
+0.7462812245891899,
+0.07308128850401663,
+0.33090474587393537,
+0.7544925268153315,
+0.987506336316328,
+0.6665932993421468,
+0.6308351543168672,
+0.08083310161466228,
+0.8414415588668442,
+0.514583545640453,
+0.0954489875193526,
+0.7786793231920507,
+0.41646133667960994,
+0.030176187583339287,
+0.3474214937189324,
+0.508530173413991,
+0.42451199127255046,
+0.2115944222725208,
+0.24733519545833516,
+0.8791022110982156,
+0.9479621899884665,
+0.26702703121252136,
+0.6954503497669413,
+0.1235728391488995,
+0.8214915473050647,
+0.11813002444192677,
+0.8579045951076123
+},
+},
+new
+{
+variable = "Variable_2",
+timestamps = new object[]
+{
+"2021-01-01T00:00:00Z",
+"2021-01-01T00:01:00Z",
+"2021-01-01T00:02:00Z",
+"2021-01-01T00:03:00Z",
+"2021-01-01T00:04:00Z",
+"2021-01-01T00:05:00Z",
+"2021-01-01T00:06:00Z",
+"2021-01-01T00:07:00Z",
+"2021-01-01T00:08:00Z",
+"2021-01-01T00:09:00Z",
+"2021-01-01T00:10:00Z",
+"2021-01-01T00:11:00Z",
+"2021-01-01T00:12:00Z",
+"2021-01-01T00:13:00Z",
+"2021-01-01T00:14:00Z",
+"2021-01-01T00:15:00Z",
+"2021-01-01T00:16:00Z",
+"2021-01-01T00:17:00Z",
+"2021-01-01T00:18:00Z",
+"2021-01-01T00:19:00Z",
+"2021-01-01T00:20:00Z",
+"2021-01-01T00:21:00Z",
+"2021-01-01T00:22:00Z",
+"2021-01-01T00:23:00Z",
+"2021-01-01T00:24:00Z",
+"2021-01-01T00:25:00Z",
+"2021-01-01T00:26:00Z",
+"2021-01-01T00:27:00Z",
+"2021-01-01T00:28:00Z",
+"2021-01-01T00:29:00Z"
+},
+values = new object[]
+{
+0.9617871613964145,
+0.24903311574778408,
+0.4920561254118613,
+0.9895601049618598,
+0.9171759283128094,
+0.5754204711105273,
+0.1811033296265634,
+0.8852311981742577,
+0.9543231904644779,
+0.7088012446094262,
+0.7843572237149014,
+0.7664787010700046,
+0.3699552325387093,
+0.504519908266789,
+0.5848930929950164,
+0.7628913396089576,
+0.8148405868900065,
+0.08540458873739332,
+0.03481976727525682,
+0.21275099339467762,
+0.9836175579199806,
+0.9321441483364282,
+0.038466608085469534,
+0.1723138437622782,
+0.8626383410218382,
+0.35053229974224254,
+0.631141662835182,
+0.0730352607990088,
+0.08886179043386,
+0.7488606040971179
+},
+},
+new
+{
+variable = "Variable_3",
+timestamps = new object[]
+{
+"2021-01-01T00:00:00Z",
+"2021-01-01T00:01:00Z",
+"2021-01-01T00:02:00Z",
+"2021-01-01T00:03:00Z",
+"2021-01-01T00:04:00Z",
+"2021-01-01T00:05:00Z",
+"2021-01-01T00:06:00Z",
+"2021-01-01T00:07:00Z",
+"2021-01-01T00:08:00Z",
+"2021-01-01T00:09:00Z",
+"2021-01-01T00:10:00Z",
+"2021-01-01T00:11:00Z",
+"2021-01-01T00:12:00Z",
+"2021-01-01T00:13:00Z",
+"2021-01-01T00:14:00Z",
+"2021-01-01T00:15:00Z",
+"2021-01-01T00:16:00Z",
+"2021-01-01T00:17:00Z",
+"2021-01-01T00:18:00Z",
+"2021-01-01T00:19:00Z",
+"2021-01-01T00:20:00Z",
+"2021-01-01T00:21:00Z",
+"2021-01-01T00:22:00Z",
+"2021-01-01T00:23:00Z",
+"2021-01-01T00:24:00Z",
+"2021-01-01T00:25:00Z",
+"2021-01-01T00:26:00Z",
+"2021-01-01T00:27:00Z",
+"2021-01-01T00:28:00Z",
+"2021-01-01T00:29:00Z"
+},
+values = new object[]
+{
+0.4030756879437628,
+0.15526889968448554,
+0.36352226408981103,
+0.6051200637229004,
+0.8516795018476276,
+0.2645605735279929,
+0.6810875830037345,
+0.9165894221681316,
+0.700783245230424,
+0.5624155469940331,
+0.6277289685127893,
+0.15992056539730204,
+0.6020964482827594,
+0.35937967753105915,
+0.8731686034848609,
+0.20301549117588935,
+0.029261872151168933,
+0.6261499548828445,
+0.45850782028563386,
+0.8275006940083313,
+0.032760268834037376,
+0.4485202784055029,
+0.8915691008748384,
+0.891669051517807,
+0.9469979353323046,
+0.115293087370132,
+0.08818772518459506,
+0.7426286620589166,
+0.32372247468990756,
+0.936268139507417
 },
 }
             },
+                topContributorCount = 10,
             });
-            Response response = client.DetectMultivariateLastAnomaly("<modelId>", content);
+            Response response = client.DetectMultivariateLastAnomaly("45aad126-aafd-11ea-b8fb-d89ef3400c5f", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -810,9 +579,9 @@ values = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_DetectMultivariateLastAnomaly_ShortVersion_Async()
+        public async Task Example_Multivariate_DetectMultivariateLastAnomaly_DetectMultivariateLastAnomaly_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
@@ -822,19 +591,218 @@ values = new object[]
             {
 new
 {
-variable = "<variable>",
+variable = "Variable_1",
 timestamps = new object[]
 {
-"<timestamps>"
+"2021-01-01T00:00:00Z",
+"2021-01-01T00:01:00Z",
+"2021-01-01T00:02:00Z",
+"2021-01-01T00:03:00Z",
+"2021-01-01T00:04:00Z",
+"2021-01-01T00:05:00Z",
+"2021-01-01T00:06:00Z",
+"2021-01-01T00:07:00Z",
+"2021-01-01T00:08:00Z",
+"2021-01-01T00:09:00Z",
+"2021-01-01T00:10:00Z",
+"2021-01-01T00:11:00Z",
+"2021-01-01T00:12:00Z",
+"2021-01-01T00:13:00Z",
+"2021-01-01T00:14:00Z",
+"2021-01-01T00:15:00Z",
+"2021-01-01T00:16:00Z",
+"2021-01-01T00:17:00Z",
+"2021-01-01T00:18:00Z",
+"2021-01-01T00:19:00Z",
+"2021-01-01T00:20:00Z",
+"2021-01-01T00:21:00Z",
+"2021-01-01T00:22:00Z",
+"2021-01-01T00:23:00Z",
+"2021-01-01T00:24:00Z",
+"2021-01-01T00:25:00Z",
+"2021-01-01T00:26:00Z",
+"2021-01-01T00:27:00Z",
+"2021-01-01T00:28:00Z",
+"2021-01-01T00:29:00Z"
 },
 values = new object[]
 {
-123.45F
+0.4551378545933972,
+0.7388603950488748,
+0.201088255984052,
+0.7462812245891899,
+0.07308128850401663,
+0.33090474587393537,
+0.7544925268153315,
+0.987506336316328,
+0.6665932993421468,
+0.6308351543168672,
+0.08083310161466228,
+0.8414415588668442,
+0.514583545640453,
+0.0954489875193526,
+0.7786793231920507,
+0.41646133667960994,
+0.030176187583339287,
+0.3474214937189324,
+0.508530173413991,
+0.42451199127255046,
+0.2115944222725208,
+0.24733519545833516,
+0.8791022110982156,
+0.9479621899884665,
+0.26702703121252136,
+0.6954503497669413,
+0.1235728391488995,
+0.8214915473050647,
+0.11813002444192677,
+0.8579045951076123
+},
+},
+new
+{
+variable = "Variable_2",
+timestamps = new object[]
+{
+"2021-01-01T00:00:00Z",
+"2021-01-01T00:01:00Z",
+"2021-01-01T00:02:00Z",
+"2021-01-01T00:03:00Z",
+"2021-01-01T00:04:00Z",
+"2021-01-01T00:05:00Z",
+"2021-01-01T00:06:00Z",
+"2021-01-01T00:07:00Z",
+"2021-01-01T00:08:00Z",
+"2021-01-01T00:09:00Z",
+"2021-01-01T00:10:00Z",
+"2021-01-01T00:11:00Z",
+"2021-01-01T00:12:00Z",
+"2021-01-01T00:13:00Z",
+"2021-01-01T00:14:00Z",
+"2021-01-01T00:15:00Z",
+"2021-01-01T00:16:00Z",
+"2021-01-01T00:17:00Z",
+"2021-01-01T00:18:00Z",
+"2021-01-01T00:19:00Z",
+"2021-01-01T00:20:00Z",
+"2021-01-01T00:21:00Z",
+"2021-01-01T00:22:00Z",
+"2021-01-01T00:23:00Z",
+"2021-01-01T00:24:00Z",
+"2021-01-01T00:25:00Z",
+"2021-01-01T00:26:00Z",
+"2021-01-01T00:27:00Z",
+"2021-01-01T00:28:00Z",
+"2021-01-01T00:29:00Z"
+},
+values = new object[]
+{
+0.9617871613964145,
+0.24903311574778408,
+0.4920561254118613,
+0.9895601049618598,
+0.9171759283128094,
+0.5754204711105273,
+0.1811033296265634,
+0.8852311981742577,
+0.9543231904644779,
+0.7088012446094262,
+0.7843572237149014,
+0.7664787010700046,
+0.3699552325387093,
+0.504519908266789,
+0.5848930929950164,
+0.7628913396089576,
+0.8148405868900065,
+0.08540458873739332,
+0.03481976727525682,
+0.21275099339467762,
+0.9836175579199806,
+0.9321441483364282,
+0.038466608085469534,
+0.1723138437622782,
+0.8626383410218382,
+0.35053229974224254,
+0.631141662835182,
+0.0730352607990088,
+0.08886179043386,
+0.7488606040971179
+},
+},
+new
+{
+variable = "Variable_3",
+timestamps = new object[]
+{
+"2021-01-01T00:00:00Z",
+"2021-01-01T00:01:00Z",
+"2021-01-01T00:02:00Z",
+"2021-01-01T00:03:00Z",
+"2021-01-01T00:04:00Z",
+"2021-01-01T00:05:00Z",
+"2021-01-01T00:06:00Z",
+"2021-01-01T00:07:00Z",
+"2021-01-01T00:08:00Z",
+"2021-01-01T00:09:00Z",
+"2021-01-01T00:10:00Z",
+"2021-01-01T00:11:00Z",
+"2021-01-01T00:12:00Z",
+"2021-01-01T00:13:00Z",
+"2021-01-01T00:14:00Z",
+"2021-01-01T00:15:00Z",
+"2021-01-01T00:16:00Z",
+"2021-01-01T00:17:00Z",
+"2021-01-01T00:18:00Z",
+"2021-01-01T00:19:00Z",
+"2021-01-01T00:20:00Z",
+"2021-01-01T00:21:00Z",
+"2021-01-01T00:22:00Z",
+"2021-01-01T00:23:00Z",
+"2021-01-01T00:24:00Z",
+"2021-01-01T00:25:00Z",
+"2021-01-01T00:26:00Z",
+"2021-01-01T00:27:00Z",
+"2021-01-01T00:28:00Z",
+"2021-01-01T00:29:00Z"
+},
+values = new object[]
+{
+0.4030756879437628,
+0.15526889968448554,
+0.36352226408981103,
+0.6051200637229004,
+0.8516795018476276,
+0.2645605735279929,
+0.6810875830037345,
+0.9165894221681316,
+0.700783245230424,
+0.5624155469940331,
+0.6277289685127893,
+0.15992056539730204,
+0.6020964482827594,
+0.35937967753105915,
+0.8731686034848609,
+0.20301549117588935,
+0.029261872151168933,
+0.6261499548828445,
+0.45850782028563386,
+0.8275006940083313,
+0.032760268834037376,
+0.4485202784055029,
+0.8915691008748384,
+0.891669051517807,
+0.9469979353323046,
+0.115293087370132,
+0.08818772518459506,
+0.7426286620589166,
+0.32372247468990756,
+0.936268139507417
 },
 }
             },
+                topContributorCount = 10,
             });
-            Response response = await client.DetectMultivariateLastAnomalyAsync("<modelId>", content);
+            Response response = await client.DetectMultivariateLastAnomalyAsync("45aad126-aafd-11ea-b8fb-d89ef3400c5f", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -842,171 +810,53 @@ values = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_DetectMultivariateLastAnomaly_ShortVersion_Convenience()
+        public void Example_Multivariate_DetectMultivariateLastAnomaly_DetectMultivariateLastAnomaly_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
             MultivariateLastDetectionOptions options = new MultivariateLastDetectionOptions(new VariableValues[]
             {
-new VariableValues("<variable>", new string[]{"<timestamps>"}, new float[]{123.45F})
-            });
-            Response<MultivariateLastDetectionResult> response = client.DetectMultivariateLastAnomaly("<modelId>", options);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_DetectMultivariateLastAnomaly_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            MultivariateLastDetectionOptions options = new MultivariateLastDetectionOptions(new VariableValues[]
-            {
-new VariableValues("<variable>", new string[]{"<timestamps>"}, new float[]{123.45F})
-            });
-            Response<MultivariateLastDetectionResult> response = await client.DetectMultivariateLastAnomalyAsync("<modelId>", options);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_DetectMultivariateLastAnomaly_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                variables = new object[]
-            {
-new
-{
-variable = "<variable>",
-timestamps = new object[]
-{
-"<timestamps>"
-},
-values = new object[]
-{
-123.45F
-},
-}
-            },
-                topContributorCount = 1234,
-            });
-            Response response = client.DetectMultivariateLastAnomaly("<modelId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
-            Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
-            Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("isAnomaly").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("severity").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("score").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("contributionScore").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("correlationChanges").GetProperty("changedVariables")[0].ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("message").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_DetectMultivariateLastAnomaly_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                variables = new object[]
-            {
-new
-{
-variable = "<variable>",
-timestamps = new object[]
-{
-"<timestamps>"
-},
-values = new object[]
-{
-123.45F
-},
-}
-            },
-                topContributorCount = 1234,
-            });
-            Response response = await client.DetectMultivariateLastAnomalyAsync("<modelId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
-            Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
-            Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("isAnomaly").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("severity").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("score").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("variable").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("contributionScore").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("correlationChanges").GetProperty("changedVariables")[0].ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("message").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_DetectMultivariateLastAnomaly_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            MultivariateLastDetectionOptions options = new MultivariateLastDetectionOptions(new VariableValues[]
-            {
-new VariableValues("<variable>", new string[]{"<timestamps>"}, new float[]{123.45F})
+new VariableValues("Variable_1", new string[]{"2021-01-01T00:00:00Z", "2021-01-01T00:01:00Z", "2021-01-01T00:02:00Z", "2021-01-01T00:03:00Z", "2021-01-01T00:04:00Z", "2021-01-01T00:05:00Z", "2021-01-01T00:06:00Z", "2021-01-01T00:07:00Z", "2021-01-01T00:08:00Z", "2021-01-01T00:09:00Z", "2021-01-01T00:10:00Z", "2021-01-01T00:11:00Z", "2021-01-01T00:12:00Z", "2021-01-01T00:13:00Z", "2021-01-01T00:14:00Z", "2021-01-01T00:15:00Z", "2021-01-01T00:16:00Z", "2021-01-01T00:17:00Z", "2021-01-01T00:18:00Z", "2021-01-01T00:19:00Z", "2021-01-01T00:20:00Z", "2021-01-01T00:21:00Z", "2021-01-01T00:22:00Z", "2021-01-01T00:23:00Z", "2021-01-01T00:24:00Z", "2021-01-01T00:25:00Z", "2021-01-01T00:26:00Z", "2021-01-01T00:27:00Z", "2021-01-01T00:28:00Z", "2021-01-01T00:29:00Z"}, new float[]{(float)0.4551378545933972, (float)0.7388603950488748, (float)0.201088255984052, (float)0.7462812245891899, (float)0.07308128850401663, (float)0.33090474587393537, (float)0.7544925268153315, (float)0.987506336316328, (float)0.6665932993421468, (float)0.6308351543168672, (float)0.08083310161466228, (float)0.8414415588668442, (float)0.514583545640453, (float)0.0954489875193526, (float)0.7786793231920507, (float)0.41646133667960994, (float)0.030176187583339287, (float)0.3474214937189324, (float)0.508530173413991, (float)0.42451199127255046, (float)0.2115944222725208, (float)0.24733519545833516, (float)0.8791022110982156, (float)0.9479621899884665, (float)0.26702703121252136, (float)0.6954503497669413, (float)0.1235728391488995, (float)0.8214915473050647, (float)0.11813002444192677, (float)0.8579045951076123}),
+new VariableValues("Variable_2", new string[]{"2021-01-01T00:00:00Z", "2021-01-01T00:01:00Z", "2021-01-01T00:02:00Z", "2021-01-01T00:03:00Z", "2021-01-01T00:04:00Z", "2021-01-01T00:05:00Z", "2021-01-01T00:06:00Z", "2021-01-01T00:07:00Z", "2021-01-01T00:08:00Z", "2021-01-01T00:09:00Z", "2021-01-01T00:10:00Z", "2021-01-01T00:11:00Z", "2021-01-01T00:12:00Z", "2021-01-01T00:13:00Z", "2021-01-01T00:14:00Z", "2021-01-01T00:15:00Z", "2021-01-01T00:16:00Z", "2021-01-01T00:17:00Z", "2021-01-01T00:18:00Z", "2021-01-01T00:19:00Z", "2021-01-01T00:20:00Z", "2021-01-01T00:21:00Z", "2021-01-01T00:22:00Z", "2021-01-01T00:23:00Z", "2021-01-01T00:24:00Z", "2021-01-01T00:25:00Z", "2021-01-01T00:26:00Z", "2021-01-01T00:27:00Z", "2021-01-01T00:28:00Z", "2021-01-01T00:29:00Z"}, new float[]{(float)0.9617871613964145, (float)0.24903311574778408, (float)0.4920561254118613, (float)0.9895601049618598, (float)0.9171759283128094, (float)0.5754204711105273, (float)0.1811033296265634, (float)0.8852311981742577, (float)0.9543231904644779, (float)0.7088012446094262, (float)0.7843572237149014, (float)0.7664787010700046, (float)0.3699552325387093, (float)0.504519908266789, (float)0.5848930929950164, (float)0.7628913396089576, (float)0.8148405868900065, (float)0.08540458873739332, (float)0.03481976727525682, (float)0.21275099339467762, (float)0.9836175579199806, (float)0.9321441483364282, (float)0.038466608085469534, (float)0.1723138437622782, (float)0.8626383410218382, (float)0.35053229974224254, (float)0.631141662835182, (float)0.0730352607990088, (float)0.08886179043386, (float)0.7488606040971179}),
+new VariableValues("Variable_3", new string[]{"2021-01-01T00:00:00Z", "2021-01-01T00:01:00Z", "2021-01-01T00:02:00Z", "2021-01-01T00:03:00Z", "2021-01-01T00:04:00Z", "2021-01-01T00:05:00Z", "2021-01-01T00:06:00Z", "2021-01-01T00:07:00Z", "2021-01-01T00:08:00Z", "2021-01-01T00:09:00Z", "2021-01-01T00:10:00Z", "2021-01-01T00:11:00Z", "2021-01-01T00:12:00Z", "2021-01-01T00:13:00Z", "2021-01-01T00:14:00Z", "2021-01-01T00:15:00Z", "2021-01-01T00:16:00Z", "2021-01-01T00:17:00Z", "2021-01-01T00:18:00Z", "2021-01-01T00:19:00Z", "2021-01-01T00:20:00Z", "2021-01-01T00:21:00Z", "2021-01-01T00:22:00Z", "2021-01-01T00:23:00Z", "2021-01-01T00:24:00Z", "2021-01-01T00:25:00Z", "2021-01-01T00:26:00Z", "2021-01-01T00:27:00Z", "2021-01-01T00:28:00Z", "2021-01-01T00:29:00Z"}, new float[]{(float)0.4030756879437628, (float)0.15526889968448554, (float)0.36352226408981103, (float)0.6051200637229004, (float)0.8516795018476276, (float)0.2645605735279929, (float)0.6810875830037345, (float)0.9165894221681316, (float)0.700783245230424, (float)0.5624155469940331, (float)0.6277289685127893, (float)0.15992056539730204, (float)0.6020964482827594, (float)0.35937967753105915, (float)0.8731686034848609, (float)0.20301549117588935, (float)0.029261872151168933, (float)0.6261499548828445, (float)0.45850782028563386, (float)0.8275006940083313, (float)0.032760268834037376, (float)0.4485202784055029, (float)0.8915691008748384, (float)0.891669051517807, (float)0.9469979353323046, (float)0.115293087370132, (float)0.08818772518459506, (float)0.7426286620589166, (float)0.32372247468990756, (float)0.936268139507417})
             })
             {
-                TopContributorCount = 1234,
+                TopContributorCount = 10,
             };
-            Response<MultivariateLastDetectionResult> response = client.DetectMultivariateLastAnomaly("<modelId>", options);
+            Response<MultivariateLastDetectionResult> response = client.DetectMultivariateLastAnomaly("45aad126-aafd-11ea-b8fb-d89ef3400c5f", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_DetectMultivariateLastAnomaly_AllParameters_Convenience_Async()
+        public async Task Example_Multivariate_DetectMultivariateLastAnomaly_DetectMultivariateLastAnomaly_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
             MultivariateLastDetectionOptions options = new MultivariateLastDetectionOptions(new VariableValues[]
             {
-new VariableValues("<variable>", new string[]{"<timestamps>"}, new float[]{123.45F})
+new VariableValues("Variable_1", new string[]{"2021-01-01T00:00:00Z", "2021-01-01T00:01:00Z", "2021-01-01T00:02:00Z", "2021-01-01T00:03:00Z", "2021-01-01T00:04:00Z", "2021-01-01T00:05:00Z", "2021-01-01T00:06:00Z", "2021-01-01T00:07:00Z", "2021-01-01T00:08:00Z", "2021-01-01T00:09:00Z", "2021-01-01T00:10:00Z", "2021-01-01T00:11:00Z", "2021-01-01T00:12:00Z", "2021-01-01T00:13:00Z", "2021-01-01T00:14:00Z", "2021-01-01T00:15:00Z", "2021-01-01T00:16:00Z", "2021-01-01T00:17:00Z", "2021-01-01T00:18:00Z", "2021-01-01T00:19:00Z", "2021-01-01T00:20:00Z", "2021-01-01T00:21:00Z", "2021-01-01T00:22:00Z", "2021-01-01T00:23:00Z", "2021-01-01T00:24:00Z", "2021-01-01T00:25:00Z", "2021-01-01T00:26:00Z", "2021-01-01T00:27:00Z", "2021-01-01T00:28:00Z", "2021-01-01T00:29:00Z"}, new float[]{(float)0.4551378545933972, (float)0.7388603950488748, (float)0.201088255984052, (float)0.7462812245891899, (float)0.07308128850401663, (float)0.33090474587393537, (float)0.7544925268153315, (float)0.987506336316328, (float)0.6665932993421468, (float)0.6308351543168672, (float)0.08083310161466228, (float)0.8414415588668442, (float)0.514583545640453, (float)0.0954489875193526, (float)0.7786793231920507, (float)0.41646133667960994, (float)0.030176187583339287, (float)0.3474214937189324, (float)0.508530173413991, (float)0.42451199127255046, (float)0.2115944222725208, (float)0.24733519545833516, (float)0.8791022110982156, (float)0.9479621899884665, (float)0.26702703121252136, (float)0.6954503497669413, (float)0.1235728391488995, (float)0.8214915473050647, (float)0.11813002444192677, (float)0.8579045951076123}),
+new VariableValues("Variable_2", new string[]{"2021-01-01T00:00:00Z", "2021-01-01T00:01:00Z", "2021-01-01T00:02:00Z", "2021-01-01T00:03:00Z", "2021-01-01T00:04:00Z", "2021-01-01T00:05:00Z", "2021-01-01T00:06:00Z", "2021-01-01T00:07:00Z", "2021-01-01T00:08:00Z", "2021-01-01T00:09:00Z", "2021-01-01T00:10:00Z", "2021-01-01T00:11:00Z", "2021-01-01T00:12:00Z", "2021-01-01T00:13:00Z", "2021-01-01T00:14:00Z", "2021-01-01T00:15:00Z", "2021-01-01T00:16:00Z", "2021-01-01T00:17:00Z", "2021-01-01T00:18:00Z", "2021-01-01T00:19:00Z", "2021-01-01T00:20:00Z", "2021-01-01T00:21:00Z", "2021-01-01T00:22:00Z", "2021-01-01T00:23:00Z", "2021-01-01T00:24:00Z", "2021-01-01T00:25:00Z", "2021-01-01T00:26:00Z", "2021-01-01T00:27:00Z", "2021-01-01T00:28:00Z", "2021-01-01T00:29:00Z"}, new float[]{(float)0.9617871613964145, (float)0.24903311574778408, (float)0.4920561254118613, (float)0.9895601049618598, (float)0.9171759283128094, (float)0.5754204711105273, (float)0.1811033296265634, (float)0.8852311981742577, (float)0.9543231904644779, (float)0.7088012446094262, (float)0.7843572237149014, (float)0.7664787010700046, (float)0.3699552325387093, (float)0.504519908266789, (float)0.5848930929950164, (float)0.7628913396089576, (float)0.8148405868900065, (float)0.08540458873739332, (float)0.03481976727525682, (float)0.21275099339467762, (float)0.9836175579199806, (float)0.9321441483364282, (float)0.038466608085469534, (float)0.1723138437622782, (float)0.8626383410218382, (float)0.35053229974224254, (float)0.631141662835182, (float)0.0730352607990088, (float)0.08886179043386, (float)0.7488606040971179}),
+new VariableValues("Variable_3", new string[]{"2021-01-01T00:00:00Z", "2021-01-01T00:01:00Z", "2021-01-01T00:02:00Z", "2021-01-01T00:03:00Z", "2021-01-01T00:04:00Z", "2021-01-01T00:05:00Z", "2021-01-01T00:06:00Z", "2021-01-01T00:07:00Z", "2021-01-01T00:08:00Z", "2021-01-01T00:09:00Z", "2021-01-01T00:10:00Z", "2021-01-01T00:11:00Z", "2021-01-01T00:12:00Z", "2021-01-01T00:13:00Z", "2021-01-01T00:14:00Z", "2021-01-01T00:15:00Z", "2021-01-01T00:16:00Z", "2021-01-01T00:17:00Z", "2021-01-01T00:18:00Z", "2021-01-01T00:19:00Z", "2021-01-01T00:20:00Z", "2021-01-01T00:21:00Z", "2021-01-01T00:22:00Z", "2021-01-01T00:23:00Z", "2021-01-01T00:24:00Z", "2021-01-01T00:25:00Z", "2021-01-01T00:26:00Z", "2021-01-01T00:27:00Z", "2021-01-01T00:28:00Z", "2021-01-01T00:29:00Z"}, new float[]{(float)0.4030756879437628, (float)0.15526889968448554, (float)0.36352226408981103, (float)0.6051200637229004, (float)0.8516795018476276, (float)0.2645605735279929, (float)0.6810875830037345, (float)0.9165894221681316, (float)0.700783245230424, (float)0.5624155469940331, (float)0.6277289685127893, (float)0.15992056539730204, (float)0.6020964482827594, (float)0.35937967753105915, (float)0.8731686034848609, (float)0.20301549117588935, (float)0.029261872151168933, (float)0.6261499548828445, (float)0.45850782028563386, (float)0.8275006940083313, (float)0.032760268834037376, (float)0.4485202784055029, (float)0.8915691008748384, (float)0.891669051517807, (float)0.9469979353323046, (float)0.115293087370132, (float)0.08818772518459506, (float)0.7426286620589166, (float)0.32372247468990756, (float)0.936268139507417})
             })
             {
-                TopContributorCount = 1234,
+                TopContributorCount = 10,
             };
-            Response<MultivariateLastDetectionResult> response = await client.DetectMultivariateLastAnomalyAsync("<modelId>", options);
+            Response<MultivariateLastDetectionResult> response = await client.DetectMultivariateLastAnomalyAsync("45aad126-aafd-11ea-b8fb-d89ef3400c5f", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_GetMultivariateModels_ShortVersion()
+        public void Example_Multivariate_GetMultivariateModels_ListMultivariateModels()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            foreach (BinaryData item in client.GetMultivariateModels(null, null, null))
+            foreach (BinaryData item in client.GetMultivariateModels(0, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("modelId").ToString());
@@ -1017,13 +867,13 @@ new VariableValues("<variable>", new string[]{"<timestamps>"}, new float[]{123.4
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_GetMultivariateModels_ShortVersion_Async()
+        public async Task Example_Multivariate_GetMultivariateModels_ListMultivariateModels_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
-            await foreach (BinaryData item in client.GetMultivariateModelsAsync(null, null, null))
+            await foreach (BinaryData item in client.GetMultivariateModelsAsync(0, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("modelId").ToString());
@@ -1034,9 +884,9 @@ new VariableValues("<variable>", new string[]{"<timestamps>"}, new float[]{123.4
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_GetMultivariateModels_ShortVersion_Convenience()
+        public void Example_Multivariate_GetMultivariateModels_ListMultivariateModels_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
@@ -1047,115 +897,13 @@ new VariableValues("<variable>", new string[]{"<timestamps>"}, new float[]{123.4
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_GetMultivariateModels_ShortVersion_Convenience_Async()
+        public async Task Example_Multivariate_GetMultivariateModels_ListMultivariateModels_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
 
             await foreach (AnomalyDetectionModel item in client.GetMultivariateModelsAsync())
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_GetMultivariateModels_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            foreach (BinaryData item in client.GetMultivariateModels(1234, 1234, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("modelId").ToString());
-                Console.WriteLine(result.GetProperty("createdTime").ToString());
-                Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSource").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSchema").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("endTime").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("displayName").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("slidingWindow").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("alignMode").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("fillNAMethod").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("paddingValue").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("epochIds")[0].ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("trainLosses")[0].ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("validationLosses")[0].ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("latenciesInSeconds")[0].ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("variable").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_GetMultivariateModels_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            await foreach (BinaryData item in client.GetMultivariateModelsAsync(1234, 1234, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("modelId").ToString());
-                Console.WriteLine(result.GetProperty("createdTime").ToString());
-                Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSource").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSchema").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("endTime").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("displayName").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("slidingWindow").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("alignMode").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("fillNAMethod").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("paddingValue").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("epochIds")[0].ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("trainLosses")[0].ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("validationLosses")[0].ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("latenciesInSeconds")[0].ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("variable").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
-                Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Multivariate_GetMultivariateModels_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            foreach (AnomalyDetectionModel item in client.GetMultivariateModels(skip: 1234, maxCount: 1234))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Multivariate_GetMultivariateModels_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient();
-
-            await foreach (AnomalyDetectionModel item in client.GetMultivariateModelsAsync(skip: 1234, maxCount: 1234))
             {
             }
         }

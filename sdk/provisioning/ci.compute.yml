@@ -13,6 +13,7 @@ trigger:
     - sdk/provisioning/Azure.Provisioning.AppContainers
     - sdk/provisioning/Azure.Provisioning.ApplicationInsights
     - sdk/provisioning/Azure.Provisioning.AppService
+    - sdk/provisioning/Azure.Provisioning.CloudMachine
     - sdk/provisioning/Azure.Provisioning.Communication
     - sdk/provisioning/Azure.Provisioning.ContainerRegistry
     - sdk/provisioning/Azure.Provisioning.ContainerService
@@ -37,6 +38,7 @@ pr:
     - sdk/provisioning/Azure.Provisioning.AppContainers
     - sdk/provisioning/Azure.Provisioning.ApplicationInsights
     - sdk/provisioning/Azure.Provisioning.AppService
+    - sdk/provisioning/Azure.Provisioning.CloudMachine
     - sdk/provisioning/Azure.Provisioning.Communication
     - sdk/provisioning/Azure.Provisioning.ContainerRegistry
     - sdk/provisioning/Azure.Provisioning.ContainerService
@@ -62,6 +64,8 @@ extends:
       safeName: AzureProvisioningApplicationInsights
     - name: Azure.Provisioning.AppService
       safeName: AzureProvisioningAppService
+    - name: Azure.Provisioning.CloudMachine
+      safeName: AzureProvisioningCloudMachine
     - name: Azure.Provisioning.Communication
       safeName: AzureProvisioningCommunication
     - name: Azure.Provisioning.ContainerRegistry
