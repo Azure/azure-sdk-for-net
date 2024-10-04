@@ -12,7 +12,7 @@ function GetPackageKey($pkg) {
 
   return $pkgKey
 }
-  
+
 # Different language needs a different way to index the package. Build a map in convienice to lookup the package.
 # E.g. <groupId>:<packageName> is the package key in java.
 function GetPackageLookup($packageList) {
@@ -44,4 +44,32 @@ function GetDocsTocDisplayName($pkg) {
     $displayName += " (deprecated)"
   }
   return $displayName
+}
+
+function CompatibleConvertFrom-Yaml {
+  param(
+    # Accept input directly from the command parameter
+    [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
+    [string]$Content
+  )
+
+  if (!($Content)) {
+    Write-Error "Content is required."
+    exit 1
+  }
+
+  # Initialize any variables or checks that need to be done once
+  $yqPresent = Get-Command 'yq' -ErrorAction SilentlyContinue
+  if (-not $yqPresent) {
+    . (Join-Path $PSScriptRoot "../../../../eng/common/scripts/Helpers" PSModule-Helpers.ps1)
+    Install-ModuleIfNotInstalled -WhatIf:$false "powershell-yaml" "0.4.1" | Import-Module
+  }
+
+  # Process the content (for example, you could convert from YAML here)
+  if ($yqPresent) {
+      return ($content | yq -o=json | ConvertFrom-Json -AsHashTable)
+  }
+  else {
+      return (ConvertFrom-Yaml (Get-Content -Raw sdk/core/ci.yml))
+  }
 }
