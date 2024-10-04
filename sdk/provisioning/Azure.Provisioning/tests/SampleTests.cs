@@ -348,12 +348,15 @@ internal class SampleTests(bool async)
     [Test]
     public void ValidNames()
     {
+        // TODO: Enable when we turn NamedProvisioningConstruct.ValidateIdentifierName back on
+        /*
         Assert.Throws<ArgumentNullException>(() => new StorageAccount(null!));
         Assert.Throws<ArgumentException>(() => new StorageAccount(""));
         Assert.Throws<ArgumentException>(() => new StorageAccount("my-storage"));
         Assert.Throws<ArgumentException>(() => new StorageAccount("my storage"));
         Assert.Throws<ArgumentException>(() => new StorageAccount("my:storage"));
         Assert.Throws<ArgumentException>(() => new StorageAccount("storage$"));
+        /**/
         _ = new StorageAccount("ABCdef123_");
     }
 }
