@@ -12,6 +12,12 @@ Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 dotnet add package Azure.Provisioning --prerelease
 ```
 
+You can also install the previous version for use with Aspire 8.x via:
+
+```dotnetcli
+dotnet add package Azure.Provisioning
+```
+
 ### Prerequisites
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
