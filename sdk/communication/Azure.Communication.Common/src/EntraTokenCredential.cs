@@ -45,21 +45,21 @@ namespace Azure.Communication
         }
 
         /// <summary>
-        /// Gets an <see cref="AccessToken"/> for the user.
+        /// Gets an <see cref="AccessToken"/>.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
-        /// <returns> Contains the access token for the user.</returns>
+        /// <returns> Contains the access token.</returns>
         public AccessToken GetToken(CancellationToken cancellationToken)
         {
             return GetTokenAsync(cancellationToken).Result;
         }
 
         /// <summary>
-        /// Gets an <see cref="AccessToken"/> for the user.
+        /// Gets an <see cref="AccessToken"/>.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
         /// <returns>
-        /// A task that represents the asynchronous get token operation. The value of its <see cref="ValueTask{AccessToken}.Result"/> property contains the access token for the user.
+        /// A task that represents the asynchronous get token operation. The value of its <see cref="ValueTask{AccessToken}.Result"/> property contains the access token.
         /// </returns>
         public ValueTask<AccessToken> GetTokenAsync(CancellationToken cancellationToken)
         {
