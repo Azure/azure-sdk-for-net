@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 
@@ -91,6 +92,97 @@ public class Infrastructure(string name = "main") : Provisionable
             nested._parent = null;
             _resources.Remove(nested);
         }
+    }
+
+    /// <summary>
+    /// Checks whether an name is a valid bicep identifier name comprised of
+    /// letters, digits, and underscores.
+    /// </summary>
+    /// <param name="identifierName">The proposed identifier name.</param>
+    /// <returns>Whether the name is a valid bicep identifier name.</returns>
+    public static bool IsValidIdentifierName(string? identifierName)
+    {
+        if (string.IsNullOrEmpty(identifierName)) { return false; }
+        if (char.IsDigit(identifierName![0])) { return false; }
+        foreach (char ch in identifierName)
+        {
+            if (!char.IsLetterOrDigit(ch) && ch != '_')
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// Validates whether a given bicep identifier name is correctly formed of
+    /// letters, numbers, and underscores.
+    /// </summary>
+    /// <param name="identifierName">The proposed bicep identifier name.</param>
+    /// <exception cref="ArgumentNullException">Throws if null.</exception>
+    /// <exception cref="ArgumentException">Throws if empty or invalid.</exception>
+    public static void ValidateIdentifierName(string? identifierName)
+    {
+        if (identifierName is null)
+        {
+            throw new ArgumentNullException(nameof(identifierName), $"{nameof(identifierName)} cannot be null.");
+        }
+        else if (identifierName.Length == 0)
+        {
+            throw new ArgumentException($"{nameof(identifierName)} cannot be empty.", nameof(identifierName));
+        }
+        else if (char.IsDigit(identifierName[0]))
+        {
+            throw new ArgumentException($"{nameof(identifierName)} cannot start with a number: \"{identifierName}\"", nameof(identifierName));
+        }
+
+        foreach (var ch in identifierName)
+        {
+            if (!char.IsLetterOrDigit(ch) && ch != '_')
+            {
+                throw new ArgumentException($"{nameof(identifierName)} should only contain letters, numbers, and underscores: \"{identifierName}\"", nameof(identifierName));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Normalizes a proposed bicep identifier name.  Any invalid characters
+    /// will be replaced with underscores.
+    /// </summary>
+    /// <param name="identifierName">The proposed bicep identifier name.</param>
+    /// <returns>A valid bicep identifier name.</returns>
+    /// <exception cref="ArgumentNullException">Throws if null.</exception>
+    /// <exception cref="ArgumentException">Throws if empty.</exception>
+    public static string NormalizeIdentifierName(string? identifierName)
+    {
+        if (identifierName is null)
+        {
+            // TODO: This may be relaxed in the future to generate an automatic
+            // name rather than throwing
+            throw new ArgumentNullException(nameof(identifierName), $"{nameof(identifierName)} cannot be null.");
+        }
+        else if (identifierName.Length == 0)
+        {
+            throw new ArgumentException($"{nameof(identifierName)} cannot be empty.", nameof(identifierName));
+        }
+
+        StringBuilder builder = new(identifierName.Length);
+
+        // Digits are not allowed as the first character, so prepend an
+        // underscore if the identifierName starts with a digit
+        if (char.IsDigit(identifierName[0]))
+        {
+            builder.Append('_');
+        }
+
+        foreach (char ch in identifierName)
+        {
+            // TODO: Consider opening this up to other naming strategies if
+            // someone can do something more intelligent for their usage/domain
+            builder.Append(char.IsLetterOrDigit(ch) ? ch : '_');
+        }
+
+        return builder.ToString();
     }
 
     /// <inheritdoc/>

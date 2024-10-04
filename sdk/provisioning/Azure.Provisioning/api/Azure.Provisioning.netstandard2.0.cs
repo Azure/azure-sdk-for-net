@@ -98,9 +98,12 @@ namespace Azure.Provisioning
         protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
         protected internal System.Collections.Generic.IDictionary<string, System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement>> CompileModules(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
         public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> GetResources() { throw null; }
+        public static bool IsValidIdentifierName(string? identifierName) { throw null; }
+        public static string NormalizeIdentifierName(string? identifierName) { throw null; }
         public virtual void Remove(Azure.Provisioning.Primitives.Provisionable resource) { }
         protected internal override void Resolve(Azure.Provisioning.ProvisioningContext? context = null) { }
         protected internal override void Validate(Azure.Provisioning.ProvisioningContext? context = null) { }
+        public static void ValidateIdentifierName(string? identifierName) { }
     }
     public partial class ProvisioningContext
     {

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -348,15 +349,32 @@ internal class SampleTests(bool async)
     [Test]
     public void ValidNames()
     {
-        // TODO: Enable when we turn NamedProvisioningConstruct.ValidateIdentifierName back on
-        /*
+        // Check null is invalid
+        Assert.IsFalse(Infrastructure.IsValidIdentifierName(null));
+        Assert.Throws<ArgumentNullException>(() => Infrastructure.ValidateIdentifierName(null));
         Assert.Throws<ArgumentNullException>(() => new StorageAccount(null!));
-        Assert.Throws<ArgumentException>(() => new StorageAccount(""));
-        Assert.Throws<ArgumentException>(() => new StorageAccount("my-storage"));
-        Assert.Throws<ArgumentException>(() => new StorageAccount("my storage"));
-        Assert.Throws<ArgumentException>(() => new StorageAccount("my:storage"));
-        Assert.Throws<ArgumentException>(() => new StorageAccount("storage$"));
-        /**/
-        _ = new StorageAccount("ABCdef123_");
+
+        // Check invalid names
+        List<string> invalid = ["", "my-storage", "my storage", "my:storage", "storage$", "1storage"];
+        foreach (string name in invalid)
+        {
+            Assert.IsFalse(Infrastructure.IsValidIdentifierName(name));
+            Assert.Throws<ArgumentException>(() => Infrastructure.ValidateIdentifierName(name));
+            if (!string.IsNullOrEmpty(name))
+            {
+                Assert.AreNotEqual(name, Infrastructure.NormalizeIdentifierName(name));
+            }
+            Assert.Throws<ArgumentException>(() => new StorageAccount(name));
+        }
+
+        // Check valid names
+        List<string> valid = ["foo", "FOO", "Foo", "f", "_foo", "_", "foo123", "ABCdef123_"];
+        foreach (string name in valid)
+        {
+            Assert.IsTrue(Infrastructure.IsValidIdentifierName(name));
+            Assert.DoesNotThrow(() => Infrastructure.ValidateIdentifierName(name));
+            Assert.AreEqual(name, Infrastructure.NormalizeIdentifierName(name));
+            Assert.DoesNotThrow(() => new StorageAccount(name));
+        }
     }
 }

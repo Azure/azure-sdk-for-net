@@ -26,7 +26,8 @@ public abstract class NamedProvisioningConstruct : ProvisioningConstruct
         set => _identifierName = ValidateIdentifierName(value, nameof(value));
     }
     private string _identifierName;
-    // TODO: Listen for feedback, but discuss IdentifierName vs. ProvisioningName in the Arch Board
+    // TODO: Listen for customer feedback and discuss IdentifierName vs.
+    // ProvisioningName in the Arch Board
 
     /// <summary>
     /// Creates a named Bicep entity, like a resource or parameter.
@@ -37,32 +38,24 @@ public abstract class NamedProvisioningConstruct : ProvisioningConstruct
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     protected NamedProvisioningConstruct(string identifierName) =>
+        // TODO: In the near future we'll make this optional and only validate
+        // if the value passed in isn't null.
         _identifierName = ValidateIdentifierName(identifierName, nameof(identifierName));
 
-    // TODO: Relax this in the future when we make identifier names optional
-    private static string ValidateIdentifierName(string identifierName, string paramName)
-    {
-        // TODO: Enable when Aspire is ready
-        /*
-        if (identifierName is null)
+    // Throw an exception relative to the .ctor param name or setter value
+    private static string ValidateIdentifierName(string identifierName, string paramName) =>
+        identifierName switch
         {
-            throw new ArgumentNullException(paramName, $"{nameof(IdentifierName)} cannot be null.");
-        }
-        else if (identifierName.Length == 0)
-        {
-            throw new ArgumentException($"{nameof(IdentifierName)} cannot be empty.", paramName);
-        }
-
-        foreach (var ch in identifierName)
-        {
-            if (!char.IsLetterOrDigit(ch) && ch != '_')
-            {
-                throw new ArgumentException($"{nameof(IdentifierName)} \"{identifierName}\" should only contain letters, numbers, and underscores.", paramName);
-            }
-        }
-        /**/
-        return identifierName;
-    }
+            null => throw new ArgumentNullException(paramName, $"{paramName} cannot be null."),
+            "" => throw new ArgumentException($"{paramName} cannot be empty.", paramName),
+            _ when !Infrastructure.IsValidIdentifierName(identifierName) =>
+                throw new ArgumentException(
+                    char.IsDigit(identifierName[0]) ?
+                        $"{paramName} cannot start with a number: \"{identifierName}\"" :
+                        $"{paramName} should only contain letters, numbers, and underscores: \"{identifierName}\"",
+                    paramName),
+            _ => identifierName
+        };
 }
 
 public abstract class ProvisioningConstruct : Provisionable
