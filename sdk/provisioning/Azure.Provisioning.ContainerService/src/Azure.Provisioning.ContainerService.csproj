@@ -9,12 +9,4 @@
     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
-
-  <!-- TODO: Consider adding ARM or DataPlane dependencies here like:
-  <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Storage" />
-    <PackageReference Include="Azure.Storage.Blobs" />
-  </ItemGroup>
-  -->
-
 </Project>

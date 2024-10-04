@@ -9,7 +9,7 @@ Azure.Provisioning.OperationalInsights simplifies declarative resource provision
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.OperationalInsights
+dotnet add package Azure.Provisioning.OperationalInsights --prerelease
 ```
 
 ### Prerequisites
