@@ -43,9 +43,9 @@ public class KeyVaultFeature : CloudMachineFeature
         cm.AddResource(ra);
 
         // necessary until ResourceName is settable via AssignRole.
-        RoleAssignment kvMiRoleAssignment = new RoleAssignment(_keyVault.ResourceName + "_" + cm.Identity.ResourceName + "_" + KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator));
+        RoleAssignment kvMiRoleAssignment = new RoleAssignment(_keyVault.IdentifierName + "_" + cm.Identity.IdentifierName + "_" + KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator));
         kvMiRoleAssignment.Name = BicepFunction.CreateGuid(_keyVault.Id, cm.Identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", KeyVaultBuiltInRole.KeyVaultAdministrator.ToString()));
-        kvMiRoleAssignment.Scope = new IdentifierExpression(_keyVault.ResourceName);
+        kvMiRoleAssignment.Scope = new IdentifierExpression(_keyVault.IdentifierName);
         kvMiRoleAssignment.PrincipalType = RoleManagementPrincipalType.ServicePrincipal;
         kvMiRoleAssignment.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", KeyVaultBuiltInRole.KeyVaultAdministrator.ToString());
         kvMiRoleAssignment.PrincipalId = cm.Identity.PrincipalId;
