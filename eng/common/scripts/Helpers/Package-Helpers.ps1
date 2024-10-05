@@ -46,9 +46,28 @@ function GetDocsTocDisplayName($pkg) {
   return $displayName
 }
 
+
+<#
+.SYNOPSIS
+This function is a safe wrapper around `yq` and `ConvertFrom-Yaml` to convert YAML content to a PowerShell HashTable object
+
+.DESCRIPTION
+This function wraps `yq` and `ConvertFrom-Yaml` to convert YAML content to a PowerShell HashTable object. The reason this function exists is
+because while on a local user's machine, installing a module from the powershell gallery is an easy task, in pipelines we often have failures
+to install modules from the gallery. This function will attempt to use the `yq` command if it is available on the machine, and only will install
+the yaml module if `yq` is not available. This means that for the majority of runs on CI machines, the yaml module will not be installed.
+
+.PARAMETER Content
+The content to convert from YAML to a PowerShell HashTable object. Accepted as named argument or from the pipeline.
+
+.EXAMPLE
+CompatibleConvertFrom-Yaml -Content (Get-Content -Raw path/to/file.yml)
+
+.EXAMPLE
+Get-Content -Raw path/to/file.yml | CompatibleConvertFrom-Yaml
+#>
 function CompatibleConvertFrom-Yaml {
   param(
-    # Accept input directly from the command parameter
     [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
     [string]$Content
   )

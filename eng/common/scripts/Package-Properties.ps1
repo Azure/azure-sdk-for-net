@@ -1,6 +1,6 @@
-# Helper functions for retireving useful information from azure-sdk-for-* repo
+# Helper functions for retrieving useful information from azure-sdk-for-* repo
 . "${PSScriptRoot}\logging.ps1"
-
+. "${PSScriptRoot}\Helpers\Package-Helpers.ps1"
 class PackageProps
 {
     [string]$Name
@@ -19,6 +19,7 @@ class PackageProps
     [boolean]$IncludedForValidation
     # does this package include other packages that we should trigger validation for?
     [string[]]$AdditionalValidationPackages
+    [HashTable]$ArtifactDetails
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory)
     {
@@ -66,6 +67,8 @@ class PackageProps
         {
             $this.ChangeLogPath = $null
         }
+
+        $this.InitializeCIArtifacts()
     }
 
     hidden [void]Initialize(
@@ -78,6 +81,60 @@ class PackageProps
     {
         $this.Initialize($name, $version, $directoryPath, $serviceDirectory)
         $this.Group = $group
+    }
+
+    hidden [object]Get-ValueSafely($hashtable, [string[]]$keys) {
+        $current = $hashtable
+        foreach ($key in $keys) {
+            if ($current.ContainsKey($key) -or $current[$key]) {
+                $current = $current[$key]
+            }
+            else {
+                return $null
+            }
+        }
+        return $current
+    }
+
+    hidden [string]ParseYmlForArtifact([string]$ymlPath) {
+        if (Test-Path -Path $ymlPath) {
+            try {
+                $content = Get-Content -Raw -Path $ymlPath | CompatibleConvertFrom-Yaml
+                if ($content) {
+
+                    $artifacts = $this.GetValueSafely($content, @("extends", "parameters", "Artifacts"))
+
+                    $artifactForCurrentPackage = $artifacts | Where-Object { $_.name -eq $this.ArtifactName }
+
+                    return $artifactForCurrentPackage
+                }
+            }
+            catch {
+              Write-Host "Exception while parsing yml file $($ymlPath): $_"
+            }
+        }
+
+        return $null
+    }
+
+    hidden [void]InitializeCIArtifacts(){
+        $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
+        $ciFilePath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory "ci.yml")
+        $ciMgmtYmlFilePath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory "ci.mgmt.yml")
+
+        $ciArtifactResult = $this.ParseYmlForArtifact($ciFilePath)
+
+        if ($ciArtifactResult) {
+          Write-Host "Is CI"
+          $this.ArtifactDetails = $ciArtifactResult
+        }
+        return
+
+        $ciMgmtResult = $this.ParseYmlForArtifact($ciMgmtYmlFilePath)
+
+        if ($ciMgmtResult) {
+          $this.ArtifactDetails = $ciArtifactResult
+        }
     }
 }
 
