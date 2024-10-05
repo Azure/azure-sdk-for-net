@@ -26,8 +26,16 @@ namespace Azure.Compute.Batch
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("storageAccountType"u8);
-            writer.WriteStringValue(StorageAccountType.ToString());
+            if (Optional.IsDefined(StorageAccountType))
+            {
+                writer.WritePropertyName("storageAccountType"u8);
+                writer.WriteStringValue(StorageAccountType.Value.ToString());
+            }
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile"u8);
+                writer.WriteObjectValue(SecurityProfile, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -66,14 +74,28 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            StorageAccountType storageAccountType = default;
+            StorageAccountType? storageAccountType = default;
+            VMDiskSecurityProfile securityProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     storageAccountType = new StorageAccountType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("securityProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityProfile = VMDiskSecurityProfile.DeserializeVMDiskSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -82,7 +104,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedDisk(storageAccountType, serializedAdditionalRawData);
+            return new ManagedDisk(storageAccountType, securityProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDisk>.Write(ModelReaderWriterOptions options)
