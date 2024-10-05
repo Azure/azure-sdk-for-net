@@ -73,14 +73,28 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            StorageAccountType storageAccountType = default;
+            StorageAccountType? storageAccountType = default;
+            VMDiskSecurityProfile securityProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     storageAccountType = new StorageAccountType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("securityProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityProfile = VMDiskSecurityProfile.DeserializeVMDiskSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +103,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedDisk(storageAccountType, serializedAdditionalRawData);
+            return new ManagedDisk(storageAccountType, securityProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDisk>.Write(ModelReaderWriterOptions options)

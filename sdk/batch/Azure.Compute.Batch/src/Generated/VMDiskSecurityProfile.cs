@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary>
-    /// The disk encryption configuration applied on compute nodes in the pool.
-    /// Disk encryption configuration is not supported on Linux pool created with
-    /// Azure Compute Gallery Image.
-    /// </summary>
-    public partial class DiskEncryptionConfiguration
+    /// <summary> Specifies the security profile settings for the managed disk. **Note**: It can only be set for Confidential VMs and required when using Confidential VMs. </summary>
+    public partial class VMDiskSecurityProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,22 +45,21 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
-        public DiskEncryptionConfiguration()
+        /// <summary> Initializes a new instance of <see cref="VMDiskSecurityProfile"/>. </summary>
+        public VMDiskSecurityProfile()
         {
-            Targets = new ChangeTrackingList<DiskEncryptionTarget>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
-        /// <param name="targets"> The list of disk targets Batch Service will encrypt on the compute node. The list of disk targets Batch Service will encrypt on the compute node. </param>
+        /// <summary> Initializes a new instance of <see cref="VMDiskSecurityProfile"/>. </summary>
+        /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob. **Note**: It can be set for only Confidential VMs and is required when using Confidential VMs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryptionConfiguration(IList<DiskEncryptionTarget> targets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VMDiskSecurityProfile(SecurityEncryptionTypes? securityEncryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Targets = targets;
+            SecurityEncryptionType = securityEncryptionType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of disk targets Batch Service will encrypt on the compute node. The list of disk targets Batch Service will encrypt on the compute node. </summary>
-        public IList<DiskEncryptionTarget> Targets { get; }
+        /// <summary> Specifies the EncryptionType of the managed disk. It is set to VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob. **Note**: It can be set for only Confidential VMs and is required when using Confidential VMs. </summary>
+        public SecurityEncryptionTypes? SecurityEncryptionType { get; set; }
     }
 }

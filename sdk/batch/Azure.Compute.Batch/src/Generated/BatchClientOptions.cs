@@ -13,13 +13,13 @@ namespace Azure.Compute.Batch
     /// <summary> Client options for BatchClient. </summary>
     public partial class BatchClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_02_01_19_0;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_07_01_20_0;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2024-02-01.19.0". </summary>
-            V2024_02_01_19_0 = 1,
+            /// <summary> Service version "2024-07-01.20.0". </summary>
+            V2024_07_01_20_0 = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Compute.Batch
         {
             Version = version switch
             {
-                ServiceVersion.V2024_02_01_19_0 => "2024-02-01.19.0",
+                ServiceVersion.V2024_07_01_20_0 => "2024-07-01.20.0",
                 _ => throw new NotSupportedException()
             };
         }

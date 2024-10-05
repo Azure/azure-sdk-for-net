@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary>
-    /// The disk encryption configuration applied on compute nodes in the pool.
-    /// Disk encryption configuration is not supported on Linux pool created with
-    /// Azure Compute Gallery Image.
-    /// </summary>
-    public partial class DiskEncryptionConfiguration
+    /// <summary> The entry of path and mount mode you want to mount into task container. </summary>
+    public partial class ContainerHostBatchBindMountEntry
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,22 +45,25 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
-        public DiskEncryptionConfiguration()
+        /// <summary> Initializes a new instance of <see cref="ContainerHostBatchBindMountEntry"/>. </summary>
+        public ContainerHostBatchBindMountEntry()
         {
-            Targets = new ChangeTrackingList<DiskEncryptionTarget>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
-        /// <param name="targets"> The list of disk targets Batch Service will encrypt on the compute node. The list of disk targets Batch Service will encrypt on the compute node. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerHostBatchBindMountEntry"/>. </summary>
+        /// <param name="source"> The path which be mounted to container customer can select. </param>
+        /// <param name="isReadOnly"> Mount this source path as read-only mode or not. Default value is false (read/write mode). For Linux, if you mount this path as a read/write mode, this does not mean that all users in container have the read/write access for the path, it depends on the access in host VM. If this path is mounted read-only, all users within the container will not be able to modify the path. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryptionConfiguration(IList<DiskEncryptionTarget> targets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerHostBatchBindMountEntry(ContainerHostDataPath? source, bool? isReadOnly, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Targets = targets;
+            Source = source;
+            IsReadOnly = isReadOnly;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of disk targets Batch Service will encrypt on the compute node. The list of disk targets Batch Service will encrypt on the compute node. </summary>
-        public IList<DiskEncryptionTarget> Targets { get; }
+        /// <summary> The path which be mounted to container customer can select. </summary>
+        public ContainerHostDataPath? Source { get; set; }
+        /// <summary> Mount this source path as read-only mode or not. Default value is false (read/write mode). For Linux, if you mount this path as a read/write mode, this does not mean that all users in container have the read/write access for the path, it depends on the access in host VM. If this path is mounted read-only, all users within the container will not be able to modify the path. </summary>
+        public bool? IsReadOnly { get; set; }
     }
 }

@@ -22,13 +22,25 @@ namespace Azure.Compute.Batch
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string RegionalValue = "regional";
-        private const string ZonalValue = "zonal";
+        private const string SharedValue = "Shared";
+        private const string StartupValue = "Startup";
+        private const string VfsMountsValue = "VfsMounts";
+        private const string TaskValue = "Task";
+        private const string JobPrepValue = "JobPrep";
+        private const string ApplicationsValue = "Applications";
 
-        /// <summary> All nodes in the pool will be allocated in the same region. </summary>
-        public static BatchNodePlacementPolicyType Regional { get; } = new BatchNodePlacementPolicyType(RegionalValue);
-        /// <summary> Nodes in the pool will be spread across different availability zones with best effort balancing. </summary>
-        public static BatchNodePlacementPolicyType Zonal { get; } = new BatchNodePlacementPolicyType(ZonalValue);
+        /// <summary> The path for multi-instances task to shared their files. </summary>
+        public static BatchNodePlacementPolicyType Shared { get; } = new BatchNodePlacementPolicyType(SharedValue);
+        /// <summary> The path for start task. </summary>
+        public static BatchNodePlacementPolicyType Startup { get; } = new BatchNodePlacementPolicyType(StartupValue);
+        /// <summary> The path contains all virtual file systems are mounted on this node. </summary>
+        public static BatchNodePlacementPolicyType VfsMounts { get; } = new BatchNodePlacementPolicyType(VfsMountsValue);
+        /// <summary> The task path. </summary>
+        public static BatchNodePlacementPolicyType Task { get; } = new BatchNodePlacementPolicyType(TaskValue);
+        /// <summary> The job-prep task path. </summary>
+        public static BatchNodePlacementPolicyType JobPrep { get; } = new BatchNodePlacementPolicyType(JobPrepValue);
+        /// <summary> The applications path. </summary>
+        public static BatchNodePlacementPolicyType Applications { get; } = new BatchNodePlacementPolicyType(ApplicationsValue);
         /// <summary> Determines if two <see cref="BatchNodePlacementPolicyType"/> values are the same. </summary>
         public static bool operator ==(BatchNodePlacementPolicyType left, BatchNodePlacementPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchNodePlacementPolicyType"/> values are not the same. </summary>

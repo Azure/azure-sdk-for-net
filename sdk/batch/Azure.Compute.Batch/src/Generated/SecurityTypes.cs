@@ -23,9 +23,12 @@ namespace Azure.Compute.Batch
         }
 
         private const string TrustedLaunchValue = "trustedLaunch";
+        private const string ConfidentialVMValue = "confidentialVM";
 
         /// <summary> Trusted launch protects against advanced and persistent attack techniques. </summary>
         public static SecurityTypes TrustedLaunch { get; } = new SecurityTypes(TrustedLaunchValue);
+        /// <summary> Azure confidential computing offers confidential VMs are for tenants with high security and confidentiality requirements. These VMs provide a strong, hardware-enforced boundary to help meet your security needs. You can use confidential VMs for migrations without making changes to your code, with the platform protecting your VM's state from being read or modified. </summary>
+        public static SecurityTypes ConfidentialVM { get; } = new SecurityTypes(ConfidentialVMValue);
         /// <summary> Determines if two <see cref="SecurityTypes"/> values are the same. </summary>
         public static bool operator ==(SecurityTypes left, SecurityTypes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityTypes"/> values are not the same. </summary>

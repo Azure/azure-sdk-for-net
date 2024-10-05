@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary>
-    /// The disk encryption configuration applied on compute nodes in the pool.
-    /// Disk encryption configuration is not supported on Linux pool created with
-    /// Azure Compute Gallery Image.
-    /// </summary>
-    public partial class DiskEncryptionConfiguration
+    /// <summary> Options for deallocating a Compute Node. </summary>
+    public partial class BatchNodeDeallocateContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,22 +45,21 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
-        public DiskEncryptionConfiguration()
+        /// <summary> Initializes a new instance of <see cref="BatchNodeDeallocateContent"/>. </summary>
+        public BatchNodeDeallocateContent()
         {
-            Targets = new ChangeTrackingList<DiskEncryptionTarget>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
-        /// <param name="targets"> The list of disk targets Batch Service will encrypt on the compute node. The list of disk targets Batch Service will encrypt on the compute node. </param>
+        /// <summary> Initializes a new instance of <see cref="BatchNodeDeallocateContent"/>. </summary>
+        /// <param name="nodeDeallocateOption"> When to deallocate the Compute Node and what to do with currently running Tasks. The default value is requeue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryptionConfiguration(IList<DiskEncryptionTarget> targets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchNodeDeallocateContent(BatchNodeDeallocateOption? nodeDeallocateOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Targets = targets;
+            NodeDeallocateOption = nodeDeallocateOption;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of disk targets Batch Service will encrypt on the compute node. The list of disk targets Batch Service will encrypt on the compute node. </summary>
-        public IList<DiskEncryptionTarget> Targets { get; }
+        /// <summary> When to deallocate the Compute Node and what to do with currently running Tasks. The default value is requeue. </summary>
+        public BatchNodeDeallocateOption? NodeDeallocateOption { get; set; }
     }
 }

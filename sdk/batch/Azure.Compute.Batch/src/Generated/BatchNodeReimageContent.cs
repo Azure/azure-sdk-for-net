@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary>
-    /// The disk encryption configuration applied on compute nodes in the pool.
-    /// Disk encryption configuration is not supported on Linux pool created with
-    /// Azure Compute Gallery Image.
-    /// </summary>
-    public partial class DiskEncryptionConfiguration
+    /// <summary> Parameters for reimaging an Azure Batch Compute Node. </summary>
+    public partial class BatchNodeReimageContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,22 +45,21 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
-        public DiskEncryptionConfiguration()
+        /// <summary> Initializes a new instance of <see cref="BatchNodeReimageContent"/>. </summary>
+        public BatchNodeReimageContent()
         {
-            Targets = new ChangeTrackingList<DiskEncryptionTarget>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
-        /// <param name="targets"> The list of disk targets Batch Service will encrypt on the compute node. The list of disk targets Batch Service will encrypt on the compute node. </param>
+        /// <summary> Initializes a new instance of <see cref="BatchNodeReimageContent"/>. </summary>
+        /// <param name="nodeReimageOption"> When to reimage the Compute Node and what to do with currently running Tasks. The default value is requeue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryptionConfiguration(IList<DiskEncryptionTarget> targets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchNodeReimageContent(BatchNodeReimageOption? nodeReimageOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Targets = targets;
+            NodeReimageOption = nodeReimageOption;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of disk targets Batch Service will encrypt on the compute node. The list of disk targets Batch Service will encrypt on the compute node. </summary>
-        public IList<DiskEncryptionTarget> Targets { get; }
+        /// <summary> When to reimage the Compute Node and what to do with currently running Tasks. The default value is requeue. </summary>
+        public BatchNodeReimageOption? NodeReimageOption { get; set; }
     }
 }
