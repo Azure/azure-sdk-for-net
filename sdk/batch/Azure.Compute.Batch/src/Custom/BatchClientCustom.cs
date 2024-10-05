@@ -165,7 +165,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
+                using HttpMessage message = CreateJobScheduleExistsInternalRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
                 return await _pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -211,7 +211,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
+                using HttpMessage message = CreateJobScheduleExistsInternalRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
                 return _pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
             }
             catch (Exception e)
