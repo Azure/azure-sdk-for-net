@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Compute.Batch.Tests.Infrastructure;
 using Azure.Core.TestFramework;
@@ -135,6 +136,56 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
         }
 
+        [RecordedTest]
+        public async Task DeallocateandStartBatchNode()
+        {
+            var client = CreateBatchClient();
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "DeallocateandStartBatchNode", IsPlayBack());
+            var poolID = iaasWindowsPoolFixture.PoolId;
+
+            try
+            {
+                // create a pool to verify we have something to query for
+                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(1);
+
+                string batchNodeID = "";
+                await foreach (BatchNode item in client.GetNodesAsync(poolID))
+                {
+                    batchNodeID = item.Id;
+                }
+                Assert.IsNotEmpty(batchNodeID);
+
+                // Deallocate node
+                Response response = await client.DeallocateNodeAsync(poolID, batchNodeID);
+                Assert.IsFalse(response.IsError);
+
+                // wait for node state to reach deallocated
+                BatchNode node = await client.GetNodeAsync(poolID, batchNodeID);
+                while (node.State != BatchNodeState.Deallocated)
+                {
+                    TestSleep(10);
+                    node = await client.GetNodeAsync(poolID, batchNodeID);
+                }
+                Assert.AreEqual(BatchNodeState.Deallocated, node.State);
+
+                // start node
+                response = await client.StartNodeAsync(poolID, batchNodeID);
+                Assert.IsFalse(response.IsError);
+
+                // wait for node state to reach starting
+                node = await client.GetNodeAsync(poolID, batchNodeID);
+                while (node.State != BatchNodeState.Starting)
+                {
+                    node = await client.GetNodeAsync(poolID, batchNodeID);
+                }
+                Assert.AreEqual(BatchNodeState.Starting, node.State);
+            }
+            finally
+            {
+                await client.DeletePoolAsync(poolID);
+            }
+        }
+
         public async Task BatchNodeExtension()
         {
             var client = CreateBatchClient();
@@ -192,8 +243,20 @@ namespace Azure.Compute.Batch.Tests.Integration
 
             try
             {
+                BatchPoolCreateContent batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions(1);
+                batchPoolCreateOptions.UserAccounts.Add(new UserAccount("testuser", "Password1!"));
+
+                BatchPoolEndpointConfiguration batchPoolEndpointConfiguration = new BatchPoolEndpointConfiguration(new List<InboundNatPool>());
+                batchPoolEndpointConfiguration.InboundNatPools.Add(new InboundNatPool("ruleName", InboundEndpointProtocol.Tcp, 3389, 15000, 15100));
+
+                batchPoolCreateOptions.NetworkConfiguration = new NetworkConfiguration()
+                {
+                    EndpointConfiguration  = batchPoolEndpointConfiguration
+                };
+
                 // create a pool to verify we have something to query for
-                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(2);
+                Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
+                BatchPool pool = await iaasWindowsPoolFixture.WaitForPoolAllocation(client, poolID);
 
                 string batchNodeID = "";
                 await foreach (BatchNode item in client.GetNodesAsync(poolID))

@@ -55,7 +55,7 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="UpgradePolicy"/>. </summary>
         /// <param name="mode"> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **Manual** - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; **Automatic** - All virtual machines in the scale set are automatically updated at the same time.&lt;br /&gt;&lt;br /&gt; **Rolling** - Scale set performs updates in batches with an optional pause time in between. </param>
         /// <param name="automaticOsUpgradePolicy"> Configuration parameters used for performing automatic OS Upgrade. The configuration parameters used for performing automatic OS upgrade. </param>
-        /// <param name="rollingUpgradePolicy"> The configuration parameters used while performing a rolling upgrade. This property is only supported on Pools with the virtualMachineConfiguration property. </param>
+        /// <param name="rollingUpgradePolicy"> The configuration parameters used while performing a rolling upgrade. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UpgradePolicy(UpgradeMode mode, AutomaticOsUpgradePolicy automaticOsUpgradePolicy, RollingUpgradePolicy rollingUpgradePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,7 +74,7 @@ namespace Azure.Compute.Batch
         public UpgradeMode Mode { get; set; }
         /// <summary> Configuration parameters used for performing automatic OS Upgrade. The configuration parameters used for performing automatic OS upgrade. </summary>
         public AutomaticOsUpgradePolicy AutomaticOsUpgradePolicy { get; set; }
-        /// <summary> The configuration parameters used while performing a rolling upgrade. This property is only supported on Pools with the virtualMachineConfiguration property. </summary>
+        /// <summary> The configuration parameters used while performing a rolling upgrade. </summary>
         public RollingUpgradePolicy RollingUpgradePolicy { get; set; }
     }
 }
