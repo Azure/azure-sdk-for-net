@@ -9,7 +9,6 @@
 
 ### Other Changes
 
-
 ## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
