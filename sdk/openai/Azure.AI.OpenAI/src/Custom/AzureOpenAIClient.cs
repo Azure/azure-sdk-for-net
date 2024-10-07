@@ -12,6 +12,7 @@ global using OpenAI.FineTuning;
 global using OpenAI.Images;
 global using OpenAI.Models;
 global using OpenAI.Moderations;
+global using OpenAI.RealtimeConversation;
 global using OpenAI.VectorStores;
 
 using System.ClientModel;
@@ -29,6 +30,7 @@ using Azure.AI.OpenAI.Assistants;
 using Azure.AI.OpenAI.Batch;
 using Azure.AI.OpenAI.Files;
 using Azure.AI.OpenAI.FineTuning;
+using Azure.AI.OpenAI.RealtimeConversation;
 using Azure.AI.OpenAI.VectorStores;
 #endif
 
@@ -46,6 +48,8 @@ public partial class AzureOpenAIClient : OpenAIClient
 {
     private readonly Uri _endpoint;
     private readonly AzureOpenAIClientOptions _options;
+    private readonly ApiKeyCredential _keyCredential;
+    private readonly TokenCredential _tokenCredential;
 
     /// <summary>
     /// Creates a new instance of <see cref="AzureOpenAIClient"/> that will connect to a specified Azure OpenAI
@@ -93,6 +97,7 @@ public partial class AzureOpenAIClient : OpenAIClient
     public AzureOpenAIClient(Uri endpoint, ApiKeyCredential credential, AzureOpenAIClientOptions options)
         : this(CreatePipeline(credential, options), endpoint, options)
     {
+        _keyCredential = credential;
     }
 
     /// <summary>
@@ -115,7 +120,9 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// <param name="options"> The scenario-independent options to use. </param>
     public AzureOpenAIClient(Uri endpoint, TokenCredential credential, AzureOpenAIClientOptions options)
         : this(CreatePipeline(credential, options), endpoint, options)
-    { }
+    {
+        _tokenCredential = credential;
+    }
 
     /// <summary>
     /// Creates a new instance of <see cref="AzureOpenAIClient"/>.
@@ -272,6 +279,26 @@ public partial class AzureOpenAIClient : OpenAIClient
 #else
         => throw new InvalidOperationException($"VectorStoreClient is not supported with this GA version of the library. Please use a preview version of the library for this functionality.");
 #endif
+
+#if AZURE_OPENAI_GA
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#endif
+    [Experimental("OPENAI002")]
+    public override RealtimeConversationClient GetRealtimeConversationClient(string deploymentName)
+    {
+#if !AZURE_OPENAI_GA
+        if (_tokenCredential is not null)
+        {
+            return new AzureRealtimeConversationClient(_endpoint, deploymentName, _tokenCredential, _options);
+        }
+        else
+        {
+            return new AzureRealtimeConversationClient(_endpoint, deploymentName, _keyCredential, _options);
+        }
+#else
+        throw new InvalidOperationException($"{nameof(RealtimeConversationClient)} is not supported with this GA version of the library. Please use a preview version of the library for this functionality.");
+#endif
+    }
 
     private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AzureOpenAIClientOptions options)
         => ClientPipeline.Create(

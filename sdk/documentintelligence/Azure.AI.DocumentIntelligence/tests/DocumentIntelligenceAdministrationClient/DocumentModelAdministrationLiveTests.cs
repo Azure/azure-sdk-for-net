@@ -427,6 +427,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             CopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(content);
 
             Assert.That(copyAuthorization.TargetModelId, Is.EqualTo(modelId));
+            Assert.That(copyAuthorization.TargetModelLocation.AbsoluteUri, Does.StartWith(TestEnvironment.Endpoint));
             Assert.That(copyAuthorization.TargetResourceId, Is.EqualTo(TestEnvironment.ResourceId));
             Assert.That(copyAuthorization.TargetResourceRegion, Is.EqualTo(TestEnvironment.ResourceRegion));
             Assert.That(copyAuthorization.AccessToken, Is.Not.Null);

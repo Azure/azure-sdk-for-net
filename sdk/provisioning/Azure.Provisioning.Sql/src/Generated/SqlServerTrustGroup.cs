@@ -51,10 +51,15 @@ public partial class SqlServerTrustGroup : Resource
     /// <summary>
     /// Creates a new SqlServerTrustGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerTrustGroup.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerTrustGroup resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerTrustGroup.</param>
-    public SqlServerTrustGroup(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/locations/serverTrustGroups", resourceVersion ?? "2021-11-01")
+    public SqlServerTrustGroup(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/locations/serverTrustGroups", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _groupMembers = BicepList<ServerTrustGroupServerInfo>.DefineProperty(this, "GroupMembers", ["properties", "groupMembers"]);
@@ -82,9 +87,14 @@ public partial class SqlServerTrustGroup : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerTrustGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerTrustGroup.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerTrustGroup resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerTrustGroup.</param>
     /// <returns>The existing SqlServerTrustGroup resource.</returns>
-    public static SqlServerTrustGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerTrustGroup FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

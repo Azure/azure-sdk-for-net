@@ -98,10 +98,15 @@ public partial class SiteSlotDeployment : Resource
     /// <summary>
     /// Creates a new SiteSlotDeployment.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotDeployment.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SiteSlotDeployment resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotDeployment.</param>
-    public SiteSlotDeployment(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/deployments", resourceVersion ?? "2024-04-01")
+    public SiteSlotDeployment(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/sites/slots/deployments", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _author = BicepValue<string>.DefineProperty(this, "Author", ["properties", "author"]);
@@ -282,9 +287,14 @@ public partial class SiteSlotDeployment : Resource
     /// <summary>
     /// Creates a reference to an existing SiteSlotDeployment.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotDeployment.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SiteSlotDeployment resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotDeployment.</param>
     /// <returns>The existing SiteSlotDeployment resource.</returns>
-    public static SiteSlotDeployment FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SiteSlotDeployment FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

@@ -106,7 +106,6 @@ internal class AzureFineTuningJobOperation : FineTuningJobOperation
     {
         using PipelineMessage message = CreateGetFineTuningEventsRequest(_jobId, after, limit, options);
         return ClientResult.FromResponse(_pipeline.ProcessMessage(message, options));
-
     }
 
     [Experimental("AOAI001")]

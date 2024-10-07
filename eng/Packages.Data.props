@@ -107,9 +107,9 @@
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Identity" Version="1.3.1" />
     <PackageReference Update="Azure.Communication.Common" Version="1.3.0" />
-    <PackageReference Update="Azure.Core" Version="1.43.0" />
+    <PackageReference Update="Azure.Core" Version="1.44.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.3.1" />
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.35" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.36" />
     <PackageReference Update="Azure.Core.Expressions.DataFactory" Version="1.0.0" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.8.0" />
@@ -128,7 +128,7 @@
     <PackageReference Update="Azure.Storage.Blobs" Version="12.21.1" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.19.1" />
     <PackageReference Update="Azure.Storage.Files.Shares" Version="12.19.1" />
-    <PackageReference Update="Azure.AI.OpenAI" Version="2.0.0-beta.6" />
+    <PackageReference Update="Azure.AI.OpenAI" Version="2.0.0" />
     <PackageReference Update="Azure.ResourceManager" Version="1.13.0" />
     <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.3.2" />
     <PackageReference Update="Azure.ResourceManager.ApplicationInsights" Version="1.0.0" />
@@ -175,7 +175,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
-    <PackageReference Update="OpenAI" Version="2.0.0" />
+    <PackageReference Update="OpenAI" Version="2.1.0-beta.1" />
   </ItemGroup>
 
   <!--
@@ -209,7 +209,7 @@
     <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
     <PackageReference Update="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.7.4" />
+    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.7.6" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
@@ -315,7 +315,7 @@
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.0.2" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Update="Microsoft.Data.SqlClient" Version="5.1.3" />
-    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.7.4" />
+    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.7.6" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.10" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
@@ -349,7 +349,7 @@
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
-    <PackageReference Update="System.ClientModel" Version="1.1.0" />
+    <PackageReference Update="System.ClientModel" Version="1.2.0" />
     <PackageReference Update="System.Diagnostics.TraceSource" Version="4.3.0" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.IO.Pipelines" Version="4.5.1" />
