@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
+    [NonParallelizable]
     internal class ContinuousAccessEvaluationTests : ContinuousAccessEvaluationTestsBase
     {
         [Test]
