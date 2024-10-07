@@ -417,7 +417,7 @@ public class TransferManagerTests
         DataTransferOptions options = new();
         options.ItemTransferFailed += e => { failures.Add(e); return Task.CompletedTask; };
 
-        DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource);
+        DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
 
         Assert.That(await jobsProcessor.TryStepAsync(), Is.True);
         Assert.That(jobsProcessor.ItemsInQueue, Is.Zero);
@@ -430,9 +430,8 @@ public class TransferManagerTests
         Assert.That(partsProcessor.ItemsInQueue, Is.Zero);
         Assert.That(chunksProcessor.ItemsInQueue, Is.Zero); // because of failure
 
-        // TODO Failures in processing parts into chunks should surface errors (currently doesn't)
-        //      Assert.That(transfer.TransferStatus.HasFailedItems);
-        //      Assert.That(failures, Is.Not.Empty);
+        Assert.That(transfer.TransferStatus.HasFailedItems);
+        Assert.That(failures, Is.Not.Empty);
         // TODO determine checkpointer status of job chunks
         //      need checkpointer API refactor for this
     }
