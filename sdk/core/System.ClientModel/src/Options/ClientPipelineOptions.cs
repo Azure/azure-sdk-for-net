@@ -23,6 +23,19 @@ public class ClientPipelineOptions
     private PipelineTransport? _transport;
     private TimeSpan? _timeout;
 
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    public ClientPipelineOptions()
+    {
+        Diagnostics = new();
+    }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    public DiagnosticOptions Diagnostics { get; }
+
     #region Pipeline creation: Overrides of default pipeline policies
 
     /// <summary>
@@ -42,6 +55,15 @@ public class ClientPipelineOptions
 
             _retryPolicy = value;
         }
+    }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    public PipelinePolicy? HttpLoggingPolicy
+    {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
     }
 
     /// <summary>
