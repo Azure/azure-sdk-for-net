@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static bool operator ==(BlockResponseCode left, BlockResponseCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlockResponseCode"/> values are not the same. </summary>
         public static bool operator !=(BlockResponseCode left, BlockResponseCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BlockResponseCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BlockResponseCode"/>. </summary>
         public static implicit operator BlockResponseCode(string value) => new BlockResponseCode(value);
 
         /// <inheritdoc />
