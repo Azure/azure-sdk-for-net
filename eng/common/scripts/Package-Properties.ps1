@@ -83,7 +83,7 @@ class PackageProps
         $this.Group = $group
     }
 
-    hidden [object]Get-ValueSafely($hashtable, [string[]]$keys) {
+    hidden [object]GetValueSafely($hashtable, [string[]]$keys) {
         $current = $hashtable
         foreach ($key in $keys) {
             if ($current.ContainsKey($key) -or $current[$key]) {
@@ -93,20 +93,38 @@ class PackageProps
                 return $null
             }
         }
+
         return $current
     }
 
-    hidden [string]ParseYmlForArtifact([string]$ymlPath) {
+    hidden [HashTable]ParseYmlForArtifact([string]$ymlPath) {
         if (Test-Path -Path $ymlPath) {
             try {
                 $content = Get-Content -Raw -Path $ymlPath | CompatibleConvertFrom-Yaml
                 if ($content) {
-
+                    Write-Host "Calling CI Artifacts for $($this.Name) using artifact name $($this.ArtifactName)"
                     $artifacts = $this.GetValueSafely($content, @("extends", "parameters", "Artifacts"))
 
-                    $artifactForCurrentPackage = $artifacts | Where-Object { $_.name -eq $this.ArtifactName }
+                    $artifactForCurrentPackage = $artifacts | Where-Object { $_["name"] -eq $this.ArtifactName -or $_["name"] -eq $this.Name }  | Select-Object -First 1
 
-                    return $artifactForCurrentPackage
+                    # adapt this for a warning
+                    # if ($pkgProps.Count -ge 1)
+                    # {
+                    #     if ($pkgProps.Count -gt 1)
+                    #     {
+                    #         Write-Host "Found more than one project with the name [$PackageName], choosing the first one under $($pkgProps[0].DirectoryPath)"
+                    #     }
+                    #     return $pkgProps[0]
+                    # }
+                    if ($artifactForCurrentPackage) {
+                        Write-Host "Got $artifactForCurrentPackage with type $($artifactForCurrentPackage.GetType())"
+                        return [HashTable]$artifactForCurrentPackage
+                    }
+                    else {
+                        Write-Host "No artifact found for $($this.Name)"
+                        return $null
+                    }
+                    return @{}
                 }
             }
             catch {
@@ -117,23 +135,34 @@ class PackageProps
         return $null
     }
 
-    hidden [void]InitializeCIArtifacts(){
+    [void]InitializeCIArtifacts(){
         $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
         $ciFilePath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory "ci.yml")
         $ciMgmtYmlFilePath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory "ci.mgmt.yml")
 
+        Write-Host "Calling InitializeCIArtifacts against $($this.Name)"
+
         $ciArtifactResult = $this.ParseYmlForArtifact($ciFilePath)
 
-        if ($ciArtifactResult) {
-          Write-Host "Is CI"
-          $this.ArtifactDetails = $ciArtifactResult
-        }
-        return
+        if (-not $this.ArtifactDetails) {
+            Write-Host "No assigned ArtifactDetails, so using the artifact result if it exists"
+            if ($ciArtifactResult) {
+                Write-Host "We have a ciArtifactResult"
+                $this.ArtifactDetails = [Hashtable]$ciArtifactResult
+                Write-Host $this.ArtifactDetails | Format-Table
+            }
+            else {
+                Write-Host "We lost ciArtifactResult somehowfor $($this.ArtifactName)"
+            }
 
-        $ciMgmtResult = $this.ParseYmlForArtifact($ciMgmtYmlFilePath)
+            if (-not $this.ArtifactDetails) {
+                $ciMgmtResult = $this.ParseYmlForArtifact($ciMgmtYmlFilePath)
 
-        if ($ciMgmtResult) {
-          $this.ArtifactDetails = $ciArtifactResult
+                if ($ciMgmtResult) {
+                    $ciMgmtResult.GetEnumerator() | Format-List -Force
+                    $this.ArtifactDetails = [Hashtable]$ciMgmtResult
+                }
+            }
         }
     }
 }
@@ -170,7 +199,7 @@ function Get-PkgProperties
 function Get-PrPkgProperties([string]$InputDiffJson) {
     $packagesWithChanges = @()
 
-    $allPackageProperties = Get-AllPkgProperties
+    $allPackageProperties = Get-AllPkgProperties "appconfiguration"
     $diff = Get-Content $InputDiffJson | ConvertFrom-Json
     $targetedFiles = $diff.ChangedFiles
 
