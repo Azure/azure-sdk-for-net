@@ -311,14 +311,14 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromContainer(string containerUri, BlobStorageResourceContainerOptions options = default)
+        public StorageResource FromContainer(Uri containerUri, BlobStorageResourceContainerOptions options = default)
         {
             BlobContainerClient client = _credentialType switch
             {
-                CredentialType.None => new BlobContainerClient(new Uri(containerUri)),
-                CredentialType.SharedKey => new BlobContainerClient(new Uri(containerUri), _getStorageSharedKeyCredential(new Uri(containerUri), false)),
-                CredentialType.Token => new BlobContainerClient(new Uri(containerUri), _getTokenCredential(new Uri(containerUri), false)),
-                CredentialType.Sas => new BlobContainerClient(new Uri(containerUri), _getAzureSasCredential(new Uri(containerUri), false)),
+                CredentialType.None => new BlobContainerClient(containerUri),
+                CredentialType.SharedKey => new BlobContainerClient(containerUri, _getStorageSharedKeyCredential(containerUri, false)),
+                CredentialType.Token => new BlobContainerClient(containerUri, _getTokenCredential(containerUri, false)),
+                CredentialType.Sas => new BlobContainerClient(containerUri, _getAzureSasCredential(containerUri, false)),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
             return new BlobStorageResourceContainer(client, options);
@@ -347,16 +347,16 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromBlob(string blobUri, BlobStorageResourceOptions options = default)
+        public StorageResource FromBlob(Uri blobUri, BlobStorageResourceOptions options = default)
         {
             if (options is BlockBlobStorageResourceOptions)
             {
                 BlockBlobClient blockClient = _credentialType switch
                 {
-                    CredentialType.None => new BlockBlobClient(new Uri(blobUri)),
-                    CredentialType.SharedKey => new BlockBlobClient(new Uri(blobUri), _getStorageSharedKeyCredential(new Uri(blobUri), false)),
-                    CredentialType.Token => new BlockBlobClient(new Uri(blobUri), _getTokenCredential(new Uri(blobUri), false)),
-                    CredentialType.Sas => new BlockBlobClient(new Uri(blobUri), _getAzureSasCredential(new Uri(blobUri), false)),
+                    CredentialType.None => new BlockBlobClient(blobUri),
+                    CredentialType.SharedKey => new BlockBlobClient(blobUri, _getStorageSharedKeyCredential(blobUri, false)),
+                    CredentialType.Token => new BlockBlobClient(blobUri, _getTokenCredential(blobUri, false)),
+                    CredentialType.Sas => new BlockBlobClient(blobUri, _getAzureSasCredential(blobUri, false)),
                     _ => throw BadCredentialTypeException(_credentialType),
                 };
                 return new BlockBlobStorageResource(blockClient, options as BlockBlobStorageResourceOptions);
@@ -365,10 +365,10 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 PageBlobClient pageClient = _credentialType switch
                 {
-                    CredentialType.None => new PageBlobClient(new Uri(blobUri)),
-                    CredentialType.SharedKey => new PageBlobClient(new Uri(blobUri), _getStorageSharedKeyCredential(new Uri(blobUri), false)),
-                    CredentialType.Token => new PageBlobClient(new Uri(blobUri), _getTokenCredential(new Uri(blobUri), false)),
-                    CredentialType.Sas => new PageBlobClient(new Uri(blobUri), _getAzureSasCredential(new Uri(blobUri), false)),
+                    CredentialType.None => new PageBlobClient(blobUri),
+                    CredentialType.SharedKey => new PageBlobClient(blobUri, _getStorageSharedKeyCredential(blobUri, false)),
+                    CredentialType.Token => new PageBlobClient(blobUri, _getTokenCredential(blobUri, false)),
+                    CredentialType.Sas => new PageBlobClient(blobUri, _getAzureSasCredential(blobUri, false)),
                     _ => throw BadCredentialTypeException(_credentialType),
                 };
                 return new PageBlobStorageResource(pageClient, options as PageBlobStorageResourceOptions);
@@ -377,20 +377,20 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 AppendBlobClient appendClient = _credentialType switch
                 {
-                    CredentialType.None => new AppendBlobClient(new Uri(blobUri)),
-                    CredentialType.SharedKey => new AppendBlobClient(new Uri(blobUri), _getStorageSharedKeyCredential(new Uri(blobUri), false)),
-                    CredentialType.Token => new AppendBlobClient(new Uri(blobUri), _getTokenCredential(new Uri(blobUri), false)),
-                    CredentialType.Sas => new AppendBlobClient(new Uri(blobUri), _getAzureSasCredential(new Uri(blobUri), false)),
+                    CredentialType.None => new AppendBlobClient(blobUri),
+                    CredentialType.SharedKey => new AppendBlobClient(blobUri, _getStorageSharedKeyCredential(blobUri, false)),
+                    CredentialType.Token => new AppendBlobClient(blobUri, _getTokenCredential(blobUri, false)),
+                    CredentialType.Sas => new AppendBlobClient(blobUri, _getAzureSasCredential(blobUri, false)),
                     _ => throw BadCredentialTypeException(_credentialType),
                 };
                 return new AppendBlobStorageResource(appendClient, options as AppendBlobStorageResourceOptions);
             }
             BlockBlobClient client = _credentialType switch
             {
-                CredentialType.None => new BlockBlobClient(new Uri(blobUri)),
-                CredentialType.SharedKey => new BlockBlobClient(new Uri(blobUri), _getStorageSharedKeyCredential(new Uri(blobUri), false)),
-                CredentialType.Token => new BlockBlobClient(new Uri(blobUri), _getTokenCredential(new Uri(blobUri), false)),
-                CredentialType.Sas => new BlockBlobClient(new Uri(blobUri), _getAzureSasCredential(new Uri(blobUri), false)),
+                CredentialType.None => new BlockBlobClient(blobUri),
+                CredentialType.SharedKey => new BlockBlobClient(blobUri, _getStorageSharedKeyCredential(blobUri, false)),
+                CredentialType.Token => new BlockBlobClient(blobUri, _getTokenCredential(blobUri, false)),
+                CredentialType.Sas => new BlockBlobClient(blobUri, _getAzureSasCredential(blobUri, false)),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
             return new BlockBlobStorageResource(client, options as BlockBlobStorageResourceOptions);

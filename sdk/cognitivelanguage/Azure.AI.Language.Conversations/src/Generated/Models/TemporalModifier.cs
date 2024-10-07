@@ -81,7 +81,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static bool operator ==(TemporalModifier left, TemporalModifier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TemporalModifier"/> values are not the same. </summary>
         public static bool operator !=(TemporalModifier left, TemporalModifier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TemporalModifier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TemporalModifier"/>. </summary>
         public static implicit operator TemporalModifier(string value) => new TemporalModifier(value);
 
         /// <inheritdoc />

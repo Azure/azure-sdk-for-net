@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator ==(ReservationErrorResponseCode left, ReservationErrorResponseCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReservationErrorResponseCode"/> values are not the same. </summary>
         public static bool operator !=(ReservationErrorResponseCode left, ReservationErrorResponseCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReservationErrorResponseCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReservationErrorResponseCode"/>. </summary>
         public static implicit operator ReservationErrorResponseCode(string value) => new ReservationErrorResponseCode(value);
 
         /// <inheritdoc />

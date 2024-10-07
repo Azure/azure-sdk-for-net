@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(DnsServiceStatus left, DnsServiceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsServiceStatus"/> values are not the same. </summary>
         public static bool operator !=(DnsServiceStatus left, DnsServiceStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DnsServiceStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsServiceStatus"/>. </summary>
         public static implicit operator DnsServiceStatus(string value) => new DnsServiceStatus(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(DataResidencyBoundary left, DataResidencyBoundary right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataResidencyBoundary"/> values are not the same. </summary>
         public static bool operator !=(DataResidencyBoundary left, DataResidencyBoundary right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataResidencyBoundary"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataResidencyBoundary"/>. </summary>
         public static implicit operator DataResidencyBoundary(string value) => new DataResidencyBoundary(value);
 
         /// <inheritdoc />

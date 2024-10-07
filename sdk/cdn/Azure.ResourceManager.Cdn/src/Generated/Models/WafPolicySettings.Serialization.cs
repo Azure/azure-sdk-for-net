@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Cdn.Models
 
         void IJsonModel<WafPolicySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WafPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WafPolicySettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
@@ -87,7 +95,6 @@ namespace Azure.ResourceManager.Cdn.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WafPolicySettings IJsonModel<WafPolicySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

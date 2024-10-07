@@ -151,7 +151,7 @@
 # ServiceOwners:                                                   @cataggar @nivasn-msft @amitchat @aishu
 
 # ServiceLabel: %Azure Data Explorer
-# ServiceOwners:                                                   @ilayrn @orhasban @zoharHenMicrosoft @sagivf @Aviv-Yaniv
+# ServiceOwners:                                                   @ilayrn @orhasban @zoharHenMicrosoft @Aviv-Yaniv
 
 # PRLabel: %Azure Stack
 /sdk/azurestack*/                                                  @sijuman @sarathys @bganapa @rakku-ms
@@ -628,7 +628,7 @@
 # ServiceOwners:                                                   @kpiteira
 
 # PRLabel: %Monitor
-/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/*                                                     @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
 
 # PRLabel: %Monitor
 /sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
@@ -742,12 +742,6 @@
 
 # ServiceLabel: %Notification Hub
 # ServiceOwners:                                                   @tjsomasundaram
-
-# PRLabel: %Network - DNS
-/sdk/dnsresolver/                                                  @jamesvoongms @jotrivet
-
-# ServiceLabel: %Network - DNS Resolver
-# ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %OpenAI
 /sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash @ralph-msft
@@ -1024,7 +1018,7 @@
 # PRLabel: %Network - DNS Resolver
 /sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
 
-# ServiceLabel: %Network - DNS Resolver
+# ServiceLabel: %Network - DNS Resolver %Mgmt
 # ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %Network - Cloud
@@ -1078,7 +1072,6 @@
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                   @sunkun99 @archerzz @ArcturusZhang @ArthurMa1978
 
-
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
 
@@ -1093,6 +1086,8 @@
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 /.github/workflows/                                                @Azure/azure-sdk-eng
+/.github/CODEOWNERS                                                @jsquire @Azure/azure-sdk-eng
+/.config/1espt/                                                    @benbp @weshaggard
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml                               @jsquire

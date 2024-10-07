@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(CloudAccountProvisioningState left, CloudAccountProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CloudAccountProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(CloudAccountProvisioningState left, CloudAccountProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CloudAccountProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudAccountProvisioningState"/>. </summary>
         public static implicit operator CloudAccountProvisioningState(string value) => new CloudAccountProvisioningState(value);
 
         /// <inheritdoc />

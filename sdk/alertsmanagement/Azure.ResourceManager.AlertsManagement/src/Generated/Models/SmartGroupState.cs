@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator ==(SmartGroupState left, SmartGroupState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SmartGroupState"/> values are not the same. </summary>
         public static bool operator !=(SmartGroupState left, SmartGroupState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SmartGroupState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SmartGroupState"/>. </summary>
         public static implicit operator SmartGroupState(string value) => new SmartGroupState(value);
 
         /// <inheritdoc />

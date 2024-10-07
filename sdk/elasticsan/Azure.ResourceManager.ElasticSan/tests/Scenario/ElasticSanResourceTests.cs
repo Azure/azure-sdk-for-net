@@ -83,26 +83,5 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             await elasticSan1.DeleteAsync(WaitUntil.Completed);
             Assert.IsFalse(await _collection.ExistsAsync(elasticSanName));
         }
-
-        //[Test]
-        //[RecordedTest]
-        //public async Task Update()
-        //{
-        //    ElasticSanCollection elasticSanCollection = (await GetResourceGroupAsync(ResourceGroupName)).GetElasticSans();
-        //    ElasticSanResource elasticSan1 = (await elasticSanCollection.GetAsync(ElasticSanName)).Value;
-        //    ElasticSanPatch patch = new ElasticSanPatch()
-        //    {
-        //        BaseSizeTiB = 2,
-        //        ExtendedCapacitySizeTiB = 7,
-        //    };
-        //    patch.Tags.Add("tag3", "val3");
-
-        //    ElasticSanResource elasticSan2 = (await elasticSan1.UpdateAsync(WaitUntil.Completed, patch)).Value;
-        //    Assert.AreEqual(elasticSan1.Data.Name, elasticSan2.Data.Name);
-        //    Assert.AreEqual(2, elasticSan2.Data.BaseSizeTiB);
-        //    Assert.AreEqual(7, elasticSan2.Data.ExtendedCapacitySizeTiB);
-        //    Assert.GreaterOrEqual(elasticSan2.Data.Tags.Count, 1);
-        //    Assert.AreEqual("val3", elasticSan2.Data.Tags["tag3"]);
-        //}
     }
 }

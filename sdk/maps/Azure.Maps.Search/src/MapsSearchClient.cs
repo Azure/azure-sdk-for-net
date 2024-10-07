@@ -218,7 +218,7 @@ namespace Azure.Maps.Search
 
         /// <param name="queries"> The list of address geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is emoty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is empty. </exception>
         public virtual async Task<Response<GeocodingBatchResponse>> GetGeocodingBatchAsync(IEnumerable<GeocodingQuery> queries, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetGeocodingBatch");
@@ -282,7 +282,8 @@ namespace Azure.Maps.Search
                         Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                     };
                 }
-                return await RestClient.GetPolygonAsync(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken).ConfigureAwait(false);
+                var boundaryInternal = await RestClient.GetPolygonAsync(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Boundary(boundaryInternal.Value), boundaryInternal.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -313,7 +314,8 @@ namespace Azure.Maps.Search
                 {
                     coordinates = new[] { (double)options.Coordinates.Longitude, (double)options.Coordinates.Latitude };
                 }
-                return RestClient.GetPolygon(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken);
+                var boundaryInternal = RestClient.GetPolygon(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken);
+                return Response.FromValue(new Boundary(boundaryInternal.Value), boundaryInternal.GetRawResponse());
             }
             catch (Exception e)
             {

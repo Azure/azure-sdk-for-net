@@ -86,10 +86,10 @@
 
     <!-- BCL packages -->
     <PackageReference Update="System.Buffers" Version="4.5.1" />
-    <PackageReference Update="System.ClientModel" Version="1.0.0" />
+    <PackageReference Update="System.ClientModel" Version="1.1.0" />
     <PackageReference Update="System.IO.Hashing" Version="6.0.0" />
     <PackageReference Update="System.Memory" Version="4.5.5" />
-    <PackageReference Update="System.Memory.Data" Version="1.0.2" />
+    <PackageReference Update="System.Memory.Data" Version="6.0.0" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="6.0.1" />
@@ -107,9 +107,9 @@
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Identity" Version="1.3.1" />
     <PackageReference Update="Azure.Communication.Common" Version="1.3.0" />
-    <PackageReference Update="Azure.Core" Version="1.43.0" />
+    <PackageReference Update="Azure.Core" Version="1.44.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.3.1" />
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.35" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.36" />
     <PackageReference Update="Azure.Core.Expressions.DataFactory" Version="1.0.0" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.8.0" />
@@ -128,7 +128,7 @@
     <PackageReference Update="Azure.Storage.Blobs" Version="12.21.1" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.19.1" />
     <PackageReference Update="Azure.Storage.Files.Shares" Version="12.19.1" />
-    <PackageReference Update="Azure.AI.OpenAI" Version="2.0.0-beta.1" />
+    <PackageReference Update="Azure.AI.OpenAI" Version="2.0.0" />
     <PackageReference Update="Azure.ResourceManager" Version="1.13.0" />
     <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.3.2" />
     <PackageReference Update="Azure.ResourceManager.ApplicationInsights" Version="1.0.0" />
@@ -152,14 +152,10 @@
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.7" />
-    <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.2.0" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.62.0" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.62.0" />
-    <!--
-      TODO: This package needs to be released as GA and arch-board approved before taking a dependency in any stable SDK library.
-      Currently, it is referencd by Azure.Identity.Broker which is still in beta
-    -->
-    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.62.0" />
+    <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.4.0" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.65.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.65.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.65.0" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
@@ -179,7 +175,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
-    <PackageReference Update="OpenAI" Version="2.0.0-beta.7" />
+    <PackageReference Update="OpenAI" Version="2.1.0-beta.1" />
   </ItemGroup>
 
   <!--
@@ -213,7 +209,7 @@
     <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
     <PackageReference Update="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.7.4" />
+    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.7.6" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
@@ -227,7 +223,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240920.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240926.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20240813.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" PrivateAssets="All" />
@@ -242,7 +238,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20240912.2" />
+    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20240913.1" />
   </ItemGroup>
 
   <!--
@@ -319,7 +315,7 @@
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.0.2" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Update="Microsoft.Data.SqlClient" Version="5.1.3" />
-    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.7.4" />
+    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.7.6" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.10" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
@@ -344,12 +340,16 @@
     <PackageReference Update="NUnit" Version="3.13.2" />
     <PackageReference Update="NUnit3TestAdapter" Version="4.4.2" />
     <PackageReference Update="OpenTelemetry" Version="1.9.0" />
+    <PackageReference Update="OpenTelemetry.Exporter.Console" Version="1.9.0" />
     <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.9.0" />
+    <PackageReference Update="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.9.0" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
     <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.9.0-beta.1" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
+    <PackageReference Update="System.ClientModel" Version="1.2.0" />
     <PackageReference Update="System.Diagnostics.TraceSource" Version="4.3.0" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.IO.Pipelines" Version="4.5.1" />

@@ -95,11 +95,15 @@ public partial class OperationalInsightsDataExport : Resource
     /// <summary>
     /// Creates a new OperationalInsightsDataExport.
     /// </summary>
-    /// <param name="resourceName">Name of the OperationalInsightsDataExport.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the OperationalInsightsDataExport
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsDataExport.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public OperationalInsightsDataExport(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.OperationalInsights/workspaces/dataExports", resourceVersion ?? "2020-08-01", context)
+    public OperationalInsightsDataExport(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.OperationalInsights/workspaces/dataExports", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdDate"]);
@@ -121,6 +125,11 @@ public partial class OperationalInsightsDataExport : Resource
     public static class ResourceVersions
     {
         /// <summary>
+        /// 2023-09-01.
+        /// </summary>
+        public static readonly string V2023_09_01 = "2023-09-01";
+
+        /// <summary>
         /// 2020-08-01.
         /// </summary>
         public static readonly string V2020_08_01 = "2020-08-01";
@@ -129,9 +138,14 @@ public partial class OperationalInsightsDataExport : Resource
     /// <summary>
     /// Creates a reference to an existing OperationalInsightsDataExport.
     /// </summary>
-    /// <param name="resourceName">Name of the OperationalInsightsDataExport.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the OperationalInsightsDataExport
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsDataExport.</param>
     /// <returns>The existing OperationalInsightsDataExport resource.</returns>
-    public static OperationalInsightsDataExport FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static OperationalInsightsDataExport FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

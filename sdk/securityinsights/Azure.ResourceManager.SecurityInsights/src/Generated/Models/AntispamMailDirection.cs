@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(AntispamMailDirection left, AntispamMailDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AntispamMailDirection"/> values are not the same. </summary>
         public static bool operator !=(AntispamMailDirection left, AntispamMailDirection right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AntispamMailDirection"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AntispamMailDirection"/>. </summary>
         public static implicit operator AntispamMailDirection(string value) => new AntispamMailDirection(value);
 
         /// <inheritdoc />

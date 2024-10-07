@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator ==(JobProvisioningState left, JobProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(JobProvisioningState left, JobProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobProvisioningState"/>. </summary>
         public static implicit operator JobProvisioningState(string value) => new JobProvisioningState(value);
 
         /// <inheritdoc />

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.BotService.Models
 
         void IJsonModel<BotChannelSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BotChannelSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BotChannelSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ExtensionKey1))
             {
                 writer.WritePropertyName("extensionKey1"u8);
@@ -96,7 +104,6 @@ namespace Azure.ResourceManager.BotService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BotChannelSettings IJsonModel<BotChannelSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

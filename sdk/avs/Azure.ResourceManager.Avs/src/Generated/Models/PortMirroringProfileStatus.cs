@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(PortMirroringProfileStatus left, PortMirroringProfileStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PortMirroringProfileStatus"/> values are not the same. </summary>
         public static bool operator !=(PortMirroringProfileStatus left, PortMirroringProfileStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PortMirroringProfileStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PortMirroringProfileStatus"/>. </summary>
         public static implicit operator PortMirroringProfileStatus(string value) => new PortMirroringProfileStatus(value);
 
         /// <inheritdoc />

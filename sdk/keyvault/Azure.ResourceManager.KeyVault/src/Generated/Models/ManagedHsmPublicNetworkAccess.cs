@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator ==(ManagedHsmPublicNetworkAccess left, ManagedHsmPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHsmPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(ManagedHsmPublicNetworkAccess left, ManagedHsmPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedHsmPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedHsmPublicNetworkAccess"/>. </summary>
         public static implicit operator ManagedHsmPublicNetworkAccess(string value) => new ManagedHsmPublicNetworkAccess(value);
 
         /// <inheritdoc />

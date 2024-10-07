@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+
+    <!-- We don't care about XML doc comments on test types and members -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="SessionRecords\**" />
+    <EmbeddedResource Remove="SessionRecords\**" />
+    <None Remove="SessionRecords\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\src\Azure.Maps.Weather.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\Azure.Maps.Common\src\Azure.Maps.Common.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\Azure.ResourceManager.Maps\src\Azure.ResourceManager.Maps.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="Azure.ResourceManager" />
+  </ItemGroup>
+</Project>

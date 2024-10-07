@@ -1,6 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Inference client library for developing .NET applications with rich experience.</Description>
+    <Description>This is the Microsoft Azure AI Inference Service client library</Description>
     <AssemblyTitle>Microsoft Azure.AI.Inference client library</AssemblyTitle>
     <Version>1.0.0-beta.2</Version>
     <PackageTags>Azure Inference</PackageTags>

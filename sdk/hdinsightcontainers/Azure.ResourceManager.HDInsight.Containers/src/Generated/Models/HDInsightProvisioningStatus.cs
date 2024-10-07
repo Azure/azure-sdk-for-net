@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(HDInsightProvisioningStatus left, HDInsightProvisioningStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightProvisioningStatus"/> values are not the same. </summary>
         public static bool operator !=(HDInsightProvisioningStatus left, HDInsightProvisioningStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HDInsightProvisioningStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightProvisioningStatus"/>. </summary>
         public static implicit operator HDInsightProvisioningStatus(string value) => new HDInsightProvisioningStatus(value);
 
         /// <inheritdoc />
