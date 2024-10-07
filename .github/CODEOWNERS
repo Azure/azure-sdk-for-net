@@ -1024,7 +1024,7 @@
 # PRLabel: %Network - DNS Resolver
 /sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
 
-# ServiceLabel: %Network - DNS Resolver
+# ServiceLabel: %Network - DNS Resolver %Mgmt
 # ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %Network - Cloud
