@@ -150,12 +150,13 @@ namespace Azure.Monitor.Query
             {
                 if (options.TimeRange != null)
                 {
-                    DateTimeOffset? startTimeDto = options.TimeRange.Value.Start;
-                    DateTimeOffset? endTimeDto = options.TimeRange.Value.End;
-                    TimeSpan duration = options.TimeRange.Value.Duration;
+                    if (options.TimeRange.Value.Start == null || options.TimeRange.Value.End == null)
+                    {
+                        throw new ArgumentNullException("Both start and end times must be set in the TimeRange.");
+                    }
 
-                    startTime = startTimeDto.ToIsoString() ?? endTimeDto?.Subtract(duration).ToIsoString();
-                    endTime = endTimeDto.ToIsoString() ?? startTimeDto?.Add(duration).ToIsoString();
+                    startTime = options.TimeRange.Value.Start.ToIsoString();
+                    endTime = options.TimeRange.Value.End.ToIsoString();
                 }
                 aggregations = MetricsClientExtensions.CommaJoin(options.Aggregations);
                 top = options.Size;
