@@ -628,7 +628,7 @@
 # ServiceOwners:                                                   @kpiteira
 
 # PRLabel: %Monitor
-/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/*                                                     @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
 
 # PRLabel: %Monitor
 /sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane

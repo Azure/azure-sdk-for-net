@@ -50,10 +50,15 @@ public partial class IPv6FirewallRule : Resource
     /// <summary>
     /// Creates a new IPv6FirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the IPv6FirewallRule.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the IPv6FirewallRule resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the IPv6FirewallRule.</param>
-    public IPv6FirewallRule(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/ipv6FirewallRules", resourceVersion ?? "2021-11-01")
+    public IPv6FirewallRule(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/ipv6FirewallRules", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _endIPv6Address = BicepValue<string>.DefineProperty(this, "EndIPv6Address", ["properties", "endIPv6Address"]);
@@ -91,9 +96,14 @@ public partial class IPv6FirewallRule : Resource
     /// <summary>
     /// Creates a reference to an existing IPv6FirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the IPv6FirewallRule.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the IPv6FirewallRule resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the IPv6FirewallRule.</param>
     /// <returns>The existing IPv6FirewallRule resource.</returns>
-    public static IPv6FirewallRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static IPv6FirewallRule FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

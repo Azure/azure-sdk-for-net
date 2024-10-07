@@ -71,10 +71,15 @@ public partial class NamespaceTopic : Resource
     /// <summary>
     /// Creates a new NamespaceTopic.
     /// </summary>
-    /// <param name="resourceName">Name of the NamespaceTopic.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the NamespaceTopic resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the NamespaceTopic.</param>
-    public NamespaceTopic(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/topics", resourceVersion ?? "2024-06-01-preview")
+    public NamespaceTopic(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.EventGrid/namespaces/topics", resourceVersion ?? "2024-06-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _eventRetentionInDays = BicepValue<int>.DefineProperty(this, "EventRetentionInDays", ["properties", "eventRetentionInDays"]);
@@ -100,9 +105,14 @@ public partial class NamespaceTopic : Resource
     /// <summary>
     /// Creates a reference to an existing NamespaceTopic.
     /// </summary>
-    /// <param name="resourceName">Name of the NamespaceTopic.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the NamespaceTopic resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the NamespaceTopic.</param>
     /// <returns>The existing NamespaceTopic resource.</returns>
-    public static NamespaceTopic FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static NamespaceTopic FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

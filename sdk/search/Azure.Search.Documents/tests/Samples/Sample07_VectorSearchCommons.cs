@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using Azure.AI.OpenAI;
 using OpenAI.Embeddings;
 #pragma warning disable SA1402 // File may only contain a single type
@@ -20,7 +21,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
             EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-ada-002");
 
-            Embedding embedding = embeddingClient.GenerateEmbedding(input);
+            OpenAIEmbedding embedding = embeddingClient.GenerateEmbedding(input);
             return embedding.ToFloats();
         }
         #endregion

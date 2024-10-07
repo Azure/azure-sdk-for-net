@@ -514,10 +514,15 @@ public partial class WebSiteConfig : Resource
     /// <summary>
     /// Creates a new WebSiteConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteConfig.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the WebSiteConfig resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteConfig.</param>
-    public WebSiteConfig(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/config", resourceVersion ?? "2024-04-01")
+    public WebSiteConfig(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/sites/config", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _acrUserManagedIdentityId = BicepValue<string>.DefineProperty(this, "AcrUserManagedIdentityId", ["properties", "acrUserManagedIdentityID"]);
@@ -762,9 +767,14 @@ public partial class WebSiteConfig : Resource
     /// <summary>
     /// Creates a reference to an existing WebSiteConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteConfig.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the WebSiteConfig resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteConfig.</param>
     /// <returns>The existing WebSiteConfig resource.</returns>
-    public static WebSiteConfig FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteConfig FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

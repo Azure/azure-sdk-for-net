@@ -7,6 +7,9 @@
 - Added GenerateUserDelegationSasUri() to BlobBaseClient and BlobContainerClient.
 - Added BlobErrorCode.BlobAccessTierNotSupportedForAccountType enum value.
 
+### Bugs Fixed
+- Fixed bug where BlobClient.Upload(BinaryData content, ..) did not properly dispose stream after wrapping the BinaryData passed.
+
 ## 12.22.1 (2024-09-25)
 
 ### Other Changes

@@ -70,10 +70,15 @@ public partial class ContainerAppSourceControl : Resource
     /// <summary>
     /// Creates a new ContainerAppSourceControl.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppSourceControl.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerAppSourceControl
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppSourceControl.</param>
-    public ContainerAppSourceControl(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.App/containerApps/sourcecontrols", resourceVersion ?? "2024-03-01")
+    public ContainerAppSourceControl(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.App/containerApps/sourcecontrols", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _branch = BicepValue<string>.DefineProperty(this, "Branch", ["properties", "branch"]);
@@ -119,9 +124,14 @@ public partial class ContainerAppSourceControl : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerAppSourceControl.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppSourceControl.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerAppSourceControl
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppSourceControl.</param>
     /// <returns>The existing ContainerAppSourceControl resource.</returns>
-    public static ContainerAppSourceControl FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppSourceControl FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

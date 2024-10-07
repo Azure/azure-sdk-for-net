@@ -76,10 +76,15 @@ public partial class CosmosDBTable : Resource
     /// <summary>
     /// Creates a new CosmosDBTable.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBTable.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CosmosDBTable resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBTable.</param>
-    public CosmosDBTable(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/tables", resourceVersion ?? "2024-08-15")
+    public CosmosDBTable(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/tables", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -231,9 +236,14 @@ public partial class CosmosDBTable : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBTable.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBTable.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CosmosDBTable resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBTable.</param>
     /// <returns>The existing CosmosDBTable resource.</returns>
-    public static CosmosDBTable FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBTable FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

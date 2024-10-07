@@ -65,10 +65,15 @@ public partial class SiteSlotNetworkConfig : Resource
     /// <summary>
     /// Creates a new SiteSlotNetworkConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotNetworkConfig.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SiteSlotNetworkConfig resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotNetworkConfig.</param>
-    public SiteSlotNetworkConfig(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/networkConfig", resourceVersion ?? "2024-04-01")
+    public SiteSlotNetworkConfig(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/sites/slots/networkConfig", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _isSwiftSupported = BicepValue<bool>.DefineProperty(this, "IsSwiftSupported", ["properties", "swiftSupported"]);
@@ -208,9 +213,14 @@ public partial class SiteSlotNetworkConfig : Resource
     /// <summary>
     /// Creates a reference to an existing SiteSlotNetworkConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotNetworkConfig.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SiteSlotNetworkConfig resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotNetworkConfig.</param>
     /// <returns>The existing SiteSlotNetworkConfig resource.</returns>
-    public static SiteSlotNetworkConfig FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SiteSlotNetworkConfig FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

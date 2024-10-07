@@ -10,32 +10,28 @@ using Azure.Storage.Stress;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Tests;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    public class BlobSingleUploadScenario : BlobScenarioBase
+    public abstract class UploadBlobSingleScenarioBase : BlobScenarioBase
     {
-        private int _blobSize;
-        public BlobSingleUploadScenario(
-            Uri destinationBlobUri,
+        protected UploadBlobSingleScenarioBase(
+            Uri blobUri,
             int? blobSize,
             TransferManagerOptions transferManagerOptions,
             DataTransferOptions dataTransferOptions,
             TokenCredential tokenCredential,
             Metrics metrics,
-            string testRunId)
-            : base(destinationBlobUri, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
+            string testRunId) : base(blobUri, blobSize, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
         {
-            _blobSize = blobSize.HasValue ? blobSize.Value : 100;
         }
 
-        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.UploadSingleBlockBlob;
-
-        public override async Task RunTestAsync(CancellationToken cancellationToken)
+        internal async Task RunTestInternalAsync(BlobType blobType, CancellationToken cancellationToken = default)
         {
             DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
             string destinationContainerName = TestSetupHelper.Randomize("container");
-            BlobContainerClient destinationContainerClient = _destinationServiceClient.GetBlobContainerClient(destinationContainerName);
+            BlobContainerClient destinationContainerClient = _blobServiceClient.GetBlobContainerClient(destinationContainerName);
             await destinationContainerClient.CreateIfNotExistsAsync();
             string blobName = TestSetupHelper.Randomize("blob");
 
@@ -47,13 +43,26 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                 cancellationToken: cancellationToken);
 
             // Create Destination Storage Resource
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(_destinationBlobUri)
+            BlobBaseClient destinationBaseBlob;
+            StorageResource destinationResource;
+            if (blobType == BlobType.Append)
             {
-                BlobContainerName = destinationContainerName,
-                BlobName = blobName
-            };
-            BlockBlobClient destinationBlob = destinationContainerClient.GetBlockBlobClient(blobName);
-            StorageResource destinationResource = _blobsStorageResourceProvider.FromBlob(blobUriBuilder.ToUri().AbsoluteUri);
+                AppendBlobClient destinationBlob = destinationContainerClient.GetAppendBlobClient(blobName);
+                destinationBaseBlob = destinationBlob;
+                destinationResource = _blobsStorageResourceProvider.FromClient(destinationBlob);
+            }
+            else if (blobType == BlobType.Page)
+            {
+                PageBlobClient destinationBlob = destinationContainerClient.GetPageBlobClient(blobName);
+                destinationBaseBlob = destinationBlob;
+                destinationResource = _blobsStorageResourceProvider.FromClient(destinationBlob);
+            }
+            else
+            {
+                BlockBlobClient destinationBlob = destinationContainerClient.GetBlockBlobClient(blobName);
+                destinationBaseBlob = destinationBlob;
+                destinationResource = _blobsStorageResourceProvider.FromClient(destinationBlob);
+            }
 
             // Start Transfer
             await new TransferValidator()
@@ -63,7 +72,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                 sourceResource,
                 destinationResource,
                 cToken => Task.FromResult(File.OpenRead(sourceResource.Uri.AbsolutePath) as Stream),
-                async cToken => await destinationBlob.OpenReadAsync(default, cToken),
+                async cToken => await destinationBaseBlob.OpenReadAsync(default, cToken),
                 options: _dataTransferOptions,
                 cancellationToken: cancellationToken);
         }
