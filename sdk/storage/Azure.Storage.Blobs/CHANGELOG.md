@@ -3,12 +3,12 @@
 ## 12.23.0-beta.1 (Unreleased)
 
 ### Features Added
-
-### Breaking Changes
+- Added support for service version 2025-01-05.
+- Added GenerateUserDelegationSasUri() to BlobBaseClient and BlobContainerClient.
+- Added BlobErrorCode.BlobAccessTierNotSupportedForAccountType enum value.
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed bug where BlobClient.Upload(BinaryData content, ..) did not properly dispose stream after wrapping the BinaryData passed.
 
 ## 12.22.1 (2024-09-25)
 

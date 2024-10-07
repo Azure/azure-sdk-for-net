@@ -15,7 +15,10 @@ public class ProvisioningOutput : ProvisioningVariable
     /// <summary>
     /// Creates a new ProvisioningOutput.
     /// </summary>
-    /// <param name="name">Name of the output.</param>
+    /// <param name="name">
+    /// Name of the output.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="type">Type of the output.</param>
     public ProvisioningOutput(string name, Expression type)
         : base(name, type, value: null) { }
@@ -23,7 +26,10 @@ public class ProvisioningOutput : ProvisioningVariable
     /// <summary>
     /// Creates a new ProvisioningOutput.
     /// </summary>
-    /// <param name="name">Name of the output.</param>
+    /// <param name="name">
+    /// Name of the output.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="type">Type of the output.</param>
     public ProvisioningOutput(string name, Type type)
         : this(name, new TypeExpression(type)) { }
@@ -31,7 +37,7 @@ public class ProvisioningOutput : ProvisioningVariable
     /// <inheritdoc />
     protected internal override IEnumerable<Statement> Compile()
     {
-        OutputStatement stmt = BicepSyntax.Declare.Output(ResourceName, BicepType, Value.Compile());
+        OutputStatement stmt = BicepSyntax.Declare.Output(IdentifierName, BicepType, Value.Compile());
         if (Description is not null) { stmt = stmt.Decorate("description", BicepSyntax.Value(Description)); }
         yield return stmt;
     }

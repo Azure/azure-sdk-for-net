@@ -53,10 +53,15 @@ public partial class SqlFirewallRule : Resource
     /// <summary>
     /// Creates a new SqlFirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlFirewallRule.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlFirewallRule resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlFirewallRule.</param>
-    public SqlFirewallRule(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/firewallRules", resourceVersion ?? "2021-11-01")
+    public SqlFirewallRule(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/firewallRules", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _endIPAddress = BicepValue<string>.DefineProperty(this, "EndIPAddress", ["properties", "endIpAddress"]);
@@ -94,11 +99,16 @@ public partial class SqlFirewallRule : Resource
     /// <summary>
     /// Creates a reference to an existing SqlFirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlFirewallRule.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlFirewallRule resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlFirewallRule.</param>
     /// <returns>The existing SqlFirewallRule resource.</returns>
-    public static SqlFirewallRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlFirewallRule FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this SqlFirewallRule resource.

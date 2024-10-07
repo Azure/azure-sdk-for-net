@@ -124,10 +124,15 @@ public partial class SiteContainer : Resource
     /// <summary>
     /// Creates a new SiteContainer.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteContainer.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SiteContainer resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteContainer.</param>
-    public SiteContainer(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/sitecontainers", resourceVersion ?? "2024-04-01")
+    public SiteContainer(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/sites/sitecontainers", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _authType = BicepValue<SiteContainerAuthType>.DefineProperty(this, "AuthType", ["properties", "authType"]);
@@ -312,9 +317,14 @@ public partial class SiteContainer : Resource
     /// <summary>
     /// Creates a reference to an existing SiteContainer.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteContainer.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SiteContainer resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteContainer.</param>
     /// <returns>The existing SiteContainer resource.</returns>
-    public static SiteContainer FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SiteContainer FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

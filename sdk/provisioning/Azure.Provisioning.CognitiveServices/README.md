@@ -9,7 +9,7 @@ Azure.Provisioning.CognitiveServices simplifies declarative resource provisionin
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.CognitiveServices
+dotnet add package Azure.Provisioning.CognitiveServices --prerelease
 ```
 
 ### Prerequisites

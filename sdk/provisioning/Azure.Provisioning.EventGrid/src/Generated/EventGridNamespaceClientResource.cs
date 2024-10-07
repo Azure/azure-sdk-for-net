@@ -99,10 +99,15 @@ public partial class EventGridNamespaceClientResource : Resource
     /// <summary>
     /// Creates a new EventGridNamespaceClientResource.
     /// </summary>
-    /// <param name="resourceName">Name of the EventGridNamespaceClientResource.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the EventGridNamespaceClientResource
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespaceClientResource.</param>
-    public EventGridNamespaceClientResource(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/clients", resourceVersion ?? "2024-06-01-preview")
+    public EventGridNamespaceClientResource(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.EventGrid/namespaces/clients", resourceVersion ?? "2024-06-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _attributes = BicepDictionary<BinaryData>.DefineProperty(this, "Attributes", ["properties", "attributes"]);
@@ -130,9 +135,14 @@ public partial class EventGridNamespaceClientResource : Resource
     /// <summary>
     /// Creates a reference to an existing EventGridNamespaceClientResource.
     /// </summary>
-    /// <param name="resourceName">Name of the EventGridNamespaceClientResource.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the EventGridNamespaceClientResource
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespaceClientResource.</param>
     /// <returns>The existing EventGridNamespaceClientResource resource.</returns>
-    public static EventGridNamespaceClientResource FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EventGridNamespaceClientResource FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

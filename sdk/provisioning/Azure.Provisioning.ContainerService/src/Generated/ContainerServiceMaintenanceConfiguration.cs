@@ -64,10 +64,16 @@ public partial class ContainerServiceMaintenanceConfiguration : Resource
     /// <summary>
     /// Creates a new ContainerServiceMaintenanceConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerServiceMaintenanceConfiguration.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ContainerServiceMaintenanceConfiguration resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceMaintenanceConfiguration.</param>
-    public ContainerServiceMaintenanceConfiguration(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ContainerService/managedClusters/maintenanceConfigurations", resourceVersion ?? "2024-08-01")
+    public ContainerServiceMaintenanceConfiguration(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.ContainerService/managedClusters/maintenanceConfigurations", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _maintenanceWindow = BicepValue<ContainerServiceMaintenanceWindow>.DefineProperty(this, "MaintenanceWindow", ["properties", "maintenanceWindow"]);
@@ -343,9 +349,15 @@ public partial class ContainerServiceMaintenanceConfiguration : Resource
     /// Creates a reference to an existing
     /// ContainerServiceMaintenanceConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerServiceMaintenanceConfiguration.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ContainerServiceMaintenanceConfiguration resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceMaintenanceConfiguration.</param>
     /// <returns>The existing ContainerServiceMaintenanceConfiguration resource.</returns>
-    public static ContainerServiceMaintenanceConfiguration FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerServiceMaintenanceConfiguration FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }
