@@ -1,5 +1,15 @@
 # Release History
 
+## 1.1.0 (2024-10-11)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-01-01-preview' to 'package-2024-06-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/eea7584434f9225cad0327d83d5c6d84257a4d7d/specification/nginx/resource-manager/readme.md
+    - Added NGINX App Protect Web Application Firewall (WAF) support.
+
+### Other Changes
+
+
 ## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
