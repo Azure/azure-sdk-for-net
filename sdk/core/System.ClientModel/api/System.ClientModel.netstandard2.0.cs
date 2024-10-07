@@ -60,6 +60,15 @@ namespace System.ClientModel
         public virtual System.BinaryData ToBytes() { throw null; }
     }
 }
+namespace System.ClientModel.Pipeline
+{
+    public partial class HttpLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public HttpLoggingPolicy(System.ClientModel.Primitives.LoggingOptions options) { }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
+    }
+}
 namespace System.ClientModel.Primitives
 {
     public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
@@ -95,7 +104,7 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
-        public System.ClientModel.Primitives.DiagnosticOptions Diagnostics { get { throw null; } }
+        public System.ClientModel.Primitives.LoggingOptions Diagnostics { get { throw null; } }
         public System.ClientModel.Primitives.PipelinePolicy? HttpLoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
@@ -126,17 +135,6 @@ namespace System.ClientModel.Primitives
         protected CollectionResult() { }
         public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult> GetRawPages();
-    }
-    public partial class DiagnosticOptions
-    {
-        public DiagnosticOptions() { }
-        public System.Collections.Generic.IList<string> AllowedHeaderNames { get { throw null; } }
-        public System.Collections.Generic.IList<string> AllowedQueryParameters { get { throw null; } }
-        public bool? EnableHttpContentLogging { get { throw null; } set { } }
-        public bool? EnableHttpLogging { get { throw null; } set { } }
-        public bool? EnableLogging { get { throw null; } set { } }
-        public int? HttpContentSizeLimit { get { throw null; } set { } }
-        public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {
@@ -169,6 +167,17 @@ namespace System.ClientModel.Primitives
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
         public override System.ClientModel.Primitives.IJsonModel<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
+    }
+    public partial class LoggingOptions
+    {
+        public LoggingOptions() { }
+        public System.Collections.Generic.IList<string> AllowedHeaderNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> AllowedQueryParameters { get { throw null; } }
+        public bool? EnableHttpContentLogging { get { throw null; } set { } }
+        public bool? EnableHttpLogging { get { throw null; } set { } }
+        public bool? EnableLogging { get { throw null; } set { } }
+        public int? HttpContentSizeLimit { get { throw null; } set { } }
+        public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
     }
     public static partial class ModelReaderWriter
     {

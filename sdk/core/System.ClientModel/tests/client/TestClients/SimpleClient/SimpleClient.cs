@@ -10,25 +10,25 @@ using ClientModel.ReferenceClients.Models;
 
 namespace ClientModel.ReferenceClients;
 
-public class RequestResponseClient
+public class SimpleClient
 {
     private readonly Uri _endpoint;
     private readonly ApiKeyCredential _credential;
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
 
-    public RequestResponseClient(RequestResponseClientOptions? options = default)
+    public SimpleClient(SimpleClientOptions? options = default)
         : this(new Uri("https://www.example.com"), new ApiKeyCredential("fake_key"))
     {
         // Provided to make test illustrations simpler - not typical for a client implementation
     }
 
-    public RequestResponseClient(Uri endpoint, ApiKeyCredential credential, RequestResponseClientOptions? options = default)
+    public SimpleClient(Uri endpoint, ApiKeyCredential credential, SimpleClientOptions? options = default)
     {
         Argument.AssertNotNull(endpoint, nameof(endpoint));
         Argument.AssertNotNull(credential, nameof(credential));
 
-        options ??= new RequestResponseClientOptions();
+        options ??= new SimpleClientOptions();
 
         _endpoint = endpoint;
         _credential = credential;

@@ -34,7 +34,7 @@ public class ClientPipelineOptions
     /// <summary>
     /// TBD.
     /// </summary>
-    public DiagnosticOptions Diagnostics { get; }
+    public LoggingOptions Diagnostics { get; }
 
     #region Pipeline creation: Overrides of default pipeline policies
 

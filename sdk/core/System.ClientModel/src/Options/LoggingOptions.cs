@@ -7,9 +7,9 @@ using Microsoft.Extensions.Logging;
 namespace System.ClientModel.Primitives;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class DiagnosticOptions
+public class LoggingOptions
 {
-    public DiagnosticOptions()
+    public LoggingOptions()
     {
     }
 
@@ -28,5 +28,10 @@ public class DiagnosticOptions
     public int? HttpContentSizeLimit { get; set; }
 
     public ILoggerFactory? LoggerFactory { get; set; }
+
+    internal void Freeze()
+    {
+        // TODO: Make freezable
+    }
 }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
