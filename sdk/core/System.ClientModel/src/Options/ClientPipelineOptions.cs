@@ -20,6 +20,7 @@ public class ClientPipelineOptions
     private bool _frozen;
 
     private PipelinePolicy? _retryPolicy;
+    private PipelinePolicy? _httpLoggingPolicy;
     private PipelineTransport? _transport;
     private TimeSpan? _timeout;
 
@@ -62,8 +63,13 @@ public class ClientPipelineOptions
     /// </summary>
     public PipelinePolicy? HttpLoggingPolicy
     {
-        get => throw new NotImplementedException();
-        set => throw new NotImplementedException();
+        get => _httpLoggingPolicy;
+        set
+        {
+            AssertNotFrozen();
+
+            _httpLoggingPolicy = value;
+        }
     }
 
     /// <summary>

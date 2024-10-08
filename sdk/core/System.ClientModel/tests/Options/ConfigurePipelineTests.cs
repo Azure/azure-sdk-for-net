@@ -35,6 +35,30 @@ public class ConfigurePipelineTests
     }
 
     [Test]
+    public void CanSpecifyConfigurationSectionViaExtensions()
+    {
+        string uriString = "https://www.example.com/";
+
+        ServiceCollection services = new ServiceCollection();
+        ConfigurationManager configuration = new ConfigurationManager();
+        configuration.AddInMemoryCollection(
+            new List<KeyValuePair<string, string?>>() {
+                new("SimpleClient:ServiceUri", uriString)
+            });
+
+        services.AddSingleton<IConfiguration>(sp => configuration);
+        services.AddLogging();
+
+        IConfigurationSection configurationSection = configuration.GetSection("SimpleClient");
+        services.AddSimpleClient(configurationSection);
+
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
+        SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
+
+        Assert.AreEqual(uriString, client.Endpoint.ToString());
+    }
+
+    [Test]
     public void CanSetClientCredentialFromConfigurationSettings()
     {
     }
@@ -46,11 +70,6 @@ public class ConfigurePipelineTests
 
     [Test]
     public void CanInjectCustomPolicyUsingDependencyInjectionExtensions()
-    {
-    }
-
-    [Test]
-    public void CanManuallySpecifyConfigurationPathViaExtensions()
     {
     }
 

@@ -18,8 +18,7 @@ public static class SimpleClientServiceCollectionExtensions
     {
         services.AddOptions();
 
-        // TODO: Add configuration
-
+        // Add client options
         services.AddOptions<SimpleClientOptions>();
 
         services.AddSingleton<SimpleClient>(sp =>
@@ -34,7 +33,8 @@ public static class SimpleClientServiceCollectionExtensions
 
             // TODO: to roll a credential, this will need to be IOptionsMonitor
             // not IOptions -- come back to this.
-            SimpleClientOptions options = sp.GetRequiredService<IOptions<SimpleClientOptions>>().Value;
+            IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
+            SimpleClientOptions options = iOptions.Value;
 
             // Set logging factory from service collection
             ILoggerFactory loggerFactory = sp.GetRequiredService<ILoggerFactory>();
@@ -51,20 +51,20 @@ public static class SimpleClientServiceCollectionExtensions
     public static IServiceCollection AddSimpleClient(this IServiceCollection services,
         IConfiguration configurationSection)
     {
-        // This binds configuration to the options
+        services.AddOptions();
+
+        // Bind configuration to options
         services.Configure<SimpleClientOptions>(configurationSection);
 
         services.AddSingleton<SimpleClient>(sp =>
         {
-            IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
-            configuration.GetSection("SimpleClient");
-
-            Uri endpoint = configuration.GetValue<Uri>("ServiceUri");
+            Uri endpoint = configurationSection.GetValue<Uri>("ServiceUri");
 
             // TODO: how to get this securely?
             ApiKeyCredential credential = new("fake key");
 
-            SimpleClientOptions options = sp.GetRequiredService<IOptions<SimpleClientOptions>>().Value;
+            IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
+            SimpleClientOptions options = iOptions.Value;
 
             // Set logging factory from service collection
             ILoggerFactory loggerFactory = sp.GetRequiredService<ILoggerFactory>();
