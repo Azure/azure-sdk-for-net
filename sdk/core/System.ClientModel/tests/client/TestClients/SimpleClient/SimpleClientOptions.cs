@@ -10,19 +10,24 @@ public class SimpleClientOptions : ClientPipelineOptions
 {
     private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
-    public enum ServiceVersion
+    // TODO: Change to generated code pattern
+    public SimpleClientOptions() : this(LatestVersion)
     {
-        V1 = 1
     }
 
-    internal string Version { get; }
-
-    public SimpleClientOptions(ServiceVersion version = LatestVersion)
+    public SimpleClientOptions(ServiceVersion version)
     {
         Version = version switch
         {
             ServiceVersion.V1 => "1.0",
             _ => throw new NotSupportedException()
         };
+    }
+
+    internal string Version { get; }
+
+    public enum ServiceVersion
+    {
+        V1 = 1
     }
 }

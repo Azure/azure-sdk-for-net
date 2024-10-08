@@ -5,7 +5,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ClientModel.ReferenceClients;
+using ClientModel.ReferenceClients.SimpleClient;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
