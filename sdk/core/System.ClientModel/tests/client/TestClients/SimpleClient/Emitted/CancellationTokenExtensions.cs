@@ -4,8 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Threading;
 
-namespace ClientModel.ReferenceClients;
-
+namespace ClientModel.ReferenceClients.SimpleClient;
 internal static class CancellationTokenExtensions
 {
     public static RequestOptions ToRequestOptions(this CancellationToken cancellationToken)

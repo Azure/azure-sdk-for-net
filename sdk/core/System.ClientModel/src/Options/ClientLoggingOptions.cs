@@ -7,9 +7,9 @@ using Microsoft.Extensions.Logging;
 namespace System.ClientModel.Primitives;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class LoggingOptions
+public class ClientLoggingOptions
 {
-    public LoggingOptions()
+    public ClientLoggingOptions()
     {
         AllowedHeaderNames = new List<string>()
         {

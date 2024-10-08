@@ -3,7 +3,7 @@
 
 using System;
 
-namespace ClientModel.ReferenceClients;
+namespace ClientModel.ReferenceClients.SimpleClient;
 
 internal static class Argument
 {

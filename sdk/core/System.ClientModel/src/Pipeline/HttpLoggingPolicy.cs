@@ -10,9 +10,9 @@ namespace System.ClientModel.Pipeline;
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class HttpLoggingPolicy : PipelinePolicy
 {
-    private readonly LoggingOptions _options;
+    private readonly ClientLoggingOptions _options;
 
-    public HttpLoggingPolicy(LoggingOptions options)
+    public HttpLoggingPolicy(ClientLoggingOptions options)
     {
         _options = options;
     }

@@ -35,7 +35,7 @@ public class ClientPipelineOptions
     /// <summary>
     /// TBD.
     /// </summary>
-    public LoggingOptions Logging { get; }
+    public ClientLoggingOptions Logging { get; }
 
     #region Pipeline creation: Overrides of default pipeline policies
 

@@ -116,7 +116,7 @@ public class ConfigurePipelineTests
     #region Helpers
     public class CustomHttpLoggingPolicy : HttpLoggingPolicy
     {
-        public CustomHttpLoggingPolicy(LoggingOptions options) : base(options)
+        public CustomHttpLoggingPolicy(ClientLoggingOptions options) : base(options)
         {
         }
     }
