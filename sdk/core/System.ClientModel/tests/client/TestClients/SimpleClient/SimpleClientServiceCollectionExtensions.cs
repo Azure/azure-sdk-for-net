@@ -17,6 +17,8 @@ public static class SimpleClientServiceCollectionExtensions
     // See: https://learn.microsoft.com/en-us/dotnet/core/extensions/options-library-authors#parameterless
     public static IServiceCollection AddSimpleClient(this IServiceCollection services)
     {
+        services.AddLogging();
+
         // Add client options
         services.AddOptions<SimpleClientOptions>()
             .Configure<ILoggerFactory>((options, loggerFactory)
@@ -64,7 +66,7 @@ public static class SimpleClientServiceCollectionExtensions
     public static IServiceCollection AddSimpleClient(this IServiceCollection services,
         IConfiguration configurationSection)
     {
-        string? sectionName = (configurationSection as IConfigurationSection)?.Key;
+        services.AddLogging();
 
         // Bind configuration to options
         services.AddOptions<SimpleClientOptions>()
@@ -72,16 +74,35 @@ public static class SimpleClientServiceCollectionExtensions
                 => options.Logging.LoggerFactory = loggerFactory)
             .Bind(configurationSection);
 
+        // Proxy to logging options in case a custom logging policy is added
+        services.AddSingleton<ClientLoggingOptions>(sp =>
+        {
+            IOptions<SimpleClientOptions> options = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
+            return options.Value.Logging;
+        });
+
         services.AddSingleton<SimpleClient>(sp =>
         {
+            string? sectionName = (configurationSection as IConfigurationSection)?.Key;
+
             Uri endpoint = configurationSection.GetValue<Uri>("ServiceUri") ??
                 throw new InvalidOperationException($"Expected 'ServiceUri' to be present in '{sectionName ?? "configuration"}' configuration settings.");
 
             // TODO: how to get this securely?
             ApiKeyCredential credential = new("fake key");
 
+            // TODO: to roll a credential, this will need to be IOptionsMonitor
+            // not IOptions -- come back to this.
             IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
             SimpleClientOptions options = iOptions.Value;
+
+            // Check whether known policy types have been added to the service
+            // collection.
+            HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
+            if (httpLoggingPolicy is not null)
+            {
+                options.HttpLoggingPolicy = httpLoggingPolicy;
+            }
 
             return new SimpleClient(endpoint, credential, options);
         });

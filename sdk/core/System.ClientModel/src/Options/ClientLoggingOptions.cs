@@ -9,6 +9,11 @@ namespace System.ClientModel.Primitives;
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class ClientLoggingOptions
 {
+    // TODO: implement freezing
+    private bool _frozen;
+
+    private bool? _enableLogging;
+
     public ClientLoggingOptions()
     {
         AllowedHeaderNames = new List<string>()
@@ -24,13 +29,19 @@ public class ClientLoggingOptions
     }
 
     public IList<string> AllowedHeaderNames { get; }
+
     public IList<string> AllowedQueryParameters { get; }
 
-    // Client-scope
+    // Client-scope logging
     public bool? EnableLogging
     {
-        get;
-        set;
+        get => _enableLogging;
+        set
+        {
+            AssertNotFrozen();
+
+            _enableLogging = value;
+        }
     }
 
     // Http request/response logging only
@@ -44,9 +55,14 @@ public class ClientLoggingOptions
 
     public ILoggerFactory? LoggerFactory { get; set; }
 
-    internal void Freeze()
+    public virtual void Freeze() => _frozen = true;
+
+    protected void AssertNotFrozen()
     {
-        // TODO: Make freezable
+        if (_frozen)
+        {
+            throw new InvalidOperationException("Cannot change a ClientLoggingOptions instance after ClientPipeline has been created.");
+        }
     }
 }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
