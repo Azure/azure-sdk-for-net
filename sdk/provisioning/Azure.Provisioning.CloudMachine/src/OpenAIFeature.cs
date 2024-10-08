@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.OpenAI;
 using Azure.CloudMachine;
 using Azure.Provisioning.CognitiveServices;
+using OpenAI.Chat;
 
 namespace Azure.Provisioning.CloudMachine.OpenAI;
 
@@ -48,9 +50,21 @@ public class OpenAIFeature : CloudMachineFeature
 
 public static class OpenAIFeatureExtensions
 {
-    public static object GetOpenAIClient(this CloudMachineClient client)
+    public static ChatClient GetOpenAIClient(this CloudMachineClient cm)
     {
-        throw new NotImplementedException();
-        //return new(new($"https://{client.Id}.vault.azure.net/"), client.Credential);
+        ChatClient client = cm.ClientCache.Get("aiai_chat", () =>
+        {
+            AzureOpenAIClient sb = cm.ClientCache.Get("aoai", () =>
+            {
+                Uri endpoint = new("https://eastus.api.cognitive.microsoft.com/");
+                AzureOpenAIClient aoai = new(endpoint, cm.Credential);
+                return aoai;
+            });
+
+            ChatClient chat = sb.GetChatClient(cm.Id);
+            return chat;
+        });
+
+        return client;
     }
 }

@@ -9,6 +9,7 @@ using Azure.Provisioning.CloudMachine.KeyVault;
 using Azure.Provisioning.CloudMachine.OpenAI;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
+using OpenAI.Chat;
 
 namespace Azure.CloudMachine.Tests;
 
@@ -28,7 +29,7 @@ public class CloudMachineTests
         Console.WriteLine(cm.Id);
     }
 
-    [Ignore("no recordings yet")]
+    //[Ignore("no recordings yet")]
     [Theory]
     [TestCase([new string[] { "--init" }])]
     [TestCase([new string[] { "" }])]
@@ -39,6 +40,9 @@ public class CloudMachineTests
         })) return;
 
         CloudMachineClient cm = new();
+        ChatClient chat = cm.GetOpenAIClient();
+        ChatCompletion completion = chat.CompleteChat("Is Azure programming easy?");
+        Console.WriteLine(completion.Content);
     }
 
     [Ignore("no recordings yet")]
