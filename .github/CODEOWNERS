@@ -756,10 +756,10 @@
 # ServiceOwners:                                                   @rhurey @dargilco
 
 # PRLabel: %Microsoft Playwright Testing
-/sdk/playwrighttesting/                                            @shreyaanand @mjmadhu
+/sdk/playwrighttesting/                                            @Sid200026 @puagarwa @ShreyaAnand
 
 # ServiceLabel: %Microsoft Playwright Testing
-# ServiceOwners:                                                   @shreyaanand @mjmadhu
+# ServiceOwners:                                                   @Sid200026 @puagarwa @ShreyaAnand
 
 # ServiceLabel: %Policy
 # ServiceOwners:                                                   @aperezcloud @kenieva
