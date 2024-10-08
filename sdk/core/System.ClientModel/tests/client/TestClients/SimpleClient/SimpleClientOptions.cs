@@ -4,7 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 
-namespace ClientModel.ReferenceClients;
+namespace ClientModel.ReferenceClients.SimpleClient;
 
 public class SimpleClientOptions : ClientPipelineOptions
 {
