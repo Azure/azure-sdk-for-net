@@ -56,6 +56,7 @@ namespace Azure.Communication
     }
     public partial class EntraCommunicationTokenCredentialOptions
     {
+        public EntraCommunicationTokenCredentialOptions(string resourceEndpoint, Azure.Core.TokenCredential entraTokenCredential) { }
         public EntraCommunicationTokenCredentialOptions(string resourceEndpoint, Azure.Core.TokenCredential entraTokenCredential, string[] scopes) { }
         public string ResourceEndpoint { get { throw null; } }
         public string[] Scopes { get { throw null; } }
