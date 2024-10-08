@@ -2,14 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
+using Azure.Provisioning.Expressions;
 
 namespace Azure.CloudMachine;
 
 public static class MessagingServices
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0107:DO NOT call public asynchronous method in synchronous scope.", Justification = "<Pending>")]
-    public static void Send(this CloudMachineClient cm, object serializable)
+    public static void SendMessage(this CloudMachineClient cm, object serializable)
     {
         ServiceBusSender sender = cm.ClientCache.Get("cm_default_topic_sender", () =>
         {
@@ -28,5 +30,10 @@ public static class MessagingServices
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
         sender.SendMessageAsync(message).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+    }
+
+    public static void WhenMessageReceived(this CloudMachineClient cm, Action<string> received)
+    {
+        throw new NotImplementedException();
     }
 }

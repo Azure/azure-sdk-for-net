@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Identity;
@@ -12,8 +11,10 @@ namespace Azure.CloudMachine;
 
 public partial class CloudMachineClient
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public string Id { get; }
 
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public TokenCredential Credential { get; } = new ChainedTokenCredential(
         new AzureDeveloperCliCredential()
     );
@@ -52,6 +53,7 @@ public partial class CloudMachineClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public CloudMachineProperties Properties => new CloudMachineProperties(this);
 
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public struct CloudMachineProperties
     {
         private readonly CloudMachineClient _cm;

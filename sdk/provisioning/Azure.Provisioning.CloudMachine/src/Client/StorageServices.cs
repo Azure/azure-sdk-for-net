@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
@@ -9,7 +10,7 @@ namespace Azure.CloudMachine;
 
 public static class StorageServices
 {
-    public static string Upload(this CloudMachineClient cm, object json, string? name = default)
+    public static string UploadBlob(this CloudMachineClient cm, object json, string? name = default)
     {
         BlobContainerClient container = cm.ClientCache.Get(cm.Properties.DefaultContainerUri.AbsoluteUri, () =>
         {
@@ -24,7 +25,7 @@ public static class StorageServices
         return name;
     }
 
-    public static BinaryData Download(this CloudMachineClient cm, string name)
+    public static BinaryData DownloadBlob(this CloudMachineClient cm, string name)
     {
         BlobContainerClient container = cm.ClientCache.Get(cm.Properties.DefaultContainerUri.AbsoluteUri, () =>
         {
@@ -35,5 +36,14 @@ public static class StorageServices
         BlobClient blob = container.GetBlobClient(name);
         BlobDownloadResult result = blob.DownloadContent();
         return result.Content;
+    }
+
+    public static void WhenBlobUploaded(this CloudMachineClient cm, Action<string> function)
+    {
+        throw new NotImplementedException();
+    }
+    public static void WhenBlobCreated(this CloudMachineClient cm, Func<string, Task> function)
+    {
+        throw new NotImplementedException();
     }
 }
