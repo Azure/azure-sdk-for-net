@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Pipeline;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -19,7 +20,19 @@ public static class SimpleClientServiceCollectionExtensions
         services.AddOptions();
 
         // Add client options
-        services.AddOptions<SimpleClientOptions>();
+        services.AddOptions<SimpleClientOptions>().Configure<ILoggerFactory>(
+            (options, loggerFactory) =>
+            {
+                options.Logging.LoggerFactory = loggerFactory;
+            });
+
+        //// Add client options
+        //services.AddOptions<SimpleClientOptions>().Configure<ILoggerFactory, HttpLoggingPolicy>(
+        //    (options, loggerFactory, loggingPolicy) =>
+        //    {
+        //        options.Logging.LoggerFactory = loggerFactory;
+        //        options.HttpLoggingPolicy = loggingPolicy;
+        //    });
 
         services.AddSingleton<SimpleClient>(sp =>
         {
@@ -37,10 +50,6 @@ public static class SimpleClientServiceCollectionExtensions
             IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
             SimpleClientOptions options = iOptions.Value;
 
-            // Set logging factory from service collection
-            ILoggerFactory loggerFactory = sp.GetRequiredService<ILoggerFactory>();
-            options.Logging.LoggerFactory = loggerFactory;
-
             return new SimpleClient(endpoint, credential, options);
         });
 
@@ -57,7 +66,12 @@ public static class SimpleClientServiceCollectionExtensions
         services.AddOptions();
 
         // Bind configuration to options
-        services.Configure<SimpleClientOptions>(configurationSection);
+        services.AddOptions<SimpleClientOptions>()
+            .Configure<ILoggerFactory>((options, loggerFactory) =>
+                {
+                    options.Logging.LoggerFactory = loggerFactory;
+                })
+            .Bind(configurationSection);
 
         services.AddSingleton<SimpleClient>(sp =>
         {
@@ -69,10 +83,6 @@ public static class SimpleClientServiceCollectionExtensions
 
             IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
             SimpleClientOptions options = iOptions.Value;
-
-            // Set logging factory from service collection
-            ILoggerFactory loggerFactory = sp.GetRequiredService<ILoggerFactory>();
-            options.Logging.LoggerFactory = loggerFactory;
 
             return new SimpleClient(endpoint, credential, options);
         });

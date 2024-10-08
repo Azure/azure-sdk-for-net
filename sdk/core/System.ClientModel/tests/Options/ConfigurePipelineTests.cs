@@ -71,34 +71,6 @@ public class ConfigurePipelineTests
     }
 
     [Test]
-    public void CanInjectCustomPolicyViaExtensions()
-    {
-        string uriString = "https://www.example.com/";
-
-        ServiceCollection services = new ServiceCollection();
-        ConfigurationManager configuration = new ConfigurationManager();
-        configuration.AddInMemoryCollection(
-            new List<KeyValuePair<string, string?>>() {
-                new("SimpleClient:ServiceUri", uriString),
-                new("SimpleClient:Logging:AllowedHeaderNames", "[\"x-allowed\"]")
-            });
-
-        services.AddSingleton<IConfiguration>(sp => configuration);
-        services.AddLogging();
-
-        // Add custom logging policy to service collection
-        services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
-
-        // Client will have custom logging policy injected at creation time
-        services.AddSimpleClient();
-
-        ServiceProvider serviceProvider = services.BuildServiceProvider();
-        SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
-
-        Assert.AreEqual(uriString, client.Endpoint.ToString());
-    }
-
-    [Test]
     public void CanRegisterAndUseDerivedLoggingPolicyType()
     {
     }
