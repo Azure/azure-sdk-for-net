@@ -227,7 +227,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             #region Snippet:EventHubs_Sample02_RemoteCertificateValidationCallback
 
 #if SNIPPET
-            var fullyQualifiedNamespace = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var credential = new DefaultAzureCredential();
 #else
