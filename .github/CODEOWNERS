@@ -1015,10 +1015,10 @@
 # ServiceLabel: %Network - Mobile %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
-# PRLabel: %Network - DNS Resolver
+# PRLabel: %Network - DNS Private Resolver
 /sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
 
-# ServiceLabel: %Network - DNS Resolver %Mgmt
+# ServiceLabel: %Network - DNS Private Resolver %Mgmt
 # ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %New Relic
