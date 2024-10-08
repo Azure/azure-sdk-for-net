@@ -92,24 +92,28 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [RecordedTest]
-        [SyncOnly]
-        public void MetricsQueryResourcesWithStartDurationTimeRange()
+        public async Task MetricsQueryResourcesWithStartDurationTimeRangeAsync()
         {
             MetricsClient client = CreateMetricsClient();
 
             var resourceId = TestEnvironment.StorageAccountId;
 
             var timeRange = new QueryTimeRange(
-                start: Recording.UtcNow,
+                start: Recording.UtcNow.Subtract(TimeSpan.FromHours(4)),
                 duration: TimeSpan.FromHours(4)
             );
 
-            Assert.Throws<AggregateException>(() =>
-                client.QueryResources(
+            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
                 resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts",
-                options: new MetricsQueryResourcesOptions { TimeRange = timeRange }));
+                options: new MetricsQueryResourcesOptions { TimeRange = timeRange }).ConfigureAwait(false);
+
+            Assert.AreEqual(200, metricsResultsResponse.GetRawResponse().Status);
+            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
+            Assert.AreEqual(1, metricsQueryResults.Values.Count);
+            Assert.AreEqual(TestEnvironment.StorageAccountId + "/providers/Microsoft.Insights/metrics/Ingress", metricsQueryResults.Values[0].Metrics[0].Id);
+            Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
         }
 
         [RecordedTest]
@@ -134,8 +138,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [RecordedTest]
-        [SyncOnly]
-        public void MetricsQueryResourcesWithDurationTimeRange()
+        public async Task MetricsQueryResourcesWithDurationTimeRangeAsync()
         {
             MetricsClient client = CreateMetricsClient();
 
@@ -145,12 +148,17 @@ namespace Azure.Monitor.Query.Tests
                 duration: TimeSpan.FromHours(4)
             );
 
-            Assert.Throws<AggregateException>(() =>
-                client.QueryResources(
+            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
                 resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts",
-                options: new MetricsQueryResourcesOptions { TimeRange = timeRange }));
+                options: new MetricsQueryResourcesOptions { TimeRange = timeRange }).ConfigureAwait(false);
+
+            Assert.AreEqual(200, metricsResultsResponse.GetRawResponse().Status);
+            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
+            Assert.AreEqual(1, metricsQueryResults.Values.Count);
+            Assert.AreEqual(TestEnvironment.StorageAccountId + "/providers/Microsoft.Insights/metrics/Ingress", metricsQueryResults.Values[0].Metrics[0].Id);
+            Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
         }
 
         [Test]

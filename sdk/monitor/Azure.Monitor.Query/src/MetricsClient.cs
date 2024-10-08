@@ -150,11 +150,6 @@ namespace Azure.Monitor.Query
             {
                 if (options.TimeRange != null)
                 {
-                    if (options.TimeRange.Value.Start == null || options.TimeRange.Value.End == null)
-                    {
-                        throw new ArgumentNullException("Both start and end times must be set in the TimeRange.");
-                    }
-
                     startTime = options.TimeRange.Value.Start.ToIsoString();
                     endTime = options.TimeRange.Value.End.ToIsoString();
                 }
