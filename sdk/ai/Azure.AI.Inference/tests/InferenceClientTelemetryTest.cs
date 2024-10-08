@@ -261,7 +261,7 @@ namespace Azure.AI.Inference.Tests
                 },
                 Model = "gpt-4o",
                 Temperature = 1,
-                Tools = { new ChatCompletionsFunctionToolDefinition(GetFutureTemperatureFunction()) },
+                Tools = { new ChatCompletionsToolDefinition(GetFutureTemperatureFunction()) },
                 ToolChoice = ChatCompletionsToolChoice.Required,
                 AdditionalProperties = { ["n"] = BinaryData.FromString("2") }
             };
@@ -304,9 +304,8 @@ namespace Azure.AI.Inference.Tests
 
                         StringBuilder[] fullContent = new[] { new StringBuilder() };
                         StringBuilder[] toolArgs = new[] { new StringBuilder(), new StringBuilder() };
-                        string[] toolNames = new string[2];
-                        string[] toolTypes = new string[2];
-                        string[] toolCallIds = new string[2];
+                        Dictionary<string, string> toolCallNames = new Dictionary<string, string>();
+                        Dictionary<string, StringBuilder> toolCallArgs = new Dictionary<string, StringBuilder>();
                         expectedResponse.FinishReasons = new string[1];
                         await foreach (var update in response)
                         {
@@ -317,19 +316,25 @@ namespace Azure.AI.Inference.Tests
 
                             if (update.ToolCallUpdate != null)
                             {
-                                var index = update.ToolCallUpdate.ToolCallIndex;
-                                toolCallIds[index] ??= update.ToolCallUpdate.Id;
-                                toolTypes[index] ??= update.ToolCallUpdate.Type;
-                                toolNames[index] ??= (update.ToolCallUpdate as StreamingFunctionToolCallUpdate)?.Name;
-                                toolArgs[index].Append((update.ToolCallUpdate as StreamingFunctionToolCallUpdate)?.ArgumentsUpdate);
+                                // OpenAI correlates using index, not the id, so id might not be available
+                                // but it's not supported, so we'll assume there is just one tool call...
+
+                                string id = update.ToolCallUpdate.Id ?? toolCallNames.FirstOrDefault().Key;
+
+                                if (!toolCallArgs.ContainsKey(id))
+                                {
+                                    toolCallNames.Add(id, update.ToolCallUpdate?.Function?.Name);
+                                    toolCallArgs[id] = new StringBuilder();
+                                }
+                                toolCallArgs[id].Append(update.ToolCallUpdate?.Function?.Arguments);
                             }
                         }
 
-                        int toolCallsCount = (toolCallIds[0] != null ? 1 : 0) + (toolCallIds[1] != null ? 1 : 0);
-                        Assert.AreEqual(2, toolCallsCount);
+                        Assert.AreEqual(2, toolCallNames.Count);
                         expectedResponse.Choices = new[] {
                             new { finish_reason = expectedResponse.FinishReasons[0], index = 0,
-                                message = new { content = fullContent[0].ToString(), tool_calls = GetToolCalls(toolNames, toolTypes, toolCallIds, toolArgs) }
+                                message = new { content = fullContent[0].ToString(), tool_calls =
+                                GetToolCalls(toolCallNames, toolCallArgs) }
                         } };
 
                         actListener.ValidateStartActivity(requestOptions, endpoint, true);
@@ -350,7 +355,7 @@ namespace Azure.AI.Inference.Tests
                 new ChatCompletionsClient(
                     endpoint,
                     new AzureKeyCredential(TestEnvironment.GithubToken),
-                    InstrumentClientOptions(new ChatCompletionsClientOptions())));
+                    InstrumentClientOptions(new AzureAIInferenceClientOptions())));
         }
 
         private object GetToolCalls(IEnumerable<ChatCompletionsToolCall> calls)
@@ -361,11 +366,11 @@ namespace Azure.AI.Inference.Tests
                 toolsCalls.Add(new
                 {
                     id = call.Id,
-                    type = call.Type,
+                    type = call.Type.ToString(),
                     function = new
                     {
-                        name = (call as ChatCompletionsFunctionToolCall)?.Name,
-                        arguments = (call as ChatCompletionsFunctionToolCall)?.Arguments
+                        name = call.Name,
+                        arguments = call.Arguments
                     },
                 });
             }
@@ -373,19 +378,19 @@ namespace Azure.AI.Inference.Tests
             return toolsCalls;
         }
 
-        private object GetToolCalls(string[] toolNames, string[] toolTypes, string[] toolIds, StringBuilder[] toolArgs)
+        private object GetToolCalls(Dictionary<string, string> toolCallNames, Dictionary<string, StringBuilder> toolCallArgs)
         {
             List<object> toolsCalls = new List<object>();
-            for (int i = 0; i < toolNames.Length; i++)
+            foreach (string id in toolCallNames.Keys)
             {
                 toolsCalls.Add(new
                 {
-                    id = toolIds[i],
-                    type = toolTypes[i],
+                    id,
+                    type = "function",
                     function = new
                     {
-                        name = toolNames[i],
-                        arguments = toolArgs[i].ToString()
+                        name = toolCallNames[id],
+                        arguments = toolCallArgs[id].ToString()
                     },
                 });
             }
