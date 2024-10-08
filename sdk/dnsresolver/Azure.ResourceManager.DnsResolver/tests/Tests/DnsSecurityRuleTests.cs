@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsSecurityRuleName = Recording.GenerateAssetName("dnsSecurityRule-");
             await CreateDnsResolverCollection();
-            var dnsSecurityRuleAction = new DnsSecurityRuleAction() { ActionType = ActionType.Block, BlockResponseCode = BlockResponseCode.Servfail };
+            var dnsSecurityRuleAction = new DnsSecurityRuleAction() { ActionType = DnsSecurityRuleActionType.Block, BlockResponseCode = BlockResponseCode.Servfail };
 
             var dnsSecurityRuleData = new DnsSecurityRuleData(this.DefaultLocation, this.DefaultDnsSecurityRulePriority, dnsSecurityRuleAction,
                 new List<WritableSubResource> {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsSecurityRuleName = Recording.GenerateAssetName("dnsSecurityRule-");
             await CreateDnsResolverCollection();
-            var dnsSecurityRuleAction = new DnsSecurityRuleAction() { ActionType = ActionType.Block, BlockResponseCode = BlockResponseCode.Servfail };
+            var dnsSecurityRuleAction = new DnsSecurityRuleAction() { ActionType = DnsSecurityRuleActionType.Block, BlockResponseCode = BlockResponseCode.Servfail };
 
             var dnsSecurityRuleData = new DnsSecurityRuleData(this.DefaultLocation, this.DefaultDnsSecurityRulePriority, dnsSecurityRuleAction,
                 new List<WritableSubResource> {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
             await CreateDnsResolverCollection();
-            var dnsSecurityRuleAction = new DnsSecurityRuleAction() { ActionType = ActionType.Block, BlockResponseCode = BlockResponseCode.Servfail };
+            var dnsSecurityRuleAction = new DnsSecurityRuleAction() { ActionType = DnsSecurityRuleActionType.Block, BlockResponseCode = BlockResponseCode.Servfail };
 
             var dnsSecurityRuleData = new DnsSecurityRuleData(this.DefaultLocation, this.DefaultDnsSecurityRulePriority, dnsSecurityRuleAction,
                 new List<WritableSubResource> {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsSecurityRuleName = Recording.GenerateAssetName("dnsSecurityRule-");
             await CreateDnsResolverCollection();
-            var dnsSecurityRuleAction = new DnsSecurityRuleAction() { ActionType = ActionType.Block, BlockResponseCode = BlockResponseCode.Servfail };
+            var dnsSecurityRuleAction = new DnsSecurityRuleAction() { ActionType = DnsSecurityRuleActionType.Block, BlockResponseCode = BlockResponseCode.Servfail };
 
             var dnsSecurityRuleData = new DnsSecurityRuleData(this.DefaultLocation, this.DefaultDnsSecurityRulePriority, dnsSecurityRuleAction,
                 new List<WritableSubResource> {

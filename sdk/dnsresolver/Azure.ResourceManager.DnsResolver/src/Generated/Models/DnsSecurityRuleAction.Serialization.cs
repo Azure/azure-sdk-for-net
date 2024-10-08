@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            ActionType? actionType = default;
+            DnsSecurityRuleActionType? actionType = default;
             BlockResponseCode? blockResponseCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     {
                         continue;
                     }
-                    actionType = new ActionType(property.Value.GetString());
+                    actionType = new DnsSecurityRuleActionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("blockResponseCode"u8))

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="actionType"> The type of action to take. </param>
         /// <param name="blockResponseCode"> The response code for block actions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsSecurityRuleAction(ActionType? actionType, BlockResponseCode? blockResponseCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DnsSecurityRuleAction(DnsSecurityRuleActionType? actionType, BlockResponseCode? blockResponseCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionType = actionType;
             BlockResponseCode = blockResponseCode;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> The type of action to take. </summary>
-        public ActionType? ActionType { get; set; }
+        public DnsSecurityRuleActionType? ActionType { get; set; }
         /// <summary> The response code for block actions. </summary>
         public BlockResponseCode? BlockResponseCode { get; set; }
     }

@@ -663,25 +663,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
 }
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ActionType : System.IEquatable<Azure.ResourceManager.DnsResolver.Models.ActionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ActionType(string value) { throw null; }
-        public static Azure.ResourceManager.DnsResolver.Models.ActionType Alert { get { throw null; } }
-        public static Azure.ResourceManager.DnsResolver.Models.ActionType Allow { get { throw null; } }
-        public static Azure.ResourceManager.DnsResolver.Models.ActionType Block { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DnsResolver.Models.ActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DnsResolver.Models.ActionType left, Azure.ResourceManager.DnsResolver.Models.ActionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DnsResolver.Models.ActionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DnsResolver.Models.ActionType left, Azure.ResourceManager.DnsResolver.Models.ActionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public static partial class ArmDnsResolverModelFactory
     {
         public static Azure.ResourceManager.DnsResolver.DnsForwardingRuleData DnsForwardingRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string domainName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DnsResolver.Models.TargetDnsServer> targetDnsServers = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ResourceManager.DnsResolver.Models.DnsForwardingRuleState? dnsForwardingRuleState = default(Azure.ResourceManager.DnsResolver.Models.DnsForwardingRuleState?), Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? provisioningState = default(Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState?)) { throw null; }
@@ -877,7 +858,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     public partial class DnsSecurityRuleAction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleAction>
     {
         public DnsSecurityRuleAction() { }
-        public Azure.ResourceManager.DnsResolver.Models.ActionType? ActionType { get { throw null; } set { } }
+        public Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType? ActionType { get { throw null; } set { } }
         public Azure.ResourceManager.DnsResolver.Models.BlockResponseCode? BlockResponseCode { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -885,6 +866,25 @@ namespace Azure.ResourceManager.DnsResolver.Models
         Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DnsSecurityRuleActionType : System.IEquatable<Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DnsSecurityRuleActionType(string value) { throw null; }
+        public static Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType Alert { get { throw null; } }
+        public static Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType Allow { get { throw null; } }
+        public static Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType Block { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType left, Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType left, Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DnsSecurityRulePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsSecurityRulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.Models.DnsSecurityRulePatch>
     {

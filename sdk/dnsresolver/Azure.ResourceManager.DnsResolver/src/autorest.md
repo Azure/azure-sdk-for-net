@@ -70,6 +70,7 @@ rename-mapping:
   IpAllocationMethod: InboundEndpointIPAllocationMethod
   OutboundEndpoint: DnsResolverOutboundEndpoint
   VirtualNetworkLink: DnsForwardingRulesetVirtualNetworkLink
+  ActionType: DnsSecurityRuleActionType
 
 directive:
   - from: dnsresolver.json
