@@ -19,7 +19,7 @@ public class OpenAIFeature : CloudMachineFeature
         CognitiveServicesAccount cs = new("openai", "2023-05-01")
         {
             Name = cm.Id,
-            Kind = "AIServices",
+            Kind = "OpenAI",
             Sku = new CognitiveServicesSku { Name = "S0" },
             Properties = new CognitiveServicesAccountProperties()
             {
