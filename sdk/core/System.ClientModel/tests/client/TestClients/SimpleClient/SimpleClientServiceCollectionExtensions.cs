@@ -16,6 +16,8 @@ public static class SimpleClientServiceCollectionExtensions
     // See: https://learn.microsoft.com/en-us/dotnet/core/extensions/options-library-authors#parameterless
     public static IServiceCollection AddSimpleClient(this IServiceCollection services)
     {
+        services.AddOptions();
+
         // TODO: Add configuration
 
         services.AddOptions<SimpleClientOptions>();
@@ -23,9 +25,9 @@ public static class SimpleClientServiceCollectionExtensions
         services.AddSingleton<SimpleClient>(sp =>
         {
             IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
-            configuration.GetSection("SimpleClient");
+            IConfiguration clientConfiguration = configuration.GetSection("SimpleClient");
 
-            Uri endpoint = configuration.GetValue<Uri>("ServiceUri");
+            Uri endpoint = clientConfiguration.GetValue<Uri>("ServiceUri");
 
             // TODO: how to get this securely?
             ApiKeyCredential credential = new("fake key");

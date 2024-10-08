@@ -14,7 +14,7 @@ public class ConfigurePipelineTests
     [Test]
     public void CanSetClientEndpointFromConfigurationSettings()
     {
-        string uriString = "https://www.example.com";
+        string uriString = "https://www.example.com/";
 
         ServiceCollection services = new ServiceCollection();
         ConfigurationManager configuration = new ConfigurationManager();
@@ -22,6 +22,9 @@ public class ConfigurePipelineTests
             new List<KeyValuePair<string, string?>>() {
                 new("SimpleClient:ServiceUri", uriString)
             });
+
+        services.AddSingleton<IConfiguration>(sp => configuration);
+        services.AddLogging();
 
         services.AddSimpleClient();
 
