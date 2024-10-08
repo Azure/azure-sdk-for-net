@@ -91,8 +91,18 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
             DataTransfer transfer = await transferManager.StartTransferAsync(
                 source, destination, options, cancellationToken);
 
-            await transfer.WaitForCompletionAsync(cancellationToken);
-            if (!transfer.TransferStatus.HasCompletedSuccessfully)
+            // The test runs for a specified duration and then cancels the token.
+            // When canceled, pause the currently running transfer so it can be
+            // cleaned up.
+            cancellationToken.Register(async () =>
+            {
+                // Don't pass cancellation token since its already cancelled.
+                await transfer.PauseAsync();
+            });
+            await transfer.WaitForCompletionAsync();
+
+            if (!transfer.TransferStatus.HasCompletedSuccessfully &&
+                transfer.TransferStatus.State != DataTransferState.Paused)
             {
                 throw new Exception("A failure occurred during the transfer.");
             }
