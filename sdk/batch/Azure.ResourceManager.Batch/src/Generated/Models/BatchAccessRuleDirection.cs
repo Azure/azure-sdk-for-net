@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Batch.Models
         public static bool operator ==(BatchAccessRuleDirection left, BatchAccessRuleDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchAccessRuleDirection"/> values are not the same. </summary>
         public static bool operator !=(BatchAccessRuleDirection left, BatchAccessRuleDirection right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BatchAccessRuleDirection"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchAccessRuleDirection"/>. </summary>
         public static implicit operator BatchAccessRuleDirection(string value) => new BatchAccessRuleDirection(value);
 
         /// <inheritdoc />

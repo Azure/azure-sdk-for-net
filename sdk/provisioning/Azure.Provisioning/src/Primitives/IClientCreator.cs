@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Azure.Core;
 
 // TODO: Decide if we want to make the name of this interface specific to Entra
@@ -13,6 +14,20 @@ using Azure.Core;
 namespace Azure.Provisioning.Primitives;
 
 /// <summary>
+/// Allows resources to declare the outputs needed to construct a client.
+/// </summary>
+public interface IClientCreator
+{
+    /// <summary>
+    /// Get the outputs required to construct a client for this resource.
+    /// </summary>
+    /// <returns>
+    /// The outputs required to construct a client for this resource.
+    /// </returns>
+    public IEnumerable<ProvisioningOutput> GetOutputs();
+}
+
+/// <summary>
 /// Allows easy creation of a data-plane client for a specific Azure resource.
 /// </summary>
 /// <typeparam name="TClient">
@@ -23,10 +38,11 @@ namespace Azure.Provisioning.Primitives;
 /// </typeparam>
 /// <remarks>
 /// This will be implemented explicitly by individual resources and you should
-/// prefer calling <see cref="ProvisioningDeployment.CreateClient"/> instead
-/// to construct data-plane client resources.
+/// prefer calling <c>Azure.Deployment.ProvisioningDeployment.CreateClient</c>
+/// instead to construct data-plane client resources.
 /// </remarks>
-public interface IClientCreator<TClient, TOptions>
+public interface IClientCreator<TClient, TOptions> :
+    IClientCreator
     where TOptions : ClientOptions
 {
     // TODO: API to declare the outputs required for client creation so we can
@@ -34,16 +50,42 @@ public interface IClientCreator<TClient, TOptions>
 
     /// <summary>
     /// Construct a <typeparamref name="TClient"/> instance for this resource
-    /// that was deployed as part of this <paramref name="deployment"/>.  This
-    /// is intended to be called from the
-    /// <see cref="ProvisioningDeployment.CreateClient"/> user facing method.
+    /// that was deployed.  This is intended to be called from the
+    /// <c>Azure.Deployment.ProvisioningDeployment.CreateClient</c> user facing
+    /// method.
     /// </summary>
-    /// <param name="deployment">The deployment for this resource.</param>
+    /// <param name="deploymentOutputs">The outputs for the deployed resources.</param>
     /// <param name="credential">A credential to use for creating the client.</param>
     /// <param name="options">Optional ClientOptions to use for creating the client.</param>
     /// <returns>A data-plane client for the provisioned resource.</returns>
     public TClient CreateClient(
-        ProvisioningDeployment deployment,
+        IReadOnlyDictionary<string, object?> deploymentOutputs,
         TokenCredential credential,
         TOptions? options = default);
+}
+
+/// <summary>
+/// Infrastructure resolver that automatically creates outputs that would be
+/// needed to connect to those resources with client libraries.
+/// </summary>
+public class ClientCreatorOutputResolver : InfrastructureResolver
+{
+    /// <inheritdoc/>
+    public override IEnumerable<Provisionable> ResolveResources(ProvisioningContext context, IEnumerable<Provisionable> resources)
+    {
+        foreach (Provisionable resource in resources)
+        {
+            // Return the resource as-is
+            yield return resource;
+
+            // Optionally add any outputs
+            if (resource is IClientCreator creator)
+            {
+                foreach (ProvisioningOutput output in creator.GetOutputs())
+                {
+                    yield return output;
+                }
+            }
+        }
+    }
 }

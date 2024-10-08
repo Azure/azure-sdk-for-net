@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(HybridComputeGatewayType left, HybridComputeGatewayType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridComputeGatewayType"/> values are not the same. </summary>
         public static bool operator !=(HybridComputeGatewayType left, HybridComputeGatewayType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HybridComputeGatewayType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeGatewayType"/>. </summary>
         public static implicit operator HybridComputeGatewayType(string value) => new HybridComputeGatewayType(value);
 
         /// <inheritdoc />

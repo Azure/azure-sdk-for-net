@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="features">
         /// Contains a list of valid `GeoJSON Feature` objects.
         /// Please note <see cref="GeoJsonFeature"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Boundary"/>.
+        /// The available derived classes include <see cref="BoundaryInternal"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="features"/> is null. </exception>
         internal GeoJsonFeatureCollectionData(IEnumerable<GeoJsonFeature> features)
@@ -33,7 +33,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="features">
         /// Contains a list of valid `GeoJSON Feature` objects.
         /// Please note <see cref="GeoJsonFeature"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Boundary"/>.
+        /// The available derived classes include <see cref="BoundaryInternal"/>.
         /// </param>
         internal GeoJsonFeatureCollectionData(IReadOnlyList<GeoJsonFeature> features)
         {
@@ -43,7 +43,7 @@ namespace Azure.Maps.Search.Models
         /// <summary>
         /// Contains a list of valid `GeoJSON Feature` objects.
         /// Please note <see cref="GeoJsonFeature"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Boundary"/>.
+        /// The available derived classes include <see cref="BoundaryInternal"/>.
         /// </summary>
         public IReadOnlyList<GeoJsonFeature> Features { get; }
     }

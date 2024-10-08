@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         void IJsonModel<LcmConfigurationSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<LcmConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ConfigurationMode))
             {
                 writer.WritePropertyName("configurationMode"u8);
@@ -72,7 +80,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         LcmConfigurationSetting IJsonModel<LcmConfigurationSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

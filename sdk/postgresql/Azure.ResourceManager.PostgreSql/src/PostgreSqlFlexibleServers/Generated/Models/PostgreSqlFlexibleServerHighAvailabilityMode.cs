@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlFlexibleServerHighAvailabilityMode left, PostgreSqlFlexibleServerHighAvailabilityMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerHighAvailabilityMode left, PostgreSqlFlexibleServerHighAvailabilityMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerHighAvailabilityMode(string value) => new PostgreSqlFlexibleServerHighAvailabilityMode(value);
 
         /// <inheritdoc />

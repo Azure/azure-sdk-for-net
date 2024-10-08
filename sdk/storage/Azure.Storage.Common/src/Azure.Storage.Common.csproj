@@ -4,9 +4,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Common client library</AssemblyTitle>
-    <Version>12.21.0</Version>
+    <Version>12.22.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>12.20.1</ApiCompatVersion>
+    <ApiCompatVersion>12.21.0</ApiCompatVersion>
     <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Common, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
     <Description>
@@ -32,6 +32,7 @@
     <Compile Remove="Shared\*.cs" />
     <Compile Remove="Shared\ClientsideEncryption\*.cs;Shared\ClientsideEncryption\Models\*.cs" />
     <Compile Remove="Shared\AesGcm\**\*.cs" />
+    <Compile Remove="stress\**" />
     <Compile Include="Shared\Argument.cs" />
     <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <!--we're defining the Shared Source in Common, but we only want to build in the files that Common names use of-->

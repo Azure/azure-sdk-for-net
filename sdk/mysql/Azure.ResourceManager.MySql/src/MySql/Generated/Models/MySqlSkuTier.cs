@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator ==(MySqlSkuTier left, MySqlSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlSkuTier"/> values are not the same. </summary>
         public static bool operator !=(MySqlSkuTier left, MySqlSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MySqlSkuTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlSkuTier"/>. </summary>
         public static implicit operator MySqlSkuTier(string value) => new MySqlSkuTier(value);
 
         /// <inheritdoc />

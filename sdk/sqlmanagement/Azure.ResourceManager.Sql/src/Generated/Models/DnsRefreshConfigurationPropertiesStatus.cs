@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(DnsRefreshConfigurationPropertiesStatus left, DnsRefreshConfigurationPropertiesStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsRefreshConfigurationPropertiesStatus"/> values are not the same. </summary>
         public static bool operator !=(DnsRefreshConfigurationPropertiesStatus left, DnsRefreshConfigurationPropertiesStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DnsRefreshConfigurationPropertiesStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsRefreshConfigurationPropertiesStatus"/>. </summary>
         public static implicit operator DnsRefreshConfigurationPropertiesStatus(string value) => new DnsRefreshConfigurationPropertiesStatus(value);
 
         /// <inheritdoc />

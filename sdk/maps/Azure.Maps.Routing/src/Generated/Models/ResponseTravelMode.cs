@@ -54,7 +54,7 @@ namespace Azure.Maps.Routing.Models
         public static bool operator ==(ResponseTravelMode left, ResponseTravelMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResponseTravelMode"/> values are not the same. </summary>
         public static bool operator !=(ResponseTravelMode left, ResponseTravelMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResponseTravelMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResponseTravelMode"/>. </summary>
         public static implicit operator ResponseTravelMode(string value) => new ResponseTravelMode(value);
 
         /// <inheritdoc />

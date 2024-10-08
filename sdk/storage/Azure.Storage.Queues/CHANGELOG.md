@@ -1,9 +1,15 @@
 # Release History
 
+## 12.21.0-beta.1 (Unreleased)
+
+### Features Added
+- Added support for service version 2025-01-05.
+
 ## 12.20.0 (2024-09-18)
 
 ### Features Added
 - Includes all features from 12.20.0-beta.1.
+- Removed Queue Permissions enum from 12.20.0-beta.1.
 
 ### Bugs Fixed
 - Fixed \[BUG\] Fixed Equality failures due to implicit cast on QueueErrorCode #44213

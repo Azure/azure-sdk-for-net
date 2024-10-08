@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public static bool operator ==(SapInstanceType left, SapInstanceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapInstanceType"/> values are not the same. </summary>
         public static bool operator !=(SapInstanceType left, SapInstanceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapInstanceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapInstanceType"/>. </summary>
         public static implicit operator SapInstanceType(string value) => new SapInstanceType(value);
 
         /// <inheritdoc />

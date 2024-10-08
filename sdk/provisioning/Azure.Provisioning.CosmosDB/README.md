@@ -9,7 +9,7 @@ Azure.Provisioning.CosmosDB simplifies declarative resource provisioning in .NET
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.CosmosDB
+dotnet add package Azure.Provisioning.CosmosDB --prerelease
 ```
 
 ### Prerequisites

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static bool operator ==(DevCenterScheduledType left, DevCenterScheduledType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevCenterScheduledType"/> values are not the same. </summary>
         public static bool operator !=(DevCenterScheduledType left, DevCenterScheduledType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevCenterScheduledType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevCenterScheduledType"/>. </summary>
         public static implicit operator DevCenterScheduledType(string value) => new DevCenterScheduledType(value);
 
         /// <inheritdoc />

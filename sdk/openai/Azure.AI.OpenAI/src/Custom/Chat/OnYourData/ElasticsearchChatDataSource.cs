@@ -1,111 +1,120 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
 [CodeGenModel("ElasticsearchChatDataSource")]
-public partial class ElasticsearchChatDataSource : AzureChatDataSource
+[Experimental("AOAI001")]
+#if AZURE_OPENAI_GA
+[EditorBrowsable(EditorBrowsableState.Never)]
+#endif
+public partial class ElasticsearchChatDataSource : ChatDataSource
 {
     [CodeGenMember("Parameters")]
     internal InternalElasticsearchChatDataSourceParameters InternalParameters { get; }
+
+#if !AZURE_OPENAI_GA
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.Endpoint"/>
     required public Uri Endpoint
     {
         get => InternalParameters.Endpoint;
-        init => InternalParameters.Endpoint = value;
+        set => InternalParameters.Endpoint = value;
     }
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.IndexName"/>
     required public string IndexName
     {
         get => InternalParameters.IndexName;
-        init => InternalParameters.IndexName = value;
+        set => InternalParameters.IndexName = value;
     }
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.Authentication"/>
     required public DataSourceAuthentication Authentication
     {
         get => InternalParameters.Authentication;
-        init => InternalParameters.Authentication = value;
+        set => InternalParameters.Authentication = value;
     }
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.TopNDocuments"/>
     public int? TopNDocuments
     {
         get => InternalParameters.TopNDocuments;
-        init => InternalParameters.TopNDocuments = value;
+        set => InternalParameters.TopNDocuments = value;
     }
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.InScope"/>
     public bool? InScope
     {
         get => InternalParameters.InScope;
-        init => InternalParameters.InScope = value;
+        set => InternalParameters.InScope = value;
     }
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.Strictness"/>
     public int? Strictness
     {
         get => InternalParameters.Strictness;
-        init => InternalParameters.Strictness = value;
-    }
-
-    /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.RoleInformation"/>
-    public string RoleInformation
-    {
-        get => InternalParameters.RoleInformation;
-        init => InternalParameters.RoleInformation = value;
+        set => InternalParameters.Strictness = value;
     }
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.MaxSearchQueries"/>
     public int? MaxSearchQueries
     {
         get => InternalParameters.MaxSearchQueries;
-        init => InternalParameters.MaxSearchQueries = value;
+        set => InternalParameters.MaxSearchQueries = value;
     }
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.AllowPartialResult"/>
-    public bool? AllowPartialResult
+    public bool? AllowPartialResults
     {
         get => InternalParameters.AllowPartialResult;
-        init => InternalParameters.AllowPartialResult = value;
+        set => InternalParameters.AllowPartialResult = value;
     }
 
-    /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.OutputContextFlags"/>
-    public DataSourceOutputContextFlags? OutputContextFlags
+    /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.OutputContexts"/>
+    public DataSourceOutputContexts? OutputContexts
     {
-        get => InternalParameters.OutputContextFlags;
-        init => InternalParameters.OutputContextFlags = value;
+        get => InternalParameters.OutputContexts;
+        set => InternalParameters.OutputContexts = value;
     }
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.FieldMappings"/>
     public DataSourceFieldMappings FieldMappings
     {
         get => InternalParameters.FieldMappings;
-        init => InternalParameters.FieldMappings = value;
+        set => InternalParameters.FieldMappings = value;
     }
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.QueryType"/>
     public DataSourceQueryType? QueryType
     {
         get => InternalParameters.QueryType;
-        init => InternalParameters.QueryType = value;
+        set => InternalParameters.QueryType = value;
     }
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.VectorizationSource"/>
     public DataSourceVectorizer VectorizationSource
     {
         get => InternalParameters.VectorizationSource;
-        init => InternalParameters.VectorizationSource = value;
+        set => InternalParameters.VectorizationSource = value;
     }
 
     public ElasticsearchChatDataSource() : base(type: "elasticsearch", serializedAdditionalRawData: null)
     {
         InternalParameters = new();
     }
+
+#else
+    public ElasticsearchChatDataSource()
+    {
+        throw new InvalidOperationException($"Elasticsearch data sources are not supported in this GA version. Please use a preview library and service version for this integration.");
+    }
+#endif
 
     // CUSTOM: Made internal.
     /// <summary> Initializes a new instance of <see cref="ElasticsearchChatDataSource"/>. </summary>

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Orbital.Models
         public static bool operator ==(GroundStationReleaseMode left, GroundStationReleaseMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GroundStationReleaseMode"/> values are not the same. </summary>
         public static bool operator !=(GroundStationReleaseMode left, GroundStationReleaseMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GroundStationReleaseMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GroundStationReleaseMode"/>. </summary>
         public static implicit operator GroundStationReleaseMode(string value) => new GroundStationReleaseMode(value);
 
         /// <inheritdoc />

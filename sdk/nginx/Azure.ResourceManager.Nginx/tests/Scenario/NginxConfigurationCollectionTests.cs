@@ -38,15 +38,17 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
-            string nginxConfigurationName = "default";
-            string virtualPath = "/etc/nginx/nginx.conf";
+            const string nginxConfigurationName = "default";
+            const string virtualPath = "/etc/nginx/nginx.conf";
             NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
 
             Assert.IsTrue(nginxConfigurationName.Equals(nginxConfiguration.Data.Name));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.GetNginxConfigurations().CreateOrUpdateAsync(WaitUntil.Completed, nginxConfigurationName, null)).Value);
 
-            NginxConfigurationData nginxConfigurationData = new NginxConfigurationData();
-            nginxConfigurationData.Location = Location;
+            NginxConfigurationData nginxConfigurationData = new NginxConfigurationData
+            {
+                Location = Location
+            };
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.GetNginxConfigurations().CreateOrUpdateAsync(WaitUntil.Completed, null, nginxConfigurationData)).Value);
         }
 
@@ -58,10 +60,10 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
             NginxConfigurationCollection collection = nginxDeployment.GetNginxConfigurations();
-            string nginxConfigurationName = "default";
+            const string nginxConfigurationName = "default";
             Assert.IsFalse(await collection.ExistsAsync(nginxConfigurationName));
-            string virtualPath = "/etc/nginx/nginx.conf";
-            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
+            const string virtualPath = "/etc/nginx/nginx.conf";
+            _ = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
 
             Assert.IsTrue(await collection.ExistsAsync(nginxConfigurationName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
@@ -75,11 +77,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
             NginxConfigurationCollection collection = nginxDeployment.GetNginxConfigurations();
-            string nginxConfigurationName = "default";
+            const string nginxConfigurationName = "default";
             NullableResponse<NginxConfigurationResource> nginxConfigurationResponse = await collection.GetIfExistsAsync(nginxConfigurationName);
             Assert.False(nginxConfigurationResponse.HasValue);
 
-            string virtualPath = "/etc/nginx/nginx.conf";
+            const string virtualPath = "/etc/nginx/nginx.conf";
             NginxConfigurationResource nginxConfiguration1 = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
             NullableResponse<NginxConfigurationResource> nginxConfigurationResponse2 = await collection.GetIfExistsAsync(nginxConfigurationName);
             Assert.True(nginxConfigurationResponse2.HasValue);

@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -247,7 +246,7 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
@@ -301,7 +300,7 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
@@ -345,7 +344,7 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = DataTransferErrorMode.ContinueOnFailure
             };
             TransferManager transferManager = new TransferManager(options);
@@ -371,7 +370,7 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
@@ -423,14 +422,15 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync();
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
+            await using DisposingContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
@@ -502,14 +502,15 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync();
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
+            await using DisposingContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
@@ -577,13 +578,14 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer blobContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer blobContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
@@ -829,7 +831,7 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
@@ -873,14 +875,15 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync();
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
+            await using DisposingContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
@@ -924,14 +927,15 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync();
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
+            await using DisposingContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
@@ -981,14 +985,15 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync();
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
+            await using DisposingContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
@@ -1068,14 +1073,15 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync();
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
+            await using DisposingContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
@@ -1162,14 +1168,15 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync();
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
+            await using DisposingContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };

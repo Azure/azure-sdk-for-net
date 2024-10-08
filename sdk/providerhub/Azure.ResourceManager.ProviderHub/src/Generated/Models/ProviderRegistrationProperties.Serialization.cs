@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         void IJsonModel<ProviderRegistrationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ProviderRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProviderRegistrationProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ProviderHubMetadata))
             {
                 writer.WritePropertyName("providerHubMetadata"u8);
@@ -41,104 +50,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("subscriptionLifecycleNotificationSpecifications"u8);
                 writer.WriteObjectValue(SubscriptionLifecycleNotificationSpecifications, options);
             }
-            if (Optional.IsDefined(ProviderAuthentication))
-            {
-                writer.WritePropertyName("providerAuthentication"u8);
-                writer.WriteObjectValue(ProviderAuthentication, options);
-            }
-            if (Optional.IsCollectionDefined(ProviderAuthorizations))
-            {
-                writer.WritePropertyName("providerAuthorizations"u8);
-                writer.WriteStartArray();
-                foreach (var item in ProviderAuthorizations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Namespace))
-            {
-                writer.WritePropertyName("namespace"u8);
-                writer.WriteStringValue(Namespace);
-            }
-            if (Optional.IsDefined(ProviderVersion))
-            {
-                writer.WritePropertyName("providerVersion"u8);
-                writer.WriteStringValue(ProviderVersion);
-            }
-            if (Optional.IsDefined(ProviderType))
-            {
-                writer.WritePropertyName("providerType"u8);
-                writer.WriteStringValue(ProviderType.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(RequiredFeatures))
-            {
-                writer.WritePropertyName("requiredFeatures"u8);
-                writer.WriteStartArray();
-                foreach (var item in RequiredFeatures)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(FeaturesRule))
-            {
-                writer.WritePropertyName("featuresRule"u8);
-                writer.WriteObjectValue(FeaturesRule, options);
-            }
-            if (Optional.IsDefined(RequestHeaderOptions))
-            {
-                writer.WritePropertyName("requestHeaderOptions"u8);
-                writer.WriteObjectValue(RequestHeaderOptions, options);
-            }
-            if (Optional.IsDefined(Management))
-            {
-                writer.WritePropertyName("management"u8);
-                writer.WriteObjectValue(Management, options);
-            }
-            if (Optional.IsCollectionDefined(Capabilities))
-            {
-                writer.WritePropertyName("capabilities"u8);
-                writer.WriteStartArray();
-                foreach (var item in Capabilities)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Metadata))
-            {
-                writer.WritePropertyName("metadata"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Metadata);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Metadata))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (Optional.IsDefined(TemplateDeploymentOptions))
-            {
-                writer.WritePropertyName("templateDeploymentOptions"u8);
-                writer.WriteObjectValue(TemplateDeploymentOptions, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         ProviderRegistrationProperties IJsonModel<ProviderRegistrationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

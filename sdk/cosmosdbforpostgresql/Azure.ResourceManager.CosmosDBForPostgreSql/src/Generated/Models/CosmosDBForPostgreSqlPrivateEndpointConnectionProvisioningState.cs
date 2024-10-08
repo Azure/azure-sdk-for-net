@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public static bool operator ==(CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState left, CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState left, CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState"/>. </summary>
         public static implicit operator CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(string value) => new CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc />

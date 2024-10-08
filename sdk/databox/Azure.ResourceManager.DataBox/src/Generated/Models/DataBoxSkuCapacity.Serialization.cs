@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataBox.Models
 
         void IJsonModel<DataBoxSkuCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxSkuCapacity)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Usable))
             {
                 writer.WritePropertyName("usable"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.DataBox.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataBoxSkuCapacity IJsonModel<DataBoxSkuCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

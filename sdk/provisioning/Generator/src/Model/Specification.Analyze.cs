@@ -22,7 +22,6 @@ public abstract partial class Specification
             $"Analyzing resources of specification {Name}",
             () =>
             {
-                string? resourceNamespace = null;
                 Dictionary<Type, MethodInfo> resources = FindConstructibleResources();
                 Resources = [.. resources.Keys.OrderBy(t => t.Name).Select(t => new Resource(this, t))];
                 foreach (Resource resource in Resources)
@@ -35,9 +34,7 @@ public abstract partial class Specification
                     {
                         // Only null for GenericResource
                         resource.ResourceType = resourceType.ToString();
-
-                        // This is assuming everything in the spec has the same namespace
-                        resourceNamespace ??= resourceType.Value.Namespace;
+                        resource.ResourceNamespace = resourceType.Value.Namespace;
                     }
 
                     MethodInfo creator = resources[resource.ArmType!];
@@ -56,8 +53,14 @@ public abstract partial class Specification
                             }
 
                             // Sort all the properties with Name/required values first and output values last
-                            resource.Properties = [.. resource.Properties.OrderBy(p => (p.Name == "Name" ? 0 : p.IsReadOnly ? '3' : p.IsRequired ? '1' : '2') + p.Name)] ;
+                            resource.Properties = [.. resource.Properties.OrderBy(p => (p.Name == "Name" ? 0 : p.IsReadOnly ? '3' : p.IsRequired ? '1' : '2') + p.Name)];
                         });
+
+                    // Hack in a few special types
+                    if (resource.Name == "Generic")
+                    {
+                        GetOrCreateModelType(typeof(WritableSubResource), resource);
+                    }
 
                     MethodInfo? getKeys = resource.ArmType.GetMethod("GetKeys") ?? resource.ArmType.GetMethod("GetSharedKeys");
                     Type? keyType = getKeys?.ReturnType.GetGenericArguments()?[0];
@@ -91,27 +94,47 @@ public abstract partial class Specification
                 // (it's specific to the subscription, but our dev playground is opted into everything good)
                 string subId = Arm.GetDefaultSubscription().Id.SubscriptionId ??
                     throw new InvalidOperationException("Failed to find default subscription ID!");
-                ResourceProviderResource rp = Arm.GetResourceProviderResource(
-                    ResourceProviderResource.CreateResourceIdentifier(subId, resourceNamespace));
-                foreach (ProviderResourceType data in rp.Get().Value.Data.ResourceTypes)
+                foreach (string resourceNamespace in Resources.Select(r => r.ResourceNamespace).Where(ns => ns is not null).Distinct())
                 {
-                    ResourceType type = new($"{resourceNamespace}/{data.ResourceType}");
-                    Resource? resource = Resources.FirstOrDefault(r => r.ResourceType?.ToString() == type.ToString());
-                    if (resource is null) { continue; }
+                    ResourceProviderResource rp = Arm.GetResourceProviderResource(
+                        ResourceProviderResource.CreateResourceIdentifier(subId, resourceNamespace));
+                    foreach (ProviderResourceType data in rp.Get().Value.Data.ResourceTypes)
+                    {
+                        ResourceType type = new($"{resourceNamespace}/{data.ResourceType}");
+                        Resource? resource = Resources.FirstOrDefault(r => string.Compare(r.ResourceType?.ToString(), type.ToString(), StringComparison.OrdinalIgnoreCase) == 0);
+                        if (resource is null) { continue; }
 
-                    // Only keep the very latest preview if it's the most
-                    // recent release - otherwise people should use a GAed version
-                    resource.ResourceVersions =
-                        [.. data.ApiVersions.OrderDescending().Where((v, i) =>
+                        // Only keep the very latest preview if it's the most
+                        // recent release - otherwise people should use a GAed version
+                        resource.ResourceVersions =
+                            [.. data.ApiVersions.OrderDescending().Where((v, i) =>
                             !v.EndsWith("preview") || i == 0)];
-                    
-                    resource.DefaultResourceVersion =
-                        // We'll use the default if specified
-                        data.DefaultApiVersion ??
-                        // The latest versions are first - so let's take the first non-preview as the default
-                        resource.ResourceVersions.FirstOrDefault(v => !v.EndsWith("preview")) ??
-                        // Otherwise we'll take the latest preview
-                        resource.ResourceVersions.FirstOrDefault();
+
+                        resource.DefaultResourceVersion =
+                            // The latest versions are first - so let's take the first non-preview as the default
+                            resource.ResourceVersions.FirstOrDefault(v => !v.EndsWith("preview", StringComparison.OrdinalIgnoreCase)) ??
+                            // Otherwise we'll take the latest preview
+                            resource.ResourceVersions.FirstOrDefault();
+                    }
+                }
+
+                // Try to resolve missing versions from related types
+                foreach (Resource resource in Resources.Where(r => r.DefaultResourceVersion is null))
+                {
+                    // First try the base type
+                    Resource? parent = resource.BaseType as Resource;
+                    resource.DefaultResourceVersion = parent?.DefaultResourceVersion;
+                    resource.ResourceVersions = parent?.ResourceVersions;
+
+                    // Otherwise default to our nearest ancestor with a version
+                    // (we're walking up to avoid the effort of a topological sort)
+                    parent = resource.ParentResource;
+                    while (resource.DefaultResourceVersion is null && parent is not null)
+                    {
+                        resource.DefaultResourceVersion = parent.DefaultResourceVersion;
+                        resource.ResourceVersions = parent.ResourceVersions;
+                        parent = parent.ParentResource;
+                    }
                 }
                 /**/
             });

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         void IJsonModel<CanonicalProfileDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CanonicalProfileDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CanonicalProfileDefinition)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(CanonicalProfileId))
             {
                 writer.WritePropertyName("canonicalProfileId"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CanonicalProfileDefinition IJsonModel<CanonicalProfileDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

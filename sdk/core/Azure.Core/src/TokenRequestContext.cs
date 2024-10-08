@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ComponentModel;
+using System.Net.Http;
+
 namespace Azure.Core
 {
     /// <summary>
@@ -27,6 +31,7 @@ namespace Azure.Core
         /// <param name="scopes">The scopes required for the token.</param>
         /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         /// <param name="claims">Additional claims to be included in the token.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims)
         {
             Scopes = scopes;
@@ -42,6 +47,7 @@ namespace Azure.Core
         /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         /// <param name="claims">Additional claims to be included in the token.</param>
         /// <param name="tenantId"> The tenantId to be included in the token request. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId)
         {
             Scopes = scopes;
@@ -58,13 +64,39 @@ namespace Azure.Core
         /// <param name="claims">Additional claims to be included in the token.</param>
         /// <param name="tenantId"> The tenantId to be included in the token request.</param>
         /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
-        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId, bool isCaeEnabled)
         {
             Scopes = scopes;
             ParentRequestId = parentRequestId;
             Claims = claims;
             TenantId = tenantId;
             IsCaeEnabled = isCaeEnabled;
+        }
+
+        /// <summary>
+        /// Creates a new TokenRequest with the specified scopes.
+        /// </summary>
+        /// <param name="scopes">The scopes required for the token.</param>
+        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
+        /// <param name="claims">Additional claims to be included in the token.</param>
+        /// <param name="tenantId">The tenant ID to be included in the token request.</param>
+        /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
+        /// <param name="isProofOfPossessionEnabled">Indicates whether to enable Proof of Possession (PoP) for the requested token.</param>
+        /// <param name="proofOfPossessionNonce">The nonce value required for PoP token requests.</param>
+        /// <param name="requestUri">The resource request URI to be authorized with a PoP token.</param>
+        /// <param name="requestMethod">The HTTP request method name of the resource request (e.g. GET, POST, etc.).</param>
+        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false, bool isProofOfPossessionEnabled = false, string? proofOfPossessionNonce = default, Uri? requestUri = default, string? requestMethod = default)
+        {
+            Scopes = scopes;
+            ParentRequestId = parentRequestId;
+            Claims = claims;
+            TenantId = tenantId;
+            IsCaeEnabled = isCaeEnabled;
+            ProofOfPossessionNonce = proofOfPossessionNonce;
+            IsProofOfPossessionEnabled = isProofOfPossessionEnabled;
+            ResourceRequestUri = requestUri;
+            ResourceRequestMethod = requestMethod;
         }
 
         /// <summary>
@@ -96,5 +128,26 @@ namespace Azure.Core
         /// If you don't handle CAE responses in these API calls, your app could end up in a loop retrying an API call with a token that is still in the returned lifespan of the token but has been revoked due to CAE.
         /// </remarks>
         public bool IsCaeEnabled { get; }
+
+        /// <summary>
+        /// Indicates whether to enable Proof of Possession (PoP) for the requested token.
+        /// </summary>
+        public bool IsProofOfPossessionEnabled { get; }
+
+        /// <summary>
+        /// The nonce value required for PoP token requests. This is typically retrieved from the WWW-Authenticate header of a 401 challenge response.
+        /// This is used in combination with <see cref="ResourceRequestUri"/> and <see cref="ResourceRequestMethod"/> to generate the PoP token.
+        /// </summary>
+        public string? ProofOfPossessionNonce { get; }
+
+        /// <summary>
+        /// The HTTP method of the request. This is used in combination with <see cref="ResourceRequestUri"/> and <see cref="ProofOfPossessionNonce"/> to generate the PoP token.
+        /// </summary>
+        public string? ResourceRequestMethod { get; }
+
+        /// <summary>
+        /// The URI of the request. This is used in combination with <see cref="ResourceRequestMethod"/> and <see cref="ProofOfPossessionNonce"/> to generate the PoP token.
+        /// </summary>
+        public Uri? ResourceRequestUri { get; }
     }
 }

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.HealthBot.Models
 
         void IJsonModel<HealthBotKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<HealthBotKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HealthBotKeyVaultProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
             if (Optional.IsDefined(KeyVersion))
@@ -55,7 +63,6 @@ namespace Azure.ResourceManager.HealthBot.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         HealthBotKeyVaultProperties IJsonModel<HealthBotKeyVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -1,5 +1,13 @@
 # Release History
 
+## 12.21.0-beta.1 (Unreleased)
+
+### Features Added
+- Added support for service version 2025-01-05.
+- Added support for the provisioned V2 billing model.
+- Added support for specifying the binary file permission format for ShareFileClient.StartCopy() and .StartCopyAsync().
+- Added ShareAccessTier.Premium enum value.
+
 ## 12.20.0 (2024-09-18)
 
 ### Features Added

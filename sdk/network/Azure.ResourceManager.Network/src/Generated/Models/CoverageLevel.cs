@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(CoverageLevel left, CoverageLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CoverageLevel"/> values are not the same. </summary>
         public static bool operator !=(CoverageLevel left, CoverageLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CoverageLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CoverageLevel"/>. </summary>
         public static implicit operator CoverageLevel(string value) => new CoverageLevel(value);
 
         /// <inheritdoc />

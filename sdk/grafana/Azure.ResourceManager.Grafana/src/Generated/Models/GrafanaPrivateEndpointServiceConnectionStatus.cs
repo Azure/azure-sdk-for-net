@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static bool operator ==(GrafanaPrivateEndpointServiceConnectionStatus left, GrafanaPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(GrafanaPrivateEndpointServiceConnectionStatus left, GrafanaPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/>. </summary>
         public static implicit operator GrafanaPrivateEndpointServiceConnectionStatus(string value) => new GrafanaPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc />
