@@ -16,12 +16,6 @@ public class SimpleClient
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
 
-    public SimpleClient(SimpleClientOptions? options = default)
-        : this(new Uri("https://www.example.com"), new ApiKeyCredential("fake_key"))
-    {
-        // Provided to make test illustrations simpler - not typical for a client implementation
-    }
-
     public SimpleClient(Uri endpoint, ApiKeyCredential credential, SimpleClientOptions? options = default)
     {
         Argument.AssertNotNull(endpoint, nameof(endpoint));

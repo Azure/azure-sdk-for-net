@@ -103,9 +103,10 @@
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.0" />    
     <PackageReference Update="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.0" />
 
     <!-- Azure SDK packages -->

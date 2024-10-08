@@ -2,6 +2,10 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
+using ClientModel.ReferenceClients.SimpleClient;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 
 namespace System.ClientModel.Tests.Options;
 
@@ -10,6 +14,13 @@ public class ConfigurePipelineTests
     [Test]
     public void CanSetClientEndpointFromConfigurationSettings()
     {
+        ServiceCollection services = new ServiceCollection();
+        ConfigurationManager configuration = new ConfigurationManager();
+        configuration.AddInMemoryCollection(
+            new List<KeyValuePair<string, string?>>() {
+                new("SimpleClient:ServiceUri", "https://www.example.com")
+            });
+        services.AddSimpleClient();
     }
 
     [Test]
