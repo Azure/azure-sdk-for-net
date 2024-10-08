@@ -55,7 +55,7 @@ Communication with the Event Hubs service can be configured by adjusting the `Ev
 For illustration, the `EventHubProducerClientOptions` are demonstrated, but the concept and form are common across the client options types.
 
 ```C# Snippet:EventHubs_Sample02_ProducerTransportFullConnectionOptions
-var fullyQualifiedNamespace = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var credential = new DefaultAzureCredential();
 
@@ -76,7 +76,7 @@ var producer = new EventHubProducerClient(
 The connection options are populated by default; you may set just the desired properties rather than creating a new instance, if you prefer.
 
 ```C# Snippet:EventHubs_Sample02_ProducerTransportProperty
-var fullyQualifiedNamespace = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var credential = new DefaultAzureCredential();
 
@@ -97,7 +97,7 @@ A common scenario for adjusting the connection options is configuring a proxy.  
 For illustration, the `EventHubProducerClientOptions` are demonstrated, but the concept and form are common across the client options types.
 
 ```C# Snippet:EventHubs_Sample02_ProducerProxyFullConnectionOptions
-var fullyQualifiedNamespace = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var credential = new DefaultAzureCredential();
 
@@ -120,7 +120,7 @@ var producer = new EventHubProducerClient(
 The connection options are populated by default; you may set just the desired properties rather than creating a new instance, if you prefer.
 
 ```C# Snippet:EventHubs_Sample02_ProducerProxyProperty
-var fullyQualifiedNamespace = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var credential = new DefaultAzureCredential();
 
@@ -154,7 +154,7 @@ Connections to the Azure Event Hubs service are made using the fully qualified n
 Some environments using unconventional proxy configurations or with certain configurations of an Express Route circuit require a custom address be used for proper routing, leaving are unable to connect from their on-premises network to the Event Hubs service using the assigned endpoint address. To support these scenarios, a custom endpoint address may be specified as part of the connection options.  This custom address will take precedence for establishing the connection to the Event Hubs service.
 
 ```C# Snippet:EventHubs_Sample02_ConnectionOptionsCustomEndpoint
-var fullyQualifiedNamespace = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var credential = new DefaultAzureCredential();
 
@@ -175,7 +175,7 @@ For some environments using a proxy or custom gateway for routing traffic to Eve
 By default, these certificates are not trusted by the Event Hubs client library and the connection will be refused.  To enable these scenarios, a [RemoteCertificateValidationCallback](https://learn.microsoft.com/dotnet/api/system.net.security.remotecertificatevalidationcallback) can be registered to provide custom validation logic for remote certificates.  This allows an application to override the default trust decision and assert responsibility for accepting or rejecting the certificate.
 
 ```C# Snippet:EventHubs_Sample02_RemoteCertificateValidationCallback
-var fullyQualifiedNamespace = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var credential = new DefaultAzureCredential();
 
@@ -213,7 +213,7 @@ The built-in retry policy offers an implementation for an exponential back-off s
 The values used as thresholds for the different aspects of these strategies can be configured by adjusting the `EventHubsRetryOptions` that are exposed by the `RetryOptions` member of a client options type. For illustration, the `EventHubConsumerClientOptions` are demonstrated, but the concept and form are common across the client options types.
 
 ```C# Snippet:EventHubs_Sample02_ConsumerRetryWithFullOptions
-var fullyQualifiedNamespace = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var credential = new DefaultAzureCredential();
 var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
@@ -240,7 +240,7 @@ var consumer = new EventHubConsumerClient(
 The retry options are populated by default; you may set just the desired properties rather than creating a new instance, if you prefer.
 
 ```C# Snippet:EventHubs_Sample02_ConsumerRetryByProperty
-var fullyQualifiedNamespace = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var credential = new DefaultAzureCredential();
 var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
