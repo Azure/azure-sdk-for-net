@@ -11,16 +11,27 @@ public class LoggingOptions
 {
     public LoggingOptions()
     {
+        AllowedHeaderNames = new List<string>()
+        {
+            "Content-Length",
+            "Content-Type"
+        };
+
+        AllowedQueryParameters = new List<string>()
+        {
+            "api-version"
+        };
     }
 
-    public IList<string> AllowedHeaderNames { get => throw new NotImplementedException(); }
-    public IList<string> AllowedQueryParameters { get => throw new NotImplementedException(); }
+    public IList<string> AllowedHeaderNames { get; }
+    public IList<string> AllowedQueryParameters { get; }
 
     // Client-scope
     public bool? EnableLogging { get; set; }
 
     // Http request/response logging only
-    public bool? EnableHttpLogging { get; set; }
+    // TODO: We can add it later.
+    //public bool? EnableHttpLogging { get; set; }
 
     // Request and response content
     public bool? EnableHttpContentLogging { get; set; }
