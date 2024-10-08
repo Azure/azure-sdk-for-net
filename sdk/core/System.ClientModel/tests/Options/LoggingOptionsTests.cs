@@ -133,7 +133,8 @@ public class LoggingOptionsTests
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
 
-        Assert.AreEqual(uriString, client.Endpoint.ToString());
+        Assert.IsNotNull(client.Options.HttpLoggingPolicy);
+        Assert.AreEqual(typeof(CustomHttpLoggingPolicy), client.Options.HttpLoggingPolicy!.GetType());
     }
 
     [Test]

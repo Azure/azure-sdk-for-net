@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Pipeline;
+using System.ClientModel.Primitives;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -17,22 +18,19 @@ public static class SimpleClientServiceCollectionExtensions
     // See: https://learn.microsoft.com/en-us/dotnet/core/extensions/options-library-authors#parameterless
     public static IServiceCollection AddSimpleClient(this IServiceCollection services)
     {
-        services.AddOptions();
-
         // Add client options
-        services.AddOptions<SimpleClientOptions>().Configure<ILoggerFactory>(
-            (options, loggerFactory) =>
-            {
-                options.Logging.LoggerFactory = loggerFactory;
-            });
+        services.AddOptions<SimpleClientOptions>()
+            .Configure<ILoggerFactory>((options, loggerFactory)
+                => options.Logging.LoggerFactory = loggerFactory);
 
-        //// Add client options
-        //services.AddOptions<SimpleClientOptions>().Configure<ILoggerFactory, HttpLoggingPolicy>(
-        //    (options, loggerFactory, loggingPolicy) =>
-        //    {
-        //        options.Logging.LoggerFactory = loggerFactory;
-        //        options.HttpLoggingPolicy = loggingPolicy;
-        //    });
+        //// Add logging options in case a custom logging policy is added
+        //// TODO: should there be one client options to rule them all?
+        //// or is per-client sufficient?
+        //services.AddSingleton<ClientLoggingOptions>(sp =>
+        //{
+        //    SimpleClientOptions options = sp.GetRequiredService<SimpleClientOptions>();
+        //    return options.Logging;
+        //});
 
         services.AddSingleton<SimpleClient>(sp =>
         {
@@ -50,6 +48,14 @@ public static class SimpleClientServiceCollectionExtensions
             IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
             SimpleClientOptions options = iOptions.Value;
 
+            //// Check whether known policy types have been added to the service
+            //// collection.
+            //HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
+            //if (httpLoggingPolicy is not null)
+            //{
+            //    options.HttpLoggingPolicy = httpLoggingPolicy;
+            //}
+
             return new SimpleClient(endpoint, credential, options);
         });
 
@@ -63,14 +69,10 @@ public static class SimpleClientServiceCollectionExtensions
     {
         string? sectionName = (configurationSection as IConfigurationSection)?.Key;
 
-        services.AddOptions();
-
         // Bind configuration to options
         services.AddOptions<SimpleClientOptions>()
-            .Configure<ILoggerFactory>((options, loggerFactory) =>
-                {
-                    options.Logging.LoggerFactory = loggerFactory;
-                })
+            .Configure<ILoggerFactory>((options, loggerFactory)
+                => options.Logging.LoggerFactory = loggerFactory)
             .Bind(configurationSection);
 
         services.AddSingleton<SimpleClient>(sp =>
