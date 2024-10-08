@@ -8,6 +8,7 @@ parameters:
   ServiceConnection: not-specified
   ResourceType: test
   UseFederatedAuth: false
+  PersistOidcToken: false
 
 # SubscriptionConfiguration will be splatted into the parameters of the test
 # resources script. It should be JSON in the form:
@@ -41,12 +42,27 @@ steps:
 
   - template: /eng/common/TestResources/setup-environments.yml
 
+  - ${{ if parameters.PersistOidcToken }}:
+    - task: AzureCLI@2
+      displayName: Set OIDC token
+      env:
+        ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
+      inputs:
+        azureSubscription: ${{ parameters.ServiceConnection }}
+        addSpnToEnvironment: true
+        scriptLocation: inlineScript
+        scriptType: pscore
+        inlineScript: |
+          Write-Host "##vso[task.setvariable variable=ARM_OIDC_TOKEN;issecret=true]$($env:idToken)"
+
   - ${{ if eq('true', parameters.UseFederatedAuth) }}:
     - task: AzurePowerShell@5
       displayName: 🚀 Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
         PoolSubnet: $(PoolSubnet)
+        ${{ if parameters.PersistOidcToken }}:
+          ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
         ${{ insert }}: ${{ parameters.EnvVars }}
       inputs:
         azureSubscription: ${{ parameters.ServiceConnection }}
