@@ -14,13 +14,21 @@ public class ConfigurePipelineTests
     [Test]
     public void CanSetClientEndpointFromConfigurationSettings()
     {
+        string uriString = "https://www.example.com";
+
         ServiceCollection services = new ServiceCollection();
         ConfigurationManager configuration = new ConfigurationManager();
         configuration.AddInMemoryCollection(
             new List<KeyValuePair<string, string?>>() {
-                new("SimpleClient:ServiceUri", "https://www.example.com")
+                new("SimpleClient:ServiceUri", uriString)
             });
+
         services.AddSimpleClient();
+
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
+        SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
+
+        Assert.AreEqual(uriString, client.Endpoint.ToString());
     }
 
     [Test]

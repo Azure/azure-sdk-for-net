@@ -16,6 +16,8 @@ public static class SimpleClientServiceCollectionExtensions
     // See: https://learn.microsoft.com/en-us/dotnet/core/extensions/options-library-authors#parameterless
     public static IServiceCollection AddSimpleClient(this IServiceCollection services)
     {
+        // TODO: Add configuration
+
         services.AddOptions<SimpleClientOptions>();
 
         services.AddSingleton<SimpleClient>(sp =>

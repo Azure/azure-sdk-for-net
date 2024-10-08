@@ -34,6 +34,9 @@ public class SimpleClient
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
     }
 
+    // public for test purposes
+    public Uri Endpoint => _endpoint;
+
     // Convenience method - async
     public Task<ClientResult<OutputModel>> GetModelAsync(InputModel input, CancellationToken cancellationToken = default)
     {
