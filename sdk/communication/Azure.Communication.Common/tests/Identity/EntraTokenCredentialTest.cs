@@ -66,6 +66,16 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
+        public void EntraTokenCredential_InitWhtScopes_InitWithDefaultScope()
+        {
+            var credential = new EntraCommunicationTokenCredentialOptions(
+                _resourceEndpoint,
+                _mockTokenCredential.Object);
+            var scopes = new[] { "https://communication.azure.com/clients/.default" };
+            Assert.AreEqual(credential.Scopes, scopes);
+        }
+
+            [Test]
         public async Task EntraTokenCredential_GetToken_ReturnsToken()
         {
             // Arrange

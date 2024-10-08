@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -10,6 +11,7 @@ namespace Azure.Communication
     /// </summary>
     public class EntraCommunicationTokenCredentialOptions
     {
+        private static string[] DefaultScopes = { "https://communication.azure.com/clients/.default" };
         /// <summary>
         /// The URI of the Azure Communication Services resource.
         /// </summary>
@@ -43,6 +45,20 @@ namespace Azure.Communication
             this.ResourceEndpoint = resourceEndpoint;
             this.TokenCredential = entraTokenCredential;
             this.Scopes = scopes;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="EntraCommunicationTokenCredentialOptions"/>.
+        /// </summary>
+        /// <param name="resourceEndpoint">The URI of the Azure Communication Services resource.For example, https://myResource.communication.azure.com.</param>
+        /// <param name="entraTokenCredential">The credential capable of fetching an Entra user token.</param>
+        public EntraCommunicationTokenCredentialOptions(
+            string resourceEndpoint,
+            TokenCredential entraTokenCredential) : this(
+                resourceEndpoint,
+                entraTokenCredential,
+                DefaultScopes)
+        {
         }
     }
 }
