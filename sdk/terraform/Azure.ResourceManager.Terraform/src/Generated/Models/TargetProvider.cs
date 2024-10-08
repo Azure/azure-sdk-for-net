@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Terraform.Models
         public static bool operator ==(TargetProvider left, TargetProvider right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TargetProvider"/> values are not the same. </summary>
         public static bool operator !=(TargetProvider left, TargetProvider right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TargetProvider"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TargetProvider"/>. </summary>
         public static implicit operator TargetProvider(string value) => new TargetProvider(value);
 
         /// <inheritdoc />
