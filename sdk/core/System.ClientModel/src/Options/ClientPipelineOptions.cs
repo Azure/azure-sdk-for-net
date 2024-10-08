@@ -28,13 +28,13 @@ public class ClientPipelineOptions
     /// </summary>
     public ClientPipelineOptions()
     {
-        Diagnostics = new();
+        Logging = new();
     }
 
     /// <summary>
     /// TBD.
     /// </summary>
-    public LoggingOptions Diagnostics { get; }
+    public LoggingOptions Logging { get; }
 
     #region Pipeline creation: Overrides of default pipeline policies
 
