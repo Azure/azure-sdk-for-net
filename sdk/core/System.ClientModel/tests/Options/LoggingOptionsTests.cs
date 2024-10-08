@@ -177,38 +177,56 @@ public class LoggingOptionsTests
     }
 
     [Test]
-    public void CanInjectNonConfiguredLoggingCustomPolicy()
+    public void CanInjectCustomLoggingPolicyWithNonConfiguredOptions()
     {
-        throw new NotImplementedException();
-        //string uriString = "https://www.example.com/";
+        string uriString = "https://www.example.com/";
 
-        //ServiceCollection services = new ServiceCollection();
-        //ConfigurationManager configuration = new ConfigurationManager();
-        //configuration.AddInMemoryCollection(
-        //    new List<KeyValuePair<string, string?>>() {
-        //        new("SimpleClient:ServiceUri", uriString),
-        //        new("SimpleClient:Logging:EnableLogging", "false"),
+        ServiceCollection services = new ServiceCollection();
+        ConfigurationManager configuration = new ConfigurationManager();
+        configuration.AddInMemoryCollection(
+            new List<KeyValuePair<string, string?>>() {
+                new("SimpleClient:ServiceUri", uriString),
+                new("SimpleClient:Logging:EnableLogging", "false"),
 
-        //        // The below is the equivalent of adding JSON [ "x-allowed" ]
-        //        // array via Microsoft.Extensions.Configuration.Json config
-        //        new("SimpleClient:Logging:AllowedHeaderNames", null),
-        //        new("SimpleClient:Logging:AllowedHeaderNames:0", "x-user-allowed"),
-        //    });
+                // The below is the equivalent of adding JSON [ "x-allowed" ]
+                // array via Microsoft.Extensions.Configuration.Json config
+                new("SimpleClient:Logging:AllowedHeaderNames", null),
+                new("SimpleClient:Logging:AllowedHeaderNames:0", "x-config-allowed"),
+            });
 
-        //services.AddSingleton<IConfiguration>(sp => configuration);
+        services.AddSingleton<IConfiguration>(sp => configuration);
 
-        //// Pass configuration section to configure from settings per options pattern
-        //IConfigurationSection configurationSection = configuration.GetSection("SimpleClient");
-        //services.AddSimpleClient(configurationSection);
+        // Add custom logging policy to service collection
+        services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>(sp =>
+        {
+            ClientLoggingOptions options = new();
+            options.AllowedHeaderNames.Add("x-custom-allowed");
+            return new CustomHttpLoggingPolicy(options);
+        });
 
-        //ServiceProvider serviceProvider = services.BuildServiceProvider();
-        //SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
+        // Pass configuration section to configure from settings per options pattern
+        IConfigurationSection configurationSection = configuration.GetSection("SimpleClient");
+        services.AddSimpleClient(configurationSection);
 
-        //CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "Content-Length");
-        //CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-client-allowed");
-        //CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-user-allowed");
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
+        SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
 
-        //// Validate that custom logging policy has been bound to the same options
+        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "Content-Length");
+        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-client-allowed");
+        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-config-allowed");
+
+        // Validate that custom logging policy has been configured from the custom options
+        // provided in the custom policy factory above.
+        CustomHttpLoggingPolicy? customPolicy = client.Options.HttpLoggingPolicy as CustomHttpLoggingPolicy;
+        Assert.IsNotNull(customPolicy);
+
+        CollectionAssert.Contains(customPolicy!.Options.AllowedHeaderNames, "Content-Length");
+        CollectionAssert.Contains(customPolicy!.Options.AllowedHeaderNames, "x-custom-allowed");
+
+        // Validate that settings from client and settings from IConfiguration
+        // have not also been added.
+        CollectionAssert.DoesNotContain(customPolicy!.Options.AllowedHeaderNames, "x-client-allowed");
+        CollectionAssert.DoesNotContain(customPolicy!.Options.AllowedHeaderNames, "x-config-allowed");
     }
 
     #region Helpers
