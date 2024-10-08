@@ -4,10 +4,6 @@ param (
     [Parameter(ValueFromRemainingArguments = $true)]
     $RemainingArguments,
 
-    [Parameter(Mandatory = $true)]
-    [ValidateNotNullOrEmpty()]
-    [string] $Location,
-
     [Parameter()]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $TestApplicationId,
@@ -31,7 +27,8 @@ $templateFileParameters['sshPubKey'] = $sshKey
 az cloud set --name $Environment
 az login --service-principal -u $TestApplicationId --tenant $TenantId --allow-no-subscriptions --federated-token $env:ARM_OIDC_TOKEN
 # Get the max version that is not preview and then get the name of the patch version with the max value
-$versions = az aks get-versions -l $Location -o json | ConvertFrom-Json
+$region = if ($Environment -eq 'AzureUSGovernment') { 'usgovvirginia' } elseif ($Environment -eq 'AzureChinaCloud') { 'chinanorth3' } else { 'westus' }
+$versions = az aks get-versions -l $region -o json | ConvertFrom-Json
 Write-Host "AKS versions: $($versions | ConvertTo-Json -Depth 100)"
 $patchVersions = $versions.values | Where-Object { $_.isPreview -eq $null } | Select-Object -ExpandProperty patchVersions
 Write-Host "AKS patch versions: $($patchVersions | ConvertTo-Json -Depth 100)"
