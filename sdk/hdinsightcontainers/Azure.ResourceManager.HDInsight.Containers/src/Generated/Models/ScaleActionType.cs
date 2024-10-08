@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(ScaleActionType left, ScaleActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScaleActionType"/> values are not the same. </summary>
         public static bool operator !=(ScaleActionType left, ScaleActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScaleActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScaleActionType"/>. </summary>
         public static implicit operator ScaleActionType(string value) => new ScaleActionType(value);
 
         /// <inheritdoc />

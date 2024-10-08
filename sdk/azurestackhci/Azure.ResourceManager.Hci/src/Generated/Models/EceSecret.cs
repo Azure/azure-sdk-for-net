@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(EceSecret left, EceSecret right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EceSecret"/> values are not the same. </summary>
         public static bool operator !=(EceSecret left, EceSecret right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EceSecret"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EceSecret"/>. </summary>
         public static implicit operator EceSecret(string value) => new EceSecret(value);
 
         /// <inheritdoc />

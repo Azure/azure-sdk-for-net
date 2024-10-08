@@ -18,9 +18,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
     <PackageReference Include="System.ValueTuple" />
-    <PackageReference Include="System.ClientModel" VersionOverride="1.1.0-beta.5" />
-
-    <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
+    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,7 +32,7 @@
   <ItemGroup>
     <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
       <_Parameter1>TestProxyPath</_Parameter1>
-      <_Parameter2>$(NuGetPackageRoot)\azure.sdk.tools.testproxy\$(TestProxyVersion)\tools\net6.0\any\Azure.Sdk.Tools.TestProxy.dll</_Parameter2>
+      <_Parameter2>$(NuGetPackageRoot)\azure.sdk.tools.testproxy\$(TestProxyVersion)\tools\net8.0\any\Azure.Sdk.Tools.TestProxy.dll</_Parameter2>
     </AssemblyAttribute>
   </ItemGroup>
 

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(DataBoxEdgeUpdateType left, DataBoxEdgeUpdateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeUpdateType"/> values are not the same. </summary>
         public static bool operator !=(DataBoxEdgeUpdateType left, DataBoxEdgeUpdateType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeUpdateType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeUpdateType"/>. </summary>
         public static implicit operator DataBoxEdgeUpdateType(string value) => new DataBoxEdgeUpdateType(value);
 
         /// <inheritdoc />

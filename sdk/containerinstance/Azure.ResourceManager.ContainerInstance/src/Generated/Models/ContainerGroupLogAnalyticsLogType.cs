@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static bool operator ==(ContainerGroupLogAnalyticsLogType left, ContainerGroupLogAnalyticsLogType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerGroupLogAnalyticsLogType"/> values are not the same. </summary>
         public static bool operator !=(ContainerGroupLogAnalyticsLogType left, ContainerGroupLogAnalyticsLogType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerGroupLogAnalyticsLogType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerGroupLogAnalyticsLogType"/>. </summary>
         public static implicit operator ContainerGroupLogAnalyticsLogType(string value) => new ContainerGroupLogAnalyticsLogType(value);
 
         /// <inheritdoc />

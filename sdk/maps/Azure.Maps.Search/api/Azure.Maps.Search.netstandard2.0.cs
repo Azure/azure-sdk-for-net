@@ -114,13 +114,13 @@ namespace Azure.Maps.Search.Models
         public string Iso { get { throw null; } }
         public string Name { get { throw null; } }
     }
-    public partial class Boundary : Azure.Maps.Search.Models.GeoJsonFeature
+    public partial class Boundary
     {
         internal Boundary() { }
-        public string Copyright { get { throw null; } }
-        public string CopyrightUrl { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.GeometryCopyright> GeometriesCopyright { get { throw null; } }
-        public string Name { get { throw null; } }
+        public string FeatureType { get { throw null; } }
+        public Azure.Core.GeoJson.GeoCollection Geometry { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.Maps.Search.Models.BoundaryProperties Properties { get { throw null; } }
     }
     public partial class BoundaryProperties
     {
@@ -229,8 +229,8 @@ namespace Azure.Maps.Search.Models
     public partial class FeaturesItem
     {
         internal FeaturesItem() { }
-        public System.Collections.Generic.IReadOnlyList<double> BoundingBox { get { throw null; } }
-        public Azure.Maps.Search.Models.GeoJsonPoint Geometry { get { throw null; } }
+        public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } }
+        public Azure.Core.GeoJson.GeoPoint Geometry { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.Maps.Search.Models.FeaturesItemProperties Properties { get { throw null; } }
         public Azure.Maps.Search.Models.FeatureTypeEnum? Type { get { throw null; } }
@@ -265,7 +265,7 @@ namespace Azure.Maps.Search.Models
     {
         internal GeocodePointsItem() { }
         public Azure.Maps.Search.Models.CalculationMethodEnum? CalculationMethod { get { throw null; } }
-        public Azure.Maps.Search.Models.GeoJsonPoint Geometry { get { throw null; } }
+        public Azure.Core.GeoJson.GeoPoint Geometry { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.UsageTypeEnum> UsageTypes { get { throw null; } }
     }
     public partial class GeocodingBatchRequestItem
@@ -331,38 +331,6 @@ namespace Azure.Maps.Search.Models
         public string NextLink { get { throw null; } }
         public Azure.Maps.Search.Models.FeatureCollectionEnum? Type { get { throw null; } }
     }
-    public partial class GeoJsonFeature : Azure.Maps.Search.Models.GeoJsonObject
-    {
-        internal GeoJsonFeature() { }
-        public string FeatureType { get { throw null; } }
-        public Azure.Maps.Search.Models.GeoJsonGeometry Geometry { get { throw null; } }
-        public string Id { get { throw null; } }
-        public object Properties { get { throw null; } }
-    }
-    public partial class GeoJsonGeometry : Azure.Maps.Search.Models.GeoJsonObject
-    {
-        internal GeoJsonGeometry() { }
-    }
-    public partial class GeoJsonGeometryCollection : Azure.Maps.Search.Models.GeoJsonGeometry
-    {
-        internal GeoJsonGeometryCollection() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.GeoJsonGeometry> Geometries { get { throw null; } }
-    }
-    public abstract partial class GeoJsonObject
-    {
-        protected GeoJsonObject() { }
-        public System.Collections.Generic.IReadOnlyList<double> BoundingBox { get { throw null; } }
-    }
-    public partial class GeoJsonPoint : Azure.Maps.Search.Models.GeoJsonGeometry
-    {
-        internal GeoJsonPoint() { }
-        public System.Collections.Generic.IReadOnlyList<double> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonPolygon : Azure.Maps.Search.Models.GeoJsonGeometry
-    {
-        internal GeoJsonPolygon() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> Coordinates { get { throw null; } }
-    }
     public partial class GeometryCopyright
     {
         internal GeometryCopyright() { }
@@ -394,9 +362,7 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.BoundaryProperties BoundaryProperties(string name = null, string copyright = null, string copyrightUrl = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeometryCopyright> geometriesCopyright = null) { throw null; }
         public static Azure.Maps.Search.Models.ErrorAdditionalInfo ErrorAdditionalInfo(string type = null, object info = null) { throw null; }
         public static Azure.Maps.Search.Models.ErrorDetail ErrorDetail(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ErrorDetail> details = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.ErrorAdditionalInfo> additionalInfo = null) { throw null; }
-        public static Azure.Maps.Search.Models.FeaturesItem FeaturesItem(Azure.Maps.Search.Models.FeatureTypeEnum? type = default(Azure.Maps.Search.Models.FeatureTypeEnum?), string id = null, Azure.Maps.Search.Models.FeaturesItemProperties properties = null, Azure.Maps.Search.Models.GeoJsonPoint geometry = null, System.Collections.Generic.IEnumerable<double> boundingBox = null) { throw null; }
         public static Azure.Maps.Search.Models.FeaturesItemProperties FeaturesItemProperties(string type = null, Azure.Maps.Search.Models.ConfidenceEnum? confidence = default(Azure.Maps.Search.Models.ConfidenceEnum?), System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.MatchCodesEnum> matchCodes = null, Azure.Maps.Search.Models.Address address = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeocodePointsItem> geocodePoints = null) { throw null; }
-        public static Azure.Maps.Search.Models.GeocodePointsItem GeocodePointsItem(Azure.Maps.Search.Models.GeoJsonPoint geometry = null, Azure.Maps.Search.Models.CalculationMethodEnum? calculationMethod = default(Azure.Maps.Search.Models.CalculationMethodEnum?), System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.UsageTypeEnum> usageTypes = null) { throw null; }
         public static Azure.Maps.Search.Models.GeocodingBatchResponse GeocodingBatchResponse(Azure.Maps.Search.Models.GeocodingBatchResponseSummary summary = null, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.GeocodingBatchResponseItem> batchItems = null, string nextLink = null) { throw null; }
         public static Azure.Maps.Search.Models.GeocodingBatchResponseItem GeocodingBatchResponseItem(string optionalId = null, Azure.Maps.Search.Models.FeatureCollectionEnum? type = default(Azure.Maps.Search.Models.FeatureCollectionEnum?), System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.FeaturesItem> features = null, string nextLink = null, Azure.Maps.Search.Models.ErrorDetail error = null) { throw null; }
         public static Azure.Maps.Search.Models.GeocodingBatchResponseSummary GeocodingBatchResponseSummary(int? successfulRequests = default(int?), int? totalRequests = default(int?)) { throw null; }
@@ -504,10 +470,6 @@ namespace Azure.Maps.Search.Models
         public static implicit operator Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum left, Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class UnknownGeoJsonObject : Azure.Maps.Search.Models.GeoJsonObject
-    {
-        internal UnknownGeoJsonObject() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UsageTypeEnum : System.IEquatable<Azure.Maps.Search.Models.UsageTypeEnum>

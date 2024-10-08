@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(ScriptOutputStreamType left, ScriptOutputStreamType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptOutputStreamType"/> values are not the same. </summary>
         public static bool operator !=(ScriptOutputStreamType left, ScriptOutputStreamType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScriptOutputStreamType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptOutputStreamType"/>. </summary>
         public static implicit operator ScriptOutputStreamType(string value) => new ScriptOutputStreamType(value);
 
         /// <inheritdoc />

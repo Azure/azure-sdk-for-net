@@ -30,7 +30,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(SecurityTypes left, SecurityTypes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityTypes"/> values are not the same. </summary>
         public static bool operator !=(SecurityTypes left, SecurityTypes right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityTypes"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityTypes"/>. </summary>
         public static implicit operator SecurityTypes(string value) => new SecurityTypes(value);
 
         /// <inheritdoc />

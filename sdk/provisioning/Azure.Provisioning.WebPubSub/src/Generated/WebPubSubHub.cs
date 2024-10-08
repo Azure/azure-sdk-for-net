@@ -51,11 +51,15 @@ public partial class WebPubSubHub : Resource
     /// <summary>
     /// Creates a new WebPubSubHub.
     /// </summary>
-    /// <param name="resourceName">Name of the WebPubSubHub.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the WebPubSubHub resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebPubSubHub.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WebPubSubHub(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.SignalRService/webPubSub/hubs", resourceVersion, context)
+    public WebPubSubHub(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.SignalRService/webPubSub/hubs", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<WebPubSubHubProperties>.DefineProperty(this, "Properties", ["properties"], isRequired: true);
@@ -65,11 +69,47 @@ public partial class WebPubSubHub : Resource
     }
 
     /// <summary>
+    /// Supported WebPubSubHub resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-04-01-preview.
+        /// </summary>
+        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
+
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2023-02-01.
+        /// </summary>
+        public static readonly string V2023_02_01 = "2023-02-01";
+
+        /// <summary>
+        /// 2021-10-01.
+        /// </summary>
+        public static readonly string V2021_10_01 = "2021-10-01";
+
+        /// <summary>
+        /// 2020-05-01.
+        /// </summary>
+        public static readonly string V2020_05_01 = "2020-05-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing WebPubSubHub.
     /// </summary>
-    /// <param name="resourceName">Name of the WebPubSubHub.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the WebPubSubHub resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebPubSubHub.</param>
     /// <returns>The existing WebPubSubHub resource.</returns>
-    public static WebPubSubHub FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebPubSubHub FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

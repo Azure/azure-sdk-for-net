@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Quantum.Models
         public static bool operator ==(WorkspaceKeyType left, WorkspaceKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkspaceKeyType"/> values are not the same. </summary>
         public static bool operator !=(WorkspaceKeyType left, WorkspaceKeyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkspaceKeyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkspaceKeyType"/>. </summary>
         public static implicit operator WorkspaceKeyType(string value) => new WorkspaceKeyType(value);
 
         /// <inheritdoc />

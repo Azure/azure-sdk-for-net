@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static bool operator ==(StorageSyncPrivateEndpointServiceConnectionStatus left, StorageSyncPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageSyncPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(StorageSyncPrivateEndpointServiceConnectionStatus left, StorageSyncPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageSyncPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageSyncPrivateEndpointServiceConnectionStatus"/>. </summary>
         public static implicit operator StorageSyncPrivateEndpointServiceConnectionStatus(string value) => new StorageSyncPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc />

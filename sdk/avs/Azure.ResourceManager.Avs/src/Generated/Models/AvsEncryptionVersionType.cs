@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(AvsEncryptionVersionType left, AvsEncryptionVersionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsEncryptionVersionType"/> values are not the same. </summary>
         public static bool operator !=(AvsEncryptionVersionType left, AvsEncryptionVersionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvsEncryptionVersionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsEncryptionVersionType"/>. </summary>
         public static implicit operator AvsEncryptionVersionType(string value) => new AvsEncryptionVersionType(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(NetworkFabricIPAddressType left, NetworkFabricIPAddressType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkFabricIPAddressType"/> values are not the same. </summary>
         public static bool operator !=(NetworkFabricIPAddressType left, NetworkFabricIPAddressType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkFabricIPAddressType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricIPAddressType"/>. </summary>
         public static implicit operator NetworkFabricIPAddressType(string value) => new NetworkFabricIPAddressType(value);
 
         /// <inheritdoc />

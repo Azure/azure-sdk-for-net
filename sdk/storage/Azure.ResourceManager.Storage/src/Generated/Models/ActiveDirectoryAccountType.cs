@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(ActiveDirectoryAccountType left, ActiveDirectoryAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActiveDirectoryAccountType"/> values are not the same. </summary>
         public static bool operator !=(ActiveDirectoryAccountType left, ActiveDirectoryAccountType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ActiveDirectoryAccountType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ActiveDirectoryAccountType"/>. </summary>
         public static implicit operator ActiveDirectoryAccountType(string value) => new ActiveDirectoryAccountType(value);
 
         /// <inheritdoc />

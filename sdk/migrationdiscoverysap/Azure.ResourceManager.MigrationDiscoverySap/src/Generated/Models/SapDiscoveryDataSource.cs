@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public static bool operator ==(SapDiscoveryDataSource left, SapDiscoveryDataSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapDiscoveryDataSource"/> values are not the same. </summary>
         public static bool operator !=(SapDiscoveryDataSource left, SapDiscoveryDataSource right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapDiscoveryDataSource"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapDiscoveryDataSource"/>. </summary>
         public static implicit operator SapDiscoveryDataSource(string value) => new SapDiscoveryDataSource(value);
 
         /// <inheritdoc />

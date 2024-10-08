@@ -45,11 +45,16 @@ public partial class ManagedRestorableDroppedDbBackupShortTermRetentionPolicy : 
     /// <summary>
     /// Creates a new ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ManagedRestorableDroppedDbBackupShortTermRetentionPolicy resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/restorableDroppedDatabases/backupShortTermRetentionPolicies", resourceVersion, context)
+    public ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/managedInstances/restorableDroppedDatabases/backupShortTermRetentionPolicies", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _retentionDays = BicepValue<int>.DefineProperty(this, "RetentionDays", ["properties", "retentionDays"]);
@@ -61,9 +66,15 @@ public partial class ManagedRestorableDroppedDbBackupShortTermRetentionPolicy : 
     /// Creates a reference to an existing
     /// ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ManagedRestorableDroppedDbBackupShortTermRetentionPolicy resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.</param>
     /// <returns>The existing ManagedRestorableDroppedDbBackupShortTermRetentionPolicy resource.</returns>
-    public static ManagedRestorableDroppedDbBackupShortTermRetentionPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedRestorableDroppedDbBackupShortTermRetentionPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }
