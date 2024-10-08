@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 new AccessControlListMatchConfiguration()
 {
 MatchConfigurationName = "example-match",
-SequenceNumber = 123,
+SequenceNumber = 123L,
 IPAddressType = NetworkFabricIPAddressType.IPv4,
 MatchConditions =
 {
