@@ -175,7 +175,6 @@ namespace System.ClientModel.Primitives
         public System.Collections.Generic.IList<string> AllowedHeaderNames { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedQueryParameters { get { throw null; } }
         public bool? EnableHttpContentLogging { get { throw null; } set { } }
-        public bool? EnableHttpLogging { get { throw null; } set { } }
         public bool? EnableLogging { get { throw null; } set { } }
         public int? HttpContentSizeLimit { get { throw null; } set { } }
         public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
