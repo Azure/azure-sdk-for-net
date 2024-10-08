@@ -27,13 +27,17 @@ public class LoggingOptionsTests
         services.AddSingleton<IConfiguration>(sp => configuration);
         services.AddLogging();
 
-        // Client will have custom logging policy injected at creation time
-        services.AddSimpleClient();
+        // Pass configuration section to configure from settings per options pattern
+        IConfigurationSection configurationSection = configuration.GetSection("SimpleClient");
+        services.AddSimpleClient(configurationSection);
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
 
-        Assert.AreEqual(uriString, client.Endpoint.ToString());
+        Assert.AreEqual(false, client.Options.Logging.EnableLogging);
+
+        // TODO: we should also add a pipeline test that there is no logging
+        // policy in the pipeline.  This can be separate in PipelineOptions tests.
     }
 
     [Test]

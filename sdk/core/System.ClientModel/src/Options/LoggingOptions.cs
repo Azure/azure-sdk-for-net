@@ -27,7 +27,11 @@ public class LoggingOptions
     public IList<string> AllowedQueryParameters { get; }
 
     // Client-scope
-    public bool? EnableLogging { get; set; }
+    public bool? EnableLogging
+    {
+        get;
+        set;
+    }
 
     // Http request/response logging only
     // TODO: We can add it later.

@@ -15,6 +15,7 @@ public class SimpleClient
     private readonly ApiKeyCredential _credential;
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
+    private readonly SimpleClientOptions _options;
 
     public SimpleClient(Uri endpoint, ApiKeyCredential credential, SimpleClientOptions? options = default)
     {
@@ -32,10 +33,15 @@ public class SimpleClient
             perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
             perTryPolicies: new PipelinePolicy[] { authenticationPolicy },
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+
+        _options = options;
     }
 
     // public for test purposes
     public Uri Endpoint => _endpoint;
+
+    // public for test purposes
+    public SimpleClientOptions Options => _options;
 
     // Convenience method - async
     public Task<ClientResult<OutputModel>> GetModelAsync(InputModel input, CancellationToken cancellationToken = default)
