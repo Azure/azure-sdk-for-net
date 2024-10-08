@@ -42,7 +42,7 @@ steps:
 
   - template: /eng/common/TestResources/setup-environments.yml
 
-  - ${{ if parameters.PersistOidcToken }}:
+  - ${{ if eq(parameters.PersistOidcToken, true) }}:
     - task: AzureCLI@2
       displayName: Set OIDC token
       env:
@@ -61,7 +61,7 @@ steps:
       env:
         TEMP: $(Agent.TempDirectory)
         PoolSubnet: $(PoolSubnet)
-        ${{ if parameters.PersistOidcToken }}:
+        ${{ if eq(parameters.PersistOidcToken, true) }}:
           ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
         ${{ insert }}: ${{ parameters.EnvVars }}
       inputs:
