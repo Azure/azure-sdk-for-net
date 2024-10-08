@@ -26,7 +26,8 @@ public static class SimpleClientServiceCollectionExtensions
             IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
             IConfiguration clientConfiguration = configuration.GetSection("SimpleClient");
 
-            Uri endpoint = clientConfiguration.GetValue<Uri>("ServiceUri");
+            Uri endpoint = clientConfiguration.GetValue<Uri>("ServiceUri") ??
+                throw new InvalidOperationException("Expected 'ServiceUri' to be present in 'SimpleClient' configuration settings.");
 
             // TODO: how to get this securely?
             ApiKeyCredential credential = new("fake key");
@@ -51,6 +52,8 @@ public static class SimpleClientServiceCollectionExtensions
     public static IServiceCollection AddSimpleClient(this IServiceCollection services,
         IConfiguration configurationSection)
     {
+        string? sectionName = (configurationSection as IConfigurationSection)?.Key;
+
         services.AddOptions();
 
         // Bind configuration to options
@@ -58,7 +61,8 @@ public static class SimpleClientServiceCollectionExtensions
 
         services.AddSingleton<SimpleClient>(sp =>
         {
-            Uri endpoint = configurationSection.GetValue<Uri>("ServiceUri");
+            Uri endpoint = configurationSection.GetValue<Uri>("ServiceUri") ??
+                throw new InvalidOperationException($"Expected 'ServiceUri' to be present in '{sectionName ?? "configuration"}' configuration settings.");
 
             // TODO: how to get this securely?
             ApiKeyCredential credential = new("fake key");
