@@ -60,15 +60,6 @@ namespace System.ClientModel
         public virtual System.BinaryData ToBytes() { throw null; }
     }
 }
-namespace System.ClientModel.Pipeline
-{
-    public partial class HttpLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
-    {
-        public HttpLoggingPolicy(System.ClientModel.Primitives.ClientLoggingOptions options) { }
-        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
-    }
-}
 namespace System.ClientModel.Primitives
 {
     public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
@@ -158,6 +149,12 @@ namespace System.ClientModel.Primitives
         protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message, System.Net.Http.HttpRequestMessage httpRequest) { }
         protected sealed override void ProcessCore(System.ClientModel.Primitives.PipelineMessage message) { }
         protected sealed override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+    }
+    public partial class HttpLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public HttpLoggingPolicy(System.ClientModel.Primitives.ClientLoggingOptions options) { }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {

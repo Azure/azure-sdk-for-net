@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.ClientModel.Pipeline;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;

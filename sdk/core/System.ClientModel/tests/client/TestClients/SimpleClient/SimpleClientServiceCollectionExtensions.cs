@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Pipeline;
 using System.ClientModel.Primitives;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,14 +22,12 @@ public static class SimpleClientServiceCollectionExtensions
             .Configure<ILoggerFactory>((options, loggerFactory)
                 => options.Logging.LoggerFactory = loggerFactory);
 
-        //// Add logging options in case a custom logging policy is added
-        //// TODO: should there be one client options to rule them all?
-        //// or is per-client sufficient?
-        //services.AddSingleton<ClientLoggingOptions>(sp =>
-        //{
-        //    SimpleClientOptions options = sp.GetRequiredService<SimpleClientOptions>();
-        //    return options.Logging;
-        //});
+        // Proxy to logging options in case a custom logging policy is added
+        services.AddSingleton<ClientLoggingOptions>(sp =>
+        {
+            IOptions<SimpleClientOptions> options = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
+            return options.Value.Logging;
+        });
 
         services.AddSingleton<SimpleClient>(sp =>
         {
@@ -48,13 +45,13 @@ public static class SimpleClientServiceCollectionExtensions
             IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
             SimpleClientOptions options = iOptions.Value;
 
-            //// Check whether known policy types have been added to the service
-            //// collection.
-            //HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
-            //if (httpLoggingPolicy is not null)
-            //{
-            //    options.HttpLoggingPolicy = httpLoggingPolicy;
-            //}
+            // Check whether known policy types have been added to the service
+            // collection.
+            HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
+            if (httpLoggingPolicy is not null)
+            {
+                options.HttpLoggingPolicy = httpLoggingPolicy;
+            }
 
             return new SimpleClient(endpoint, credential, options);
         });
