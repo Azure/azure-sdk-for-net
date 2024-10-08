@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(AlertRuleKind left, AlertRuleKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlertRuleKind"/> values are not the same. </summary>
         public static bool operator !=(AlertRuleKind left, AlertRuleKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AlertRuleKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AlertRuleKind"/>. </summary>
         public static implicit operator AlertRuleKind(string value) => new AlertRuleKind(value);
 
         /// <inheritdoc />

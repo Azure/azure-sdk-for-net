@@ -45,7 +45,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static bool operator ==(EncounterClass left, EncounterClass right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EncounterClass"/> values are not the same. </summary>
         public static bool operator !=(EncounterClass left, EncounterClass right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EncounterClass"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EncounterClass"/>. </summary>
         public static implicit operator EncounterClass(string value) => new EncounterClass(value);
 
         /// <inheritdoc />

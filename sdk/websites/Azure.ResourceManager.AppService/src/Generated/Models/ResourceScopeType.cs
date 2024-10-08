@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(ResourceScopeType left, ResourceScopeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceScopeType"/> values are not the same. </summary>
         public static bool operator !=(ResourceScopeType left, ResourceScopeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourceScopeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceScopeType"/>. </summary>
         public static implicit operator ResourceScopeType(string value) => new ResourceScopeType(value);
 
         /// <inheritdoc />

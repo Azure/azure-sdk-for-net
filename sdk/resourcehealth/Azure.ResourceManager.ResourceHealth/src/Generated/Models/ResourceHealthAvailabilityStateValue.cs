@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static bool operator ==(ResourceHealthAvailabilityStateValue left, ResourceHealthAvailabilityStateValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceHealthAvailabilityStateValue"/> values are not the same. </summary>
         public static bool operator !=(ResourceHealthAvailabilityStateValue left, ResourceHealthAvailabilityStateValue right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourceHealthAvailabilityStateValue"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceHealthAvailabilityStateValue"/>. </summary>
         public static implicit operator ResourceHealthAvailabilityStateValue(string value) => new ResourceHealthAvailabilityStateValue(value);
 
         /// <inheritdoc />

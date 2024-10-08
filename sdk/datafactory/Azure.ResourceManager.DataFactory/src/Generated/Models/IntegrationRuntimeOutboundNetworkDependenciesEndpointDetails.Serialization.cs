@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails IJsonModel<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

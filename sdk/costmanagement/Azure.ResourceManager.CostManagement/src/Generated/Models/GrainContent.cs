@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(GrainContent left, GrainContent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GrainContent"/> values are not the same. </summary>
         public static bool operator !=(GrainContent left, GrainContent right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GrainContent"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GrainContent"/>. </summary>
         public static implicit operator GrainContent(string value) => new GrainContent(value);
 
         /// <inheritdoc />

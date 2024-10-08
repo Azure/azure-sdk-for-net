@@ -12,6 +12,7 @@ Below are the packages contained in Azure Maps:
 - [Azure.Maps.Search][search] supports many searching functionalities for entities, point of interests (POI) or streets, and also supports reverse geocode a coordinate to a place or an entity.
 - [Azure.Maps.Geolocation][geolocation] allows you to get the ISO country code for the provided IP address.
 - [Azure.Maps.TimeZone][timezone]
+- [Azure.Maps.Weather][weather] allows you to get real-time, forecasted, and historical weather data.
 ### Install the package
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
@@ -221,6 +222,7 @@ additional questions or comments.
 [geolocation]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Geolocation
 [search]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search
 [timezone]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.TimeZone
+[weather]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Weather
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

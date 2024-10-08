@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<RunQueryFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RunQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RunQueryFilter)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("operand"u8);
             writer.WriteStringValue(Operand.ToString());
             writer.WritePropertyName("operator"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RunQueryFilter IJsonModel<RunQueryFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

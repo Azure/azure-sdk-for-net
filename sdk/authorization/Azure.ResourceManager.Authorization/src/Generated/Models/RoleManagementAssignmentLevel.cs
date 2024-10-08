@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Authorization.Models
         public static bool operator ==(RoleManagementAssignmentLevel left, RoleManagementAssignmentLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementAssignmentLevel"/> values are not the same. </summary>
         public static bool operator !=(RoleManagementAssignmentLevel left, RoleManagementAssignmentLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RoleManagementAssignmentLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleManagementAssignmentLevel"/>. </summary>
         public static implicit operator RoleManagementAssignmentLevel(string value) => new RoleManagementAssignmentLevel(value);
 
         /// <inheritdoc />

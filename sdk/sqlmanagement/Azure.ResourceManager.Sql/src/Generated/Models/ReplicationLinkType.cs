@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(ReplicationLinkType left, ReplicationLinkType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReplicationLinkType"/> values are not the same. </summary>
         public static bool operator !=(ReplicationLinkType left, ReplicationLinkType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReplicationLinkType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReplicationLinkType"/>. </summary>
         public static implicit operator ReplicationLinkType(string value) => new ReplicationLinkType(value);
 
         /// <inheritdoc />

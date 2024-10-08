@@ -63,6 +63,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             DocumentClassifierDetails classifier = operation.Value;
 
             Assert.That(classifier.ClassifierId, Is.EqualTo(classifierId));
+            Assert.That(classifier.BaseClassifierId, Is.Null);
             Assert.That(classifier.Description, Is.EqualTo(description));
             Assert.That(classifier.ApiVersion, Is.EqualTo(ServiceVersionString));
             Assert.That(classifier.CreatedOn, Is.GreaterThan(startTime));
@@ -139,7 +140,6 @@ namespace Azure.AI.DocumentIntelligence.Tests
         #region Copy
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/45476")]
         public async Task CopyClassifierTo()
         {
             var client = CreateDocumentIntelligenceAdministrationClient();
@@ -183,7 +183,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             DocumentClassifierDetails classifier = operation.Value;
 
             Assert.That(classifier.ClassifierId, Is.EqualTo(classifierId));
-            Assert.That(classifier.BaseClassifierId, Is.EqualTo(sourceClassifier.ClassifierId));
+            Assert.That(classifier.BaseClassifierId, Is.Null);
             Assert.That(classifier.Description, Is.EqualTo(description));
             Assert.That(classifier.ApiVersion, Is.EqualTo(ServiceVersionString));
 
@@ -191,8 +191,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(classifier.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
             Assert.That(classifier.ExpiresOn, Is.GreaterThan(classifier.CreatedOn));
 
-            // TODO: reenable validation once the following service issue has been fixed: https://github.com/Azure/azure-sdk-for-net/issues/37172
-            // DocumentAssert.AreEquivalent(sourceClassifier.DocTypes, classifier.DocTypes);
+            DocumentAssert.AreEquivalent(sourceClassifier.DocTypes, classifier.DocTypes);
 
             foreach (var docType in classifier.DocTypes.Values)
             {
@@ -304,7 +303,6 @@ namespace Azure.AI.DocumentIntelligence.Tests
         #endregion Delete
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/45476")]
         public async Task AuthorizeClassifierCopy()
         {
             var client = CreateDocumentIntelligenceAdministrationClient();
@@ -314,12 +312,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
             ClassifierCopyAuthorization copyAuthorization = await client.AuthorizeClassifierCopyAsync(content);
 
             Assert.That(copyAuthorization.TargetClassifierId, Is.EqualTo(classifierId));
+            Assert.That(copyAuthorization.TargetClassifierLocation.AbsoluteUri, Does.StartWith(TestEnvironment.Endpoint));
             Assert.That(copyAuthorization.TargetResourceId, Is.EqualTo(TestEnvironment.ResourceId));
             Assert.That(copyAuthorization.TargetResourceRegion, Is.EqualTo(TestEnvironment.ResourceRegion));
             Assert.That(copyAuthorization.AccessToken, Is.Not.Null);
             Assert.That(copyAuthorization.AccessToken, Is.Not.Empty);
             Assert.That(copyAuthorization.ExpirationDateTime, Is.GreaterThan(Recording.UtcNow));
-            // TODO: Check targetclassifierlocation and same for model test.
         }
     }
 }

@@ -63,11 +63,15 @@ public partial class AppConfigurationReplica : Resource
     /// <summary>
     /// Creates a new AppConfigurationReplica.
     /// </summary>
-    /// <param name="resourceName">Name of the AppConfigurationReplica.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the AppConfigurationReplica resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppConfigurationReplica.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AppConfigurationReplica(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.AppConfiguration/configurationStores/replicas", resourceVersion ?? "2024-05-01", context)
+    public AppConfigurationReplica(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.AppConfiguration/configurationStores/replicas", resourceVersion ?? "2024-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"]);
@@ -97,11 +101,16 @@ public partial class AppConfigurationReplica : Resource
     /// <summary>
     /// Creates a reference to an existing AppConfigurationReplica.
     /// </summary>
-    /// <param name="resourceName">Name of the AppConfigurationReplica.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the AppConfigurationReplica resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppConfigurationReplica.</param>
     /// <returns>The existing AppConfigurationReplica resource.</returns>
-    public static AppConfigurationReplica FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static AppConfigurationReplica FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this AppConfigurationReplica resource.

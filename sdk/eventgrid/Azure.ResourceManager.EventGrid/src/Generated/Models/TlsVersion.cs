@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(TlsVersion left, TlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TlsVersion"/> values are not the same. </summary>
         public static bool operator !=(TlsVersion left, TlsVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TlsVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TlsVersion"/>. </summary>
         public static implicit operator TlsVersion(string value) => new TlsVersion(value);
 
         /// <inheritdoc />
