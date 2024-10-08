@@ -7,12 +7,6 @@
 - Upgraded api-version tag from 'package-2024-05' to 'package-preview-2024-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/9a8af2acfafc4d7a23eff41b859d2d332f51b0bc/specification/elasticsan/resource-manager/readme.md.
     - Supported auto scale policy for ElasticSan.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.1.0 (2024-09-27)
 
 ### Features Added
