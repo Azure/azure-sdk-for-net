@@ -10,9 +10,11 @@ public class SimpleClientOptions : ClientPipelineOptions
 {
     private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
-    // TODO: Change to generated code pattern
+    // TODO: Change to generated code pattern needed to support DI binding
+    // from IConfiguration settings.
     public SimpleClientOptions() : this(LatestVersion)
     {
+        Logging.AllowedHeaderNames.Add("x-client-allowed");
     }
 
     public SimpleClientOptions(ServiceVersion version)

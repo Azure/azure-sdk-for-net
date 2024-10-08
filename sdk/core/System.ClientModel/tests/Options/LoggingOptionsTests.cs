@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections;
 using System.Collections.Generic;
 using ClientModel.ReferenceClients.SimpleClient;
 using Microsoft.Extensions.Configuration;
@@ -52,7 +51,11 @@ public class LoggingOptionsTests
             new List<KeyValuePair<string, string?>>() {
                 new("SimpleClient:ServiceUri", uriString),
                 new("SimpleClient:Logging:EnableLogging", "false"),
-                new("SimpleClient:Logging:AllowedHeaderNames", "[\"x-allowed\"]")
+
+                // The below is the equivalent of adding JSON [ "x-allowed" ]
+                // array via Microsoft.Extensions.Configuration.Json config
+                new("SimpleClient:Logging:AllowedHeaderNames", null),
+                new("SimpleClient:Logging:AllowedHeaderNames:0", "x-user-allowed"),
             });
 
         services.AddSingleton<IConfiguration>(sp => configuration);
@@ -65,12 +68,14 @@ public class LoggingOptionsTests
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
 
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-allowed");
-    }
+        // SCM defaults
+        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "Content-Length");
 
-    [Test]
-    public void CanAddToClientAuthorAllowedHeadersListFromConfigurationSettings()
-    {
+        // Client defaults (client-author additions)
+        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-client-allowed");
+
+        // User additions
+        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-user-allowed");
     }
 
     [Test]
