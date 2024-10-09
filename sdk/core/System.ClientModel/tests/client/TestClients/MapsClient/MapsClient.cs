@@ -8,7 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Maps;
+namespace ClientModel.ReferenceClients.MapsClient;
 
 public class MapsClient
 {

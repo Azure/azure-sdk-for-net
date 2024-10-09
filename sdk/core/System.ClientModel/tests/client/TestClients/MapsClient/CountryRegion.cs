@@ -5,7 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Maps;
+namespace ClientModel.ReferenceClients.MapsClient;
 
 public class CountryRegion : IJsonModel<CountryRegion>
 {

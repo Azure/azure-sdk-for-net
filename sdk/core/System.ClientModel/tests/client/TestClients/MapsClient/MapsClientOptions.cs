@@ -4,7 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 
-namespace Maps;
+namespace ClientModel.ReferenceClients.MapsClient;
 
 public class MapsClientOptions : ClientPipelineOptions
 {

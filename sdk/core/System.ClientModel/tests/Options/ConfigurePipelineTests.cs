@@ -62,6 +62,11 @@ public class ConfigurePipelineTests
     }
 
     [Test]
+    public void CanAddMultipleClientsWithDifferentConfigurationBlocks()
+    {
+    }
+
+    [Test]
     public void CanSetClientCredentialFromConfigurationSettings()
     {
         throw new NotImplementedException();
