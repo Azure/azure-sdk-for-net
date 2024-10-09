@@ -1,19 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseBlobs;
 extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Blobs.Tests;
-using Azure.Storage.DataMovement.Tests;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
@@ -82,7 +79,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task GetStorageResourcesAsync()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             await SetUpContainerForListing(test.Container);
 
             string folderName = "foo";
@@ -247,7 +244,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task GetStorageResourceReferenceAsync_Default()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             await SetUpContainerForListing(test.Container);
 
             string prefix = "foo";
@@ -268,7 +265,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [TestCase(DataMovementBlobConstants.ResourceId.AppendBlob)]
         public async Task GetStorageResourceReferenceAsync_BlobType(string blobResourceId)
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             await SetUpContainerForListing(test.Container);
 
             string prefix = "foo";
