@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
         public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata)
         {
-            ShareCreateOptions options = new ShareCreateOptions
+            BaseShares::Azure.Storage.Files.Shares.Models.ShareCreateOptions options = new()
             {
                 Metadata = metadata
             };

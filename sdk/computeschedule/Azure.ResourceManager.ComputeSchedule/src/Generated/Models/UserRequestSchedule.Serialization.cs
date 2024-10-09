@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         void IJsonModel<UserRequestSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<UserRequestSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UserRequestSchedule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("deadLine"u8);
             writer.WriteStringValue(DeadLine, "O");
             writer.WritePropertyName("timeZone"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         UserRequestSchedule IJsonModel<UserRequestSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

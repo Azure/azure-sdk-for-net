@@ -23,10 +23,15 @@ public abstract class NamedProvisioningConstruct : ProvisioningConstruct
     public string IdentifierName
     {
         get => _identifierName;
-        set => _identifierName = ValidateIdentifierName(value, nameof(value));
+        set
+        {
+            Infrastructure.ValidateIdentifierName(value, nameof(value));
+            _identifierName = value;
+        }
     }
     private string _identifierName;
-    // TODO: Listen for feedback, but discuss IdentifierName vs. ProvisioningName in the Arch Board
+    // TODO: Listen for customer feedback and discuss IdentifierName vs.
+    // ProvisioningName in the Arch Board
 
     /// <summary>
     /// Creates a named Bicep entity, like a resource or parameter.
@@ -36,32 +41,12 @@ public abstract class NamedProvisioningConstruct : ProvisioningConstruct
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
-    protected NamedProvisioningConstruct(string identifierName) =>
-        _identifierName = ValidateIdentifierName(identifierName, nameof(identifierName));
-
-    // TODO: Relax this in the future when we make identifier names optional
-    private static string ValidateIdentifierName(string identifierName, string paramName)
+    protected NamedProvisioningConstruct(string identifierName)
     {
-        // TODO: Enable when Aspire is ready
-        /*
-        if (identifierName is null)
-        {
-            throw new ArgumentNullException(paramName, $"{nameof(IdentifierName)} cannot be null.");
-        }
-        else if (identifierName.Length == 0)
-        {
-            throw new ArgumentException($"{nameof(IdentifierName)} cannot be empty.", paramName);
-        }
-
-        foreach (var ch in identifierName)
-        {
-            if (!char.IsLetterOrDigit(ch) && ch != '_')
-            {
-                throw new ArgumentException($"{nameof(IdentifierName)} \"{identifierName}\" should only contain letters, numbers, and underscores.", paramName);
-            }
-        }
-        /**/
-        return identifierName;
+        // TODO: In the near future we'll make this optional and only validate
+        // if the value passed in isn't null.
+        Infrastructure.ValidateIdentifierName(identifierName, nameof(identifierName));
+        _identifierName = identifierName;
     }
 }
 
