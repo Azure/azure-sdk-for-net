@@ -2838,90 +2838,6 @@ namespace Azure.Compute.Batch
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Checks the specified Job Schedule exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobScheduleId"> The ID of the Job Schedule which you want to check. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> JobScheduleExistsInternalAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.JobScheduleExistsInternal");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateJobScheduleExistsInternalRequest(jobScheduleId, timeOutInSeconds, ocpdate, requestConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Checks the specified Job Schedule exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobScheduleId"> The ID of the Job Schedule which you want to check. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response JobScheduleExistsInternal(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.JobScheduleExistsInternal");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateJobScheduleExistsInternalRequest(jobScheduleId, timeOutInSeconds, ocpdate, requestConditions, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
         /// [Protocol Method] Deletes a Job Schedule from the specified Account.
         /// <list type="bullet">
         /// <item>
@@ -10617,7 +10533,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateJobScheduleExistsInternalRequest(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateJobScheduleExistsRequest(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
             var request = message.Request;
