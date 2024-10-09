@@ -4,8 +4,6 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
@@ -14,22 +12,24 @@ namespace Azure.Storage.DataMovement
     internal class ServiceToServiceTransferJob : TransferJobInternal
     {
         /// <summary>
-        /// Create Storage Transfer Job for single transfer
+        /// Create Storage Transfer Job.
         /// </summary>
         internal ServiceToServiceTransferJob(
             DataTransfer dataTransfer,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
             DataTransferOptions transferOptions,
-            TransferCheckpointer CheckPointFolderPath,
+            TransferCheckpointer checkpointer,
             DataTransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
             ClientDiagnostics clientDiagnostics)
             : base(dataTransfer,
                   sourceResource,
                   destinationResource,
+                  ServiceToServiceJobPart.CreateJobPartAsync,
+                  ServiceToServiceJobPart.CreateJobPartAsync,
                   transferOptions,
-                  CheckPointFolderPath,
+                  checkpointer,
                   errorHandling,
                   arrayPool,
                   clientDiagnostics)
@@ -37,7 +37,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Create Storage Transfer Job for container transfer
+        /// Create Storage Transfer Job.
         /// </summary>
         internal ServiceToServiceTransferJob(
             DataTransfer dataTransfer,
@@ -51,6 +51,8 @@ namespace Azure.Storage.DataMovement
             : base(dataTransfer,
                   sourceResource,
                   destinationResource,
+                  ServiceToServiceJobPart.CreateJobPartAsync,
+                  ServiceToServiceJobPart.CreateJobPartAsync,
                   transferOptions,
                   checkpointer,
                   errorHandling,
@@ -73,7 +75,7 @@ namespace Azure.Storage.DataMovement
                 // Starting brand new job
                 if (_isSingleResource)
                 {
-                    ServiceToServiceJobPart part = default;
+                    JobPartInternal part = default;
                     try
                     {
                         // Single resource transfer, we can skip to chunking the job.
@@ -198,7 +200,7 @@ namespace Azure.Storage.DataMovement
                             ? current.Uri.GetPath()
                             : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
 
-                        ServiceToServiceJobPart part;
+                        JobPartInternal part;
                         try
                         {
                             StorageResourceItem sourceItem = (StorageResourceItem)current;

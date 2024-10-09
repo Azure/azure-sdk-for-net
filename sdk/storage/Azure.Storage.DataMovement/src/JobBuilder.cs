@@ -146,7 +146,7 @@ internal class JobBuilder
                     sourceResource: sourceResource,
                     destinationResource: destinationResource,
                     transferOptions: transferOptions,
-                    CheckPointFolderPath: checkpointer,
+                    checkpointer: checkpointer,
                     errorHandling: _errorHandling,
                     arrayPool: _arrayPool,
                     clientDiagnostics: ClientDiagnostics);

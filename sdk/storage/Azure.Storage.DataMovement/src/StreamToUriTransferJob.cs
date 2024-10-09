@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Buffers;
-using System;
 using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement
@@ -26,6 +26,8 @@ namespace Azure.Storage.DataMovement
             : base(dataTransfer,
                   sourceResource,
                   destinationResource,
+                  StreamToUriJobPart.CreateJobPartAsync,
+                  StreamToUriJobPart.CreateJobPartAsync,
                   transferOptions,
                   checkpointer,
                   errorHandling,
@@ -49,6 +51,8 @@ namespace Azure.Storage.DataMovement
             : base(dataTransfer,
                   sourceResource,
                   destinationResource,
+                  StreamToUriJobPart.CreateJobPartAsync,
+                  StreamToUriJobPart.CreateJobPartAsync,
                   transferOptions,
                   checkpointer,
                   errorHandling,
@@ -71,7 +75,7 @@ namespace Azure.Storage.DataMovement
                 // Starting brand new job
                 if (_isSingleResource)
                 {
-                    StreamToUriJobPart part = default;
+                    JobPartInternal part = default;
                     try
                     {
                         // Single resource transfer, we can skip to chunking the job.
@@ -195,7 +199,7 @@ namespace Azure.Storage.DataMovement
                             ? current.Uri.GetPath()
                             : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
 
-                        StreamToUriJobPart part;
+                        JobPartInternal part;
                         try
                         {
                             part = await StreamToUriJobPart.CreateJobPartAsync(

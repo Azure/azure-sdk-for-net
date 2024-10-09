@@ -26,6 +26,8 @@ namespace Azure.Storage.DataMovement
             : base(dataTransfer,
                   sourceResource,
                   destinationResource,
+                  UriToStreamJobPart.CreateJobPartAsync,
+                  UriToStreamJobPart.CreateJobPartAsync,
                   transferOptions,
                   checkpointer,
                   errorHandling,
@@ -49,6 +51,8 @@ namespace Azure.Storage.DataMovement
             : base(dataTransfer,
                   sourceResource,
                   destinationResource,
+                  UriToStreamJobPart.CreateJobPartAsync,
+                  UriToStreamJobPart.CreateJobPartAsync,
                   transferOptions,
                   checkpointer,
                   errorHandling,
@@ -71,7 +75,7 @@ namespace Azure.Storage.DataMovement
                 // Starting brand new job
                 if (_isSingleResource)
                 {
-                    UriToStreamJobPart part = default;
+                    JobPartInternal part = default;
                     try
                     {
                         // Single resource transfer, we can skip to chunking the job.
@@ -173,7 +177,7 @@ namespace Azure.Storage.DataMovement
                         ? current.Uri.GetPath()
                         : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
 
-                    UriToStreamJobPart part;
+                    JobPartInternal part;
                     try
                     {
                         part = await UriToStreamJobPart.CreateJobPartAsync(
