@@ -11,7 +11,7 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentIntelligenceAdministrationClient
     {
         // CUSTOM CODE NOTE: we're overwriting the behavior of the BuildDocumentModel, ComposeModel,
-        // CopyModelTo, BuildClassifier, and CopyClassifierTo APIs to return an instance of TrainingOperation.
+        // CopyModelTo, BuildClassifier, and CopyClassifierTo APIs to return an instance of OperationWithId.
         // This is a workaround since Operation.Id is not supported by our generator yet (it throws a
         // NotSupportedException), but this ID is needed for the GetOperation API.
 
@@ -47,7 +47,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 using HttpMessage message = CreateBuildDocumentModelRequest(content, context);
                 var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
-                return new TrainingOperation(internalOperation);
+                return new OperationWithId(internalOperation);
             }
             catch (Exception e)
             {
@@ -88,7 +88,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 using HttpMessage message = CreateBuildDocumentModelRequest(content, context);
                 var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
-                return new TrainingOperation(internalOperation);
+                return new OperationWithId(internalOperation);
             }
             catch (Exception e)
             {
@@ -129,7 +129,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 using HttpMessage message = CreateComposeModelRequest(content, context);
                 var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
-                return new TrainingOperation(internalOperation);
+                return new OperationWithId(internalOperation);
             }
             catch (Exception e)
             {
@@ -170,7 +170,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 using HttpMessage message = CreateComposeModelRequest(content, context);
                 var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
-                return new TrainingOperation(internalOperation);
+                return new OperationWithId(internalOperation);
             }
             catch (Exception e)
             {
@@ -214,7 +214,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 using HttpMessage message = CreateCopyModelToRequest(modelId, content, context);
                 var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
-                return new TrainingOperation(internalOperation);
+                return new OperationWithId(internalOperation);
             }
             catch (Exception e)
             {
@@ -258,7 +258,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 using HttpMessage message = CreateCopyModelToRequest(modelId, content, context);
                 var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo", OperationFinalStateVia.OperationLocation, context, waitUntil);
-                return new TrainingOperation(internalOperation);
+                return new OperationWithId(internalOperation);
             }
             catch (Exception e)
             {
@@ -299,7 +299,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 using HttpMessage message = CreateBuildClassifierRequest(content, context);
                 var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
-                return new TrainingOperation(internalOperation);
+                return new OperationWithId(internalOperation);
             }
             catch (Exception e)
             {
@@ -340,7 +340,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 using HttpMessage message = CreateBuildClassifierRequest(content, context);
                 var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier", OperationFinalStateVia.OperationLocation, context, waitUntil);
-                return new TrainingOperation(internalOperation);
+                return new OperationWithId(internalOperation);
             }
             catch (Exception e)
             {
@@ -384,7 +384,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 using HttpMessage message = CreateCopyClassifierToRequest(classifierId, content, context);
                 var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyClassifierTo", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
-                return new TrainingOperation(internalOperation);
+                return new OperationWithId(internalOperation);
             }
             catch (Exception e)
             {
@@ -428,7 +428,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 using HttpMessage message = CreateCopyClassifierToRequest(classifierId, content, context);
                 var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyClassifierTo", OperationFinalStateVia.OperationLocation, context, waitUntil);
-                return new TrainingOperation(internalOperation);
+                return new OperationWithId(internalOperation);
             }
             catch (Exception e)
             {

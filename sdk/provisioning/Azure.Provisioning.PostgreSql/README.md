@@ -9,7 +9,7 @@ Azure.Provisioning.PostgreSql simplifies declarative resource provisioning in .N
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.PostgreSql
+dotnet add package Azure.Provisioning.PostgreSql --prerelease
 ```
 
 ### Prerequisites

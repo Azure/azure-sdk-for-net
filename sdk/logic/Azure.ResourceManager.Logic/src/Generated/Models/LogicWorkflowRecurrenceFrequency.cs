@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(LogicWorkflowRecurrenceFrequency left, LogicWorkflowRecurrenceFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicWorkflowRecurrenceFrequency"/> values are not the same. </summary>
         public static bool operator !=(LogicWorkflowRecurrenceFrequency left, LogicWorkflowRecurrenceFrequency right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogicWorkflowRecurrenceFrequency"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogicWorkflowRecurrenceFrequency"/>. </summary>
         public static implicit operator LogicWorkflowRecurrenceFrequency(string value) => new LogicWorkflowRecurrenceFrequency(value);
 
         /// <inheritdoc />

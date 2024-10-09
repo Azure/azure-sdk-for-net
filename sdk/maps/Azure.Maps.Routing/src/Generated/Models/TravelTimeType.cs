@@ -33,7 +33,7 @@ namespace Azure.Maps.Routing
         public static bool operator ==(TravelTimeType left, TravelTimeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TravelTimeType"/> values are not the same. </summary>
         public static bool operator !=(TravelTimeType left, TravelTimeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TravelTimeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TravelTimeType"/>. </summary>
         public static implicit operator TravelTimeType(string value) => new TravelTimeType(value);
 
         /// <inheritdoc />

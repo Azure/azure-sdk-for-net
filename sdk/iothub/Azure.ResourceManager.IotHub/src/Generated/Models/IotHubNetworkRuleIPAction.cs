@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static bool operator ==(IotHubNetworkRuleIPAction left, IotHubNetworkRuleIPAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubNetworkRuleIPAction"/> values are not the same. </summary>
         public static bool operator !=(IotHubNetworkRuleIPAction left, IotHubNetworkRuleIPAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IotHubNetworkRuleIPAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubNetworkRuleIPAction"/>. </summary>
         public static implicit operator IotHubNetworkRuleIPAction(string value) => new IotHubNetworkRuleIPAction(value);
 
         /// <inheritdoc />

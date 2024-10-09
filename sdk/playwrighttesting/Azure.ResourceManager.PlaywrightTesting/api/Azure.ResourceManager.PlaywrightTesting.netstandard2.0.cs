@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         public Azure.ResourceManager.PlaywrightTesting.Models.EnablementStatus? RegionalAffinity { get { throw null; } set { } }
         public Azure.ResourceManager.PlaywrightTesting.Models.EnablementStatus? Reporting { get { throw null; } set { } }
         public Azure.ResourceManager.PlaywrightTesting.Models.EnablementStatus? ScalableExecution { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -89,6 +90,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         public PlaywrightTestingQuotaData() { }
         public Azure.ResourceManager.PlaywrightTesting.Models.FreeTrialProperties FreeTrial { get { throw null; } set { } }
         public Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingQuotaData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingQuotaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingQuotaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingQuotaData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingQuotaData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -171,6 +173,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         public decimal PercentageUsed { get { throw null; } }
         public Azure.ResourceManager.PlaywrightTesting.Models.FreeTrialState State { get { throw null; } }
         public int UsedValue { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PlaywrightTesting.Models.FreeTrialProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PlaywrightTesting.Models.FreeTrialProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PlaywrightTesting.Models.FreeTrialProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PlaywrightTesting.Models.FreeTrialProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlaywrightTesting.Models.FreeTrialProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -202,6 +205,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         public Azure.ResourceManager.PlaywrightTesting.Models.EnablementStatus? Reporting { get { throw null; } set { } }
         public Azure.ResourceManager.PlaywrightTesting.Models.EnablementStatus? ScalableExecution { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingAccountPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingAccountPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingAccountPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingAccountPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingAccountPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

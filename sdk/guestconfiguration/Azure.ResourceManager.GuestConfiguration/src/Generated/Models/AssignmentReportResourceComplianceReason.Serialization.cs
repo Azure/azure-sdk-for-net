@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         void IJsonModel<AssignmentReportResourceComplianceReason>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentReportResourceComplianceReason>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Phrase))
             {
                 writer.WritePropertyName("phrase"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AssignmentReportResourceComplianceReason IJsonModel<AssignmentReportResourceComplianceReason>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

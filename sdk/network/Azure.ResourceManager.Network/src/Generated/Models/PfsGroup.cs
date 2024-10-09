@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(PfsGroup left, PfsGroup right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PfsGroup"/> values are not the same. </summary>
         public static bool operator !=(PfsGroup left, PfsGroup right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PfsGroup"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PfsGroup"/>. </summary>
         public static implicit operator PfsGroup(string value) => new PfsGroup(value);
 
         /// <inheritdoc />

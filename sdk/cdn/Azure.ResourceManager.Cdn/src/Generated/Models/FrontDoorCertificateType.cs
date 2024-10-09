@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(FrontDoorCertificateType left, FrontDoorCertificateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorCertificateType"/> values are not the same. </summary>
         public static bool operator !=(FrontDoorCertificateType left, FrontDoorCertificateType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FrontDoorCertificateType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorCertificateType"/>. </summary>
         public static implicit operator FrontDoorCertificateType(string value) => new FrontDoorCertificateType(value);
 
         /// <inheritdoc />

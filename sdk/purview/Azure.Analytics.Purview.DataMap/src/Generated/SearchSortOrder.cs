@@ -33,7 +33,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static bool operator ==(SearchSortOrder left, SearchSortOrder right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchSortOrder"/> values are not the same. </summary>
         public static bool operator !=(SearchSortOrder left, SearchSortOrder right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SearchSortOrder"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchSortOrder"/>. </summary>
         public static implicit operator SearchSortOrder(string value) => new SearchSortOrder(value);
 
         /// <inheritdoc />
