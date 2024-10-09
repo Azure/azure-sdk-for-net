@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Terraform
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.ExportTerraformAzureTerraformClient(WaitUntil,BaseExportModel,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.ExportTerraform(WaitUntil,BaseExportModel,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.Terraform
         /// <param name="exportParameter"> The export parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="exportParameter"/> is null. </exception>
-        public static async Task<ArmOperation<OperationStatus>> ExportTerraformAzureTerraformClientAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<OperationStatus>> ExportTerraformAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableTerraformSubscriptionResource(subscriptionResource).ExportTerraformAzureTerraformClientAsync(waitUntil, exportParameter, cancellationToken).ConfigureAwait(false);
+            return await GetMockableTerraformSubscriptionResource(subscriptionResource).ExportTerraformAsync(waitUntil, exportParameter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Terraform
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.ExportTerraformAzureTerraformClient(WaitUntil,BaseExportModel,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.ExportTerraform(WaitUntil,BaseExportModel,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.Terraform
         /// <param name="exportParameter"> The export parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="exportParameter"/> is null. </exception>
-        public static ArmOperation<OperationStatus> ExportTerraformAzureTerraformClient(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
+        public static ArmOperation<OperationStatus> ExportTerraform(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableTerraformSubscriptionResource(subscriptionResource).ExportTerraformAzureTerraformClient(waitUntil, exportParameter, cancellationToken);
+            return GetMockableTerraformSubscriptionResource(subscriptionResource).ExportTerraform(waitUntil, exportParameter, cancellationToken);
         }
 
         /// <summary>

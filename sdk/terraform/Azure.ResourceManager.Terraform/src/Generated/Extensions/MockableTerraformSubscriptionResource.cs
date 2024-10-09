@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// <param name="exportParameter"> The export parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exportParameter"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationStatus>> ExportTerraformAzureTerraformClientAsync(WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationStatus>> ExportTerraformAsync(WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(exportParameter, nameof(exportParameter));
 
-            using var scope = AzureTerraformClientClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraformAzureTerraformClient");
+            using var scope = AzureTerraformClientClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
             scope.Start();
             try
             {
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// <param name="exportParameter"> The export parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exportParameter"/> is null. </exception>
-        public virtual ArmOperation<OperationStatus> ExportTerraformAzureTerraformClient(WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationStatus> ExportTerraform(WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(exportParameter, nameof(exportParameter));
 
-            using var scope = AzureTerraformClientClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraformAzureTerraformClient");
+            using var scope = AzureTerraformClientClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
             scope.Start();
             try
             {

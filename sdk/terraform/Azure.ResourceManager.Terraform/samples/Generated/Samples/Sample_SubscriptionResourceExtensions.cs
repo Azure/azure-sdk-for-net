@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Terraform.Samples
         // ExportTerraform
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ExportTerraformAzureTerraformClient_ExportTerraform()
+        public async Task ExportTerraform_ExportTerraform()
         {
             // Generated from example definition: 2023-07-01-preview/ExportTerraform.json
             // this example is just showing the usage of "AzureTerraform_ExportTerraform" operation, for the dependent resources, they will have to be created separately.
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Terraform.Samples
 
             // invoke the operation
             BaseExportModel exportParameter = new ExportResourceGroup("rg1");
-            ArmOperation<OperationStatus> lro = await subscriptionResource.ExportTerraformAzureTerraformClientAsync(WaitUntil.Completed, exportParameter);
+            ArmOperation<OperationStatus> lro = await subscriptionResource.ExportTerraformAsync(WaitUntil.Completed, exportParameter);
             OperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
