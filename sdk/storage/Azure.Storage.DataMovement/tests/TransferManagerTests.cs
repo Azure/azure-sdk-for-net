@@ -19,11 +19,6 @@ namespace Azure.Storage.DataMovement.Tests;
 
 public class TransferManagerTests
 {
-    public enum TransferDirection
-    {
-        Upload, Download, S2S,
-    }
-
     public static IEnumerable<TransferDirection> AllTransferDirections()
         => Enum.GetValues(typeof(TransferDirection)).Cast<TransferDirection>();
 
