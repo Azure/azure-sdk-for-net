@@ -1,0 +1,3281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateAgentAsync(string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call CreateAgentAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<Agent> response = await client.CreateAgentAsync("kgubdmpuvhzjjfwaj");
+]]></code></example>
+    </member>
+    <member name="CreateAgent(string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call CreateAgent.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<Agent> response = client.CreateAgent("kgubdmpuvhzjjfwaj");
+]]></code></example>
+    </member>
+    <member name="CreateAgentAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateAgentAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    model = "kgubdmpuvhzjjfwaj",
+});
+Response response = await client.CreateAgentAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_resources").ToString());
+Console.WriteLine(result.GetProperty("temperature").ToString());
+Console.WriteLine(result.GetProperty("top_p").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateAgent(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateAgent and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    model = "kgubdmpuvhzjjfwaj",
+});
+Response response = client.CreateAgent(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_resources").ToString());
+Console.WriteLine(result.GetProperty("temperature").ToString());
+Console.WriteLine(result.GetProperty("top_p").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAgentAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetAgentAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<Agent> response = await client.GetAgentAsync("aorarcltzoneckqmfoluejbhgbm");
+]]></code></example>
+    </member>
+    <member name="GetAgent(string,CancellationToken)">
+      <example>
+This sample shows how to call GetAgent.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<Agent> response = client.GetAgent("aorarcltzoneckqmfoluejbhgbm");
+]]></code></example>
+    </member>
+    <member name="GetAgentAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetAgentAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.GetAgentAsync("aorarcltzoneckqmfoluejbhgbm", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_resources").ToString());
+Console.WriteLine(result.GetProperty("temperature").ToString());
+Console.WriteLine(result.GetProperty("top_p").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAgent(string,RequestContext)">
+      <example>
+This sample shows how to call GetAgent and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.GetAgent("aorarcltzoneckqmfoluejbhgbm", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_resources").ToString());
+Console.WriteLine(result.GetProperty("temperature").ToString());
+Console.WriteLine(result.GetProperty("top_p").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateAgentAsync(string,string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call UpdateAgentAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<Agent> response = await client.UpdateAgentAsync("drivavkqxrpkaxwqjfiyaxdkytrpyo");
+]]></code></example>
+    </member>
+    <member name="UpdateAgent(string,string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call UpdateAgent.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<Agent> response = client.UpdateAgent("drivavkqxrpkaxwqjfiyaxdkytrpyo");
+]]></code></example>
+    </member>
+    <member name="UpdateAgentAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateAgentAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.UpdateAgentAsync("drivavkqxrpkaxwqjfiyaxdkytrpyo", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_resources").ToString());
+Console.WriteLine(result.GetProperty("temperature").ToString());
+Console.WriteLine(result.GetProperty("top_p").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateAgent(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateAgent and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.UpdateAgent("drivavkqxrpkaxwqjfiyaxdkytrpyo", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_resources").ToString());
+Console.WriteLine(result.GetProperty("temperature").ToString());
+Console.WriteLine(result.GetProperty("top_p").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateThreadAsync(IEnumerable{ThreadMessageOptions},ToolResources,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call CreateThreadAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<AgentThread> response = await client.CreateThreadAsync();
+]]></code></example>
+    </member>
+    <member name="CreateThread(IEnumerable{ThreadMessageOptions},ToolResources,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call CreateThread.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<AgentThread> response = client.CreateThread();
+]]></code></example>
+    </member>
+    <member name="CreateThreadAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateThreadAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CreateThreadAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("tool_resources").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateThread(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateThread and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.CreateThread(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("tool_resources").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetThreadAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetThreadAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<AgentThread> response = await client.GetThreadAsync("tyfreqamibskuzfoyo");
+]]></code></example>
+    </member>
+    <member name="GetThread(string,CancellationToken)">
+      <example>
+This sample shows how to call GetThread.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<AgentThread> response = client.GetThread("tyfreqamibskuzfoyo");
+]]></code></example>
+    </member>
+    <member name="GetThreadAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetThreadAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.GetThreadAsync("tyfreqamibskuzfoyo", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("tool_resources").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetThread(string,RequestContext)">
+      <example>
+This sample shows how to call GetThread and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.GetThread("tyfreqamibskuzfoyo", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("tool_resources").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateThreadAsync(string,ToolResources,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call UpdateThreadAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<AgentThread> response = await client.UpdateThreadAsync("jgyxjehvrgpipokdeyifitlfbidb");
+]]></code></example>
+    </member>
+    <member name="UpdateThread(string,ToolResources,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call UpdateThread.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<AgentThread> response = client.UpdateThread("jgyxjehvrgpipokdeyifitlfbidb");
+]]></code></example>
+    </member>
+    <member name="UpdateThreadAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateThreadAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.UpdateThreadAsync("jgyxjehvrgpipokdeyifitlfbidb", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("tool_resources").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateThread(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateThread and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.UpdateThread("jgyxjehvrgpipokdeyifitlfbidb", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("tool_resources").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateMessageAsync(string,MessageRole,string,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call CreateMessageAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadMessage> response = await client.CreateMessageAsync("xbhvabcrbxxkvgduotbrlzflyhzfqs", MessageRole.User, "qpdhdxo");
+]]></code></example>
+    </member>
+    <member name="CreateMessage(string,MessageRole,string,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call CreateMessage.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadMessage> response = client.CreateMessage("xbhvabcrbxxkvgduotbrlzflyhzfqs", MessageRole.User, "qpdhdxo");
+]]></code></example>
+    </member>
+    <member name="CreateMessageAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateMessageAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    role = "user",
+    content = "qpdhdxo",
+});
+Response response = await client.CreateMessageAsync("xbhvabcrbxxkvgduotbrlzflyhzfqs", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("file_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateMessage(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateMessage and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    role = "user",
+    content = "qpdhdxo",
+});
+Response response = client.CreateMessage("xbhvabcrbxxkvgduotbrlzflyhzfqs", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("file_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetMessageAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetMessageAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadMessage> response = await client.GetMessageAsync("secglofbhaocemzzskoeatl", "axpvtnmnjmpctkmnoswam");
+]]></code></example>
+    </member>
+    <member name="GetMessage(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetMessage.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadMessage> response = client.GetMessage("secglofbhaocemzzskoeatl", "axpvtnmnjmpctkmnoswam");
+]]></code></example>
+    </member>
+    <member name="GetMessageAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetMessageAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.GetMessageAsync("secglofbhaocemzzskoeatl", "axpvtnmnjmpctkmnoswam", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("file_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetMessage(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetMessage and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.GetMessage("secglofbhaocemzzskoeatl", "axpvtnmnjmpctkmnoswam", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("file_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateMessageAsync(string,string,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call UpdateMessageAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadMessage> response = await client.UpdateMessageAsync("ptewwjnlbwxlgmrwuaewu", "i");
+]]></code></example>
+    </member>
+    <member name="UpdateMessage(string,string,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call UpdateMessage.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadMessage> response = client.UpdateMessage("ptewwjnlbwxlgmrwuaewu", "i");
+]]></code></example>
+    </member>
+    <member name="UpdateMessageAsync(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateMessageAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.UpdateMessageAsync("ptewwjnlbwxlgmrwuaewu", "i", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("file_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateMessage(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateMessage and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.UpdateMessage("ptewwjnlbwxlgmrwuaewu", "i", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("file_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateRunAsync(string,string,string,string,string,IEnumerable{ThreadMessage},IEnumerable{ToolDefinition},bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call CreateRunAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadRun> response = await client.CreateRunAsync("titpgvpkrtswgazxcziukwksc", "edviydkrqnjapocjydfbukm");
+]]></code></example>
+    </member>
+    <member name="CreateRun(string,string,string,string,string,IEnumerable{ThreadMessage},IEnumerable{ToolDefinition},bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call CreateRun.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadRun> response = client.CreateRun("titpgvpkrtswgazxcziukwksc", "edviydkrqnjapocjydfbukm");
+]]></code></example>
+    </member>
+    <member name="CreateRunAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateRunAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    assistant_id = "edviydkrqnjapocjydfbukm",
+    model = "e",
+    instructions = "llphgcevph",
+    additional_instructions = "rditmqedmpzv",
+    additional_messages = new object[]
+    {
+        new Dictionary<string, object>
+        {
+            ["id"] = "igxwspkkr",
+            ["object"] = "thread.message",
+            ["created_at"] = 14,
+            ["thread_id"] = "wdhurfoa",
+            ["status"] = "in_progress",
+            ["incomplete_details"] = new
+            {
+                reason = "content_filter",
+            },
+            ["completed_at"] = 15,
+            ["incomplete_at"] = 12,
+            ["role"] = "user",
+            ["content"] = Array.Empty<object>(),
+            ["assistant_id"] = "asscaznjc",
+            ["run_id"] = "pwpnijksnuvlkphkiacvrchmradxdg",
+            ["attachments"] = new object[]
+            {
+                new
+                {
+                    file_id = "mvfwlptwylzrsgyl",
+                    tools = new object[]
+                    {
+                        null
+                    },
+                }
+            },
+            ["metadata"] = new
+            {
+                key4165 = "tijsirnrvsmh",
+            }
+        }
+    },
+    tools = Array.Empty<object>(),
+    stream = true,
+    temperature = 7,
+    top_p = 20,
+    max_prompt_tokens = 19,
+    max_completion_tokens = 30,
+    truncation_strategy = new
+    {
+        type = "auto",
+        last_messages = 4,
+    },
+    metadata = new
+    {
+        key4871 = "wtdke",
+    },
+});
+Response response = await client.CreateRunAsync("titpgvpkrtswgazxcziukwksc", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("expires_at").ToString());
+Console.WriteLine(result.GetProperty("started_at").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("cancelled_at").ToString());
+Console.WriteLine(result.GetProperty("failed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("truncation_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_choice").ToString());
+Console.WriteLine(result.GetProperty("response_format").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateRun(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateRun and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    assistant_id = "edviydkrqnjapocjydfbukm",
+    model = "e",
+    instructions = "llphgcevph",
+    additional_instructions = "rditmqedmpzv",
+    additional_messages = new object[]
+    {
+        new Dictionary<string, object>
+        {
+            ["id"] = "igxwspkkr",
+            ["object"] = "thread.message",
+            ["created_at"] = 14,
+            ["thread_id"] = "wdhurfoa",
+            ["status"] = "in_progress",
+            ["incomplete_details"] = new
+            {
+                reason = "content_filter",
+            },
+            ["completed_at"] = 15,
+            ["incomplete_at"] = 12,
+            ["role"] = "user",
+            ["content"] = Array.Empty<object>(),
+            ["assistant_id"] = "asscaznjc",
+            ["run_id"] = "pwpnijksnuvlkphkiacvrchmradxdg",
+            ["attachments"] = new object[]
+            {
+                new
+                {
+                    file_id = "mvfwlptwylzrsgyl",
+                    tools = new object[]
+                    {
+                        null
+                    },
+                }
+            },
+            ["metadata"] = new
+            {
+                key4165 = "tijsirnrvsmh",
+            }
+        }
+    },
+    tools = Array.Empty<object>(),
+    stream = true,
+    temperature = 7,
+    top_p = 20,
+    max_prompt_tokens = 19,
+    max_completion_tokens = 30,
+    truncation_strategy = new
+    {
+        type = "auto",
+        last_messages = 4,
+    },
+    metadata = new
+    {
+        key4871 = "wtdke",
+    },
+});
+Response response = client.CreateRun("titpgvpkrtswgazxcziukwksc", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("expires_at").ToString());
+Console.WriteLine(result.GetProperty("started_at").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("cancelled_at").ToString());
+Console.WriteLine(result.GetProperty("failed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("truncation_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_choice").ToString());
+Console.WriteLine(result.GetProperty("response_format").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetRunAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetRunAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadRun> response = await client.GetRunAsync("ilcsibdqbvldqyvmbjjtvirntap", "scpdacucqpuoqjihekkeolfpdyeea");
+]]></code></example>
+    </member>
+    <member name="GetRun(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetRun.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadRun> response = client.GetRun("ilcsibdqbvldqyvmbjjtvirntap", "scpdacucqpuoqjihekkeolfpdyeea");
+]]></code></example>
+    </member>
+    <member name="GetRunAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetRunAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.GetRunAsync("ilcsibdqbvldqyvmbjjtvirntap", "scpdacucqpuoqjihekkeolfpdyeea", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("expires_at").ToString());
+Console.WriteLine(result.GetProperty("started_at").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("cancelled_at").ToString());
+Console.WriteLine(result.GetProperty("failed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("truncation_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_choice").ToString());
+Console.WriteLine(result.GetProperty("response_format").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetRun(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetRun and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.GetRun("ilcsibdqbvldqyvmbjjtvirntap", "scpdacucqpuoqjihekkeolfpdyeea", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("expires_at").ToString());
+Console.WriteLine(result.GetProperty("started_at").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("cancelled_at").ToString());
+Console.WriteLine(result.GetProperty("failed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("truncation_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_choice").ToString());
+Console.WriteLine(result.GetProperty("response_format").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateRunAsync(string,string,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call UpdateRunAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadRun> response = await client.UpdateRunAsync("rtzvfjw", "ibopwyspzczc");
+]]></code></example>
+    </member>
+    <member name="UpdateRun(string,string,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call UpdateRun.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadRun> response = client.UpdateRun("rtzvfjw", "ibopwyspzczc");
+]]></code></example>
+    </member>
+    <member name="UpdateRunAsync(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateRunAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    metadata = new
+    {
+        key5931 = "ojeukdviplvt",
+    },
+});
+Response response = await client.UpdateRunAsync("rtzvfjw", "ibopwyspzczc", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("expires_at").ToString());
+Console.WriteLine(result.GetProperty("started_at").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("cancelled_at").ToString());
+Console.WriteLine(result.GetProperty("failed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("truncation_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_choice").ToString());
+Console.WriteLine(result.GetProperty("response_format").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateRun(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateRun and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    metadata = new
+    {
+        key5931 = "ojeukdviplvt",
+    },
+});
+Response response = client.UpdateRun("rtzvfjw", "ibopwyspzczc", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("expires_at").ToString());
+Console.WriteLine(result.GetProperty("started_at").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("cancelled_at").ToString());
+Console.WriteLine(result.GetProperty("failed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("truncation_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_choice").ToString());
+Console.WriteLine(result.GetProperty("response_format").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="SubmitToolOutputsToRunAsync(string,string,IEnumerable{ToolOutput},bool?,CancellationToken)">
+      <example>
+This sample shows how to call SubmitToolOutputsToRunAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadRun> response = await client.SubmitToolOutputsToRunAsync("yosbqrdcijdcesgiveaq", "uebvrihwqaydtgeh", new ToolOutput[]
+{
+    new ToolOutput
+    {
+        ToolCallId = "flwjfqlwyobzrqsr",
+        Output = "bzgsvafsjpmngunow",
+    }
+});
+]]></code></example>
+    </member>
+    <member name="SubmitToolOutputsToRun(string,string,IEnumerable{ToolOutput},bool?,CancellationToken)">
+      <example>
+This sample shows how to call SubmitToolOutputsToRun.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadRun> response = client.SubmitToolOutputsToRun("yosbqrdcijdcesgiveaq", "uebvrihwqaydtgeh", new ToolOutput[]
+{
+    new ToolOutput
+    {
+        ToolCallId = "flwjfqlwyobzrqsr",
+        Output = "bzgsvafsjpmngunow",
+    }
+});
+]]></code></example>
+    </member>
+    <member name="SubmitToolOutputsToRunAsync(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call SubmitToolOutputsToRunAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    tool_outputs = new object[]
+    {
+        new
+        {
+            tool_call_id = "flwjfqlwyobzrqsr",
+            output = "bzgsvafsjpmngunow",
+        }
+    },
+    stream = true,
+});
+Response response = await client.SubmitToolOutputsToRunAsync("yosbqrdcijdcesgiveaq", "uebvrihwqaydtgeh", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("expires_at").ToString());
+Console.WriteLine(result.GetProperty("started_at").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("cancelled_at").ToString());
+Console.WriteLine(result.GetProperty("failed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("truncation_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_choice").ToString());
+Console.WriteLine(result.GetProperty("response_format").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="SubmitToolOutputsToRun(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call SubmitToolOutputsToRun and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    tool_outputs = new object[]
+    {
+        new
+        {
+            tool_call_id = "flwjfqlwyobzrqsr",
+            output = "bzgsvafsjpmngunow",
+        }
+    },
+    stream = true,
+});
+Response response = client.SubmitToolOutputsToRun("yosbqrdcijdcesgiveaq", "uebvrihwqaydtgeh", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("expires_at").ToString());
+Console.WriteLine(result.GetProperty("started_at").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("cancelled_at").ToString());
+Console.WriteLine(result.GetProperty("failed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("truncation_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_choice").ToString());
+Console.WriteLine(result.GetProperty("response_format").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CancelRunAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call CancelRunAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadRun> response = await client.CancelRunAsync("sxximmrzssszbrz", "reoghmjcd");
+]]></code></example>
+    </member>
+    <member name="CancelRun(string,string,CancellationToken)">
+      <example>
+This sample shows how to call CancelRun.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadRun> response = client.CancelRun("sxximmrzssszbrz", "reoghmjcd");
+]]></code></example>
+    </member>
+    <member name="CancelRunAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call CancelRunAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.CancelRunAsync("sxximmrzssszbrz", "reoghmjcd", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("expires_at").ToString());
+Console.WriteLine(result.GetProperty("started_at").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("cancelled_at").ToString());
+Console.WriteLine(result.GetProperty("failed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("truncation_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_choice").ToString());
+Console.WriteLine(result.GetProperty("response_format").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CancelRun(string,string,RequestContext)">
+      <example>
+This sample shows how to call CancelRun and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.CancelRun("sxximmrzssszbrz", "reoghmjcd", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("expires_at").ToString());
+Console.WriteLine(result.GetProperty("started_at").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("cancelled_at").ToString());
+Console.WriteLine(result.GetProperty("failed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("truncation_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_choice").ToString());
+Console.WriteLine(result.GetProperty("response_format").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateThreadAndRunAsync(string,AgentThreadCreationOptions,string,string,IEnumerable{ToolDefinition},UpdateToolResourcesOptions,bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call CreateThreadAndRunAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadRun> response = await client.CreateThreadAndRunAsync("ycnmflszpe");
+]]></code></example>
+    </member>
+    <member name="CreateThreadAndRun(string,AgentThreadCreationOptions,string,string,IEnumerable{ToolDefinition},UpdateToolResourcesOptions,bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call CreateThreadAndRun.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<ThreadRun> response = client.CreateThreadAndRun("ycnmflszpe");
+]]></code></example>
+    </member>
+    <member name="CreateThreadAndRunAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateThreadAndRunAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    assistant_id = "ycnmflszpe",
+    thread = new
+    {
+        messages = new object[]
+        {
+            new
+            {
+                role = "user",
+                content = "qpdhdxo",
+                attachments = new object[]
+                {
+                    new
+                    {
+                        file_id = "mvfwlptwylzrsgyl",
+                        tools = new object[]
+                        {
+                            null
+                        },
+                    }
+                },
+                metadata = new
+                {
+                    key5680 = "ucsj",
+                },
+            }
+        },
+        tool_resources = new
+        {
+            code_interpreter = new
+            {
+                file_ids = new object[]
+                {
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon"
+                },
+            },
+            file_search = new
+            {
+                vector_store_ids = new object[]
+                {
+                    "kqlafrklwkuayr"
+                },
+            },
+        },
+        metadata = new
+        {
+            key8298 = "ufsqvphcxlgdpnuety",
+        },
+    },
+    model = "hsaoekkcvbgjmzgdczhtlpced",
+    instructions = "htnwuhzqgdxbebijhziazxmf",
+    tools = Array.Empty<object>(),
+    tool_resources = new
+    {
+        code_interpreter = new
+        {
+            file_ids = new object[]
+            {
+                "lwtankyeso",
+                "lwtankyeso",
+                "lwtankyeso"
+            },
+        },
+        file_search = new
+        {
+            vector_store_ids = new object[]
+            {
+                "cdrtekcixiqcrfy"
+            },
+        },
+    },
+    stream = true,
+    temperature = 27,
+    top_p = 11,
+    max_prompt_tokens = 20,
+    max_completion_tokens = 2,
+    truncation_strategy = new
+    {
+        type = "auto",
+        last_messages = 23,
+    },
+    metadata = new
+    {
+        key277 = "wtjlphurkf",
+    },
+});
+Response response = await client.CreateThreadAndRunAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("expires_at").ToString());
+Console.WriteLine(result.GetProperty("started_at").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("cancelled_at").ToString());
+Console.WriteLine(result.GetProperty("failed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("truncation_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_choice").ToString());
+Console.WriteLine(result.GetProperty("response_format").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateThreadAndRun(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateThreadAndRun and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    assistant_id = "ycnmflszpe",
+    thread = new
+    {
+        messages = new object[]
+        {
+            new
+            {
+                role = "user",
+                content = "qpdhdxo",
+                attachments = new object[]
+                {
+                    new
+                    {
+                        file_id = "mvfwlptwylzrsgyl",
+                        tools = new object[]
+                        {
+                            null
+                        },
+                    }
+                },
+                metadata = new
+                {
+                    key5680 = "ucsj",
+                },
+            }
+        },
+        tool_resources = new
+        {
+            code_interpreter = new
+            {
+                file_ids = new object[]
+                {
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon",
+                    "kwlqzezdwrgsebon"
+                },
+            },
+            file_search = new
+            {
+                vector_store_ids = new object[]
+                {
+                    "kqlafrklwkuayr"
+                },
+            },
+        },
+        metadata = new
+        {
+            key8298 = "ufsqvphcxlgdpnuety",
+        },
+    },
+    model = "hsaoekkcvbgjmzgdczhtlpced",
+    instructions = "htnwuhzqgdxbebijhziazxmf",
+    tools = Array.Empty<object>(),
+    tool_resources = new
+    {
+        code_interpreter = new
+        {
+            file_ids = new object[]
+            {
+                "lwtankyeso",
+                "lwtankyeso",
+                "lwtankyeso"
+            },
+        },
+        file_search = new
+        {
+            vector_store_ids = new object[]
+            {
+                "cdrtekcixiqcrfy"
+            },
+        },
+    },
+    stream = true,
+    temperature = 27,
+    top_p = 11,
+    max_prompt_tokens = 20,
+    max_completion_tokens = 2,
+    truncation_strategy = new
+    {
+        type = "auto",
+        last_messages = 23,
+    },
+    metadata = new
+    {
+        key277 = "wtjlphurkf",
+    },
+});
+Response response = client.CreateThreadAndRun(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("model").ToString());
+Console.WriteLine(result.GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("expires_at").ToString());
+Console.WriteLine(result.GetProperty("started_at").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("cancelled_at").ToString());
+Console.WriteLine(result.GetProperty("failed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_prompt_tokens").ToString());
+Console.WriteLine(result.GetProperty("max_completion_tokens").ToString());
+Console.WriteLine(result.GetProperty("truncation_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("tool_choice").ToString());
+Console.WriteLine(result.GetProperty("response_format").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetRunStepAsync(string,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetRunStepAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<RunStep> response = await client.GetRunStepAsync("jwopmhvryvcpltxhimyrvkcwel", "echizvrhsigfce", "kc");
+]]></code></example>
+    </member>
+    <member name="GetRunStep(string,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetRunStep.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<RunStep> response = client.GetRunStep("jwopmhvryvcpltxhimyrvkcwel", "echizvrhsigfce", "kc");
+]]></code></example>
+    </member>
+    <member name="GetRunStepAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetRunStepAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.GetRunStepAsync("jwopmhvryvcpltxhimyrvkcwel", "echizvrhsigfce", "kc", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("step_details").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("expired_at").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("cancelled_at").ToString());
+Console.WriteLine(result.GetProperty("failed_at").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetRunStep(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetRunStep and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.GetRunStep("jwopmhvryvcpltxhimyrvkcwel", "echizvrhsigfce", "kc", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("step_details").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("expired_at").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("cancelled_at").ToString());
+Console.WriteLine(result.GetProperty("failed_at").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="UploadFileAsync(Stream,OpenAIFilePurpose,string,CancellationToken)">
+      <example>
+This sample shows how to call UploadFileAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<OpenAIFile> response = await client.UploadFileAsync(null, (OpenAIFilePurpose)null);
+]]></code></example>
+    </member>
+    <member name="UploadFile(Stream,OpenAIFilePurpose,string,CancellationToken)">
+      <example>
+This sample shows how to call UploadFile.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<OpenAIFile> response = client.UploadFile(null, (OpenAIFilePurpose)null);
+]]></code></example>
+    </member>
+    <member name="UploadFileAsync(RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call UploadFileAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = null;
+Response response = await client.UploadFileAsync(content, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("bytes").ToString());
+Console.WriteLine(result.GetProperty("filename").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("purpose").ToString());
+]]></code></example>
+    </member>
+    <member name="UploadFile(RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call UploadFile and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = null;
+Response response = client.UploadFile(content, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("bytes").ToString());
+Console.WriteLine(result.GetProperty("filename").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("purpose").ToString());
+]]></code></example>
+    </member>
+    <member name="GetFileAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetFileAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<OpenAIFile> response = await client.GetFileAsync("ahlwbnjjg");
+]]></code></example>
+    </member>
+    <member name="GetFile(string,CancellationToken)">
+      <example>
+This sample shows how to call GetFile.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<OpenAIFile> response = client.GetFile("ahlwbnjjg");
+]]></code></example>
+    </member>
+    <member name="GetFileAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetFileAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.GetFileAsync("ahlwbnjjg", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("bytes").ToString());
+Console.WriteLine(result.GetProperty("filename").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("purpose").ToString());
+]]></code></example>
+    </member>
+    <member name="GetFile(string,RequestContext)">
+      <example>
+This sample shows how to call GetFile and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.GetFile("ahlwbnjjg", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("bytes").ToString());
+Console.WriteLine(result.GetProperty("filename").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("purpose").ToString());
+]]></code></example>
+    </member>
+    <member name="GetFileContentAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetFileContentAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<FileContentResponse> response = await client.GetFileContentAsync("oudalhdmazgj");
+]]></code></example>
+    </member>
+    <member name="GetFileContent(string,CancellationToken)">
+      <example>
+This sample shows how to call GetFileContent.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<FileContentResponse> response = client.GetFileContent("oudalhdmazgj");
+]]></code></example>
+    </member>
+    <member name="GetFileContentAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetFileContentAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.GetFileContentAsync("oudalhdmazgj", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("content").ToString());
+]]></code></example>
+    </member>
+    <member name="GetFileContent(string,RequestContext)">
+      <example>
+This sample shows how to call GetFileContent and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.GetFileContent("oudalhdmazgj", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("content").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoresAsync(int?,ListSortOrder?,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoresAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<OpenAIPageableListOfVectorStore> response = await client.GetVectorStoresAsync();
+]]></code></example>
+    </member>
+    <member name="GetVectorStores(int?,ListSortOrder?,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStores.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<OpenAIPageableListOfVectorStore> response = client.GetVectorStores();
+]]></code></example>
+    </member>
+    <member name="GetVectorStoresAsync(int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoresAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.GetVectorStoresAsync(null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("file_counts").GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("last_active_at").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("metadata").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("first_id").ToString());
+Console.WriteLine(result.GetProperty("last_id").ToString());
+Console.WriteLine(result.GetProperty("has_more").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStores(int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStores and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.GetVectorStores(null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("file_counts").GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("last_active_at").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("metadata").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("first_id").ToString());
+Console.WriteLine(result.GetProperty("last_id").ToString());
+Console.WriteLine(result.GetProperty("has_more").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreAsync(IEnumerable{string},string,VectorStoreExpirationPolicy,VectorStoreChunkingStrategyRequest,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call CreateVectorStoreAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStore> response = await client.CreateVectorStoreAsync();
+]]></code></example>
+    </member>
+    <member name="CreateVectorStore(IEnumerable{string},string,VectorStoreExpirationPolicy,VectorStoreChunkingStrategyRequest,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call CreateVectorStore.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStore> response = client.CreateVectorStore();
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateVectorStoreAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CreateVectorStoreAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_active_at").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateVectorStore(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateVectorStore and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.CreateVectorStore(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_active_at").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStore> response = await client.GetVectorStoreAsync("imldyfrenvwrdahxomrvypghklgzfm");
+]]></code></example>
+    </member>
+    <member name="GetVectorStore(string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStore.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStore> response = client.GetVectorStore("imldyfrenvwrdahxomrvypghklgzfm");
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.GetVectorStoreAsync("imldyfrenvwrdahxomrvypghklgzfm", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_active_at").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStore(string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStore and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.GetVectorStore("imldyfrenvwrdahxomrvypghklgzfm", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_active_at").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="ModifyVectorStoreAsync(string,string,VectorStoreExpirationPolicy,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call ModifyVectorStoreAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStore> response = await client.ModifyVectorStoreAsync("kvppqylqdvhzao");
+]]></code></example>
+    </member>
+    <member name="ModifyVectorStore(string,string,VectorStoreExpirationPolicy,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call ModifyVectorStore.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStore> response = client.ModifyVectorStore("kvppqylqdvhzao");
+]]></code></example>
+    </member>
+    <member name="ModifyVectorStoreAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ModifyVectorStoreAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.ModifyVectorStoreAsync("kvppqylqdvhzao", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_active_at").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="ModifyVectorStore(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ModifyVectorStore and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.ModifyVectorStore("kvppqylqdvhzao", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_active_at").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteVectorStoreAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call DeleteVectorStoreAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStoreDeletionStatus> response = await client.DeleteVectorStoreAsync("sshdziwghotwucptzhzgdxpggsedy");
+]]></code></example>
+    </member>
+    <member name="DeleteVectorStore(string,CancellationToken)">
+      <example>
+This sample shows how to call DeleteVectorStore.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStoreDeletionStatus> response = client.DeleteVectorStore("sshdziwghotwucptzhzgdxpggsedy");
+]]></code></example>
+    </member>
+    <member name="DeleteVectorStoreAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteVectorStoreAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.DeleteVectorStoreAsync("sshdziwghotwucptzhzgdxpggsedy", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("deleted").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteVectorStore(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteVectorStore and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.DeleteVectorStore("sshdziwghotwucptzhzgdxpggsedy", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("deleted").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFilesAsync(string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFilesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<OpenAIPageableListOfVectorStoreFile> response = await client.GetVectorStoreFilesAsync("al");
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFiles(string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFiles.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<OpenAIPageableListOfVectorStoreFile> response = client.GetVectorStoreFiles("al");
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFilesAsync(string,string,int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFilesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.GetVectorStoreFilesAsync("al", null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("chunking_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("first_id").ToString());
+Console.WriteLine(result.GetProperty("last_id").ToString());
+Console.WriteLine(result.GetProperty("has_more").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFiles(string,string,int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFiles and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.GetVectorStoreFiles("al", null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("chunking_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("first_id").ToString());
+Console.WriteLine(result.GetProperty("last_id").ToString());
+Console.WriteLine(result.GetProperty("has_more").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreFileAsync(string,string,VectorStoreChunkingStrategyRequest,CancellationToken)">
+      <example>
+This sample shows how to call CreateVectorStoreFileAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStoreFile> response = await client.CreateVectorStoreFileAsync("idpqwwckeqghniuwsifhtpjyjgiju", "xppxliqsswnnyrukfmsmf");
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreFile(string,string,VectorStoreChunkingStrategyRequest,CancellationToken)">
+      <example>
+This sample shows how to call CreateVectorStoreFile.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStoreFile> response = client.CreateVectorStoreFile("idpqwwckeqghniuwsifhtpjyjgiju", "xppxliqsswnnyrukfmsmf");
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreFileAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateVectorStoreFileAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    file_id = "xppxliqsswnnyrukfmsmf",
+});
+Response response = await client.CreateVectorStoreFileAsync("idpqwwckeqghniuwsifhtpjyjgiju", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreFile(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateVectorStoreFile and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    file_id = "xppxliqsswnnyrukfmsmf",
+});
+Response response = client.CreateVectorStoreFile("idpqwwckeqghniuwsifhtpjyjgiju", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFileAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStoreFile> response = await client.GetVectorStoreFileAsync("tcpppckhbcqnmxcpqnsdhmocbfkvw", "swmxwhxjbntnayymmrrocysdsrio");
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFile(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFile.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStoreFile> response = client.GetVectorStoreFile("tcpppckhbcqnmxcpqnsdhmocbfkvw", "swmxwhxjbntnayymmrrocysdsrio");
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFileAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.GetVectorStoreFileAsync("tcpppckhbcqnmxcpqnsdhmocbfkvw", "swmxwhxjbntnayymmrrocysdsrio", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFile(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFile and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.GetVectorStoreFile("tcpppckhbcqnmxcpqnsdhmocbfkvw", "swmxwhxjbntnayymmrrocysdsrio", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteVectorStoreFileAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call DeleteVectorStoreFileAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStoreFileDeletionStatus> response = await client.DeleteVectorStoreFileAsync("hbnrqrcvbsowbuksdrtcqi", "vzshxliuznhftv");
+]]></code></example>
+    </member>
+    <member name="DeleteVectorStoreFile(string,string,CancellationToken)">
+      <example>
+This sample shows how to call DeleteVectorStoreFile.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStoreFileDeletionStatus> response = client.DeleteVectorStoreFile("hbnrqrcvbsowbuksdrtcqi", "vzshxliuznhftv");
+]]></code></example>
+    </member>
+    <member name="DeleteVectorStoreFileAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteVectorStoreFileAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.DeleteVectorStoreFileAsync("hbnrqrcvbsowbuksdrtcqi", "vzshxliuznhftv", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("deleted").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteVectorStoreFile(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteVectorStoreFile and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.DeleteVectorStoreFile("hbnrqrcvbsowbuksdrtcqi", "vzshxliuznhftv", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("deleted").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreFileBatchAsync(string,IEnumerable{string},VectorStoreChunkingStrategyRequest,CancellationToken)">
+      <example>
+This sample shows how to call CreateVectorStoreFileBatchAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStoreFileBatch> response = await client.CreateVectorStoreFileBatchAsync("wbzlofzqg", new string[] { "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve" });
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreFileBatch(string,IEnumerable{string},VectorStoreChunkingStrategyRequest,CancellationToken)">
+      <example>
+This sample shows how to call CreateVectorStoreFileBatch.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStoreFileBatch> response = client.CreateVectorStoreFileBatch("wbzlofzqg", new string[] { "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve", "cyletve" });
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreFileBatchAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateVectorStoreFileBatchAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    file_ids = new object[]
+    {
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve"
+    },
+});
+Response response = await client.CreateVectorStoreFileBatchAsync("wbzlofzqg", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreFileBatch(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateVectorStoreFileBatch and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    file_ids = new object[]
+    {
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve",
+        "cyletve"
+    },
+});
+Response response = client.CreateVectorStoreFileBatch("wbzlofzqg", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatchAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatchAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStoreFileBatch> response = await client.GetVectorStoreFileBatchAsync("lbs", "zxqbzpge");
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatch(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatch.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStoreFileBatch> response = client.GetVectorStoreFileBatch("lbs", "zxqbzpge");
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatchAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatchAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.GetVectorStoreFileBatchAsync("lbs", "zxqbzpge", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatch(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatch and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.GetVectorStoreFileBatch("lbs", "zxqbzpge", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code></example>
+    </member>
+    <member name="CancelVectorStoreFileBatchAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call CancelVectorStoreFileBatchAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStoreFileBatch> response = await client.CancelVectorStoreFileBatchAsync("esqgxemsdquv", "ukjhmcvwhahdrhhiiyortbbjlhx");
+]]></code></example>
+    </member>
+    <member name="CancelVectorStoreFileBatch(string,string,CancellationToken)">
+      <example>
+This sample shows how to call CancelVectorStoreFileBatch.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<VectorStoreFileBatch> response = client.CancelVectorStoreFileBatch("esqgxemsdquv", "ukjhmcvwhahdrhhiiyortbbjlhx");
+]]></code></example>
+    </member>
+    <member name="CancelVectorStoreFileBatchAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call CancelVectorStoreFileBatchAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.CancelVectorStoreFileBatchAsync("esqgxemsdquv", "ukjhmcvwhahdrhhiiyortbbjlhx", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code></example>
+    </member>
+    <member name="CancelVectorStoreFileBatch(string,string,RequestContext)">
+      <example>
+This sample shows how to call CancelVectorStoreFileBatch and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.CancelVectorStoreFileBatch("esqgxemsdquv", "ukjhmcvwhahdrhhiiyortbbjlhx", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatchFilesAsync(string,string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatchFilesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<OpenAIPageableListOfVectorStoreFile> response = await client.GetVectorStoreFileBatchFilesAsync("vdelhyyzsgiavifhhzvtvqeqhhsuh", "gffqfjubkoliaarvbyq");
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatchFiles(string,string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatchFiles.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response<OpenAIPageableListOfVectorStoreFile> response = client.GetVectorStoreFileBatchFiles("vdelhyyzsgiavifhhzvtvqeqhhsuh", "gffqfjubkoliaarvbyq");
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatchFilesAsync(string,string,string,int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatchFilesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = await client.GetVectorStoreFileBatchFilesAsync("vdelhyyzsgiavifhhzvtvqeqhhsuh", "gffqfjubkoliaarvbyq", null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("chunking_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("first_id").ToString());
+Console.WriteLine(result.GetProperty("last_id").ToString());
+Console.WriteLine(result.GetProperty("has_more").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatchFiles(string,string,string,int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatchFiles and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+
+Response response = client.GetVectorStoreFileBatchFiles("vdelhyyzsgiavifhhzvtvqeqhhsuh", "gffqfjubkoliaarvbyq", null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("data")[0].GetProperty("chunking_strategy").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("first_id").ToString());
+Console.WriteLine(result.GetProperty("last_id").ToString());
+Console.WriteLine(result.GetProperty("has_more").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>
