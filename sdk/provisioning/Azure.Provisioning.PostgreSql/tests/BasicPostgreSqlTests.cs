@@ -121,7 +121,7 @@ public class BasicPostgreSqlTests(bool async)
             param location string = resourceGroup().location
 
             resource server 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
-              name: take('server${uniqueString(resourceGroup().id)}', 24)
+              name: take('server-${uniqueString(resourceGroup().id)}', 63)
               location: location
               properties: {
                 administratorLogin: adminLogin

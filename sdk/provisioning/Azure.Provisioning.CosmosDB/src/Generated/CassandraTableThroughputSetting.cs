@@ -69,10 +69,15 @@ public partial class CassandraTableThroughputSetting : Resource
     /// <summary>
     /// Creates a new CassandraTableThroughputSetting.
     /// </summary>
-    /// <param name="resourceName">Name of the CassandraTableThroughputSetting.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CassandraTableThroughputSetting
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CassandraTableThroughputSetting.</param>
-    public CassandraTableThroughputSetting(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables/throughputSettings", resourceVersion ?? "2024-08-15")
+    public CassandraTableThroughputSetting(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables/throughputSettings", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -223,9 +228,14 @@ public partial class CassandraTableThroughputSetting : Resource
     /// <summary>
     /// Creates a reference to an existing CassandraTableThroughputSetting.
     /// </summary>
-    /// <param name="resourceName">Name of the CassandraTableThroughputSetting.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CassandraTableThroughputSetting
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CassandraTableThroughputSetting.</param>
     /// <returns>The existing CassandraTableThroughputSetting resource.</returns>
-    public static CassandraTableThroughputSetting FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CassandraTableThroughputSetting FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

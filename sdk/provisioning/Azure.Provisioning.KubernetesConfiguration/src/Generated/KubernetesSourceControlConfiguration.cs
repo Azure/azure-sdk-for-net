@@ -121,10 +121,15 @@ public partial class KubernetesSourceControlConfiguration : Resource
     /// <summary>
     /// Creates a new KubernetesSourceControlConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the KubernetesSourceControlConfiguration.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// KubernetesSourceControlConfiguration resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the KubernetesSourceControlConfiguration.</param>
-    public KubernetesSourceControlConfiguration(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.KubernetesConfiguration/sourceControlConfigurations", resourceVersion ?? "2023-05-01")
+    public KubernetesSourceControlConfiguration(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.KubernetesConfiguration/sourceControlConfigurations", resourceVersion ?? "2023-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _configurationProtectedSettings = BicepDictionary<string>.DefineProperty(this, "ConfigurationProtectedSettings", ["properties", "configurationProtectedSettings"]);
@@ -178,9 +183,14 @@ public partial class KubernetesSourceControlConfiguration : Resource
     /// <summary>
     /// Creates a reference to an existing KubernetesSourceControlConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the KubernetesSourceControlConfiguration.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// KubernetesSourceControlConfiguration resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the KubernetesSourceControlConfiguration.</param>
     /// <returns>The existing KubernetesSourceControlConfiguration resource.</returns>
-    public static KubernetesSourceControlConfiguration FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static KubernetesSourceControlConfiguration FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

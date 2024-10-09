@@ -25,12 +25,11 @@ spec:
       {{- include "stress-test-addons.container-env" . | nindent 6 }}
     - name: main
       image:  {{ .Stress.imageTag }}
-      command: ['sh', '-c']
+      command: ['dotnet', "Azure.Storage.DataMovement.Stress.dll", "--test", "{{ .Stress.testScenario }}"]
       args:
         - |
           set -xa;
           set -o pipefail;
-          keytool -import -alias test -file /mnt/outputs/dev-cert.pfx -keystore ${JAVA_HOME}/lib/security/cacerts -noprompt -keypass changeit -storepass changeit;
           mkdir -p "$DEBUG_SHARE";
           . /mnt/outputs/.env;
           export AZURE_HTTP_CLIENT_IMPLEMENTATION=com.azure.core.http.netty.NettyAsyncHttpClientProvider;

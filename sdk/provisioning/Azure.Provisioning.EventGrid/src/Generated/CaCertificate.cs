@@ -74,10 +74,15 @@ public partial class CaCertificate : Resource
     /// <summary>
     /// Creates a new CaCertificate.
     /// </summary>
-    /// <param name="resourceName">Name of the CaCertificate.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CaCertificate resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CaCertificate.</param>
-    public CaCertificate(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/caCertificates", resourceVersion ?? "2024-06-01-preview")
+    public CaCertificate(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.EventGrid/namespaces/caCertificates", resourceVersion ?? "2024-06-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
@@ -104,9 +109,14 @@ public partial class CaCertificate : Resource
     /// <summary>
     /// Creates a reference to an existing CaCertificate.
     /// </summary>
-    /// <param name="resourceName">Name of the CaCertificate.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CaCertificate resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CaCertificate.</param>
     /// <returns>The existing CaCertificate resource.</returns>
-    public static CaCertificate FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CaCertificate FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

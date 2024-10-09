@@ -26,7 +26,10 @@ public class ProvisioningParameter : ProvisioningVariable
     /// <summary>
     /// Creates a new ProvisioningParameter.
     /// </summary>
-    /// <param name="name">Name of the parameter.</param>
+    /// <param name="name">
+    /// Name of the parameter.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="type">Type of the parameter.</param>
     public ProvisioningParameter(string name, Expression type)
         : base(name, type, value: null) { }
@@ -34,7 +37,10 @@ public class ProvisioningParameter : ProvisioningVariable
     /// <summary>
     /// Creates a new ProvisioningParameter.
     /// </summary>
-    /// <param name="name">Name of the parameter.</param>
+    /// <param name="name">
+    /// Name of the parameter.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="type">Type of the parameter.</param>
     public ProvisioningParameter(string name, Type type)
         : this(name, new TypeExpression(type)) { }
@@ -42,7 +48,7 @@ public class ProvisioningParameter : ProvisioningVariable
     /// <inheritdoc />
     protected internal override IEnumerable<Statement> Compile()
     {
-        ParameterStatement stmt = BicepSyntax.Declare.Param(ResourceName, BicepType, Value.Kind == BicepValueKind.Unset ? null : Value.Compile());
+        ParameterStatement stmt = BicepSyntax.Declare.Param(IdentifierName, BicepType, Value.Kind == BicepValueKind.Unset ? null : Value.Compile());
         if (IsSecure) { stmt = stmt.Decorate("secure"); }
         if (Description is not null) { stmt = stmt.Decorate("description", BicepSyntax.Value(Description)); }
         yield return stmt;

@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.DocumentIntelligence.Tests
 {
-    public class TrainingOperationLiveTests : DocumentIntelligenceLiveTestBase
+    public class OperationWithIdLiveTests : DocumentIntelligenceLiveTestBase
     {
         // Example: 3eb2e5b5-b9d3-4b5a-ac31-90d945f4b4e4
         private const string AnalysisOperationIdPattern = @"^[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}$";
@@ -18,7 +18,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         // Example: 31466498286_3eb2e5b5-b9d3-4b5a-ac31-90d945f4b4e4
         private const string TrainingOperationIdPattern = @"^[0-9]+_[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}$";
 
-        public TrainingOperationLiveTests(bool isAsync)
+        public OperationWithIdLiveTests(bool isAsync)
             : base(isAsync)
         {
         }
@@ -198,7 +198,6 @@ namespace Azure.AI.DocumentIntelligence.Tests
         [RecordedTest]
         [TestCase(WaitUntil.Started)]
         [TestCase(WaitUntil.Completed)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/45476")]
         public async Task CopyClassifierToOperationCanParseOperationId(WaitUntil waitUntil)
         {
             var client = CreateDocumentIntelligenceAdministrationClient();

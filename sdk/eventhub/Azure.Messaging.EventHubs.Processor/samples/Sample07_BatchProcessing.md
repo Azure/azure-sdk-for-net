@@ -24,15 +24,17 @@ public class SimpleBatchProcessor : PluggableCheckpointStoreEventProcessor<Event
     public SimpleBatchProcessor(CheckpointStore checkpointStore,
                                 int eventBatchMaximumCount,
                                 string consumerGroup,
-                                string connectionString,
+                                string fullyQualifiedNamespace,
                                 string eventHubName,
+                                TokenCredential credential,
                                 EventProcessorOptions clientOptions = default)
         : base(
             checkpointStore,
             eventBatchMaximumCount,
             consumerGroup,
-            connectionString,
+            fullyQualifiedNamespace,
             eventHubName,
+            credential,
             clientOptions)
     {
     }
@@ -109,16 +111,23 @@ public class SimpleBatchProcessor : PluggableCheckpointStoreEventProcessor<Event
 The custom batch processor can be used in the same manner as the standard `EventProcessorClient`, with the exception that event handlers do not need to be managed.  
 
 ```C# Snippet:EventHubs_Processor_Sample07_ProcessByBatch_Usage
-var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var credential = new DefaultAzureCredential();
+
+var storageAccountEndpoint = "<< Account Uri (likely similar to https://{your-account}.blob.core.windows.net) >>";
 var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 
-var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
+var blobUriBuilder = new BlobUriBuilder(new Uri(storageAccountEndpoint))
+{
+    BlobContainerName = blobContainerName
+};
+
 var storageClient = new BlobContainerClient(
-    storageConnectionString,
-    blobContainerName);
+    blobUriBuilder.ToUri(),
+    credential);
 
 var checkpointStore = new BlobCheckpointStore(storageClient);
 var maximumBatchSize = 100;
@@ -127,8 +136,9 @@ var processor = new SimpleBatchProcessor(
     checkpointStore,
     maximumBatchSize,
     consumerGroup,
-    eventHubsConnectionString,
-    eventHubName);
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 using var cancellationSource = new CancellationTokenSource();
 cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));

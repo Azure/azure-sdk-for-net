@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Stress;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Tests;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    public class BlobDirectoryUploadScenario : BlobScenarioBase
+    public abstract class UploadBlobDirectoryScenarioBase : BlobScenarioBase
     {
-        private int? _blobSize;
         private int _blobCount;
-        public BlobDirectoryUploadScenario(
+        public UploadBlobDirectoryScenarioBase(
             Uri destinationBlobUri,
             int? blobSize,
             int? blobCount,
@@ -24,39 +24,39 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             TokenCredential tokenCredential,
             Metrics metrics,
             string testRunId)
-            : base(destinationBlobUri, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
+            : base(destinationBlobUri, blobSize, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
         {
-            _blobSize = blobSize;
-            _blobCount = blobCount != default ? blobCount.Value : 50;
+            _blobCount = blobCount ?? DataMovementBlobStressConstants.DefaultObjectCount;
         }
 
-        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.UploadDirectoryBlockBlob;
-
-        public override async Task RunTestAsync(CancellationToken cancellationToken)
+        public async Task RunTestInternalAsync(BlobType blobType, CancellationToken cancellationToken)
         {
             // Create test local directory
-            DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string pathPrefix = TestSetupHelper.Randomize("dir");
+            DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory(pathPrefix);
 
             // Create destination blob container
             string destinationContainerName = TestSetupHelper.Randomize("container");
-            BlobContainerClient destinationContainerClient = _destinationServiceClient.GetBlobContainerClient(destinationContainerName);
+            BlobContainerClient destinationContainerClient = _blobServiceClient.GetBlobContainerClient(destinationContainerName);
             await destinationContainerClient.CreateIfNotExistsAsync();
 
             // Create Local Files
-            await TestSetupHelper.CreateLocalFilesToUploadAsync(disposingLocalDirectory.DirectoryPath, _blobCount, _blobSize);
+            await TestSetupHelper.CreateLocalFilesToUploadAsync(
+                disposingLocalDirectory.DirectoryPath,
+                _blobCount,
+                _blobSize);
 
             // Create Local Source Storage Resource
             StorageResource sourceResource = await TestSetupHelper.GetTemporaryFileStorageResourceAsync(disposingLocalDirectory.DirectoryPath);
 
             // Create Destination Storage Resource
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(_destinationBlobUri)
-            {
-                BlobContainerName = destinationContainerName,
-            };
-            StorageResource destinationResource = _blobsStorageResourceProvider.FromContainer(blobUriBuilder.ToUri().AbsoluteUri);
-
-            // Initialize TransferManager
-            TransferManager transferManager = new TransferManager();
+            StorageResource destinationResource = _blobsStorageResourceProvider.FromClient(
+                destinationContainerClient,
+                new()
+                {
+                    BlobDirectoryPrefix = pathPrefix,
+                    BlobType = new(blobType)
+                });
 
             // Upload
             await new TransferValidator()
