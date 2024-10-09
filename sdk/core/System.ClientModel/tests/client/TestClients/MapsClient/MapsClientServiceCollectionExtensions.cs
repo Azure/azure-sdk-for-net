@@ -33,10 +33,10 @@ public static class MapsClientServiceCollectionExtensions
         services.AddSingleton<MapsClient>(sp =>
         {
             IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
-            IConfiguration clientConfiguration = configuration.GetSection("SimpleClient");
+            IConfiguration clientConfiguration = configuration.GetSection("MapsClient");
 
             Uri endpoint = clientConfiguration.GetValue<Uri>("ServiceUri") ??
-                throw new InvalidOperationException("Expected 'ServiceUri' to be present in 'SimpleClient' configuration settings.");
+                throw new InvalidOperationException("Expected 'ServiceUri' to be present in 'MapsClient' configuration settings.");
 
             // TODO: how to get this securely?
             ApiKeyCredential credential = new("fake key");
@@ -67,9 +67,7 @@ public static class MapsClientServiceCollectionExtensions
         return services;
     }
 
-    // Taking an IConfiguration uses that to configure the options per the pattern
-    // See: https://learn.microsoft.com/en-us/dotnet/core/extensions/options-library-authors#iconfiguration-parameter
-    public static IServiceCollection AddSimpleClient(this IServiceCollection services,
+    public static IServiceCollection AddMapsClient(this IServiceCollection services,
         IConfiguration configurationSection)
     {
         services.AddLogging();

@@ -10,12 +10,10 @@ public class MapsClientOptions : ClientPipelineOptions
 {
     private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
-    public enum ServiceVersion
+    public MapsClientOptions() : this(LatestVersion)
     {
-        V1 = 1
+        Logging.AllowedHeaderNames.Add("x-maps-client-allowed");
     }
-
-    internal string Version { get; }
 
     public MapsClientOptions(ServiceVersion version = LatestVersion)
     {
@@ -24,5 +22,12 @@ public class MapsClientOptions : ClientPipelineOptions
             ServiceVersion.V1 => "1.0",
             _ => throw new NotSupportedException()
         };
+    }
+
+    internal string Version { get; }
+
+    public enum ServiceVersion
+    {
+        V1 = 1
     }
 }

@@ -5,6 +5,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Reflection;
+using ClientModel.ReferenceClients.MapsClient;
 using ClientModel.ReferenceClients.SimpleClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -64,6 +65,52 @@ public class ConfigurePipelineTests
     [Test]
     public void CanAddMultipleClientsWithDifferentConfigurationBlocks()
     {
+        ServiceCollection services = new ServiceCollection();
+        ConfigurationManager configuration = new ConfigurationManager();
+        services.AddSingleton<IConfiguration>(sp => configuration);
+
+        configuration.AddInMemoryCollection(new List<KeyValuePair<string, string?>>()
+        {
+            // SimpleClient config block
+            new("SimpleClient:ServiceUri", "https://www.simple-service.com/"),
+            new("SimpleClient:Logging:AllowedHeaderNames", null),
+            new("SimpleClient:Logging:AllowedHeaderNames:0", "x-simple-config-allowed"),
+
+            // MapsClient config block
+            new("MapsClient:ServiceUri", "https://www.maps-service.com/"),
+            new("MapsClient:Logging:AllowedHeaderNames", null),
+            new("MapsClient:Logging:AllowedHeaderNames:0", "x-maps-config-allowed"),
+        });
+
+        // Add the two clients
+        services.AddSimpleClient();
+        services.AddMapsClient();
+
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
+        SimpleClient simpleClient = serviceProvider.GetRequiredService<SimpleClient>();
+        MapsClient mapsClient = serviceProvider.GetRequiredService<MapsClient>();
+
+        // Validate that each client has the headers from their own client customizations
+        // and their own client config blocks and not the headers from other client's
+        // customizations or config blocks.
+
+        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "Content-Length");
+        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
+        CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-client-allowed");
+        CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
+
+        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "Content-Length");
+        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-client-allowed");
+        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
+        CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
+    }
+
+    [Test]
+    public void CanConfigureMultipleClientsFromCommonConfigurationBlock()
+    {
+        throw new NotImplementedException();
     }
 
     [Test]

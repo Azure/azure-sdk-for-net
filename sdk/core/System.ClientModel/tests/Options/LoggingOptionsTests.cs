@@ -55,7 +55,7 @@ public class LoggingOptionsTests
                 // The below is the equivalent of adding JSON [ "x-allowed" ]
                 // array via Microsoft.Extensions.Configuration.Json config
                 new("SimpleClient:Logging:AllowedHeaderNames", null),
-                new("SimpleClient:Logging:AllowedHeaderNames:0", "x-user-allowed"),
+                new("SimpleClient:Logging:AllowedHeaderNames:0", "x-config-allowed"),
             });
 
         services.AddSingleton<IConfiguration>(sp => configuration);
@@ -71,10 +71,10 @@ public class LoggingOptionsTests
         CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "Content-Length");
 
         // Client defaults (client-author additions)
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-client-allowed");
+        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
 
         // User additions
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-user-allowed");
+        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-config-allowed");
     }
 
     [Test]
@@ -148,7 +148,7 @@ public class LoggingOptionsTests
                 // The below is the equivalent of adding JSON [ "x-allowed" ]
                 // array via Microsoft.Extensions.Configuration.Json config
                 new("SimpleClient:Logging:AllowedHeaderNames", null),
-                new("SimpleClient:Logging:AllowedHeaderNames:0", "x-user-allowed"),
+                new("SimpleClient:Logging:AllowedHeaderNames:0", "x-config-allowed"),
             });
 
         services.AddSingleton<IConfiguration>(sp => configuration);
@@ -164,16 +164,16 @@ public class LoggingOptionsTests
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
 
         CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "Content-Length");
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-client-allowed");
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-user-allowed");
+        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-config-allowed");
 
         // Validate that custom logging policy has been bound to the same options
         CustomHttpLoggingPolicy? customPolicy = client.Options.HttpLoggingPolicy as CustomHttpLoggingPolicy;
         Assert.IsNotNull(customPolicy);
 
         CollectionAssert.Contains(customPolicy!.Options.AllowedHeaderNames, "Content-Length");
-        CollectionAssert.Contains(customPolicy!.Options.AllowedHeaderNames, "x-client-allowed");
-        CollectionAssert.Contains(customPolicy!.Options.AllowedHeaderNames, "x-user-allowed");
+        CollectionAssert.Contains(customPolicy!.Options.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.Contains(customPolicy!.Options.AllowedHeaderNames, "x-config-allowed");
     }
 
     [Test]
@@ -212,7 +212,7 @@ public class LoggingOptionsTests
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
 
         CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "Content-Length");
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-client-allowed");
+        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
         CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-config-allowed");
 
         // Validate that custom logging policy has been configured from the custom options
@@ -225,7 +225,7 @@ public class LoggingOptionsTests
 
         // Validate that settings from client and settings from IConfiguration
         // have not also been added.
-        CollectionAssert.DoesNotContain(customPolicy!.Options.AllowedHeaderNames, "x-client-allowed");
+        CollectionAssert.DoesNotContain(customPolicy!.Options.AllowedHeaderNames, "x-simple-client-allowed");
         CollectionAssert.DoesNotContain(customPolicy!.Options.AllowedHeaderNames, "x-config-allowed");
     }
 
