@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,6 +14,9 @@ namespace ClientModel.ReferenceClients.SimpleClient;
 
 public static class SimpleClientServiceCollectionExtensions
 {
+    // TODO: How much of these can SCM provide for SCM-based clients to use
+    // from a central source?  Microsoft.Extensions.ClientModel, e.g.?
+
     // No parameters uses client defaults
     // See: https://learn.microsoft.com/en-us/dotnet/core/extensions/options-library-authors#parameterless
     public static IServiceCollection AddSimpleClient(this IServiceCollection services)
@@ -46,6 +50,13 @@ public static class SimpleClientServiceCollectionExtensions
             // not IOptions -- come back to this.
             IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
             SimpleClientOptions options = iOptions.Value;
+
+            // Check whether an HttpClient has been injected
+            HttpClient? httpClient = sp.GetService<HttpClient>();
+            if (httpClient is not null)
+            {
+                options.Transport = new HttpClientPipelineTransport(httpClient);
+            }
 
             // Check whether known policy types have been added to the service
             // collection.
@@ -95,6 +106,13 @@ public static class SimpleClientServiceCollectionExtensions
             // not IOptions -- come back to this.
             IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
             SimpleClientOptions options = iOptions.Value;
+
+            // Check whether an HttpClient has been injected
+            HttpClient? httpClient = sp.GetService<HttpClient>();
+            if (httpClient is not null)
+            {
+                options.Transport = new HttpClientPipelineTransport(httpClient);
+            }
 
             // Check whether known policy types have been added to the service
             // collection.
