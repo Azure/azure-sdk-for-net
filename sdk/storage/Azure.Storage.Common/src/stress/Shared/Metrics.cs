@@ -52,7 +52,7 @@ public class Metrics
     ///   the individual transfer part was restarted or retried.
     /// </summary>
     ///
-    public const string TransferRetriedRestarted = "TransferRestarted";
+    public const string TransferRestarted = "TransferRestarted";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on the total number of bytes that have been

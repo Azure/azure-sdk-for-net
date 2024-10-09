@@ -37,6 +37,8 @@
     <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
   <ItemGroup>
+
+    <Compile Include="$(AzureStorageSharedTestSources)IDisposingContainer.cs" LinkBase="SharedSource\Storage" />
     <Compile Include="$(AzureStorageSharedTestSources)TemporaryFileStream.cs" LinkBase="SharedSource\Storage" />
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageStressTestSharedSources)*.cs" LinkBase="Shared\Stress" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)..\..\stress\*.cs" LinkBase="Shared\Stress" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\Azure.Storage.Blobs\tests\DisposingContainer.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\**">
