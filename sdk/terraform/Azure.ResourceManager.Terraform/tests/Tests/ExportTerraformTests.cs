@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -38,27 +36,11 @@ namespace Azure.ResourceManager.Terraform.Tests.Tests
         public async Task ExportTerraform()
         {
             string rgName = _resourceGroup.Data.Name;
-            ArmOperation armOperation = await DefaultSubscription.ExportTerraformAzureTerraformClientAsync(WaitUntil.Completed, new ExportResourceGroup(rgName));
-            string responseContent = armOperation.GetRawResponse().Content.ToString();
-            string hcl = HclFromResponseContent(responseContent);
+            ArmOperation<OperationStatus> operationStatus = await DefaultSubscription.ExportTerraformAzureTerraformClientAsync(WaitUntil.Completed, new ExportResourceGroup(rgName));
+            string hcl = operationStatus.Value.Properties.Configuration;
 
             Assert.That(hcl, Does.Contain("azurerm_resource_group"));
             Assert.That(hcl, Does.Contain(rgName));
-        }
-
-        private static string HclFromResponseContent(string responseContent)
-        {
-            try
-            {
-                using (JsonDocument doc = JsonDocument.Parse(responseContent))
-                {
-                    return doc.RootElement.GetProperty("properties").GetProperty("configuration").GetString();
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Error parsing json string and accessing 'properties.configuration' path", e);
-            }
         }
     }
 }

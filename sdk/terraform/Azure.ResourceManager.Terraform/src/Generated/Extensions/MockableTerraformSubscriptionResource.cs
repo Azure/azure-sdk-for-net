@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// <param name="exportParameter"> The export parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exportParameter"/> is null. </exception>
-        public virtual async Task<ArmOperation> ExportTerraformAzureTerraformClientAsync(WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationStatus>> ExportTerraformAzureTerraformClientAsync(WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(exportParameter, nameof(exportParameter));
 
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Terraform.Mocking
             try
             {
                 var response = await AzureTerraformClientRestClient.ExportTerraformAsync(Id.SubscriptionId, exportParameter, cancellationToken).ConfigureAwait(false);
-                var operation = new TerraformArmOperation(AzureTerraformClientClientDiagnostics, Pipeline, AzureTerraformClientRestClient.CreateExportTerraformRequest(Id.SubscriptionId, exportParameter).Request, response, OperationFinalStateVia.Location);
+                var operation = new TerraformArmOperation<OperationStatus>(new OperationStatusOperationSource(), AzureTerraformClientClientDiagnostics, Pipeline, AzureTerraformClientRestClient.CreateExportTerraformRequest(Id.SubscriptionId, exportParameter).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// <param name="exportParameter"> The export parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exportParameter"/> is null. </exception>
-        public virtual ArmOperation ExportTerraformAzureTerraformClient(WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationStatus> ExportTerraformAzureTerraformClient(WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(exportParameter, nameof(exportParameter));
 
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.Terraform.Mocking
             try
             {
                 var response = AzureTerraformClientRestClient.ExportTerraform(Id.SubscriptionId, exportParameter, cancellationToken);
-                var operation = new TerraformArmOperation(AzureTerraformClientClientDiagnostics, Pipeline, AzureTerraformClientRestClient.CreateExportTerraformRequest(Id.SubscriptionId, exportParameter).Request, response, OperationFinalStateVia.Location);
+                var operation = new TerraformArmOperation<OperationStatus>(new OperationStatusOperationSource(), AzureTerraformClientClientDiagnostics, Pipeline, AzureTerraformClientRestClient.CreateExportTerraformRequest(Id.SubscriptionId, exportParameter).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)

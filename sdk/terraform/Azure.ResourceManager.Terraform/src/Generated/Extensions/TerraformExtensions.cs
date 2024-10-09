@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Terraform
         /// <param name="exportParameter"> The export parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="exportParameter"/> is null. </exception>
-        public static async Task<ArmOperation> ExportTerraformAzureTerraformClientAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<OperationStatus>> ExportTerraformAzureTerraformClientAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Terraform
         /// <param name="exportParameter"> The export parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="exportParameter"/> is null. </exception>
-        public static ArmOperation ExportTerraformAzureTerraformClient(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
+        public static ArmOperation<OperationStatus> ExportTerraformAzureTerraformClient(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

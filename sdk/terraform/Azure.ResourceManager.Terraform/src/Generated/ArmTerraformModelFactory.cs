@@ -53,5 +53,44 @@ namespace Azure.ResourceManager.Terraform.Models
                 resourceGroupName,
                 namePattern);
         }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OperationStatus"/>. </summary>
+        /// <param name="id"> The operation status resource id. </param>
+        /// <param name="resourceId"> The fully qualified resource id of the resource for which the operation was performed. </param>
+        /// <param name="name"> The operation name. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="percentComplete"> The progress percentage of the operation, ranges from 0 to 100. </param>
+        /// <param name="properties"> The Terraform export result. </param>
+        /// <param name="error"> The error object. </param>
+        /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
+        public static OperationStatus OperationStatus(string id = null, string resourceId = null, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string status = null, double? percentComplete = null, ExportResult properties = null, ResponseError error = null)
+        {
+            return new OperationStatus(
+                id,
+                resourceId,
+                name,
+                startOn,
+                endOn,
+                status,
+                percentComplete,
+                properties,
+                error,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExportResult"/>. </summary>
+        /// <param name="configuration"> The Terraform configuration content. </param>
+        /// <param name="skippedResources"> A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform. </param>
+        /// <param name="errors"> A list of errors derived during exporting each resource. </param>
+        /// <returns> A new <see cref="Models.ExportResult"/> instance for mocking. </returns>
+        public static ExportResult ExportResult(string configuration = null, IEnumerable<string> skippedResources = null, IEnumerable<ResponseError> errors = null)
+        {
+            skippedResources ??= new List<string>();
+            errors ??= new List<ResponseError>();
+
+            return new ExportResult(configuration, skippedResources?.ToList(), errors?.ToList(), serializedAdditionalRawData: null);
+        }
     }
 }
