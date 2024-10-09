@@ -192,8 +192,20 @@ namespace Azure.Compute.Batch.Tests.Integration
 
             try
             {
+                BatchPoolCreateContent batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions(1);
+                batchPoolCreateOptions.UserAccounts.Add(new UserAccount("testuser", "Password1!"));
+
+                BatchPoolEndpointConfiguration batchPoolEndpointConfiguration = new BatchPoolEndpointConfiguration(new List<InboundNatPool>());
+                batchPoolEndpointConfiguration.InboundNatPools.Add(new InboundNatPool("ruleName", InboundEndpointProtocol.Tcp, 3389, 15000, 15100));
+
+                batchPoolCreateOptions.NetworkConfiguration = new NetworkConfiguration()
+                {
+                    EndpointConfiguration  = batchPoolEndpointConfiguration
+                };
+
                 // create a pool to verify we have something to query for
-                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(2);
+                Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
+                BatchPool pool = await iaasWindowsPoolFixture.WaitForPoolAllocation(client, poolID);
 
                 string batchNodeID = "";
                 await foreach (BatchNode item in client.GetNodesAsync(poolID))

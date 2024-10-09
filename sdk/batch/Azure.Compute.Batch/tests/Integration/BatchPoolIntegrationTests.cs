@@ -96,7 +96,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             try
             {
                 // create a pool to verify we have something to query for
-                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(0);
+                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(1);
 
                 BatchPoolUsageMetrics exptedItem = null;
                 await foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetricsAsync())
@@ -289,11 +289,20 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 // update pool
                 BatchPoolUpdateContent updateContent = new BatchPoolUpdateContent();
+
                 updateContent.Metadata.Add(new MetadataItem("name", "value"));
                 updateContent.ApplicationPackageReferences.Add(new BatchApplicationPackageReference("dotnotsdkbatchapplication1")
                 {
                     Version = "1"
                 });
+
+                //updateContent.StartTask
+                updateContent.DisplayName = "newDisplayName";
+                updateContent.VirtualMachineConfiguration = orginalPool.VirtualMachineConfiguration;
+                updateContent.VirtualMachineConfiguration.NodePlacementConfiguration = new BatchNodePlacementConfiguration()
+                {
+                    Policy = BatchNodePlacementPolicyType.JobPrep
+                };
 
                 Response response = await client.UpdatePoolAsync(poolID, updateContent);
                 BatchPool patchPool = await client.GetPoolAsync(poolID);
