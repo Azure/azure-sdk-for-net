@@ -2,11 +2,24 @@
 
 ## 1.0.0-beta.2 (Unreleased)
 
+- Added support for the Large Face List and Large Person Group:
+  - Added client `LargeFaceListClient` and `LargePersonGroupClient`.
+  - Added operations `FindSimilarFromLargeFaceList`, `IdentifyFromLargePersonGroup` and `VerifyFromLargePersonGroup` to `FaceClient`.
+  - Added models for supporting Large Face List and Large Person Group.
+- Added support for latest Detect Liveness Session API:
+  - Added operations `GetSessionImage` and `DetectFromSessionImage` to `FaceSessionClient`.
+  - Added properties `EnableSessionImage ` and `LivenessSingleModalModel` to model `CreateLivenessSessionContent`.
+  - Added model `CreateLivenessWithVerifySessionContent`.
+
 ### Features Added
 
 ### Breaking Changes
 
+- Changed the parameter of `CreateLivenessWithVerifySession` from model `CreateLivenessSessionContent` to `CreateLivenessWithVerifySessionContent`.
+
 ### Bugs Fixed
+
+- Remove `Mask` from `FaceAsttributes.Detection01`, which is not supported.
 
 ### Other Changes
 
