@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Relay.Models
         public static bool operator ==(RelayNetworkRuleSetDefaultAction left, RelayNetworkRuleSetDefaultAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RelayNetworkRuleSetDefaultAction"/> values are not the same. </summary>
         public static bool operator !=(RelayNetworkRuleSetDefaultAction left, RelayNetworkRuleSetDefaultAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RelayNetworkRuleSetDefaultAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RelayNetworkRuleSetDefaultAction"/>. </summary>
         public static implicit operator RelayNetworkRuleSetDefaultAction(string value) => new RelayNetworkRuleSetDefaultAction(value);
 
         /// <inheritdoc />

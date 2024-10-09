@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2024-08-04". </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2025-01-05". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public PageBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version)
         {
@@ -235,7 +235,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateUploadPagesRequest(long contentLength, Stream body, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, int? timeout, string range, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
+        internal HttpMessage CreateUploadPagesRequest(long contentLength, Stream body, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, int? timeout, string range, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string structuredBodyType, long? structuredContentLength)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -310,6 +310,14 @@ namespace Azure.Storage.Blobs
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (structuredBodyType != null)
+            {
+                request.Headers.Add("x-ms-structured-body", structuredBodyType);
+            }
+            if (structuredContentLength != null)
+            {
+                request.Headers.Add("x-ms-structured-content-length", structuredContentLength.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Length", contentLength);
             if (transactionalContentMD5 != null)
@@ -341,16 +349,18 @@ namespace Azure.Storage.Blobs
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
+        /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobUploadPagesHeaders>> UploadPagesAsync(long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageBlobUploadPagesHeaders>> UploadPagesAsync(long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string structuredBodyType = null, long? structuredContentLength = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateUploadPagesRequest(contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateUploadPagesRequest(contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, structuredBodyType, structuredContentLength);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobUploadPagesHeaders(message.Response);
             switch (message.Response.Status)
@@ -382,16 +392,18 @@ namespace Azure.Storage.Blobs
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
+        /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobUploadPagesHeaders> UploadPages(long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageBlobUploadPagesHeaders> UploadPages(long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string structuredBodyType = null, long? structuredContentLength = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateUploadPagesRequest(contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateUploadPagesRequest(contentLength, body, transactionalContentMD5, transactionalContentCrc64, timeout, range, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, structuredBodyType, structuredContentLength);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobUploadPagesHeaders(message.Response);
             switch (message.Response.Status)

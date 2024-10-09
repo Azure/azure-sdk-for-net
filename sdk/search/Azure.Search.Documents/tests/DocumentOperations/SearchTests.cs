@@ -238,6 +238,23 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public async Task TestNormalizer()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            Response<SearchResults<Hotel>> response =
+                await resources.GetQueryClient().SearchAsync<Hotel>(
+                    null,
+                    new SearchOptions
+                    {
+                        Filter = "address/city eq 'New york'"
+                    });
+            await AssertKeysEqual(
+                response,
+                h => h.Document.HotelId,
+                "5", "9");
+        }
+
+        [Test]
         public async Task HitHighlighting()
         {
             const string Description = "description";
@@ -1011,6 +1028,11 @@ namespace Azure.Search.Documents.Tests
                 Queries = { new VectorizedQuery(VectorSearchEmbeddings.SearchVectorizeDescription) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } },
                 FilterMode = VectorFilterMode.PostFilter
             };
+            source.HybridSearch = new HybridSearch()
+            {
+                MaxTextRecallSize = 50,
+                CountAndFacetMode = HybridCountAndFacetMode.CountRetrievableResults
+            };
             SearchOptions clonedSearchOptions = source.Clone();
 
             CollectionAssert.AreEquivalent(source.Facets, clonedSearchOptions.Facets); // A non-null collection with multiple items
@@ -1031,6 +1053,8 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(source.SemanticSearch.MaxWait, clonedSearchOptions.SemanticSearch.MaxWait);
             Assert.AreEqual(source.VectorSearch.Queries, clonedSearchOptions.VectorSearch.Queries);
             Assert.AreEqual(source.VectorSearch.FilterMode, clonedSearchOptions.VectorSearch.FilterMode);
+            Assert.AreEqual(source.HybridSearch.MaxTextRecallSize, clonedSearchOptions.HybridSearch.MaxTextRecallSize);
+            Assert.AreEqual(source.HybridSearch.CountAndFacetMode, clonedSearchOptions.HybridSearch.CountAndFacetMode);
         }
 
         /* TODO: Enable these Track 1 tests when we have support for index creation

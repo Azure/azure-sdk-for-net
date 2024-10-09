@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(DataFactoryExpressionType left, DataFactoryExpressionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFactoryExpressionType"/> values are not the same. </summary>
         public static bool operator !=(DataFactoryExpressionType left, DataFactoryExpressionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataFactoryExpressionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFactoryExpressionType"/>. </summary>
         public static implicit operator DataFactoryExpressionType(string value) => new DataFactoryExpressionType(value);
 
         /// <inheritdoc />

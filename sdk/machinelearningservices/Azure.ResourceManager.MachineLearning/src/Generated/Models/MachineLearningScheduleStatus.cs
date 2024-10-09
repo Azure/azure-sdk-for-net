@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningScheduleStatus left, MachineLearningScheduleStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningScheduleStatus"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningScheduleStatus left, MachineLearningScheduleStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningScheduleStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningScheduleStatus"/>. </summary>
         public static implicit operator MachineLearningScheduleStatus(string value) => new MachineLearningScheduleStatus(value);
 
         /// <inheritdoc />

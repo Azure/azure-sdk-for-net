@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(NetezzaPartitionOption left, NetezzaPartitionOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetezzaPartitionOption"/> values are not the same. </summary>
         public static bool operator !=(NetezzaPartitionOption left, NetezzaPartitionOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetezzaPartitionOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetezzaPartitionOption"/>. </summary>
         public static implicit operator NetezzaPartitionOption(string value) => new NetezzaPartitionOption(value);
 
         /// <inheritdoc />

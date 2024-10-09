@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Elastic.Models
 
         void IJsonModel<UpgradableVersionsList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<UpgradableVersionsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UpgradableVersionsList)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(CurrentVersion))
             {
                 writer.WritePropertyName("currentVersion"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.Elastic.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         UpgradableVersionsList IJsonModel<UpgradableVersionsList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -54,7 +54,7 @@ namespace Azure.Maps.Search.Models
         public static bool operator ==(GeoJsonObjectType left, GeoJsonObjectType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GeoJsonObjectType"/> values are not the same. </summary>
         public static bool operator !=(GeoJsonObjectType left, GeoJsonObjectType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GeoJsonObjectType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GeoJsonObjectType"/>. </summary>
         public static implicit operator GeoJsonObjectType(string value) => new GeoJsonObjectType(value);
 
         /// <inheritdoc />

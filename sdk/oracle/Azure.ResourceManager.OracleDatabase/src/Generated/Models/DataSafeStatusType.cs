@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(DataSafeStatusType left, DataSafeStatusType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataSafeStatusType"/> values are not the same. </summary>
         public static bool operator !=(DataSafeStatusType left, DataSafeStatusType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataSafeStatusType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataSafeStatusType"/>. </summary>
         public static implicit operator DataSafeStatusType(string value) => new DataSafeStatusType(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.AI.AnomalyDetector
         public static bool operator ==(AlignMode left, AlignMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlignMode"/> values are not the same. </summary>
         public static bool operator !=(AlignMode left, AlignMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AlignMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AlignMode"/>. </summary>
         public static implicit operator AlignMode(string value) => new AlignMode(value);
 
         /// <inheritdoc />

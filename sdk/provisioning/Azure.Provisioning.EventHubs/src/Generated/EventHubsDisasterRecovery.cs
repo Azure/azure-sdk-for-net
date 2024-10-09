@@ -85,11 +85,15 @@ public partial class EventHubsDisasterRecovery : Resource
     /// <summary>
     /// Creates a new EventHubsDisasterRecovery.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubsDisasterRecovery.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the EventHubsDisasterRecovery
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubsDisasterRecovery.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventHubsDisasterRecovery(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/disasterRecoveryConfigs", resourceVersion, context)
+    public EventHubsDisasterRecovery(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.EventHub/namespaces/disasterRecoveryConfigs", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _alternateName = BicepValue<string>.DefineProperty(this, "AlternateName", ["properties", "alternateName"]);
@@ -104,13 +108,44 @@ public partial class EventHubsDisasterRecovery : Resource
     }
 
     /// <summary>
+    /// Supported EventHubsDisasterRecovery resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2024-01-01.
+        /// </summary>
+        public static readonly string V2024_01_01 = "2024-01-01";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2017-04-01.
+        /// </summary>
+        public static readonly string V2017_04_01 = "2017-04-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing EventHubsDisasterRecovery.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubsDisasterRecovery.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the EventHubsDisasterRecovery
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubsDisasterRecovery.</param>
     /// <returns>The existing EventHubsDisasterRecovery resource.</returns>
-    public static EventHubsDisasterRecovery FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EventHubsDisasterRecovery FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this EventHubsDisasterRecovery resource.

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(DestinationProtocol left, DestinationProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DestinationProtocol"/> values are not the same. </summary>
         public static bool operator !=(DestinationProtocol left, DestinationProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DestinationProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DestinationProtocol"/>. </summary>
         public static implicit operator DestinationProtocol(string value) => new DestinationProtocol(value);
 
         /// <inheritdoc />

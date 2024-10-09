@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(CookiesOperator left, CookiesOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CookiesOperator"/> values are not the same. </summary>
         public static bool operator !=(CookiesOperator left, CookiesOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CookiesOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CookiesOperator"/>. </summary>
         public static implicit operator CookiesOperator(string value) => new CookiesOperator(value);
 
         /// <inheritdoc />

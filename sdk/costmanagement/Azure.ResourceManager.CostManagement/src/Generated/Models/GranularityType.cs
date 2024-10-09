@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(GranularityType left, GranularityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GranularityType"/> values are not the same. </summary>
         public static bool operator !=(GranularityType left, GranularityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GranularityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GranularityType"/>. </summary>
         public static implicit operator GranularityType(string value) => new GranularityType(value);
 
         /// <inheritdoc />
