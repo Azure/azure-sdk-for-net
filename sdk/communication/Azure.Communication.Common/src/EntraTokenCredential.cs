@@ -72,13 +72,26 @@ namespace Azure.Communication
 
         private AccessToken ExchangeEntraToken(CancellationToken cancellationToken)
         {
-            return ExchangeEntraTokenAsync(cancellationToken).Result;
+            return ExchangeEntraTokenAsync(false, cancellationToken).EnsureCompleted();
         }
 
         private async ValueTask<AccessToken> ExchangeEntraTokenAsync(CancellationToken cancellationToken)
         {
+            var result = await ExchangeEntraTokenAsync(true, cancellationToken).ConfigureAwait(false);
+            return result;
+        }
+
+        private async ValueTask<AccessToken> ExchangeEntraTokenAsync(bool async, CancellationToken cancellationToken)
+        {
             var message = CreateRequestMessage();
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            if (async)
+            {
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                _pipeline.Send(message, cancellationToken);
+            }
             return ParseAccessTokenFromResponse(message.Response);
         }
 

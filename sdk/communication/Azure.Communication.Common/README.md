@@ -108,11 +108,13 @@ For scenarios where an Entra user can be used with Communication Services, you n
 Along with this, you must provide the URI of the Azure Communication Services resource and the scopes required for the Entra user token. These scopes determine the permissions granted to the token:
 
 ```C# 
-var options = new InteractiveBrowserCredentialOptions();
-options.TenantId = "<your-tenant-id>";
-options.ClientId = "<your-client-id>";
-options.RedirectUri = new Uri("<your-redirect-uri>");
-options.AuthorityHost = new Uri("https://login.microsoftonline.com/<your-tenant-id>");
+var options = new InteractiveBrowserCredentialOptions
+    {
+        TenantId = "<your-tenant-id>",
+        ClientId = "<your-client-id>",
+        RedirectUri = new Uri("<your-redirect-uri>"),
+        AuthorityHost = new Uri("https://login.microsoftonline.com/<your-tenant-id>")
+    };
 var entraTokenCredential = new InteractiveBrowserCredential(options);
 
 var entraTokenCredentialOptions = new EntraCommunicationTokenCredentialOptions(
