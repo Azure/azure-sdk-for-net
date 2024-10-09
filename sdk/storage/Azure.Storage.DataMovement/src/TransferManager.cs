@@ -362,6 +362,9 @@ namespace Azure.Storage.DataMovement
                 destinationResource,
                 cancellationToken).ConfigureAwait(false);
 
+            // TODO: if the below fails for any reason, this job will still be in the checkpointer.
+            // That seems not desirable.
+
             DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
                 sourceResource,
                 destinationResource,
