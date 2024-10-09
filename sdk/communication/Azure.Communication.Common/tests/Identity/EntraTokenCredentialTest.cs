@@ -81,10 +81,8 @@ namespace Azure.Communication.Identity
             // Arrange
             var expiryTime = DateTimeOffset.Parse(SampleTokenExpiry, null, System.Globalization.DateTimeStyles.RoundtripKind);
             var options = CreateEntraTokenCredentialOptions();
-            var entraTokenCredential = new EntraTokenCredential(options);
-
-            var pipelineOptions = CreatePipelineOptions(200, TokenResponse);
-            entraTokenCredential.SetPipeline(CreateHttpPipeline(pipelineOptions, _mockTokenCredential.Object));
+            var mockTransport = CreateMockTransport(200, TokenResponse);
+            var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
 
             // Act
             var token = await entraTokenCredential.GetTokenAsync(CancellationToken.None);
@@ -100,10 +98,8 @@ namespace Azure.Communication.Identity
         {
             // Arrange
             var options = CreateEntraTokenCredentialOptions();
-            var entraTokenCredential = new EntraTokenCredential(options);
-
-            var pipelineOptions = CreatePipelineOptions(200, TokenResponse);
-            entraTokenCredential.SetPipeline(CreateHttpPipeline(pipelineOptions, _mockTokenCredential.Object));
+            var mockTransport = CreateMockTransport(200, TokenResponse);
+            var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
 
             // Act
             var token = await entraTokenCredential.GetTokenAsync(CancellationToken.None);
@@ -121,10 +117,9 @@ namespace Azure.Communication.Identity
         {
             // Arrange
             var options = CreateEntraTokenCredentialOptions();
-            var entraTokenCredential = new EntraTokenCredential(options);
             var errorMessage = "{\"error\":{\"code\":\"BadRequest\",\"message\":\"Invalid request.\"}}";
-            var pipelineOptions = CreatePipelineOptions(400, errorMessage);
-            entraTokenCredential.SetPipeline(CreateHttpPipeline(pipelineOptions, _mockTokenCredential.Object));
+            var mockTransport = CreateMockTransport(400, errorMessage);
+            var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
 
             // Act & Assert
             Assert.ThrowsAsync<RequestFailedException>(async () => await entraTokenCredential.GetTokenAsync(CancellationToken.None));
@@ -135,15 +130,38 @@ namespace Azure.Communication.Identity
         {
             // Arrange
             var options = CreateEntraTokenCredentialOptions();
-            var entraTokenCredential = new EntraTokenCredential(options);
             var errorMessage = "{\"error\":{\"code\":\"BadRequest\",\"message\":\"Invalid request.\"}}";
-            var pipelineOptions = CreatePipelineOptions(200, errorMessage);
-            entraTokenCredential.SetPipeline(CreateHttpPipeline(pipelineOptions, _mockTokenCredential.Object));
+            var mockTransport = CreateMockTransport(200, errorMessage);
+
+            var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
 
             // Act & Assert
             Assert.ThrowsAsync<RequestFailedException>(async () => await entraTokenCredential.GetTokenAsync(CancellationToken.None));
         }
 
+        [Test]
+        public void EntraTokenCredential_GetToken_RetriesThreeTimesOnTransientError()
+        {
+            // Arrange
+            var options = CreateEntraTokenCredentialOptions();
+            var lastRetryErrorMessage = "Last Retry Error Message";
+            var mockResponses = new MockResponse[]
+            {
+                new MockResponse(500, "First Error Message"),
+                new MockResponse(500, "Second Error Message"),
+                new MockResponse(500, "Third Error Message"),
+                new MockResponse(500, lastRetryErrorMessage),
+                new MockResponse(500, "Fifth Error Message"),
+            };
+
+            var pipelineOptions = ClientOptions.Default;
+            var mockTransport = new MockTransport(mockResponses);
+            var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
+
+            // Act & Assert
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await entraTokenCredential.GetTokenAsync(CancellationToken.None));
+            Assert.AreEqual(true, exception?.Message.Contains(lastRetryErrorMessage));
+        }
         private static HttpPipeline CreateHttpPipeline(ClientOptions options, TokenCredential tokenCredential)
         {
             var authenticationPolicy = new BearerTokenAuthenticationPolicy(tokenCredential, "");
@@ -154,15 +172,11 @@ namespace Azure.Communication.Identity
         {
             return new EntraCommunicationTokenCredentialOptions(_resourceEndpoint, _mockTokenCredential.Object, _scopes);
         }
-        private TestProxyClientOptions CreatePipelineOptions(int statusCode, string content)
+        private HttpPipelineTransport CreateMockTransport(int statusCode, string content)
         {
             var mockResponse = new MockResponse(statusCode);
             mockResponse.SetContent(content);
-            var pipelineOptions = new TestProxyClientOptions
-            {
-                Transport = new MockTransport(mockResponse)
-            };
-            return pipelineOptions;
+            return new MockTransport(mockResponse);
         }
     }
 }
