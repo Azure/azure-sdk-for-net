@@ -11,15 +11,13 @@ To create a large person group, you'll need `LargePersonGroupClient` object.
 ```C# Snippet:CreateLargePersonGroupClient
 Uri endpoint = new Uri("<your endpoint>");
 DefaultAzureCredential credential = new DefaultAzureCredential();
-var groupClient = new LargePersonGroupClient(endpoint, credential);
+var groupClient = new LargePersonGroupClient(id, endpoint, credential);
 ```
 
 Call `Create` to create a large person group. You need to provide the ID of the large person group you want to create with a name and optional user data.
 
 ```C# Snippet:VerifyAndIdentifyFromLargePersonGroup_CreateLargePersonGroup
-var groupId = "lpg_family1";
-
-groupClient.Create(groupId, "Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
+groupClient.Create("Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
 ```
 
 ## Create the `Person` with faces in the Large Person Group
@@ -37,13 +35,13 @@ var personIds = new Dictionary<string, Guid>();
 
 foreach (var person in persons)
 {
-    var createPersonResponse = groupClient.CreatePerson(groupId, person.Name, userData: person.UserData);
+    var createPersonResponse = groupClient.CreatePerson(person.Name, userData: person.UserData);
     var personId = createPersonResponse.Value.PersonId;
     personIds.Add(person.Name, personId);
 
     foreach (var imageUrl in person.ImageUrls)
     {
-        groupClient.AddFace(groupId, personId, new Uri(imageUrl), userData: $"{person.UserData}-{imageUrl}", detectionModel: FaceDetectionModel.Detection03);
+        groupClient.AddFace(personId, new Uri(imageUrl), userData: $"{person.UserData}-{imageUrl}", detectionModel: FaceDetectionModel.Detection03);
     }
 }
 ```
@@ -53,7 +51,7 @@ foreach (var person in persons)
 Before you can identify faces, you must train the large person group. Call `TrainLargePersonGroup` to start the training process. `TrainLargePersonGroup` is a long-running operation that may take a while to complete.
 
 ```C# Snippet:VerifyAndIdentifyFromLargePersonGroup_Train
-var operation = groupClient.Train(WaitUntil.Completed, groupId);
+var operation = groupClient.Train(WaitUntil.Completed);
 operation.WaitForCompletionResponse();
 ```
 
@@ -77,7 +75,7 @@ To identify a face from the large person group, call `IdentifyFromLargePersonGro
 var identifyResponse = faceClient.IdentifyFromLargePersonGroup(new[] { faceId }, groupId);
 foreach (var candidate in identifyResponse.Value[0].Candidates)
 {
-    var person = groupClient.GetPerson(groupId, candidate.PersonId);
+    var person = groupClient.GetPerson(candidate.PersonId);
     Console.WriteLine($"The detected face belongs to {person.Value.Name} ({candidate.Confidence})");
 }
 ```
@@ -87,7 +85,7 @@ foreach (var candidate in identifyResponse.Value[0].Candidates)
 When you no longer need the large person group, you can delete it by calling `DeleteLargePersonGroup`. The associated persons and faces will also be deleted.
 
 ```C# Snippet:VerifyAndIdentifyFromLargePersonGroup_DeleteLargePersonGroup
-groupClient.Delete(groupId);
+groupClient.Delete();
 ```
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face#getting-started

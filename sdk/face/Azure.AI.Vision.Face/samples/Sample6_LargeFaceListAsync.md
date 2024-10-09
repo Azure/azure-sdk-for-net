@@ -11,14 +11,13 @@ To create a large face list, you'll need `LargeFaceListClient` object.
 ```C# Snippet:CreateLargeFaceListClient
 Uri endpoint = new Uri("<your endpoint>");
 DefaultAzureCredential credential = new DefaultAzureCredential();
-var listClient = new LargeFaceListClient(endpoint, credential);
+var listClient = new LargeFaceListClient(id, endpoint, credential);
 ```
 
 Call `CreateAsync` to create a large face list. You can specify the `name` and `userData` for the large face list.
 
 ```C# Snippet:CreateLargeFaceListAsync
-var listId = "lfl_family1";
-await listClient.CreateAsync(listId, "Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
+await listClient.CreateAsync("Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
 ```
 
 ## Add faces to the Large Face List
@@ -36,7 +35,7 @@ var faceIds = new Dictionary<Guid, string>();
 
 foreach (var face in faces)
 {
-    var addFaceResponse = await listClient.AddFaceAsync(listId, face.ImageUrl, userData: face.UserData);
+    var addFaceResponse = await listClient.AddFaceAsync(face.ImageUrl, userData: face.UserData);
     faceIds[addFaceResponse.Value.PersistedFaceId] = face.UserData;
 }
 ```
@@ -46,7 +45,7 @@ foreach (var face in faces)
 Before you can identify faces, you must train the large face list by calling `TrainAsync`. This method is asynchronous and returns an `Operation` object that you can use to wait for the training to complete.
 
 ```C# Snippet:TrainLargeFaceListAsync
-var operation = await listClient.TrainAsync(WaitUntil.Completed, listId);
+var operation = await listClient.TrainAsync(WaitUntil.Completed);
 await operation.WaitForCompletionResponseAsync();
 ```
 
@@ -71,7 +70,7 @@ foreach (var similarFace in findSimilarResponse.Value)
 When you no longer need the large face list, you can delete it by calling `DeleteAsync`.
 
 ```C# Snippet:DeleteLargeFaceListAsync
-await listClient.DeleteAsync(listId);
+await listClient.DeleteAsync();
 ```
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face#getting-started
