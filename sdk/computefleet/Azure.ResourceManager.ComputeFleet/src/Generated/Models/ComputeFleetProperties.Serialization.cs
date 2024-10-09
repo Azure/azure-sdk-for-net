@@ -56,6 +56,16 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(VmAttributes))
+            {
+                writer.WritePropertyName("vmAttributes"u8);
+                writer.WriteObjectValue(VmAttributes, options);
+            }
+            if (Optional.IsDefined(AdditionalLocationsProfile))
+            {
+                writer.WritePropertyName("additionalLocationsProfile"u8);
+                writer.WriteObjectValue(AdditionalLocationsProfile, options);
+            }
             writer.WritePropertyName("computeProfile"u8);
             writer.WriteObjectValue(ComputeProfile, options);
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
@@ -109,6 +119,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             SpotPriorityProfile spotPriorityProfile = default;
             RegularPriorityProfile regularPriorityProfile = default;
             IList<ComputeFleetVmSizeProfile> vmSizesProfile = default;
+            VmAttributes vmAttributes = default;
+            AdditionalLocationsProfile additionalLocationsProfile = default;
             ComputeFleetComputeProfile computeProfile = default;
             DateTimeOffset? timeCreated = default;
             string uniqueId = default;
@@ -153,6 +165,24 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     vmSizesProfile = array;
                     continue;
                 }
+                if (property.NameEquals("vmAttributes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmAttributes = VmAttributes.DeserializeVmAttributes(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("additionalLocationsProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    additionalLocationsProfile = AdditionalLocationsProfile.DeserializeAdditionalLocationsProfile(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("computeProfile"u8))
                 {
                     computeProfile = ComputeFleetComputeProfile.DeserializeComputeFleetComputeProfile(property.Value, options);
@@ -183,6 +213,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 spotPriorityProfile,
                 regularPriorityProfile,
                 vmSizesProfile,
+                vmAttributes,
+                additionalLocationsProfile,
                 computeProfile,
                 timeCreated,
                 uniqueId,
