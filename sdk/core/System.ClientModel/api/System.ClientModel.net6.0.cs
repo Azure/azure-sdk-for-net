@@ -92,6 +92,8 @@ namespace System.ClientModel.Primitives
         public bool? EnableLogging { get { throw null; } set { } }
         public int? HttpContentSizeLimit { get { throw null; } set { } }
         public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
+        protected void AssertNotFrozen() { }
+        public virtual void Freeze() { }
     }
     public sealed partial class ClientPipeline
     {
