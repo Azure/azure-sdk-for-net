@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 
 namespace Azure.AI.Inference
@@ -26,6 +27,7 @@ namespace Azure.AI.Inference
             DateTimeOffset created = default;
             string systemFingerprint = null;
             List<StreamingChoiceData> choiceEntries = new();
+            CompletionsUsage completionsUsage = null;
 
             foreach (JsonProperty property in element.EnumerateObject())
             {
@@ -56,6 +58,10 @@ namespace Azure.AI.Inference
                         choiceEntries.Add(StreamingChoiceData.DeserializeStreamingChoiceData(choiceElement));
                     }
                 }
+                if (property.NameEquals("usage"u8))
+                {
+                    completionsUsage = StreamingChoiceData.DeserializeUsageData(property.Value);
+                }
             }
 
             // If a chunk has no choices, we infer an empty one to aid traversal/expansion
@@ -83,7 +89,9 @@ namespace Azure.AI.Inference
                         choiceData.FinishReason,
                         choiceData.Delta.FunctionName,
                         choiceData.Delta.FunctionArgumentsUpdate,
-                        toolCallUpdate));
+                        toolCallUpdate,
+                        completionsUsage
+                        ));
                 }
             }
 
@@ -131,6 +139,37 @@ namespace Azure.AI.Inference
                 }
 
                 return result;
+            }
+
+            internal static CompletionsUsage DeserializeUsageData(JsonElement element, ModelReaderWriterOptions _ = default)
+            {
+                if (element.ValueKind != JsonValueKind.Object)
+                {
+                    return null;
+                }
+                int completionTokens = 0;
+                int promptTokens = 0;
+                int totalTokens = 0;
+                foreach (JsonProperty usageProperty in element.EnumerateObject())
+                {
+                    if (usageProperty.NameEquals("completion_tokens"u8))
+                    {
+                        completionTokens = usageProperty.Value.GetInt32();
+                    }
+                    else if (usageProperty.NameEquals("prompt_tokens"u8))
+                    {
+                        promptTokens = usageProperty.Value.GetInt32();
+                    }
+                    else if (usageProperty.NameEquals("total_tokens"u8))
+                    {
+                        totalTokens = usageProperty.Value.GetInt32();
+                    }
+                }
+                return new CompletionsUsage(
+                    completionTokens: completionTokens,
+                    promptTokens: promptTokens,
+                    totalTokens: totalTokens
+                    );
             }
         }
 

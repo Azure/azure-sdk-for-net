@@ -37,4 +37,3 @@ extends:
       ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
       ARM_CLIENT_ID: $(ARM_CLIENT_ID)
       ARM_TENANT_ID: $(ARM_TENANT_ID)
-    UseFederatedAuth: true
