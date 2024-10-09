@@ -50,10 +50,15 @@ public partial class OutboundFirewallRule : Resource
     /// <summary>
     /// Creates a new OutboundFirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the OutboundFirewallRule.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the OutboundFirewallRule resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the OutboundFirewallRule.</param>
-    public OutboundFirewallRule(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/outboundFirewallRules", resourceVersion ?? "2021-11-01")
+    public OutboundFirewallRule(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/outboundFirewallRules", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
@@ -91,9 +96,14 @@ public partial class OutboundFirewallRule : Resource
     /// <summary>
     /// Creates a reference to an existing OutboundFirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the OutboundFirewallRule.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the OutboundFirewallRule resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the OutboundFirewallRule.</param>
     /// <returns>The existing OutboundFirewallRule resource.</returns>
-    public static OutboundFirewallRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static OutboundFirewallRule FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

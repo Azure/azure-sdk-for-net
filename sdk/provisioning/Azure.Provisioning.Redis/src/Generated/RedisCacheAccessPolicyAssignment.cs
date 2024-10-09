@@ -69,10 +69,15 @@ public partial class RedisCacheAccessPolicyAssignment : Resource
     /// <summary>
     /// Creates a new RedisCacheAccessPolicyAssignment.
     /// </summary>
-    /// <param name="resourceName">Name of the RedisCacheAccessPolicyAssignment.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the RedisCacheAccessPolicyAssignment
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RedisCacheAccessPolicyAssignment.</param>
-    public RedisCacheAccessPolicyAssignment(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Cache/redis/accessPolicyAssignments", resourceVersion ?? "2024-03-01")
+    public RedisCacheAccessPolicyAssignment(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Cache/redis/accessPolicyAssignments", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _accessPolicyName = BicepValue<string>.DefineProperty(this, "AccessPolicyName", ["properties", "accessPolicyName"]);
@@ -178,9 +183,14 @@ public partial class RedisCacheAccessPolicyAssignment : Resource
     /// <summary>
     /// Creates a reference to an existing RedisCacheAccessPolicyAssignment.
     /// </summary>
-    /// <param name="resourceName">Name of the RedisCacheAccessPolicyAssignment.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the RedisCacheAccessPolicyAssignment
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RedisCacheAccessPolicyAssignment.</param>
     /// <returns>The existing RedisCacheAccessPolicyAssignment resource.</returns>
-    public static RedisCacheAccessPolicyAssignment FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static RedisCacheAccessPolicyAssignment FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

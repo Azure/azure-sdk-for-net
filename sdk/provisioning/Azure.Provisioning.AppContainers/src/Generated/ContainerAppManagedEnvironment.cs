@@ -170,10 +170,15 @@ public partial class ContainerAppManagedEnvironment : Resource
     /// <summary>
     /// Creates a new ContainerAppManagedEnvironment.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppManagedEnvironment.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerAppManagedEnvironment
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironment.</param>
-    public ContainerAppManagedEnvironment(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.App/managedEnvironments", resourceVersion ?? "2024-03-01")
+    public ContainerAppManagedEnvironment(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.App/managedEnvironments", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -234,11 +239,16 @@ public partial class ContainerAppManagedEnvironment : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerAppManagedEnvironment.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppManagedEnvironment.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerAppManagedEnvironment
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironment.</param>
     /// <returns>The existing ContainerAppManagedEnvironment resource.</returns>
-    public static ContainerAppManagedEnvironment FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppManagedEnvironment FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Creates a role assignment for a user-assigned identity that grants
@@ -248,10 +258,10 @@ public partial class ContainerAppManagedEnvironment : Resource
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
     public RoleAssignment CreateRoleAssignment(AppContainersBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{ResourceName}_{identity.ResourceName}_{AppContainersBuiltInRole.GetBuiltInRoleName(role)}")
+        new($"{IdentifierName}_{identity.IdentifierName}_{AppContainersBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(IdentifierName),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
@@ -264,13 +274,13 @@ public partial class ContainerAppManagedEnvironment : Resource
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
-    /// <param name="resourceNameSuffix">Optional role assignment resource name suffix.</param>
+    /// <param name="identifierNameSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment CreateRoleAssignment(AppContainersBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? resourceNameSuffix = default) =>
-        new($"{ResourceName}_{AppContainersBuiltInRole.GetBuiltInRoleName(role)}{(resourceNameSuffix is null ? "" : "_")}{resourceNameSuffix}")
+    public RoleAssignment CreateRoleAssignment(AppContainersBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? identifierNameSuffix = default) =>
+        new($"{IdentifierName}_{AppContainersBuiltInRole.GetBuiltInRoleName(role)}{(identifierNameSuffix is null ? "" : "_")}{identifierNameSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(IdentifierName),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

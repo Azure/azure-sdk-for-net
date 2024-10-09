@@ -181,10 +181,15 @@ public partial class AppServiceCertificateOrder : Resource
     /// <summary>
     /// Creates a new AppServiceCertificateOrder.
     /// </summary>
-    /// <param name="resourceName">Name of the AppServiceCertificateOrder.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the AppServiceCertificateOrder
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppServiceCertificateOrder.</param>
-    public AppServiceCertificateOrder(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.CertificateRegistration/certificateOrders", resourceVersion ?? "2024-04-01")
+    public AppServiceCertificateOrder(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.CertificateRegistration/certificateOrders", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -303,9 +308,14 @@ public partial class AppServiceCertificateOrder : Resource
     /// <summary>
     /// Creates a reference to an existing AppServiceCertificateOrder.
     /// </summary>
-    /// <param name="resourceName">Name of the AppServiceCertificateOrder.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the AppServiceCertificateOrder
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppServiceCertificateOrder.</param>
     /// <returns>The existing AppServiceCertificateOrder resource.</returns>
-    public static AppServiceCertificateOrder FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static AppServiceCertificateOrder FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

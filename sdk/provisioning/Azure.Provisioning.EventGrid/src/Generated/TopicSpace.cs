@@ -68,10 +68,15 @@ public partial class TopicSpace : Resource
     /// <summary>
     /// Creates a new TopicSpace.
     /// </summary>
-    /// <param name="resourceName">Name of the TopicSpace.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the TopicSpace resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TopicSpace.</param>
-    public TopicSpace(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/topicSpaces", resourceVersion ?? "2024-06-01-preview")
+    public TopicSpace(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.EventGrid/namespaces/topicSpaces", resourceVersion ?? "2024-06-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
@@ -96,9 +101,14 @@ public partial class TopicSpace : Resource
     /// <summary>
     /// Creates a reference to an existing TopicSpace.
     /// </summary>
-    /// <param name="resourceName">Name of the TopicSpace.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the TopicSpace resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TopicSpace.</param>
     /// <returns>The existing TopicSpace resource.</returns>
-    public static TopicSpace FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static TopicSpace FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

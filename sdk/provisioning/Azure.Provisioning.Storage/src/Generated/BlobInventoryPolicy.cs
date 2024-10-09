@@ -58,10 +58,15 @@ public partial class BlobInventoryPolicy : Resource
     /// <summary>
     /// Creates a new BlobInventoryPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the BlobInventoryPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the BlobInventoryPolicy resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the BlobInventoryPolicy.</param>
-    public BlobInventoryPolicy(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/inventoryPolicies", resourceVersion ?? "2024-01-01")
+    public BlobInventoryPolicy(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Storage/storageAccounts/inventoryPolicies", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _policySchema = BicepValue<BlobInventoryPolicySchema>.DefineProperty(this, "PolicySchema", ["properties", "policy"]);
@@ -200,9 +205,14 @@ public partial class BlobInventoryPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing BlobInventoryPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the BlobInventoryPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the BlobInventoryPolicy resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the BlobInventoryPolicy.</param>
     /// <returns>The existing BlobInventoryPolicy resource.</returns>
-    public static BlobInventoryPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static BlobInventoryPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

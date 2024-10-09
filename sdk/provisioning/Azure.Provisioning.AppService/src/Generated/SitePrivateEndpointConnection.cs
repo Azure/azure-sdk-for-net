@@ -77,10 +77,15 @@ public partial class SitePrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new SitePrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the SitePrivateEndpointConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SitePrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SitePrivateEndpointConnection.</param>
-    public SitePrivateEndpointConnection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/privateEndpointConnections", resourceVersion ?? "2024-04-01")
+    public SitePrivateEndpointConnection(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/sites/privateEndpointConnections", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _iPAddresses = BicepList<IPAddress>.DefineProperty(this, "IPAddresses", ["properties", "ipAddresses"]);
@@ -257,11 +262,16 @@ public partial class SitePrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing SitePrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the SitePrivateEndpointConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SitePrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SitePrivateEndpointConnection.</param>
     /// <returns>The existing SitePrivateEndpointConnection resource.</returns>
-    public static SitePrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SitePrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this SitePrivateEndpointConnection

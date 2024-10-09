@@ -69,10 +69,15 @@ public partial class SqlServerCommunicationLink : Resource
     /// <summary>
     /// Creates a new SqlServerCommunicationLink.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerCommunicationLink.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerCommunicationLink
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerCommunicationLink.</param>
-    public SqlServerCommunicationLink(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/communicationLinks", resourceVersion ?? "2014-04-01")
+    public SqlServerCommunicationLink(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/communicationLinks", resourceVersion ?? "2014-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _partnerServer = BicepValue<string>.DefineProperty(this, "PartnerServer", ["properties", "partnerServer"]);
@@ -108,9 +113,14 @@ public partial class SqlServerCommunicationLink : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerCommunicationLink.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerCommunicationLink.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerCommunicationLink
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerCommunicationLink.</param>
     /// <returns>The existing SqlServerCommunicationLink resource.</returns>
-    public static SqlServerCommunicationLink FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerCommunicationLink FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

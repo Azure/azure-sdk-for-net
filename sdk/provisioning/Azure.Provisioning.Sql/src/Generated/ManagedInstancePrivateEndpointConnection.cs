@@ -62,10 +62,16 @@ public partial class ManagedInstancePrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new ManagedInstancePrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstancePrivateEndpointConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ManagedInstancePrivateEndpointConnection resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstancePrivateEndpointConnection.</param>
-    public ManagedInstancePrivateEndpointConnection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/privateEndpointConnections", resourceVersion ?? "2021-11-01")
+    public ManagedInstancePrivateEndpointConnection(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/managedInstances/privateEndpointConnections", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<ManagedInstancePrivateLinkServiceConnectionStateProperty>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -96,9 +102,15 @@ public partial class ManagedInstancePrivateEndpointConnection : Resource
     /// Creates a reference to an existing
     /// ManagedInstancePrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstancePrivateEndpointConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ManagedInstancePrivateEndpointConnection resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstancePrivateEndpointConnection.</param>
     /// <returns>The existing ManagedInstancePrivateEndpointConnection resource.</returns>
-    public static ManagedInstancePrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstancePrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

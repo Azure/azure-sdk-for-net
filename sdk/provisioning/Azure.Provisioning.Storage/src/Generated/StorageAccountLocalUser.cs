@@ -93,10 +93,15 @@ public partial class StorageAccountLocalUser : Resource
     /// <summary>
     /// Creates a new StorageAccountLocalUser.
     /// </summary>
-    /// <param name="resourceName">Name of the StorageAccountLocalUser.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StorageAccountLocalUser resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StorageAccountLocalUser.</param>
-    public StorageAccountLocalUser(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/localUsers", resourceVersion ?? "2024-01-01")
+    public StorageAccountLocalUser(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Storage/storageAccounts/localUsers", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _hasSharedKey = BicepValue<bool>.DefineProperty(this, "HasSharedKey", ["properties", "hasSharedKey"]);
@@ -240,11 +245,16 @@ public partial class StorageAccountLocalUser : Resource
     /// <summary>
     /// Creates a reference to an existing StorageAccountLocalUser.
     /// </summary>
-    /// <param name="resourceName">Name of the StorageAccountLocalUser.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StorageAccountLocalUser resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StorageAccountLocalUser.</param>
     /// <returns>The existing StorageAccountLocalUser resource.</returns>
-    public static StorageAccountLocalUser FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StorageAccountLocalUser FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get access keys for this StorageAccountLocalUser resource.
@@ -252,5 +262,5 @@ public partial class StorageAccountLocalUser : Resource
     /// <returns>The keys for this StorageAccountLocalUser resource.</returns>
     public LocalUserKeys GetKeys() =>
         LocalUserKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(ResourceName), "listKeys")));
+            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(IdentifierName), "listKeys")));
 }

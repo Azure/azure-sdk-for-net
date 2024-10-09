@@ -182,10 +182,15 @@ public partial class BlobContainer : Resource
     /// <summary>
     /// Creates a new BlobContainer.
     /// </summary>
-    /// <param name="resourceName">Name of the BlobContainer.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the BlobContainer resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the BlobContainer.</param>
-    public BlobContainer(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/blobServices/containers", resourceVersion ?? "2024-01-01")
+    public BlobContainer(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Storage/storageAccounts/blobServices/containers", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _defaultEncryptionScope = BicepValue<string>.DefineProperty(this, "DefaultEncryptionScope", ["properties", "defaultEncryptionScope"]);
@@ -332,11 +337,16 @@ public partial class BlobContainer : Resource
     /// <summary>
     /// Creates a reference to an existing BlobContainer.
     /// </summary>
-    /// <param name="resourceName">Name of the BlobContainer.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the BlobContainer resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the BlobContainer.</param>
     /// <returns>The existing BlobContainer resource.</returns>
-    public static BlobContainer FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static BlobContainer FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this BlobContainer resource.

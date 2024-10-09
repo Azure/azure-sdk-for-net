@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         void IJsonModel<ExecuteStartContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ExecuteStartContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExecuteStartContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("executionParameters"u8);
             writer.WriteObjectValue(ExecutionParameters, options);
             writer.WritePropertyName("resources"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ExecuteStartContent IJsonModel<ExecuteStartContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

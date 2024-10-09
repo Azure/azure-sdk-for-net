@@ -10,6 +10,10 @@
 
 ### Other Changes
 
+## 1.7.6 (2024-10-04)
+
+### Other Changes
+
 - Improved the efficiency of `AzureEventSourceLogForwarder` by eliminating message formatting. ([#46202](https://github.com/Azure/azure-sdk-for-net/pull/46202))
 
 ## 1.7.5 (2024-08-15)

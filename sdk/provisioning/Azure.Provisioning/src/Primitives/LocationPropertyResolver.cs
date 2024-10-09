@@ -65,8 +65,8 @@ public class LocationPropertyResolver : PropertyResolver
         IDictionary<string, ProvisioningParameter> existing =
             infra.GetResources()
             .OfType<ProvisioningParameter>()
-            .Where(p => p.ResourceName.StartsWith("location"))
-            .ToDictionary(p => p.ResourceName);
+            .Where(p => p.IdentifierName.StartsWith("location"))
+            .ToDictionary(p => p.IdentifierName);
         foreach (ProvisioningParameter p in existing.Values)
         {
             if (p.BicepType is TypeExpression type &&
@@ -87,7 +87,7 @@ public class LocationPropertyResolver : PropertyResolver
             // Optionally specialize to the resource
             if (construct is NamedProvisioningConstruct resource)
             {
-                name = $"{name}_{resource.ResourceName}";
+                name = $"{name}_{resource.IdentifierName}";
                 increment = existing.ContainsKey(name);
             }
 
