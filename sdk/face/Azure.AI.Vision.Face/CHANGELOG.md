@@ -23,6 +23,8 @@
 
 ### Other Changes
 
+- Change the default service API version to `v1.2-preview.1`.
+
 ## 1.0.0-beta.1 (2024-05-27)
 
 This is the first preview Azure AI Face client library that follows the [.NET Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html).
