@@ -135,4 +135,65 @@ public static class SimpleClientServiceCollectionExtensions
 
         return services;
     }
+
+    // TODO: is this the right pattern for taking both common and client-specific
+    // configuration sections?  Or should there be a higher level block that holds both?
+    public static IServiceCollection AddSimpleClient(this IServiceCollection services,
+        IConfiguration commonConfigurationSection,
+        IConfiguration clientConfigurationSection)
+    {
+        services.AddLogging();
+
+        // Bind configuration to options
+        services.AddOptions<SimpleClientOptions>()
+            .Configure<ILoggerFactory>((options, loggerFactory)
+                => options.Logging.LoggerFactory = loggerFactory)
+            .Bind(commonConfigurationSection)
+
+            // TODO: validate that binding to client config second allows client
+            // configuration to override comon settings.
+            .Bind(clientConfigurationSection);
+
+        // Proxy to logging options in case a custom logging policy is added
+        services.AddSingleton<ClientLoggingOptions>(sp =>
+        {
+            IOptions<SimpleClientOptions> options = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
+            return options.Value.Logging;
+        });
+
+        services.AddSingleton<SimpleClient>(sp =>
+        {
+            string? sectionName = (clientConfigurationSection as IConfigurationSection)?.Key;
+
+            Uri endpoint = clientConfigurationSection.GetValue<Uri>("ServiceUri") ??
+                throw new InvalidOperationException($"Expected 'ServiceUri' to be present in '{sectionName ?? "configuration"}' configuration settings.");
+
+            // TODO: how to get this securely?
+            ApiKeyCredential credential = new("fake key");
+
+            // TODO: to roll a credential, this will need to be IOptionsMonitor
+            // not IOptions -- come back to this.
+            IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
+            SimpleClientOptions options = iOptions.Value;
+
+            // Check whether an HttpClient has been injected
+            HttpClient? httpClient = sp.GetService<HttpClient>();
+            if (httpClient is not null)
+            {
+                options.Transport = new HttpClientPipelineTransport(httpClient);
+            }
+
+            // Check whether known policy types have been added to the service
+            // collection.
+            HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
+            if (httpLoggingPolicy is not null)
+            {
+                options.HttpLoggingPolicy = httpLoggingPolicy;
+            }
+
+            return new SimpleClient(endpoint, credential, options);
+        });
+
+        return services;
+    }
 }

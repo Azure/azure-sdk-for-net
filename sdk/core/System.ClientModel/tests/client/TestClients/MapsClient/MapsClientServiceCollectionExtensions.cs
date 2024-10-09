@@ -120,4 +120,60 @@ public static class MapsClientServiceCollectionExtensions
 
         return services;
     }
+
+    public static IServiceCollection AddMapsClient(this IServiceCollection services,
+        IConfiguration commonConfigurationSection,
+        IConfiguration clientConfigurationSection)
+    {
+        services.AddLogging();
+
+        // Bind configuration to options
+        services.AddOptions<MapsClientOptions>()
+            .Configure<ILoggerFactory>((options, loggerFactory)
+                => options.Logging.LoggerFactory = loggerFactory)
+            .Bind(commonConfigurationSection)
+            .Bind(clientConfigurationSection);
+
+        // Proxy to logging options in case a custom logging policy is added
+        services.AddSingleton<ClientLoggingOptions>(sp =>
+        {
+            IOptions<MapsClientOptions> options = sp.GetRequiredService<IOptions<MapsClientOptions>>();
+            return options.Value.Logging;
+        });
+
+        services.AddSingleton<MapsClient>(sp =>
+        {
+            string? sectionName = (clientConfigurationSection as IConfigurationSection)?.Key;
+
+            Uri endpoint = clientConfigurationSection.GetValue<Uri>("ServiceUri") ??
+                throw new InvalidOperationException($"Expected 'ServiceUri' to be present in '{sectionName ?? "configuration"}' configuration settings.");
+
+            // TODO: how to get this securely?
+            ApiKeyCredential credential = new("fake key");
+
+            // TODO: to roll a credential, this will need to be IOptionsMonitor
+            // not IOptions -- come back to this.
+            IOptions<MapsClientOptions> iOptions = sp.GetRequiredService<IOptions<MapsClientOptions>>();
+            MapsClientOptions options = iOptions.Value;
+
+            // Check whether an HttpClient has been injected
+            HttpClient? httpClient = sp.GetService<HttpClient>();
+            if (httpClient is not null)
+            {
+                options.Transport = new HttpClientPipelineTransport(httpClient);
+            }
+
+            // Check whether known policy types have been added to the service
+            // collection.
+            HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
+            if (httpLoggingPolicy is not null)
+            {
+                options.HttpLoggingPolicy = httpLoggingPolicy;
+            }
+
+            return new MapsClient(endpoint, credential, options);
+        });
+
+        return services;
+    }
 }
