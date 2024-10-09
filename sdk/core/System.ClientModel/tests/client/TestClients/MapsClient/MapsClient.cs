@@ -17,6 +17,9 @@ public class MapsClient
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
 
+    // Added for test visibility
+    private readonly MapsClientOptions _options;
+
     public MapsClient(Uri endpoint, ApiKeyCredential credential, MapsClientOptions? options = default)
     {
         if (endpoint is null)
@@ -35,7 +38,12 @@ public class MapsClient
             perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
             perTryPolicies: new PipelinePolicy[] { authenticationPolicy },
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+
+        _options = options;
     }
+
+    // public for test purposes
+    public MapsClientOptions Options => _options;
 
     public virtual async Task<ClientResult<IPAddressCountryPair>> GetCountryCodeAsync(IPAddress ipAddress)
     {

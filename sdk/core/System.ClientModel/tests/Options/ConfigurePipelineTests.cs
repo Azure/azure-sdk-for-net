@@ -100,11 +100,11 @@ public class ConfigurePipelineTests
         CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-client-allowed");
         CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
 
-        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "Content-Length");
-        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-client-allowed");
-        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
-        CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
-        CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
+        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "Content-Length");
+        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-maps-client-allowed");
+        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
+        CollectionAssert.DoesNotContain(mapsClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.DoesNotContain(mapsClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
     }
 
     [Test]

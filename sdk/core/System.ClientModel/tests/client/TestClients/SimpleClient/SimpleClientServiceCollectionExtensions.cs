@@ -35,6 +35,14 @@ public static class SimpleClientServiceCollectionExtensions
             return options.Value.Logging;
         });
 
+        //// Proxy to logging options in case a custom logging policy is added
+        //services.AddKeyedSingleton<ClientLoggingOptions>(typeof(SimpleClientOptions),
+        //    (sp, type) =>
+        //    {
+        //        IOptions<SimpleClientOptions> options = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
+        //        return (options.Value.Logging as SimpleClientLoggingOptions)!;
+        //    });
+
         services.AddSingleton<SimpleClient>(sp =>
         {
             IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
