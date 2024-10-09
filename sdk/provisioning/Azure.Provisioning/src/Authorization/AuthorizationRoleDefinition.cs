@@ -12,5 +12,5 @@ public partial class AuthorizationRoleDefinition
     // naming policies won't be able to manage that as cleanly.  Anyone who
     // really wants can override the value though.
     private partial BicepValue<string> GetNameDefaultValue() =>
-        BicepFunction.CreateGuid(BicepFunction.GetResourceGroup().Id, ResourceName);
+        BicepFunction.CreateGuid(BicepFunction.GetResourceGroup().Id, IdentifierName);
 }

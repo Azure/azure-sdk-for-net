@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static bool operator ==(DevOpsStorageAccountType left, DevOpsStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevOpsStorageAccountType"/> values are not the same. </summary>
         public static bool operator !=(DevOpsStorageAccountType left, DevOpsStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevOpsStorageAccountType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevOpsStorageAccountType"/>. </summary>
         public static implicit operator DevOpsStorageAccountType(string value) => new DevOpsStorageAccountType(value);
 
         /// <inheritdoc />

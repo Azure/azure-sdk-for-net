@@ -39,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Models
         public static bool operator ==(AggregationType left, AggregationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AggregationType"/> values are not the same. </summary>
         public static bool operator !=(AggregationType left, AggregationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AggregationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AggregationType"/>. </summary>
         public static implicit operator AggregationType(string value) => new AggregationType(value);
 
         /// <inheritdoc />

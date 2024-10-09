@@ -36,7 +36,7 @@ namespace Azure.AI.Vision.Face
         public static bool operator ==(ExposureLevel left, ExposureLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExposureLevel"/> values are not the same. </summary>
         public static bool operator !=(ExposureLevel left, ExposureLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExposureLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExposureLevel"/>. </summary>
         public static implicit operator ExposureLevel(string value) => new ExposureLevel(value);
 
         /// <inheritdoc />

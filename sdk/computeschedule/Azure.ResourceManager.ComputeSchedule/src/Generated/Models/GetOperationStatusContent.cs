@@ -48,25 +48,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Initializes a new instance of <see cref="GetOperationStatusContent"/>. </summary>
         /// <param name="operationIds"> The list of operation ids to get the status of. </param>
-        /// <param name="correlationid"> Correlationid item. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationIds"/> or <paramref name="correlationid"/> is null. </exception>
-        public GetOperationStatusContent(IEnumerable<string> operationIds, string correlationid)
+        /// <param name="correlationId"> CorrelationId item. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationIds"/> or <paramref name="correlationId"/> is null. </exception>
+        public GetOperationStatusContent(IEnumerable<string> operationIds, string correlationId)
         {
             Argument.AssertNotNull(operationIds, nameof(operationIds));
-            Argument.AssertNotNull(correlationid, nameof(correlationid));
+            Argument.AssertNotNull(correlationId, nameof(correlationId));
 
             OperationIds = operationIds.ToList();
-            Correlationid = correlationid;
+            CorrelationId = correlationId;
         }
 
         /// <summary> Initializes a new instance of <see cref="GetOperationStatusContent"/>. </summary>
         /// <param name="operationIds"> The list of operation ids to get the status of. </param>
-        /// <param name="correlationid"> Correlationid item. </param>
+        /// <param name="correlationId"> CorrelationId item. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetOperationStatusContent(IList<string> operationIds, string correlationid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetOperationStatusContent(IList<string> operationIds, string correlationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationIds = operationIds;
-            Correlationid = correlationid;
+            CorrelationId = correlationId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> The list of operation ids to get the status of. </summary>
         public IList<string> OperationIds { get; }
-        /// <summary> Correlationid item. </summary>
-        public string Correlationid { get; }
+        /// <summary> CorrelationId item. </summary>
+        public string CorrelationId { get; }
     }
 }

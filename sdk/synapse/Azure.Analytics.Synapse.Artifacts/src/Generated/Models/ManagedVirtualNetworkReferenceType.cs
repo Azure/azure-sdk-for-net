@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(ManagedVirtualNetworkReferenceType left, ManagedVirtualNetworkReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedVirtualNetworkReferenceType"/> values are not the same. </summary>
         public static bool operator !=(ManagedVirtualNetworkReferenceType left, ManagedVirtualNetworkReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedVirtualNetworkReferenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedVirtualNetworkReferenceType"/>. </summary>
         public static implicit operator ManagedVirtualNetworkReferenceType(string value) => new ManagedVirtualNetworkReferenceType(value);
 
         /// <inheritdoc />

@@ -51,7 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         public static bool operator ==(PredicateType left, PredicateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PredicateType"/> values are not the same. </summary>
         public static bool operator !=(PredicateType left, PredicateType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PredicateType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PredicateType"/>. </summary>
         public static implicit operator PredicateType(string value) => new PredicateType(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(SoftwareAssuranceStatus left, SoftwareAssuranceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SoftwareAssuranceStatus"/> values are not the same. </summary>
         public static bool operator !=(SoftwareAssuranceStatus left, SoftwareAssuranceStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SoftwareAssuranceStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SoftwareAssuranceStatus"/>. </summary>
         public static implicit operator SoftwareAssuranceStatus(string value) => new SoftwareAssuranceStatus(value);
 
         /// <inheritdoc />

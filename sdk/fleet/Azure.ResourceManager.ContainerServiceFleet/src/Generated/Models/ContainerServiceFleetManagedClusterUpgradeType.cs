@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static bool operator ==(ContainerServiceFleetManagedClusterUpgradeType left, ContainerServiceFleetManagedClusterUpgradeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceFleetManagedClusterUpgradeType"/> values are not the same. </summary>
         public static bool operator !=(ContainerServiceFleetManagedClusterUpgradeType left, ContainerServiceFleetManagedClusterUpgradeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerServiceFleetManagedClusterUpgradeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceFleetManagedClusterUpgradeType"/>. </summary>
         public static implicit operator ContainerServiceFleetManagedClusterUpgradeType(string value) => new ContainerServiceFleetManagedClusterUpgradeType(value);
 
         /// <inheritdoc />

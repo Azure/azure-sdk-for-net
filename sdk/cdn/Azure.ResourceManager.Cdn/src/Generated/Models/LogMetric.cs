@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(LogMetric left, LogMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogMetric"/> values are not the same. </summary>
         public static bool operator !=(LogMetric left, LogMetric right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogMetric"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogMetric"/>. </summary>
         public static implicit operator LogMetric(string value) => new LogMetric(value);
 
         /// <inheritdoc />

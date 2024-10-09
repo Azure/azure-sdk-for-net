@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(ScheduledActionWeeksOfMonth left, ScheduledActionWeeksOfMonth right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduledActionWeeksOfMonth"/> values are not the same. </summary>
         public static bool operator !=(ScheduledActionWeeksOfMonth left, ScheduledActionWeeksOfMonth right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScheduledActionWeeksOfMonth"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionWeeksOfMonth"/>. </summary>
         public static implicit operator ScheduledActionWeeksOfMonth(string value) => new ScheduledActionWeeksOfMonth(value);
 
         /// <inheritdoc />

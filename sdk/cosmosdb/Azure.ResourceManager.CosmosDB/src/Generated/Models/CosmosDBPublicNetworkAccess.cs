@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CosmosDBPublicNetworkAccess left, CosmosDBPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBPublicNetworkAccess left, CosmosDBPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBPublicNetworkAccess"/>. </summary>
         public static implicit operator CosmosDBPublicNetworkAccess(string value) => new CosmosDBPublicNetworkAccess(value);
 
         /// <inheritdoc />

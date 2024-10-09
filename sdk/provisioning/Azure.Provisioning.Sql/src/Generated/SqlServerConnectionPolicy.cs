@@ -62,11 +62,15 @@ public partial class SqlServerConnectionPolicy : Resource
     /// <summary>
     /// Creates a new SqlServerConnectionPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerConnectionPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerConnectionPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerConnectionPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerConnectionPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/connectionPolicies", resourceVersion ?? "2021-11-01", context)
+    public SqlServerConnectionPolicy(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/connectionPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _connectionType = BicepValue<ServerConnectionType>.DefineProperty(this, "ConnectionType", ["properties", "connectionType"]);
@@ -106,9 +110,14 @@ public partial class SqlServerConnectionPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerConnectionPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerConnectionPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerConnectionPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerConnectionPolicy.</param>
     /// <returns>The existing SqlServerConnectionPolicy resource.</returns>
-    public static SqlServerConnectionPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerConnectionPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

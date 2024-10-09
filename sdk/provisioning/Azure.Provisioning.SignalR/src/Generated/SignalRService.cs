@@ -207,11 +207,15 @@ public partial class SignalRService : Resource
     /// <summary>
     /// Creates a new SignalRService.
     /// </summary>
-    /// <param name="resourceName">Name of the SignalRService.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SignalRService resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SignalRService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SignalRService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.SignalRService/signalR", resourceVersion, context)
+    public SignalRService(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.SignalRService/signalR", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -243,13 +247,59 @@ public partial class SignalRService : Resource
     }
 
     /// <summary>
+    /// Supported SignalRService resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-04-01-preview.
+        /// </summary>
+        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
+
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2023-02-01.
+        /// </summary>
+        public static readonly string V2023_02_01 = "2023-02-01";
+
+        /// <summary>
+        /// 2022-02-01.
+        /// </summary>
+        public static readonly string V2022_02_01 = "2022-02-01";
+
+        /// <summary>
+        /// 2021-10-01.
+        /// </summary>
+        public static readonly string V2021_10_01 = "2021-10-01";
+
+        /// <summary>
+        /// 2020-05-01.
+        /// </summary>
+        public static readonly string V2020_05_01 = "2020-05-01";
+
+        /// <summary>
+        /// 2018-10-01.
+        /// </summary>
+        public static readonly string V2018_10_01 = "2018-10-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing SignalRService.
     /// </summary>
-    /// <param name="resourceName">Name of the SignalRService.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SignalRService resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SignalRService.</param>
     /// <returns>The existing SignalRService resource.</returns>
-    public static SignalRService FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SignalRService FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this SignalRService resource.
@@ -265,37 +315,39 @@ public partial class SignalRService : Resource
     /// <returns>The keys for this SignalRService resource.</returns>
     public SignalRKeys GetKeys() =>
         SignalRKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(ResourceName), "listKeys")));
+            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(IdentifierName), "listKeys")));
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// SignalRService.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this SignalRService.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(SignalRBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{ResourceName}_{identity.ResourceName}_{SignalRBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(SignalRBuiltInRole role, UserAssignedIdentity identity) =>
+        new($"{IdentifierName}_{identity.IdentifierName}_{SignalRBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(IdentifierName),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
         };
 
     /// <summary>
-    /// Assign a role to a principal that grants access to this SignalRService.
+    /// Creates a role assignment for a principal that grants access to this
+    /// SignalRService.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="identifierNameSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(SignalRBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{ResourceName}_{SignalRBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(SignalRBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? identifierNameSuffix = default) =>
+        new($"{IdentifierName}_{SignalRBuiltInRole.GetBuiltInRoleName(role)}{(identifierNameSuffix is null ? "" : "_")}{identifierNameSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(IdentifierName),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(DataBoxEdgeOSPlatformType left, DataBoxEdgeOSPlatformType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeOSPlatformType"/> values are not the same. </summary>
         public static bool operator !=(DataBoxEdgeOSPlatformType left, DataBoxEdgeOSPlatformType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeOSPlatformType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeOSPlatformType"/>. </summary>
         public static implicit operator DataBoxEdgeOSPlatformType(string value) => new DataBoxEdgeOSPlatformType(value);
 
         /// <inheritdoc />

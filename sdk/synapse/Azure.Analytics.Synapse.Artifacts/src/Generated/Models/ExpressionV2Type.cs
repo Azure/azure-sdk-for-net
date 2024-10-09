@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(ExpressionV2Type left, ExpressionV2Type right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressionV2Type"/> values are not the same. </summary>
         public static bool operator !=(ExpressionV2Type left, ExpressionV2Type right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExpressionV2Type"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressionV2Type"/>. </summary>
         public static implicit operator ExpressionV2Type(string value) => new ExpressionV2Type(value);
 
         /// <inheritdoc />

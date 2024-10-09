@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static bool operator ==(EndpointType left, EndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EndpointType"/> values are not the same. </summary>
         public static bool operator !=(EndpointType left, EndpointType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EndpointType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EndpointType"/>. </summary>
         public static implicit operator EndpointType(string value) => new EndpointType(value);
 
         /// <inheritdoc />

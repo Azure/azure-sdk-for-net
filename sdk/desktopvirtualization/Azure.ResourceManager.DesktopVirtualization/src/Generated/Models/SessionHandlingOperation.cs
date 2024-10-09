@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator ==(SessionHandlingOperation left, SessionHandlingOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SessionHandlingOperation"/> values are not the same. </summary>
         public static bool operator !=(SessionHandlingOperation left, SessionHandlingOperation right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SessionHandlingOperation"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SessionHandlingOperation"/>. </summary>
         public static implicit operator SessionHandlingOperation(string value) => new SessionHandlingOperation(value);
 
         /// <inheritdoc />

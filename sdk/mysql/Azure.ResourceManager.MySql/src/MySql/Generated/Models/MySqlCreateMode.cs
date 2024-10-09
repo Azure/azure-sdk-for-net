@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator ==(MySqlCreateMode left, MySqlCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlCreateMode"/> values are not the same. </summary>
         public static bool operator !=(MySqlCreateMode left, MySqlCreateMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MySqlCreateMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlCreateMode"/>. </summary>
         public static implicit operator MySqlCreateMode(string value) => new MySqlCreateMode(value);
 
         /// <inheritdoc />

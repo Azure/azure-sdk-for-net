@@ -20,6 +20,8 @@ public class BasicSearchTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 SearchService search =
                     new(nameof(search))
                     {
@@ -28,6 +30,9 @@ public class BasicSearchTests(bool async)
                         PartitionCount = 1,
                         HostingMode = SearchServiceHostingMode.Default,
                     };
+                infra.Add(search);
+
+                return infra;
             })
         .Compare(
             """

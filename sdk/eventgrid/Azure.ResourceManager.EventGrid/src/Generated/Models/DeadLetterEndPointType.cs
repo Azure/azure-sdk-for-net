@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(DeadLetterEndPointType left, DeadLetterEndPointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeadLetterEndPointType"/> values are not the same. </summary>
         public static bool operator !=(DeadLetterEndPointType left, DeadLetterEndPointType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeadLetterEndPointType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeadLetterEndPointType"/>. </summary>
         public static implicit operator DeadLetterEndPointType(string value) => new DeadLetterEndPointType(value);
 
         /// <inheritdoc />
