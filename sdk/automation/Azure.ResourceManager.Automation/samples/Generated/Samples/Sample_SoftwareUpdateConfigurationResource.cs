@@ -107,7 +107,7 @@ WorkspaceId = "WorkspaceId2",
             {
                 StartOn = DateTimeOffset.Parse("2017-10-19T12:22:57+00:00"),
                 ExpireOn = DateTimeOffset.Parse("2018-11-09T11:22:57+00:00"),
-                Interval = 1,
+                Interval = 1L,
                 Frequency = AutomationScheduleFrequency.Hour,
                 TimeZone = "America/Los_Angeles",
                 AdvancedSchedule = new AutomationAdvancedSchedule()
