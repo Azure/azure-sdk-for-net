@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Exposed `JsonModelWriteCore` for model serialization procedure.test
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
