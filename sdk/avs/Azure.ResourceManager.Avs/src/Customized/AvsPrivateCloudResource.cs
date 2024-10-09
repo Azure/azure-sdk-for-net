@@ -51,7 +51,6 @@ namespace Azure.ResourceManager.Avs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<WorkloadNetworkResource> GetWorkloadNetwork(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
-            // return GetWorkloadNetwork()
             return GetWorkloadNetworks().Get(workloadNetworkName, cancellationToken);
         }
 
@@ -82,7 +81,6 @@ namespace Azure.ResourceManager.Avs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<WorkloadNetworkResource>> GetWorkloadNetworkAsync(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
-            // workloadNetworkName.toString(), get async all workload networks and search if it exists
             return await GetWorkloadNetworks().GetAsync(workloadNetworkName, cancellationToken).ConfigureAwait(false);
         }
 

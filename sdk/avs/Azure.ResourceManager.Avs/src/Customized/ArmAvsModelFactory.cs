@@ -76,10 +76,6 @@ namespace Azure.ResourceManager.Avs.Models
             ExpressRouteCircuit secondaryCircuit = null,
             NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = null)
         {
-            tags ??= new Dictionary<string, string>();
-            identitySources ??= new List<SingleSignOnIdentitySource>();
-            externalCloudLinks ??= new List<ResourceIdentifier>();
-
             return AvsPrivateCloudData(
                 id: id,
                 name: name,
@@ -112,8 +108,6 @@ namespace Azure.ResourceManager.Avs.Models
                 virtualNetworkId: null,
                 dnsZoneType: null
             );
-
-            //externalCloudLinks?.ToList(), secondaryCircuit, nsxPublicIPQuotaRaised, null, null, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudData"/>. </summary>
