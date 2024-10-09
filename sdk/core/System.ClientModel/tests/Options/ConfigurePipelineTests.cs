@@ -10,6 +10,7 @@ using ClientModel.ReferenceClients.SimpleClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using static System.ClientModel.Tests.Options.LoggingOptionsTests;
 
 namespace System.ClientModel.Tests.Options;
 
@@ -153,6 +154,77 @@ public class ConfigurePipelineTests
         CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
         CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
         CollectionAssert.DoesNotContain(mapsClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
+    }
+
+    [Test]
+    public void CanConfigureCustomPolicyDifferentlyPerClient()
+    {
+        ServiceCollection services = new ServiceCollection();
+        ConfigurationManager configuration = new ConfigurationManager();
+        services.AddSingleton<IConfiguration>(sp => configuration);
+
+        configuration.AddInMemoryCollection(new List<KeyValuePair<string, string?>>()
+        {
+            // Common config block
+            new("ClientCommon:Logging:AllowedHeaderNames", null),
+            new("ClientCommon:Logging:AllowedHeaderNames:0", "x-common-config-allowed"),
+
+            // SimpleClient config block
+            new("SimpleClient:ServiceUri", "https://www.simple-service.com/"),
+            new("SimpleClient:Logging:AllowedHeaderNames", null),
+            new("SimpleClient:Logging:AllowedHeaderNames:0", "x-simple-config-allowed"),
+
+            // MapsClient config block
+            new("MapsClient:ServiceUri", "https://www.maps-service.com/"),
+            new("MapsClient:Logging:AllowedHeaderNames", null),
+            new("MapsClient:Logging:AllowedHeaderNames:0", "x-maps-config-allowed"),
+        });
+
+        // Add the two clients
+        services.AddSimpleClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("SimpleClient"));
+
+        services.AddMapsClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("MapsClient"));
+
+        // Add custom logging policy to service collection
+        services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
+
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
+        SimpleClient simpleClient = serviceProvider.GetRequiredService<SimpleClient>();
+        MapsClient mapsClient = serviceProvider.GetRequiredService<MapsClient>();
+
+        // Validate that both clients have headers from the common config block
+
+        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
+        CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
+
+        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
+        CollectionAssert.DoesNotContain(mapsClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
+
+        // Validate that the custom policy for each client is configured according to that client's options
+
+        CustomHttpLoggingPolicy? simpleClientPolicy = simpleClient.Options.HttpLoggingPolicy as CustomHttpLoggingPolicy;
+        Assert.IsNotNull(simpleClientPolicy);
+
+        CollectionAssert.Contains(simpleClientPolicy!.Options.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.Contains(simpleClientPolicy!.Options.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.Contains(simpleClientPolicy!.Options.AllowedHeaderNames, "x-simple-config-allowed");
+        CollectionAssert.DoesNotContain(simpleClientPolicy!.Options.AllowedHeaderNames, "x-maps-client-allowed");
+        CollectionAssert.DoesNotContain(simpleClientPolicy!.Options.AllowedHeaderNames, "x-maps-config-allowed");
+
+        CustomHttpLoggingPolicy? mapsClientPolicy = mapsClient.Options.HttpLoggingPolicy as CustomHttpLoggingPolicy;
+        Assert.IsNotNull(mapsClientPolicy);
+
+        CollectionAssert.Contains(mapsClientPolicy!.Options.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.Contains(mapsClientPolicy!.Options.AllowedHeaderNames, "x-maps-client-allowed");
+        CollectionAssert.Contains(mapsClientPolicy!.Options.AllowedHeaderNames, "x-maps-config-allowed");
+        CollectionAssert.DoesNotContain(mapsClientPolicy!.Options.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.DoesNotContain(mapsClientPolicy!.Options.AllowedHeaderNames, "x-simple-config-allowed");
     }
 
     [Test]
