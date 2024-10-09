@@ -54,7 +54,8 @@
     "sdk/remoterendering/*/api/*.cs",
     "sdk/videoanalyzer/*/api/*.cs",
     "sdk/newrelicobservability/*/api/*.cs",
-    "sdk/paloaltonetworks.ngfw/*/api/*.cs"
+    "sdk/paloaltonetworks.ngfw/*/api/*.cs",
+    "sdk/servicefabric/*/api/*.cs"
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
