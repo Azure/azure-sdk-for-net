@@ -45,7 +45,7 @@ namespace Azure.Maps.Weather.Models
         public static bool operator ==(PollutantType left, PollutantType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PollutantType"/> values are not the same. </summary>
         public static bool operator !=(PollutantType left, PollutantType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PollutantType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PollutantType"/>. </summary>
         public static implicit operator PollutantType(string value) => new PollutantType(value);
 
         /// <inheritdoc />

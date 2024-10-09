@@ -48,7 +48,7 @@ namespace Azure.Maps.Weather.Models
         public static bool operator ==(HourlyDuration left, HourlyDuration right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HourlyDuration"/> values are not the same. </summary>
         public static bool operator !=(HourlyDuration left, HourlyDuration right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HourlyDuration"/>. </summary>
+        /// <summary> Converts a <see cref="int"/> to a <see cref="HourlyDuration"/>. </summary>
         public static implicit operator HourlyDuration(int value) => new HourlyDuration(value);
 
         /// <inheritdoc />
