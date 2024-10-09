@@ -16,6 +16,7 @@ public partial class CloudMachineClient
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TokenCredential Credential { get; } = new ChainedTokenCredential(
+        new AzureCliCredential(),
         new AzureDeveloperCliCredential()
     );
 

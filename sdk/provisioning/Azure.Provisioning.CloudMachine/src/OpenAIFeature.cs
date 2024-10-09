@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using Azure.AI.OpenAI;
 using Azure.CloudMachine;
 using Azure.Provisioning.CognitiveServices;
@@ -54,14 +56,18 @@ public static class OpenAIFeatureExtensions
     {
         ChatClient client = cm.ClientCache.Get("aiai_chat", () =>
         {
-            AzureOpenAIClient sb = cm.ClientCache.Get("aoai", () =>
+            AzureOpenAIClient aoia = cm.ClientCache.Get("aoai", () =>
             {
                 Uri endpoint = new("https://eastus.api.cognitive.microsoft.com/");
-                AzureOpenAIClient aoai = new(endpoint, cm.Credential);
+                var op = new AzureOpenAIClientOptions();
+                op.AddPolicy(new LoggingPolicy(), PipelinePosition.BeforeTransport);
+                string key = Environment.GetEnvironmentVariable("openai_cm_key");
+                //AzureOpenAIClient aoai = new(endpoint, new System.ClientModel.ApiKeyCredential(key), op);
+                AzureOpenAIClient aoai = new(endpoint, cm.Credential, op);
                 return aoai;
             });
 
-            ChatClient chat = sb.GetChatClient(cm.Id);
+            ChatClient chat = aoia.GetChatClient(cm.Id);
             return chat;
         });
 

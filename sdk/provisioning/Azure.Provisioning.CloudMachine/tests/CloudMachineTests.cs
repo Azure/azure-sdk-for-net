@@ -42,7 +42,12 @@ public class CloudMachineTests
         CloudMachineClient cm = new();
         ChatClient chat = cm.GetOpenAIClient();
         ChatCompletion completion = chat.CompleteChat("Is Azure programming easy?");
-        Console.WriteLine(completion.Content);
+
+        ChatMessageContent content = completion.Content;
+        foreach (ChatMessageContentPart part in content)
+        {
+            Console.WriteLine(part.Text);
+        }
     }
 
     [Ignore("no recordings yet")]
@@ -60,7 +65,7 @@ public class CloudMachineTests
         secrets.SetSecret("testsecret", "don't tell anybody");
     }
 
-    [Ignore("no recordings yet")]
+    //[Ignore("no recordings yet")]
     [Theory]
     [TestCase([new string[] { "--init" }])]
     [TestCase([new string[] { "" }])]
@@ -108,8 +113,15 @@ public class CloudMachineTests
         if (CloudMachineInfrastructure.Configure(args)) return;
 
         CloudMachineClient cm = new();
+
+        // setup
         cm.WhenMessageReceived((string message) => cm.UploadBlob(message));
-        cm.WhenBlobUploaded((string content) => { Console.WriteLine(content); });
-        cm.SendMessage("Hello World");
+        cm.WhenBlobUploaded((string content) => {
+            ChatCompletion completion = cm.GetOpenAIClient().CompleteChat(content);
+            Console.WriteLine(completion.Content[0].Text);
+        });
+
+        // go!
+        cm.SendMessage("Tell me something about Redmond, WA.");
     }
 }
