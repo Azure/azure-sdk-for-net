@@ -141,6 +141,21 @@ public static class MapsClientServiceCollectionExtensions
             return options.Value.Logging;
         });
 
+        //services.AddKeyedSingleton<ClientLoggingOptions>(typeof(MapsClientOptions), (sp, key) =>
+        //{
+        //    IOptions<MapsClientOptions> options = sp.GetRequiredService<IOptions<MapsClientOptions>>();
+        //    return options.Value.Logging;
+        //});
+
+        //// Add as transient to these are recomputed each time ClientLoggingOptions
+        //// is requested ... this enables creating different custom policy instances
+        //// from different client configurations.
+        //services.AddTransient<ClientLoggingOptions>(sp =>
+        //{
+        //    IOptions<ClientLoggingOptions> options = sp.GetRequiredKeyedService<IOptions<ClientLoggingOptions>>(typeof(MapsClientOptions));
+        //    return options.Value;
+        //});
+
         services.AddSingleton<MapsClient>(sp =>
         {
             string? sectionName = (clientConfigurationSection as IConfigurationSection)?.Key;

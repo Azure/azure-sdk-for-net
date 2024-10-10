@@ -190,7 +190,9 @@ public class ConfigurePipelineTests
             configuration.GetSection("MapsClient"));
 
         // Add custom logging policy to service collection
-        services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
+        // Add it as transient so different policy configurations can be added
+        // to different clients...
+        services.AddTransient<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient simpleClient = serviceProvider.GetRequiredService<SimpleClient>();

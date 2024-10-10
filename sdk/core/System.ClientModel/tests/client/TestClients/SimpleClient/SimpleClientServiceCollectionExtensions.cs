@@ -28,6 +28,15 @@ public static class SimpleClientServiceCollectionExtensions
             .Configure<ILoggerFactory>((options, loggerFactory)
                 => options.Logging.LoggerFactory = loggerFactory);
 
+        //// Add client options
+        //services.AddOptions<SimpleClientOptions>()
+        //    .Configure<ILoggerFactory, LoggingOptionsResolver>(
+        //        (options, loggerFactory, optionsResolver) =>
+        //        {
+        //            options.Logging.LoggerFactory = loggerFactory;
+        //            optionsResolver.GetPolicy();
+        //        });
+
         // Proxy to logging options in case a custom logging policy is added
         services.AddSingleton<ClientLoggingOptions>(sp =>
         {
@@ -92,6 +101,14 @@ public static class SimpleClientServiceCollectionExtensions
             .Configure<ILoggerFactory>((options, loggerFactory)
                 => options.Logging.LoggerFactory = loggerFactory)
             .Bind(configurationSection);
+        //.Configure();
+
+        //services.AddTransient<IConfigureOptions<SimpleClientOptions>>(sp =>
+        //{
+
+        //    HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
+        //}
+        //)
 
         // Proxy to logging options in case a custom logging policy is added
         services.AddSingleton<ClientLoggingOptions>(sp =>
@@ -124,6 +141,8 @@ public static class SimpleClientServiceCollectionExtensions
 
             // Check whether known policy types have been added to the service
             // collection.
+            //sp.GetServices
+
             HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
             if (httpLoggingPolicy is not null)
             {
@@ -144,10 +163,21 @@ public static class SimpleClientServiceCollectionExtensions
     {
         services.AddLogging();
 
+        //// Use named options - attempt 1
+        //services.AddOptions()
+
+        //services.AddSingleton<LoggingOptionsResolver>();
+
         // Bind configuration to options
         services.AddOptions<SimpleClientOptions>()
-            .Configure<ILoggerFactory>((options, loggerFactory)
-                => options.Logging.LoggerFactory = loggerFactory)
+                .Configure<ILoggerFactory>((options, loggerFactory)
+                    => options.Logging.LoggerFactory = loggerFactory)
+            //.Configure<ILoggerFactory, LoggingOptionsResolver>(
+            //(options, loggerFactory, optionsResolver) =>
+            //{
+            //    options.Logging.LoggerFactory = loggerFactory;
+            //    optionsResolver.GetPolicy();
+            //})
             .Bind(commonConfigurationSection)
 
             // TODO: validate that binding to client config second allows client
@@ -160,6 +190,15 @@ public static class SimpleClientServiceCollectionExtensions
             IOptions<SimpleClientOptions> options = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
             return options.Value.Logging;
         });
+
+        //// Add as transient to these are recomputed each time ClientLoggingOptions
+        //// is requested ... this enables creating different custom policy instances
+        //// from different client configurations.
+        //services.AddTransient<ClientLoggingOptions>(sp =>
+        //{
+        //    IOptions<SimpleClientOptions> options = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
+        //    return options.Value.Logging;
+        //});
 
         services.AddSingleton<SimpleClient>(sp =>
         {
