@@ -26,9 +26,9 @@ public partial class Samples_AssistantsClient
         string azureApiKey = Environment.GetEnvironmentVariable("AOAI_API_KEY");
 
         #region Snippet:OverviewCreateClient
-        AssistantsClient client = isAzureOpenAI
-            ? new AssistantsClient(new Uri(azureResourceUrl), new AzureKeyCredential(azureApiKey))
-            : new AssistantsClient(nonAzureApiKey);
+        Agents client = isAzureOpenAI
+            ? new Agents(new Uri(azureResourceUrl), new AzureKeyCredential(azureApiKey))
+            : new Agents(nonAzureApiKey);
         #endregion
 
         // Step 1: Create an assistant

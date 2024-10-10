@@ -22,7 +22,7 @@ public class AssistantsTests : AssistantsTestBase
     [TestCase(OpenAIClientServiceTarget.Azure)]
     public async Task CanListAssistants(OpenAIClientServiceTarget target)
     {
-        AssistantsClient client = GetTestClient(target);
+        Agents client = GetTestClient(target);
         Response<PageableList<Assistant>> listResponse = await client.GetAssistantsAsync();
         AssertSuccessfulResponse(listResponse);
     }
@@ -32,7 +32,7 @@ public class AssistantsTests : AssistantsTestBase
     [TestCase(OpenAIClientServiceTarget.Azure)]
     public async Task CanCreateRetrieveListAndDeleteAssistants(OpenAIClientServiceTarget target)
     {
-        AssistantsClient client = GetTestClient(target);
+        Agents client = GetTestClient(target);
         string deploymentName = GetDeploymentOrModelName(target);
 
         // No assistant should exist with the metadata K/V pair we're going to use
@@ -97,7 +97,7 @@ public class AssistantsTests : AssistantsTestBase
     [TestCase(OpenAIClientServiceTarget.NonAzure)]
     public async Task CanCreateRetrieveAndDeleteThreads(OpenAIClientServiceTarget serviceTarget)
     {
-        AssistantsClient client = GetTestClient(serviceTarget);
+        Agents client = GetTestClient(serviceTarget);
 
         Response<AssistantThread> threadCreationResponse
             = await client.CreateThreadAsync(new AssistantThreadCreationOptions()
@@ -123,7 +123,7 @@ public class AssistantsTests : AssistantsTestBase
     [TestCase(OpenAIClientServiceTarget.NonAzure)]
     public async Task CanCreateAndModifyMessages(OpenAIClientServiceTarget serviceTarget)
     {
-        AssistantsClient client = GetTestClient(serviceTarget);
+        Agents client = GetTestClient(serviceTarget);
 
         Response<AssistantThread> threadCreationResponse
             = await client.CreateThreadAsync(new AssistantThreadCreationOptions()
@@ -178,7 +178,7 @@ public class AssistantsTests : AssistantsTestBase
     [TestCase(OpenAIClientServiceTarget.NonAzure)]
     public async Task CanRunAThread(OpenAIClientServiceTarget serviceTarget)
     {
-        AssistantsClient client = GetTestClient(serviceTarget);
+        Agents client = GetTestClient(serviceTarget);
 
         // Create an assistant
         Response<Assistant> assistantCreationResponse

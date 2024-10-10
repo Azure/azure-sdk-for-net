@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI.Assistants;
+namespace Azure.AI.Client.Models;
 
 internal partial class UploadFileRequest : IUtf8JsonSerializable
 {

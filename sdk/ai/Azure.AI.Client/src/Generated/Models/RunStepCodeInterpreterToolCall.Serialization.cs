@@ -27,7 +27,7 @@ namespace Azure.AI.Client.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("code_interpreter"u8);
-            writer.WriteObjectValue(InternalDetails, options);
+            writer.WriteObjectValue<InternalCodeInterpreterToolCallDetails>(InternalDetails, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("id"u8);

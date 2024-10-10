@@ -9,11 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Client;
-using Azure.AI.Client.Models;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI.Assistants
+namespace Azure.AI.Client.Models
 {
     internal partial class InternalOpenAIPageableListOfThreadRun : IUtf8JsonSerializable, IJsonModel<InternalOpenAIPageableListOfThreadRun>
     {
@@ -81,8 +79,8 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            Client.Models.OpenAIPageableListOfThreadRunObject @object = default;
-            IReadOnlyList<Client.Models.ThreadRun> data = default;
+            OpenAIPageableListOfThreadRunObject @object = default;
+            IReadOnlyList<ThreadRun> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -92,15 +90,15 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new Client.Models.OpenAIPageableListOfThreadRunObject(property.Value.GetString());
+                    @object = new OpenAIPageableListOfThreadRunObject(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    List<Client.Models.ThreadRun> array = new List<Client.Models.ThreadRun>();
+                    List<ThreadRun> array = new List<ThreadRun>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Client.Models.ThreadRun.DeserializeThreadRun(item, options));
+                        array.Add(ThreadRun.DeserializeThreadRun(item, options));
                     }
                     data = array;
                     continue;

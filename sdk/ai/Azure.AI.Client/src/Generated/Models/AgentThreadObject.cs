@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Client.Models
 {
     /// <summary> The AgentThread_object. </summary>
-    public readonly partial struct AgentThreadObject : IEquatable<AgentThreadObject>
+    internal readonly partial struct AgentThreadObject : IEquatable<AgentThreadObject>
     {
         private readonly string _value;
 

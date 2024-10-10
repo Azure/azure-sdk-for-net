@@ -40,8 +40,5 @@ namespace Azure.AI.Client.Models
         internal RequiredFunctionToolCall()
         {
         }
-
-        /// <summary> Detailed information about the function to be executed by the tool that includes name and arguments. </summary>
-        public InternalRequiredFunctionToolCallDetails InternalDetails { get; }
     }
 }

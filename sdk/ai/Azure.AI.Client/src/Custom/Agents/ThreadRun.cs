@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI.Assistants;
+namespace Azure.AI.Client.Models;
 
 [CodeGenSerialization(nameof(StartedAt), DeserializationValueHook = nameof(DeserializeNullableDateTimeOffset))]
 [CodeGenSerialization(nameof(ExpiresAt), DeserializationValueHook = nameof(DeserializeNullableDateTimeOffset))]
@@ -15,6 +15,13 @@ namespace Azure.AI.OpenAI.Assistants;
 [CodeGenSerialization(nameof(FailedAt), DeserializationValueHook = nameof(DeserializeNullableDateTimeOffset))]
 public partial class ThreadRun
 {
+    /*
+    * CUSTOM CODE DESCRIPTION:
+    *
+    * This change allows us to complete the customization of hiding an unnecessary "Object" discriminator.
+    */
+    internal string Object { get; }
+
     /*
      * CUSTOM CODE DESCRIPTION:
      *

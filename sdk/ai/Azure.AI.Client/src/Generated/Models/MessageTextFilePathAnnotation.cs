@@ -44,9 +44,6 @@ namespace Azure.AI.Client.Models
         internal MessageTextFilePathAnnotation()
         {
         }
-
-        /// <summary> A URL for the file that's generated when the agent used the code_interpreter tool to generate a file. </summary>
-        public InternalMessageTextFilePathDetails InternalDetails { get; set; }
         /// <summary> The first text index associated with this text annotation. </summary>
         public int? StartIndex { get; set; }
         /// <summary> The last text index associated with this text annotation. </summary>

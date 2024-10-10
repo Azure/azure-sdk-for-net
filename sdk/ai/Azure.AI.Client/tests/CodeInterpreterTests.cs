@@ -22,7 +22,7 @@ public class CodeInterpreterTests : AssistantsTestBase
     [TestCase(OpenAIClientServiceTarget.Azure)]
     public async Task InterpreterGeneratedImageWorks(OpenAIClientServiceTarget target)
     {
-        AssistantsClient client = GetTestClient(target);
+        Agents client = GetTestClient(target);
         string deploymentOrModelName = GetDeploymentOrModelName(target);
 
         Response<Assistant> assistantCreationResponse

@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.AI.OpenAI.Assistants;
+namespace Azure.AI.Client.Models;
 
 public partial class SubmitToolOutputsAction : RequiredAction
 {

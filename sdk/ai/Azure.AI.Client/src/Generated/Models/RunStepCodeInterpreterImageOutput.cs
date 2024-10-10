@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Client.Models
 {
     /// <summary> A representation of an image output emitted by a code interpreter tool in response to a tool call by the model. </summary>
-    internal partial class RunStepCodeInterpreterImageOutput : RunStepCodeInterpreterToolCallOutput
+    public partial class RunStepCodeInterpreterImageOutput : RunStepCodeInterpreterToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterImageOutput"/>. </summary>
         /// <param name="image"> Referential information for the image associated with this output. </param>

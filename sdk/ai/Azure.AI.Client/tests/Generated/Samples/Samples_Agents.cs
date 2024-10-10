@@ -721,8 +721,8 @@ key4165 = "tijsirnrvsmh",
             },
                 tools = Array.Empty<object>(),
                 stream = true,
-                temperature = 7,
-                top_p = 20,
+                temperature = 7F,
+                top_p = 20F,
                 max_prompt_tokens = 19,
                 max_completion_tokens = 30,
                 truncation_strategy = new
@@ -818,8 +818,8 @@ key4165 = "tijsirnrvsmh",
             },
                 tools = Array.Empty<object>(),
                 stream = true,
-                temperature = 7,
-                top_p = 20,
+                temperature = 7F,
+                top_p = 20F,
                 max_prompt_tokens = 19,
                 max_completion_tokens = 30,
                 truncation_strategy = new
@@ -1437,8 +1437,8 @@ key5680 = "ucsj",
                     },
                 },
                 stream = true,
-                temperature = 27,
-                top_p = 11,
+                temperature = 27F,
+                top_p = 11F,
                 max_prompt_tokens = 20,
                 max_completion_tokens = 2,
                 truncation_strategy = new
@@ -1582,8 +1582,8 @@ key5680 = "ucsj",
                     },
                 },
                 stream = true,
-                temperature = 27,
-                top_p = 11,
+                temperature = 27F,
+                top_p = 11F,
                 max_prompt_tokens = 20,
                 max_completion_tokens = 2,
                 truncation_strategy = new
@@ -1777,7 +1777,7 @@ key5680 = "ucsj",
             TokenCredential credential = new DefaultAzureCredential();
             Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
 
-            Response<OpenAIFile> response = client.UploadFile(null, (OpenAIFilePurpose)null);
+            Response<OpenAIFile> response = client.UploadFile((Stream)null, (OpenAIFilePurpose)null);
         }
 
         [Test]
@@ -1788,7 +1788,7 @@ key5680 = "ucsj",
             TokenCredential credential = new DefaultAzureCredential();
             Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
 
-            Response<OpenAIFile> response = await client.UploadFileAsync(null, (OpenAIFilePurpose)null);
+            Response<OpenAIFile> response = await client.UploadFileAsync((Stream)null, (OpenAIFilePurpose)null);
         }
 
         [Test]

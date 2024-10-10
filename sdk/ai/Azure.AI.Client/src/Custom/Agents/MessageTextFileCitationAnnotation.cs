@@ -3,7 +3,7 @@
 
 #nullable disable
 
-namespace Azure.AI.OpenAI.Assistants;
+namespace Azure.AI.Client.Models;
 
 /*
  * CUSTOM CODE DESCRIPTION:

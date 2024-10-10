@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI.Assistants;
+namespace Azure.AI.Client.Models;
 
 /*
  * CUSTOM CODE DESCRIPTION:
@@ -54,4 +54,43 @@ public partial class FunctionToolDefinition
     public FunctionToolDefinition(string name, string description)
         : this(name, description, BinaryData.FromObjectAsJson(new { type = "object", properties = new { } }))
     { }
+
+    /*
+    * CUSTOM CODE DESCRIPTION:
+    *
+    * These additions simply allow easy comparison between tool calls and tool definitions.
+    */
+
+    public static bool operator ==(FunctionToolDefinition functionToolDefinition, RunStepFunctionToolCall functionToolCall)
+        => functionToolDefinition.Name == functionToolCall.Name;
+
+    public static bool operator !=(FunctionToolDefinition functionToolDefinition, RunStepFunctionToolCall functionToolCall)
+        => functionToolDefinition.Name != functionToolCall.Name;
+
+    public static bool operator ==(RunStepFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
+        => functionToolCall.Name == functionToolDefinition.Name;
+
+    public static bool operator !=(RunStepFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
+        => functionToolCall.Name != functionToolDefinition.Name;
+
+    public static bool operator ==(FunctionToolDefinition functionToolDefinition, RequiredFunctionToolCall functionToolCall)
+        => functionToolDefinition.Name == functionToolCall.Name;
+
+    public static bool operator !=(FunctionToolDefinition functionToolDefinition, RequiredFunctionToolCall functionToolCall)
+        => functionToolDefinition.Name != functionToolCall.Name;
+
+    public static bool operator ==(RequiredFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
+        => functionToolCall.Name == functionToolDefinition.Name;
+
+    public static bool operator !=(RequiredFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
+        => functionToolCall.Name != functionToolDefinition.Name;
+
+    /// <inheritdoc/>
+    public override bool Equals(object obj)
+        => (obj is FunctionToolDefinition toolDefinition && Name == toolDefinition.Name)
+            || (obj is RunStepFunctionToolCall runStepToolCall && Name == runStepToolCall.Name)
+            || (obj is RequiredFunctionToolCall requiredToolCall && Name == requiredToolCall.Name);
+
+    /// <inheritdoc/>
+    public override int GetHashCode() => InternalFunction.GetHashCode();
 }

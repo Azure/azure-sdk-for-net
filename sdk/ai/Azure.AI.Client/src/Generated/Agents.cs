@@ -12,7 +12,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Client.Models;
-using Azure.AI.OpenAI.Assistants;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -239,11 +238,11 @@ namespace Azure.AI.Client
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<OpenAIPageableListOfAgent>> InternalGetAgentsAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<InternalOpenAIPageableListOfAgent>> InternalGetAgentsAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await InternalGetAgentsAsync(limit, order?.ToString(), after, before, context).ConfigureAwait(false);
-            return Response.FromValue(OpenAIPageableListOfAgent.FromResponse(response), response);
+            return Response.FromValue(InternalOpenAIPageableListOfAgent.FromResponse(response), response);
         }
 
         /// <summary> Gets a list of agents that were previously created. </summary>
@@ -252,11 +251,11 @@ namespace Azure.AI.Client
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<OpenAIPageableListOfAgent> InternalGetAgents(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual Response<InternalOpenAIPageableListOfAgent> InternalGetAgents(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = InternalGetAgents(limit, order?.ToString(), after, before, context);
-            return Response.FromValue(OpenAIPageableListOfAgent.FromResponse(response), response);
+            return Response.FromValue(InternalOpenAIPageableListOfAgent.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1207,7 +1206,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='CreateMessageAsync(string,MessageRole,string,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)']/*" />
-        public virtual async Task<Response<Models.ThreadMessage>> CreateMessageAsync(string threadId, MessageRole role, string content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadMessage>> CreateMessageAsync(string threadId, MessageRole role, string content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1215,7 +1214,7 @@ namespace Azure.AI.Client
             CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, attachments?.ToList() as IReadOnlyList<MessageAttachment> ?? new ChangeTrackingList<MessageAttachment>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateMessageAsync(threadId, createMessageRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(Models.ThreadMessage.FromResponse(response), response);
+            return Response.FromValue(ThreadMessage.FromResponse(response), response);
         }
 
         /// <summary> Creates a new message on a specified thread. </summary>
@@ -1236,7 +1235,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='CreateMessage(string,MessageRole,string,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)']/*" />
-        public virtual Response<Models.ThreadMessage> CreateMessage(string threadId, MessageRole role, string content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadMessage> CreateMessage(string threadId, MessageRole role, string content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1244,7 +1243,7 @@ namespace Azure.AI.Client
             CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, attachments?.ToList() as IReadOnlyList<MessageAttachment> ?? new ChangeTrackingList<MessageAttachment>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateMessage(threadId, createMessageRequest.ToRequestContent(), context);
-            return Response.FromValue(Models.ThreadMessage.FromResponse(response), response);
+            return Response.FromValue(ThreadMessage.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1464,14 +1463,14 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetMessageAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<Models.ThreadMessage>> GetMessageAsync(string threadId, string messageId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadMessage>> GetMessageAsync(string threadId, string messageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetMessageAsync(threadId, messageId, context).ConfigureAwait(false);
-            return Response.FromValue(Models.ThreadMessage.FromResponse(response), response);
+            return Response.FromValue(ThreadMessage.FromResponse(response), response);
         }
 
         /// <summary> Gets an existing message from an existing thread. </summary>
@@ -1481,14 +1480,14 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetMessage(string,string,CancellationToken)']/*" />
-        public virtual Response<Models.ThreadMessage> GetMessage(string threadId, string messageId, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadMessage> GetMessage(string threadId, string messageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetMessage(threadId, messageId, context);
-            return Response.FromValue(Models.ThreadMessage.FromResponse(response), response);
+            return Response.FromValue(ThreadMessage.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1583,7 +1582,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='UpdateMessageAsync(string,string,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
-        public virtual async Task<Response<Models.ThreadMessage>> UpdateMessageAsync(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadMessage>> UpdateMessageAsync(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
@@ -1591,7 +1590,7 @@ namespace Azure.AI.Client
             UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateMessageAsync(threadId, messageId, updateMessageRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(Models.ThreadMessage.FromResponse(response), response);
+            return Response.FromValue(ThreadMessage.FromResponse(response), response);
         }
 
         /// <summary> Modifies an existing message on an existing thread. </summary>
@@ -1602,7 +1601,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='UpdateMessage(string,string,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
-        public virtual Response<Models.ThreadMessage> UpdateMessage(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadMessage> UpdateMessage(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
@@ -1610,7 +1609,7 @@ namespace Azure.AI.Client
             UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateMessage(threadId, messageId, updateMessageRequest.ToRequestContent(), context);
-            return Response.FromValue(Models.ThreadMessage.FromResponse(response), response);
+            return Response.FromValue(ThreadMessage.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1745,7 +1744,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='CreateRunAsync(string,string,string,string,string,IEnumerable{ThreadMessage},IEnumerable{ToolDefinition},bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
-        public virtual async Task<Response<Models.ThreadRun>> CreateRunAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<Models.ThreadMessage> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadRun>> CreateRunAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessage> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(assistantId, nameof(assistantId));
@@ -1755,7 +1754,7 @@ namespace Azure.AI.Client
                 overrideModelName,
                 overrideInstructions,
                 additionalInstructions,
-                additionalMessages?.ToList() as IReadOnlyList<Models.ThreadMessage> ?? new ChangeTrackingList<Models.ThreadMessage>(),
+                additionalMessages?.ToList() as IReadOnlyList<ThreadMessage> ?? new ChangeTrackingList<ThreadMessage>(),
                 overrideTools?.ToList() as IReadOnlyList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
                 stream,
                 temperature,
@@ -1769,7 +1768,7 @@ namespace Azure.AI.Client
                 null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateRunAsync(threadId, createRunRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(Models.ThreadRun.FromResponse(response), response);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary> Creates a new run for an agent thread. </summary>
@@ -1816,7 +1815,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='CreateRun(string,string,string,string,string,IEnumerable{ThreadMessage},IEnumerable{ToolDefinition},bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
-        public virtual Response<Models.ThreadRun> CreateRun(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<Models.ThreadMessage> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> CreateRun(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessage> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(assistantId, nameof(assistantId));
@@ -1826,7 +1825,7 @@ namespace Azure.AI.Client
                 overrideModelName,
                 overrideInstructions,
                 additionalInstructions,
-                additionalMessages?.ToList() as IReadOnlyList<Models.ThreadMessage> ?? new ChangeTrackingList<Models.ThreadMessage>(),
+                additionalMessages?.ToList() as IReadOnlyList<ThreadMessage> ?? new ChangeTrackingList<ThreadMessage>(),
                 overrideTools?.ToList() as IReadOnlyList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
                 stream,
                 temperature,
@@ -1840,7 +1839,7 @@ namespace Azure.AI.Client
                 null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateRun(threadId, createRunRequest.ToRequestContent(), context);
-            return Response.FromValue(Models.ThreadRun.FromResponse(response), response);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1853,7 +1852,7 @@ namespace Azure.AI.Client
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateRunAsync(string,string,string,string,string,IEnumerable{Models.ThreadMessage},IEnumerable{ToolDefinition},bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateRunAsync(string,string,string,string,string,IEnumerable{ThreadMessage},IEnumerable{ToolDefinition},bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1895,7 +1894,7 @@ namespace Azure.AI.Client
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateRun(string,string,string,string,string,IEnumerable{Models.ThreadMessage},IEnumerable{ToolDefinition},bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateRun(string,string,string,string,string,IEnumerable{ThreadMessage},IEnumerable{ToolDefinition},bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2056,14 +2055,14 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetRunAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<Models.ThreadRun>> GetRunAsync(string threadId, string runId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadRun>> GetRunAsync(string threadId, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetRunAsync(threadId, runId, context).ConfigureAwait(false);
-            return Response.FromValue(Models.ThreadRun.FromResponse(response), response);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary> Gets an existing run from an existing thread. </summary>
@@ -2073,14 +2072,14 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetRun(string,string,CancellationToken)']/*" />
-        public virtual Response<Models.ThreadRun> GetRun(string threadId, string runId, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> GetRun(string threadId, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetRun(threadId, runId, context);
-            return Response.FromValue(Models.ThreadRun.FromResponse(response), response);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary>
@@ -2175,7 +2174,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='UpdateRunAsync(string,string,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
-        public virtual async Task<Response<Models.ThreadRun>> UpdateRunAsync(string threadId, string runId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadRun>> UpdateRunAsync(string threadId, string runId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
@@ -2183,7 +2182,7 @@ namespace Azure.AI.Client
             UpdateRunRequest updateRunRequest = new UpdateRunRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateRunAsync(threadId, runId, updateRunRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(Models.ThreadRun.FromResponse(response), response);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary> Modifies an existing thread run. </summary>
@@ -2194,7 +2193,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='UpdateRun(string,string,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
-        public virtual Response<Models.ThreadRun> UpdateRun(string threadId, string runId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> UpdateRun(string threadId, string runId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
@@ -2202,7 +2201,7 @@ namespace Azure.AI.Client
             UpdateRunRequest updateRunRequest = new UpdateRunRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateRun(threadId, runId, updateRunRequest.ToRequestContent(), context);
-            return Response.FromValue(Models.ThreadRun.FromResponse(response), response);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary>
@@ -2302,7 +2301,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="toolOutputs"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='SubmitToolOutputsToRunAsync(string,string,IEnumerable{ToolOutput},bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<Models.ThreadRun>> SubmitToolOutputsToRunAsync(string threadId, string runId, IEnumerable<Models.ToolOutput> toolOutputs, bool? stream = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, bool? stream = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
@@ -2311,7 +2310,7 @@ namespace Azure.AI.Client
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), stream, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await SubmitToolOutputsToRunAsync(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(Models.ThreadRun.FromResponse(response), response);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary> Submits outputs from tools as requested by tool calls in a run. Runs that need submitted tool outputs will have a status of 'requires_action' with a required_action.type of 'submit_tool_outputs'. </summary>
@@ -2323,7 +2322,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="toolOutputs"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='SubmitToolOutputsToRun(string,string,IEnumerable{ToolOutput},bool?,CancellationToken)']/*" />
-        public virtual Response<Models.ThreadRun> SubmitToolOutputsToRun(string threadId, string runId, IEnumerable<Models.ToolOutput> toolOutputs, bool? stream = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> SubmitToolOutputsToRun(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, bool? stream = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
@@ -2332,7 +2331,7 @@ namespace Azure.AI.Client
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), stream, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = SubmitToolOutputsToRun(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
-            return Response.FromValue(Models.ThreadRun.FromResponse(response), response);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary>
@@ -2345,7 +2344,7 @@ namespace Azure.AI.Client
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SubmitToolOutputsToRunAsync(string,string,IEnumerable{Models.ToolOutput},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SubmitToolOutputsToRunAsync(string,string,IEnumerable{ToolOutput},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2389,7 +2388,7 @@ namespace Azure.AI.Client
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SubmitToolOutputsToRun(string,string,IEnumerable{Models.ToolOutput},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SubmitToolOutputsToRun(string,string,IEnumerable{ToolOutput},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2430,14 +2429,14 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='CancelRunAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<Models.ThreadRun>> CancelRunAsync(string threadId, string runId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadRun>> CancelRunAsync(string threadId, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CancelRunAsync(threadId, runId, context).ConfigureAwait(false);
-            return Response.FromValue(Models.ThreadRun.FromResponse(response), response);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary> Cancels a run of an in progress thread. </summary>
@@ -2447,14 +2446,14 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='CancelRun(string,string,CancellationToken)']/*" />
-        public virtual Response<Models.ThreadRun> CancelRun(string threadId, string runId, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> CancelRun(string threadId, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CancelRun(threadId, runId, context);
-            return Response.FromValue(Models.ThreadRun.FromResponse(response), response);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary>
@@ -2580,7 +2579,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='CreateThreadAndRunAsync(string,AgentThreadCreationOptions,string,string,IEnumerable{ToolDefinition},UpdateToolResourcesOptions,bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
-        public virtual async Task<Response<Models.ThreadRun>> CreateThreadAndRunAsync(string assistantId, AgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(string assistantId, AgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(assistantId, nameof(assistantId));
 
@@ -2603,7 +2602,7 @@ namespace Azure.AI.Client
                 null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateThreadAndRunAsync(createThreadAndRunRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(Models.ThreadRun.FromResponse(response), response);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary> Creates a new agent thread and immediately starts a run using that new thread. </summary>
@@ -2645,7 +2644,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='CreateThreadAndRun(string,AgentThreadCreationOptions,string,string,IEnumerable{ToolDefinition},UpdateToolResourcesOptions,bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
-        public virtual Response<Models.ThreadRun> CreateThreadAndRun(string assistantId, AgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> CreateThreadAndRun(string assistantId, AgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(assistantId, nameof(assistantId));
 
@@ -2668,7 +2667,7 @@ namespace Azure.AI.Client
                 null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateThreadAndRun(createThreadAndRunRequest.ToRequestContent(), context);
-            return Response.FromValue(Models.ThreadRun.FromResponse(response), response);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary>
@@ -2757,7 +2756,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetRunStepAsync(string,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<Models.RunStep>> GetRunStepAsync(string threadId, string runId, string stepId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RunStep>> GetRunStepAsync(string threadId, string runId, string stepId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
@@ -2765,7 +2764,7 @@ namespace Azure.AI.Client
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetRunStepAsync(threadId, runId, stepId, context).ConfigureAwait(false);
-            return Response.FromValue(Models.RunStep.FromResponse(response), response);
+            return Response.FromValue(RunStep.FromResponse(response), response);
         }
 
         /// <summary> Gets a single run step from a thread run. </summary>
@@ -2776,7 +2775,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetRunStep(string,string,string,CancellationToken)']/*" />
-        public virtual Response<Models.RunStep> GetRunStep(string threadId, string runId, string stepId, CancellationToken cancellationToken = default)
+        public virtual Response<RunStep> GetRunStep(string threadId, string runId, string stepId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
@@ -2784,7 +2783,7 @@ namespace Azure.AI.Client
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetRunStep(threadId, runId, stepId, context);
-            return Response.FromValue(Models.RunStep.FromResponse(response), response);
+            return Response.FromValue(RunStep.FromResponse(response), response);
         }
 
         /// <summary>
@@ -3102,15 +3101,15 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='UploadFileAsync(Stream,OpenAIFilePurpose,string,CancellationToken)']/*" />
-        public virtual async Task<Response<Models.OpenAIFile>> UploadFileAsync(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OpenAIFile>> UploadFileAsync(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            Models.UploadFileRequest uploadFileRequest = new Models.UploadFileRequest(data, purpose, filename, null);
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
-            return Response.FromValue(Models.OpenAIFile.FromResponse(response), response);
+            return Response.FromValue(OpenAIFile.FromResponse(response), response);
         }
 
         /// <summary> Uploads a file for use by other operations. </summary>
@@ -3120,15 +3119,15 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='UploadFile(Stream,OpenAIFilePurpose,string,CancellationToken)']/*" />
-        public virtual Response<Models.OpenAIFile> UploadFile(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
+        public virtual Response<OpenAIFile> UploadFile(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            Models.UploadFileRequest uploadFileRequest = new Models.UploadFileRequest(data, purpose, filename, null);
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UploadFile(content, content.ContentType, context);
-            return Response.FromValue(Models.OpenAIFile.FromResponse(response), response);
+            return Response.FromValue(OpenAIFile.FromResponse(response), response);
         }
 
         /// <summary>
@@ -3323,13 +3322,13 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetFileAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<Models.OpenAIFile>> GetFileAsync(string fileId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OpenAIFile>> GetFileAsync(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetFileAsync(fileId, context).ConfigureAwait(false);
-            return Response.FromValue(Models.OpenAIFile.FromResponse(response), response);
+            return Response.FromValue(OpenAIFile.FromResponse(response), response);
         }
 
         /// <summary> Returns information about a specific file. Does not retrieve file content. </summary>
@@ -3338,13 +3337,13 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Agents.xml" path="doc/members/member[@name='GetFile(string,CancellationToken)']/*" />
-        public virtual Response<Models.OpenAIFile> GetFile(string fileId, CancellationToken cancellationToken = default)
+        public virtual Response<OpenAIFile> GetFile(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetFile(fileId, context);
-            return Response.FromValue(Models.OpenAIFile.FromResponse(response), response);
+            return Response.FromValue(OpenAIFile.FromResponse(response), response);
         }
 
         /// <summary>

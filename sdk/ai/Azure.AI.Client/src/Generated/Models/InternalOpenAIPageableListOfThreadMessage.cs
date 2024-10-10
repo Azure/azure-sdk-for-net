@@ -8,10 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Client;
-using Azure.AI.Client.Models;
 
-namespace Azure.AI.OpenAI.Assistants
+namespace Azure.AI.Client.Models
 {
     /// <summary> The response data for a requested list of items. </summary>
     internal partial class InternalOpenAIPageableListOfThreadMessage
@@ -54,7 +52,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/>, <paramref name="firstId"/> or <paramref name="lastId"/> is null. </exception>
-        internal InternalOpenAIPageableListOfThreadMessage(IEnumerable<Client.Models.ThreadMessage> data, string firstId, string lastId, bool hasMore)
+        internal InternalOpenAIPageableListOfThreadMessage(IEnumerable<ThreadMessage> data, string firstId, string lastId, bool hasMore)
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(firstId, nameof(firstId));
@@ -73,7 +71,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalOpenAIPageableListOfThreadMessage(Client.Models.OpenAIPageableListOfThreadMessageObject @object, IReadOnlyList<Client.Models.ThreadMessage> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalOpenAIPageableListOfThreadMessage(OpenAIPageableListOfThreadMessageObject @object, IReadOnlyList<ThreadMessage> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Object = @object;
             Data = data;
@@ -89,10 +87,10 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> The object type, which is always list. </summary>
-        public Client.Models.OpenAIPageableListOfThreadMessageObject Object { get; } = Client.Models.OpenAIPageableListOfThreadMessageObject.List;
+        public OpenAIPageableListOfThreadMessageObject Object { get; } = OpenAIPageableListOfThreadMessageObject.List;
 
         /// <summary> The requested list of items. </summary>
-        public IReadOnlyList<Client.Models.ThreadMessage> Data { get; }
+        public IReadOnlyList<ThreadMessage> Data { get; }
         /// <summary> The first ID represented in this list. </summary>
         public string FirstId { get; }
         /// <summary> The last ID represented in this list. </summary>

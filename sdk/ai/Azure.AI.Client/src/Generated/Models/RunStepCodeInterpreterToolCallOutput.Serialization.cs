@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.AI.Client.Models
 {
     [PersistableModelProxy(typeof(UnknownRunStepCodeInterpreterToolCallOutput))]
-    internal partial class RunStepCodeInterpreterToolCallOutput : IUtf8JsonSerializable, IJsonModel<RunStepCodeInterpreterToolCallOutput>
+    public partial class RunStepCodeInterpreterToolCallOutput : IUtf8JsonSerializable, IJsonModel<RunStepCodeInterpreterToolCallOutput>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepCodeInterpreterToolCallOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

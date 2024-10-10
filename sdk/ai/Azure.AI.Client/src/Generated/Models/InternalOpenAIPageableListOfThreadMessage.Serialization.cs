@@ -9,11 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Client;
-using Azure.AI.Client.Models;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI.Assistants
+namespace Azure.AI.Client.Models
 {
     internal partial class InternalOpenAIPageableListOfThreadMessage : IUtf8JsonSerializable, IJsonModel<InternalOpenAIPageableListOfThreadMessage>
     {
@@ -81,8 +79,8 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            Client.Models.OpenAIPageableListOfThreadMessageObject @object = default;
-            IReadOnlyList<Client.Models.ThreadMessage> data = default;
+            OpenAIPageableListOfThreadMessageObject @object = default;
+            IReadOnlyList<ThreadMessage> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -92,15 +90,15 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new Client.Models.OpenAIPageableListOfThreadMessageObject(property.Value.GetString());
+                    @object = new OpenAIPageableListOfThreadMessageObject(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    List<Client.Models.ThreadMessage> array = new List<Client.Models.ThreadMessage>();
+                    List<ThreadMessage> array = new List<ThreadMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Client.Models.ThreadMessage.DeserializeThreadMessage(item, options));
+                        array.Add(ThreadMessage.DeserializeThreadMessage(item, options));
                     }
                     data = array;
                     continue;

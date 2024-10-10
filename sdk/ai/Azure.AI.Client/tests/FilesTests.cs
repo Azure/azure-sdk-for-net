@@ -23,7 +23,7 @@ public class FilesTests : AssistantsTestBase
     [TestCase(OpenAIClientServiceTarget.Azure)]
     public async Task CanWorkWithFiles(OpenAIClientServiceTarget target)
     {
-        AssistantsClient client = GetTestClient(target);
+        Agents client = GetTestClient(target);
 
         // Uploading a file should work
         OpenAIFile uploadedFile = null;
@@ -83,7 +83,7 @@ public class FilesTests : AssistantsTestBase
     [TestCase(OpenAIClientServiceTarget.Azure)]
     public async Task ConvenienceMethodWorks(OpenAIClientServiceTarget target)
     {
-        AssistantsClient client = GetTestClient(target);
+        Agents client = GetTestClient(target);
 
         string temporaryFilePath = Path.GetTempFileName();
         FileInfo temporaryFileInfo = new(temporaryFilePath);

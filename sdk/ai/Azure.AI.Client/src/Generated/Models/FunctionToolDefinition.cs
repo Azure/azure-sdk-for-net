@@ -14,17 +14,6 @@ namespace Azure.AI.Client.Models
     public partial class FunctionToolDefinition : ToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="FunctionToolDefinition"/>. </summary>
-        /// <param name="internalFunction"> The definition of the concrete function that the function tool should call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="internalFunction"/> is null. </exception>
-        public FunctionToolDefinition(InternalFunctionDefinition internalFunction)
-        {
-            Argument.AssertNotNull(internalFunction, nameof(internalFunction));
-
-            Type = "function";
-            InternalFunction = internalFunction;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FunctionToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalFunction"> The definition of the concrete function that the function tool should call. </param>
@@ -37,8 +26,5 @@ namespace Azure.AI.Client.Models
         internal FunctionToolDefinition()
         {
         }
-
-        /// <summary> The definition of the concrete function that the function tool should call. </summary>
-        public InternalFunctionDefinition InternalFunction { get; set; }
     }
 }

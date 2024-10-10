@@ -37,8 +37,5 @@ namespace Azure.AI.Client.Models
         internal SubmitToolOutputsAction()
         {
         }
-
-        /// <summary> The details describing tools that should be called to submit tool outputs. </summary>
-        public InternalSubmitToolOutputsDetails InternalDetails { get; }
     }
 }

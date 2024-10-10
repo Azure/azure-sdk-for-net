@@ -40,8 +40,8 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
             ? TimeSpan.FromMilliseconds(10)
             : TimeSpan.FromMilliseconds(500);
 
-    public List<(AssistantsClient, string)> EnsuredFileDeletions = new();
-    public List<(AssistantsClient, string)> EnsuredThreadDeletions = new();
+    public List<(Agents, string)> EnsuredFileDeletions = new();
+    public List<(Agents, string)> EnsuredThreadDeletions = new();
 
     protected AssistantsTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
     {
@@ -70,7 +70,7 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
                 {
                     // Best effort attempt to find items with the metadata key/value this run added and remove them
                     // -- or to remove older runs' entries with the key and a different value.
-                    AssistantsClient client = GetTestClient(serviceTarget);
+                    Agents client = GetTestClient(serviceTarget);
 
                     Response<PageableList<Assistant>> assistantListResponse = await client.GetAssistantsAsync();
 
@@ -103,7 +103,7 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
     {
         if (Recording.Mode != RecordedTestMode.Playback)
         {
-            foreach ((AssistantsClient client, string fileId) in EnsuredFileDeletions)
+            foreach ((Agents client, string fileId) in EnsuredFileDeletions)
             {
                 try
                 {
@@ -112,7 +112,7 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
                 catch (Exception)
                 { }
             }
-            foreach ((AssistantsClient client, string threadId) in EnsuredThreadDeletions)
+            foreach ((Agents client, string threadId) in EnsuredThreadDeletions)
             {
                 try
                 {

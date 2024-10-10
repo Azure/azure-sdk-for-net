@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Client.Models
 {
     /// <summary> The RunStep_object. </summary>
-    public readonly partial struct RunStepObject : IEquatable<RunStepObject>
+    internal readonly partial struct RunStepObject : IEquatable<RunStepObject>
     {
         private readonly string _value;
 

@@ -37,8 +37,5 @@ namespace Azure.AI.Client.Models
         internal MessageTextContent()
         {
         }
-
-        /// <summary> The text and associated annotations for this thread message content item. </summary>
-        public InternalMessageTextDetails InternalDetails { get; set; }
     }
 }

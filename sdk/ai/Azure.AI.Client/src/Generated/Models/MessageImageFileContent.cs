@@ -37,8 +37,5 @@ namespace Azure.AI.Client.Models
         internal MessageImageFileContent()
         {
         }
-
-        /// <summary> The image file for this thread message content item. </summary>
-        public InternalMessageImageFileDetails InternalDetails { get; set; }
     }
 }

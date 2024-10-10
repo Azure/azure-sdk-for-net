@@ -3,7 +3,7 @@
 
 #nullable disable
 
-namespace Azure.AI.OpenAI.Assistants;
+namespace Azure.AI.Client.Models;
 
 /*
  * CUSTOM CODE DESCRIPTION:
@@ -12,10 +12,10 @@ namespace Azure.AI.OpenAI.Assistants;
  * is to avoid having types that contain nothing meaningful beyond a property to another type.
  */
 
-public partial class MessageImageFileContent
+public partial class MessageTextFilePathAnnotation : MessageTextAnnotation
 {
-    /// <inheritdoc cref="InternalMessageImageFileDetails.InternalDetails"/>
-    public string FileId => InternalDetails.InternalDetails;
+    /// <inheritdoc cref="InternalMessageTextFilePathDetails.FileId"/>
+    public string FileId => InternalDetails.FileId;
 
-    internal InternalMessageImageFileDetails InternalDetails { get; }
+    internal InternalMessageTextFilePathDetails InternalDetails { get; }
 }

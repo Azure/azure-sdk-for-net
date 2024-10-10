@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Client.Models
 {
-    internal partial class OpenAIPageableListOfAgent : IUtf8JsonSerializable, IJsonModel<OpenAIPageableListOfAgent>
+    internal partial class InternalOpenAIPageableListOfAgent : IUtf8JsonSerializable, IJsonModel<InternalOpenAIPageableListOfAgent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenAIPageableListOfAgent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalOpenAIPageableListOfAgent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OpenAIPageableListOfAgent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InternalOpenAIPageableListOfAgent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOfAgent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalOpenAIPageableListOfAgent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAIPageableListOfAgent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAgent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,19 +59,19 @@ namespace Azure.AI.Client.Models
             writer.WriteEndObject();
         }
 
-        OpenAIPageableListOfAgent IJsonModel<OpenAIPageableListOfAgent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        InternalOpenAIPageableListOfAgent IJsonModel<InternalOpenAIPageableListOfAgent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOfAgent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalOpenAIPageableListOfAgent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAIPageableListOfAgent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAgent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOpenAIPageableListOfAgent(document.RootElement, options);
+            return DeserializeInternalOpenAIPageableListOfAgent(document.RootElement, options);
         }
 
-        internal static OpenAIPageableListOfAgent DeserializeOpenAIPageableListOfAgent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static InternalOpenAIPageableListOfAgent DeserializeInternalOpenAIPageableListOfAgent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -124,7 +124,7 @@ namespace Azure.AI.Client.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OpenAIPageableListOfAgent(
+            return new InternalOpenAIPageableListOfAgent(
                 @object,
                 data,
                 firstId,
@@ -133,43 +133,43 @@ namespace Azure.AI.Client.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<OpenAIPageableListOfAgent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<InternalOpenAIPageableListOfAgent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOfAgent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalOpenAIPageableListOfAgent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OpenAIPageableListOfAgent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAgent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OpenAIPageableListOfAgent IPersistableModel<OpenAIPageableListOfAgent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        InternalOpenAIPageableListOfAgent IPersistableModel<InternalOpenAIPageableListOfAgent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOfAgent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalOpenAIPageableListOfAgent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeOpenAIPageableListOfAgent(document.RootElement, options);
+                        return DeserializeInternalOpenAIPageableListOfAgent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenAIPageableListOfAgent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalOpenAIPageableListOfAgent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OpenAIPageableListOfAgent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InternalOpenAIPageableListOfAgent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static OpenAIPageableListOfAgent FromResponse(Response response)
+        internal static InternalOpenAIPageableListOfAgent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeOpenAIPageableListOfAgent(document.RootElement);
+            return DeserializeInternalOpenAIPageableListOfAgent(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

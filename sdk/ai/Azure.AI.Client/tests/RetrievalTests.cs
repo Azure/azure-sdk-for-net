@@ -22,7 +22,7 @@ public class RetrievalTests : AssistantsTestBase
     [TestCase(OpenAIClientServiceTarget.Azure)]
     public async Task BasicRetrievalWorks(OpenAIClientServiceTarget target)
     {
-        AssistantsClient client = GetTestClient(target);
+        Agents client = GetTestClient(target);
         string deploymentOrModelName = GetDeploymentOrModelName(target);
 
         OpenAIFile uploadedFile = null;

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.AI.OpenAI.Assistants;
+namespace Azure.AI.Client.Models;
 
 /*
  * CUSTOM CODE DESCRIPTION:
@@ -9,5 +9,5 @@ namespace Azure.AI.OpenAI.Assistants;
  * This change allows us to complete the customization of hiding an unnecessary "Object" single-use nested type.
  */
 
-internal readonly partial struct InternalFileListResponseObject
+internal readonly partial struct InternalAgentDeletionStatusObject
 { }

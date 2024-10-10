@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Client.Models
 {
     /// <summary> The Agent_object. </summary>
-    public readonly partial struct AgentObject : IEquatable<AgentObject>
+    internal readonly partial struct AgentObject : IEquatable<AgentObject>
     {
         private readonly string _value;
 

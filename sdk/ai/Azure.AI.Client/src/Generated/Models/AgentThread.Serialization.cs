@@ -29,7 +29,7 @@ namespace Azure.AI.Client.Models
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object.ToString());
+            writer.WriteStringValue(Object);
             writer.WritePropertyName("created_at"u8);
             writer.WriteNumberValue(CreatedAt, "U");
             if (ToolResources != null)
@@ -95,7 +95,7 @@ namespace Azure.AI.Client.Models
                 return null;
             }
             string id = default;
-            AgentThreadObject @object = default;
+            string @object = default;
             DateTimeOffset createdAt = default;
             ToolResources toolResources = default;
             IReadOnlyDictionary<string, string> metadata = default;
@@ -110,7 +110,7 @@ namespace Azure.AI.Client.Models
                 }
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new AgentThreadObject(property.Value.GetString());
+                    @object = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("created_at"u8))

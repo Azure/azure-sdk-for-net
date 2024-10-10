@@ -15,7 +15,7 @@ namespace Azure.AI.Client.Models
     /// Please note <see cref="RunStepCodeInterpreterToolCallOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RunStepCodeInterpreterImageOutput"/> and <see cref="RunStepCodeInterpreterLogOutput"/>.
     /// </summary>
-    internal abstract partial class RunStepCodeInterpreterToolCallOutput
+    public abstract partial class RunStepCodeInterpreterToolCallOutput
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

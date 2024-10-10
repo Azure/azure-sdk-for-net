@@ -43,8 +43,5 @@ namespace Azure.AI.Client.Models
         internal RunStepFunctionToolCall()
         {
         }
-
-        /// <summary> The detailed information about the function called by the model. </summary>
-        public InternalRunStepFunctionToolCallDetails InternalDetails { get; }
     }
 }

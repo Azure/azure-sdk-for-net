@@ -23,7 +23,7 @@ public class FunctionsTests : AssistantsTestBase
     [TestCase(OpenAIClientServiceTarget.Azure)]
     public async Task CanCallParallelFunctions(OpenAIClientServiceTarget target)
     {
-        AssistantsClient client = GetTestClient(target);
+        Agents client = GetTestClient(target);
 
         FunctionToolDefinition favoriteVacationDestinationFunction = new(
             name: "getFavoriteVacationDestination",

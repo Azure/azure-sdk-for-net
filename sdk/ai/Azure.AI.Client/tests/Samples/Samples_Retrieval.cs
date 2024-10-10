@@ -26,9 +26,9 @@ public partial class Samples_AssistantsClient
         string nonAzureApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
         string azureApiKey = Environment.GetEnvironmentVariable("AOAI_API_KEY");
 
-        AssistantsClient client = isAzureOpenAI
-            ? new AssistantsClient(new Uri(azureResourceUrl), new AzureKeyCredential(azureApiKey))
-            : new AssistantsClient(nonAzureApiKey);
+        Agents client = isAzureOpenAI
+            ? new Agents(new Uri(azureResourceUrl), new AzureKeyCredential(azureApiKey))
+            : new Agents(nonAzureApiKey);
 
         #region Snippet:UploadAssistantFilesToUse
         File.WriteAllText(

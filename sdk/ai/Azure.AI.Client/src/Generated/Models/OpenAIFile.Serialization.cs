@@ -27,7 +27,7 @@ namespace Azure.AI.Client.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object.ToString());
+            writer.WriteStringValue(Object);
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("bytes"u8);
@@ -86,7 +86,7 @@ namespace Azure.AI.Client.Models
             {
                 return null;
             }
-            OpenAIFileObject @object = default;
+            string @object = default;
             string id = default;
             int bytes = default;
             string filename = default;
@@ -100,7 +100,7 @@ namespace Azure.AI.Client.Models
             {
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new OpenAIFileObject(property.Value.GetString());
+                    @object = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -110,7 +110,7 @@ namespace Azure.AI.Client.Models
                 }
                 if (property.NameEquals("bytes"u8))
                 {
-                    bytes = property.Value.GetInt32();
+                    DeserializeNullableSize(property, ref bytes);
                     continue;
                 }
                 if (property.NameEquals("filename"u8))

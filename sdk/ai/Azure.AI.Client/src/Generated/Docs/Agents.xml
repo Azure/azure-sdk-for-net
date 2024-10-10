@@ -725,8 +725,8 @@ using RequestContent content = RequestContent.Create(new
     },
     tools = Array.Empty<object>(),
     stream = true,
-    temperature = 7,
-    top_p = 20,
+    temperature = 7F,
+    top_p = 20F,
     max_prompt_tokens = 19,
     max_completion_tokens = 30,
     truncation_strategy = new
@@ -822,8 +822,8 @@ using RequestContent content = RequestContent.Create(new
     },
     tools = Array.Empty<object>(),
     stream = true,
-    temperature = 7,
-    top_p = 20,
+    temperature = 7F,
+    top_p = 20F,
     max_prompt_tokens = 19,
     max_completion_tokens = 30,
     truncation_strategy = new
@@ -1441,8 +1441,8 @@ using RequestContent content = RequestContent.Create(new
         },
     },
     stream = true,
-    temperature = 27,
-    top_p = 11,
+    temperature = 27F,
+    top_p = 11F,
     max_prompt_tokens = 20,
     max_completion_tokens = 2,
     truncation_strategy = new
@@ -1586,8 +1586,8 @@ using RequestContent content = RequestContent.Create(new
         },
     },
     stream = true,
-    temperature = 27,
-    top_p = 11,
+    temperature = 27F,
+    top_p = 11F,
     max_prompt_tokens = 20,
     max_completion_tokens = 2,
     truncation_strategy = new
@@ -1719,7 +1719,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
 
-Response<OpenAIFile> response = await client.UploadFileAsync(null, (OpenAIFilePurpose)null);
+Response<OpenAIFile> response = await client.UploadFileAsync((Stream)null, (OpenAIFilePurpose)null);
 ]]></code></example>
     </member>
     <member name="UploadFile(Stream,OpenAIFilePurpose,string,CancellationToken)">
@@ -1730,7 +1730,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
 
-Response<OpenAIFile> response = client.UploadFile(null, (OpenAIFilePurpose)null);
+Response<OpenAIFile> response = client.UploadFile((Stream)null, (OpenAIFilePurpose)null);
 ]]></code></example>
     </member>
     <member name="UploadFileAsync(RequestContent,string,RequestContext)">

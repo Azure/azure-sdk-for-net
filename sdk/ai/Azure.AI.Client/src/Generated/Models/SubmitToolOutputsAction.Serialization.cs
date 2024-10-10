@@ -27,7 +27,7 @@ namespace Azure.AI.Client.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("submit_tool_outputs"u8);
-            writer.WriteObjectValue(InternalDetails, options);
+            writer.WriteObjectValue<InternalSubmitToolOutputsDetails>(InternalDetails, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

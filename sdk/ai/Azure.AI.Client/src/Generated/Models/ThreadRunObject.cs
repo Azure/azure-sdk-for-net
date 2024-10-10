@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Client.Models
 {
     /// <summary> The ThreadRun_object. </summary>
-    public readonly partial struct ThreadRunObject : IEquatable<ThreadRunObject>
+    internal readonly partial struct ThreadRunObject : IEquatable<ThreadRunObject>
     {
         private readonly string _value;
 

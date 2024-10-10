@@ -3,7 +3,9 @@
 
 #nullable disable
 
-namespace Azure.AI.OpenAI.Assistants;
+using System;
+
+namespace Azure.AI.Client.Models;
 
 /*
  * CUSTOM CODE DESCRIPTION:
@@ -12,16 +14,13 @@ namespace Azure.AI.OpenAI.Assistants;
  * is to avoid having types that contain nothing meaningful beyond a property to another type.
  */
 
-public partial class RunStepFunctionToolCall
+public partial class RequiredFunctionToolCall
 {
-    /// <inheritdoc cref="InternalRunStepFunctionToolCallDetails.Name"/>
+    /// <inheritdoc cref="InternalRequiredFunctionToolCallDetails.Name"/>
     public string Name => InternalDetails.Name;
 
-    /// <inheritdoc cref="InternalRunStepFunctionToolCallDetails.Arguments"/>
+    /// <inheritdoc cref="InternalRequiredFunctionToolCallDetails.Arguments"/>
     public string Arguments => InternalDetails.Arguments;
 
-    /// <inheritdoc cref="InternalRunStepFunctionToolCallDetails.Output"/>
-    public string Output => InternalDetails.Output;
-
-    internal InternalRunStepFunctionToolCallDetails InternalDetails { get; }
+    internal InternalRequiredFunctionToolCallDetails InternalDetails { get; }
 }

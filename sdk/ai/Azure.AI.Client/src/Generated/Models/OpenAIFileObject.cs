@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Client.Models
 {
     /// <summary> The OpenAIFile_object. </summary>
-    public readonly partial struct OpenAIFileObject : IEquatable<OpenAIFileObject>
+    internal readonly partial struct OpenAIFileObject : IEquatable<OpenAIFileObject>
     {
         private readonly string _value;
 

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Client.Models
 {
     /// <summary> A representation of a log output emitted by a code interpreter tool in response to a tool call by the model. </summary>
-    internal partial class RunStepCodeInterpreterLogOutput : RunStepCodeInterpreterToolCallOutput
+    public partial class RunStepCodeInterpreterLogOutput : RunStepCodeInterpreterToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterLogOutput"/>. </summary>
         /// <param name="logs"> The serialized log output emitted by the code interpreter. </param>

@@ -3,7 +3,7 @@
 
 #nullable disable
 
-namespace Azure.AI.OpenAI.Assistants;
+namespace Azure.AI.Client.Models;
 
 /*
  * CUSTOM CODE DESCRIPTION:
@@ -11,7 +11,7 @@ namespace Azure.AI.OpenAI.Assistants;
  * This change allows us to complete the customization of hiding an unnecessary "Object" discriminator.
  */
 
-public partial class RunStep
+public partial class Agent
 {
     internal string Object { get; }
 }

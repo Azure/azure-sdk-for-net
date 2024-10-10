@@ -9,11 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Client;
-using Azure.AI.Client.Models;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI.Assistants
+namespace Azure.AI.Client.Models
 {
     internal partial class InternalOpenAIPageableListOfRunStep : IUtf8JsonSerializable, IJsonModel<InternalOpenAIPageableListOfRunStep>
     {
@@ -81,8 +79,8 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            Client.Models.OpenAIPageableListOfRunStepObject @object = default;
-            IReadOnlyList<Client.Models.RunStep> data = default;
+            OpenAIPageableListOfRunStepObject @object = default;
+            IReadOnlyList<RunStep> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -92,15 +90,15 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new Client.Models.OpenAIPageableListOfRunStepObject(property.Value.GetString());
+                    @object = new OpenAIPageableListOfRunStepObject(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    List<Client.Models.RunStep> array = new List<Client.Models.RunStep>();
+                    List<RunStep> array = new List<RunStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Client.Models.RunStep.DeserializeRunStep(item, options));
+                        array.Add(RunStep.DeserializeRunStep(item, options));
                     }
                     data = array;
                     continue;

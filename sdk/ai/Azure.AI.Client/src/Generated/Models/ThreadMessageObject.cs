@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Client.Models
 {
     /// <summary> The ThreadMessage_object. </summary>
-    public readonly partial struct ThreadMessageObject : IEquatable<ThreadMessageObject>
+    internal readonly partial struct ThreadMessageObject : IEquatable<ThreadMessageObject>
     {
         private readonly string _value;
 

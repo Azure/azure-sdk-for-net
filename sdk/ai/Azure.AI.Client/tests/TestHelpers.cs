@@ -22,7 +22,7 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
         ActiveDirectory,
     }
 
-    public AssistantsClient GetTestClient(
+    public Agents GetTestClient(
         OpenAIClientServiceTarget target,
         OpenAIClientAuthenticationType authenticationType)
     {
@@ -34,13 +34,13 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
         };
     }
 
-    public AssistantsClient GetTestClient(OpenAIClientServiceTarget target)
+    public Agents GetTestClient(OpenAIClientServiceTarget target)
         => GetTestClient(target, OpenAIClientAuthenticationType.ApiKey);
 
-    protected AssistantsClient GetNonAzureClientWithKey() => InstrumentClient(
+    protected Agents GetNonAzureClientWithKey() => InstrumentClient(
         new AssistantsClient(NonAzureApiKey, GetInstrumentedClientOptions()));
 
-    protected AssistantsClient GetAzureClientWithKey() => InstrumentClient(
+    protected Agents GetAzureClientWithKey() => InstrumentClient(
         new AssistantsClient(new(AzureResourceUrl), AzureApiKeyCredential, GetInstrumentedClientOptions()));
 
     private AssistantsClientOptions GetInstrumentedClientOptions(

@@ -74,7 +74,7 @@ namespace Azure.AI.Client.Models
         /// <param name="status"> The state of the file. This field is available in Azure OpenAI only. </param>
         /// <param name="statusDetails"> The error message with details in case processing of this file failed. This field is available in Azure OpenAI only. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenAIFile(OpenAIFileObject @object, string id, int size, string filename, DateTimeOffset createdAt, OpenAIFilePurpose purpose, FileState? status, string statusDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OpenAIFile(string @object, string id, int size, string filename, DateTimeOffset createdAt, OpenAIFilePurpose purpose, FileState? status, string statusDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Object = @object;
             Id = id;
@@ -91,9 +91,6 @@ namespace Azure.AI.Client.Models
         internal OpenAIFile()
         {
         }
-
-        /// <summary> The object type, which is always 'file'. </summary>
-        public OpenAIFileObject Object { get; } = OpenAIFileObject.File;
 
         /// <summary> The identifier, which can be referenced in API endpoints. </summary>
         public string Id { get; }

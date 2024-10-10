@@ -29,7 +29,7 @@ namespace Azure.AI.Client.Models
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object.ToString());
+            writer.WriteStringValue(Object);
             writer.WritePropertyName("created_at"u8);
             writer.WriteNumberValue(CreatedAt, "U");
             if (Name != null)
@@ -168,7 +168,7 @@ namespace Azure.AI.Client.Models
                 return null;
             }
             string id = default;
-            AgentObject @object = default;
+            string @object = default;
             DateTimeOffset createdAt = default;
             string name = default;
             string description = default;
@@ -191,7 +191,7 @@ namespace Azure.AI.Client.Models
                 }
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new AgentObject(property.Value.GetString());
+                    @object = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("created_at"u8))

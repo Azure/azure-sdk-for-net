@@ -29,7 +29,7 @@ namespace Azure.AI.Client.Models
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object.ToString());
+            writer.WriteStringValue(Object);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("assistant_id"u8);
@@ -155,7 +155,7 @@ namespace Azure.AI.Client.Models
                 return null;
             }
             string id = default;
-            RunStepObject @object = default;
+            string @object = default;
             RunStepType type = default;
             string assistantId = default;
             string threadId = default;
@@ -181,7 +181,7 @@ namespace Azure.AI.Client.Models
                 }
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new RunStepObject(property.Value.GetString());
+                    @object = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -231,42 +231,22 @@ namespace Azure.AI.Client.Models
                 }
                 if (property.NameEquals("expired_at"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        expiredAt = null;
-                        continue;
-                    }
-                    expiredAt = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    DeserializeNullableDateTimeOffset(property, ref expiredAt);
                     continue;
                 }
                 if (property.NameEquals("completed_at"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        completedAt = null;
-                        continue;
-                    }
-                    completedAt = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    DeserializeNullableDateTimeOffset(property, ref completedAt);
                     continue;
                 }
                 if (property.NameEquals("cancelled_at"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        cancelledAt = null;
-                        continue;
-                    }
-                    cancelledAt = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    DeserializeNullableDateTimeOffset(property, ref cancelledAt);
                     continue;
                 }
                 if (property.NameEquals("failed_at"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        failedAt = null;
-                        continue;
-                    }
-                    failedAt = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    DeserializeNullableDateTimeOffset(property, ref failedAt);
                     continue;
                 }
                 if (property.NameEquals("usage"u8))

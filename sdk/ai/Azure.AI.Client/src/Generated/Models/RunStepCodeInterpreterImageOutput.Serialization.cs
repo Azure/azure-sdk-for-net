@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Client.Models
 {
-    internal partial class RunStepCodeInterpreterImageOutput : IUtf8JsonSerializable, IJsonModel<RunStepCodeInterpreterImageOutput>
+    public partial class RunStepCodeInterpreterImageOutput : IUtf8JsonSerializable, IJsonModel<RunStepCodeInterpreterImageOutput>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepCodeInterpreterImageOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

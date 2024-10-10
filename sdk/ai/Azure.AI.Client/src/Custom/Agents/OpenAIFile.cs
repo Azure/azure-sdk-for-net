@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI.Assistants;
+namespace Azure.AI.Client.Models;
 
 /*
  * CUSTOM CODE DESCRIPTION:
@@ -19,6 +19,11 @@ namespace Azure.AI.OpenAI.Assistants;
 [CodeGenSerialization(nameof(Size), DeserializationValueHook = nameof(DeserializeNullableSize))]
 public partial class OpenAIFile
 {
+    /*
+    * CUSTOM CODE DESCRIPTION: This change allows us to complete the customization of hiding an unnecessary "Object" discriminator.
+    */
+    internal string Object { get; }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void DeserializeNullableSize(JsonProperty property, ref int size)
     {

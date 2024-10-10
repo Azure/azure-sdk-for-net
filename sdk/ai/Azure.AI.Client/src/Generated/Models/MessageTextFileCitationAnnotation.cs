@@ -50,12 +50,6 @@ namespace Azure.AI.Client.Models
         internal MessageTextFileCitationAnnotation()
         {
         }
-
-        /// <summary>
-        /// A citation within the message that points to a specific quote from a specific file.
-        /// Generated when the agent uses the "file_search" tool to search files.
-        /// </summary>
-        public InternalMessageTextFileCitationDetails InternalDetails { get; set; }
         /// <summary> The first text index associated with this text annotation. </summary>
         public int? StartIndex { get; set; }
         /// <summary> The last text index associated with this text annotation. </summary>

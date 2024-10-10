@@ -27,7 +27,7 @@ namespace Azure.AI.Client.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue(InternalFunction, options);
+            writer.WriteObjectValue<InternalFunctionDefinition>(InternalFunction, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

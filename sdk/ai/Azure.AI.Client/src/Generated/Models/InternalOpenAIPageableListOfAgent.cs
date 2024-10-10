@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Client.Models
 {
     /// <summary> The response data for a requested list of items. </summary>
-    internal partial class OpenAIPageableListOfAgent
+    internal partial class InternalOpenAIPageableListOfAgent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,13 +46,13 @@ namespace Azure.AI.Client.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OpenAIPageableListOfAgent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalOpenAIPageableListOfAgent"/>. </summary>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="firstId"> The first ID represented in this list. </param>
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/>, <paramref name="firstId"/> or <paramref name="lastId"/> is null. </exception>
-        internal OpenAIPageableListOfAgent(IEnumerable<Agent> data, string firstId, string lastId, bool hasMore)
+        internal InternalOpenAIPageableListOfAgent(IEnumerable<Agent> data, string firstId, string lastId, bool hasMore)
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(firstId, nameof(firstId));
@@ -64,14 +64,14 @@ namespace Azure.AI.Client.Models
             HasMore = hasMore;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenAIPageableListOfAgent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalOpenAIPageableListOfAgent"/>. </summary>
         /// <param name="object"> The object type, which is always list. </param>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="firstId"> The first ID represented in this list. </param>
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenAIPageableListOfAgent(OpenAIPageableListOfAgentObject @object, IReadOnlyList<Agent> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalOpenAIPageableListOfAgent(OpenAIPageableListOfAgentObject @object, IReadOnlyList<Agent> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Object = @object;
             Data = data;
@@ -81,8 +81,8 @@ namespace Azure.AI.Client.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenAIPageableListOfAgent"/> for deserialization. </summary>
-        internal OpenAIPageableListOfAgent()
+        /// <summary> Initializes a new instance of <see cref="InternalOpenAIPageableListOfAgent"/> for deserialization. </summary>
+        internal InternalOpenAIPageableListOfAgent()
         {
         }
 
