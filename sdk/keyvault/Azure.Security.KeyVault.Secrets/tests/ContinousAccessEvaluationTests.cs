@@ -93,5 +93,90 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             }
             Assert.Fail("Expected RequestFailedException, but no exception was thrown.");
         }
+
+        [Test]
+        public void ensureTokenFromClaimsChallengeGetsUsed()
+        {
+            MockTransport transport = new(new[]
+            {
+                defaultInitialChallenge,
+
+                new MockResponse(200)
+                    .WithJson("""
+                    {
+                        "token_type": "Bearer",
+                        "expires_in": 3599,
+                        "resource": "https://vault.azure.net",
+                        "access_token": "TOKEN_1"
+                    }
+                    """),
+
+                defaultCaeChallenge,
+
+                new MockResponse(200)
+                .WithJson("""
+                    {
+                        "token_type": "Bearer",
+                        "expires_in": 3599,
+                        "resource": "https://vault.azure.net",
+                        "access_token": "TOKEN_2"
+                    }
+                """),
+
+                new MockResponse(200)
+                    {
+                        ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
+                    },
+
+                new MockResponse(200)
+                    {
+                        ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
+                    },
+
+                new MockResponse(401)
+                .WithHeader("WWW-Authenticate", @"Bearer realm="""", authorization_uri=""https://login.microsoftonline.com/common/oauth2/authorize"", error=""insufficient_claims"", claims=""eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk5In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjIyMjEyIn19fQ=="""),
+
+            new MockResponse(200)
+                .WithJson("""
+                {
+                    "token_type": "Bearer",
+                    "expires_in": 3599,
+                    "resource": "https://vault.azure.net",
+                    "access_token": "TOKEN_3"
+                }
+                """),
+
+                new MockResponse(200)
+                {
+                    ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
+                },
+            });
+
+            SecretClient client = new(
+                VaultUri,
+                new MockCredential(transport),
+                new SecretClientOptions()
+                {
+                    Transport = transport,
+                });
+
+            client.GetSecret("test-secret");
+            client.GetSecret("test-secret");
+            client.GetSecret("test-secret");
+
+            var requests = transport.Requests;
+
+            // Token 1 gets revoked immidiately after the first request, so it's never used in a GET request to KeyVault
+            Assert.IsTrue(transport.Requests[4].Headers.TryGetValue("Authorization", out string authorizationValue));
+            Assert.AreEqual("Bearer TOKEN_2", authorizationValue);
+
+            // Token 2 is still valid for the second GET request
+            Assert.IsTrue(transport.Requests[5].Headers.TryGetValue("Authorization", out string authorizationValue2));
+            Assert.AreEqual("Bearer TOKEN_2", authorizationValue2);
+
+            // Token 2 becomes invalid and now Token 3 is used for the third GET request
+            Assert.IsTrue(transport.Requests[8].Headers.TryGetValue("Authorization", out string authorizationValue3));
+            Assert.AreEqual("Bearer TOKEN_3", authorizationValue3);
+        }
     }
 }
