@@ -12,7 +12,7 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal abstract class TransferJobInternal : IDisposable
+    internal class TransferJobInternal : IDisposable
     {
         internal delegate Task<JobPartInternal> CreateJobPartSingleAsync(
             TransferJobInternal job,
