@@ -150,10 +150,15 @@ public partial class DomainTopicEventSubscription : Resource
     /// <summary>
     /// Creates a new DomainTopicEventSubscription.
     /// </summary>
-    /// <param name="resourceName">Name of the DomainTopicEventSubscription.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the DomainTopicEventSubscription
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the DomainTopicEventSubscription.</param>
-    public DomainTopicEventSubscription(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/domains/topics/eventSubscriptions", resourceVersion ?? "2022-06-15")
+    public DomainTopicEventSubscription(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.EventGrid/domains/topics/eventSubscriptions", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _deadLetterDestination = BicepValue<DeadLetterDestination>.DefineProperty(this, "DeadLetterDestination", ["properties", "deadLetterDestination"]);
@@ -206,9 +211,14 @@ public partial class DomainTopicEventSubscription : Resource
     /// <summary>
     /// Creates a reference to an existing DomainTopicEventSubscription.
     /// </summary>
-    /// <param name="resourceName">Name of the DomainTopicEventSubscription.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the DomainTopicEventSubscription
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the DomainTopicEventSubscription.</param>
     /// <returns>The existing DomainTopicEventSubscription resource.</returns>
-    public static DomainTopicEventSubscription FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static DomainTopicEventSubscription FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

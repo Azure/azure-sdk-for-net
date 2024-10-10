@@ -9,6 +9,12 @@ Azure.Provisioning makes it easy to declaratively specify Azure infrastructure n
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
+dotnet add package Azure.Provisioning --prerelease
+```
+
+You can also install the previous version for use with Aspire 8.x via:
+
+```dotnetcli
 dotnet add package Azure.Provisioning
 ```
 

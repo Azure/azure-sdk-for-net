@@ -58,10 +58,15 @@ public partial class ManagedDatabaseAdvancedThreatProtection : Resource
     /// <summary>
     /// Creates a new ManagedDatabaseAdvancedThreatProtection.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedDatabaseAdvancedThreatProtection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ManagedDatabaseAdvancedThreatProtection resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedDatabaseAdvancedThreatProtection.</param>
-    public ManagedDatabaseAdvancedThreatProtection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/databases/advancedThreatProtectionSettings", resourceVersion ?? "2024-05-01-preview")
+    public ManagedDatabaseAdvancedThreatProtection(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/managedInstances/databases/advancedThreatProtectionSettings", resourceVersion ?? "2024-05-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<AdvancedThreatProtectionState>.DefineProperty(this, "State", ["properties", "state"]);
@@ -86,9 +91,14 @@ public partial class ManagedDatabaseAdvancedThreatProtection : Resource
     /// Creates a reference to an existing
     /// ManagedDatabaseAdvancedThreatProtection.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedDatabaseAdvancedThreatProtection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ManagedDatabaseAdvancedThreatProtection resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedDatabaseAdvancedThreatProtection.</param>
     /// <returns>The existing ManagedDatabaseAdvancedThreatProtection resource.</returns>
-    public static ManagedDatabaseAdvancedThreatProtection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedDatabaseAdvancedThreatProtection FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

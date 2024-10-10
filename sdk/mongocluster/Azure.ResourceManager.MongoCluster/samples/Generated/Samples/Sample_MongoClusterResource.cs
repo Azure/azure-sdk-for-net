@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             {
                 Properties = new MongoClusterUpdateProperties()
                 {
-                    StorageSizeGb = 256,
+                    StorageSizeGb = 256L,
                 },
             };
             ArmOperation<MongoClusterResource> lro = await mongoCluster.UpdateAsync(WaitUntil.Completed, patch);
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                     ServerVersion = "5.0",
                     PublicNetworkAccess = MongoClusterPublicNetworkAccess.Enabled,
                     HighAvailabilityTargetMode = HighAvailabilityMode.SameZone,
-                    StorageSizeGb = 256,
+                    StorageSizeGb = 256L,
                     ShardingShardCount = 4,
                     ComputeTier = "M50",
                     PreviewFeatures =
