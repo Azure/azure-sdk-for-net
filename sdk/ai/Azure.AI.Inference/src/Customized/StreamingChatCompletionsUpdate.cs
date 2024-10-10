@@ -103,7 +103,7 @@ namespace Azure.AI.Inference
             ChatRole? role = null,
             string contentUpdate = null,
             CompletionsFinishReason? finishReason = null,
-            StreamingToolCallUpdate toolCallUpdate = null)
+            StreamingChatResponseToolCallUpdate toolCallUpdate = null,
             CompletionsUsage usage = null)
         {
             Id = id;

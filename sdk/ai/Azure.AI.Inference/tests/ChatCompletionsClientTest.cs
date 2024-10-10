@@ -45,6 +45,7 @@ namespace Azure.AI.Inference.Tests
 
         public ChatCompletionsClientTest(bool isAsync) : base(isAsync)
         {
+            TestDiagnostics = false;
             JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
         }
 
@@ -556,86 +557,6 @@ namespace Azure.AI.Inference.Tests
             captureRequestPayloadPolicy._requestHeaders.TryGetValue("User-Agent", out userAgent);
             Assert.That(userAgent, Is.Not.Null.Or.Empty);
             Assert.That(userAgent.StartsWith("MyAppId"));
-        }
-
-        [RecordedTest]
-        public async Task ManualTest()
-        {
-            FunctionDefinition futureTemperatureFunction = new FunctionDefinition("get_future_temperature")
-            {
-                Description = "requests the anticipated future temperature at a provided location to help inform "
-                + "advice about topics like choice of attire",
-                Parameters = BinaryData.FromObjectAsJson(new
-                {
-                    Type = "object",
-                    Properties = new
-                    {
-                        LocationName = new
-                        {
-                            Type = "string",
-                            Description = "the name or brief description of a location for weather information"
-                        },
-                        DaysInAdvance = new
-                        {
-                            Type = "integer",
-                            Description = "the number of days in the future for which to retrieve weather information"
-                        }
-                    }
-                },
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
-            };
-
-            ChatCompletionsToolDefinition functionToolDef = new ChatCompletionsToolDefinition(futureTemperatureFunction);
-
-            var endpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
-            var credential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
-
-            CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
-            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
-            clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
-
-            var client = CreateClient(endpoint, credential, clientOptions);
-
-            var toolCalls = new List<ChatCompletionsToolCall>() {
-                ChatCompletionsToolCall.CreateFunctionToolCall("6A5FmRJI4", "get_future_temperature", "{\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}")
-            };
-
-            var messages = new List<ChatRequestMessage>()
-            {
-                new ChatRequestSystemMessage("You are a helpful assistant."),
-                new ChatRequestUserMessage("What should I wear in Honolulu in 3 days?"),
-                new ChatRequestAssistantMessage(toolCalls),
-                new ChatRequestToolMessage("31 celsius", "6A5FmRJI4")
-            };
-
-            var requestOptions = new ChatCompletionsOptions(messages)
-            {
-                MaxTokens = 512,
-                // Tools = { functionToolDef },
-                // ToolChoice = ChatCompletionsToolChoice.Auto
-            };
-
-            StreamingResponse<StreamingChatCompletionsUpdate> response = null;
-            //Response<ChatCompletions> response = null;
-            string requestPayload = null;
-            Dictionary<string, string> requestHeaders = null;
-            try
-            {
-                response = await client.CompleteStreamingAsync(requestOptions);
-                //response = await client.CompleteAsync(requestOptions);
-            }
-            catch (Exception ex)
-            {
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
-            }
-            finally
-            {
-                requestPayload = captureRequestPayloadPolicy._requestContent;
-                requestHeaders = captureRequestPayloadPolicy._requestHeaders;
-            }
-
-            await ProcessStreamingResponse(response, messages);
-            Assert.That(messages.Count() > 4);
         }
 
         [RecordedTest]

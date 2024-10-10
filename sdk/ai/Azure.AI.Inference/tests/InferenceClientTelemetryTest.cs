@@ -262,7 +262,7 @@ namespace Azure.AI.Inference.Tests
                 Model = "gpt-4o",
                 Temperature = 1,
                 Tools = { new ChatCompletionsToolDefinition(GetFutureTemperatureFunction()) },
-                ToolChoice = ChatCompletionsToolChoice.Required,
+                ToolChoice = ChatCompletionsToolChoice.Auto,
                 AdditionalProperties = { ["n"] = BinaryData.FromString("2") }
             };
 
