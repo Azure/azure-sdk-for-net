@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
                 },
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness)
                 {
-                    MaxStalenessPrefix = 200,
+                    MaxStalenessPrefix = 200L,
                     MaxIntervalInSeconds = 10,
                 },
                 IPRules =

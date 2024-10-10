@@ -1,5 +1,17 @@
 # Release History
 
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Add AutoUpgrade and AutoUpgradeProfile support
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
