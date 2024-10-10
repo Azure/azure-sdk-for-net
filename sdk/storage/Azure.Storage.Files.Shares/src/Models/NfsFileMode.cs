@@ -79,6 +79,9 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Returns a <see cref="NfsFileMode"/> from the octal string representation.
         /// </summary>
+        /// <param name="modeString">
+        /// A 4-digit octal string representation of a File Mode.
+        /// </param>
         public static NfsFileMode ParseOctalFileMode(string modeString)
         {
             // https://en.wikipedia.org/wiki/File-system_permissions#Numeric_notation
@@ -170,6 +173,9 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Returns a <see cref="NfsFileMode"/> from the symbolic string representation.
         /// </summary>
+        /// <param name="modeString">
+        /// A 9-character symbolic string representation of a File Mode.
+        /// </param>
         public static NfsFileMode ParseSymbolicFileMode(string modeString)
         {
             // https://en.wikipedia.org/wiki/File-system_permissions#Symbolic_notation
