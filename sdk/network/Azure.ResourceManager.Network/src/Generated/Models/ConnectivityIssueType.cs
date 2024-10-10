@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ConnectivityIssueType left, ConnectivityIssueType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectivityIssueType"/> values are not the same. </summary>
         public static bool operator !=(ConnectivityIssueType left, ConnectivityIssueType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectivityIssueType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectivityIssueType"/>. </summary>
         public static implicit operator ConnectivityIssueType(string value) => new ConnectivityIssueType(value);
 
         /// <inheritdoc />

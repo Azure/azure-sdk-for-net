@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Relay.Models
 
         void IJsonModel<RelayAccessKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RelayAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RelayAccessKeys)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryConnectionString))
             {
                 writer.WritePropertyName("primaryConnectionString"u8);
@@ -66,7 +74,6 @@ namespace Azure.ResourceManager.Relay.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RelayAccessKeys IJsonModel<RelayAccessKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

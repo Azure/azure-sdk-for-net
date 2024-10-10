@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static bool operator ==(RangeKind left, RangeKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RangeKind"/> values are not the same. </summary>
         public static bool operator !=(RangeKind left, RangeKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RangeKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RangeKind"/>. </summary>
         public static implicit operator RangeKind(string value) => new RangeKind(value);
 
         /// <inheritdoc />

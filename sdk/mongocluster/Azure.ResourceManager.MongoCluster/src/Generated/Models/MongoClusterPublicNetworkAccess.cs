@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static bool operator ==(MongoClusterPublicNetworkAccess left, MongoClusterPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoClusterPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(MongoClusterPublicNetworkAccess left, MongoClusterPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MongoClusterPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterPublicNetworkAccess"/>. </summary>
         public static implicit operator MongoClusterPublicNetworkAccess(string value) => new MongoClusterPublicNetworkAccess(value);
 
         /// <inheritdoc />

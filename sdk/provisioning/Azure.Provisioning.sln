@@ -112,6 +112,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CloudMac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CloudMachine.Tests", "Azure.Provisioning.CloudMachine\tests\Azure.Provisioning.CloudMachine.Tests.csproj", "{94642992-7CC0-4649-B58F-8E5E3F134C8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Deployment", "Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj", "{0BC64290-A91B-4EF2-BAF2-01AE91F81AED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Deployment.Tests", "Azure.Provisioning.Deployment\tests\Azure.Provisioning.Deployment.Tests.csproj", "{0D2C464F-C246-4069-90B2-33D637BE18BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -322,15 +326,23 @@ Global
 		{94642992-7CC0-4649-B58F-8E5E3F134C8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94642992-7CC0-4649-B58F-8E5E3F134C8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94642992-7CC0-4649-B58F-8E5E3F134C8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BC64290-A91B-4EF2-BAF2-01AE91F81AED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BC64290-A91B-4EF2-BAF2-01AE91F81AED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BC64290-A91B-4EF2-BAF2-01AE91F81AED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BC64290-A91B-4EF2-BAF2-01AE91F81AED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D2C464F-C246-4069-90B2-33D637BE18BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D2C464F-C246-4069-90B2-33D637BE18BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D2C464F-C246-4069-90B2-33D637BE18BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D2C464F-C246-4069-90B2-33D637BE18BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7CB2D417-323C-4A66-9355-26459881303F}
-	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F54CA64F-3BB8-49D5-AE3B-3408AE324632} = {DB2FC0CB-7103-4D3C-A737-8C6AB61168F8}
 		{94642992-7CC0-4649-B58F-8E5E3F134C8A} = {DB2FC0CB-7103-4D3C-A737-8C6AB61168F8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7CB2D417-323C-4A66-9355-26459881303F}
 	EndGlobalSection
 EndGlobal

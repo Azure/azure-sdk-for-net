@@ -75,11 +75,15 @@ public partial class SqlServerAzureADAdministrator : Resource
     /// <summary>
     /// Creates a new SqlServerAzureADAdministrator.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerAzureADAdministrator.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerAzureADAdministrator
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerAzureADAdministrator.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerAzureADAdministrator(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/administrators", resourceVersion ?? "2021-11-01", context)
+    public SqlServerAzureADAdministrator(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/administrators", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
         _administratorType = BicepValue<SqlAdministratorType>.DefineProperty(this, "AdministratorType", ["properties", "administratorType"]);
@@ -121,9 +125,14 @@ public partial class SqlServerAzureADAdministrator : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerAzureADAdministrator.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerAzureADAdministrator.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerAzureADAdministrator
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerAzureADAdministrator.</param>
     /// <returns>The existing SqlServerAzureADAdministrator resource.</returns>
-    public static SqlServerAzureADAdministrator FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerAzureADAdministrator FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

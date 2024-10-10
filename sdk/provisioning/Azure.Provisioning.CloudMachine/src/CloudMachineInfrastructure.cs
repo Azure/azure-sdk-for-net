@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.CloudMachine;
+using System.IO;
+using System;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.EventGrid;
 using Azure.Provisioning.Expressions;
@@ -8,78 +11,100 @@ using Azure.Provisioning.Resources;
 using Azure.Provisioning.Roles;
 using Azure.Provisioning.ServiceBus;
 using Azure.Provisioning.Storage;
+using Azure.Provisioning.Primitives;
+using System.Collections.Generic;
 
 namespace Azure.Provisioning.CloudMachine;
 
-public class CloudMachineInfrastructure : Infrastructure
+public class CloudMachineInfrastructure
 {
-    private readonly string _name;
-    private UserAssignedIdentity _identity;
+    private readonly string _cmid;
+
+    private Infrastructure _infrastructure = new Infrastructure("cm");
+    private List<Provisionable> _resources = new();
+
+    // storage
     private StorageAccount _storage;
     private BlobService _blobs;
     private BlobContainer _container;
+
+    // servicebus
     private ServiceBusNamespace _serviceBusNamespace;
     private ServiceBusNamespaceAuthorizationRule _serviceBusNamespaceAuthorizationRule;
-    private ServiceBusTopic _serviceBusTopic_main;
-    private ServiceBusTopic _serviceBusTopic_app;
-    private ServiceBusSubscription _serviceBusSubscription_main;
-    private ServiceBusSubscription _serviceBusSubscription_app;
-    private SystemTopic _eventGridTopic_Blobs;
-    private SystemTopicEventSubscription _systemTopicEventSubscription;
+
+    private ServiceBusTopic _serviceBusTopic_default;
+    private ServiceBusSubscription _serviceBusSubscription_default;
+
+    private ServiceBusTopic _serviceBusTopic_private;
+    private ServiceBusSubscription _serviceBusSubscription_private;
+
+    // eventgrid
+    private SystemTopic _eventGridTopic_blobs;
+    private SystemTopicEventSubscription _eventGridSubscription_blobs;
+
+    public UserAssignedIdentity Identity { get; private set; }
+    public string Id => _cmid;
 
     /// <summary>
     /// The common principalId parameter.
     /// </summary>
-    public BicepParameter PrincipalIdParameter => new BicepParameter("principalId", typeof(string));
+    public ProvisioningParameter PrincipalIdParameter => new ProvisioningParameter("principalId", typeof(string));
 
-    /// <summary>
-    /// The common principalType parameter.
-    /// </summary>
-    public BicepParameter PrincipalTypeParameter => new BicepParameter("principalType", typeof(string));
+    ///// <summary>
+    ///// The common principalType parameter.
+    ///// </summary>
+    //public ProvisioningParameter PrincipalTypeParameter => new BicepParameter("principalType", typeof(string));
 
-    /// <summary>
-    /// The common principalName parameter.
-    /// </summary>
-    public BicepParameter PrincipalNameParameter => new BicepParameter("principalName", typeof(string));
+    ///// <summary>
+    ///// The common principalName parameter.
+    ///// </summary>
+    //public ProvisioningParameter PrincipalNameParameter => new BicepParameter("principalName", typeof(string));
 
-    public CloudMachineInfrastructure(string name = "cm") : base(name!)
+    public CloudMachineInfrastructure(string cmId)
     {
-        _name = name ?? "cm";
-        _identity = new($"{_name}_identity");
+        _cmid = cmId;
+
+        // setup CM identity
+        Identity = new UserAssignedIdentity("cm_identity");
+        Identity.Name = _cmid;
+        _infrastructure.Add(new ProvisioningOutput($"cm_managed_identity_id", typeof(string)) { Value = Identity.Id });
         ManagedServiceIdentity managedServiceIdentity = new()
         {
             ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned,
-            UserAssignedIdentities = { { BicepFunction.Interpolate($"{_identity.Id}").Compile().ToString(), new UserAssignedIdentityDetails() } }
+            UserAssignedIdentities = { { BicepFunction.Interpolate($"{Identity.Id}").Compile().ToString(), new UserAssignedIdentityDetails() } }
         };
 
-        _storage = StorageResources.CreateAccount($"{_name}_sa");
+        _storage = StorageResources.CreateAccount("cm_storage");
         _storage.Identity = managedServiceIdentity;
+        _storage.Name = _cmid;
 
-        _blobs = new($"{_name}_blobs")
+        _blobs = new("cm_storage_blobs")
         {
             Parent = _storage,
         };
-        _container = new BlobContainer($"{_name}_container", "2023-01-01")
+        _container = new BlobContainer("cm_storage_blobs_container", "2023-01-01")
         {
             Parent = _blobs,
             Name = "default"
         };
 
-        _serviceBusNamespace = new($"{_name}_sb")
+        _serviceBusNamespace = new("cm_servicebus")
         {
             Sku = new ServiceBusSku
             {
                 Name = ServiceBusSkuName.Standard,
                 Tier = ServiceBusSkuTier.Standard
             },
+            Name = _cmid,
         };
-        _serviceBusNamespaceAuthorizationRule = new($"{_name}_sb_auth_rule", "2021-11-01")
+        _serviceBusNamespaceAuthorizationRule = new($"cm_servicebus_auth_rule", "2021-11-01")
         {
             Parent = _serviceBusNamespace,
             Rights = [ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send, ServiceBusAccessRight.Manage]
         };
-        _serviceBusTopic_main = new($"{_name}_sb_topic_main", "2021-11-01")
+        _serviceBusTopic_private = new("cm_servicebus_topic_private", "2021-11-01")
         {
+            Name = "cm_servicebus_topic_private",
             Parent = _serviceBusNamespace,
             MaxMessageSizeInKilobytes = 256,
             DefaultMessageTimeToLive = new StringLiteral("P14D"),
@@ -88,9 +113,9 @@ public class CloudMachineInfrastructure : Infrastructure
             SupportOrdering = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusSubscription_main = new($"{_name}_sb_sub_main", "2021-11-01")
+        _serviceBusSubscription_private = new("cm_servicebus_subscription_private", "2021-11-01")
         {
-            Parent = _serviceBusTopic_main,
+            Parent = _serviceBusTopic_private,
             IsClientAffine = false,
             LockDuration = new StringLiteral("PT30S"),
             RequiresSession = false,
@@ -101,8 +126,9 @@ public class CloudMachineInfrastructure : Infrastructure
             EnableBatchedOperations = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusTopic_app = new($"{_name}_sb_topic_app", "2021-11-01")
+        _serviceBusTopic_default = new("cm_servicebus_topic_default", "2021-11-01")
         {
+            Name = "cm_servicebus_default_topic",
             Parent = _serviceBusNamespace,
             MaxMessageSizeInKilobytes = 256,
             DefaultMessageTimeToLive = new StringLiteral("P14D"),
@@ -111,9 +137,10 @@ public class CloudMachineInfrastructure : Infrastructure
             SupportOrdering = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusSubscription_app = new($"{_name}_sb_sub_app", "2021-11-01")
+        _serviceBusSubscription_default = new("cm_servicebus_subscription_default", "2021-11-01")
         {
-            Parent = _serviceBusTopic_app,
+            Name = "cm_servicebus_subscription_default",
+            Parent = _serviceBusTopic_default,
             IsClientAffine = false,
             LockDuration = new StringLiteral("PT30S"),
             RequiresSession = false,
@@ -124,25 +151,26 @@ public class CloudMachineInfrastructure : Infrastructure
             EnableBatchedOperations = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _eventGridTopic_Blobs = new($"{_name}_eg_blob", "2022-06-15")
+        _eventGridTopic_blobs = new("cm_eventgrid_topic_blob", "2022-06-15")
         {
             TopicType = "Microsoft.Storage.StorageAccounts",
             Source = _storage.Id,
-            Identity = managedServiceIdentity
+            Identity = managedServiceIdentity,
+            Name = _cmid
         };
-        _systemTopicEventSubscription = new($"{_name}_eg_blob_sub", "2022-06-15")
+        _eventGridSubscription_blobs = new("cm_eventgrid_subscription_blob", "2022-06-15")
         {
-            Parent = _eventGridTopic_Blobs,
+            Parent = _eventGridTopic_blobs,
             DeliveryWithResourceIdentity = new DeliveryWithResourceIdentity
             {
                 Identity = new EventSubscriptionIdentity
                 {
                     IdentityType = EventSubscriptionIdentityType.UserAssigned,
-                    UserAssignedIdentity = _identity.Id
+                    UserAssignedIdentity = Identity.Id
                 },
                 Destination = new ServiceBusTopicEventSubscriptionDestination
                 {
-                    ResourceId = _serviceBusTopic_main.Id
+                    ResourceId = _serviceBusTopic_private.Id
                 }
             },
             Filter = new EventSubscriptionFilter
@@ -164,54 +192,82 @@ public class CloudMachineInfrastructure : Infrastructure
         };
     }
 
-    public override ProvisioningPlan Build(ProvisioningContext? context = null)
+    public void AddResource(NamedProvisioningConstruct resource)
+    {
+        _resources.Add(resource);
+    }
+    public void AddFeature(CloudMachineFeature resource)
+    {
+        resource.AddTo(this);
+    }
+
+    public ProvisioningPlan Build(ProvisioningContext? context = null)
     {
         // Always add a default location parameter.
         // azd assumes there will be a location parameter for every module.
         // The Infrastructure location resolver will resolve unset Location properties to this parameter.
-        Add(new BicepParameter("location", typeof(string))
+        _infrastructure.Add(new ProvisioningParameter("location", typeof(string))
         {
             Description = "The location for the resource(s) to be deployed.",
             Value = BicepFunction.GetResourceGroup().Location
         });
 
-        Add(PrincipalIdParameter);
-        Add(PrincipalTypeParameter);
-        Add(PrincipalNameParameter);
+        _infrastructure.Add(PrincipalIdParameter);
+        //Add(PrincipalTypeParameter);
+        //Add(PrincipalNameParameter);
 
-        Add(_identity);
-        Add(_storage);
-        Add(_storage.AssignRole(StorageBuiltInRole.StorageBlobDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
-        Add(_storage.AssignRole(StorageBuiltInRole.StorageTableDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
-        Add(_container);
-        Add(_blobs);
-        Add(_serviceBusNamespace);
-        Add(_serviceBusNamespace.AssignRole(ServiceBusBuiltInRole.AzureServiceBusDataOwner, RoleManagementPrincipalType.User, PrincipalIdParameter));
-        Add(_serviceBusNamespaceAuthorizationRule);
-        Add(_serviceBusTopic_main);
-        Add(_serviceBusTopic_app);
-        Add(_serviceBusSubscription_main);
-        Add(_serviceBusSubscription_app);
+        _infrastructure.Add(Identity);
+        _infrastructure.Add(_storage);
+        _infrastructure.Add(_storage.CreateRoleAssignment(StorageBuiltInRole.StorageBlobDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
+        _infrastructure.Add(_storage.CreateRoleAssignment(StorageBuiltInRole.StorageTableDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
+        _infrastructure.Add(_container);
+        _infrastructure.Add(_blobs);
+        _infrastructure.Add(_serviceBusNamespace);
+        _infrastructure.Add(_serviceBusNamespace.CreateRoleAssignment(ServiceBusBuiltInRole.AzureServiceBusDataOwner, RoleManagementPrincipalType.User, PrincipalIdParameter));
+        _infrastructure.Add(_serviceBusNamespaceAuthorizationRule);
+        _infrastructure.Add(_serviceBusTopic_private);
+        _infrastructure.Add(_serviceBusTopic_default);
+        _infrastructure.Add(_serviceBusSubscription_private);
+        _infrastructure.Add(_serviceBusSubscription_default);
 
-        // This is necessary until SystemTopic adds an AssignRole method.
-        var role = ServiceBusBuiltInRole.AzureServiceBusDataSender;
-        RoleAssignment roleAssignment = new RoleAssignment(_serviceBusNamespace.ResourceName + "_" + _identity.ResourceName + "_" + ServiceBusBuiltInRole.GetBuiltInRoleName(role));
-        roleAssignment.Name = BicepFunction.CreateGuid(_serviceBusNamespace.Id, _identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()));
-        roleAssignment.Scope = new IdentifierExpression(_serviceBusNamespace.ResourceName);
-        roleAssignment.PrincipalType = RoleManagementPrincipalType.ServicePrincipal;
-        roleAssignment.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString());
-        roleAssignment.PrincipalId = _identity.PrincipalId;
-        Add(roleAssignment);
+        RoleAssignment roleAssignment = _serviceBusNamespace.CreateRoleAssignment(ServiceBusBuiltInRole.AzureServiceBusDataSender, RoleManagementPrincipalType.User, PrincipalIdParameter);
+        _infrastructure.Add(roleAssignment);
         // the role assignment must exist before the system topic event subscription is created.
-        _systemTopicEventSubscription.DependsOn.Add(roleAssignment);
+        _eventGridSubscription_blobs.DependsOn.Add(roleAssignment);
 
-        Add(_systemTopicEventSubscription);
-        Add(_eventGridTopic_Blobs);
+        _infrastructure.Add(_eventGridSubscription_blobs);
+        _infrastructure.Add(_eventGridTopic_blobs);
 
         // Placeholders for now.
-        Add(new BicepOutput($"storage_name", typeof(string)) { Value = _storage.Name });
-        Add(new BicepOutput($"servicebus_name", typeof(string)) { Value = _serviceBusNamespace.Name });
+        _infrastructure.Add(new ProvisioningOutput($"storage_name", typeof(string)) { Value = _storage.Name });
+        _infrastructure.Add(new ProvisioningOutput($"servicebus_name", typeof(string)) { Value = _serviceBusNamespace.Name });
 
-        return base.Build(context);
+        // Add any add-on resources to the infrastructure.
+        foreach (Provisionable resource in _resources)
+        {
+            _infrastructure.Add(resource);
+        }
+
+        return _infrastructure.Build(context);
+    }
+
+    public static bool Configure(string[] args, Action<CloudMachineInfrastructure>? configure = default)
+    {
+        if (args.Length < 1 || args[0] != "--init")
+        {
+            return false;
+        }
+
+        string cmid = Azd.ReadOrCreateCmid();
+
+        CloudMachineInfrastructure cmi = new(cmid);
+        if (configure != default)
+        {
+            configure(cmi);
+        }
+
+        string infraDirectory = Path.Combine(".", "infra");
+        Azd.Init(infraDirectory, cmi);
+        return true;
     }
 }

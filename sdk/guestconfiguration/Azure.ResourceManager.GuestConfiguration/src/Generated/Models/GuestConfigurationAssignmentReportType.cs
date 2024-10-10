@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static bool operator ==(GuestConfigurationAssignmentReportType left, GuestConfigurationAssignmentReportType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GuestConfigurationAssignmentReportType"/> values are not the same. </summary>
         public static bool operator !=(GuestConfigurationAssignmentReportType left, GuestConfigurationAssignmentReportType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GuestConfigurationAssignmentReportType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GuestConfigurationAssignmentReportType"/>. </summary>
         public static implicit operator GuestConfigurationAssignmentReportType(string value) => new GuestConfigurationAssignmentReportType(value);
 
         /// <inheritdoc />

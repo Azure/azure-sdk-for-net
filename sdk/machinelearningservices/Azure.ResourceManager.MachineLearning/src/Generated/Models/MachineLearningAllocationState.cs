@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningAllocationState left, MachineLearningAllocationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningAllocationState"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningAllocationState left, MachineLearningAllocationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningAllocationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningAllocationState"/>. </summary>
         public static implicit operator MachineLearningAllocationState(string value) => new MachineLearningAllocationState(value);
 
         /// <inheritdoc />

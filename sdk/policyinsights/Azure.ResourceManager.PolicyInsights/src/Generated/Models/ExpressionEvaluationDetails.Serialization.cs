@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         void IJsonModel<ExpressionEvaluationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressionEvaluationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExpressionEvaluationDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
@@ -90,7 +98,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ExpressionEvaluationDetails IJsonModel<ExpressionEvaluationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

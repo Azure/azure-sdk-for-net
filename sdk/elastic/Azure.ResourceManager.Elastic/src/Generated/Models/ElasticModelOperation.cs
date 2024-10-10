@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static bool operator ==(ElasticModelOperation left, ElasticModelOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticModelOperation"/> values are not the same. </summary>
         public static bool operator !=(ElasticModelOperation left, ElasticModelOperation right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ElasticModelOperation"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticModelOperation"/>. </summary>
         public static implicit operator ElasticModelOperation(string value) => new ElasticModelOperation(value);
 
         /// <inheritdoc />

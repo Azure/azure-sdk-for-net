@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(SplitSkillUnit left, SplitSkillUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SplitSkillUnit"/> values are not the same. </summary>
         public static bool operator !=(SplitSkillUnit left, SplitSkillUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SplitSkillUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SplitSkillUnit"/>. </summary>
         public static implicit operator SplitSkillUnit(string value) => new SplitSkillUnit(value);
 
         /// <inheritdoc />

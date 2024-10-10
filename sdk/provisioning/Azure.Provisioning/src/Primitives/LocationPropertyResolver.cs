@@ -24,7 +24,7 @@ public class LocationPropertyResolver : PropertyResolver
             !location.IsOutput &&
             (construct is not Resource r || !r.IsExistingResource))
         {
-            BicepParameter param = GetOrCreateLocationParameter(context, construct);
+            ProvisioningParameter param = GetOrCreateLocationParameter(context, construct);
             construct.SetProvisioningProperty(location, (BicepValue<string>)param);
         }
     }
@@ -51,7 +51,7 @@ public class LocationPropertyResolver : PropertyResolver
     /// <param name="context">The provisioning context for this construct.</param>
     /// <param name="construct">The construct with an unset Location property.</param>
     /// <returns></returns>
-    private BicepParameter GetOrCreateLocationParameter(
+    private ProvisioningParameter GetOrCreateLocationParameter(
         ProvisioningContext context,
         ProvisioningConstruct construct)
     {
@@ -62,12 +62,12 @@ public class LocationPropertyResolver : PropertyResolver
         // Try to find an existing location param with the same value
         Infrastructure infra = construct.ParentInfrastructure ??
             throw new InvalidOperationException($"Construct {construct} must be added to an {nameof(Infrastructure)} instance before resolving properties.");
-        IDictionary<string, BicepParameter> existing =
+        IDictionary<string, ProvisioningParameter> existing =
             infra.GetResources()
-            .OfType<BicepParameter>()
-            .Where(p => p.ResourceName.StartsWith("location"))
-            .ToDictionary(p => p.ResourceName);
-        foreach (BicepParameter p in existing.Values)
+            .OfType<ProvisioningParameter>()
+            .Where(p => p.IdentifierName.StartsWith("location"))
+            .ToDictionary(p => p.IdentifierName);
+        foreach (ProvisioningParameter p in existing.Values)
         {
             if (p.BicepType is TypeExpression type &&
                 type.Type == typeof(string) &&
@@ -87,7 +87,7 @@ public class LocationPropertyResolver : PropertyResolver
             // Optionally specialize to the resource
             if (construct is NamedProvisioningConstruct resource)
             {
-                name = $"{name}_{resource.ResourceName}";
+                name = $"{name}_{resource.IdentifierName}";
                 increment = existing.ContainsKey(name);
             }
 
@@ -107,7 +107,7 @@ public class LocationPropertyResolver : PropertyResolver
         }
 
         // Create and add the param
-        BicepParameter param =
+        ProvisioningParameter param =
             new(name, typeof(string))
             {
                 Description = "The location for the resource(s) to be deployed.",

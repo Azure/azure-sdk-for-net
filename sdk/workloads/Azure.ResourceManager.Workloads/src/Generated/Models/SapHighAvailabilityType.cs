@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator ==(SapHighAvailabilityType left, SapHighAvailabilityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapHighAvailabilityType"/> values are not the same. </summary>
         public static bool operator !=(SapHighAvailabilityType left, SapHighAvailabilityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapHighAvailabilityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapHighAvailabilityType"/>. </summary>
         public static implicit operator SapHighAvailabilityType(string value) => new SapHighAvailabilityType(value);
 
         /// <inheritdoc />

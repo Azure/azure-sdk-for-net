@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator ==(MonitorServiceSourceForAlert left, MonitorServiceSourceForAlert right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorServiceSourceForAlert"/> values are not the same. </summary>
         public static bool operator !=(MonitorServiceSourceForAlert left, MonitorServiceSourceForAlert right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitorServiceSourceForAlert"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorServiceSourceForAlert"/>. </summary>
         public static implicit operator MonitorServiceSourceForAlert(string value) => new MonitorServiceSourceForAlert(value);
 
         /// <inheritdoc />

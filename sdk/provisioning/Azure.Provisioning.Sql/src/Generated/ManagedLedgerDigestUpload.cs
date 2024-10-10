@@ -57,11 +57,15 @@ public partial class ManagedLedgerDigestUpload : Resource
     /// <summary>
     /// Creates a new ManagedLedgerDigestUpload.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedLedgerDigestUpload.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ManagedLedgerDigestUpload
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedLedgerDigestUpload.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedLedgerDigestUpload(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/databases/ledgerDigestUploads", resourceVersion ?? "2024-05-01-preview", context)
+    public ManagedLedgerDigestUpload(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/managedInstances/databases/ledgerDigestUploads", resourceVersion ?? "2024-05-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _digestStorageEndpoint = BicepValue<string>.DefineProperty(this, "DigestStorageEndpoint", ["properties", "digestStorageEndpoint"]);
@@ -85,9 +89,14 @@ public partial class ManagedLedgerDigestUpload : Resource
     /// <summary>
     /// Creates a reference to an existing ManagedLedgerDigestUpload.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedLedgerDigestUpload.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ManagedLedgerDigestUpload
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedLedgerDigestUpload.</param>
     /// <returns>The existing ManagedLedgerDigestUpload resource.</returns>
-    public static ManagedLedgerDigestUpload FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedLedgerDigestUpload FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator ==(KustoScriptType left, KustoScriptType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoScriptType"/> values are not the same. </summary>
         public static bool operator !=(KustoScriptType left, KustoScriptType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KustoScriptType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoScriptType"/>. </summary>
         public static implicit operator KustoScriptType(string value) => new KustoScriptType(value);
 
         /// <inheritdoc />

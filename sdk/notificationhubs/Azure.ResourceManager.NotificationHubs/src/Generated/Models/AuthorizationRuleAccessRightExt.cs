@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static bool operator ==(AuthorizationRuleAccessRightExt left, AuthorizationRuleAccessRightExt right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthorizationRuleAccessRightExt"/> values are not the same. </summary>
         public static bool operator !=(AuthorizationRuleAccessRightExt left, AuthorizationRuleAccessRightExt right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AuthorizationRuleAccessRightExt"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AuthorizationRuleAccessRightExt"/>. </summary>
         public static implicit operator AuthorizationRuleAccessRightExt(string value) => new AuthorizationRuleAccessRightExt(value);
 
         /// <inheritdoc />

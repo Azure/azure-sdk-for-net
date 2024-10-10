@@ -1,8 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.OpenAI.Chat;
 
+[Experimental("AOAI001")]
 [CodeGenModel("AzureChatDataSourceEndpointVectorizationSource")]
 internal partial class InternalAzureChatDataSourceEndpointVectorizationSource
 {

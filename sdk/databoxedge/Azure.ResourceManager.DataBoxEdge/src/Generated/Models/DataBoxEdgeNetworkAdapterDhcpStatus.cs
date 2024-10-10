@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(DataBoxEdgeNetworkAdapterDhcpStatus left, DataBoxEdgeNetworkAdapterDhcpStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkAdapterDhcpStatus"/> values are not the same. </summary>
         public static bool operator !=(DataBoxEdgeNetworkAdapterDhcpStatus left, DataBoxEdgeNetworkAdapterDhcpStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeNetworkAdapterDhcpStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeNetworkAdapterDhcpStatus"/>. </summary>
         public static implicit operator DataBoxEdgeNetworkAdapterDhcpStatus(string value) => new DataBoxEdgeNetworkAdapterDhcpStatus(value);
 
         /// <inheritdoc />

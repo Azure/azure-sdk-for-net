@@ -26,6 +26,7 @@ model-namespace: false
 public-clients: false
 head-as-boolean: false
 use-model-reader-writer: true
+use-write-core: true
 enable-bicep-serialization: true
 
 #mgmt-debug: 
