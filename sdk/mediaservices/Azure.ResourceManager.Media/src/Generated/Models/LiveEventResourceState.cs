@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(LiveEventResourceState left, LiveEventResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LiveEventResourceState"/> values are not the same. </summary>
         public static bool operator !=(LiveEventResourceState left, LiveEventResourceState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LiveEventResourceState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LiveEventResourceState"/>. </summary>
         public static implicit operator LiveEventResourceState(string value) => new LiveEventResourceState(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Redis.Models
         public static bool operator ==(UpdateChannel left, UpdateChannel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpdateChannel"/> values are not the same. </summary>
         public static bool operator !=(UpdateChannel left, UpdateChannel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UpdateChannel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UpdateChannel"/>. </summary>
         public static implicit operator UpdateChannel(string value) => new UpdateChannel(value);
 
         /// <inheritdoc />

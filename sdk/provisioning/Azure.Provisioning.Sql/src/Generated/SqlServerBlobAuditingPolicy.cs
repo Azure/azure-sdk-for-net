@@ -212,11 +212,15 @@ public partial class SqlServerBlobAuditingPolicy : Resource
     /// <summary>
     /// Creates a new SqlServerBlobAuditingPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerBlobAuditingPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerBlobAuditingPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerBlobAuditingPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerBlobAuditingPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/auditingSettings", resourceVersion ?? "2021-11-01", context)
+    public SqlServerBlobAuditingPolicy(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/auditingSettings", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _auditActionsAndGroups = BicepList<string>.DefineProperty(this, "AuditActionsAndGroups", ["properties", "auditActionsAndGroups"]);
@@ -254,9 +258,14 @@ public partial class SqlServerBlobAuditingPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerBlobAuditingPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerBlobAuditingPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerBlobAuditingPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerBlobAuditingPolicy.</param>
     /// <returns>The existing SqlServerBlobAuditingPolicy resource.</returns>
-    public static SqlServerBlobAuditingPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerBlobAuditingPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

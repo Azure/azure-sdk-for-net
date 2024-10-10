@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Search.Models
         public static bool operator ==(SearchServicePublicInternetAccess left, SearchServicePublicInternetAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchServicePublicInternetAccess"/> values are not the same. </summary>
         public static bool operator !=(SearchServicePublicInternetAccess left, SearchServicePublicInternetAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SearchServicePublicInternetAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchServicePublicInternetAccess"/>. </summary>
         public static implicit operator SearchServicePublicInternetAccess(string value) => new SearchServicePublicInternetAccess(value);
 
         /// <inheritdoc />

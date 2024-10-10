@@ -150,8 +150,8 @@ namespace Azure.Monitor.Query
             {
                 if (options.TimeRange != null)
                 {
-                    startTime = options.TimeRange.Value.Start.ToString();
-                    endTime = options.TimeRange.Value.End.ToString();
+                    startTime = options.TimeRange.Value.Start.ToIsoString();
+                    endTime = options.TimeRange.Value.End.ToIsoString();
                 }
                 aggregations = MetricsClientExtensions.CommaJoin(options.Aggregations);
                 top = options.Size;

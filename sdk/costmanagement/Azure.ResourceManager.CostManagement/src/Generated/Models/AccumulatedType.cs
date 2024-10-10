@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(AccumulatedType left, AccumulatedType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AccumulatedType"/> values are not the same. </summary>
         public static bool operator !=(AccumulatedType left, AccumulatedType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AccumulatedType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AccumulatedType"/>. </summary>
         public static implicit operator AccumulatedType(string value) => new AccumulatedType(value);
 
         /// <inheritdoc />

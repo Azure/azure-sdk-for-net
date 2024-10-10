@@ -88,11 +88,15 @@ public partial class ContainerAppAuthConfig : Resource
     /// <summary>
     /// Creates a new ContainerAppAuthConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppAuthConfig.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerAppAuthConfig resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppAuthConfig.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerAppAuthConfig(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.App/containerApps/authConfigs", resourceVersion, context)
+    public ContainerAppAuthConfig(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.App/containerApps/authConfigs", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _encryptionSettings = BicepValue<EncryptionSettings>.DefineProperty(this, "EncryptionSettings", ["properties", "encryptionSettings"]);
@@ -107,11 +111,47 @@ public partial class ContainerAppAuthConfig : Resource
     }
 
     /// <summary>
+    /// Supported ContainerAppAuthConfig resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-08-02-preview.
+        /// </summary>
+        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
+
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2023-05-01.
+        /// </summary>
+        public static readonly string V2023_05_01 = "2023-05-01";
+
+        /// <summary>
+        /// 2022-10-01.
+        /// </summary>
+        public static readonly string V2022_10_01 = "2022-10-01";
+
+        /// <summary>
+        /// 2022-03-01.
+        /// </summary>
+        public static readonly string V2022_03_01 = "2022-03-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing ContainerAppAuthConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppAuthConfig.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerAppAuthConfig resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppAuthConfig.</param>
     /// <returns>The existing ContainerAppAuthConfig resource.</returns>
-    public static ContainerAppAuthConfig FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppAuthConfig FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

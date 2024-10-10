@@ -16,9 +16,8 @@ namespace Azure.Provisioning.Primitives;
 /// <param name="resourceName">The friendly name of the resource.</param>
 /// <param name="resourceType">The type of the resource.</param>
 /// <param name="resourceVersion">The version of the resource.</param>
-/// <param name="context">Optional ProvisioningContext.</param>
-public abstract class Resource(string resourceName, ResourceType resourceType, string? resourceVersion = default, ProvisioningContext? context = default)
-    : NamedProvisioningConstruct(resourceName, context)
+public abstract class Resource(string resourceName, ResourceType resourceType, string? resourceVersion = default)
+    : NamedProvisioningConstruct(resourceName)
 {
     /// <summary>
     /// Gets the type of the resource.
@@ -71,11 +70,9 @@ public abstract class Resource(string resourceName, ResourceType resourceType, s
     /// <returns>
     /// A provisioning plan that can be saved as Bicep or deployed directly.
     /// </returns>
-    public virtual ProvisioningPlan Build(ProvisioningContext? context = default)
-    {
-        context ??= DefaultProvisioningContext;
-        return context.DefaultInfrastructure.Build(context);
-    }
+    public virtual ProvisioningPlan Build(ProvisioningContext? context = default) =>
+        ParentInfrastructure?.Build(context ?? new()) ??
+            throw new InvalidOperationException($"Cannot build a provisioning plan for {GetType().Name} resource {IdentifierName} before it has been added to {nameof(Infrastructure)}.");
 
     /// <inheritdoc />
     protected internal override void Validate(ProvisioningContext? context = null)
@@ -84,12 +81,12 @@ public abstract class Resource(string resourceName, ResourceType resourceType, s
 
         if (ResourceVersion is null)
         {
-            throw new InvalidOperationException($"{GetType().Name} resource {ResourceName} must have {nameof(ResourceVersion)} specified.");
+            throw new InvalidOperationException($"{GetType().Name} resource {IdentifierName} must have {nameof(ResourceVersion)} specified.");
         }
 
         if (DependsOn.Count > 0 && (IsExistingResource || ExpressionOverride is not null))
         {
-            throw new InvalidOperationException($"{GetType().Name} resource {ResourceName} cannot have dependencies if it's an existing resource or an expression override.");
+            throw new InvalidOperationException($"{GetType().Name} resource {IdentifierName} cannot have dependencies if it's an existing resource or an expression override.");
         }
 
         if (IsExistingResource)
@@ -108,7 +105,7 @@ public abstract class Resource(string resourceName, ResourceType resourceType, s
     }
 
     /// <inheritdoc />
-    protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)
+    protected internal override IEnumerable<Statement> Compile()
     {
         if (ExpressionOverride is not null)
         {
@@ -125,17 +122,17 @@ public abstract class Resource(string resourceName, ResourceType resourceType, s
             // This should be caught by Validate above
             if (body is not ObjectExpression obj)
             {
-                throw new InvalidOperationException($"{GetType().Name} resource {ResourceName} cannot have dependencies if it's an existing resource or an expression override.");
+                throw new InvalidOperationException($"{GetType().Name} resource {IdentifierName} cannot have dependencies if it's an existing resource or an expression override.");
             }
 
             // Add the dependsOn property
-            ArrayExpression dependencies = new(DependsOn.Select(r => BicepSyntax.Var(r.ResourceName)).ToArray());
+            ArrayExpression dependencies = new(DependsOn.Select(r => BicepSyntax.Var(r.IdentifierName)).ToArray());
             body = new ObjectExpression([.. obj.Properties, new PropertyExpression("dependsOn", dependencies)]);
         }
 
         // Create a resource declaration
         ResourceStatement resource = BicepSyntax.Declare.Resource(
-            ResourceName,
+            IdentifierName,
             $"{ResourceType}@{ResourceVersion}",
             body);
         if (IsExistingResource)

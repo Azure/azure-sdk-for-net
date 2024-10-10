@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI.Chat
 {
     /// <summary> Represents a data source configuration that will use an Azure Search resource. </summary>
-    public partial class AzureSearchChatDataSource : AzureChatDataSource
+    public partial class AzureSearchChatDataSource : ChatDataSource
     {
     }
 }

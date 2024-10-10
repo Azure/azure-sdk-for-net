@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetEvictionPolicy left, ComputeFleetEvictionPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetEvictionPolicy"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetEvictionPolicy left, ComputeFleetEvictionPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetEvictionPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetEvictionPolicy"/>. </summary>
         public static implicit operator ComputeFleetEvictionPolicy(string value) => new ComputeFleetEvictionPolicy(value);
 
         /// <inheritdoc />

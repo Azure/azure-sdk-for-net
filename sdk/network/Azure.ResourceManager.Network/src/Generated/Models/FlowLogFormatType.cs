@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(FlowLogFormatType left, FlowLogFormatType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FlowLogFormatType"/> values are not the same. </summary>
         public static bool operator !=(FlowLogFormatType left, FlowLogFormatType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FlowLogFormatType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FlowLogFormatType"/>. </summary>
         public static implicit operator FlowLogFormatType(string value) => new FlowLogFormatType(value);
 
         /// <inheritdoc />

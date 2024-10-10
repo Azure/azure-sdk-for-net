@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static bool operator ==(BackupRehydrationPriority left, BackupRehydrationPriority right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupRehydrationPriority"/> values are not the same. </summary>
         public static bool operator !=(BackupRehydrationPriority left, BackupRehydrationPriority right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupRehydrationPriority"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupRehydrationPriority"/>. </summary>
         public static implicit operator BackupRehydrationPriority(string value) => new BackupRehydrationPriority(value);
 
         /// <inheritdoc />

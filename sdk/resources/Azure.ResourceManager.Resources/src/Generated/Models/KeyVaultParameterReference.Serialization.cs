@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IJsonModel<KeyVaultParameterReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultParameterReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KeyVaultParameterReference)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("keyVault"u8);
             JsonSerializer.Serialize(writer, KeyVault);
             writer.WritePropertyName("secretName"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         KeyVaultParameterReference IJsonModel<KeyVaultParameterReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

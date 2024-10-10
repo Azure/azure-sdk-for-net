@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static bool operator ==(DevCenterHibernateSupport left, DevCenterHibernateSupport right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevCenterHibernateSupport"/> values are not the same. </summary>
         public static bool operator !=(DevCenterHibernateSupport left, DevCenterHibernateSupport right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevCenterHibernateSupport"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevCenterHibernateSupport"/>. </summary>
         public static implicit operator DevCenterHibernateSupport(string value) => new DevCenterHibernateSupport(value);
 
         /// <inheritdoc />

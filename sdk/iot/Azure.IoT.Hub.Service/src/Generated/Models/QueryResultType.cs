@@ -51,7 +51,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator ==(QueryResultType left, QueryResultType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryResultType"/> values are not the same. </summary>
         public static bool operator !=(QueryResultType left, QueryResultType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QueryResultType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryResultType"/>. </summary>
         public static implicit operator QueryResultType(string value) => new QueryResultType(value);
 
         /// <inheritdoc />
