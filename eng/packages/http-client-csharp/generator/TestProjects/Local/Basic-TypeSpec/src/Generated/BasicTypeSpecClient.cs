@@ -622,13 +622,13 @@ namespace BasicTypeSpec
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Thing> AnonymousBody(string name, BinaryData requiredUnion, AnonymousBodyRequestRequiredLiteralString requiredLiteralString, AnonymousBodyRequestRequiredLiteralInt requiredLiteralInt, AnonymousBodyRequestRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, AnonymousBodyRequestOptionalLiteralString? optionalLiteralString = default, AnonymousBodyRequestOptionalLiteralInt? optionalLiteralInt = default, AnonymousBodyRequestOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default)
+        public virtual Response<Thing> AnonymousBody(string name, BinaryData requiredUnion, ThingRequiredLiteralString requiredLiteralString, ThingRequiredLiteralInt requiredLiteralInt, ThingRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingOptionalLiteralString? optionalLiteralString = default, ThingOptionalLiteralInt? optionalLiteralInt = default, ThingOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
             Argument.AssertNotNull(requiredBadDescription, nameof(requiredBadDescription));
 
-            AnonymousBodyRequest spreadModel = new AnonymousBodyRequest(
+            Thing spreadModel = new Thing(
                 name,
                 requiredUnion,
                 requiredLiteralString,
@@ -663,13 +663,13 @@ namespace BasicTypeSpec
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Thing>> AnonymousBodyAsync(string name, BinaryData requiredUnion, AnonymousBodyRequestRequiredLiteralString requiredLiteralString, AnonymousBodyRequestRequiredLiteralInt requiredLiteralInt, AnonymousBodyRequestRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, AnonymousBodyRequestOptionalLiteralString? optionalLiteralString = default, AnonymousBodyRequestOptionalLiteralInt? optionalLiteralInt = default, AnonymousBodyRequestOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default)
+        public virtual async Task<Response<Thing>> AnonymousBodyAsync(string name, BinaryData requiredUnion, ThingRequiredLiteralString requiredLiteralString, ThingRequiredLiteralInt requiredLiteralInt, ThingRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingOptionalLiteralString? optionalLiteralString = default, ThingOptionalLiteralInt? optionalLiteralInt = default, ThingOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
             Argument.AssertNotNull(requiredBadDescription, nameof(requiredBadDescription));
 
-            AnonymousBodyRequest spreadModel = new AnonymousBodyRequest(
+            Thing spreadModel = new Thing(
                 name,
                 requiredUnion,
                 requiredLiteralString,
@@ -738,7 +738,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            FriendlyModelRequest spreadModel = new FriendlyModelRequest(name, null);
+            Friend spreadModel = new Friend(name, null);
             Response result = FriendlyModel(spreadModel, null);
             return Response.FromValue((Friend)result, result);
         }
@@ -751,7 +751,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            FriendlyModelRequest spreadModel = new FriendlyModelRequest(name, null);
+            Friend spreadModel = new Friend(name, null);
             Response result = await FriendlyModelAsync(spreadModel, null).ConfigureAwait(false);
             return Response.FromValue((Friend)result, result);
         }
@@ -854,7 +854,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ProjectedNameModelRequest spreadModel = new ProjectedNameModelRequest(name, null);
+            ProjectedModel spreadModel = new ProjectedModel(name, null);
             Response result = ProjectedNameModel(spreadModel, null);
             return Response.FromValue((ProjectedModel)result, result);
         }
@@ -867,7 +867,7 @@ namespace BasicTypeSpec
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ProjectedNameModelRequest spreadModel = new ProjectedNameModelRequest(name, null);
+            ProjectedModel spreadModel = new ProjectedModel(name, null);
             Response result = await ProjectedNameModelAsync(spreadModel, null).ConfigureAwait(false);
             return Response.FromValue((ProjectedModel)result, result);
         }
