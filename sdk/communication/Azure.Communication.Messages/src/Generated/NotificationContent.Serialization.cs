@@ -79,9 +79,13 @@ namespace Azure.Communication.Messages
             {
                 switch (discriminator.GetString())
                 {
-                    case "image": return MediaNotificationContent.DeserializeMediaNotificationContent(element, options);
+                    case "audio": return AudioNotificationContent.DeserializeAudioNotificationContent(element, options);
+                    case "document": return DocumentNotificationContent.DeserializeDocumentNotificationContent(element, options);
+                    case "image": return ImageNotificationContent.DeserializeImageNotificationContent(element, options);
+                    case "image_v0": return MediaNotificationContent.DeserializeMediaNotificationContent(element, options);
                     case "template": return TemplateNotificationContent.DeserializeTemplateNotificationContent(element, options);
                     case "text": return TextNotificationContent.DeserializeTextNotificationContent(element, options);
+                    case "video": return VideoNotificationContent.DeserializeVideoNotificationContent(element, options);
                 }
             }
             return UnknownNotificationContent.DeserializeUnknownNotificationContent(element, options);

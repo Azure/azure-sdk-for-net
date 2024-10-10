@@ -52,10 +52,81 @@ namespace Azure.Communication.Messages
             return new MediaNotificationContent(
                 channelRegistrationId,
                 to?.ToList(),
-                CommunicationMessageKind.Image,
+                CommunicationMessageKind.ImageV0,
                 serializedAdditionalRawData: null,
                 content,
                 mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.ImageNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="caption"> Optional text content. </param>
+        /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
+        /// <returns> A new <see cref="Messages.ImageNotificationContent"/> instance for mocking. </returns>
+        public static ImageNotificationContent ImageNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string caption = null, Uri mediaUri = null)
+        {
+            to ??= new List<string>();
+
+            return new ImageNotificationContent(
+                channelRegistrationId,
+                to?.ToList(),
+                CommunicationMessageKind.Image,
+                serializedAdditionalRawData: null,
+                caption,
+                mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.DocumentNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="caption"> Optional text content. </param>
+        /// <param name="fileName"> Optional name for the file. </param>
+        /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
+        /// <returns> A new <see cref="Messages.DocumentNotificationContent"/> instance for mocking. </returns>
+        public static DocumentNotificationContent DocumentNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string caption = null, string fileName = null, Uri mediaUri = null)
+        {
+            to ??= new List<string>();
+
+            return new DocumentNotificationContent(
+                channelRegistrationId,
+                to?.ToList(),
+                CommunicationMessageKind.Document,
+                serializedAdditionalRawData: null,
+                caption,
+                fileName,
+                mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.VideoNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="caption"> Optional text content. </param>
+        /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
+        /// <returns> A new <see cref="Messages.VideoNotificationContent"/> instance for mocking. </returns>
+        public static VideoNotificationContent VideoNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string caption = null, Uri mediaUri = null)
+        {
+            to ??= new List<string>();
+
+            return new VideoNotificationContent(
+                channelRegistrationId,
+                to?.ToList(),
+                CommunicationMessageKind.Video,
+                serializedAdditionalRawData: null,
+                caption,
+                mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.AudioNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
+        /// <returns> A new <see cref="Messages.AudioNotificationContent"/> instance for mocking. </returns>
+        public static AudioNotificationContent AudioNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, Uri mediaUri = null)
+        {
+            to ??= new List<string>();
+
+            return new AudioNotificationContent(channelRegistrationId, to?.ToList(), CommunicationMessageKind.Audio, serializedAdditionalRawData: null, mediaUri);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.TemplateNotificationContent"/>. </summary>
