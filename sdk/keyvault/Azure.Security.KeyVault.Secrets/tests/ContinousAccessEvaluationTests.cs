@@ -43,6 +43,10 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 {
                     Assert.AreEqual(expectedClaims, r.Claims);
                 }
+                else
+                {
+                    Assert.Fail("unexpected token request");
+                }
                 Interlocked.Increment(ref callCount);
                 Assert.AreEqual(true, r.IsCaeEnabled);
 
