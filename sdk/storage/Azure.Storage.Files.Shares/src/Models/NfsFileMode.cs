@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Globalization;
 using System.Text;
 
@@ -48,6 +49,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public string ToOctalFileMode()
         {
+            // https://en.wikipedia.org/wiki/File-system_permissions#Numeric_notation
             StringBuilder stringBuilder = new StringBuilder();
 
             int higherOrderDigit = 0;
@@ -79,9 +81,15 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public static NfsFileMode ParseOctalFileMode(string modeString)
         {
+            // https://en.wikipedia.org/wiki/File-system_permissions#Numeric_notation
             if (modeString == null)
             {
                 return null;
+            }
+
+            if (modeString.Length == 4)
+            {
+                throw Errors.InvalidFormat(nameof(modeString));
             }
 
             NfsFileMode nfsFileMode = new NfsFileMode
@@ -107,6 +115,84 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 nfsFileMode.StickyBit = true;
             }
+
+            return nfsFileMode;
+        }
+
+        /// <summary>
+        /// Returns this <see cref="NfsFileMode"/> as a string in symbolic notation.
+        /// </summary>
+        public string ToSymbolicFileMode()
+        {
+            // https://en.wikipedia.org/wiki/File-system_permissions#Symbolic_notation
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(Owner.ToSymbolicRolePermissions());
+            stringBuilder.Append(Group.ToSymbolicRolePermissions());
+            stringBuilder.Append(Other.ToSymbolicRolePermissions());
+
+            if (EffectiveUserIdentity)
+            {
+                if (stringBuilder[2] == 'x')
+                {
+                    stringBuilder[2] = 's';
+                }
+                else
+                {
+                    stringBuilder[2] = 'S';
+                }
+            }
+
+            if (EffectiveGroupIdentity)
+            {
+                if (stringBuilder[5] == 'x')
+                {
+                    stringBuilder[5] = 's';
+                }
+                else
+                {
+                    stringBuilder[5] = 'S';
+                }
+            }
+
+            if (StickyBit)
+            {
+                if (stringBuilder[8] == 'x')
+                {
+                    stringBuilder[8] = 't';
+                }
+                else
+                {
+                    stringBuilder[8] = 'T';
+                }
+            }
+            return stringBuilder.ToString();
+        }
+        /// <summary>
+        /// Returns a <see cref="NfsFileMode"/> from the symbolic string representation.
+        /// </summary>
+        public static NfsFileMode ParseSymbolicFileMode(string modeString)
+        {
+            // https://en.wikipedia.org/wiki/File-system_permissions#Symbolic_notation
+            if (modeString != null)
+            {
+                return null;
+            }
+
+            if (modeString.Length != 9)
+            {
+                throw Errors.InvalidFormat(nameof(modeString));
+            }
+
+            NfsFileMode nfsFileMode = new NfsFileMode();
+
+            nfsFileMode.Owner = RolePermissionExtensions.ParseSymbolicRolePermissions(modeString.Substring(0, 3), out bool effectiveUserIdentity);
+            nfsFileMode.EffectiveUserIdentity = effectiveUserIdentity;
+
+            nfsFileMode.Group = RolePermissionExtensions.ParseSymbolicRolePermissions(modeString.Substring(3, 3), out bool effectiveGroupIdentity);
+            nfsFileMode.EffectiveGroupIdentity = effectiveGroupIdentity;
+
+            nfsFileMode.Other = RolePermissionExtensions.ParseSymbolicRolePermissions(modeString.Substring(6, 9), out bool stickyBit);
+            nfsFileMode.StickyBit = stickyBit;
 
             return nfsFileMode;
         }
