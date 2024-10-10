@@ -106,37 +106,59 @@ public class LoggingOptionsTests
     }
 
     [Test]
-    public void CanInjectCustomLoggingPolicyViaServiceRegistration()
+    public void CanInjectCustomLoggingPolicyViaServiceCollection()
     {
         string uriString = "https://www.example.com/";
 
         ServiceCollection services = new ServiceCollection();
         ConfigurationManager configuration = new ConfigurationManager();
-        configuration.AddInMemoryCollection(
-            new List<KeyValuePair<string, string?>>() {
-                new("SimpleClient:ServiceUri", uriString)
-            });
-
         services.AddSingleton<IConfiguration>(sp => configuration);
+
+        configuration.AddInMemoryCollection(new List<KeyValuePair<string, string?>>()
+        {
+            // Common config block
+            new("ClientCommon:Logging:AllowedHeaderNames", null),
+            new("ClientCommon:Logging:AllowedHeaderNames:0", "x-common-config-allowed"),
+
+            // SimpleClient config block
+            new("SimpleClient:ServiceUri", uriString)
+        });
+
+        // Add custom policy to the service collection
+        services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
 
         // Client will have custom logging policy injected at creation time
         // Note this is the parameterless overload
-        services.AddSimpleClient(options =>
-        {
-            // Note: this is a nice approach for having a custom policy instance
-            // per client -- the options passed to this delegate is already
-            // configured from configuration settings, and the caller here
-            // is able to override anything if we call this delegate last.
-            options.HttpLoggingPolicy = new CustomHttpLoggingPolicy(options.Logging);
+        services.AddSimpleClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("SimpleClient"),
+            options => { });
 
-            // Note: anyone can use .PostConfigure to override our stuff.
-        });
+        //// Client will have custom logging policy injected at creation time
+        //// Note this is the parameterless overload
+        //services.AddSimpleClient(
+        //    configuration.GetSection("ClientCommon"),
+        //    configuration.GetSection("SimpleClient"),
+        //    options =>
+        //    {
+        //        // Note: this is a nice approach for having a custom policy instance
+        //        // per client -- the options passed to this delegate is already
+        //        // configured from configuration settings, and the caller here
+        //        // is able to override anything if we call this delegate last.
+        //        options.HttpLoggingPolicy = new CustomHttpLoggingPolicy(options.Logging);
+
+        //        // Note: anyone can use .PostConfigure to override our stuff.
+        //    });
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
 
         Assert.IsNotNull(client.Options.HttpLoggingPolicy);
         Assert.AreEqual(typeof(CustomHttpLoggingPolicy), client.Options.HttpLoggingPolicy!.GetType());
+
+        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
+
+        // TODO: validate that it doesn't have client-specific values configured
     }
 
     [Test]

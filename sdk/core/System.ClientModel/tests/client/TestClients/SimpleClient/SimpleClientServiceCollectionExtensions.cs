@@ -147,30 +147,43 @@ public static class SimpleClientServiceCollectionExtensions
     // TODO: is this the right pattern for taking both common and client-specific
     // configuration sections?  Or should there be a higher level block that holds both?
     public static IServiceCollection AddSimpleClient(this IServiceCollection services,
+        IConfiguration commonConfigurationSection,
+        IConfiguration clientConfigurationSection,
         Action<SimpleClientOptions> configureOptions)
     {
         services.AddLogging();
 
-        //services.AddSingleton<IConfigureOptions<SimpleClientOptions>>()
-
-        // Bind configuration to options
-        services.AddOptions<SimpleClientOptions>()
+        // Bind common options to common IConfiguration block
+        services.AddOptions<ClientPipelineOptions>()
                 .Configure<ILoggerFactory>((options, loggerFactory) =>
                 {
                     options.Logging.LoggerFactory = loggerFactory;
                 })
-                .Configure(configureOptions)
-                .PostConfigure(options =>
-                {
-                });
+                .Bind(commonConfigurationSection);
+
+        // Add common policy options to the service collection
+        services.AddSingleton<ClientLoggingOptions>(sp =>
+        {
+            IOptions<ClientPipelineOptions> options = sp.GetRequiredService<IOptions<ClientPipelineOptions>>();
+            return options.Value.Logging;
+        });
+
+        // Bind client options to common, client, and caller configuration
+        services.AddOptions<SimpleClientOptions>()
+                .Configure<ILoggerFactory>((options, loggerFactory) =>
+                    {
+                        options.Logging.LoggerFactory = loggerFactory;
+                    })
+                .Bind(commonConfigurationSection)
+                .Bind(clientConfigurationSection)
+                .Configure(configureOptions);
 
         services.AddSingleton<SimpleClient>(sp =>
         {
-            IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
-            IConfiguration clientConfiguration = configuration.GetSection("SimpleClient");
+            string? sectionName = (clientConfigurationSection as IConfigurationSection)?.Key;
 
-            Uri endpoint = clientConfiguration.GetValue<Uri>("ServiceUri") ??
-                throw new InvalidOperationException("Expected 'ServiceUri' to be present in 'SimpleClient' configuration settings.");
+            Uri endpoint = clientConfigurationSection.GetValue<Uri>("ServiceUri") ??
+                throw new InvalidOperationException($"Expected 'ServiceUri' to be present in '{sectionName ?? "configuration"}' configuration settings.");
 
             // TODO: how to get this securely?
             ApiKeyCredential credential = new("fake key");
@@ -185,6 +198,14 @@ public static class SimpleClientServiceCollectionExtensions
             if (httpClient is not null)
             {
                 options.Transport = new HttpClientPipelineTransport(httpClient);
+            }
+
+            // Check whether known policy types have been added to the service
+            // collection.
+            HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
+            if (httpLoggingPolicy is not null)
+            {
+                options.HttpLoggingPolicy = httpLoggingPolicy;
             }
 
             return new SimpleClient(endpoint, credential, options);
