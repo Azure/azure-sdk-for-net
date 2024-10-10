@@ -736,21 +736,17 @@ namespace Azure.Storage.Files.Shares.Tests
             string name = GetNewFileName();
             ShareFileClient file = InstrumentClient(directory.GetFileClient(name));
 
+            uint owner = 345;
+            uint group = 123;
+            string fileMode = "7777";
+
             ShareFileCreateOptions options = new ShareFileCreateOptions
             {
                 NfsProperties = new FileNfsProperties
                 {
-                    Owner = 0,
-                    Group = 0,
-                    FileMode = new NfsFileMode
-                    {
-                        Owner = RolePermissions.Write | RolePermissions.Read | RolePermissions.Execute,
-                        Group = RolePermissions.Read,
-                        Others = RolePermissions.None,
-                        StickyBit = true,
-                        EffectiveGroupIdentity = true,
-                        EffectiveUserIdentity = true
-                    }
+                    Owner = owner,
+                    Group = group,
+                    FileMode = NfsFileMode.ParseOctalFileMode(fileMode)
                 }
             };
 
@@ -760,6 +756,10 @@ namespace Azure.Storage.Files.Shares.Tests
                 options: options);
 
             // Assert
+            Assert.AreEqual(NfsFileType.Regular, response.Value.NfsProperties.FileType);
+            Assert.AreEqual(owner, response.Value.NfsProperties.Owner);
+            Assert.AreEqual(group, response.Value.NfsProperties.Group);
+            Assert.AreEqual(fileMode, response.Value.NfsProperties.FileMode.ToOctalFileMode());
         }
 
         [RecordedTest]

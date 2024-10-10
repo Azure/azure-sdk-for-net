@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Globalization;
+using System.Text;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
@@ -20,9 +23,9 @@ namespace Azure.Storage.Files.Shares.Models
         public RolePermissions Group { get; set; }
 
         /// <summary>
-        /// Permissions others have over the file or directory.
+        /// Permissions other have over the file or directory.
         /// </summary>
-        public RolePermissions Others { get; set; }
+        public RolePermissions Other { get; set; }
 
         /// <summary>
         /// Set effective user ID (setuid) on the file or directory.
@@ -39,5 +42,73 @@ namespace Azure.Storage.Files.Shares.Models
         /// directory may only be renamed or deleted by the file's owner, the directory's owner, or the root user.
         /// </summary>
         public bool StickyBit { get; set; }
+
+        /// <summary>
+        /// Returns the octal represenation of this <see cref="NfsFileMode"/> as a string.
+        /// </summary>
+        public string ToOctalFileMode()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            int higherOrderDigit = 0;
+
+            if (EffectiveUserIdentity)
+            {
+                higherOrderDigit |= 4;
+            }
+
+            if (EffectiveGroupIdentity)
+            {
+                higherOrderDigit |= 2;
+            }
+
+            if (StickyBit)
+            {
+                higherOrderDigit |= 1;
+            }
+
+            stringBuilder.Append(higherOrderDigit.ToString(CultureInfo.InvariantCulture));
+            stringBuilder.Append(Owner.ToOctalRolePermissions());
+            stringBuilder.Append(Group.ToOctalRolePermissions());
+            stringBuilder.Append(Other.ToOctalRolePermissions());
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Returns a <see cref="NfsFileMode"/> from the octal string representation.
+        /// </summary>
+        public static NfsFileMode ParseOctalFileMode(string modeString)
+        {
+            if (modeString == null)
+            {
+                return null;
+            }
+
+            NfsFileMode nfsFileMode = new NfsFileMode
+            {
+                Owner = RolePermissionExtensions.ParseOctalRolePermissions(modeString[1]),
+                Group = RolePermissionExtensions.ParseOctalRolePermissions(modeString[2]),
+                Other = RolePermissionExtensions.ParseOctalRolePermissions(modeString[3])
+            };
+
+            int value = (int)char.GetNumericValue(modeString[0]);
+
+            if ((value & 4) > 0)
+            {
+                nfsFileMode.EffectiveUserIdentity = true;
+            }
+
+            if ((value & 2) > 0)
+            {
+                nfsFileMode.EffectiveGroupIdentity = true;
+            }
+
+            if ((value & 1) > 0)
+            {
+                nfsFileMode.StickyBit = true;
+            }
+
+            return nfsFileMode;
+        }
     }
 }
