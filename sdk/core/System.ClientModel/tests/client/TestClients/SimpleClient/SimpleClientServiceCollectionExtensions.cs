@@ -151,11 +151,18 @@ public static class SimpleClientServiceCollectionExtensions
     {
         services.AddLogging();
 
+        //services.AddSingleton<IConfigureOptions<SimpleClientOptions>>()
+
         // Bind configuration to options
         services.AddOptions<SimpleClientOptions>()
-                .Configure<ILoggerFactory>((options, loggerFactory)
-                    => options.Logging.LoggerFactory = loggerFactory)
-                .Configure(configureOptions);
+                .Configure<ILoggerFactory>((options, loggerFactory) =>
+                {
+                    options.Logging.LoggerFactory = loggerFactory;
+                })
+                .Configure(configureOptions)
+                .PostConfigure(options =>
+                {
+                });
 
         services.AddSingleton<SimpleClient>(sp =>
         {
