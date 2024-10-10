@@ -133,6 +133,16 @@ namespace System.ClientModel.Primitives
         protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    public static partial class ClientServiceCollectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddCommonOptions(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddCommonOptions(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, Microsoft.Extensions.Configuration.IConfiguration commonConfigurationSection) { throw null; }
+    }
+    public static partial class ClientServiceProviderExtensions
+    {
+        public static TOptions ConfigurePolicies<TOptions>(this TOptions options, System.IServiceProvider serviceProvider) where TOptions : System.ClientModel.Primitives.ClientPipelineOptions { throw null; }
+        public static System.Uri GetClientEndpoint(this System.IServiceProvider serviceProvider, Microsoft.Extensions.Configuration.IConfiguration clientConfigurationSection) { throw null; }
+    }
     public abstract partial class CollectionResult
     {
         protected CollectionResult() { }
