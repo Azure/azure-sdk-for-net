@@ -104,6 +104,7 @@
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.Logging" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />

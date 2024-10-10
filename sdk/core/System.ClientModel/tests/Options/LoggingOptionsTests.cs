@@ -29,8 +29,10 @@ public class LoggingOptionsTests
         services.AddSingleton<IConfiguration>(sp => configuration);
 
         // Pass configuration section to configure from settings per options pattern
-        IConfigurationSection configurationSection = configuration.GetSection("SimpleClient");
-        services.AddSimpleClient(configurationSection);
+
+        IConfigurationSection commonSection = configuration.GetSection("ClientCommon");
+        IConfigurationSection clientSection = configuration.GetSection("SimpleClient");
+        services.AddSimpleClient(commonSection, clientSection);
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
@@ -61,8 +63,9 @@ public class LoggingOptionsTests
         services.AddSingleton<IConfiguration>(sp => configuration);
 
         // Pass configuration section to configure from settings per options pattern
-        IConfigurationSection configurationSection = configuration.GetSection("SimpleClient");
-        services.AddSimpleClient(configurationSection);
+        IConfigurationSection commonSection = configuration.GetSection("ClientCommon");
+        IConfigurationSection clientSection = configuration.GetSection("SimpleClient");
+        services.AddSimpleClient(commonSection, clientSection);
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
@@ -106,74 +109,59 @@ public class LoggingOptionsTests
     }
 
     [Test]
-    public void CanInjectCustomLoggingPolicyViaServiceRegistration()
+    public void CanInjectCustomLoggingPolicyViaServiceCollection()
     {
         string uriString = "https://www.example.com/";
 
         ServiceCollection services = new ServiceCollection();
         ConfigurationManager configuration = new ConfigurationManager();
-        configuration.AddInMemoryCollection(
-            new List<KeyValuePair<string, string?>>() {
-                new("SimpleClient:ServiceUri", uriString)
-            });
-
         services.AddSingleton<IConfiguration>(sp => configuration);
 
-        // Add custom logging policy to service collection
+        configuration.AddInMemoryCollection(new List<KeyValuePair<string, string?>>()
+        {
+            // Common config block
+            new("ClientCommon:Logging:AllowedHeaderNames", null),
+            new("ClientCommon:Logging:AllowedHeaderNames:0", "x-common-config-allowed"),
+
+            // SimpleClient config block
+            new("SimpleClient:ServiceUri", uriString)
+        });
+
+        // Add custom policy to the service collection
         services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
 
         // Client will have custom logging policy injected at creation time
         // Note this is the parameterless overload
-        services.AddSimpleClient();
+        services.AddSimpleClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("SimpleClient"),
+            options => { });
+
+        //// Client will have custom logging policy injected at creation time
+        //// Note this is the parameterless overload
+        //services.AddSimpleClient(
+        //    configuration.GetSection("ClientCommon"),
+        //    configuration.GetSection("SimpleClient"),
+        //    options =>
+        //    {
+        //        // Note: this is a nice approach for having a custom policy instance
+        //        // per client -- the options passed to this delegate is already
+        //        // configured from configuration settings, and the caller here
+        //        // is able to override anything if we call this delegate last.
+        //        options.HttpLoggingPolicy = new CustomHttpLoggingPolicy(options.Logging);
+
+        //        // Note: anyone can use .PostConfigure to override our stuff.
+        //    });
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
 
         Assert.IsNotNull(client.Options.HttpLoggingPolicy);
         Assert.AreEqual(typeof(CustomHttpLoggingPolicy), client.Options.HttpLoggingPolicy!.GetType());
-    }
 
-    [Test]
-    public void CanConfigureCustomLoggingPolicyFromConfigurationSettings()
-    {
-        string uriString = "https://www.example.com/";
+        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
 
-        ServiceCollection services = new ServiceCollection();
-        ConfigurationManager configuration = new ConfigurationManager();
-        configuration.AddInMemoryCollection(
-            new List<KeyValuePair<string, string?>>() {
-                new("SimpleClient:ServiceUri", uriString),
-                new("SimpleClient:Logging:EnableLogging", "false"),
-
-                // The below is the equivalent of adding JSON [ "x-allowed" ]
-                // array via Microsoft.Extensions.Configuration.Json config
-                new("SimpleClient:Logging:AllowedHeaderNames", null),
-                new("SimpleClient:Logging:AllowedHeaderNames:0", "x-config-allowed"),
-            });
-
-        services.AddSingleton<IConfiguration>(sp => configuration);
-
-        // Add custom logging policy to service collection
-        services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
-
-        // Pass configuration section to configure from settings per options pattern
-        IConfigurationSection configurationSection = configuration.GetSection("SimpleClient");
-        services.AddSimpleClient(configurationSection);
-
-        ServiceProvider serviceProvider = services.BuildServiceProvider();
-        SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
-
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "Content-Length");
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-config-allowed");
-
-        // Validate that custom logging policy has been bound to the same options
-        CustomHttpLoggingPolicy? customPolicy = client.Options.HttpLoggingPolicy as CustomHttpLoggingPolicy;
-        Assert.IsNotNull(customPolicy);
-
-        CollectionAssert.Contains(customPolicy!.Options.AllowedHeaderNames, "Content-Length");
-        CollectionAssert.Contains(customPolicy!.Options.AllowedHeaderNames, "x-simple-client-allowed");
-        CollectionAssert.Contains(customPolicy!.Options.AllowedHeaderNames, "x-config-allowed");
+        // TODO: validate that it doesn't have client-specific values configured
     }
 
     [Test]
@@ -205,8 +193,9 @@ public class LoggingOptionsTests
         });
 
         // Pass configuration section to configure from settings per options pattern
-        IConfigurationSection configurationSection = configuration.GetSection("SimpleClient");
-        services.AddSimpleClient(configurationSection);
+        IConfigurationSection commonSection = configuration.GetSection("ClientCommon");
+        IConfigurationSection clientSection = configuration.GetSection("SimpleClient");
+        services.AddSimpleClient(commonSection, clientSection);
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();

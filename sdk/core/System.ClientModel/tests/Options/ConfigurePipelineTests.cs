@@ -3,12 +3,12 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Reflection;
 using ClientModel.ReferenceClients.MapsClient;
 using ClientModel.ReferenceClients.SimpleClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using static System.ClientModel.Tests.Options.LoggingOptionsTests;
 
@@ -23,13 +23,12 @@ public class ConfigurePipelineTests
 
         ServiceCollection services = new ServiceCollection();
         ConfigurationManager configuration = new ConfigurationManager();
+        services.AddSingleton<IConfiguration>(sp => configuration);
+
         configuration.AddInMemoryCollection(
             new List<KeyValuePair<string, string?>>() {
                 new("SimpleClient:ServiceUri", uriString)
             });
-
-        services.AddSingleton<IConfiguration>(sp => configuration);
-        services.AddLogging();
 
         services.AddSimpleClient();
 
@@ -46,16 +45,16 @@ public class ConfigurePipelineTests
 
         ServiceCollection services = new ServiceCollection();
         ConfigurationManager configuration = new ConfigurationManager();
+        services.AddSingleton<IConfiguration>(sp => configuration);
+
         configuration.AddInMemoryCollection(
             new List<KeyValuePair<string, string?>>() {
                 new("SimpleClient:ServiceUri", uriString)
             });
 
-        services.AddSingleton<IConfiguration>(sp => configuration);
-        services.AddLogging();
-
-        IConfigurationSection configurationSection = configuration.GetSection("SimpleClient");
-        services.AddSimpleClient(configurationSection);
+        IConfigurationSection commonSection = configuration.GetSection("ClientCommon");
+        IConfigurationSection clientSection = configuration.GetSection("SimpleClient");
+        services.AddSimpleClient(commonSection, clientSection);
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
@@ -84,8 +83,12 @@ public class ConfigurePipelineTests
         });
 
         // Add the two clients
-        services.AddSimpleClient(configuration.GetSection("SimpleClient"));
-        services.AddMapsClient(configuration.GetSection("MapsClient"));
+        services.AddSimpleClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("SimpleClient"));
+        services.AddMapsClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("MapsClient"));
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient simpleClient = serviceProvider.GetRequiredService<SimpleClient>();
@@ -157,7 +160,7 @@ public class ConfigurePipelineTests
     }
 
     [Test]
-    public void CanConfigureCustomPolicyDifferentlyPerClient()
+    public void CanInjectSinglePolicyUsedByAllClients()
     {
         ServiceCollection services = new ServiceCollection();
         ConfigurationManager configuration = new ConfigurationManager();
@@ -180,6 +183,9 @@ public class ConfigurePipelineTests
             new("MapsClient:Logging:AllowedHeaderNames:0", "x-maps-config-allowed"),
         });
 
+        // Add single custom policy to the service collection
+        services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
+
         // Add the two clients
         services.AddSimpleClient(
             configuration.GetSection("ClientCommon"),
@@ -189,10 +195,73 @@ public class ConfigurePipelineTests
             configuration.GetSection("ClientCommon"),
             configuration.GetSection("MapsClient"));
 
-        // Add custom logging policy to service collection
-        // Add it as transient so different policy configurations can be added
-        // to different clients...
-        services.AddTransient<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
+        SimpleClient simpleClient = serviceProvider.GetRequiredService<SimpleClient>();
+        MapsClient mapsClient = serviceProvider.GetRequiredService<MapsClient>();
+
+        CustomHttpLoggingPolicy? simpleClientPolicy = simpleClient.Options.HttpLoggingPolicy as CustomHttpLoggingPolicy;
+        CustomHttpLoggingPolicy? mapsClientPolicy = simpleClient.Options.HttpLoggingPolicy as CustomHttpLoggingPolicy;
+
+        Assert.IsNotNull(simpleClientPolicy);
+        Assert.IsNotNull(mapsClientPolicy);
+
+        CollectionAssert.Contains(simpleClientPolicy!.Options.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.DoesNotContain(simpleClientPolicy!.Options.AllowedHeaderNames, "x-simple-config-allowed");
+
+        CollectionAssert.Contains(mapsClientPolicy!.Options.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.DoesNotContain(mapsClientPolicy!.Options.AllowedHeaderNames, "x-maps-config-allowed");
+
+        // TODO: should we throw if individual client blocks try to configure the logging policy?
+        // What is desired behavior here?
+    }
+
+    [Test]
+    public void CanInjectCustomPoliciesConfiguredDifferentlyPerClient()
+    {
+        ServiceCollection services = new ServiceCollection();
+        ConfigurationManager configuration = new ConfigurationManager();
+        services.AddSingleton<IConfiguration>(sp => configuration);
+
+        configuration.AddInMemoryCollection(new List<KeyValuePair<string, string?>>()
+        {
+            // Common config block
+            new("ClientCommon:Logging:AllowedHeaderNames", null),
+            new("ClientCommon:Logging:AllowedHeaderNames:0", "x-common-config-allowed"),
+
+            // SimpleClient config block
+            new("SimpleClient:ServiceUri", "https://www.simple-service.com/"),
+            new("SimpleClient:Logging:AllowedHeaderNames", null),
+            new("SimpleClient:Logging:AllowedHeaderNames:0", "x-simple-config-allowed"),
+
+            // MapsClient config block
+            new("MapsClient:ServiceUri", "https://www.maps-service.com/"),
+            new("MapsClient:Logging:AllowedHeaderNames", null),
+            new("MapsClient:Logging:AllowedHeaderNames:0", "x-maps-config-allowed"),
+        });
+
+        // Add a custom policy to the service collection configured for each client
+        services.AddKeyedSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>(typeof(SimpleClientOptions),
+            (sp, sco) =>
+            {
+                SimpleClientOptions options = sp.GetRequiredService<IOptions<SimpleClientOptions>>().Value;
+                return new CustomHttpLoggingPolicy(options.Logging);
+            });
+
+        services.AddKeyedSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>(typeof(MapsClientOptions),
+            (sp, mco) =>
+            {
+                MapsClientOptions options = sp.GetRequiredService<IOptions<MapsClientOptions>>().Value;
+                return new CustomHttpLoggingPolicy(options.Logging);
+            });
+
+        // Add the two clients
+        services.AddSimpleClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("SimpleClient"));
+
+        services.AddMapsClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("MapsClient"));
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient simpleClient = serviceProvider.GetRequiredService<SimpleClient>();
@@ -200,12 +269,18 @@ public class ConfigurePipelineTests
 
         // Validate that both clients have headers from the common config block
 
+        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "Content-Length");
+        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
         CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
         CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
+        CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-client-allowed");
         CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
 
+        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "Content-Length");
+        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-maps-client-allowed");
         CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
         CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
+        CollectionAssert.DoesNotContain(mapsClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
         CollectionAssert.DoesNotContain(mapsClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
 
         // Validate that the custom policy for each client is configured according to that client's options
@@ -230,6 +305,67 @@ public class ConfigurePipelineTests
     }
 
     [Test]
+    public void CanRegisterMultipleInstancesOfTheSameClientType()
+    {
+        // see: https://learn.microsoft.com/en-us/dotnet/azure/sdk/dependency-injection?tabs=web-app-builder#configure-multiple-service-clients-with-different-names
+
+        string publicUriString = "https://www.simple-public.com/";
+        string privateUriString = "https://www.simple-private.com/";
+
+        ServiceCollection services = new ServiceCollection();
+        ConfigurationManager configuration = new ConfigurationManager();
+        services.AddSingleton<IConfiguration>(sp => configuration);
+
+        configuration.AddInMemoryCollection(new List<KeyValuePair<string, string?>>()
+        {
+            // Common config block
+            new("ClientCommon:Logging:AllowedHeaderNames", null),
+            new("ClientCommon:Logging:AllowedHeaderNames:0", "x-common-config-allowed"),
+
+            // PublicClient config block
+            new("PublicClient:ServiceUri", publicUriString),
+            new("PublicClient:Logging:AllowedHeaderNames", null),
+            new("PublicClient:Logging:AllowedHeaderNames:0", "x-public-config-allowed"),
+
+            // PrivateClient config block
+            new("PrivateClient:ServiceUri", privateUriString),
+            new("PrivateClient:Logging:AllowedHeaderNames", null),
+            new("PrivateClient:Logging:AllowedHeaderNames:0", "x-private-config-allowed"),
+        });
+
+        // Add the two client instances
+        services.AddSimpleClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("PublicClient"),
+            options => { },
+            "PublicClient");
+
+        services.AddSimpleClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("PrivateClient"),
+            options => { },
+            "PrivateClient");
+
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
+        SimpleClient publicClient = serviceProvider.GetRequiredKeyedService<SimpleClient>("PublicClient");
+        SimpleClient privateClient = serviceProvider.GetRequiredKeyedService<SimpleClient>("PrivateClient");
+
+        // Validate that both clients have headers from appropriate common config blocks
+
+        Assert.AreEqual(publicUriString, publicClient.Endpoint.ToString());
+        CollectionAssert.Contains(publicClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.Contains(publicClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.Contains(publicClient.Options.Logging.AllowedHeaderNames, "x-public-config-allowed");
+        CollectionAssert.DoesNotContain(publicClient.Options.Logging.AllowedHeaderNames, "x-private-config-allowed");
+
+        Assert.AreEqual(privateUriString, privateClient.Endpoint.ToString());
+        CollectionAssert.Contains(privateClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.Contains(privateClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.Contains(privateClient.Options.Logging.AllowedHeaderNames, "x-private-config-allowed");
+        CollectionAssert.DoesNotContain(privateClient.Options.Logging.AllowedHeaderNames, "x-public-config-allowed");
+    }
+
+    [Test]
     public void CanSetClientCredentialFromConfigurationSettings()
     {
         throw new NotImplementedException();
@@ -237,51 +373,6 @@ public class ConfigurePipelineTests
 
     [Test]
     public void CanRollCredentialFromConfigurationSettings()
-    {
-        throw new NotImplementedException();
-    }
-
-    [Test]
-    public void CanInjectCustomHttpClient()
-    {
-        // Maybe this uses HttpClientFactory instead in the future
-
-        string uriString = "https://www.example.com/";
-
-        ServiceCollection services = new ServiceCollection();
-        ConfigurationManager configuration = new ConfigurationManager();
-        configuration.AddInMemoryCollection(
-            new List<KeyValuePair<string, string?>>() {
-                new("SimpleClient:ServiceUri", uriString)
-            });
-
-        services.AddSingleton<IConfiguration>(sp => configuration);
-
-        // Add custom logging policy to service collection
-
-        // Using specific HttpClient instance for test to validate object
-        // equality. Note that this is an anti-pattern from a DI perspective.
-        HttpClient httpClientInstance = new();
-        services.AddSingleton<HttpClient, HttpClient>(sp => httpClientInstance);
-
-        // Client will have custom logging policy injected at creation time
-        // Note this is the parameterless overload
-        services.AddSimpleClient();
-
-        ServiceProvider serviceProvider = services.BuildServiceProvider();
-        SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
-
-        HttpClientPipelineTransport? transport = client.Options.Transport as HttpClientPipelineTransport;
-
-        Assert.IsNotNull(transport);
-
-        HttpClient pipelineHttpClient = transport!.GetPrivateField<HttpClient>("_httpClient");
-
-        Assert.AreEqual(httpClientInstance, pipelineHttpClient);
-    }
-
-    [Test]
-    public void CanRegisterClientsAsKeyedServices()
     {
         throw new NotImplementedException();
     }
