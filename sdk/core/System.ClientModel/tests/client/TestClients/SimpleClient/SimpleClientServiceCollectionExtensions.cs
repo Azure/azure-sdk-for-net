@@ -144,8 +144,6 @@ public static class SimpleClientServiceCollectionExtensions
         return services;
     }
 
-    // TODO: is this the right pattern for taking both common and client-specific
-    // configuration sections?  Or should there be a higher level block that holds both?
     public static IServiceCollection AddSimpleClient(this IServiceCollection services,
         IConfiguration commonConfigurationSection,
         IConfiguration clientConfigurationSection,
