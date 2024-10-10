@@ -1,5 +1,10 @@
 # Release History
 
+## 12.21.1 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
 ## 12.21.0 (2024-09-18)
 
 ### Features Added
