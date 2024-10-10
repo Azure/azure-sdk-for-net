@@ -23,13 +23,12 @@ public class ConfigurePipelineTests
 
         ServiceCollection services = new ServiceCollection();
         ConfigurationManager configuration = new ConfigurationManager();
+        services.AddSingleton<IConfiguration>(sp => configuration);
+
         configuration.AddInMemoryCollection(
             new List<KeyValuePair<string, string?>>() {
                 new("SimpleClient:ServiceUri", uriString)
             });
-
-        services.AddSingleton<IConfiguration>(sp => configuration);
-        services.AddLogging();
 
         services.AddSimpleClient();
 

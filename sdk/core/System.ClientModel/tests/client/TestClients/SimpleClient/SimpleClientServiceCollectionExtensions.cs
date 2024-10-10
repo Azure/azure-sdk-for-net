@@ -4,10 +4,8 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace ClientModel.ReferenceClients.SimpleClient;
@@ -23,10 +21,10 @@ public static class SimpleClientServiceCollectionExtensions
 
         // Add client options
         services.AddOptions<SimpleClientOptions>()
-                .Configure<ClientPipelineOptions>((clientOptions, commonOptions) =>
+                .Configure<IOptions<ClientPipelineOptions>>((clientOptions, commonOptions) =>
                     {
                         // TODO: devise strategy for copying common options to client options
-                        clientOptions.Logging.LoggerFactory = commonOptions.Logging.LoggerFactory;
+                        clientOptions.Logging.LoggerFactory = commonOptions.Value.Logging.LoggerFactory;
                     });
 
         services.AddSingleton<SimpleClient>(sp =>
@@ -65,10 +63,10 @@ public static class SimpleClientServiceCollectionExtensions
         // Bind client options to common and client settings, and configure
         // with caller-specified configure options delegate.
         services.AddOptions<SimpleClientOptions>()
-                .Configure<ClientPipelineOptions>((clientOptions, commonOptions) =>
+                .Configure<IOptions<ClientPipelineOptions>>((clientOptions, commonOptions) =>
                 {
                     // TODO: devise strategy for copying common options to client options
-                    clientOptions.Logging.LoggerFactory = commonOptions.Logging.LoggerFactory;
+                    clientOptions.Logging.LoggerFactory = commonOptions.Value.Logging.LoggerFactory;
                 })
             .Bind(commonConfigurationSection)
 
@@ -106,10 +104,10 @@ public static class SimpleClientServiceCollectionExtensions
         // Bind client options to common and client settings, and configure
         // with caller-specified configure options delegate.
         services.AddOptions<SimpleClientOptions>()
-                .Configure<ClientPipelineOptions>((clientOptions, commonOptions) =>
+                .Configure<IOptions<ClientPipelineOptions>>((clientOptions, commonOptions) =>
                 {
                     // TODO: devise strategy for copying common options to client options
-                    clientOptions.Logging.LoggerFactory = commonOptions.Logging.LoggerFactory;
+                    clientOptions.Logging.LoggerFactory = commonOptions.Value.Logging.LoggerFactory;
                 })
                 .Bind(commonConfigurationSection)
                 .Bind(clientConfigurationSection)
