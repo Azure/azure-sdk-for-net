@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Inference.Tests.Samples
 {
-    public class Sample9_EmbeddingsWithAoai : SamplesBase<InferenceClientTestEnvironment>
+    public class Sample10_EmbeddingsWithAoai : SamplesBase<InferenceClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
