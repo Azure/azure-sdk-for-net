@@ -13,6 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
+    //cspell:ignore Rdma
     public partial class VmAttributes : IUtf8JsonSerializable, IJsonModel<VmAttributes>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmAttributes>)this).Write(writer, ModelSerializationExtensions.WireOptions);
