@@ -69,7 +69,7 @@ jobs:
       - name: Close Stale Issues Scheduled Event
         if: github.event.schedule == '0 1 * * *'
         run: |
-          github-event-processor ${{ github.event_name }} $GITHUB_EVENT_PATH CloseStaleIssues
+          github-event-processor ${{ github.event_name }} ${{ github.event_path }} CloseStaleIssues
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -77,7 +77,7 @@ jobs:
       - name: Identify Stale PullRequests Scheduled Event
         if: github.event.schedule == '0 5 * * FRI'
         run: |
-          github-event-processor ${{ github.event_name }} $GITHUB_EVENT_PATH IdentifyStalePullRequests
+          github-event-processor ${{ github.event_name }} ${{ github.event_path }} IdentifyStalePullRequests
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -85,7 +85,7 @@ jobs:
       - name: Close Stale PullRequests Scheduled Event
         if: github.event.schedule == '30 2,8,14,20 * * *'
         run: |
-          github-event-processor ${{ github.event_name }} $GITHUB_EVENT_PATH CloseStalePullRequests
+          github-event-processor ${{ github.event_name }} ${{ github.event_path }} CloseStalePullRequests
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -93,7 +93,7 @@ jobs:
       - name: Identify Stale Issues Scheduled Event
         if: github.event.schedule == '30 3,9,15,21 * * *'
         run: |
-          github-event-processor ${{ github.event_name }} $GITHUB_EVENT_PATH IdentifyStaleIssues
+          github-event-processor ${{ github.event_name }} ${{ github.event_path }} IdentifyStaleIssues
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -101,7 +101,7 @@ jobs:
       - name: Close Addressed Issues Scheduled Event
         if: github.event.schedule == '30 4,10,16,22 * * *'
         run: |
-          github-event-processor ${{ github.event_name }} $GITHUB_EVENT_PATH
+          github-event-processor ${{ github.event_name }} ${{ github.event_path }}
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -109,7 +109,7 @@ jobs:
       - name: Lock Closed Issues Scheduled Event
         if: github.event.schedule == '30 5,11,17,23 * * *'
         run: |
-          github-event-processor ${{ github.event_name }} $GITHUB_EVENT_PATH LockClosedIssues
+          github-event-processor ${{ github.event_name }} ${{ github.event_path }} LockClosedIssues
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -117,7 +117,14 @@ jobs:
       - name: Enforce Max Life of Issues Scheduled Event
         if: github.event.schedule == '0 18 * * 1,3,5'
         run: |
-          github-event-processor ${{ github.event_name }} $GITHUB_EVENT_PATH EnforceMaxLifeOfIssues
+          github-event-processor ${{ github.event_name }} ${{ github.event_path }} EnforceMaxLifeOfIssues
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Archive github event data
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: event
+          path: ${{ github.event_path }}
