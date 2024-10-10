@@ -11,19 +11,41 @@ namespace System.ClientModel.Primitives;
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public static class ClientServiceCollectionExtensions
 {
-    public static IServiceCollection AddClientPipelineOptions(this IServiceCollection services,
-        IConfiguration commonConfigurationSection,
-        IConfiguration clientConfigurationSection)
+    public static IServiceCollection AddCommonOptions(this IServiceCollection services)
+    {
+        services.AddRequiredServices();
+        services.AddClientPipelineOptions();
+
+        return services;
+    }
+
+    public static IServiceCollection AddCommonOptions(this IServiceCollection services,
+        IConfiguration commonConfigurationSection)
+    {
+        services.AddRequiredServices();
+
+        services.AddClientPipelineOptions()
+                .Bind(commonConfigurationSection);
+
+        return services;
+    }
+
+    private static IServiceCollection AddRequiredServices(this IServiceCollection services)
     {
         services.AddLogging();
 
-        // Bind common options to common IConfiguration block
-        services.AddOptions<ClientPipelineOptions>()
-                .Configure<ILoggerFactory>((options, loggerFactory) =>
-                {
-                    options.Logging.LoggerFactory = loggerFactory;
-                })
-                .Bind(commonConfigurationSection);
+        return services;
+    }
+
+    private static OptionsBuilder<ClientPipelineOptions> AddClientPipelineOptions(this IServiceCollection services)
+    {
+        // Add common options with required dependencies
+        OptionsBuilder<ClientPipelineOptions> builder =
+            services.AddOptions<ClientPipelineOptions>()
+                    .Configure<ILoggerFactory>((options, loggerFactory) =>
+                    {
+                        options.Logging.LoggerFactory = loggerFactory;
+                    });
 
         // Add common policy options to the service collection
         services.AddSingleton<ClientLoggingOptions>(sp =>
@@ -32,7 +54,11 @@ public static class ClientServiceCollectionExtensions
             return options.Value.Logging;
         });
 
-        return services;
+        return builder;
     }
+
+    //private static IServiceCollection AddLoggingOptions(this IServiceCollection services)
+    //{
+    //}
 }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

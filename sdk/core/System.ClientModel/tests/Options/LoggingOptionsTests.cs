@@ -29,8 +29,10 @@ public class LoggingOptionsTests
         services.AddSingleton<IConfiguration>(sp => configuration);
 
         // Pass configuration section to configure from settings per options pattern
-        IConfigurationSection configurationSection = configuration.GetSection("SimpleClient");
-        services.AddSimpleClient(configurationSection);
+
+        IConfigurationSection commonSection = configuration.GetSection("ClientCommon");
+        IConfigurationSection clientSection = configuration.GetSection("SimpleClient");
+        services.AddSimpleClient(commonSection, clientSection);
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
@@ -61,8 +63,9 @@ public class LoggingOptionsTests
         services.AddSingleton<IConfiguration>(sp => configuration);
 
         // Pass configuration section to configure from settings per options pattern
-        IConfigurationSection configurationSection = configuration.GetSection("SimpleClient");
-        services.AddSimpleClient(configurationSection);
+        IConfigurationSection commonSection = configuration.GetSection("ClientCommon");
+        IConfigurationSection clientSection = configuration.GetSection("SimpleClient");
+        services.AddSimpleClient(commonSection, clientSection);
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
@@ -185,8 +188,9 @@ public class LoggingOptionsTests
         services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
 
         // Pass configuration section to configure from settings per options pattern
-        IConfigurationSection configurationSection = configuration.GetSection("SimpleClient");
-        services.AddSimpleClient(configurationSection);
+        IConfigurationSection commonSection = configuration.GetSection("ClientCommon");
+        IConfigurationSection clientSection = configuration.GetSection("SimpleClient");
+        services.AddSimpleClient(commonSection, clientSection);
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
@@ -233,8 +237,9 @@ public class LoggingOptionsTests
         });
 
         // Pass configuration section to configure from settings per options pattern
-        IConfigurationSection configurationSection = configuration.GetSection("SimpleClient");
-        services.AddSimpleClient(configurationSection);
+        IConfigurationSection commonSection = configuration.GetSection("ClientCommon");
+        IConfigurationSection clientSection = configuration.GetSection("SimpleClient");
+        services.AddSimpleClient(commonSection, clientSection);
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();

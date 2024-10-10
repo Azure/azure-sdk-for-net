@@ -54,8 +54,9 @@ public class ConfigurePipelineTests
         services.AddSingleton<IConfiguration>(sp => configuration);
         services.AddLogging();
 
-        IConfigurationSection configurationSection = configuration.GetSection("SimpleClient");
-        services.AddSimpleClient(configurationSection);
+        IConfigurationSection commonSection = configuration.GetSection("ClientCommon");
+        IConfigurationSection clientSection = configuration.GetSection("SimpleClient");
+        services.AddSimpleClient(commonSection, clientSection);
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
@@ -84,8 +85,12 @@ public class ConfigurePipelineTests
         });
 
         // Add the two clients
-        services.AddSimpleClient(configuration.GetSection("SimpleClient"));
-        services.AddMapsClient(configuration.GetSection("MapsClient"));
+        services.AddSimpleClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("SimpleClient"));
+        services.AddMapsClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("MapsClient"));
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient simpleClient = serviceProvider.GetRequiredService<SimpleClient>();

@@ -18,20 +18,25 @@ public static class SimpleClientServiceCollectionExtensions
     // See: https://learn.microsoft.com/en-us/dotnet/core/extensions/options-library-authors#parameterless
     public static IServiceCollection AddSimpleClient(this IServiceCollection services)
     {
-        services.AddLogging();
+        // Add common options
+        services.AddCommonOptions();
 
         // Add client options
         services.AddOptions<SimpleClientOptions>()
-            .Configure<ILoggerFactory>((options, loggerFactory)
-                => options.Logging.LoggerFactory = loggerFactory);
+                .Configure<ClientPipelineOptions>((clientOptions, commonOptions) =>
+                    {
+                        // TODO: devise strategy for copying common options to client options
+                        clientOptions.Logging.LoggerFactory = commonOptions.Logging.LoggerFactory;
+                    });
 
         services.AddSingleton<SimpleClient>(sp =>
         {
+            // TODO: factor out configuration lookup cases per proposed schema
             IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
+            IConfiguration commonConfiguration = configuration.GetSection("ClientCommon");
             IConfiguration clientConfiguration = configuration.GetSection("SimpleClient");
 
-            Uri endpoint = clientConfiguration.GetValue<Uri>("ServiceUri") ??
-                throw new InvalidOperationException("Expected 'ServiceUri' to be present in 'SimpleClient' configuration settings.");
+            Uri endpoint = sp.GetClientEndpoint(clientConfiguration);
 
             // TODO: how to get this securely?
             ApiKeyCredential credential = new("fake key");
@@ -41,53 +46,7 @@ public static class SimpleClientServiceCollectionExtensions
             IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
             SimpleClientOptions options = iOptions.Value;
 
-            // Check whether an HttpClient has been injected
-            HttpClient? httpClient = sp.GetService<HttpClient>();
-            if (httpClient is not null)
-            {
-                options.Transport = new HttpClientPipelineTransport(httpClient);
-            }
-
-            return new SimpleClient(endpoint, credential, options);
-        });
-
-        return services;
-    }
-
-    // Taking an IConfiguration uses that to configure the options per the pattern
-    // See: https://learn.microsoft.com/en-us/dotnet/core/extensions/options-library-authors#iconfiguration-parameter
-    public static IServiceCollection AddSimpleClient(this IServiceCollection services,
-        IConfiguration configurationSection)
-    {
-        services.AddLogging();
-
-        // Bind configuration to options
-        services.AddOptions<SimpleClientOptions>()
-            .Configure<ILoggerFactory>((options, loggerFactory)
-                => options.Logging.LoggerFactory = loggerFactory)
-            .Bind(configurationSection);
-
-        services.AddSingleton<SimpleClient>(sp =>
-        {
-            string? sectionName = (configurationSection as IConfigurationSection)?.Key;
-
-            Uri endpoint = configurationSection.GetValue<Uri>("ServiceUri") ??
-                throw new InvalidOperationException($"Expected 'ServiceUri' to be present in '{sectionName ?? "configuration"}' configuration settings.");
-
-            // TODO: how to get this securely?
-            ApiKeyCredential credential = new("fake key");
-
-            // TODO: to roll a credential, this will need to be IOptionsMonitor
-            // not IOptions -- come back to this.
-            IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
-            SimpleClientOptions options = iOptions.Value;
-
-            // Check whether an HttpClient has been injected
-            HttpClient? httpClient = sp.GetService<HttpClient>();
-            if (httpClient is not null)
-            {
-                options.Transport = new HttpClientPipelineTransport(httpClient);
-            }
+            options = options.ConfigurePolicies(sp);
 
             return new SimpleClient(endpoint, credential, options);
         });
@@ -101,12 +60,16 @@ public static class SimpleClientServiceCollectionExtensions
         IConfiguration commonConfigurationSection,
         IConfiguration clientConfigurationSection)
     {
-        services.AddLogging();
+        services.AddCommonOptions(commonConfigurationSection);
 
-        // Bind configuration to options
+        // Bind client options to common and client settings, and configure
+        // with caller-specified configure options delegate.
         services.AddOptions<SimpleClientOptions>()
-                .Configure<ILoggerFactory>((options, loggerFactory)
-                    => options.Logging.LoggerFactory = loggerFactory)
+                .Configure<ClientPipelineOptions>((clientOptions, commonOptions) =>
+                {
+                    // TODO: devise strategy for copying common options to client options
+                    clientOptions.Logging.LoggerFactory = commonOptions.Logging.LoggerFactory;
+                })
             .Bind(commonConfigurationSection)
 
             // TODO: validate that binding to client config second allows client
@@ -115,10 +78,7 @@ public static class SimpleClientServiceCollectionExtensions
 
         services.AddSingleton<SimpleClient>(sp =>
         {
-            string? sectionName = (clientConfigurationSection as IConfigurationSection)?.Key;
-
-            Uri endpoint = clientConfigurationSection.GetValue<Uri>("ServiceUri") ??
-                throw new InvalidOperationException($"Expected 'ServiceUri' to be present in '{sectionName ?? "configuration"}' configuration settings.");
+            Uri endpoint = sp.GetClientEndpoint(clientConfigurationSection);
 
             // TODO: how to get this securely?
             ApiKeyCredential credential = new("fake key");
@@ -128,12 +88,7 @@ public static class SimpleClientServiceCollectionExtensions
             IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
             SimpleClientOptions options = iOptions.Value;
 
-            // Check whether an HttpClient has been injected
-            HttpClient? httpClient = sp.GetService<HttpClient>();
-            if (httpClient is not null)
-            {
-                options.Transport = new HttpClientPipelineTransport(httpClient);
-            }
+            options = options.ConfigurePolicies(sp);
 
             return new SimpleClient(endpoint, credential, options);
         });
@@ -146,15 +101,16 @@ public static class SimpleClientServiceCollectionExtensions
         IConfiguration clientConfigurationSection,
         Action<SimpleClientOptions> configureOptions)
     {
-        services.AddClientPipelineOptions(commonConfigurationSection, clientConfigurationSection);
+        services.AddCommonOptions(commonConfigurationSection);
 
         // Bind client options to common and client settings, and configure
         // with caller-specified configure options delegate.
         services.AddOptions<SimpleClientOptions>()
-                .Configure<ILoggerFactory>((options, loggerFactory) =>
-                    {
-                        options.Logging.LoggerFactory = loggerFactory;
-                    })
+                .Configure<ClientPipelineOptions>((clientOptions, commonOptions) =>
+                {
+                    // TODO: devise strategy for copying common options to client options
+                    clientOptions.Logging.LoggerFactory = commonOptions.Logging.LoggerFactory;
+                })
                 .Bind(commonConfigurationSection)
                 .Bind(clientConfigurationSection)
                 .Configure(configureOptions);
@@ -173,6 +129,7 @@ public static class SimpleClientServiceCollectionExtensions
             SimpleClientOptions options = iOptions.Value;
 
             options = options.ConfigurePolicies(sp);
+
             return new SimpleClient(endpoint, credential, options);
         });
 

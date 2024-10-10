@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,13 +23,13 @@ public static class ClientServiceProviderExtensions
     public static TOptions ConfigurePolicies<TOptions>(this TOptions options,
         IServiceProvider serviceProvider) where TOptions : ClientPipelineOptions
     {
-        // TODO: need to apply SCM settings to HttpClient
-        // Check whether an HttpClient has been injected.
-        HttpClient? httpClient = serviceProvider.GetService<HttpClient>();
-        if (httpClient is not null)
-        {
-            options.Transport = new HttpClientPipelineTransport(httpClient);
-        }
+        //// TODO: need to apply SCM settings to HttpClient
+        //// Check whether an HttpClient has been injected.
+        //HttpClient? httpClient = serviceProvider.GetService<HttpClient>();
+        //if (httpClient is not null)
+        //{
+        //    options.Transport = new HttpClientPipelineTransport(httpClient);
+        //}
 
         // Check whether known policy types have been added to the service collection.
         ClientRetryPolicy? retryPolicy = serviceProvider.GetService<ClientRetryPolicy>();
