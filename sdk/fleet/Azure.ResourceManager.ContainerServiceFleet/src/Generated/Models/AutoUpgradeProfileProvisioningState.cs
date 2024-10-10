@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static bool operator ==(AutoUpgradeProfileProvisioningState left, AutoUpgradeProfileProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutoUpgradeProfileProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AutoUpgradeProfileProvisioningState left, AutoUpgradeProfileProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutoUpgradeProfileProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoUpgradeProfileProvisioningState"/>. </summary>
         public static implicit operator AutoUpgradeProfileProvisioningState(string value) => new AutoUpgradeProfileProvisioningState(value);
 
         /// <inheritdoc />

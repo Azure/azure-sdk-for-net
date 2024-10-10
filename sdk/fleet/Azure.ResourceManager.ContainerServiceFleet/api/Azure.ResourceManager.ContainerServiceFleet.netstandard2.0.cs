@@ -399,6 +399,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     {
         public ContainerServiceFleetManagedClusterUpdate(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetManagedClusterUpgradeSpec upgrade) { }
         public Azure.ResourceManager.ContainerServiceFleet.Models.NodeImageSelection NodeImageSelection { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.ContainerServiceFleet.Models.NodeImageSelectionType? SelectionType { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetManagedClusterUpgradeSpec Upgrade { get { throw null; } set { } }
         Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetManagedClusterUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetManagedClusterUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetManagedClusterUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

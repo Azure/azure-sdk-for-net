@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static bool operator ==(TargetType left, TargetType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TargetType"/> values are not the same. </summary>
         public static bool operator !=(TargetType left, TargetType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TargetType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TargetType"/>. </summary>
         public static implicit operator TargetType(string value) => new TargetType(value);
 
         /// <inheritdoc />
