@@ -123,7 +123,13 @@ public class LoggingOptionsTests
         // Note this is the parameterless overload
         services.AddSimpleClient(options =>
         {
+            // Note: this is a nice approach for having a custom policy instance
+            // per client -- the options passed to this delegate is already
+            // configured from configuration settings, and the caller here
+            // is able to override anything if we call this delegate last.
             options.HttpLoggingPolicy = new CustomHttpLoggingPolicy(options.Logging);
+
+            // Note: anyone can use .PostConfigure to override our stuff.
         });
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
