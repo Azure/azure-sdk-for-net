@@ -415,7 +415,7 @@ DiscoveryGroupPayload body = new DiscoveryGroupPayload
 {
     Description = "This is a disco group",
     Tier = "advanced",
-    FrequencyMilliseconds = 604800000,
+    FrequencyMilliseconds = 604800000L,
     Seeds = {new DiscoverySource
     {
         Kind = DiscoverySourceKind.Host,
@@ -437,7 +437,7 @@ DiscoveryGroupPayload body = new DiscoveryGroupPayload
 {
     Description = "This is a disco group",
     Tier = "advanced",
-    FrequencyMilliseconds = 604800000,
+    FrequencyMilliseconds = 604800000L,
     Seeds = {new DiscoverySource
     {
         Kind = DiscoverySourceKind.Host,
@@ -458,7 +458,7 @@ EasmClient client = new EasmClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     description = "This is a disco group",
-    frequencyMilliseconds = 604800000,
+    frequencyMilliseconds = 604800000L,
     tier = "advanced",
     seeds = new object[]
     {
@@ -486,7 +486,7 @@ EasmClient client = new EasmClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     description = "This is a disco group",
-    frequencyMilliseconds = 604800000,
+    frequencyMilliseconds = 604800000L,
     tier = "advanced",
     seeds = new object[]
     {
@@ -565,7 +565,7 @@ DiscoveryGroupPayload body = new DiscoveryGroupPayload
 {
     Description = "This is a disco group",
     Tier = "advanced",
-    FrequencyMilliseconds = 604800000,
+    FrequencyMilliseconds = 604800000L,
     Seeds = {new DiscoverySource
     {
         Kind = DiscoverySourceKind.Host,
@@ -587,7 +587,7 @@ DiscoveryGroupPayload body = new DiscoveryGroupPayload
 {
     Description = "This is a disco group",
     Tier = "advanced",
-    FrequencyMilliseconds = 604800000,
+    FrequencyMilliseconds = 604800000L,
     Seeds = {new DiscoverySource
     {
         Kind = DiscoverySourceKind.Host,
@@ -608,7 +608,7 @@ EasmClient client = new EasmClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     description = "This is a disco group",
-    frequencyMilliseconds = 604800000,
+    frequencyMilliseconds = 604800000L,
     tier = "advanced",
     seeds = new object[]
     {
@@ -636,7 +636,7 @@ EasmClient client = new EasmClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     description = "This is a disco group",
-    frequencyMilliseconds = 604800000,
+    frequencyMilliseconds = 604800000L,
     tier = "advanced",
     seeds = new object[]
     {

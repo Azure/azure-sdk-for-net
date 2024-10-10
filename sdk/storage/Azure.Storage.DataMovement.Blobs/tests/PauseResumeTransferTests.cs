@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseBlobs;
 extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
+using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Common;
+using Azure.Storage.DataMovement.Blobs.Tests;
 using Azure.Storage.DataMovement.JobPlan;
 using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
@@ -239,8 +241,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync();
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
@@ -293,8 +295,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync();
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
@@ -363,8 +365,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync();
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
@@ -423,8 +425,8 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
             BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
@@ -503,8 +505,8 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
             BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
@@ -579,7 +581,7 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
             BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingContainer blobContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer blobContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
@@ -824,8 +826,8 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync();
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
@@ -876,8 +878,8 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
             BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
@@ -928,8 +930,8 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
             BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
@@ -986,8 +988,8 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
             BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
@@ -1074,8 +1076,8 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
             BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
@@ -1169,8 +1171,8 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
             BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();

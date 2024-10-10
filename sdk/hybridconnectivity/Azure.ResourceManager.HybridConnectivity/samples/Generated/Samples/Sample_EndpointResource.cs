@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             EndpointResource endpointResource = client.GetEndpointResource(endpointResourceId);
 
             // invoke the operation
-            long? expiresin = 10800;
+            long? expiresin = 10800L;
             TargetResourceEndpointAccess result = await endpointResource.GetCredentialsAsync(expiresin: expiresin);
 
             Console.WriteLine($"Succeeded: {result}");
