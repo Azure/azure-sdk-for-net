@@ -1,13 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseBlobs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
+using BaseBlobs::Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -69,7 +70,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         /// </summary>
         /// <param name="blobName">Name of the blob in the respective container</param>
         /// <returns>The respective block blob client to the container</returns>
-        protected override BlockBlobClient GetBlockBlobClientCore(string blobName)
+        protected internal override BlockBlobClient GetBlockBlobClientCore(string blobName)
         {
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
             {

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseBlobs;
 extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Tests;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.DataMovement.Blobs.Tests;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -90,7 +92,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task DownloadDirectoryAsync_Small(int size, int waitInSec)
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             string sourceBlobDirectoryName = "foo";
 
             List<string> blobNames = new()
@@ -120,7 +122,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task DownloadDirectoryAsync_Large(int size, int waitInSec)
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             string sourceBlobDirectoryName = "foo";
 
             List<string> blobNames = new()
@@ -145,7 +147,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task DownloadDirectoryAsync_Empty()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string sourceBlobDirectoryName = "foo";
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
@@ -182,7 +184,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task DownloadDirectoryAsync_SingleFile()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             string sourceBlobDirectoryName = GetNewBlobDirectoryName();
             await DownloadBlobDirectoryAndVerify(
                 test.Container,
@@ -196,7 +198,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task DownloadDirectoryAsync_ManySubDirectories()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string tempFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
@@ -223,7 +225,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task DownloadDirectoryAsync_SubDirectoriesLevels(int level)
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             string sourcePrefix = "foo";
 
             List<string> blobNames = new List<string>();
@@ -249,7 +251,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             int blobSize = 2 * Constants.KB;
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string tempFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
@@ -298,7 +300,7 @@ namespace Azure.Storage.DataMovement.Tests
             string[] files = { "file1", "dir1/file1", "dir1/file2", "dir1/file3", "dir2/file1" };
             BinaryData data = BinaryData.FromString("Hello World");
 
-            await using DisposingContainer source = await GetTestContainerAsync();
+            await using DisposingBlobContainer source = await GetTestContainerAsync();
             using DisposingLocalDirectory destination = DisposingLocalDirectory.GetTestDirectory();
 
             foreach (string file in files)
@@ -388,7 +390,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_AwaitCompletion()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
@@ -420,7 +422,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_AwaitCompletion_Failed()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
@@ -461,7 +463,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_AwaitCompletion_Skipped()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
@@ -502,7 +504,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
@@ -535,7 +537,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted_Failed()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
@@ -576,7 +578,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted_Skipped()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
@@ -617,7 +619,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted_Failed_SmallChunks()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
