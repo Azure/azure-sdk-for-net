@@ -754,38 +754,34 @@ namespace Azure.Storage.Files.Shares
                     FileSmbProperties smbProps = smbProperties ?? new FileSmbProperties();
 
                     ShareExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
-                    if (filePermission == null && smbProps.FilePermissionKey == null)
-                    {
-                        filePermission = Constants.File.FilePermissionInherit;
-                    }
 
                     ResponseWithHeaders<DirectoryCreateHeaders> response;
 
                     if (async)
                     {
                         response = await DirectoryRestClient.CreateAsync(
-                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
-                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
-                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            fileAttributes: smbProps?.FileAttributes.ToAttributesString(),
+                            fileCreationTime: smbProps?.FileCreatedOn.ToFileDateTimeString(),
+                            fileLastWriteTime: smbProps?.FileLastWrittenOn.ToFileDateTimeString(),
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
-                            filePermissionKey: smbProps.FilePermissionKey,
-                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
+                            filePermissionKey: smbProps?.FilePermissionKey,
+                            fileChangeTime: smbProps?.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = DirectoryRestClient.Create(
-                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
-                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
-                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            fileAttributes: smbProps?.FileAttributes.ToAttributesString(),
+                            fileCreationTime: smbProps?.FileCreatedOn.ToFileDateTimeString(),
+                            fileLastWriteTime: smbProps?.FileLastWrittenOn.ToFileDateTimeString(),
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
-                            filePermissionKey: smbProps.FilePermissionKey,
-                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
+                            filePermissionKey: smbProps?.FilePermissionKey,
+                            fileChangeTime: smbProps?.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken);
                     }
 
@@ -1746,7 +1742,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await DirectoryRestClient.SetPropertiesAsync(
-                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
+                            fileAttributes: smbProps?.FileAttributes.ToAttributesString() ?? Constants.File.Preserve,
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             filePermission: filePermission,
@@ -1759,7 +1755,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = DirectoryRestClient.SetProperties(
-                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
+                            fileAttributes: smbProps?.FileAttributes.ToAttributesString() ?? Constants.File.Preserve,
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             filePermission: filePermission,
@@ -2863,7 +2859,7 @@ namespace Azure.Storage.Files.Shares
 
                     CopyFileSmbInfo copyFileSmbInfo = new CopyFileSmbInfo
                     {
-                        FileAttributes = options?.SmbProperties?.FileAttributes?.ToAttributesString(),
+                        FileAttributes = options?.SmbProperties?.FileAttributes.ToAttributesString(),
                         FileCreationTime = options?.SmbProperties?.FileCreatedOn.ToFileDateTimeString(),
                         FileLastWriteTime = options?.SmbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
                         FileChangeTime = options?.SmbProperties?.FileChangedOn.ToFileDateTimeString(),

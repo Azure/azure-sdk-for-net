@@ -16,11 +16,6 @@ namespace Azure.Storage.Files.Shares
     {
         internal static void AssertValidFilePermissionAndKey(string filePermission, string filePermissionKey)
         {
-            if (filePermission != null && filePermissionKey != null)
-            {
-                throw Errors.CannotBothBeNotNull(nameof(filePermission), nameof(filePermissionKey));
-            }
-
             if (filePermission != null && Encoding.UTF8.GetByteCount(filePermission) > Constants.File.MaxFilePermissionHeaderSize)
             {
                 throw Errors.MustBeLessThanOrEqualTo(nameof(filePermission), Constants.File.MaxFilePermissionHeaderSize);
@@ -293,6 +288,12 @@ namespace Azure.Storage.Files.Shares
                     FileChangedOn = response.Headers.FileChangeTime,
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
+                },
+                NfsProperties = new FileNfsProperties()
+                {
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group,
+                    FileType = response.Headers.NfsFileType,
                 }
             };
         }
@@ -998,6 +999,61 @@ namespace Azure.Storage.Files.Shares
                     PermissionFormat = response.Value.Format
                 },
                 response.GetRawResponse());
+        }
+
+        internal static string ToOctalFileMode(this NfsFileMode nfsFileMode)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("0");
+            stringBuilder.Append(nfsFileMode.ToOctalHigherOrderDigit());
+            stringBuilder.Append(nfsFileMode.Owner.ToOctalRolePermissions());
+            stringBuilder.Append(nfsFileMode.Group.ToOctalRolePermissions());
+            stringBuilder.Append(nfsFileMode.Others.ToOctalRolePermissions());
+            return stringBuilder.ToString();
+        }
+
+        internal static string ToOctalHigherOrderDigit(this NfsFileMode nfsFileMode)
+        {
+            int result = 0;
+
+            if (nfsFileMode.EffectiveUserIdentity)
+            {
+                result |= 4;
+            }
+
+            if (nfsFileMode.EffectiveGroupIdentity)
+            {
+                result |= 2;
+            }
+
+            if (nfsFileMode.StickyBit)
+            {
+                result |= 1;
+            }
+
+            return result.ToString(CultureInfo.InvariantCulture);
+        }
+
+        internal static string ToOctalRolePermissions(this RolePermissions rolePermissions)
+        {
+            int result = 0;
+
+            if (rolePermissions.HasFlag(RolePermissions.Read))
+            {
+                result |= 4;
+            }
+
+            if (rolePermissions.HasFlag(RolePermissions.Write))
+            {
+                result |= 2;
+            }
+
+            if (rolePermissions.HasFlag(RolePermissions.Execute))
+            {
+                result |= 1;
+            }
+
+            return result.ToString(CultureInfo.InvariantCulture);
         }
     }
 }
