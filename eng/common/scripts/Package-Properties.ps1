@@ -104,7 +104,7 @@ class PackageProps
                 if ($content) {
                     $artifacts = $this.GetValueSafely($content, @("extends", "parameters", "Artifacts"))
 
-                    $artifactForCurrentPackage = $artifacts | Where-Object { $_["name"] -eq $this.ArtifactName -or $_["name"] -eq $this.Name }  | Select-Object -First 1
+                    $artifactForCurrentPackage = $artifacts | Where-Object { $_["name"] -eq $this.ArtifactName -or $_["name"] -eq $this.Name }
 
                     if ($artifactForCurrentPackage.Count -gt 1)
                     {
@@ -113,10 +113,12 @@ class PackageProps
                         return $artifactForCurrentPackage[0]
                     }
                     if ($artifactForCurrentPackage) {
-                        # Write-Host "Got $artifactForCurrentPackage with type $($artifactForCurrentPackage.GetType())"
+                        Write-Host "Got $artifactForCurrentPackage with type $($artifactForCurrentPackage.GetType())"
                         return [HashTable]$artifactForCurrentPackage
                     }
-                    return @{}
+                    else {
+                        "We don't have a matching artifact for $($this.Name) in the yml file $($ymlPath)"
+                    }
                 }
             }
             catch {
@@ -132,31 +134,31 @@ class PackageProps
         $ciFilePath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory "ci.yml")
         $ciMgmtYmlFilePath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory "ci.mgmt.yml")
 
-        # Write-Host "Calling InitializeCIArtifacts against $($this.Name)"
+        Write-Host "Calling InitializeCIArtifacts against $($this.Name)"
 
         if (-not $this.ArtifactDetails) {
-            # Write-Host "Artifact details for $($this.Name) is not set. Trying to get it from ci.yml."
+            Write-Host "Artifact details for $($this.Name) is not set. Trying to get it from ci.yml."
             $ciArtifactResult = $this.ParseYmlForArtifact($ciFilePath)
             if ($ciArtifactResult) {
-                # Write-Host "We have a ciArtifactResult: $ciArtifactResult"
+                Write-Host "We have a ciArtifactResult: $ciArtifactResult"
                 $this.ArtifactDetails = [Hashtable]$ciArtifactResult
             }
-            # else {
-            #     Write-Host "We don't have an artifact result to assign to $($this.Name)"
-            # }
+            else {
+                Write-Host "We don't have an artifact result to assign to $($this.Name)"
+            }
         }
 
         if (-not $this.ArtifactDetails) {
-            # Write-Host "Artifact details for $($this.Name) is not set. Trying to get it from ci.mgmt.yml."
+            Write-Host "Artifact details for $($this.Name) is not set. Trying to get it from ci.mgmt.yml."
             $ciMgmtResult = $this.ParseYmlForArtifact($ciMgmtYmlFilePath)
 
             if ($ciMgmtResult) {
-                # Write-Host "We have a ciMgmtResult: $ciMgmtResult"
+                Write-Host "We have a ciMgmtResult: $ciMgmtResult"
                 $this.ArtifactDetails = [Hashtable]$ciMgmtResult
             }
-            # else {
-            #     Write-Host "We don't have a mgmt artifact result to assign to $($this.ArtifactName)"
-            # }
+            else {
+                Write-Host "We don't have a mgmt artifact result to assign to $($this.ArtifactName)"
+            }
         }
     }
 }
@@ -193,7 +195,7 @@ function Get-PkgProperties
 function Get-PrPkgProperties([string]$InputDiffJson) {
     $packagesWithChanges = @()
 
-    $allPackageProperties = Get-AllPkgProperties "appconfiguration"
+    $allPackageProperties = Get-AllPkgProperties
     $diff = Get-Content $InputDiffJson | ConvertFrom-Json
     $targetedFiles = $diff.ChangedFiles
 
