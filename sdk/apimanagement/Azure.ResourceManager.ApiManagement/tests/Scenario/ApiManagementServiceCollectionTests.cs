@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class ApiManagementServiceCollectionTests : ApiManagementManagementTestBase
     {
         public ApiManagementServiceCollectionTests(bool isAsync)
-                    : base(isAsync)//, RecordedTestMode.Record)
+                    : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         public async Task CRUD()
         {
             var collection = await GetApiManagementServiceCollectionAsync();
-            var apiName = Recording.GenerateAssetName("testapi-");
-            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+            var apiName = Recording.GenerateAssetName("sdktestapimv2-");
+            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             if (Mode != RecordedTestMode.Playback)
             {
                 collection = await GetApiManagementServiceCollectionAsync();
-                apiName = Recording.GenerateAssetName("testapi-");
-                var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+                apiName = Recording.GenerateAssetName("sdktestapimv2-");
+                var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
                 {
                     Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
                 };
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             if (Mode != RecordedTestMode.Playback)
             {
                 collection = await GetApiManagementServiceCollectionAsync();
-                var apiName = Recording.GenerateAssetName("testapi-");
-                var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+                var apiName = Recording.GenerateAssetName("sdktestapimv2-");
+                var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
                 {
                     Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
                 };
@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             if (Mode != RecordedTestMode.Playback)
             {
                 collection = await GetApiManagementServiceCollectionAsync();
-                apiName = Recording.GenerateAssetName("testapi-");
-                var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+                apiName = Recording.GenerateAssetName("sdktestapimv2-");
+                var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
                 {
                     Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
                 };
