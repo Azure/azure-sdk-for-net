@@ -89,6 +89,6 @@ function CompatibleConvertFrom-Yaml {
       return ($content | yq -o=json | ConvertFrom-Json -AsHashTable)
   }
   else {
-      return (ConvertFrom-Yaml (Get-Content -Raw sdk/core/ci.yml))
+      return ConvertFrom-Yaml $content
   }
 }
