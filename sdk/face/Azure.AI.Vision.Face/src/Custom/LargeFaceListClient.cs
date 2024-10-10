@@ -23,7 +23,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LargeFaceListClient(string largeFaceListId, Uri endpoint, AzureKeyCredential credential) : this(largeFaceListId, endpoint, credential, new AzureAIVisionFaceClientOptions())
+        public LargeFaceListClient(Uri endpoint, AzureKeyCredential credential, string largeFaceListId) : this(endpoint, credential, largeFaceListId, new AzureAIVisionFaceClientOptions())
         {
         }
 
@@ -35,7 +35,7 @@ namespace Azure.AI.Vision.Face
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LargeFaceListClient(string largeFaceListId, Uri endpoint, TokenCredential credential) : this(largeFaceListId, endpoint, credential, new AzureAIVisionFaceClientOptions())
+        public LargeFaceListClient(Uri endpoint, TokenCredential credential, string largeFaceListId) : this(endpoint, credential, largeFaceListId, new AzureAIVisionFaceClientOptions())
         {
         }
 
@@ -48,7 +48,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LargeFaceListClient(string largeFaceListId, Uri endpoint, AzureKeyCredential credential, AzureAIVisionFaceClientOptions options)
+        public LargeFaceListClient(Uri endpoint, AzureKeyCredential credential, string largeFaceListId, AzureAIVisionFaceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -71,7 +71,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LargeFaceListClient(string largeFaceListId, Uri endpoint, TokenCredential credential, AzureAIVisionFaceClientOptions options)
+        public LargeFaceListClient(Uri endpoint, TokenCredential credential, string largeFaceListId, AzureAIVisionFaceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
