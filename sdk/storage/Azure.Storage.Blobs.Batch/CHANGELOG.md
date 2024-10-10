@@ -1,6 +1,6 @@
 # Release History
 
-## 12.20.0-beta.2 (10-10-2024)
+## 12.20.0-beta.2 (2024-10-10)
 
 ### Other Changes
 - Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
