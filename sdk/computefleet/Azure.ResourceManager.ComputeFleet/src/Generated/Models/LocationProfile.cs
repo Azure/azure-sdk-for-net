@@ -46,12 +46,17 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LocationProfile"/>. </summary>
-        public LocationProfile()
+        /// <param name="location"> The ARM location name of the additional region. If LocationProfile is specified, then location is required. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public LocationProfile(string location)
         {
+            Argument.AssertNotNull(location, nameof(location));
+
+            Location = location;
         }
 
         /// <summary> Initializes a new instance of <see cref="LocationProfile"/>. </summary>
-        /// <param name="location"> The ARM location name of the additional region. </param>
+        /// <param name="location"> The ARM location name of the additional region. If LocationProfile is specified, then location is required. </param>
         /// <param name="virtualMachineProfileOverride">
         /// An override for computeProfile.baseVirtualMachineProfile specific to this region.
         /// This override is merged with the base virtual machine profile to define the final virtual machine profile for the resources deployed in this location.
@@ -64,7 +69,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The ARM location name of the additional region. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocationProfile"/> for deserialization. </summary>
+        internal LocationProfile()
+        {
+        }
+
+        /// <summary> The ARM location name of the additional region. If LocationProfile is specified, then location is required. </summary>
         public string Location { get; set; }
         /// <summary>
         /// An override for computeProfile.baseVirtualMachineProfile specific to this region.

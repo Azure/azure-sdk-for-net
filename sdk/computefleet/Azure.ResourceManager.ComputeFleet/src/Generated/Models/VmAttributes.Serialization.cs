@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             writer.WriteObjectValue(VCpuCount, options);
             writer.WritePropertyName("memoryInGiB"u8);
             writer.WriteObjectValue(MemoryInGiB, options);
+            if (Optional.IsDefined(MemoryInGiBPerVCpu))
+            {
+                writer.WritePropertyName("memoryInGiBPerVCpu"u8);
+                writer.WriteObjectValue(MemoryInGiBPerVCpu, options);
+            }
             if (Optional.IsDefined(LocalStorageSupport))
             {
                 writer.WritePropertyName("localStorageSupport"u8);
@@ -197,6 +202,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
             VmAttributeMinMaxInteger vCpuCount = default;
             VmAttributeMinMaxDouble memoryInGiB = default;
+            VmAttributeMinMaxDouble memoryInGiBPerVCpu = default;
             VmAttributeSupport? localStorageSupport = default;
             VmAttributeMinMaxDouble localStorageInGiB = default;
             IList<LocalStorageDiskType> localStorageDiskTypes = default;
@@ -226,6 +232,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 if (property.NameEquals("memoryInGiB"u8))
                 {
                     memoryInGiB = VmAttributeMinMaxDouble.DeserializeVmAttributeMinMaxDouble(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("memoryInGiBPerVCpu"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    memoryInGiBPerVCpu = VmAttributeMinMaxDouble.DeserializeVmAttributeMinMaxDouble(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("localStorageSupport"u8))
@@ -425,6 +440,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new VmAttributes(
                 vCpuCount,
                 memoryInGiB,
+                memoryInGiBPerVCpu,
                 localStorageSupport,
                 localStorageInGiB,
                 localStorageDiskTypes ?? new ChangeTrackingList<LocalStorageDiskType>(),

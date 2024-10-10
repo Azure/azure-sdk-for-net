@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         private const string ARM64Value = "ARM64";
-        private const string X86Value = "X86";
+        private const string X64Value = "X64";
 
         /// <summary> ARM64 Architecture. </summary>
         public static ArchitectureType ARM64 { get; } = new ArchitectureType(ARM64Value);
-        /// <summary> X86 Architecture. </summary>
-        public static ArchitectureType X86 { get; } = new ArchitectureType(X86Value);
+        /// <summary> X64 Architecture. </summary>
+        public static ArchitectureType X64 { get; } = new ArchitectureType(X64Value);
         /// <summary> Determines if two <see cref="ArchitectureType"/> values are the same. </summary>
         public static bool operator ==(ArchitectureType left, ArchitectureType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArchitectureType"/> values are not the same. </summary>
