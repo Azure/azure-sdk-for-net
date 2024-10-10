@@ -79,7 +79,7 @@ function CompatibleConvertFrom-Yaml {
   # Initialize any variables or checks that need to be done once
   $yqPresent = Get-Command 'yq' -ErrorAction SilentlyContinue
   if (-not $yqPresent) {
-    . (Join-Path $PSScriptRoot "../../../../eng/common/scripts/Helpers" PSModule-Helpers.ps1)
+    . (Join-Path $PSScriptRoot PSModule-Helpers.ps1)
     Install-ModuleIfNotInstalled -WhatIf:$false "powershell-yaml" "0.4.1" | Import-Module
   }
 
