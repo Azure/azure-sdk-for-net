@@ -5,12 +5,7 @@
 ### Features Added
 
 - Add AutoUpgrade and AutoUpgradeProfile support
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ## 1.0.0 (2023-12-13)
 
