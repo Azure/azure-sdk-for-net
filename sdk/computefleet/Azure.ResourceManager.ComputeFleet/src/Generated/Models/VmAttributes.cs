@@ -68,8 +68,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Initializes a new instance of <see cref="VmAttributes"/>. </summary>
         /// <param name="vCpuCount"> The range of vCpuCount specified from Min to Max. Must be specified if VMAttributes are specified, either Min or Max is required if specified. </param>
         /// <param name="memoryInGiB"> The range of memory specified from Min to Max. Must be specified if VMAttributes are specified, either Min or Max is required if specified. </param>
+        /// <param name="memoryInGiBPerVCpu"> The range of memory in GiB per vCPU specified from min to max. Optional parameter. Either Min or Max is required if specified. </param>
         /// <param name="localStorageSupport"> Specifies whether the VMSize supporting local storage should be used to build Fleet or not. </param>
-        /// <param name="localStorageInGiB"> The range of local storage in GB specified from Min to Max. </param>
+        /// <param name="localStorageInGiB">
+        /// LocalStorageSupport should be set to "Included" or "Required" to use this VMAttribute.
+        /// If localStorageSupport is "Excluded", this VMAttribute can not be used.
+        /// </param>
         /// <param name="localStorageDiskTypes">
         /// The local storage disk types specified as a list. LocalStorageSupport should be set to "Included" or "Required" to use this VMAttribute.
         /// If localStorageSupport is "Excluded", this VMAttribute can not be used.
@@ -78,21 +82,41 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="networkInterfaceCount"> The range of network interface count specified from Min to Max. Optional parameter. Either Min or Max is required if specified. </param>
         /// <param name="networkBandwidthInMbps"> The range of network bandwidth in Mbps specified from Min to Max. Optional parameter. Either Min or Max is required if specified. </param>
         /// <param name="rdmaSupport"> Specifies whether the VMSize supporting RDMA (Remote Direct Memory Access) should be used to build Fleet or not. </param>
-        /// <param name="rdmaNetworkInterfaceCount"> The range of RDMA (Remote Direct Memory Access) network interface count specified from Min to Max. Optional parameter. Either Min or Max is required if specified. </param>
-        /// <param name="acceleratorSupport"> Specifies whether the VMSize supporting accelerator should be used to build Fleet or not. </param>
-        /// <param name="acceleratorManufacturers"> The accelerator manufacturers specified as a list. acceleratorSupport should be set to Included or Required to use this VMAttribute. </param>
-        /// <param name="acceleratorTypes"> The accelerator types specified as a list. acceleratorSupport should be set to Included or Required to use this VMAttribute. </param>
-        /// <param name="acceleratorCount"> The range of accelerator count specified from min to max.. Optional parameter. Either Min or Max is required if specified. </param>
+        /// <param name="rdmaNetworkInterfaceCount">
+        /// The range of RDMA (Remote Direct Memory Access) network interface count specified from Min to Max. Optional parameter. Either Min or Max is required if specified.
+        /// rdmaSupport should be set to "Included" or "Required" to use this VMAttribute.
+        /// If rdmaSupport is "Excluded", this VMAttribute can not be used.
+        /// </param>
+        /// <param name="acceleratorSupport">
+        /// Specifies whether the VMSize supporting accelerator should be used to build Fleet or not.
+        /// acceleratorSupport should be set to "Included" or "Required" to use this VMAttribute.
+        /// If acceleratorSupport is "Excluded", this VMAttribute can not be used.
+        /// </param>
+        /// <param name="acceleratorManufacturers">
+        /// The accelerator manufacturers specified as a list.
+        /// acceleratorSupport should be set to "Included" or "Required" to use this VMAttribute.
+        /// If acceleratorSupport is "Excluded", this VMAttribute can not be used.
+        /// </param>
+        /// <param name="acceleratorTypes">
+        /// The accelerator types specified as a list. acceleratorSupport should be set to "Included" or "Required" to use this VMAttribute.
+        /// If acceleratorSupport is "Excluded", this VMAttribute can not be used.
+        /// </param>
+        /// <param name="acceleratorCount">
+        /// The range of accelerator count specified from min to max. Optional parameter. Either Min or Max is required if specified.
+        /// acceleratorSupport should be set to "Included" or "Required" to use this VMAttribute.
+        /// If acceleratorSupport is "Excluded", this VMAttribute can not be used.
+        /// </param>
         /// <param name="vmCategories"> The VM category specified as a list. Optional parameter. </param>
         /// <param name="architectureTypes"> The VM architecture types specified as a list. Optional parameter. </param>
         /// <param name="cpuManufacturers"> The VM CPU manufacturers specified as a list. Optional parameter. </param>
         /// <param name="burstableSupport"> Specifies whether the VMSize supporting burstable capability should be used to build Fleet or not. </param>
         /// <param name="excludedVmSizes"> Specifies which VMSizes should be excluded while building Fleet. Optional parameter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VmAttributes(VmAttributeMinMaxInteger vCpuCount, VmAttributeMinMaxDouble memoryInGiB, VmAttributeSupport? localStorageSupport, VmAttributeMinMaxDouble localStorageInGiB, IList<LocalStorageDiskType> localStorageDiskTypes, VmAttributeMinMaxInteger dataDiskCount, VmAttributeMinMaxInteger networkInterfaceCount, VmAttributeMinMaxDouble networkBandwidthInMbps, VmAttributeSupport? rdmaSupport, VmAttributeMinMaxInteger rdmaNetworkInterfaceCount, VmAttributeSupport? acceleratorSupport, IList<AcceleratorManufacturer> acceleratorManufacturers, IList<AcceleratorType> acceleratorTypes, VmAttributeMinMaxInteger acceleratorCount, IList<VmCategory> vmCategories, IList<ArchitectureType> architectureTypes, IList<CpuManufacturer> cpuManufacturers, VmAttributeSupport? burstableSupport, IList<string> excludedVmSizes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VmAttributes(VmAttributeMinMaxInteger vCpuCount, VmAttributeMinMaxDouble memoryInGiB, VmAttributeMinMaxDouble memoryInGiBPerVCpu, VmAttributeSupport? localStorageSupport, VmAttributeMinMaxDouble localStorageInGiB, IList<LocalStorageDiskType> localStorageDiskTypes, VmAttributeMinMaxInteger dataDiskCount, VmAttributeMinMaxInteger networkInterfaceCount, VmAttributeMinMaxDouble networkBandwidthInMbps, VmAttributeSupport? rdmaSupport, VmAttributeMinMaxInteger rdmaNetworkInterfaceCount, VmAttributeSupport? acceleratorSupport, IList<AcceleratorManufacturer> acceleratorManufacturers, IList<AcceleratorType> acceleratorTypes, VmAttributeMinMaxInteger acceleratorCount, IList<VmCategory> vmCategories, IList<ArchitectureType> architectureTypes, IList<CpuManufacturer> cpuManufacturers, VmAttributeSupport? burstableSupport, IList<string> excludedVmSizes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VCpuCount = vCpuCount;
             MemoryInGiB = memoryInGiB;
+            MemoryInGiBPerVCpu = memoryInGiBPerVCpu;
             LocalStorageSupport = localStorageSupport;
             LocalStorageInGiB = localStorageInGiB;
             LocalStorageDiskTypes = localStorageDiskTypes;
@@ -122,9 +146,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public VmAttributeMinMaxInteger VCpuCount { get; set; }
         /// <summary> The range of memory specified from Min to Max. Must be specified if VMAttributes are specified, either Min or Max is required if specified. </summary>
         public VmAttributeMinMaxDouble MemoryInGiB { get; set; }
+        /// <summary> The range of memory in GiB per vCPU specified from min to max. Optional parameter. Either Min or Max is required if specified. </summary>
+        public VmAttributeMinMaxDouble MemoryInGiBPerVCpu { get; set; }
         /// <summary> Specifies whether the VMSize supporting local storage should be used to build Fleet or not. </summary>
         public VmAttributeSupport? LocalStorageSupport { get; set; }
-        /// <summary> The range of local storage in GB specified from Min to Max. </summary>
+        /// <summary>
+        /// LocalStorageSupport should be set to "Included" or "Required" to use this VMAttribute.
+        /// If localStorageSupport is "Excluded", this VMAttribute can not be used.
+        /// </summary>
         public VmAttributeMinMaxDouble LocalStorageInGiB { get; set; }
         /// <summary>
         /// The local storage disk types specified as a list. LocalStorageSupport should be set to "Included" or "Required" to use this VMAttribute.
@@ -139,15 +168,34 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public VmAttributeMinMaxDouble NetworkBandwidthInMbps { get; set; }
         /// <summary> Specifies whether the VMSize supporting RDMA (Remote Direct Memory Access) should be used to build Fleet or not. </summary>
         public VmAttributeSupport? RdmaSupport { get; set; }
-        /// <summary> The range of RDMA (Remote Direct Memory Access) network interface count specified from Min to Max. Optional parameter. Either Min or Max is required if specified. </summary>
+        /// <summary>
+        /// The range of RDMA (Remote Direct Memory Access) network interface count specified from Min to Max. Optional parameter. Either Min or Max is required if specified.
+        /// rdmaSupport should be set to "Included" or "Required" to use this VMAttribute.
+        /// If rdmaSupport is "Excluded", this VMAttribute can not be used.
+        /// </summary>
         public VmAttributeMinMaxInteger RdmaNetworkInterfaceCount { get; set; }
-        /// <summary> Specifies whether the VMSize supporting accelerator should be used to build Fleet or not. </summary>
+        /// <summary>
+        /// Specifies whether the VMSize supporting accelerator should be used to build Fleet or not.
+        /// acceleratorSupport should be set to "Included" or "Required" to use this VMAttribute.
+        /// If acceleratorSupport is "Excluded", this VMAttribute can not be used.
+        /// </summary>
         public VmAttributeSupport? AcceleratorSupport { get; set; }
-        /// <summary> The accelerator manufacturers specified as a list. acceleratorSupport should be set to Included or Required to use this VMAttribute. </summary>
+        /// <summary>
+        /// The accelerator manufacturers specified as a list.
+        /// acceleratorSupport should be set to "Included" or "Required" to use this VMAttribute.
+        /// If acceleratorSupport is "Excluded", this VMAttribute can not be used.
+        /// </summary>
         public IList<AcceleratorManufacturer> AcceleratorManufacturers { get; }
-        /// <summary> The accelerator types specified as a list. acceleratorSupport should be set to Included or Required to use this VMAttribute. </summary>
+        /// <summary>
+        /// The accelerator types specified as a list. acceleratorSupport should be set to "Included" or "Required" to use this VMAttribute.
+        /// If acceleratorSupport is "Excluded", this VMAttribute can not be used.
+        /// </summary>
         public IList<AcceleratorType> AcceleratorTypes { get; }
-        /// <summary> The range of accelerator count specified from min to max.. Optional parameter. Either Min or Max is required if specified. </summary>
+        /// <summary>
+        /// The range of accelerator count specified from min to max. Optional parameter. Either Min or Max is required if specified.
+        /// acceleratorSupport should be set to "Included" or "Required" to use this VMAttribute.
+        /// If acceleratorSupport is "Excluded", this VMAttribute can not be used.
+        /// </summary>
         public VmAttributeMinMaxInteger AcceleratorCount { get; set; }
         /// <summary> The VM category specified as a list. Optional parameter. </summary>
         public IList<VmCategory> VmCategories { get; }

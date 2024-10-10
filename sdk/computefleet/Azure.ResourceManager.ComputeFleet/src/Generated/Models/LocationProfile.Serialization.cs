@@ -34,11 +34,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 throw new FormatException($"The model {nameof(LocationProfile)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
             if (Optional.IsDefined(VirtualMachineProfileOverride))
             {
                 writer.WritePropertyName("virtualMachineProfileOverride"u8);
