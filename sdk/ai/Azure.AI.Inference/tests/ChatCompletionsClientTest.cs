@@ -463,13 +463,11 @@ namespace Azure.AI.Inference.Tests
         public async Task TestChatCompletionsWithImages(ImageTestSourceKind imageSourceKind)
         {
             var aoaiEndpoint = new Uri(TestEnvironment.AoaiEndpoint);
-            // This isn't used currently, but is necessary because of the header handling for the generated client
-            var aoaiKey = new AzureKeyCredential("foo");
+            var aoaiKey = new AzureKeyCredential(TestEnvironment.AoaiKey);
 
             CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
             AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
             clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
-            clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(TestEnvironment), HttpPipelinePosition.PerCall);
 
             // Uncomment the following lines to enable enhanced log output
             // AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
@@ -607,7 +605,7 @@ namespace Azure.AI.Inference.Tests
             {
                 TargetModel.MistralSmall => new AzureKeyCredential(TestEnvironment.MistralSmallApiKey),
                 TargetModel.GitHubGpt4o => new AzureKeyCredential(TestEnvironment.GithubToken),
-                TargetModel.AoaiGpt4Turbo => new AzureKeyCredential("foo"),
+                TargetModel.AoaiGpt4Turbo => new AzureKeyCredential(TestEnvironment.AoaiKey),
                 _ => throw new ArgumentException(nameof(targetModel)),
             };
 
@@ -616,11 +614,6 @@ namespace Azure.AI.Inference.Tests
             CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
             AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
             clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
-
-            if (targetModel == TargetModel.AoaiGpt4Turbo)
-            {
-                clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(TestEnvironment), HttpPipelinePosition.PerCall);
-            }
 
             // Uncomment the following lines to enable enhanced log output
             // AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
@@ -778,33 +771,6 @@ namespace Azure.AI.Inference.Tests
                 _requestHeaders = message.Request.Headers.ToDictionary(a => a.Name, a => a.Value);
 
                 return task;
-            }
-        }
-
-        private class AddAoaiAuthHeaderPolicy : HttpPipelinePolicy
-        {
-            public InferenceClientTestEnvironment TestEnvironment { get; }
-            public string Token { get; }
-
-            public AddAoaiAuthHeaderPolicy(InferenceClientTestEnvironment testEnvironment)
-            {
-                TestEnvironment = testEnvironment;
-            }
-
-            public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-            {
-                // Add your desired header name and value
-                message.Request.Headers.Add("api-key", TestEnvironment.AoaiKey);
-
-                ProcessNext(message, pipeline);
-            }
-
-            public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-            {
-                // Add your desired header name and value
-                message.Request.Headers.Add("api-key", TestEnvironment.AoaiKey);
-
-                return ProcessNextAsync(message, pipeline);
             }
         }
 

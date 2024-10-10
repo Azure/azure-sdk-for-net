@@ -18,6 +18,49 @@ namespace Azure.AI.Inference
     /// <summary> The ChatCompletions service client. </summary>
     public partial class ChatCompletionsClient
     {
+        /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ChatCompletionsClient(Uri endpoint, AzureKeyCredential credential, AzureAIInferenceClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AzureAIInferenceClientOptions();
+            credential.Deconstruct(out var key);
+            options.AddPolicy(new AddApiKeyHeaderPolicy(key), HttpPipelinePosition.PerCall);
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _keyCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ChatCompletionsClient(Uri endpoint, TokenCredential credential, AzureAIInferenceClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AzureAIInferenceClientOptions();
+
+            // CUSTOM CODE NOTE: This mimics the TokenRequestContext internal to the BearerTokenAuthenticationPolicy used in the pipeline
+            TokenRequestContext context = new TokenRequestContext(AuthorizationScopes, null, null, null, isCaeEnabled: true, isProofOfPossessionEnabled: false, null, null, null);
+            var token = credential.GetToken(context, CancellationToken.None).Token;
+            options.AddPolicy(new AddApiKeyHeaderPolicy(token), HttpPipelinePosition.PerCall);
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
         /// <summary>
         /// Gets chat completions for the provided chat messages.
         /// Completions support a wide variety of tasks and generate text that continues from or "completes"
@@ -253,6 +296,32 @@ namespace Azure.AI.Inference
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        private class AddApiKeyHeaderPolicy : HttpPipelinePolicy
+        {
+            public string Token { get; }
+
+            public AddApiKeyHeaderPolicy(string token)
+            {
+                Token = token;
+            }
+
+            public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                // Add your desired header name and value
+                message.Request.Headers.Add("api-key", Token);
+
+                ProcessNext(message, pipeline);
+            }
+
+            public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                // Add your desired header name and value
+                message.Request.Headers.Add("api-key", Token);
+
+                return ProcessNextAsync(message, pipeline);
+            }
         }
     }
 }
