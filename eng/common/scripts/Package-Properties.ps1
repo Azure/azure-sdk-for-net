@@ -107,22 +107,14 @@ class PackageProps
 
                     $artifactForCurrentPackage = $artifacts | Where-Object { $_["name"] -eq $this.ArtifactName -or $_["name"] -eq $this.Name }  | Select-Object -First 1
 
-                    # adapt this for a warning
-                    # if ($pkgProps.Count -ge 1)
-                    # {
-                    #     if ($pkgProps.Count -gt 1)
-                    #     {
-                    #         Write-Host "Found more than one project with the name [$PackageName], choosing the first one under $($pkgProps[0].DirectoryPath)"
-                    #     }
-                    #     return $pkgProps[0]
-                    # }
-                    if ($artifactForCurrentPackage) {
-                        Write-Host "Got $artifactForCurrentPackage with type $($artifactForCurrentPackage.GetType())"
-                        return [HashTable]$artifactForCurrentPackage
+                    if ($artifactForCurrentPackage.Count -ge 1)
+                    {
+                        Write-Host "Found more than one project with the name [$PackageName], choosing the first one under $($artifactForCurrentPackage[0].DirectoryPath)"
+                        return $artifactForCurrentPackage[0]
                     }
-                    else {
-                        Write-Host "No artifact found for $($this.Name)"
-                        return $null
+                    if ($artifactForCurrentPackage) {
+                        # Write-Host "Got $artifactForCurrentPackage with type $($artifactForCurrentPackage.GetType())"
+                        return [HashTable]$artifactForCurrentPackage
                     }
                     return @{}
                 }
@@ -140,29 +132,31 @@ class PackageProps
         $ciFilePath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory "ci.yml")
         $ciMgmtYmlFilePath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory "ci.mgmt.yml")
 
-        Write-Host "Calling InitializeCIArtifacts against $($this.Name)"
-
-        $ciArtifactResult = $this.ParseYmlForArtifact($ciFilePath)
+        # Write-Host "Calling InitializeCIArtifacts against $($this.Name)"
 
         if (-not $this.ArtifactDetails) {
-            Write-Host "No assigned ArtifactDetails, so using the artifact result if it exists"
+            # Write-Host "Artifact details for $($this.Name) is not set. Trying to get it from ci.yml."
+            $ciArtifactResult = $this.ParseYmlForArtifact($ciFilePath)
             if ($ciArtifactResult) {
-                Write-Host "We have a ciArtifactResult"
+                # Write-Host "We have a ciArtifactResult: $ciArtifactResult"
                 $this.ArtifactDetails = [Hashtable]$ciArtifactResult
-                Write-Host $this.ArtifactDetails | Format-Table
             }
-            else {
-                Write-Host "We lost ciArtifactResult somehowfor $($this.ArtifactName)"
-            }
+            # else {
+            #     Write-Host "We don't have an artifact result to assign to $($this.Name)"
+            # }
+        }
 
-            if (-not $this.ArtifactDetails) {
-                $ciMgmtResult = $this.ParseYmlForArtifact($ciMgmtYmlFilePath)
+        if (-not $this.ArtifactDetails) {
+            # Write-Host "Artifact details for $($this.Name) is not set. Trying to get it from ci.mgmt.yml."
+            $ciMgmtResult = $this.ParseYmlForArtifact($ciMgmtYmlFilePath)
 
-                if ($ciMgmtResult) {
-                    $ciMgmtResult.GetEnumerator() | Format-List -Force
-                    $this.ArtifactDetails = [Hashtable]$ciMgmtResult
-                }
+            if ($ciMgmtResult) {
+                # Write-Host "We have a ciMgmtResult: $ciMgmtResult"
+                $this.ArtifactDetails = [Hashtable]$ciMgmtResult
             }
+            # else {
+            #     Write-Host "We don't have a mgmt artifact result to assign to $($this.ArtifactName)"
+            # }
         }
     }
 }
