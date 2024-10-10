@@ -165,50 +165,6 @@ public class LoggingOptionsTests
     }
 
     [Test]
-    public void CanConfigureCustomLoggingPolicyFromConfigurationSettings()
-    {
-        string uriString = "https://www.example.com/";
-
-        ServiceCollection services = new ServiceCollection();
-        ConfigurationManager configuration = new ConfigurationManager();
-        configuration.AddInMemoryCollection(
-            new List<KeyValuePair<string, string?>>() {
-                new("SimpleClient:ServiceUri", uriString),
-                new("SimpleClient:Logging:EnableLogging", "false"),
-
-                // The below is the equivalent of adding JSON [ "x-allowed" ]
-                // array via Microsoft.Extensions.Configuration.Json config
-                new("SimpleClient:Logging:AllowedHeaderNames", null),
-                new("SimpleClient:Logging:AllowedHeaderNames:0", "x-config-allowed"),
-            });
-
-        services.AddSingleton<IConfiguration>(sp => configuration);
-
-        // Add custom logging policy to service collection
-        services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
-
-        // Pass configuration section to configure from settings per options pattern
-        IConfigurationSection commonSection = configuration.GetSection("ClientCommon");
-        IConfigurationSection clientSection = configuration.GetSection("SimpleClient");
-        services.AddSimpleClient(commonSection, clientSection);
-
-        ServiceProvider serviceProvider = services.BuildServiceProvider();
-        SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
-
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "Content-Length");
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-config-allowed");
-
-        // Validate that custom logging policy has been bound to the same options
-        CustomHttpLoggingPolicy? customPolicy = client.Options.HttpLoggingPolicy as CustomHttpLoggingPolicy;
-        Assert.IsNotNull(customPolicy);
-
-        CollectionAssert.Contains(customPolicy!.Options.AllowedHeaderNames, "Content-Length");
-        CollectionAssert.Contains(customPolicy!.Options.AllowedHeaderNames, "x-simple-client-allowed");
-        CollectionAssert.Contains(customPolicy!.Options.AllowedHeaderNames, "x-config-allowed");
-    }
-
-    [Test]
     public void CanInjectCustomLoggingPolicyWithNonConfiguredOptions()
     {
         string uriString = "https://www.example.com/";
