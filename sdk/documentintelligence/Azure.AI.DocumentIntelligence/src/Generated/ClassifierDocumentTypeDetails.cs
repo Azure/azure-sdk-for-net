@@ -52,22 +52,22 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Initializes a new instance of <see cref="ClassifierDocumentTypeDetails"/>. </summary>
         /// <param name="sourceKind"> Type of training data source. </param>
-        /// <param name="azureBlobSource">
+        /// <param name="blobSource">
         /// Azure Blob Storage location containing the training data for a classifier
         /// document type.  Either azureBlobSource or azureBlobFileListSource must be
         /// specified.
         /// </param>
-        /// <param name="azureBlobFileListSource">
+        /// <param name="blobFileListSource">
         /// Azure Blob Storage file list specifying the training data for a classifier
         /// document type.  Either azureBlobSource or azureBlobFileListSource must be
         /// specified.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClassifierDocumentTypeDetails(ContentSourceKind? sourceKind, AzureBlobContentSource azureBlobSource, AzureBlobFileListContentSource azureBlobFileListSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClassifierDocumentTypeDetails(ContentSourceKind? sourceKind, BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceKind = sourceKind;
-            AzureBlobSource = azureBlobSource;
-            AzureBlobFileListSource = azureBlobFileListSource;
+            BlobSource = blobSource;
+            BlobFileListSource = blobFileListSource;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -78,12 +78,12 @@ namespace Azure.AI.DocumentIntelligence
         /// document type.  Either azureBlobSource or azureBlobFileListSource must be
         /// specified.
         /// </summary>
-        public AzureBlobContentSource AzureBlobSource { get; set; }
+        public BlobContentSource BlobSource { get; set; }
         /// <summary>
         /// Azure Blob Storage file list specifying the training data for a classifier
         /// document type.  Either azureBlobSource or azureBlobFileListSource must be
         /// specified.
         /// </summary>
-        public AzureBlobFileListContentSource AzureBlobFileListSource { get; set; }
+        public BlobFileListContentSource BlobFileListSource { get; set; }
     }
 }

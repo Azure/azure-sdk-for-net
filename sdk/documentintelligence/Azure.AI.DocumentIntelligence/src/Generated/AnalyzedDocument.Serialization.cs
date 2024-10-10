@@ -35,7 +35,7 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WritePropertyName("docType"u8);
-            writer.WriteStringValue(DocType);
+            writer.WriteStringValue(DocumentType);
             if (Optional.IsCollectionDefined(BoundingRegions))
             {
                 writer.WritePropertyName("boundingRegions"u8);

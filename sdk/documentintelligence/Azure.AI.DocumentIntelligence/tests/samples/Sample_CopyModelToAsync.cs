@@ -29,12 +29,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
             string setupModelId = Guid.NewGuid().ToString();
             Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var buildContent = new BuildDocumentModelContent(setupModelId, DocumentBuildMode.Template)
+            var buildOptions = new BuildDocumentModelOptions(setupModelId, DocumentBuildMode.Template)
             {
-                AzureBlobSource = new AzureBlobContentSource(blobContainerUri)
+                BlobSource = new BlobContentSource(blobContainerUri)
             };
 
-            await sourceClient.BuildDocumentModelAsync(WaitUntil.Completed, buildContent);
+            await sourceClient.BuildDocumentModelAsync(WaitUntil.Completed, buildOptions);
 
             #region Snippet:DocumentIntelligenceSampleCreateCopyTargetClient
 #if SNIPPET
@@ -53,8 +53,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
 #else
             string targetModelId = Guid.NewGuid().ToString();
 #endif
-            var authorizeCopyContent = new AuthorizeCopyContent(targetModelId);
-            CopyAuthorization copyAuthorization = await targetClient.AuthorizeModelCopyAsync(authorizeCopyContent);
+            var authorizeCopyOptions = new AuthorizeModelCopyOptions(targetModelId);
+            ModelCopyAuthorization copyAuthorization = await targetClient.AuthorizeModelCopyAsync(authorizeCopyOptions);
             #endregion
 
             #region Snippet:DocumentIntelligenceSampleCreateCopyModel

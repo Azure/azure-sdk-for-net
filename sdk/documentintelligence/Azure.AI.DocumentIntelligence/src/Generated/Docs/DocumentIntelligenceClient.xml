@@ -101,7 +101,173 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="AnalyzeDocumentAsync(WaitUntil,string,AnalyzeDocumentContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)">
+    <member name="DeleteAnalyzeResultAsync(string,Guid,RequestContext)">
+      <example>
+This sample shows how to call DeleteAnalyzeResultAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+Response response = await client.DeleteAnalyzeResultAsync("myCustomModel", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"));
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteAnalyzeResult(string,Guid,RequestContext)">
+      <example>
+This sample shows how to call DeleteAnalyzeResult.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+Response response = client.DeleteAnalyzeResult("myCustomModel", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"));
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteAnalyzeBatchResultAsync(string,Guid,RequestContext)">
+      <example>
+This sample shows how to call DeleteAnalyzeBatchResultAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+Response response = await client.DeleteAnalyzeBatchResultAsync("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"));
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteAnalyzeBatchResult(string,Guid,RequestContext)">
+      <example>
+This sample shows how to call DeleteAnalyzeBatchResult.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+Response response = client.DeleteAnalyzeBatchResult("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"));
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetAnalyzeBatchResultAsync(string,Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetAnalyzeBatchResultAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+Response<AnalyzeBatchOperationDetails> response = await client.GetAnalyzeBatchResultAsync("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"));
+]]></code></example>
+    </member>
+    <member name="GetAnalyzeBatchResult(string,Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetAnalyzeBatchResult.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+Response<AnalyzeBatchOperationDetails> response = client.GetAnalyzeBatchResult("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"));
+]]></code></example>
+    </member>
+    <member name="GetAnalyzeBatchResultAsync(string,Guid,RequestContext)">
+      <example>
+This sample shows how to call GetAnalyzeBatchResultAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+Response response = await client.GetAnalyzeBatchResultAsync("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAnalyzeBatchResult(string,Guid,RequestContext)">
+      <example>
+This sample shows how to call GetAnalyzeBatchResult and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+Response response = client.GetAnalyzeBatchResult("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAnalyzeBatchResultsAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetAnalyzeBatchResultsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+await foreach (AnalyzeBatchOperationDetails item in client.GetAnalyzeBatchResultsAsync("prebuilt-invoice"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetAnalyzeBatchResults(string,CancellationToken)">
+      <example>
+This sample shows how to call GetAnalyzeBatchResults.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+foreach (AnalyzeBatchOperationDetails item in client.GetAnalyzeBatchResults("prebuilt-invoice"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetAnalyzeBatchResultsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetAnalyzeBatchResultsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetAnalyzeBatchResultsAsync("prebuilt-invoice", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetAnalyzeBatchResults(string,RequestContext)">
+      <example>
+This sample shows how to call GetAnalyzeBatchResults and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetAnalyzeBatchResults("prebuilt-invoice", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="AnalyzeDocumentAsync(WaitUntil,string,AnalyzeDocumentOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)">
       <example>
 This sample shows how to call AnalyzeDocumentAsync.
 <code><![CDATA[
@@ -122,7 +288,7 @@ Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil
 AnalyzeResult responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="AnalyzeDocument(WaitUntil,string,AnalyzeDocumentContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)">
+    <member name="AnalyzeDocument(WaitUntil,string,AnalyzeDocumentOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)">
       <example>
 This sample shows how to call AnalyzeDocument.
 <code><![CDATA[
@@ -237,7 +403,7 @@ Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProp
 Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProperty("length").ToString());
 ]]></code></example>
     </member>
-    <member name="AnalyzeBatchDocumentsAsync(WaitUntil,string,AnalyzeBatchDocumentsContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)">
+    <member name="AnalyzeBatchDocumentsAsync(WaitUntil,string,AnalyzeBatchDocumentsOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)">
       <example>
 This sample shows how to call AnalyzeBatchDocumentsAsync.
 <code><![CDATA[
@@ -249,7 +415,7 @@ Operation<AnalyzeBatchResult> operation = await client.AnalyzeBatchDocumentsAsyn
 AnalyzeBatchResult responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="AnalyzeBatchDocuments(WaitUntil,string,AnalyzeBatchDocumentsContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)">
+    <member name="AnalyzeBatchDocuments(WaitUntil,string,AnalyzeBatchDocumentsOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)">
       <example>
 This sample shows how to call AnalyzeBatchDocuments.
 <code><![CDATA[
@@ -287,8 +453,6 @@ JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("succeededCount").ToString());
 Console.WriteLine(result.GetProperty("failedCount").ToString());
 Console.WriteLine(result.GetProperty("skippedCount").ToString());
-Console.WriteLine(result.GetProperty("details")[0].GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("details")[0].GetProperty("sourceUrl").ToString());
 ]]></code></example>
     </member>
     <member name="AnalyzeBatchDocuments(WaitUntil,string,RequestContent,string,string,string,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},string,IEnumerable{AnalyzeOutputOption},RequestContext)">
@@ -317,11 +481,9 @@ JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("succeededCount").ToString());
 Console.WriteLine(result.GetProperty("failedCount").ToString());
 Console.WriteLine(result.GetProperty("skippedCount").ToString());
-Console.WriteLine(result.GetProperty("details")[0].GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("details")[0].GetProperty("sourceUrl").ToString());
 ]]></code></example>
     </member>
-    <member name="ClassifyDocumentAsync(WaitUntil,string,ClassifyDocumentContent,StringIndexType?,SplitMode?,string,CancellationToken)">
+    <member name="ClassifyDocumentAsync(WaitUntil,string,ClassifyDocumentOptions,StringIndexType?,SplitMode?,string,CancellationToken)">
       <example>
 This sample shows how to call ClassifyDocumentAsync.
 <code><![CDATA[
@@ -329,15 +491,15 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
+ClassifyDocumentOptions classifyRequest = new ClassifyDocumentOptions
 {
-    UrlSource = new Uri("http://host.com/doc.pdf"),
+    UriSource = new Uri("http://host.com/doc.pdf"),
 };
 Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "classifierId", classifyRequest);
 AnalyzeResult responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="ClassifyDocument(WaitUntil,string,ClassifyDocumentContent,StringIndexType?,SplitMode?,string,CancellationToken)">
+    <member name="ClassifyDocument(WaitUntil,string,ClassifyDocumentOptions,StringIndexType?,SplitMode?,string,CancellationToken)">
       <example>
 This sample shows how to call ClassifyDocument.
 <code><![CDATA[
@@ -345,9 +507,9 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
+ClassifyDocumentOptions classifyRequest = new ClassifyDocumentOptions
 {
-    UrlSource = new Uri("http://host.com/doc.pdf"),
+    UriSource = new Uri("http://host.com/doc.pdf"),
 };
 Operation<AnalyzeResult> operation = client.ClassifyDocument(WaitUntil.Completed, "classifierId", classifyRequest);
 AnalyzeResult responseData = operation.Value;

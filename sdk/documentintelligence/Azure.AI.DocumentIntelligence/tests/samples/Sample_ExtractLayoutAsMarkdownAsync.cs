@@ -23,12 +23,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions()
             {
-                UrlSource = uriSource
+                UriSource = uriSource
             };
 
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, outputContentFormat: ContentFormat.Markdown);
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options, outputContentFormat: DocumentContentFormat.Markdown);
             AnalyzeResult result = operation.Value;
 
             Console.WriteLine(result.Content);

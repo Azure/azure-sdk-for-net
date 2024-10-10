@@ -30,12 +30,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             var client = CreateDocumentIntelligenceClient();
 
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions()
             {
-                UrlSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt)
+                UriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt)
             };
 
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(waitUntil, "prebuilt-receipt", content);
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(waitUntil, "prebuilt-receipt", options);
             await operation.WaitForCompletionAsync();
 
             var match = Regex.Match(operation.Id, AnalysisOperationIdPattern);
@@ -52,18 +52,18 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var modelId = Recording.GenerateId();
 
             var containerUrl = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var source = new AzureBlobContentSource(containerUrl);
+            var source = new BlobContentSource(containerUrl);
 
-            var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
+            var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template)
             {
-                AzureBlobSource = source
+                BlobSource = source
             };
 
             Operation<DocumentModelDetails> operation = null;
 
             try
             {
-                operation = await client.BuildDocumentModelAsync(waitUntil, content);
+                operation = await client.BuildDocumentModelAsync(waitUntil, options);
                 await operation.WaitForCompletionAsync();
             }
             finally
@@ -89,9 +89,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableModel = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl);
 
-            var authorizeCopyContent = new AuthorizeCopyContent(modelId);
+            var authorizeCopyOptions = new AuthorizeModelCopyOptions(modelId);
 
-            CopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(authorizeCopyContent);
+            ModelCopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(authorizeCopyOptions);
 
             Operation<DocumentModelDetails> operation = null;
 
@@ -132,13 +132,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 { "model1", new DocumentTypeDetails() { ModelId = disposableModel1.ModelId } }
             };
 
-            var content = new ComposeDocumentModelContent(modelId, disposableClassifier.ClassifierId, docTypes);
+            var options = new ComposeModelOptions(modelId, disposableClassifier.ClassifierId, docTypes);
 
             Operation<DocumentModelDetails> operation = null;
 
             try
             {
-                operation = await client.ComposeModelAsync(waitUntil, content);
+                operation = await client.ComposeModelAsync(waitUntil, options);
                 await operation.WaitForCompletionAsync();
             }
             finally
@@ -163,23 +163,23 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var classifierId = Recording.GenerateId();
 
             var containerUrl = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
-            var sourceA = new AzureBlobContentSource(containerUrl) { Prefix = "IRS-1040-A/train" };
-            var sourceB = new AzureBlobContentSource(containerUrl) { Prefix = "IRS-1040-B/train" };
-            var docTypeA = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceA };
-            var docTypeB = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceB };
+            var sourceA = new BlobContentSource(containerUrl) { Prefix = "IRS-1040-A/train" };
+            var sourceB = new BlobContentSource(containerUrl) { Prefix = "IRS-1040-B/train" };
+            var docTypeA = new ClassifierDocumentTypeDetails() { BlobSource = sourceA };
+            var docTypeB = new ClassifierDocumentTypeDetails() { BlobSource = sourceB };
             var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
                 { "IRS-1040-A", docTypeA },
                 { "IRS-1040-B", docTypeB }
             };
 
-            var content = new BuildDocumentClassifierContent(classifierId, docTypes);
+            var options = new BuildClassifierOptions(classifierId, docTypes);
 
             Operation<DocumentClassifierDetails> operation = null;
 
             try
             {
-                operation = await client.BuildClassifierAsync(waitUntil, content);
+                operation = await client.BuildClassifierAsync(waitUntil, options);
                 await operation.WaitForCompletionAsync();
             }
             finally
@@ -205,9 +205,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
-            var authorizeCopyContent = new AuthorizeClassifierCopyContent(classifierId);
+            var authorizeCopyOptions = new AuthorizeClassifierCopyOptions(classifierId);
 
-            ClassifierCopyAuthorization copyAuthorization = await client.AuthorizeClassifierCopyAsync(authorizeCopyContent);
+            ClassifierCopyAuthorization copyAuthorization = await client.AuthorizeClassifierCopyAsync(authorizeCopyOptions);
 
             Operation<DocumentClassifierDetails> operation = null;
 

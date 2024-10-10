@@ -3,10 +3,46 @@
 ## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
-
+- Added methods `GetAnalyzeBatchResult`, `GetAnalyzeBatchResults`, `DeleteAnalyzeBatchResult`, and `DeleteAnalyzeResult` to `DocumentIntelligenceClient`.
+- Added class `AnalyzeBatchOperationRename` to be used as the output of the `GetAnalyzeBatchResult` and `GetAnalyzeBatchResults` APIs.
+- Added property `ModifiedOn` to `DocumentModelDetails` and to `DocumentClassifierDetails`.
+- Added member `Skipped` to `DocumentIntelligenceOperationStatus` (former `OperationStatus`).
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
+- `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient` now target service API version `2024-11-30`. Support for `2024-07-31-preview` has been removed.
+- Renamed the following classes ending in `Content`:
+  - `AnalyzeBatchDocumentsContent` to `AnalyzeBatchDocumentsOptions`.
+  - `AnalyzeDocumentContent` to `AnalyzeDocumentOptions`.
+  - `AuthorizeClassifierCopyContent` to `AuthorizeClassifierCopyOptions`.
+  - `AuthorizeCopyContent` to `AuthorizeModelCopyOptions`.
+  - `BuildDocumentClassifierContent` to `BuildClassifierOptions`.
+  - `BuildDocumentModelContent` to `BuildDocumentModelOptions`.
+  - `ClassifyDocumentContent` to `ClassifyDocumentOptions`.
+  - `ComposeDocumentModelContent` to `ComposeModelOptions`.
+- Renamed all occurrences of property `UrlSource` to `UriSource`.
+- Renamed all occurrences of properties `DocType` and `DocTypes` to `DocumentType` and `DocumentTypes`, respectively.
+- In `DocumentField`, renamed properties `Type` and `ValueLong` to `FieldType` and `ValueInt64`, respectively.
+- Renamed property `Type` to `FieldType` in `DocumentFieldSchema`.
+- Renamed class `AzureBlobContentSource` to `BlobContentSource`.
+- Renamed class `AzureBlobFileListContentSource` to `BlobFileListContentSource`.
+- Renamed all occurrences of properties `AzureBlobSource` and `AzureBlobFileListSource` to `BlobSource` and `BlobFileListSource`, respectively.
+- Renamed all occurrences of property `ContainerUrl` to `ContainerUri`.
+- Renamed property `ResultContainerUrl` to `ResultContainerUri` in `AnalyzeBatchDocumentsContent`.
+- Renamed class `AnalyzeBatchOperationDetail` to `AnalyzeBatchResultDetails`.
+- In `AnalyzeBatchResultDetails` (former `AnalyzeBatchOperationDetail`), renamed properties `SourceUrl` and `ResultUrl` to `SourceUri` and `ResultUri`, respectively.
+- Removed member `Generative` from `DocumentBuildMode`.
+- Renamed member `StyleFonts` to `FontStyling` in `DocumentAnalysisFeature`.
+- In `ContentSourceKind`, renamed members `Url`, `AzureBlob`, and `AzureBlobFileList` to `Uri`, `Blob`, and `BlobFileList`, respectively.
+- Renamed all occurrences of property `ExpirationDateTime` to `ExpiresOn`.
+- Renamed method `GetResourceInfo` to `GetResourceDetails` in `DocumentIntelligenceAdministrationClient`.
+- Renamed class `ResourceDetails` to `DocumentIntelligenceResourceDetails`.
+- Renamed type `ContentFormat` to `DocumentContentFormat`.
+- Renamed class `OperationDetails` to `DocumentIntelligenceOperationDetails`.
+- Renamed class `InnerError` to `DocumentIntelligenceInnerError`.
+- Renamed class `CopyAuthorization` to `ModelCopyAuthorization`.
+- Renamed type `OperationStatus` to `DocumentIntelligenceOperationStatus`.
+- Removed member `Completed` from `DocumentIntelligenceOperationStatus` (former `OperationStatus`).
 
 ### Bugs Fixed
 - Fixed a bug where calling `Operation.Id` would sometimes return an `InvalidOperationException` with message "The operation ID was not present in the service response.".

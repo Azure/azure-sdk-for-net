@@ -25,9 +25,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions()
             {
-                UrlSource = uriSource
+                UriSource = uriSource
             };
 
             List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
@@ -35,7 +35,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 DocumentAnalysisFeature.Formulas
             };
 
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options, features: features);
             AnalyzeResult result = operation.Value;
 
             foreach (DocumentPage page in result.Pages)
@@ -73,17 +73,17 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions()
             {
-                UrlSource = uriSource
+                UriSource = uriSource
             };
 
             List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
             {
-                DocumentAnalysisFeature.StyleFont
+                DocumentAnalysisFeature.FontStyling
             };
 
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options, features: features);
             AnalyzeResult result = operation.Value;
 
             // Handwritten styles
@@ -236,9 +236,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions()
             {
-                UrlSource = uriSource
+                UriSource = uriSource
             };
 
             List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
@@ -246,7 +246,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 DocumentAnalysisFeature.Barcodes
             };
 
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options, features: features);
             AnalyzeResult result = operation.Value;
 
             foreach (DocumentPage page in result.Pages)
@@ -286,9 +286,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions()
             {
-                UrlSource = uriSource
+                UriSource = uriSource
             };
 
             List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
@@ -296,7 +296,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 DocumentAnalysisFeature.Languages
             };
 
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options, features: features);
             AnalyzeResult result = operation.Value;
 
             Console.WriteLine("----Languages detected in the document----");
@@ -328,9 +328,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions()
             {
-                UrlSource = uriSource
+                UriSource = uriSource
             };
 
             List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
@@ -338,7 +338,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 DocumentAnalysisFeature.KeyValuePairs
             };
 
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options, features: features);
             AnalyzeResult result = operation.Value;
 
             Console.WriteLine("----Key Value Pair Options detected in the document----");
