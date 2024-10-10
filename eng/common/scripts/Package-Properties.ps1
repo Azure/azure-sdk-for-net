@@ -102,14 +102,14 @@ class PackageProps
             try {
                 $content = Get-Content -Raw -Path $ymlPath | CompatibleConvertFrom-Yaml
                 if ($content) {
-                    Write-Host "Calling CI Artifacts for $($this.Name) using artifact name $($this.ArtifactName)"
                     $artifacts = $this.GetValueSafely($content, @("extends", "parameters", "Artifacts"))
 
                     $artifactForCurrentPackage = $artifacts | Where-Object { $_["name"] -eq $this.ArtifactName -or $_["name"] -eq $this.Name }  | Select-Object -First 1
 
-                    if ($artifactForCurrentPackage.Count -ge 1)
+                    if ($artifactForCurrentPackage.Count -gt 1)
                     {
-                        Write-Host "Found more than one project with the name [$PackageName], choosing the first one under $($artifactForCurrentPackage[0].DirectoryPath)"
+                        $data = ($artifactForCurrentPackage | % { $_.name }) -join ", "
+                        Write-Host "Found more than one project with the name [$($this.Name)]: [ $data ]. Choosing the first one under $($artifactForCurrentPackage[0].DirectoryPath)"
                         return $artifactForCurrentPackage[0]
                     }
                     if ($artifactForCurrentPackage) {
