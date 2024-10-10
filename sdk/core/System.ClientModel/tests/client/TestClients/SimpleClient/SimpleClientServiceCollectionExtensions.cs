@@ -14,9 +14,6 @@ namespace ClientModel.ReferenceClients.SimpleClient;
 
 public static class SimpleClientServiceCollectionExtensions
 {
-    // TODO: How much of these can SCM provide for SCM-based clients to use
-    // from a central source?  Microsoft.Extensions.ClientModel, e.g.?
-
     // No parameters uses client defaults
     // See: https://learn.microsoft.com/en-us/dotnet/core/extensions/options-library-authors#parameterless
     public static IServiceCollection AddSimpleClient(this IServiceCollection services)
@@ -149,24 +146,10 @@ public static class SimpleClientServiceCollectionExtensions
         IConfiguration clientConfigurationSection,
         Action<SimpleClientOptions> configureOptions)
     {
-        services.AddLogging();
+        services.AddClientPipelineOptions(commonConfigurationSection, clientConfigurationSection);
 
-        // Bind common options to common IConfiguration block
-        services.AddOptions<ClientPipelineOptions>()
-                .Configure<ILoggerFactory>((options, loggerFactory) =>
-                {
-                    options.Logging.LoggerFactory = loggerFactory;
-                })
-                .Bind(commonConfigurationSection);
-
-        // Add common policy options to the service collection
-        services.AddSingleton<ClientLoggingOptions>(sp =>
-        {
-            IOptions<ClientPipelineOptions> options = sp.GetRequiredService<IOptions<ClientPipelineOptions>>();
-            return options.Value.Logging;
-        });
-
-        // Bind client options to common, client, and caller configuration
+        // Bind client options to common and client settings, and configure
+        // with caller-specified configure options delegate.
         services.AddOptions<SimpleClientOptions>()
                 .Configure<ILoggerFactory>((options, loggerFactory) =>
                     {
@@ -176,12 +159,10 @@ public static class SimpleClientServiceCollectionExtensions
                 .Bind(clientConfigurationSection)
                 .Configure(configureOptions);
 
+        // Add the requested client
         services.AddSingleton<SimpleClient>(sp =>
         {
-            string? sectionName = (clientConfigurationSection as IConfigurationSection)?.Key;
-
-            Uri endpoint = clientConfigurationSection.GetValue<Uri>("ServiceUri") ??
-                throw new InvalidOperationException($"Expected 'ServiceUri' to be present in '{sectionName ?? "configuration"}' configuration settings.");
+            Uri endpoint = sp.GetClientEndpoint(clientConfigurationSection);
 
             // TODO: how to get this securely?
             ApiKeyCredential credential = new("fake key");
@@ -191,21 +172,7 @@ public static class SimpleClientServiceCollectionExtensions
             IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
             SimpleClientOptions options = iOptions.Value;
 
-            // Check whether an HttpClient has been injected
-            HttpClient? httpClient = sp.GetService<HttpClient>();
-            if (httpClient is not null)
-            {
-                options.Transport = new HttpClientPipelineTransport(httpClient);
-            }
-
-            // Check whether known policy types have been added to the service
-            // collection.
-            HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
-            if (httpLoggingPolicy is not null)
-            {
-                options.HttpLoggingPolicy = httpLoggingPolicy;
-            }
-
+            options = options.ConfigurePolicies(sp);
             return new SimpleClient(endpoint, credential, options);
         });
 
