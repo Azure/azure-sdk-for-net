@@ -104,17 +104,24 @@ public static class SimpleClientServiceCollectionExtensions
 
         // Bind client options to common and client settings, and configure
         // with caller-specified configure options delegate.
-        services.AddOptions<SimpleClientOptions>()
-                .Configure<IOptions<ClientPipelineOptions>>((clientOptions, commonOptions) =>
-                {
-                    // TODO: devise strategy for copying common options to client options
-                    clientOptions.Logging.LoggerFactory = commonOptions.Value.Logging.LoggerFactory;
-                })
-                .Bind(commonConfigurationSection)
-                .Bind(clientConfigurationSection)
-                .Configure(configureOptions);
 
-        Func<IServiceProvider, SimpleClient> clientFactory = sp =>
+        OptionsBuilder<SimpleClientOptions> optionsBuilder = key is null ?
+            services.AddOptions<SimpleClientOptions>() :
+
+            // TODO: verify this will be unique in all reasonable cases
+            services.AddOptions<SimpleClientOptions>(key.ToString());
+
+        optionsBuilder
+            .Configure<IOptions<ClientPipelineOptions>>((clientOptions, commonOptions) =>
+            {
+                // TODO: devise strategy for copying common options to client options
+                clientOptions.Logging.LoggerFactory = commonOptions.Value.Logging.LoggerFactory;
+            })
+            .Bind(commonConfigurationSection)
+            .Bind(clientConfigurationSection)
+            .Configure(configureOptions);
+
+        Func<IServiceProvider, object?, SimpleClient> clientFactory = (sp, key) =>
         {
             Uri endpoint = sp.GetClientEndpoint(clientConfigurationSection);
 
@@ -123,8 +130,13 @@ public static class SimpleClientServiceCollectionExtensions
 
             // TODO: to roll a credential, this will need to be IOptionsMonitor
             // not IOptions -- come back to this.
-            IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
-            SimpleClientOptions options = iOptions.Value;
+
+            IOptionsMonitor<SimpleClientOptions> iOptions =
+                sp.GetRequiredService<IOptionsMonitor<SimpleClientOptions>>();
+
+            SimpleClientOptions options = key is null ?
+                iOptions.CurrentValue :
+                iOptions.Get(key.ToString());
 
             options = options.ConfigurePolicies(sp);
 
@@ -134,11 +146,11 @@ public static class SimpleClientServiceCollectionExtensions
         // Add the requested client
         if (key is null)
         {
-            services.AddSingleton<SimpleClient>(clientFactory);
+            services.AddSingleton<SimpleClient>(sp => clientFactory(sp, key));
         }
         else
         {
-            services.AddKeyedSingleton<SimpleClient>(key, (sp, key) => clientFactory(sp));
+            services.AddKeyedSingleton<SimpleClient>(key, clientFactory);
         }
 
         return services;

@@ -309,6 +309,9 @@ public class ConfigurePipelineTests
     {
         // see: https://learn.microsoft.com/en-us/dotnet/azure/sdk/dependency-injection?tabs=web-app-builder#configure-multiple-service-clients-with-different-names
 
+        string publicUriString = "https://www.simple-public.com/";
+        string privateUriString = "https://www.simple-private.com/";
+
         ServiceCollection services = new ServiceCollection();
         ConfigurationManager configuration = new ConfigurationManager();
         services.AddSingleton<IConfiguration>(sp => configuration);
@@ -320,12 +323,12 @@ public class ConfigurePipelineTests
             new("ClientCommon:Logging:AllowedHeaderNames:0", "x-common-config-allowed"),
 
             // PublicClient config block
-            new("PublicClient:ServiceUri", "https://www.simple-public.com/"),
+            new("PublicClient:ServiceUri", publicUriString),
             new("PublicClient:Logging:AllowedHeaderNames", null),
             new("PublicClient:Logging:AllowedHeaderNames:0", "x-public-config-allowed"),
 
             // PrivateClient config block
-            new("PrivateClient:ServiceUri", "https://www.simple-private.com/"),
+            new("PrivateClient:ServiceUri", privateUriString),
             new("PrivateClient:Logging:AllowedHeaderNames", null),
             new("PrivateClient:Logging:AllowedHeaderNames:0", "x-private-config-allowed"),
         });
@@ -349,13 +352,15 @@ public class ConfigurePipelineTests
 
         // Validate that both clients have headers from appropriate common config blocks
 
+        Assert.AreEqual(publicUriString, publicClient.Endpoint.ToString());
         CollectionAssert.Contains(publicClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
         CollectionAssert.Contains(publicClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
         CollectionAssert.Contains(publicClient.Options.Logging.AllowedHeaderNames, "x-public-config-allowed");
         CollectionAssert.DoesNotContain(publicClient.Options.Logging.AllowedHeaderNames, "x-private-config-allowed");
 
+        Assert.AreEqual(privateUriString, privateClient.Endpoint.ToString());
         CollectionAssert.Contains(privateClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
-        CollectionAssert.Contains(privateClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
+        CollectionAssert.Contains(privateClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
         CollectionAssert.Contains(privateClient.Options.Logging.AllowedHeaderNames, "x-private-config-allowed");
         CollectionAssert.DoesNotContain(privateClient.Options.Logging.AllowedHeaderNames, "x-public-config-allowed");
     }
