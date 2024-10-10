@@ -119,12 +119,12 @@ public class LoggingOptionsTests
 
         services.AddSingleton<IConfiguration>(sp => configuration);
 
-        // Add custom logging policy to service collection
-        services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
-
         // Client will have custom logging policy injected at creation time
         // Note this is the parameterless overload
-        services.AddSimpleClient();
+        services.AddSimpleClient(options =>
+        {
+            options.HttpLoggingPolicy = new CustomHttpLoggingPolicy(options.Logging);
+        });
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();

@@ -23,13 +23,6 @@ public static class MapsClientServiceCollectionExtensions
             .Configure<ILoggerFactory>((options, loggerFactory)
                 => options.Logging.LoggerFactory = loggerFactory);
 
-        // Proxy to logging options in case a custom logging policy is added
-        services.AddSingleton<ClientLoggingOptions>(sp =>
-        {
-            IOptions<MapsClientOptions> options = sp.GetRequiredService<IOptions<MapsClientOptions>>();
-            return options.Value.Logging;
-        });
-
         services.AddSingleton<MapsClient>(sp =>
         {
             IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
@@ -53,14 +46,6 @@ public static class MapsClientServiceCollectionExtensions
                 options.Transport = new HttpClientPipelineTransport(httpClient);
             }
 
-            // Check whether known policy types have been added to the service
-            // collection.
-            HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
-            if (httpLoggingPolicy is not null)
-            {
-                options.HttpLoggingPolicy = httpLoggingPolicy;
-            }
-
             return new MapsClient(endpoint, credential, options);
         });
 
@@ -77,13 +62,6 @@ public static class MapsClientServiceCollectionExtensions
             .Configure<ILoggerFactory>((options, loggerFactory)
                 => options.Logging.LoggerFactory = loggerFactory)
             .Bind(configurationSection);
-
-        // Proxy to logging options in case a custom logging policy is added
-        services.AddSingleton<ClientLoggingOptions>(sp =>
-        {
-            IOptions<MapsClientOptions> options = sp.GetRequiredService<IOptions<MapsClientOptions>>();
-            return options.Value.Logging;
-        });
 
         services.AddSingleton<MapsClient>(sp =>
         {
@@ -107,14 +85,6 @@ public static class MapsClientServiceCollectionExtensions
                 options.Transport = new HttpClientPipelineTransport(httpClient);
             }
 
-            // Check whether known policy types have been added to the service
-            // collection.
-            HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
-            if (httpLoggingPolicy is not null)
-            {
-                options.HttpLoggingPolicy = httpLoggingPolicy;
-            }
-
             return new MapsClient(endpoint, credential, options);
         });
 
@@ -133,28 +103,6 @@ public static class MapsClientServiceCollectionExtensions
                 => options.Logging.LoggerFactory = loggerFactory)
             .Bind(commonConfigurationSection)
             .Bind(clientConfigurationSection);
-
-        // Proxy to logging options in case a custom logging policy is added
-        services.AddSingleton<ClientLoggingOptions>(sp =>
-        {
-            IOptions<MapsClientOptions> options = sp.GetRequiredService<IOptions<MapsClientOptions>>();
-            return options.Value.Logging;
-        });
-
-        //services.AddKeyedSingleton<ClientLoggingOptions>(typeof(MapsClientOptions), (sp, key) =>
-        //{
-        //    IOptions<MapsClientOptions> options = sp.GetRequiredService<IOptions<MapsClientOptions>>();
-        //    return options.Value.Logging;
-        //});
-
-        //// Add as transient to these are recomputed each time ClientLoggingOptions
-        //// is requested ... this enables creating different custom policy instances
-        //// from different client configurations.
-        //services.AddTransient<ClientLoggingOptions>(sp =>
-        //{
-        //    IOptions<ClientLoggingOptions> options = sp.GetRequiredKeyedService<IOptions<ClientLoggingOptions>>(typeof(MapsClientOptions));
-        //    return options.Value;
-        //});
 
         services.AddSingleton<MapsClient>(sp =>
         {
@@ -176,14 +124,6 @@ public static class MapsClientServiceCollectionExtensions
             if (httpClient is not null)
             {
                 options.Transport = new HttpClientPipelineTransport(httpClient);
-            }
-
-            // Check whether known policy types have been added to the service
-            // collection.
-            HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
-            if (httpLoggingPolicy is not null)
-            {
-                options.HttpLoggingPolicy = httpLoggingPolicy;
             }
 
             return new MapsClient(endpoint, credential, options);

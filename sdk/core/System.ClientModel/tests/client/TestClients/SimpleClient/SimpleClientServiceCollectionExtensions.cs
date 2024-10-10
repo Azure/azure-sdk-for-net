@@ -28,30 +28,6 @@ public static class SimpleClientServiceCollectionExtensions
             .Configure<ILoggerFactory>((options, loggerFactory)
                 => options.Logging.LoggerFactory = loggerFactory);
 
-        //// Add client options
-        //services.AddOptions<SimpleClientOptions>()
-        //    .Configure<ILoggerFactory, LoggingOptionsResolver>(
-        //        (options, loggerFactory, optionsResolver) =>
-        //        {
-        //            options.Logging.LoggerFactory = loggerFactory;
-        //            optionsResolver.GetPolicy();
-        //        });
-
-        // Proxy to logging options in case a custom logging policy is added
-        services.AddSingleton<ClientLoggingOptions>(sp =>
-        {
-            IOptions<SimpleClientOptions> options = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
-            return options.Value.Logging;
-        });
-
-        //// Proxy to logging options in case a custom logging policy is added
-        //services.AddKeyedSingleton<ClientLoggingOptions>(typeof(SimpleClientOptions),
-        //    (sp, type) =>
-        //    {
-        //        IOptions<SimpleClientOptions> options = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
-        //        return (options.Value.Logging as SimpleClientLoggingOptions)!;
-        //    });
-
         services.AddSingleton<SimpleClient>(sp =>
         {
             IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
@@ -75,14 +51,6 @@ public static class SimpleClientServiceCollectionExtensions
                 options.Transport = new HttpClientPipelineTransport(httpClient);
             }
 
-            // Check whether known policy types have been added to the service
-            // collection.
-            HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
-            if (httpLoggingPolicy is not null)
-            {
-                options.HttpLoggingPolicy = httpLoggingPolicy;
-            }
-
             return new SimpleClient(endpoint, credential, options);
         });
 
@@ -101,21 +69,6 @@ public static class SimpleClientServiceCollectionExtensions
             .Configure<ILoggerFactory>((options, loggerFactory)
                 => options.Logging.LoggerFactory = loggerFactory)
             .Bind(configurationSection);
-        //.Configure();
-
-        //services.AddTransient<IConfigureOptions<SimpleClientOptions>>(sp =>
-        //{
-
-        //    HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
-        //}
-        //)
-
-        // Proxy to logging options in case a custom logging policy is added
-        services.AddSingleton<ClientLoggingOptions>(sp =>
-        {
-            IOptions<SimpleClientOptions> options = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
-            return options.Value.Logging;
-        });
 
         services.AddSingleton<SimpleClient>(sp =>
         {
@@ -139,16 +92,6 @@ public static class SimpleClientServiceCollectionExtensions
                 options.Transport = new HttpClientPipelineTransport(httpClient);
             }
 
-            // Check whether known policy types have been added to the service
-            // collection.
-            //sp.GetServices
-
-            HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
-            if (httpLoggingPolicy is not null)
-            {
-                options.HttpLoggingPolicy = httpLoggingPolicy;
-            }
-
             return new SimpleClient(endpoint, credential, options);
         });
 
@@ -163,42 +106,15 @@ public static class SimpleClientServiceCollectionExtensions
     {
         services.AddLogging();
 
-        //// Use named options - attempt 1
-        //services.AddOptions()
-
-        //services.AddSingleton<LoggingOptionsResolver>();
-
         // Bind configuration to options
         services.AddOptions<SimpleClientOptions>()
                 .Configure<ILoggerFactory>((options, loggerFactory)
                     => options.Logging.LoggerFactory = loggerFactory)
-            //.Configure<ILoggerFactory, LoggingOptionsResolver>(
-            //(options, loggerFactory, optionsResolver) =>
-            //{
-            //    options.Logging.LoggerFactory = loggerFactory;
-            //    optionsResolver.GetPolicy();
-            //})
             .Bind(commonConfigurationSection)
 
             // TODO: validate that binding to client config second allows client
             // configuration to override comon settings.
             .Bind(clientConfigurationSection);
-
-        // Proxy to logging options in case a custom logging policy is added
-        services.AddSingleton<ClientLoggingOptions>(sp =>
-        {
-            IOptions<SimpleClientOptions> options = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
-            return options.Value.Logging;
-        });
-
-        //// Add as transient to these are recomputed each time ClientLoggingOptions
-        //// is requested ... this enables creating different custom policy instances
-        //// from different client configurations.
-        //services.AddTransient<ClientLoggingOptions>(sp =>
-        //{
-        //    IOptions<SimpleClientOptions> options = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
-        //    return options.Value.Logging;
-        //});
 
         services.AddSingleton<SimpleClient>(sp =>
         {
@@ -222,12 +138,46 @@ public static class SimpleClientServiceCollectionExtensions
                 options.Transport = new HttpClientPipelineTransport(httpClient);
             }
 
-            // Check whether known policy types have been added to the service
-            // collection.
-            HttpLoggingPolicy? httpLoggingPolicy = sp.GetService<HttpLoggingPolicy>();
-            if (httpLoggingPolicy is not null)
+            return new SimpleClient(endpoint, credential, options);
+        });
+
+        return services;
+    }
+
+    // TODO: is this the right pattern for taking both common and client-specific
+    // configuration sections?  Or should there be a higher level block that holds both?
+    public static IServiceCollection AddSimpleClient(this IServiceCollection services,
+        Action<SimpleClientOptions> configureOptions)
+    {
+        services.AddLogging();
+
+        // Bind configuration to options
+        services.AddOptions<SimpleClientOptions>()
+                .Configure<ILoggerFactory>((options, loggerFactory)
+                    => options.Logging.LoggerFactory = loggerFactory)
+                .Configure(configureOptions);
+
+        services.AddSingleton<SimpleClient>(sp =>
+        {
+            IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
+            IConfiguration clientConfiguration = configuration.GetSection("SimpleClient");
+
+            Uri endpoint = clientConfiguration.GetValue<Uri>("ServiceUri") ??
+                throw new InvalidOperationException("Expected 'ServiceUri' to be present in 'SimpleClient' configuration settings.");
+
+            // TODO: how to get this securely?
+            ApiKeyCredential credential = new("fake key");
+
+            // TODO: to roll a credential, this will need to be IOptionsMonitor
+            // not IOptions -- come back to this.
+            IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
+            SimpleClientOptions options = iOptions.Value;
+
+            // Check whether an HttpClient has been injected
+            HttpClient? httpClient = sp.GetService<HttpClient>();
+            if (httpClient is not null)
             {
-                options.HttpLoggingPolicy = httpLoggingPolicy;
+                options.Transport = new HttpClientPipelineTransport(httpClient);
             }
 
             return new SimpleClient(endpoint, credential, options);
