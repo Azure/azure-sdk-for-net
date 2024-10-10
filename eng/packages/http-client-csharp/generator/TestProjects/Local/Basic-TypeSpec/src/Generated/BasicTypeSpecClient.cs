@@ -7,11 +7,12 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using BasicTypeSpec.Models;
 
 namespace BasicTypeSpec
@@ -51,11 +52,11 @@ namespace BasicTypeSpec
 
             _endpoint = endpoint;
             _keyCredential = keyCredential;
-            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { ApiKeyAuthenticationPolicy.CreateHeaderApiKeyPolicy(_keyCredential, AuthorizationHeader) }, Array.Empty<PipelinePolicy>());
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] {  });
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public ClientPipeline Pipeline { get; }
+        public HttpPipeline Pipeline { get; }
 
         /// <summary>
         /// [Protocol Method] Return hi
@@ -70,15 +71,15 @@ namespace BasicTypeSpec
         /// <param name="optionalQuery"></param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response SayHi(string headParameter, string queryParameter, string optionalQuery, RequestOptions options)
+        public virtual Response SayHi(string headParameter, string queryParameter, string optionalQuery, RequestContext options)
         {
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
 
-            using PipelineMessage message = CreateSayHiRequest(headParameter, queryParameter, optionalQuery, options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateSayHiRequest(headParameter, queryParameter, optionalQuery, options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -94,15 +95,15 @@ namespace BasicTypeSpec
         /// <param name="optionalQuery"></param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> SayHiAsync(string headParameter, string queryParameter, string optionalQuery, RequestOptions options)
+        public virtual async Task<Response> SayHiAsync(string headParameter, string queryParameter, string optionalQuery, RequestContext options)
         {
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
 
-            using PipelineMessage message = CreateSayHiRequest(headParameter, queryParameter, optionalQuery, options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateSayHiRequest(headParameter, queryParameter, optionalQuery, options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary> Return hi. </summary>
@@ -110,14 +111,14 @@ namespace BasicTypeSpec
         /// <param name="queryParameter"></param>
         /// <param name="optionalQuery"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual global::Azure.Response<Thing> SayHi(string headParameter, string queryParameter, string optionalQuery)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<Thing> SayHi(string headParameter, string queryParameter, string optionalQuery)
         {
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
 
-            ClientResult result = SayHi(headParameter, queryParameter, optionalQuery, null);
-            return global::Azure.Response.FromValue((Thing)result, result.GetRawResponse());
+            Response result = SayHi(headParameter, queryParameter, optionalQuery, null);
+            return Response.FromValue((Thing)result, result);
         }
 
         /// <summary> Return hi. </summary>
@@ -125,14 +126,14 @@ namespace BasicTypeSpec
         /// <param name="queryParameter"></param>
         /// <param name="optionalQuery"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<global::Azure.Response<Thing>> SayHiAsync(string headParameter, string queryParameter, string optionalQuery)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<Thing>> SayHiAsync(string headParameter, string queryParameter, string optionalQuery)
         {
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
 
-            ClientResult result = await SayHiAsync(headParameter, queryParameter, optionalQuery, null).ConfigureAwait(false);
-            return global::Azure.Response.FromValue((Thing)result, result.GetRawResponse());
+            Response result = await SayHiAsync(headParameter, queryParameter, optionalQuery, null).ConfigureAwait(false);
+            return Response.FromValue((Thing)result, result);
         }
 
         /// <summary>
@@ -148,16 +149,16 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response HelloAgain(string p2, string p1, BinaryContent content, RequestOptions options)
+        public virtual Response HelloAgain(string p2, string p1, RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(p2, nameof(p2));
             Argument.AssertNotNull(p1, nameof(p1));
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateHelloAgainRequest(p2, p1, content, options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateHelloAgainRequest(p2, p1, content, options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -173,16 +174,16 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> HelloAgainAsync(string p2, string p1, BinaryContent content, RequestOptions options)
+        public virtual async Task<Response> HelloAgainAsync(string p2, string p1, RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(p2, nameof(p2));
             Argument.AssertNotNull(p1, nameof(p1));
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateHelloAgainRequest(p2, p1, content, options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateHelloAgainRequest(p2, p1, content, options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary> Return hi again. </summary>
@@ -190,15 +191,15 @@ namespace BasicTypeSpec
         /// <param name="p1"></param>
         /// <param name="action"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="action"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual global::Azure.Response<RoundTripModel> HelloAgain(string p2, string p1, RoundTripModel action)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<RoundTripModel> HelloAgain(string p2, string p1, RoundTripModel action)
         {
             Argument.AssertNotNull(p2, nameof(p2));
             Argument.AssertNotNull(p1, nameof(p1));
             Argument.AssertNotNull(action, nameof(action));
 
-            ClientResult result = HelloAgain(p2, p1, action, null);
-            return global::Azure.Response.FromValue((RoundTripModel)result, result.GetRawResponse());
+            Response result = HelloAgain(p2, p1, action, null);
+            return Response.FromValue((RoundTripModel)result, result);
         }
 
         /// <summary> Return hi again. </summary>
@@ -206,15 +207,15 @@ namespace BasicTypeSpec
         /// <param name="p1"></param>
         /// <param name="action"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="action"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<global::Azure.Response<RoundTripModel>> HelloAgainAsync(string p2, string p1, RoundTripModel action)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<RoundTripModel>> HelloAgainAsync(string p2, string p1, RoundTripModel action)
         {
             Argument.AssertNotNull(p2, nameof(p2));
             Argument.AssertNotNull(p1, nameof(p1));
             Argument.AssertNotNull(action, nameof(action));
 
-            ClientResult result = await HelloAgainAsync(p2, p1, action, null).ConfigureAwait(false);
-            return global::Azure.Response.FromValue((RoundTripModel)result, result.GetRawResponse());
+            Response result = await HelloAgainAsync(p2, p1, action, null).ConfigureAwait(false);
+            return Response.FromValue((RoundTripModel)result, result);
         }
 
         /// <summary>
@@ -230,16 +231,16 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response NoContentType(string p2, string p1, BinaryContent content, RequestOptions options)
+        public virtual Response NoContentType(string p2, string p1, RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(p2, nameof(p2));
             Argument.AssertNotNull(p1, nameof(p1));
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateNoContentTypeRequest(p2, p1, content, options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateNoContentTypeRequest(p2, p1, content, options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -255,16 +256,16 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> NoContentTypeAsync(string p2, string p1, BinaryContent content, RequestOptions options)
+        public virtual async Task<Response> NoContentTypeAsync(string p2, string p1, RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(p2, nameof(p2));
             Argument.AssertNotNull(p1, nameof(p1));
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateNoContentTypeRequest(p2, p1, content, options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateNoContentTypeRequest(p2, p1, content, options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -276,12 +277,12 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response HelloDemo2(RequestOptions options)
+        public virtual Response HelloDemo2(RequestContext options)
         {
-            using PipelineMessage message = CreateHelloDemo2Request(options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateHelloDemo2Request(options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -293,28 +294,28 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> HelloDemo2Async(RequestOptions options)
+        public virtual async Task<Response> HelloDemo2Async(RequestContext options)
         {
-            using PipelineMessage message = CreateHelloDemo2Request(options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateHelloDemo2Request(options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary> Return hi in demo2. </summary>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual global::Azure.Response<Thing> HelloDemo2()
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<Thing> HelloDemo2()
         {
-            ClientResult result = HelloDemo2(null);
-            return global::Azure.Response.FromValue((Thing)result, result.GetRawResponse());
+            Response result = HelloDemo2(null);
+            return Response.FromValue((Thing)result, result);
         }
 
         /// <summary> Return hi in demo2. </summary>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<global::Azure.Response<Thing>> HelloDemo2Async()
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<Thing>> HelloDemo2Async()
         {
-            ClientResult result = await HelloDemo2Async(null).ConfigureAwait(false);
-            return global::Azure.Response.FromValue((Thing)result, result.GetRawResponse());
+            Response result = await HelloDemo2Async(null).ConfigureAwait(false);
+            return Response.FromValue((Thing)result, result);
         }
 
         /// <summary>
@@ -328,14 +329,14 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response CreateLiteral(BinaryContent content, RequestOptions options)
+        public virtual Response CreateLiteral(RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateLiteralRequest(content, options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateCreateLiteralRequest(content, options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -349,38 +350,38 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> CreateLiteralAsync(BinaryContent content, RequestOptions options)
+        public virtual async Task<Response> CreateLiteralAsync(RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateLiteralRequest(content, options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateCreateLiteralRequest(content, options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary> Create with literal value. </summary>
         /// <param name="body"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual global::Azure.Response<Thing> CreateLiteral(Thing body)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<Thing> CreateLiteral(Thing body)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            ClientResult result = CreateLiteral(body, null);
-            return global::Azure.Response.FromValue((Thing)result, result.GetRawResponse());
+            Response result = CreateLiteral(body, null);
+            return Response.FromValue((Thing)result, result);
         }
 
         /// <summary> Create with literal value. </summary>
         /// <param name="body"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<global::Azure.Response<Thing>> CreateLiteralAsync(Thing body)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<Thing>> CreateLiteralAsync(Thing body)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            ClientResult result = await CreateLiteralAsync(body, null).ConfigureAwait(false);
-            return global::Azure.Response.FromValue((Thing)result, result.GetRawResponse());
+            Response result = await CreateLiteralAsync(body, null).ConfigureAwait(false);
+            return Response.FromValue((Thing)result, result);
         }
 
         /// <summary>
@@ -392,12 +393,12 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response HelloLiteral(RequestOptions options)
+        public virtual Response HelloLiteral(RequestContext options)
         {
-            using PipelineMessage message = CreateHelloLiteralRequest(options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateHelloLiteralRequest(options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -409,28 +410,28 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> HelloLiteralAsync(RequestOptions options)
+        public virtual async Task<Response> HelloLiteralAsync(RequestContext options)
         {
-            using PipelineMessage message = CreateHelloLiteralRequest(options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateHelloLiteralRequest(options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary> Send literal parameters. </summary>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual global::Azure.Response<Thing> HelloLiteral()
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<Thing> HelloLiteral()
         {
-            ClientResult result = HelloLiteral(null);
-            return global::Azure.Response.FromValue((Thing)result, result.GetRawResponse());
+            Response result = HelloLiteral(null);
+            return Response.FromValue((Thing)result, result);
         }
 
         /// <summary> Send literal parameters. </summary>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<global::Azure.Response<Thing>> HelloLiteralAsync()
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<Thing>> HelloLiteralAsync()
         {
-            ClientResult result = await HelloLiteralAsync(null).ConfigureAwait(false);
-            return global::Azure.Response.FromValue((Thing)result, result.GetRawResponse());
+            Response result = await HelloLiteralAsync(null).ConfigureAwait(false);
+            return Response.FromValue((Thing)result, result);
         }
 
         /// <summary>
@@ -443,12 +444,12 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="action"></param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response TopAction(DateTimeOffset action, RequestOptions options)
+        public virtual Response TopAction(DateTimeOffset action, RequestContext options)
         {
-            using PipelineMessage message = CreateTopActionRequest(action, options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateTopActionRequest(action, options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -461,30 +462,30 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="action"></param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> TopActionAsync(DateTimeOffset action, RequestOptions options)
+        public virtual async Task<Response> TopActionAsync(DateTimeOffset action, RequestContext options)
         {
-            using PipelineMessage message = CreateTopActionRequest(action, options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateTopActionRequest(action, options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary> top level method. </summary>
         /// <param name="action"></param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual global::Azure.Response<Thing> TopAction(DateTimeOffset action)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<Thing> TopAction(DateTimeOffset action)
         {
-            ClientResult result = TopAction(action, null);
-            return global::Azure.Response.FromValue((Thing)result, result.GetRawResponse());
+            Response result = TopAction(action, null);
+            return Response.FromValue((Thing)result, result);
         }
 
         /// <summary> top level method. </summary>
         /// <param name="action"></param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<global::Azure.Response<Thing>> TopActionAsync(DateTimeOffset action)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<Thing>> TopActionAsync(DateTimeOffset action)
         {
-            ClientResult result = await TopActionAsync(action, null).ConfigureAwait(false);
-            return global::Azure.Response.FromValue((Thing)result, result.GetRawResponse());
+            Response result = await TopActionAsync(action, null).ConfigureAwait(false);
+            return Response.FromValue((Thing)result, result);
         }
 
         /// <summary>
@@ -496,12 +497,12 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response TopAction2(RequestOptions options)
+        public virtual Response TopAction2(RequestContext options)
         {
-            using PipelineMessage message = CreateTopAction2Request(options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateTopAction2Request(options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -513,12 +514,12 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> TopAction2Async(RequestOptions options)
+        public virtual async Task<Response> TopAction2Async(RequestContext options)
         {
-            using PipelineMessage message = CreateTopAction2Request(options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateTopAction2Request(options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -532,14 +533,14 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response PatchAction(BinaryContent content, RequestOptions options)
+        public virtual Response PatchAction(RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreatePatchActionRequest(content, options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreatePatchActionRequest(content, options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -553,14 +554,14 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> PatchActionAsync(BinaryContent content, RequestOptions options)
+        public virtual async Task<Response> PatchActionAsync(RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreatePatchActionRequest(content, options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreatePatchActionRequest(content, options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -574,14 +575,14 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response AnonymousBody(BinaryContent content, RequestOptions options)
+        public virtual Response AnonymousBody(RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateAnonymousBodyRequest(content, options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateAnonymousBodyRequest(content, options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -595,14 +596,14 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> AnonymousBodyAsync(BinaryContent content, RequestOptions options)
+        public virtual async Task<Response> AnonymousBodyAsync(RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateAnonymousBodyRequest(content, options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateAnonymousBodyRequest(content, options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary> body parameter without body decorator. </summary>
@@ -620,8 +621,8 @@ namespace BasicTypeSpec
         /// <param name="optionalLiteralBool"> optional literal bool. </param>
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual global::Azure.Response<Thing> AnonymousBody(string name, BinaryData requiredUnion, AnonymousBodyRequestRequiredLiteralString requiredLiteralString, AnonymousBodyRequestRequiredLiteralInt requiredLiteralInt, AnonymousBodyRequestRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, AnonymousBodyRequestOptionalLiteralString? optionalLiteralString = default, AnonymousBodyRequestOptionalLiteralInt? optionalLiteralInt = default, AnonymousBodyRequestOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<Thing> AnonymousBody(string name, BinaryData requiredUnion, AnonymousBodyRequestRequiredLiteralString requiredLiteralString, AnonymousBodyRequestRequiredLiteralInt requiredLiteralInt, AnonymousBodyRequestRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, AnonymousBodyRequestOptionalLiteralString? optionalLiteralString = default, AnonymousBodyRequestOptionalLiteralInt? optionalLiteralInt = default, AnonymousBodyRequestOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
@@ -642,8 +643,8 @@ namespace BasicTypeSpec
                 optionalNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
                 requiredNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
                 null);
-            ClientResult result = AnonymousBody(spreadModel, null);
-            return global::Azure.Response.FromValue((Thing)result, result.GetRawResponse());
+            Response result = AnonymousBody(spreadModel, null);
+            return Response.FromValue((Thing)result, result);
         }
 
         /// <summary> body parameter without body decorator. </summary>
@@ -661,8 +662,8 @@ namespace BasicTypeSpec
         /// <param name="optionalLiteralBool"> optional literal bool. </param>
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<global::Azure.Response<Thing>> AnonymousBodyAsync(string name, BinaryData requiredUnion, AnonymousBodyRequestRequiredLiteralString requiredLiteralString, AnonymousBodyRequestRequiredLiteralInt requiredLiteralInt, AnonymousBodyRequestRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, AnonymousBodyRequestOptionalLiteralString? optionalLiteralString = default, AnonymousBodyRequestOptionalLiteralInt? optionalLiteralInt = default, AnonymousBodyRequestOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<Thing>> AnonymousBodyAsync(string name, BinaryData requiredUnion, AnonymousBodyRequestRequiredLiteralString requiredLiteralString, AnonymousBodyRequestRequiredLiteralInt requiredLiteralInt, AnonymousBodyRequestRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, AnonymousBodyRequestOptionalLiteralString? optionalLiteralString = default, AnonymousBodyRequestOptionalLiteralInt? optionalLiteralInt = default, AnonymousBodyRequestOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
@@ -683,8 +684,8 @@ namespace BasicTypeSpec
                 optionalNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
                 requiredNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
                 null);
-            ClientResult result = await AnonymousBodyAsync(spreadModel, null).ConfigureAwait(false);
-            return global::Azure.Response.FromValue((Thing)result, result.GetRawResponse());
+            Response result = await AnonymousBodyAsync(spreadModel, null).ConfigureAwait(false);
+            return Response.FromValue((Thing)result, result);
         }
 
         /// <summary>
@@ -698,14 +699,14 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response FriendlyModel(BinaryContent content, RequestOptions options)
+        public virtual Response FriendlyModel(RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateFriendlyModelRequest(content, options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateFriendlyModelRequest(content, options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -719,40 +720,40 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> FriendlyModelAsync(BinaryContent content, RequestOptions options)
+        public virtual async Task<Response> FriendlyModelAsync(RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateFriendlyModelRequest(content, options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateFriendlyModelRequest(content, options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary> Model can have its friendly name. </summary>
         /// <param name="name"> name of the NotFriend. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual global::Azure.Response<Friend> FriendlyModel(string name)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<Friend> FriendlyModel(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             FriendlyModelRequest spreadModel = new FriendlyModelRequest(name, null);
-            ClientResult result = FriendlyModel(spreadModel, null);
-            return global::Azure.Response.FromValue((Friend)result, result.GetRawResponse());
+            Response result = FriendlyModel(spreadModel, null);
+            return Response.FromValue((Friend)result, result);
         }
 
         /// <summary> Model can have its friendly name. </summary>
         /// <param name="name"> name of the NotFriend. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<global::Azure.Response<Friend>> FriendlyModelAsync(string name)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<Friend>> FriendlyModelAsync(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             FriendlyModelRequest spreadModel = new FriendlyModelRequest(name, null);
-            ClientResult result = await FriendlyModelAsync(spreadModel, null).ConfigureAwait(false);
-            return global::Azure.Response.FromValue((Friend)result, result.GetRawResponse());
+            Response result = await FriendlyModelAsync(spreadModel, null).ConfigureAwait(false);
+            return Response.FromValue((Friend)result, result);
         }
 
         /// <summary>
@@ -764,12 +765,12 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response AddTimeHeader(RequestOptions options)
+        public virtual Response AddTimeHeader(RequestContext options)
         {
-            using PipelineMessage message = CreateAddTimeHeaderRequest(options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateAddTimeHeaderRequest(options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -781,24 +782,24 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> AddTimeHeaderAsync(RequestOptions options)
+        public virtual async Task<Response> AddTimeHeaderAsync(RequestContext options)
         {
-            using PipelineMessage message = CreateAddTimeHeaderRequest(options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateAddTimeHeaderRequest(options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary> addTimeHeader. </summary>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual global::Azure.Response AddTimeHeader()
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response AddTimeHeader()
         {
             return AddTimeHeader(null);
         }
 
         /// <summary> addTimeHeader. </summary>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<global::Azure.Response> AddTimeHeaderAsync()
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> AddTimeHeaderAsync()
         {
             return await AddTimeHeaderAsync(null).ConfigureAwait(false);
         }
@@ -814,14 +815,14 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response ProjectedNameModel(BinaryContent content, RequestOptions options)
+        public virtual Response ProjectedNameModel(RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateProjectedNameModelRequest(content, options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateProjectedNameModelRequest(content, options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -835,40 +836,40 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> ProjectedNameModelAsync(BinaryContent content, RequestOptions options)
+        public virtual async Task<Response> ProjectedNameModelAsync(RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateProjectedNameModelRequest(content, options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateProjectedNameModelRequest(content, options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary> Model can have its projected name. </summary>
         /// <param name="name"> name of the ModelWithProjectedName. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual global::Azure.Response<ProjectedModel> ProjectedNameModel(string name)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ProjectedModel> ProjectedNameModel(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             ProjectedNameModelRequest spreadModel = new ProjectedNameModelRequest(name, null);
-            ClientResult result = ProjectedNameModel(spreadModel, null);
-            return global::Azure.Response.FromValue((ProjectedModel)result, result.GetRawResponse());
+            Response result = ProjectedNameModel(spreadModel, null);
+            return Response.FromValue((ProjectedModel)result, result);
         }
 
         /// <summary> Model can have its projected name. </summary>
         /// <param name="name"> name of the ModelWithProjectedName. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<global::Azure.Response<ProjectedModel>> ProjectedNameModelAsync(string name)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ProjectedModel>> ProjectedNameModelAsync(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             ProjectedNameModelRequest spreadModel = new ProjectedNameModelRequest(name, null);
-            ClientResult result = await ProjectedNameModelAsync(spreadModel, null).ConfigureAwait(false);
-            return global::Azure.Response.FromValue((ProjectedModel)result, result.GetRawResponse());
+            Response result = await ProjectedNameModelAsync(spreadModel, null).ConfigureAwait(false);
+            return Response.FromValue((ProjectedModel)result, result);
         }
 
         /// <summary>
@@ -880,12 +881,12 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response ReturnsAnonymousModel(RequestOptions options)
+        public virtual Response ReturnsAnonymousModel(RequestContext options)
         {
-            using PipelineMessage message = CreateReturnsAnonymousModelRequest(options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateReturnsAnonymousModelRequest(options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -897,28 +898,28 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> ReturnsAnonymousModelAsync(RequestOptions options)
+        public virtual async Task<Response> ReturnsAnonymousModelAsync(RequestContext options)
         {
-            using PipelineMessage message = CreateReturnsAnonymousModelRequest(options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateReturnsAnonymousModelRequest(options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary> return anonymous model. </summary>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual global::Azure.Response<ReturnsAnonymousModelResponse> ReturnsAnonymousModel()
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ReturnsAnonymousModelResponse> ReturnsAnonymousModel()
         {
-            ClientResult result = ReturnsAnonymousModel(null);
-            return global::Azure.Response.FromValue((ReturnsAnonymousModelResponse)result, result.GetRawResponse());
+            Response result = ReturnsAnonymousModel(null);
+            return Response.FromValue((ReturnsAnonymousModelResponse)result, result);
         }
 
         /// <summary> return anonymous model. </summary>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<global::Azure.Response<ReturnsAnonymousModelResponse>> ReturnsAnonymousModelAsync()
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ReturnsAnonymousModelResponse>> ReturnsAnonymousModelAsync()
         {
-            ClientResult result = await ReturnsAnonymousModelAsync(null).ConfigureAwait(false);
-            return global::Azure.Response.FromValue((ReturnsAnonymousModelResponse)result, result.GetRawResponse());
+            Response result = await ReturnsAnonymousModelAsync(null).ConfigureAwait(false);
+            return Response.FromValue((ReturnsAnonymousModelResponse)result, result);
         }
 
         /// <summary>
@@ -932,14 +933,14 @@ namespace BasicTypeSpec
         /// <param name="accept"></param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response GetUnknownValue(string accept, RequestOptions options)
+        public virtual Response GetUnknownValue(string accept, RequestContext options)
         {
             Argument.AssertNotNull(accept, nameof(accept));
 
-            using PipelineMessage message = CreateGetUnknownValueRequest(accept, options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateGetUnknownValueRequest(accept, options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -953,38 +954,38 @@ namespace BasicTypeSpec
         /// <param name="accept"></param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> GetUnknownValueAsync(string accept, RequestOptions options)
+        public virtual async Task<Response> GetUnknownValueAsync(string accept, RequestContext options)
         {
             Argument.AssertNotNull(accept, nameof(accept));
 
-            using PipelineMessage message = CreateGetUnknownValueRequest(accept, options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateGetUnknownValueRequest(accept, options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary> get extensible enum. </summary>
         /// <param name="accept"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual global::Azure.Response<string> GetUnknownValue(string accept)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<string> GetUnknownValue(string accept)
         {
             Argument.AssertNotNull(accept, nameof(accept));
 
-            ClientResult result = GetUnknownValue(accept, null);
-            return global::Azure.Response.FromValue(result.GetRawResponse().Content.ToObjectFromJson<string>(), result.GetRawResponse());
+            Response result = GetUnknownValue(accept, null);
+            return Response.FromValue(result.Content.ToObjectFromJson<string>(), result);
         }
 
         /// <summary> get extensible enum. </summary>
         /// <param name="accept"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<global::Azure.Response<string>> GetUnknownValueAsync(string accept)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<string>> GetUnknownValueAsync(string accept)
         {
             Argument.AssertNotNull(accept, nameof(accept));
 
-            ClientResult result = await GetUnknownValueAsync(accept, null).ConfigureAwait(false);
-            return global::Azure.Response.FromValue(result.GetRawResponse().Content.ToObjectFromJson<string>(), result.GetRawResponse());
+            Response result = await GetUnknownValueAsync(accept, null).ConfigureAwait(false);
+            return Response.FromValue(result.Content.ToObjectFromJson<string>(), result);
         }
 
         /// <summary>
@@ -998,14 +999,14 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response InternalProtocol(BinaryContent content, RequestOptions options)
+        public virtual Response InternalProtocol(RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateInternalProtocolRequest(content, options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateInternalProtocolRequest(content, options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -1019,38 +1020,38 @@ namespace BasicTypeSpec
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> InternalProtocolAsync(BinaryContent content, RequestOptions options)
+        public virtual async Task<Response> InternalProtocolAsync(RequestContent content, RequestContext options)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateInternalProtocolRequest(content, options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateInternalProtocolRequest(content, options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary> When set protocol false and convenient true, then the protocol method should be internal. </summary>
         /// <param name="body"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual global::Azure.Response<Thing> InternalProtocol(Thing body)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<Thing> InternalProtocol(Thing body)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            ClientResult result = InternalProtocol(body, null);
-            return global::Azure.Response.FromValue((Thing)result, result.GetRawResponse());
+            Response result = InternalProtocol(body, null);
+            return Response.FromValue((Thing)result, result);
         }
 
         /// <summary> When set protocol false and convenient true, then the protocol method should be internal. </summary>
         /// <param name="body"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<global::Azure.Response<Thing>> InternalProtocolAsync(Thing body)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<Thing>> InternalProtocolAsync(Thing body)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            ClientResult result = await InternalProtocolAsync(body, null).ConfigureAwait(false);
-            return global::Azure.Response.FromValue((Thing)result, result.GetRawResponse());
+            Response result = await InternalProtocolAsync(body, null).ConfigureAwait(false);
+            return Response.FromValue((Thing)result, result);
         }
 
         /// <summary>
@@ -1062,12 +1063,12 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response StillConvenient(RequestOptions options)
+        public virtual Response StillConvenient(RequestContext options)
         {
-            using PipelineMessage message = CreateStillConvenientRequest(options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateStillConvenientRequest(options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -1079,24 +1080,24 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> StillConvenientAsync(RequestOptions options)
+        public virtual async Task<Response> StillConvenientAsync(RequestContext options)
         {
-            using PipelineMessage message = CreateStillConvenientRequest(options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateStillConvenientRequest(options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary> When set protocol false and convenient true, the convenient method should be generated even it has the same signature as protocol one. </summary>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual global::Azure.Response StillConvenient()
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response StillConvenient()
         {
             return StillConvenient(null);
         }
 
         /// <summary> When set protocol false and convenient true, the convenient method should be generated even it has the same signature as protocol one. </summary>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<global::Azure.Response> StillConvenientAsync()
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> StillConvenientAsync()
         {
             return await StillConvenientAsync(null).ConfigureAwait(false);
         }
@@ -1112,14 +1113,14 @@ namespace BasicTypeSpec
         /// <param name="id"></param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual global::Azure.Response HeadAsBoolean(string id, RequestOptions options)
+        public virtual Response HeadAsBoolean(string id, RequestContext options)
         {
             Argument.AssertNotNull(id, nameof(id));
 
-            using PipelineMessage message = CreateHeadAsBooleanRequest(id, options);
-            return global::Azure.Response.FromResponse(Pipeline.ProcessMessage(message, options));
+            using HttpMessage message = CreateHeadAsBooleanRequest(id, options);
+            return Pipeline.ProcessMessage(message, options);
         }
 
         /// <summary>
@@ -1133,21 +1134,21 @@ namespace BasicTypeSpec
         /// <param name="id"></param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<global::Azure.Response> HeadAsBooleanAsync(string id, RequestOptions options)
+        public virtual async Task<Response> HeadAsBooleanAsync(string id, RequestContext options)
         {
             Argument.AssertNotNull(id, nameof(id));
 
-            using PipelineMessage message = CreateHeadAsBooleanRequest(id, options);
-            return global::Azure.Response.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using HttpMessage message = CreateHeadAsBooleanRequest(id, options);
+            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
         }
 
         /// <summary> head as boolean. </summary>
         /// <param name="id"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual global::Azure.Response HeadAsBoolean(string id)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response HeadAsBoolean(string id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -1157,8 +1158,8 @@ namespace BasicTypeSpec
         /// <summary> head as boolean. </summary>
         /// <param name="id"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<global::Azure.Response> HeadAsBooleanAsync(string id)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> HeadAsBooleanAsync(string id)
         {
             Argument.AssertNotNull(id, nameof(id));
 

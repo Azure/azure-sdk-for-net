@@ -6,11 +6,11 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using BasicTypeSpec;
 
 namespace BasicTypeSpec.Models
@@ -119,16 +119,18 @@ namespace BasicTypeSpec.Models
 
         string IPersistableModel<ReturnsAnonymousModelResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="returnsAnonymousModelResponse"> The <see cref="ReturnsAnonymousModelResponse"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(ReturnsAnonymousModelResponse returnsAnonymousModelResponse)
+        /// <param name="returnsAnonymousModelResponse"> The <see cref="ReturnsAnonymousModelResponse"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ReturnsAnonymousModelResponse returnsAnonymousModelResponse)
         {
-            return BinaryContent.Create(returnsAnonymousModelResponse, ModelSerializationExtensions.WireOptions);
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(returnsAnonymousModelResponse, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <param name="result"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="ReturnsAnonymousModelResponse"/> from. </param>
-        public static explicit operator ReturnsAnonymousModelResponse(global::Azure.Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ReturnsAnonymousModelResponse"/> from. </param>
+        public static explicit operator ReturnsAnonymousModelResponse(Response result)
         {
-            using global::Azure.Response response = result.GetRawResponse();
+            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeReturnsAnonymousModelResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

@@ -9,12 +9,12 @@ using Azure;
 
 namespace BasicTypeSpec
 {
-    internal partial class ErrorResult<T> : global::Azure.Response<T>
+    internal partial class ErrorResult<T> : Response<T>
     {
-        private readonly global::Azure.Response _response;
-        private readonly global::Azure.RequestFailedException _exception;
+        private readonly Response _response;
+        private readonly RequestFailedException _exception;
 
-        public ErrorResult(global::Azure.Response response, global::Azure.RequestFailedException exception) : base(default, response)
+        public ErrorResult(Response response, RequestFailedException exception)
         {
             _response = response;
             _exception = exception;
@@ -24,7 +24,7 @@ namespace BasicTypeSpec
 
         public override Response GetRawResponse()
         {
-            throw new System.NotImplementedException();
+            return _response;
         }
     }
 }

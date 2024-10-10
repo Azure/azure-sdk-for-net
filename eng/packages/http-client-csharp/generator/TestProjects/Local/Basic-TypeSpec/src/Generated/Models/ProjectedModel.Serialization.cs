@@ -6,11 +6,11 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using BasicTypeSpec;
 
 namespace BasicTypeSpec.Models
@@ -131,16 +131,18 @@ namespace BasicTypeSpec.Models
 
         string IPersistableModel<ProjectedModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="projectedModel"> The <see cref="ProjectedModel"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(ProjectedModel projectedModel)
+        /// <param name="projectedModel"> The <see cref="ProjectedModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ProjectedModel projectedModel)
         {
-            return BinaryContent.Create(projectedModel, ModelSerializationExtensions.WireOptions);
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(projectedModel, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <param name="result"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="ProjectedModel"/> from. </param>
-        public static explicit operator ProjectedModel(global::Azure.Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ProjectedModel"/> from. </param>
+        public static explicit operator ProjectedModel(Response result)
         {
-            using global::Azure.Response response = result.GetRawResponse();
+            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeProjectedModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

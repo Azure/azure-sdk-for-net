@@ -6,11 +6,11 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using BasicTypeSpec;
 
 namespace BasicTypeSpec.Models
@@ -85,7 +85,7 @@ namespace BasicTypeSpec.Models
                 {
                     writer.WritePropertyName("optionalNullableList"u8);
                     writer.WriteStartArray();
-                    foreach (var item in OptionalNullableList)
+                    foreach (int item in OptionalNullableList)
                     {
                         writer.WriteNumberValue(item);
                     }
@@ -100,7 +100,7 @@ namespace BasicTypeSpec.Models
             {
                 writer.WritePropertyName("requiredNullableList"u8);
                 writer.WriteStartArray();
-                foreach (var item in RequiredNullableList)
+                foreach (int item in RequiredNullableList)
                 {
                     writer.WriteNumberValue(item);
                 }
@@ -326,16 +326,18 @@ namespace BasicTypeSpec.Models
 
         string IPersistableModel<AnonymousBodyRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="anonymousBodyRequest"> The <see cref="AnonymousBodyRequest"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(AnonymousBodyRequest anonymousBodyRequest)
+        /// <param name="anonymousBodyRequest"> The <see cref="AnonymousBodyRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AnonymousBodyRequest anonymousBodyRequest)
         {
-            return BinaryContent.Create(anonymousBodyRequest, ModelSerializationExtensions.WireOptions);
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(anonymousBodyRequest, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <param name="result"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="AnonymousBodyRequest"/> from. </param>
-        public static explicit operator AnonymousBodyRequest(global::Azure.Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="AnonymousBodyRequest"/> from. </param>
+        public static explicit operator AnonymousBodyRequest(Response result)
         {
-            using global::Azure.Response response = result.GetRawResponse();
+            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeAnonymousBodyRequest(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

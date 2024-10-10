@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
+using Azure.Generator.Providers.Abstraction;
 using Microsoft.Generator.CSharp.ClientModel;
 using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.Expressions;
 using Microsoft.Generator.CSharp.Input;
 using Microsoft.Generator.CSharp.Primitives;
 
@@ -15,22 +16,31 @@ namespace Azure.Generator
     public class AzureTypeFactory : ScmTypeFactory
     {
         /// <inheritdoc/>
-        public override CSharpType ClientResponseExceptionType => typeof(RequestFailedException);
+        public override CSharpType ClientUriBuilderBaseType => typeof(RequestUriBuilder);
 
         /// <inheritdoc/>
-        public override CSharpType ClientResponseType => typeof(Response);
+        public override IClientResponseApi ClientResponseApi => AzureClientResponseProvider.Instance;
 
         /// <inheritdoc/>
-        public override CSharpType ClientResponseOfTType => typeof(Response<>);
+        public override IHttpResponseApi HttpResponseApi => AzureResponseProvider.Instance;
 
         /// <inheritdoc/>
-        public override CSharpType HttpResponseType => typeof(Response);
+        public override IClientPipelineApi ClientPipelineApi => HttpPipelineProvider.Instance;
 
         /// <inheritdoc/>
-        public override ClientResponseApi CreateClientResponse(ValueExpression original) => new AzureClientResponseProvider(original.As<Response>());
+        public override IHttpMessageApi HttpMessageApi => HttpMessageProvider.Instance;
 
         /// <inheritdoc/>
-        public override HttpResponseApi CreateHttpResponse(ValueExpression original) => new AzureResponseProvider(original.As<Response>());
+        public override IHttpRequestApi HttpRequestApi => HttpRequestProvider.Instance;
+
+        /// <inheritdoc/>
+        public override IStatusCodeClassifierApi StatusCodeClassifierApi => StatusCodeClassifierProvider.Instance;
+
+        /// <inheritdoc/>
+        public override IRequestContentApi RequestContentApi => RequestContentProvider.Instance;
+
+        /// <inheritdoc/>
+        public override IHttpRequestOptionsApi HttpRequestOptionsApi => HttpRequestOptionsProvider.Instance;
 
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)

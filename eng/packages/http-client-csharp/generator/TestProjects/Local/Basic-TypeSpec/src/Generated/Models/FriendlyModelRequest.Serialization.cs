@@ -6,11 +6,11 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using BasicTypeSpec;
 
 namespace BasicTypeSpec.Models
@@ -131,16 +131,18 @@ namespace BasicTypeSpec.Models
 
         string IPersistableModel<FriendlyModelRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="friendlyModelRequest"> The <see cref="FriendlyModelRequest"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(FriendlyModelRequest friendlyModelRequest)
+        /// <param name="friendlyModelRequest"> The <see cref="FriendlyModelRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(FriendlyModelRequest friendlyModelRequest)
         {
-            return BinaryContent.Create(friendlyModelRequest, ModelSerializationExtensions.WireOptions);
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(friendlyModelRequest, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <param name="result"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="FriendlyModelRequest"/> from. </param>
-        public static explicit operator FriendlyModelRequest(global::Azure.Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FriendlyModelRequest"/> from. </param>
+        public static explicit operator FriendlyModelRequest(Response result)
         {
-            using global::Azure.Response response = result.GetRawResponse();
+            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeFriendlyModelRequest(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

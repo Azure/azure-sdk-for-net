@@ -6,11 +6,11 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using BasicTypeSpec;
 
 namespace BasicTypeSpec.Models
@@ -131,16 +131,18 @@ namespace BasicTypeSpec.Models
 
         string IPersistableModel<ProjectedNameModelRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="projectedNameModelRequest"> The <see cref="ProjectedNameModelRequest"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(ProjectedNameModelRequest projectedNameModelRequest)
+        /// <param name="projectedNameModelRequest"> The <see cref="ProjectedNameModelRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ProjectedNameModelRequest projectedNameModelRequest)
         {
-            return BinaryContent.Create(projectedNameModelRequest, ModelSerializationExtensions.WireOptions);
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(projectedNameModelRequest, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <param name="result"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="ProjectedNameModelRequest"/> from. </param>
-        public static explicit operator ProjectedNameModelRequest(global::Azure.Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ProjectedNameModelRequest"/> from. </param>
+        public static explicit operator ProjectedNameModelRequest(Response result)
         {
-            using global::Azure.Response response = result.GetRawResponse();
+            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeProjectedNameModelRequest(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

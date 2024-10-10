@@ -6,11 +6,11 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using BasicTypeSpec;
 
 namespace BasicTypeSpec.Models
@@ -85,7 +85,7 @@ namespace BasicTypeSpec.Models
                 {
                     writer.WritePropertyName("optionalNullableList"u8);
                     writer.WriteStartArray();
-                    foreach (var item in OptionalNullableList)
+                    foreach (int item in OptionalNullableList)
                     {
                         writer.WriteNumberValue(item);
                     }
@@ -100,7 +100,7 @@ namespace BasicTypeSpec.Models
             {
                 writer.WritePropertyName("requiredNullableList"u8);
                 writer.WriteStartArray();
-                foreach (var item in RequiredNullableList)
+                foreach (int item in RequiredNullableList)
                 {
                     writer.WriteNumberValue(item);
                 }
@@ -326,16 +326,18 @@ namespace BasicTypeSpec.Models
 
         string IPersistableModel<Thing>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="thing"> The <see cref="Thing"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(Thing thing)
+        /// <param name="thing"> The <see cref="Thing"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(Thing thing)
         {
-            return BinaryContent.Create(thing, ModelSerializationExtensions.WireOptions);
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(thing, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <param name="result"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="Thing"/> from. </param>
-        public static explicit operator Thing(global::Azure.Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="Thing"/> from. </param>
+        public static explicit operator Thing(Response result)
         {
-            using global::Azure.Response response = result.GetRawResponse();
+            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeThing(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
