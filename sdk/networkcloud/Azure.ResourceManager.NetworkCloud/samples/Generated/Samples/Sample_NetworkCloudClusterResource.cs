@@ -142,14 +142,14 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 new BareMetalMachineConfiguration(new AdministrativeCredentials("username")
 {
 Password = "{password}",
-},"AA:BB:CC:DD:EE:FF","00:BB:CC:DD:EE:FF",1,"BM1219XXX")
+},"AA:BB:CC:DD:EE:FF","00:BB:CC:DD:EE:FF",1L,"BM1219XXX")
 {
 MachineDetails = "extraDetails",
 MachineName = "bmmName1",
 },new BareMetalMachineConfiguration(new AdministrativeCredentials("username")
 {
 Password = "{password}",
-},"AA:BB:CC:DD:EE:00","00:BB:CC:DD:EE:00",2,"BM1219YYY")
+},"AA:BB:CC:DD:EE:00","00:BB:CC:DD:EE:00",2L,"BM1219YYY")
 {
 MachineDetails = "extraDetails",
 MachineName = "bmmName2",
@@ -161,13 +161,13 @@ MachineName = "bmmName2",
 new StorageApplianceConfiguration(new AdministrativeCredentials("username")
 {
 Password = "{password}",
-},1,"BM1219XXX")
+},1L,"BM1219XXX")
 {
 StorageApplianceName = "vmName",
 }
 },
                 },
-                ComputeDeploymentThreshold = new ValidationThreshold(ValidationThresholdGrouping.PerCluster, ValidationThresholdType.PercentSuccess, 90),
+                ComputeDeploymentThreshold = new ValidationThreshold(ValidationThresholdGrouping.PerCluster, ValidationThresholdType.PercentSuccess, 90L),
             };
             ArmOperation<NetworkCloudClusterResource> lro = await networkCloudCluster.UpdateAsync(WaitUntil.Completed, patch);
             NetworkCloudClusterResource result = lro.Value;

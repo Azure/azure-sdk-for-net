@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network.Samples
             string connectionName = "conn1";
             BgpConnectionData data = new BgpConnectionData()
             {
-                PeerAsn = 20000,
+                PeerAsn = 20000L,
                 PeerIP = "192.168.1.5",
                 HubVirtualNetworkConnectionId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/hub1/hubVirtualNetworkConnections/hubVnetConn1"),
             };
