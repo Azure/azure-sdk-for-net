@@ -226,6 +226,8 @@ jobs:
           displayName: "Build & Test (all tests for $(TestTargetFramework)) - Client Secret Auth"
           env:
             AZURE_TEST_MODE: $(TestMode)
+            ${{ if parameters.PersistOidcToken }}:
+              ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
             ${{ each var in parameters.EnvVars }}:
               ${{ var.key }}: ${{ var.value }}
 
