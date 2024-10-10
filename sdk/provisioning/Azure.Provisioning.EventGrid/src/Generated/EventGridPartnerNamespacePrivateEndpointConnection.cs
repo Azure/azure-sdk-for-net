@@ -69,10 +69,16 @@ public partial class EventGridPartnerNamespacePrivateEndpointConnection : Resour
     /// <summary>
     /// Creates a new EventGridPartnerNamespacePrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the EventGridPartnerNamespacePrivateEndpointConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// EventGridPartnerNamespacePrivateEndpointConnection resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventGridPartnerNamespacePrivateEndpointConnection.</param>
-    public EventGridPartnerNamespacePrivateEndpointConnection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/partnerNamespaces/privateEndpointConnections", resourceVersion ?? "2022-06-15")
+    public EventGridPartnerNamespacePrivateEndpointConnection(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.EventGrid/partnerNamespaces/privateEndpointConnections", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<EventGridPrivateEndpointConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -105,9 +111,15 @@ public partial class EventGridPartnerNamespacePrivateEndpointConnection : Resour
     /// Creates a reference to an existing
     /// EventGridPartnerNamespacePrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the EventGridPartnerNamespacePrivateEndpointConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// EventGridPartnerNamespacePrivateEndpointConnection resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventGridPartnerNamespacePrivateEndpointConnection.</param>
     /// <returns>The existing EventGridPartnerNamespacePrivateEndpointConnection resource.</returns>
-    public static EventGridPartnerNamespacePrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EventGridPartnerNamespacePrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

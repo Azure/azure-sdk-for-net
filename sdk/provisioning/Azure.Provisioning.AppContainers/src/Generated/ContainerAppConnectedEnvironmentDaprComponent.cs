@@ -93,10 +93,16 @@ public partial class ContainerAppConnectedEnvironmentDaprComponent : Resource
     /// <summary>
     /// Creates a new ContainerAppConnectedEnvironmentDaprComponent.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppConnectedEnvironmentDaprComponent.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ContainerAppConnectedEnvironmentDaprComponent resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironmentDaprComponent.</param>
-    public ContainerAppConnectedEnvironmentDaprComponent(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.App/connectedEnvironments/daprComponents", resourceVersion ?? "2024-03-01")
+    public ContainerAppConnectedEnvironmentDaprComponent(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.App/connectedEnvironments/daprComponents", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _componentType = BicepValue<string>.DefineProperty(this, "ComponentType", ["properties", "componentType"]);
@@ -143,9 +149,15 @@ public partial class ContainerAppConnectedEnvironmentDaprComponent : Resource
     /// Creates a reference to an existing
     /// ContainerAppConnectedEnvironmentDaprComponent.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppConnectedEnvironmentDaprComponent.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ContainerAppConnectedEnvironmentDaprComponent resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironmentDaprComponent.</param>
     /// <returns>The existing ContainerAppConnectedEnvironmentDaprComponent resource.</returns>
-    public static ContainerAppConnectedEnvironmentDaprComponent FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppConnectedEnvironmentDaprComponent FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

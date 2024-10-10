@@ -87,10 +87,15 @@ public partial class ContainerRegistryReplication : Resource
     /// <summary>
     /// Creates a new ContainerRegistryReplication.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryReplication.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerRegistryReplication
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryReplication.</param>
-    public ContainerRegistryReplication(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/replications", resourceVersion ?? "2023-07-01")
+    public ContainerRegistryReplication(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.ContainerRegistry/registries/replications", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -143,11 +148,16 @@ public partial class ContainerRegistryReplication : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerRegistryReplication.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryReplication.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerRegistryReplication
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryReplication.</param>
     /// <returns>The existing ContainerRegistryReplication resource.</returns>
-    public static ContainerRegistryReplication FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerRegistryReplication FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ContainerRegistryReplication

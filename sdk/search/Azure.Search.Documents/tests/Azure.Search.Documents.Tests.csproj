@@ -35,9 +35,6 @@
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Azure.Security.KeyVault.Keys" />
     <PackageReference Include="Microsoft.Spatial" />
-
-    <!-- Temporarily retain package-only references to Azure.AI.OpenAI pending 2.0.0 GA updates -->
-    <ExcludeFromProjectReferenceToConversion Include="Azure.AI.OpenAI" />
   </ItemGroup>
 
   <ItemGroup>

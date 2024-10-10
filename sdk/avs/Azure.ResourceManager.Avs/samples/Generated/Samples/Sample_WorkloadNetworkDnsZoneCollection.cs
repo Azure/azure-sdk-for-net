@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Avs.Samples
 IPAddress.Parse("1.1.1.1")
 },
                 SourceIP = IPAddress.Parse("8.8.8.8"),
-                Revision = 1,
+                Revision = 1L,
             };
             ArmOperation<WorkloadNetworkDnsZoneResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dnsZoneId, data);
             WorkloadNetworkDnsZoneResource result = lro.Value;

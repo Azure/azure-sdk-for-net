@@ -93,10 +93,15 @@ public partial class WebSiteSlotPremierAddOn : Resource
     /// <summary>
     /// Creates a new WebSiteSlotPremierAddOn.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSlotPremierAddOn.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the WebSiteSlotPremierAddOn resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotPremierAddOn.</param>
-    public WebSiteSlotPremierAddOn(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/premieraddons", resourceVersion ?? "2024-04-01")
+    public WebSiteSlotPremierAddOn(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/sites/slots/premieraddons", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -276,9 +281,14 @@ public partial class WebSiteSlotPremierAddOn : Resource
     /// <summary>
     /// Creates a reference to an existing WebSiteSlotPremierAddOn.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSlotPremierAddOn.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the WebSiteSlotPremierAddOn resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotPremierAddOn.</param>
     /// <returns>The existing WebSiteSlotPremierAddOn resource.</returns>
-    public static WebSiteSlotPremierAddOn FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteSlotPremierAddOn FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

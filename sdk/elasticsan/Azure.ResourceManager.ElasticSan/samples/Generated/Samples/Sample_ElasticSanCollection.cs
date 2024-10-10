@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanData data = new ElasticSanData(new AzureLocation("France Central"), new ElasticSanSku(ElasticSanSkuName.PremiumLrs)
             {
                 Tier = ElasticSanSkuTier.Premium,
-            }, 5, 25)
+            }, 5L, 25L)
             {
                 AvailabilityZones =
 {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // invoke the operation
             string elasticSanName = "elasticsanname";
-            ElasticSanData data = new ElasticSanData(new AzureLocation("France Central"), new ElasticSanSku(ElasticSanSkuName.PremiumLrs), 15, 27);
+            ElasticSanData data = new ElasticSanData(new AzureLocation("France Central"), new ElasticSanSku(ElasticSanSkuName.PremiumLrs), 15L, 27L);
             ArmOperation<ElasticSanResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, elasticSanName, data);
             ElasticSanResource result = lro.Value;
 

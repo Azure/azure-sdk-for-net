@@ -59,10 +59,15 @@ public partial class ServiceBusQueueAuthorizationRule : Resource
     /// <summary>
     /// Creates a new ServiceBusQueueAuthorizationRule.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusQueueAuthorizationRule.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ServiceBusQueueAuthorizationRule
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusQueueAuthorizationRule.</param>
-    public ServiceBusQueueAuthorizationRule(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/queues/authorizationRules", resourceVersion ?? "2024-01-01")
+    public ServiceBusQueueAuthorizationRule(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.ServiceBus/namespaces/queues/authorizationRules", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _rights = BicepList<ServiceBusAccessRight>.DefineProperty(this, "Rights", ["properties", "rights"]);
@@ -96,11 +101,16 @@ public partial class ServiceBusQueueAuthorizationRule : Resource
     /// <summary>
     /// Creates a reference to an existing ServiceBusQueueAuthorizationRule.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusQueueAuthorizationRule.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ServiceBusQueueAuthorizationRule
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusQueueAuthorizationRule.</param>
     /// <returns>The existing ServiceBusQueueAuthorizationRule resource.</returns>
-    public static ServiceBusQueueAuthorizationRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusQueueAuthorizationRule FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ServiceBusQueueAuthorizationRule
@@ -117,5 +127,5 @@ public partial class ServiceBusQueueAuthorizationRule : Resource
     /// <returns>The keys for this ServiceBusQueueAuthorizationRule resource.</returns>
     public ServiceBusAccessKeys GetKeys() =>
         ServiceBusAccessKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(ResourceName), "listKeys")));
+            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(IdentifierName), "listKeys")));
 }

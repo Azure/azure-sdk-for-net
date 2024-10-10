@@ -29,5 +29,6 @@ public class PostgreSqlSpecification() :
         AddNameRequirements<PostgreSqlDatabaseResource>(min: 1, max: 63, lower: true, upper: true, digits: true, hyphen: true);
         AddNameRequirements<PostgreSqlFirewallRuleResource>(min: 1, max: 128, lower: true, upper: true, digits: true, hyphen: true, underscore: true);
         AddNameRequirements<PostgreSqlVirtualNetworkRuleResource>(min: 1, max: 128, lower: true, upper: true, digits: true, hyphen: true);
+        AddNameRequirements<PostgreSqlFlexibleServerResource>(min: 3, max: 63, lower: true, digits: true, hyphen: true);
     }
 }

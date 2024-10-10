@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("userProfile"u8);
                 writer.WriteObjectValue(UserProfile, options);
             }
+            if (Optional.IsDefined(NginxAppProtect))
+            {
+                writer.WritePropertyName("nginxAppProtect"u8);
+                writer.WriteObjectValue(NginxAppProtect, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -131,6 +136,7 @@ namespace Azure.ResourceManager.Nginx.Models
             NginxDeploymentScalingProperties scalingProperties = default;
             AutoUpgradeProfile autoUpgradeProfile = default;
             NginxDeploymentUserProfile userProfile = default;
+            NginxDeploymentPropertiesNginxAppProtect nginxAppProtect = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,6 +219,15 @@ namespace Azure.ResourceManager.Nginx.Models
                     userProfile = NginxDeploymentUserProfile.DeserializeNginxDeploymentUserProfile(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("nginxAppProtect"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nginxAppProtect = NginxDeploymentPropertiesNginxAppProtect.DeserializeNginxDeploymentPropertiesNginxAppProtect(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -230,6 +245,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 scalingProperties,
                 autoUpgradeProfile,
                 userProfile,
+                nginxAppProtect,
                 serializedAdditionalRawData);
         }
 
