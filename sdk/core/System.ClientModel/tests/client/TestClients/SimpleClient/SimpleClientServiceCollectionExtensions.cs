@@ -97,7 +97,8 @@ public static class SimpleClientServiceCollectionExtensions
     public static IServiceCollection AddSimpleClient(this IServiceCollection services,
         IConfiguration commonConfigurationSection,
         IConfiguration clientConfigurationSection,
-        Action<SimpleClientOptions> configureOptions)
+        Action<SimpleClientOptions> configureOptions,
+        object? key = default)
     {
         services.AddCommonOptions(commonConfigurationSection);
 
@@ -113,8 +114,7 @@ public static class SimpleClientServiceCollectionExtensions
                 .Bind(clientConfigurationSection)
                 .Configure(configureOptions);
 
-        // Add the requested client
-        services.AddSingleton<SimpleClient>(sp =>
+        Func<IServiceProvider, SimpleClient> clientFactory = sp =>
         {
             Uri endpoint = sp.GetClientEndpoint(clientConfigurationSection);
 
@@ -129,7 +129,17 @@ public static class SimpleClientServiceCollectionExtensions
             options = options.ConfigurePolicies(sp);
 
             return new SimpleClient(endpoint, credential, options);
-        });
+        };
+
+        // Add the requested client
+        if (key is null)
+        {
+            services.AddSingleton<SimpleClient>(clientFactory);
+        }
+        else
+        {
+            services.AddKeyedSingleton<SimpleClient>(key, (sp, key) => clientFactory(sp));
+        }
 
         return services;
     }

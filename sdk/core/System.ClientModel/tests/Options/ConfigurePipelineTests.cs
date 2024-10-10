@@ -3,7 +3,6 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Reflection;
 using ClientModel.ReferenceClients.MapsClient;
 using ClientModel.ReferenceClients.SimpleClient;
@@ -306,6 +305,62 @@ public class ConfigurePipelineTests
     }
 
     [Test]
+    public void CanRegisterMultipleInstancesOfTheSameClientType()
+    {
+        // see: https://learn.microsoft.com/en-us/dotnet/azure/sdk/dependency-injection?tabs=web-app-builder#configure-multiple-service-clients-with-different-names
+
+        ServiceCollection services = new ServiceCollection();
+        ConfigurationManager configuration = new ConfigurationManager();
+        services.AddSingleton<IConfiguration>(sp => configuration);
+
+        configuration.AddInMemoryCollection(new List<KeyValuePair<string, string?>>()
+        {
+            // Common config block
+            new("ClientCommon:Logging:AllowedHeaderNames", null),
+            new("ClientCommon:Logging:AllowedHeaderNames:0", "x-common-config-allowed"),
+
+            // PublicClient config block
+            new("PublicClient:ServiceUri", "https://www.simple-public.com/"),
+            new("PublicClient:Logging:AllowedHeaderNames", null),
+            new("PublicClient:Logging:AllowedHeaderNames:0", "x-public-config-allowed"),
+
+            // PrivateClient config block
+            new("PrivateClient:ServiceUri", "https://www.simple-private.com/"),
+            new("PrivateClient:Logging:AllowedHeaderNames", null),
+            new("PrivateClient:Logging:AllowedHeaderNames:0", "x-private-config-allowed"),
+        });
+
+        // Add the two client instances
+        services.AddSimpleClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("PublicClient"),
+            options => { },
+            "PublicClient");
+
+        services.AddSimpleClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("PrivateClient"),
+            options => { },
+            "PrivateClient");
+
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
+        SimpleClient publicClient = serviceProvider.GetRequiredKeyedService<SimpleClient>("PublicClient");
+        SimpleClient privateClient = serviceProvider.GetRequiredKeyedService<SimpleClient>("PrivateClient");
+
+        // Validate that both clients have headers from appropriate common config blocks
+
+        CollectionAssert.Contains(publicClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.Contains(publicClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.Contains(publicClient.Options.Logging.AllowedHeaderNames, "x-public-config-allowed");
+        CollectionAssert.DoesNotContain(publicClient.Options.Logging.AllowedHeaderNames, "x-private-config-allowed");
+
+        CollectionAssert.Contains(privateClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.Contains(privateClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
+        CollectionAssert.Contains(privateClient.Options.Logging.AllowedHeaderNames, "x-private-config-allowed");
+        CollectionAssert.DoesNotContain(privateClient.Options.Logging.AllowedHeaderNames, "x-public-config-allowed");
+    }
+
+    [Test]
     public void CanSetClientCredentialFromConfigurationSettings()
     {
         throw new NotImplementedException();
@@ -313,12 +368,6 @@ public class ConfigurePipelineTests
 
     [Test]
     public void CanRollCredentialFromConfigurationSettings()
-    {
-        throw new NotImplementedException();
-    }
-
-    [Test]
-    public void CanRegisterClientsAsKeyedServices()
     {
         throw new NotImplementedException();
     }
