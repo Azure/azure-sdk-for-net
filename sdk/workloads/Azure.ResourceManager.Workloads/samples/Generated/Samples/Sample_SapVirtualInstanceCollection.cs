@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Workloads.Samples
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1)
+                }), 1L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -288,7 +288,7 @@ DataDiskNames =
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -306,7 +306,7 @@ DataDiskNames =
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -324,7 +324,7 @@ DataDiskNames =
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -585,7 +585,7 @@ DataDiskNames =
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -603,7 +603,7 @@ DataDiskNames =
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -621,7 +621,7 @@ DataDiskNames =
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -952,7 +952,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -972,7 +972,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -992,7 +992,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 1)
+                }), 1L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 }),
@@ -1060,7 +1060,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1080,7 +1080,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 5), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 5L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1100,7 +1100,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -1171,7 +1171,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1191,7 +1191,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1211,7 +1211,7 @@ KeyData = "ssh-rsa public key",
 }
 },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -1349,7 +1349,7 @@ KeyData = "ssh-rsa public key",
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1367,7 +1367,7 @@ KeyData = "ssh-rsa public key",
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1385,45 +1385,45 @@ KeyData = "ssh-rsa public key",
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1)
+                }), 1L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                     DiskVolumeConfigurations =
 {
 ["backup"] = new DiskVolumeConfiguration()
 {
-Count = 2,
-SizeInGB = 256,
+Count = 2L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["hana/data"] = new DiskVolumeConfiguration()
 {
-Count = 4,
-SizeInGB = 128,
+Count = 4L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/log"] = new DiskVolumeConfiguration()
 {
-Count = 3,
-SizeInGB = 128,
+Count = 3L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/shared"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 256,
+Count = 1L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["os"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 64,
+Count = 1L,
+SizeInGB = 64L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["usr/sap"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 128,
+Count = 1L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 },
@@ -1494,7 +1494,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1512,7 +1512,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1530,45 +1530,45 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                     DiskVolumeConfigurations =
 {
 ["backup"] = new DiskVolumeConfiguration()
 {
-Count = 2,
-SizeInGB = 256,
+Count = 2L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["hana/data"] = new DiskVolumeConfiguration()
 {
-Count = 4,
-SizeInGB = 128,
+Count = 4L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/log"] = new DiskVolumeConfiguration()
 {
-Count = 3,
-SizeInGB = 128,
+Count = 3L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/shared"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 256,
+Count = 1L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["os"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 64,
+Count = 1L,
+SizeInGB = 64L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["usr/sap"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 128,
+Count = 1L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 },
@@ -1642,7 +1642,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1660,7 +1660,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1678,45 +1678,45 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                     DiskVolumeConfigurations =
 {
 ["backup"] = new DiskVolumeConfiguration()
 {
-Count = 2,
-SizeInGB = 256,
+Count = 2L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["hana/data"] = new DiskVolumeConfiguration()
 {
-Count = 4,
-SizeInGB = 128,
+Count = 4L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/log"] = new DiskVolumeConfiguration()
 {
-Count = 3,
-SizeInGB = 128,
+Count = 3L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/shared"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 256,
+Count = 1L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["os"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 64,
+Count = 1L,
+SizeInGB = 64L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["usr/sap"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 128,
+Count = 1L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 },
@@ -1798,38 +1798,38 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 {
 ["backup"] = new DiskVolumeConfiguration()
 {
-Count = 2,
-SizeInGB = 256,
+Count = 2L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["hana/data"] = new DiskVolumeConfiguration()
 {
-Count = 4,
-SizeInGB = 128,
+Count = 4L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/log"] = new DiskVolumeConfiguration()
 {
-Count = 3,
-SizeInGB = 128,
+Count = 3L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 ["hana/shared"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 256,
+Count = 1L,
+SizeInGB = 256L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["os"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 64,
+Count = 1L,
+SizeInGB = 64L,
 SkuName = DiskDetailsDiskSkuName.StandardSsdLrs,
 },
 ["usr/sap"] = new DiskVolumeConfiguration()
 {
-Count = 1,
-SizeInGB = 128,
+Count = 1L,
+SizeInGB = 128L,
 SkuName = DiskDetailsDiskSkuName.PremiumLrs,
 },
 },
@@ -1900,7 +1900,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1918,7 +1918,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -1936,7 +1936,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1)
+                }), 1L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 }),
@@ -2006,7 +2006,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2024,7 +2024,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2042,7 +2042,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -2115,7 +2115,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2133,7 +2133,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2151,7 +2151,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -2295,7 +2295,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2313,7 +2313,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2331,7 +2331,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1)
+                }), 1L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -2408,7 +2408,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2426,7 +2426,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2444,7 +2444,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1)
+                }), 1L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -2517,7 +2517,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2535,7 +2535,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP",
@@ -2553,7 +2553,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 1)
+                }), 1L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -2626,7 +2626,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "{{privateKey}}",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_E4ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_E4ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -2644,7 +2644,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "{{privateKey}}",
                         },
                     },
-                }), 2), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 2L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -2662,7 +2662,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "{{privateKey}}",
                         },
                     },
-                }), 1))
+                }), 1L))
                 {
                     IsSecondaryIPEnabled = true,
                 },
@@ -2812,7 +2812,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -2830,7 +2830,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -2848,7 +2848,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -2925,7 +2925,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
+                }), 2L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet"), new SapVirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -2943,7 +2943,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 6), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 6L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -2961,7 +2961,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "xyz",
                         },
                     },
-                }), 2)
+                }), 2L)
                 {
                     DatabaseType = SapDatabaseType.Hana,
                 })
@@ -3038,7 +3038,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "{{privateKey}}",
                         },
                     },
-                }), 1), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_E4ds_v4", new SapImageReference()
+                }), 1L), new ApplicationServerConfiguration(new ResourceIdentifier("/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_E4ds_v4", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -3056,7 +3056,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "{{privateKey}}",
                         },
                     },
-                }), 2), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
+                }), 2L), new DatabaseConfiguration(new ResourceIdentifier("/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app"), new SapVirtualMachineConfiguration("Standard_M32ts", new SapImageReference()
                 {
                     Publisher = "RedHat",
                     Offer = "RHEL-SAP-HA",
@@ -3074,7 +3074,7 @@ SkuName = DiskDetailsDiskSkuName.PremiumLrs,
                             PrivateKey = "{{privateKey}}",
                         },
                     },
-                }), 1))
+                }), 1L))
                 {
                     IsSecondaryIPEnabled = true,
                 },

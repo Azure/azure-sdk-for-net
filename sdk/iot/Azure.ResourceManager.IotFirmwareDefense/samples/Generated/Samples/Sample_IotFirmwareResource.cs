@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
                 Model = "f",
                 Version = "s",
                 Description = "uz",
-                FileSize = 17,
+                FileSize = 17L,
                 Status = FirmwareAnalysisStatus.Pending,
                 StatusMessages =
 {

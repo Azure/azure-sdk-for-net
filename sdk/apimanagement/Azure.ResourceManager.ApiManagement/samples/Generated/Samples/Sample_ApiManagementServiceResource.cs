@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
             // invoke the operation
-            ConnectivityCheckContent content = new ConnectivityCheckContent(new ConnectivityCheckRequestSource("northeurope"), new ConnectivityCheckRequestDestination("https://microsoft.com", 3306))
+            ConnectivityCheckContent content = new ConnectivityCheckContent(new ConnectivityCheckRequestSource("northeurope"), new ConnectivityCheckRequestDestination("https://microsoft.com", 3306L))
             {
                 Protocol = ConnectivityCheckProtocol.Https,
                 ProtocolHttpConfiguration = new ConnectivityCheckRequestHttpConfiguration()
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                     Method = HttpMethodConfiguration.Get,
                     ValidStatusCodes =
 {
-200,204
+200L,204L
 },
                     Headers =
 {
@@ -113,7 +113,7 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
             // invoke the operation
-            ConnectivityCheckContent content = new ConnectivityCheckContent(new ConnectivityCheckRequestSource("northeurope"), new ConnectivityCheckRequestDestination("8.8.8.8", 53))
+            ConnectivityCheckContent content = new ConnectivityCheckContent(new ConnectivityCheckRequestSource("northeurope"), new ConnectivityCheckRequestDestination("8.8.8.8", 53L))
             {
                 PreferredIPVersion = PreferredIPVersion.IPv4,
             };

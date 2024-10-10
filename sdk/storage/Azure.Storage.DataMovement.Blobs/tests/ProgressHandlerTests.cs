@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseBlobs;
 extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Tests;
+using Azure.Storage.DataMovement.Blobs.Tests;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
 
@@ -146,7 +148,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task ProgressHandler_DownloadDirectory()
         {
             // Arrange
-            await using DisposingContainer source = await GetTestContainerAsync();
+            await using DisposingBlobContainer source = await GetTestContainerAsync();
             using DisposingLocalDirectory destination = DisposingLocalDirectory.GetTestDirectory();
 
             await PopulateTestContainer(source.Container);
@@ -170,7 +172,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             using DisposingLocalDirectory source = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer destination = await GetTestContainerAsync();
+            await using DisposingBlobContainer destination = await GetTestContainerAsync();
 
             await PopulateTestLocalDirectory(source.DirectoryPath);
 
@@ -193,8 +195,8 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingContainer source = await GetTestContainerAsync(service);
-            await using DisposingContainer destination = await GetTestContainerAsync();
+            await using DisposingBlobContainer source = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer destination = await GetTestContainerAsync();
 
             await PopulateTestContainer(source.Container);
 
@@ -219,7 +221,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             using DisposingLocalDirectory source = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer destination = await GetTestContainerAsync();
+            await using DisposingBlobContainer destination = await GetTestContainerAsync();
 
             await PopulateTestLocalDirectory(source.DirectoryPath);
 
@@ -258,8 +260,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             BlobServiceClient service = GetServiceClient_OAuth();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
             StorageResourceContainer sourceResource;
             StorageResourceContainer destinationResource;
@@ -312,7 +314,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task ProgressHandler_PauseResume(int delayInMs)
         {
             // Arrange
-            await using DisposingContainer source = await GetTestContainerAsync();
+            await using DisposingBlobContainer source = await GetTestContainerAsync();
             using DisposingLocalDirectory destination = DisposingLocalDirectory.GetTestDirectory();
 
             await PopulateTestContainer(source.Container);
