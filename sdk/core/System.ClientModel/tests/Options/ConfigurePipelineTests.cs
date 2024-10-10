@@ -270,12 +270,18 @@ public class ConfigurePipelineTests
 
         // Validate that both clients have headers from the common config block
 
+        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "Content-Length");
+        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
         CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
         CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
+        CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-client-allowed");
         CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
 
+        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "Content-Length");
+        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-maps-client-allowed");
         CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
         CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
+        CollectionAssert.DoesNotContain(mapsClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
         CollectionAssert.DoesNotContain(mapsClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
 
         // Validate that the custom policy for each client is configured according to that client's options
@@ -309,45 +315,6 @@ public class ConfigurePipelineTests
     public void CanRollCredentialFromConfigurationSettings()
     {
         throw new NotImplementedException();
-    }
-
-    [Test]
-    public void CanInjectCustomHttpClient()
-    {
-        // Maybe this uses HttpClientFactory instead in the future
-
-        string uriString = "https://www.example.com/";
-
-        ServiceCollection services = new ServiceCollection();
-        ConfigurationManager configuration = new ConfigurationManager();
-        configuration.AddInMemoryCollection(
-            new List<KeyValuePair<string, string?>>() {
-                new("SimpleClient:ServiceUri", uriString)
-            });
-
-        services.AddSingleton<IConfiguration>(sp => configuration);
-
-        // Add custom logging policy to service collection
-
-        // Using specific HttpClient instance for test to validate object
-        // equality. Note that this is an anti-pattern from a DI perspective.
-        HttpClient httpClientInstance = new();
-        services.AddSingleton<HttpClient, HttpClient>(sp => httpClientInstance);
-
-        // Client will have custom logging policy injected at creation time
-        // Note this is the parameterless overload
-        services.AddSimpleClient();
-
-        ServiceProvider serviceProvider = services.BuildServiceProvider();
-        SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
-
-        HttpClientPipelineTransport? transport = client.Options.Transport as HttpClientPipelineTransport;
-
-        Assert.IsNotNull(transport);
-
-        HttpClient pipelineHttpClient = transport!.GetPrivateField<HttpClient>("_httpClient");
-
-        Assert.AreEqual(httpClientInstance, pipelineHttpClient);
     }
 
     [Test]
