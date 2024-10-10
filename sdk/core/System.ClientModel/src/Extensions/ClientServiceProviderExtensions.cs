@@ -38,7 +38,10 @@ public static class ClientServiceProviderExtensions
             options.RetryPolicy = retryPolicy;
         }
 
-        HttpLoggingPolicy? httpLoggingPolicy = serviceProvider.GetService<HttpLoggingPolicy>();
+        HttpLoggingPolicy? httpLoggingPolicy =
+            serviceProvider.GetService<HttpLoggingPolicy>() ??
+            serviceProvider.GetKeyedService<HttpLoggingPolicy>(typeof(TOptions));
+
         if (httpLoggingPolicy is not null)
         {
             options.HttpLoggingPolicy = httpLoggingPolicy;

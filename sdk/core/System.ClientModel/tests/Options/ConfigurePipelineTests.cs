@@ -9,6 +9,7 @@ using ClientModel.ReferenceClients.MapsClient;
 using ClientModel.ReferenceClients.SimpleClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using static System.ClientModel.Tests.Options.LoggingOptionsTests;
 
@@ -183,7 +184,7 @@ public class ConfigurePipelineTests
             new("MapsClient:Logging:AllowedHeaderNames:0", "x-maps-config-allowed"),
         });
 
-        // Add custom policy to the service collection
+        // Add single custom policy to the service collection
         services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
 
         // Add the two clients
@@ -216,7 +217,7 @@ public class ConfigurePipelineTests
     }
 
     [Test]
-    public void CanConfigureCustomPolicyDifferentlyPerClient()
+    public void CanInjectCustomPoliciesConfiguredDifferentlyPerClient()
     {
         ServiceCollection services = new ServiceCollection();
         ConfigurationManager configuration = new ConfigurationManager();
@@ -239,6 +240,21 @@ public class ConfigurePipelineTests
             new("MapsClient:Logging:AllowedHeaderNames:0", "x-maps-config-allowed"),
         });
 
+        // Add a custom policy to the service collection configured for each client
+        services.AddKeyedSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>(typeof(SimpleClientOptions),
+            (sp, sco) =>
+            {
+                SimpleClientOptions options = sp.GetRequiredService<IOptions<SimpleClientOptions>>().Value;
+                return new CustomHttpLoggingPolicy(options.Logging);
+            });
+
+        services.AddKeyedSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>(typeof(MapsClientOptions),
+            (sp, mco) =>
+            {
+                MapsClientOptions options = sp.GetRequiredService<IOptions<MapsClientOptions>>().Value;
+                return new CustomHttpLoggingPolicy(options.Logging);
+            });
+
         // Add the two clients
         services.AddSimpleClient(
             configuration.GetSection("ClientCommon"),
@@ -247,11 +263,6 @@ public class ConfigurePipelineTests
         services.AddMapsClient(
             configuration.GetSection("ClientCommon"),
             configuration.GetSection("MapsClient"));
-
-        // Add custom logging policy to service collection
-        // Add it as transient so different policy configurations can be added
-        // to different clients...
-        services.AddTransient<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient simpleClient = serviceProvider.GetRequiredService<SimpleClient>();
