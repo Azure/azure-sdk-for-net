@@ -11,7 +11,7 @@ To create a large person group, you'll need `LargePersonGroupClient` object.
 ```C# Snippet:CreateLargePersonGroupClient
 Uri endpoint = new Uri("<your endpoint>");
 DefaultAzureCredential credential = new DefaultAzureCredential();
-var groupClient = new LargePersonGroupClient(id, endpoint, credential);
+var groupClient = new LargePersonGroupClient(endpoint, credential, id);
 ```
 
 Call `CreateAsync` to create a large person group. You need to provide the ID of the large person group you want to create with a name and optional user data.

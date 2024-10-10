@@ -98,6 +98,21 @@ AzureKeyCredential credential = new AzureKeyCredential("<your apiKey>");
 var client = new FaceClient(endpoint, credential);
 ```
 
+### Specifiy the service version
+
+The Azure Face service has multiple versions available, and the client library supports the following versions:
+
+- v1.1-preivew.1
+- v1.2-preview.1
+
+The service version can be specified when creating the client:
+
+```C# Snippet:CreateFaceClientWithVersion
+Uri endpoint = new Uri("<your endpoint>");
+DefaultAzureCredential credential = new DefaultAzureCredential();
+var client = new FaceClient(endpoint, credential, new AzureAIVisionFaceClientOptions(AzureAIVisionFaceClientOptions.ServiceVersion.V1_2_Preview_1));
+```
+
 ## Key concepts
 
 ### FaceClient

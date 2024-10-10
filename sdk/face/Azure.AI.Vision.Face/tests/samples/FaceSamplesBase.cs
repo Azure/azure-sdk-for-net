@@ -77,5 +77,15 @@ namespace Azure.AI.Vision.Face.Samples
             #endregion
             return client;
         }
+
+        public FaceClient CreateClientWithSpecifyVersion()
+        {
+            #region Snippet:CreateFaceClientWithVersion
+            Uri endpoint = new Uri("<your endpoint>");
+            DefaultAzureCredential credential = new DefaultAzureCredential();
+            var client = new FaceClient(endpoint, credential, new AzureAIVisionFaceClientOptions(AzureAIVisionFaceClientOptions.ServiceVersion.V1_2_Preview_1));
+            #endregion
+            return client;
+        }
     }
 }
