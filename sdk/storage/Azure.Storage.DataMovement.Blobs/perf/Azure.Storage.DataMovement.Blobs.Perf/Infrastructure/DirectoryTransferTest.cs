@@ -18,6 +18,7 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
         protected BlobServiceClient BlobServiceClient { get; }
         protected LocalFilesStorageResourceProvider LocalFileResourceProvider { get; }
         protected BlobsStorageResourceProvider BlobResourceProvider { get; }
+        private TimeSpan _transferTimeout;
 
         public DirectoryTransferTest(TOptions options) : base(options)
         {
@@ -25,6 +26,7 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
             BlobServiceClient = new BlobServiceClient(PerfTestEnvironment.Instance.BlobStorageEndpoint, PerfTestEnvironment.Instance.Credential);
             LocalFileResourceProvider = new LocalFilesStorageResourceProvider();
             BlobResourceProvider = new BlobsStorageResourceProvider(PerfTestEnvironment.Instance.Credential);
+            _transferTimeout = TimeSpan.FromSeconds(5 + (Options.Count * Options.Size) / (1 * 1024 * 1024));
         }
 
         protected string CreateLocalDirectory(bool populate = false)
@@ -91,8 +93,24 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
             DataTransfer transfer = await transferManager.StartTransferAsync(
                 source, destination, options, cancellationToken);
 
-            await transfer.WaitForCompletionAsync(cancellationToken);
-            if (!transfer.TransferStatus.HasCompletedSuccessfully)
+            // The test runs for a specified duration and then cancels the token.
+            // When canceled, pause the currently running transfer so it can be cleaned up.
+            cancellationToken.Register(async () =>
+            {
+                // Don't pass cancellation token since its already cancelled.
+                await transfer.PauseAsync();
+            });
+
+            // The cancellation token we specify for WaitForCompletion should not
+            // be the one passed to the test as we don't want this code to exit until
+            // the transfer is complete or paused so it can be properly cleaned up.
+            // However, we pass a token with a generous time to prevent the transfer
+            // from hanging forever if there is an issue.
+            CancellationTokenSource ctx = new(_transferTimeout);
+            await transfer.WaitForCompletionAsync(ctx.Token);
+
+            if (!transfer.TransferStatus.HasCompletedSuccessfully &&
+                transfer.TransferStatus.State != DataTransferState.Paused)
             {
                 throw new Exception("A failure occurred during the transfer.");
             }

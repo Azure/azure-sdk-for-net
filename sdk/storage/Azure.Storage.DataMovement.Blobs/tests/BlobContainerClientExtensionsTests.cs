@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseBlobs;
 extern alias DMBlobs;
 using System;
 using System.IO;
@@ -8,7 +9,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
-using Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs;
 using DMBlobs::Azure.Storage.Blobs;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
