@@ -32,6 +32,7 @@ namespace Azure.Communication
                     ExchangeEntraToken,
                     ExchangeEntraTokenAsync,
                     false, null, null);
+            _accessTokenCache.GetValueAsync(default);
         }
 
         private HttpPipeline CreatePipelineFromOptions(EntraCommunicationTokenCredentialOptions options, HttpPipelineTransport pipelineTransport)
@@ -134,7 +135,7 @@ namespace Azure.Communication
             }
         }
 
-        private partial class AcsToken
+        private class AcsToken
         {
             public string token { get; set; }
             public DateTimeOffset expiresOn { get; set; }

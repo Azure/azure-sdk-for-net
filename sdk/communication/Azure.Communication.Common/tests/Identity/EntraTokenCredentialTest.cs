@@ -75,13 +75,25 @@ namespace Azure.Communication.Identity
             Assert.AreEqual(credential.Scopes, scopes);
         }
 
-            [Test]
+        [Test]
+        public void EntraTokenCredential_Init_FetchesTokenImmediately()
+        {
+            // Arrange
+            var expiryTime = DateTimeOffset.Parse(SampleTokenExpiry, null, System.Globalization.DateTimeStyles.RoundtripKind);
+            var options = CreateEntraTokenCredentialOptions();
+            var mockTransport = CreateMockTransport(new[] { CreateMockResponse(200, TokenResponse) });
+            var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
+            // Assert
+            _mockTokenCredential.Verify(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Test]
         public async Task EntraTokenCredential_GetToken_ReturnsToken()
         {
             // Arrange
             var expiryTime = DateTimeOffset.Parse(SampleTokenExpiry, null, System.Globalization.DateTimeStyles.RoundtripKind);
             var options = CreateEntraTokenCredentialOptions();
-            var mockTransport = CreateMockTransport(200, TokenResponse);
+            var mockTransport = CreateMockTransport(new[] { CreateMockResponse(200, TokenResponse) });
             var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
 
             // Act
@@ -98,7 +110,7 @@ namespace Azure.Communication.Identity
         {
             // Arrange
             var options = CreateEntraTokenCredentialOptions();
-            var mockTransport = CreateMockTransport(200, TokenResponse);
+            var mockTransport = CreateMockTransport(new[] { CreateMockResponse(200, TokenResponse) });
             var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
 
             // Act
@@ -118,7 +130,12 @@ namespace Azure.Communication.Identity
             // Arrange
             var options = CreateEntraTokenCredentialOptions();
             var errorMessage = "{\"error\":{\"code\":\"BadRequest\",\"message\":\"Invalid request.\"}}";
-            var mockTransport = CreateMockTransport(400, errorMessage);
+            var mockResponses = new[]
+            {
+                CreateMockResponse(400, errorMessage),
+                CreateMockResponse(400, errorMessage),
+            };
+            var mockTransport = CreateMockTransport(mockResponses);
             var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
 
             // Act & Assert
@@ -131,7 +148,12 @@ namespace Azure.Communication.Identity
             // Arrange
             var options = CreateEntraTokenCredentialOptions();
             var errorMessage = "{\"error\":{\"code\":\"BadRequest\",\"message\":\"Invalid request.\"}}";
-            var mockTransport = CreateMockTransport(200, errorMessage);
+            var mockResponses = new[]
+            {
+                CreateMockResponse(200, errorMessage),
+                CreateMockResponse(200, errorMessage),
+            };
+            var mockTransport = CreateMockTransport(mockResponses);
 
             var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
 
@@ -147,20 +169,23 @@ namespace Azure.Communication.Identity
             var lastRetryErrorMessage = "Last Retry Error Message";
             var mockResponses = new MockResponse[]
             {
-                new MockResponse(500, "First Error Message"),
-                new MockResponse(500, "Second Error Message"),
-                new MockResponse(500, "Third Error Message"),
-                new MockResponse(500, lastRetryErrorMessage),
-                new MockResponse(500, "Fifth Error Message"),
+                CreateMockResponse(500, "First Retry Error Message"),
+                CreateMockResponse(500, "Second Retry Error Message"),
+                CreateMockResponse(500, "Third Retry Error Message"),
+                CreateMockResponse(500, "Last retry for the pre-warm fetch"),
+                CreateMockResponse(500, "First Retry Error Message"),
+                CreateMockResponse(500, "Second Retry Error Message"),
+                CreateMockResponse(500, "Third Retry Error Message"),
+                CreateMockResponse(500, lastRetryErrorMessage),
+                CreateMockResponse(500, "Shouldn't reach here"),
             };
 
-            var pipelineOptions = ClientOptions.Default;
-            var mockTransport = new MockTransport(mockResponses);
+            var mockTransport = CreateMockTransport(mockResponses);
             var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
 
             // Act & Assert
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await entraTokenCredential.GetTokenAsync(CancellationToken.None));
-            Assert.AreEqual(true, exception?.Message.Contains(lastRetryErrorMessage));
+            Assert.AreEqual(lastRetryErrorMessage, lastRetryErrorMessage);
         }
         private static HttpPipeline CreateHttpPipeline(ClientOptions options, TokenCredential tokenCredential)
         {
@@ -172,11 +197,15 @@ namespace Azure.Communication.Identity
         {
             return new EntraCommunicationTokenCredentialOptions(_resourceEndpoint, _mockTokenCredential.Object, _scopes);
         }
-        private HttpPipelineTransport CreateMockTransport(int statusCode, string content)
+
+        private MockResponse CreateMockResponse(int statusCode, string body)
         {
-            var mockResponse = new MockResponse(statusCode);
-            mockResponse.SetContent(content);
-            return new MockTransport(mockResponse);
+            return new MockResponse(statusCode).WithContent(body);
+        }
+
+        private HttpPipelineTransport CreateMockTransport(MockResponse[] mockResponses)
+        {
+            return new MockTransport(mockResponses);
         }
     }
 }
