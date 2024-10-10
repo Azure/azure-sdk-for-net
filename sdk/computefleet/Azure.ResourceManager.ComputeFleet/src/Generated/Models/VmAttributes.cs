@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    //cspell:ignore Rdma
     /// <summary> VMAttributes that will be used to filter VMSizes which will be used to build Fleet. </summary>
     public partial class VmAttributes
     {
