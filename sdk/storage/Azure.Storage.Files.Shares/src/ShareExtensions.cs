@@ -291,6 +291,7 @@ namespace Azure.Storage.Files.Shares
                 },
                 NfsProperties = new FileNfsProperties()
                 {
+                    FileMode = response.Headers.FileMode.ToNfsFileMode(),
                     Owner = response.Headers.Owner,
                     Group = response.Headers.Group,
                     FileType = response.Headers.NfsFileType,
@@ -1004,7 +1005,6 @@ namespace Azure.Storage.Files.Shares
         internal static string ToOctalFileMode(this NfsFileMode nfsFileMode)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("0");
             stringBuilder.Append(nfsFileMode.ToOctalHigherOrderDigit());
             stringBuilder.Append(nfsFileMode.Owner.ToOctalRolePermissions());
             stringBuilder.Append(nfsFileMode.Group.ToOctalRolePermissions());
@@ -1054,6 +1054,69 @@ namespace Azure.Storage.Files.Shares
             }
 
             return result.ToString(CultureInfo.InvariantCulture);
+        }
+
+        internal static NfsFileMode ToNfsFileMode(this string modeString)
+        {
+            if (modeString == null)
+            {
+                return null;
+            }
+
+            NfsFileMode nfsFileMode = new NfsFileMode
+            {
+                Owner = modeString[1].ToRolePermissions(),
+                Group = modeString[2].ToRolePermissions(),
+                Others = modeString[3].ToRolePermissions(),
+            };
+
+            int value = (int)char.GetNumericValue(modeString[0]);
+
+            if ((value & 4) > 0)
+            {
+                nfsFileMode.EffectiveUserIdentity = true;
+            }
+
+            if ((value & 2) > 0)
+            {
+                nfsFileMode.EffectiveGroupIdentity = true;
+            }
+
+            if ((value & 1) >  1)
+            {
+                nfsFileMode.StickyBit = true;
+            }
+
+            return nfsFileMode;
+        }
+
+        internal static RolePermissions ToRolePermissions(this char c)
+        {
+            RolePermissions rolePermissions = RolePermissions.None;
+
+            int value = (int)char.GetNumericValue(c);
+
+            if (value < 0 || value > 7)
+            {
+                throw Errors.MustBeBetweenInclusive(nameof(c), 0, 7, value);
+            }
+
+            if ((value & 4) > 0)
+            {
+                rolePermissions |= RolePermissions.Read;
+            }
+
+            if ((value & 2) > 0)
+            {
+                rolePermissions |= RolePermissions.Write;
+            }
+
+            if ((value & 1) > 0)
+            {
+                rolePermissions |= RolePermissions.Execute;
+            }
+
+            return rolePermissions;
         }
     }
 }

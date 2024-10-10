@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
@@ -735,8 +736,31 @@ namespace Azure.Storage.Files.Shares.Tests
             string name = GetNewFileName();
             ShareFileClient file = InstrumentClient(directory.GetFileClient(name));
 
+            ShareFileCreateOptions options = new ShareFileCreateOptions
+            {
+                NfsProperties = new FileNfsProperties
+                {
+                    Owner = "1",
+                    Group = "1",
+                    FileType = NfsFileType.Regular,
+                    FileMode = new NfsFileMode
+                    {
+                        Owner = RolePermissions.Write | RolePermissions.Read | RolePermissions.Execute,
+                        Group = RolePermissions.Read,
+                        Others = RolePermissions.None,
+                        StickyBit = true,
+                        EffectiveGroupIdentity = true,
+                        EffectiveUserIdentity = true
+                    }
+                }
+            };
+
             // Act
-            Response<ShareFileInfo> response = await file.CreateAsync(maxSize: Constants.MB);
+            Response<ShareFileInfo> response = await file.CreateAsync(
+                maxSize: Constants.MB,
+                options: options);
+
+            // Assert
         }
 
         [RecordedTest]
