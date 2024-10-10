@@ -797,26 +797,26 @@ wordLevelTimings = new object[]
 new
 {
 word = "good",
-offset = 390000,
-duration = 2700000,
+offset = 390000L,
+duration = 2700000L,
 },
 new
 {
 word = "morning",
-offset = 4500000,
-duration = 920000,
+offset = 4500000L,
+duration = 920000L,
 },
 new
 {
 word = "john",
-offset = 590000,
-duration = 2700000,
+offset = 590000L,
+duration = 2700000L,
 },
 new
 {
 word = "doe",
-offset = 6300000,
-duration = 920000,
+offset = 6300000L,
+duration = 920000L,
 }
 },
 }
@@ -882,26 +882,26 @@ wordLevelTimings = new object[]
 new
 {
 word = "good",
-offset = 390000,
-duration = 2700000,
+offset = 390000L,
+duration = 2700000L,
 },
 new
 {
 word = "morning",
-offset = 4500000,
-duration = 920000,
+offset = 4500000L,
+duration = 920000L,
 },
 new
 {
 word = "john",
-offset = 590000,
-duration = 2700000,
+offset = 590000L,
+duration = 2700000L,
 },
 new
 {
 word = "doe",
-offset = 6300000,
-duration = 920000,
+offset = 6300000L,
+duration = 920000L,
 }
 },
 }
@@ -953,23 +953,23 @@ new TranscriptConversationItem(
 {
 WordLevelTimings = {new WordLevelTiming
 {
-Offset = 390000,
-Duration = 2700000,
+Offset = 390000L,
+Duration = 2700000L,
 Word = "good",
 }, new WordLevelTiming
 {
-Offset = 4500000,
-Duration = 920000,
+Offset = 4500000L,
+Duration = 920000L,
 Word = "morning",
 }, new WordLevelTiming
 {
-Offset = 590000,
-Duration = 2700000,
+Offset = 590000L,
+Duration = 2700000L,
 Word = "john",
 }, new WordLevelTiming
 {
-Offset = 6300000,
-Duration = 920000,
+Offset = 6300000L,
+Duration = 920000L,
 Word = "doe",
 }},
 }
@@ -1019,23 +1019,23 @@ new TranscriptConversationItem(
 {
 WordLevelTimings = {new WordLevelTiming
 {
-Offset = 390000,
-Duration = 2700000,
+Offset = 390000L,
+Duration = 2700000L,
 Word = "good",
 }, new WordLevelTiming
 {
-Offset = 4500000,
-Duration = 920000,
+Offset = 4500000L,
+Duration = 920000L,
 Word = "morning",
 }, new WordLevelTiming
 {
-Offset = 590000,
-Duration = 2700000,
+Offset = 590000L,
+Duration = 2700000L,
 Word = "john",
 }, new WordLevelTiming
 {
-Offset = 6300000,
-Duration = 920000,
+Offset = 6300000L,
+Duration = 920000L,
 Word = "doe",
 }},
 }
@@ -1099,26 +1099,26 @@ wordLevelTimings = new object[]
 new
 {
 word = "good",
-offset = 390000,
-duration = 2700000,
+offset = 390000L,
+duration = 2700000L,
 },
 new
 {
 word = "morning",
-offset = 4500000,
-duration = 920000,
+offset = 4500000L,
+duration = 920000L,
 },
 new
 {
 word = "john",
-offset = 590000,
-duration = 2700000,
+offset = 590000L,
+duration = 2700000L,
 },
 new
 {
 word = "doe",
-offset = 6300000,
-duration = 920000,
+offset = 6300000L,
+duration = 920000L,
 }
 },
 }
@@ -1185,26 +1185,26 @@ wordLevelTimings = new object[]
 new
 {
 word = "good",
-offset = 390000,
-duration = 2700000,
+offset = 390000L,
+duration = 2700000L,
 },
 new
 {
 word = "morning",
-offset = 4500000,
-duration = 920000,
+offset = 4500000L,
+duration = 920000L,
 },
 new
 {
 word = "john",
-offset = 590000,
-duration = 2700000,
+offset = 590000L,
+duration = 2700000L,
 },
 new
 {
 word = "doe",
-offset = 6300000,
-duration = 920000,
+offset = 6300000L,
+duration = 920000L,
 }
 },
 }
@@ -1257,23 +1257,23 @@ new TranscriptConversationItem(
 {
 WordLevelTimings = {new WordLevelTiming
 {
-Offset = 390000,
-Duration = 2700000,
+Offset = 390000L,
+Duration = 2700000L,
 Word = "good",
 }, new WordLevelTiming
 {
-Offset = 4500000,
-Duration = 920000,
+Offset = 4500000L,
+Duration = 920000L,
 Word = "morning",
 }, new WordLevelTiming
 {
-Offset = 590000,
-Duration = 2700000,
+Offset = 590000L,
+Duration = 2700000L,
 Word = "john",
 }, new WordLevelTiming
 {
-Offset = 6300000,
-Duration = 920000,
+Offset = 6300000L,
+Duration = 920000L,
 Word = "doe",
 }},
 }
@@ -1324,23 +1324,23 @@ new TranscriptConversationItem(
 {
 WordLevelTimings = {new WordLevelTiming
 {
-Offset = 390000,
-Duration = 2700000,
+Offset = 390000L,
+Duration = 2700000L,
 Word = "good",
 }, new WordLevelTiming
 {
-Offset = 4500000,
-Duration = 920000,
+Offset = 4500000L,
+Duration = 920000L,
 Word = "morning",
 }, new WordLevelTiming
 {
-Offset = 590000,
-Duration = 2700000,
+Offset = 590000L,
+Duration = 2700000L,
 Word = "john",
 }, new WordLevelTiming
 {
-Offset = 6300000,
-Duration = 920000,
+Offset = 6300000L,
+Duration = 920000L,
 Word = "doe",
 }},
 }
@@ -1405,26 +1405,26 @@ wordLevelTimings = new object[]
 new
 {
 word = "good",
-offset = 390000,
-duration = 2700000,
+offset = 390000L,
+duration = 2700000L,
 },
 new
 {
 word = "morning",
-offset = 4500000,
-duration = 920000,
+offset = 4500000L,
+duration = 920000L,
 },
 new
 {
 word = "john",
-offset = 590000,
-duration = 2700000,
+offset = 590000L,
+duration = 2700000L,
 },
 new
 {
 word = "doe",
-offset = 6300000,
-duration = 920000,
+offset = 6300000L,
+duration = 920000L,
 }
 },
 }
@@ -1490,26 +1490,26 @@ wordLevelTimings = new object[]
 new
 {
 word = "good",
-offset = 390000,
-duration = 2700000,
+offset = 390000L,
+duration = 2700000L,
 },
 new
 {
 word = "morning",
-offset = 4500000,
-duration = 920000,
+offset = 4500000L,
+duration = 920000L,
 },
 new
 {
 word = "john",
-offset = 590000,
-duration = 2700000,
+offset = 590000L,
+duration = 2700000L,
 },
 new
 {
 word = "doe",
-offset = 6300000,
-duration = 920000,
+offset = 6300000L,
+duration = 920000L,
 }
 },
 }
@@ -1561,23 +1561,23 @@ new TranscriptConversationItem(
 {
 WordLevelTimings = {new WordLevelTiming
 {
-Offset = 390000,
-Duration = 2700000,
+Offset = 390000L,
+Duration = 2700000L,
 Word = "good",
 }, new WordLevelTiming
 {
-Offset = 4500000,
-Duration = 920000,
+Offset = 4500000L,
+Duration = 920000L,
 Word = "morning",
 }, new WordLevelTiming
 {
-Offset = 590000,
-Duration = 2700000,
+Offset = 590000L,
+Duration = 2700000L,
 Word = "john",
 }, new WordLevelTiming
 {
-Offset = 6300000,
-Duration = 920000,
+Offset = 6300000L,
+Duration = 920000L,
 Word = "doe",
 }},
 }
@@ -1627,23 +1627,23 @@ new TranscriptConversationItem(
 {
 WordLevelTimings = {new WordLevelTiming
 {
-Offset = 390000,
-Duration = 2700000,
+Offset = 390000L,
+Duration = 2700000L,
 Word = "good",
 }, new WordLevelTiming
 {
-Offset = 4500000,
-Duration = 920000,
+Offset = 4500000L,
+Duration = 920000L,
 Word = "morning",
 }, new WordLevelTiming
 {
-Offset = 590000,
-Duration = 2700000,
+Offset = 590000L,
+Duration = 2700000L,
 Word = "john",
 }, new WordLevelTiming
 {
-Offset = 6300000,
-Duration = 920000,
+Offset = 6300000L,
+Duration = 920000L,
 Word = "doe",
 }},
 }
@@ -1703,8 +1703,8 @@ itn = "",
 maskedItn = "",
 conversationItemLevelTiming = new
 {
-offset = 0,
-duration = 20000000,
+offset = 0L,
+duration = 20000000L,
 },
 },
 new
@@ -1717,8 +1717,8 @@ itn = "",
 maskedItn = "",
 conversationItemLevelTiming = new
 {
-offset = 20000000,
-duration = 50000000,
+offset = 20000000L,
+duration = 50000000L,
 },
 },
 new
@@ -1731,8 +1731,8 @@ itn = "",
 maskedItn = "",
 conversationItemLevelTiming = new
 {
-offset = 50000000,
-duration = 60000000,
+offset = 50000000L,
+duration = 60000000L,
 },
 }
 },
@@ -1791,8 +1791,8 @@ itn = "",
 maskedItn = "",
 conversationItemLevelTiming = new
 {
-offset = 0,
-duration = 20000000,
+offset = 0L,
+duration = 20000000L,
 },
 },
 new
@@ -1805,8 +1805,8 @@ itn = "",
 maskedItn = "",
 conversationItemLevelTiming = new
 {
-offset = 20000000,
-duration = 50000000,
+offset = 20000000L,
+duration = 50000000L,
 },
 },
 new
@@ -1819,8 +1819,8 @@ itn = "",
 maskedItn = "",
 conversationItemLevelTiming = new
 {
-offset = 50000000,
-duration = 60000000,
+offset = 50000000L,
+duration = 60000000L,
 },
 }
 },
@@ -1869,8 +1869,8 @@ new TranscriptConversationItem(
 {
 ConversationItemLevelTiming = new ConversationItemLevelTiming
 {
-Offset = 0,
-Duration = 20000000,
+Offset = 0L,
+Duration = 20000000L,
 },
 },
 new TranscriptConversationItem(
@@ -1883,8 +1883,8 @@ new TranscriptConversationItem(
 {
 ConversationItemLevelTiming = new ConversationItemLevelTiming
 {
-Offset = 20000000,
-Duration = 50000000,
+Offset = 20000000L,
+Duration = 50000000L,
 },
 },
 new TranscriptConversationItem(
@@ -1897,8 +1897,8 @@ new TranscriptConversationItem(
 {
 ConversationItemLevelTiming = new ConversationItemLevelTiming
 {
-Offset = 50000000,
-Duration = 60000000,
+Offset = 50000000L,
+Duration = 60000000L,
 },
 }
 })
@@ -1938,8 +1938,8 @@ new TranscriptConversationItem(
 {
 ConversationItemLevelTiming = new ConversationItemLevelTiming
 {
-Offset = 0,
-Duration = 20000000,
+Offset = 0L,
+Duration = 20000000L,
 },
 },
 new TranscriptConversationItem(
@@ -1952,8 +1952,8 @@ new TranscriptConversationItem(
 {
 ConversationItemLevelTiming = new ConversationItemLevelTiming
 {
-Offset = 20000000,
-Duration = 50000000,
+Offset = 20000000L,
+Duration = 50000000L,
 },
 },
 new TranscriptConversationItem(
@@ -1966,8 +1966,8 @@ new TranscriptConversationItem(
 {
 ConversationItemLevelTiming = new ConversationItemLevelTiming
 {
-Offset = 50000000,
-Duration = 60000000,
+Offset = 50000000L,
+Duration = 60000000L,
 },
 }
 })
@@ -2245,8 +2245,8 @@ itn = "",
 maskedItn = "",
 conversationItemLevelTiming = new
 {
-offset = 0,
-duration = 20000000,
+offset = 0L,
+duration = 20000000L,
 },
 },
 new
@@ -2259,8 +2259,8 @@ itn = "",
 maskedItn = "",
 conversationItemLevelTiming = new
 {
-offset = 20000000,
-duration = 50000000,
+offset = 20000000L,
+duration = 50000000L,
 },
 },
 new
@@ -2273,8 +2273,8 @@ itn = "",
 maskedItn = "",
 conversationItemLevelTiming = new
 {
-offset = 50000000,
-duration = 60000000,
+offset = 50000000L,
+duration = 60000000L,
 },
 }
 },
@@ -2334,8 +2334,8 @@ itn = "",
 maskedItn = "",
 conversationItemLevelTiming = new
 {
-offset = 0,
-duration = 20000000,
+offset = 0L,
+duration = 20000000L,
 },
 },
 new
@@ -2348,8 +2348,8 @@ itn = "",
 maskedItn = "",
 conversationItemLevelTiming = new
 {
-offset = 20000000,
-duration = 50000000,
+offset = 20000000L,
+duration = 50000000L,
 },
 },
 new
@@ -2362,8 +2362,8 @@ itn = "",
 maskedItn = "",
 conversationItemLevelTiming = new
 {
-offset = 50000000,
-duration = 60000000,
+offset = 50000000L,
+duration = 60000000L,
 },
 }
 },
@@ -2413,8 +2413,8 @@ new TranscriptConversationItem(
 {
 ConversationItemLevelTiming = new ConversationItemLevelTiming
 {
-Offset = 0,
-Duration = 20000000,
+Offset = 0L,
+Duration = 20000000L,
 },
 },
 new TranscriptConversationItem(
@@ -2427,8 +2427,8 @@ new TranscriptConversationItem(
 {
 ConversationItemLevelTiming = new ConversationItemLevelTiming
 {
-Offset = 20000000,
-Duration = 50000000,
+Offset = 20000000L,
+Duration = 50000000L,
 },
 },
 new TranscriptConversationItem(
@@ -2441,8 +2441,8 @@ new TranscriptConversationItem(
 {
 ConversationItemLevelTiming = new ConversationItemLevelTiming
 {
-Offset = 50000000,
-Duration = 60000000,
+Offset = 50000000L,
+Duration = 60000000L,
 },
 }
 })
@@ -2482,8 +2482,8 @@ new TranscriptConversationItem(
 {
 ConversationItemLevelTiming = new ConversationItemLevelTiming
 {
-Offset = 0,
-Duration = 20000000,
+Offset = 0L,
+Duration = 20000000L,
 },
 },
 new TranscriptConversationItem(
@@ -2496,8 +2496,8 @@ new TranscriptConversationItem(
 {
 ConversationItemLevelTiming = new ConversationItemLevelTiming
 {
-Offset = 20000000,
-Duration = 50000000,
+Offset = 20000000L,
+Duration = 50000000L,
 },
 },
 new TranscriptConversationItem(
@@ -2510,8 +2510,8 @@ new TranscriptConversationItem(
 {
 ConversationItemLevelTiming = new ConversationItemLevelTiming
 {
-Offset = 50000000,
-Duration = 60000000,
+Offset = 50000000L,
+Duration = 60000000L,
 },
 }
 })
