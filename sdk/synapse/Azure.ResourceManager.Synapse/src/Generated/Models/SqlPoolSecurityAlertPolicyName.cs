@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SqlPoolSecurityAlertPolicyName left, SqlPoolSecurityAlertPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlPoolSecurityAlertPolicyName"/> values are not the same. </summary>
         public static bool operator !=(SqlPoolSecurityAlertPolicyName left, SqlPoolSecurityAlertPolicyName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlPoolSecurityAlertPolicyName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlPoolSecurityAlertPolicyName"/>. </summary>
         public static implicit operator SqlPoolSecurityAlertPolicyName(string value) => new SqlPoolSecurityAlertPolicyName(value);
 
         /// <inheritdoc />

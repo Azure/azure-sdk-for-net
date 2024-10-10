@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public static bool operator ==(SapDiscoveryProvisioningState left, SapDiscoveryProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapDiscoveryProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(SapDiscoveryProvisioningState left, SapDiscoveryProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapDiscoveryProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapDiscoveryProvisioningState"/>. </summary>
         public static implicit operator SapDiscoveryProvisioningState(string value) => new SapDiscoveryProvisioningState(value);
 
         /// <inheritdoc />

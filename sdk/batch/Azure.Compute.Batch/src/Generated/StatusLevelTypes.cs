@@ -36,7 +36,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(StatusLevelTypes left, StatusLevelTypes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StatusLevelTypes"/> values are not the same. </summary>
         public static bool operator !=(StatusLevelTypes left, StatusLevelTypes right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StatusLevelTypes"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StatusLevelTypes"/>. </summary>
         public static implicit operator StatusLevelTypes(string value) => new StatusLevelTypes(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static bool operator ==(ProvisionedClusterAzureHybridBenefit left, ProvisionedClusterAzureHybridBenefit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProvisionedClusterAzureHybridBenefit"/> values are not the same. </summary>
         public static bool operator !=(ProvisionedClusterAzureHybridBenefit left, ProvisionedClusterAzureHybridBenefit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProvisionedClusterAzureHybridBenefit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProvisionedClusterAzureHybridBenefit"/>. </summary>
         public static implicit operator ProvisionedClusterAzureHybridBenefit(string value) => new ProvisionedClusterAzureHybridBenefit(value);
 
         /// <inheritdoc />

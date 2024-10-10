@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         public static bool operator ==(PrivateDnsProvisioningState left, PrivateDnsProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateDnsProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(PrivateDnsProvisioningState left, PrivateDnsProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PrivateDnsProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateDnsProvisioningState"/>. </summary>
         public static implicit operator PrivateDnsProvisioningState(string value) => new PrivateDnsProvisioningState(value);
 
         /// <inheritdoc />

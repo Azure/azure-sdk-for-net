@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static bool operator ==(MarketplaceAutoRenew left, MarketplaceAutoRenew right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MarketplaceAutoRenew"/> values are not the same. </summary>
         public static bool operator !=(MarketplaceAutoRenew left, MarketplaceAutoRenew right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MarketplaceAutoRenew"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MarketplaceAutoRenew"/>. </summary>
         public static implicit operator MarketplaceAutoRenew(string value) => new MarketplaceAutoRenew(value);
 
         /// <inheritdoc />

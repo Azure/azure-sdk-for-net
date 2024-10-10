@@ -54,23 +54,26 @@ parameters:
     type: object
     default:
       Public:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         ServiceConnection: azure-sdk-tests
         SubscriptionConfigurationFilePaths:
           - eng/common/TestResources/sub-config/AzurePublicMsft.json
       Preview:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
         ServiceConnection: azure-sdk-tests-preview
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzurePreviewMsft.json
       Canary:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        Location: 'eastus2euap'
         ServiceConnection: azure-sdk-tests
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzurePublicMsft.json
+        Location: 'eastus2euap'
       UsGov:
-        SubscriptionConfiguration: $(sub-config-gov-test-resources)
         ServiceConnection: usgov_azure-sdk-tests
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzureUsGovMsft.json
       China:
-        SubscriptionConfiguration: $(sub-config-cn-test-resources)
         ServiceConnection: china_azure-sdk-tests
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzureChinaMsft.json
   - name: MatrixConfigs
     type: object
     default:
@@ -114,7 +117,7 @@ parameters:
     default: true
   - name: UseFederatedAuth
     type: boolean
-    default: false
+    default: true
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml

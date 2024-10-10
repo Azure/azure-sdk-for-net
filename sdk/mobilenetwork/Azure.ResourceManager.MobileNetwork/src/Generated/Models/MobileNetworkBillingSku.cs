@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator ==(MobileNetworkBillingSku left, MobileNetworkBillingSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkBillingSku"/> values are not the same. </summary>
         public static bool operator !=(MobileNetworkBillingSku left, MobileNetworkBillingSku right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MobileNetworkBillingSku"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MobileNetworkBillingSku"/>. </summary>
         public static implicit operator MobileNetworkBillingSku(string value) => new MobileNetworkBillingSku(value);
 
         /// <inheritdoc />
