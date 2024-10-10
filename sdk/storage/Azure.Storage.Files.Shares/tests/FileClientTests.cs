@@ -740,8 +740,8 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 NfsProperties = new FileNfsProperties
                 {
-                    Owner = "1",
-                    Group = "1",
+                    Owner = 0,
+                    Group = 0,
                     FileMode = new NfsFileMode
                     {
                         Owner = RolePermissions.Write | RolePermissions.Read | RolePermissions.Execute,

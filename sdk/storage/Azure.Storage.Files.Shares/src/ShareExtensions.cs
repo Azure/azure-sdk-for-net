@@ -274,7 +274,7 @@ namespace Azure.Storage.Files.Shares
                 return null;
             }
 
-            return new ShareFileInfo
+            ShareFileInfo shareFileInfo = new ShareFileInfo
             {
                 ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
@@ -292,11 +292,21 @@ namespace Azure.Storage.Files.Shares
                 NfsProperties = new FileNfsProperties()
                 {
                     FileMode = response.Headers.FileMode.ToNfsFileMode(),
-                    Owner = response.Headers.Owner,
-                    Group = response.Headers.Group,
                     FileType = response.Headers.NfsFileType,
                 }
             };
+
+            if (uint.TryParse(response.Headers.Owner, out uint owner))
+            {
+                shareFileInfo.NfsProperties.Owner = owner;
+            }
+
+            if (uint.TryParse(response.Headers.Group, out uint group))
+            {
+                shareFileInfo.NfsProperties.Group = group;
+            }
+
+            return shareFileInfo;
         }
 
         internal static ShareFileCopyInfo ToShareFileCopyInfo(this ResponseWithHeaders<FileStartCopyHeaders> response)

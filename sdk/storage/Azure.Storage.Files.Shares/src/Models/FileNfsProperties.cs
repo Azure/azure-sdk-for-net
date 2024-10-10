@@ -23,12 +23,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Optional. The owner user identifier (UID) to be set on the file or directory. The default value is 0 (root).
         /// </summary>
-        public string Owner { get; set; }
+        public uint? Owner { get; set; }
 
         /// <summary>
         /// Optional. The owner group identifier (GID) to be set on the file or directory. The default value is 0 (root group).
         /// </summary>
-        public string Group { get; set; }
+        public uint? Group { get; set; }
 
         /// <summary>
         /// Optional, only applicable to files. The type of the file. The default value is <see cref="NfsFileType.Regular"/>.
@@ -46,8 +46,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public static FileNfsProperties FileNfsProperties(
             NfsFileMode fileMode,
-            string owner,
-            string group,
+            uint? owner,
+            uint? group,
             NfsFileType fileType)
         {
             return new FileNfsProperties
