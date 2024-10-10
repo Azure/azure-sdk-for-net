@@ -45,13 +45,12 @@ public class ConfigurePipelineTests
 
         ServiceCollection services = new ServiceCollection();
         ConfigurationManager configuration = new ConfigurationManager();
+        services.AddSingleton<IConfiguration>(sp => configuration);
+
         configuration.AddInMemoryCollection(
             new List<KeyValuePair<string, string?>>() {
                 new("SimpleClient:ServiceUri", uriString)
             });
-
-        services.AddSingleton<IConfiguration>(sp => configuration);
-        services.AddLogging();
 
         IConfigurationSection commonSection = configuration.GetSection("ClientCommon");
         IConfigurationSection clientSection = configuration.GetSection("SimpleClient");
@@ -158,6 +157,62 @@ public class ConfigurePipelineTests
         CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
         CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
         CollectionAssert.DoesNotContain(mapsClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
+    }
+
+    [Test]
+    public void CanInjectSinglePolicyUsedByAllClients()
+    {
+        ServiceCollection services = new ServiceCollection();
+        ConfigurationManager configuration = new ConfigurationManager();
+        services.AddSingleton<IConfiguration>(sp => configuration);
+
+        configuration.AddInMemoryCollection(new List<KeyValuePair<string, string?>>()
+        {
+            // Common config block
+            new("ClientCommon:Logging:AllowedHeaderNames", null),
+            new("ClientCommon:Logging:AllowedHeaderNames:0", "x-common-config-allowed"),
+
+            // SimpleClient config block
+            new("SimpleClient:ServiceUri", "https://www.simple-service.com/"),
+            new("SimpleClient:Logging:AllowedHeaderNames", null),
+            new("SimpleClient:Logging:AllowedHeaderNames:0", "x-simple-config-allowed"),
+
+            // MapsClient config block
+            new("MapsClient:ServiceUri", "https://www.maps-service.com/"),
+            new("MapsClient:Logging:AllowedHeaderNames", null),
+            new("MapsClient:Logging:AllowedHeaderNames:0", "x-maps-config-allowed"),
+        });
+
+        // Add custom policy to the service collection
+        services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
+
+        // Add the two clients
+        services.AddSimpleClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("SimpleClient"));
+
+        services.AddMapsClient(
+            configuration.GetSection("ClientCommon"),
+            configuration.GetSection("MapsClient"));
+
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
+        SimpleClient simpleClient = serviceProvider.GetRequiredService<SimpleClient>();
+        MapsClient mapsClient = serviceProvider.GetRequiredService<MapsClient>();
+
+        CustomHttpLoggingPolicy? simpleClientPolicy = simpleClient.Options.HttpLoggingPolicy as CustomHttpLoggingPolicy;
+        CustomHttpLoggingPolicy? mapsClientPolicy = simpleClient.Options.HttpLoggingPolicy as CustomHttpLoggingPolicy;
+
+        Assert.IsNotNull(simpleClientPolicy);
+        Assert.IsNotNull(mapsClientPolicy);
+
+        CollectionAssert.Contains(simpleClientPolicy!.Options.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.DoesNotContain(simpleClientPolicy!.Options.AllowedHeaderNames, "x-simple-config-allowed");
+
+        CollectionAssert.Contains(mapsClientPolicy!.Options.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.DoesNotContain(mapsClientPolicy!.Options.AllowedHeaderNames, "x-maps-config-allowed");
+
+        // TODO: should we throw if individual client blocks try to configure the logging policy?
+        // What is desired behavior here?
     }
 
     [Test]
