@@ -810,10 +810,10 @@ namespace Azure.AI.Vision.Face
     public partial class LargeFaceListClient
     {
         protected LargeFaceListClient() { }
-        public LargeFaceListClient(string largeFaceListId, System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public LargeFaceListClient(string largeFaceListId, System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions options) { }
-        public LargeFaceListClient(string largeFaceListId, System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public LargeFaceListClient(string largeFaceListId, System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions options) { }
+        public LargeFaceListClient(System.Uri endpoint, Azure.AzureKeyCredential credential, string largeFaceListId) { }
+        public LargeFaceListClient(System.Uri endpoint, Azure.AzureKeyCredential credential, string largeFaceListId, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions options) { }
+        public LargeFaceListClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string largeFaceListId) { }
+        public LargeFaceListClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string largeFaceListId, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response AddFace(Azure.Core.RequestContent content, System.Collections.Generic.IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.Vision.Face.AddFaceResult> AddFace(System.BinaryData imageContent, System.Collections.Generic.IEnumerable<int> targetFace = null, Azure.AI.Vision.Face.FaceDetectionModel? detectionModel = default(Azure.AI.Vision.Face.FaceDetectionModel?), string userData = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -883,10 +883,10 @@ namespace Azure.AI.Vision.Face
     public partial class LargePersonGroupClient
     {
         protected LargePersonGroupClient() { }
-        public LargePersonGroupClient(string largePersonGroupId, System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public LargePersonGroupClient(string largePersonGroupId, System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions options) { }
-        public LargePersonGroupClient(string largePersonGroupId, System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public LargePersonGroupClient(string largePersonGroupId, System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions options) { }
+        public LargePersonGroupClient(System.Uri endpoint, Azure.AzureKeyCredential credential, string largePersonGroupId) { }
+        public LargePersonGroupClient(System.Uri endpoint, Azure.AzureKeyCredential credential, string largePersonGroupId, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions options) { }
+        public LargePersonGroupClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string largePersonGroupId) { }
+        public LargePersonGroupClient(System.Uri endpoint, Azure.Core.TokenCredential credential, string largePersonGroupId, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response AddFace(System.Guid personId, Azure.Core.RequestContent content, System.Collections.Generic.IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.Vision.Face.AddFaceResult> AddFace(System.Guid personId, System.BinaryData imageContent, System.Collections.Generic.IEnumerable<int> targetFace = null, Azure.AI.Vision.Face.FaceDetectionModel? detectionModel = default(Azure.AI.Vision.Face.FaceDetectionModel?), string userData = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
