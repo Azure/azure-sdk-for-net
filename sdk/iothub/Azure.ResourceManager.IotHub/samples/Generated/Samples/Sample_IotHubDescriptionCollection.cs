@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.IotHub.Samples
             string resourceName = "testHub";
             IotHubDescriptionData data = new IotHubDescriptionData(new AzureLocation("centraluseuap"), new IotHubSkuInfo(IotHubSku.S1)
             {
-                Capacity = 1,
+                Capacity = 1L,
             })
             {
                 ETag = new ETag("AAAAAAFD6M4="),
@@ -177,7 +177,7 @@ Action = IotHubNetworkRuleIPAction.Allow,
 {
 ["events"] = new EventHubCompatibleEndpointProperties()
 {
-RetentionTimeInDays = 1,
+RetentionTimeInDays = 1L,
 PartitionCount = 2,
 },
 },
@@ -295,7 +295,7 @@ MaxDeliveryCount = 10,
             string resourceName = "testHub";
             IotHubDescriptionData data = new IotHubDescriptionData(new AzureLocation("centraluseuap"), new IotHubSkuInfo(IotHubSku.S1)
             {
-                Capacity = 1,
+                Capacity = 1L,
             })
             {
                 ETag = new ETag("AAAAAAFD6M4="),
@@ -322,7 +322,7 @@ Action = IotHubNetworkRuleIPAction.Allow,
 {
 ["events"] = new EventHubCompatibleEndpointProperties()
 {
-RetentionTimeInDays = 1,
+RetentionTimeInDays = 1L,
 PartitionCount = 2,
 },
 },
