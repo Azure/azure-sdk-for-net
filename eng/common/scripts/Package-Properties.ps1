@@ -121,8 +121,6 @@ class PackageProps
 
     [void]InitializeCIArtifacts(){
         $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
-        # $ciFilePath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory "ci.yml")
-        # $ciMgmtYmlFilePath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory "ci.mgmt.yml")
 
         $ciFolderPath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory)
         $ciFiles = Get-ChildItem -Path $ciFolderPath -Filter "ci*.yml" -File
