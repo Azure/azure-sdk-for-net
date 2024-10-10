@@ -13,9 +13,10 @@ internal class LoggingPolicy : PipelinePolicy
 {
     public LoggingPolicy() {}
 
+    public List<string> AllowedHeaders { get; } = new List<string>(["Content-Type", "Accept", "User-Agent", "x-ms-client-request-id"]);
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        Log(message);
+        LogRequest(message);
         if (currentIndex < pipeline.Count - 1)
         {
             pipeline[currentIndex + 1].Process(message, pipeline, currentIndex + 1);
@@ -24,41 +25,66 @@ internal class LoggingPolicy : PipelinePolicy
 
     public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        Log(message);
+        LogRequest(message);
         if (currentIndex < pipeline.Count - 1)
         {
             await pipeline[currentIndex + 1].ProcessAsync(message, pipeline, currentIndex + 1).ConfigureAwait(false);
         }
+        LogResponse(message);
     }
 
-    protected virtual void Log(PipelineMessage message)
+    protected virtual void LogRequest(PipelineMessage message)
     {
-        string logMessage = ComposeLog(message);
+        string logMessage = FormatRequestLog(message);
+        Console.WriteLine(logMessage);
+    }
+    protected virtual void LogResponse(PipelineMessage message)
+    {
+        string logMessage = FormatResponseLog(message);
         Console.WriteLine(logMessage);
     }
 
-    protected string ComposeLog(PipelineMessage message) {
+    protected virtual string FormatRequestLog(PipelineMessage message) {
         StringBuilder logMessage = new StringBuilder();
-        ComposeRequestLine(message, logMessage);
-        ComposeHeaders(message, logMessage);
-        ComposeContent(message, logMessage);
+        FormatRequestLine(message, logMessage);
+        FormatHeaders(message, logMessage);
+        FormatContent(message, logMessage);
         return logMessage.ToString();
     }
-    protected virtual void ComposeRequestLine(PipelineMessage message, StringBuilder logMessage)
+    protected virtual string FormatResponseLog(PipelineMessage message)
     {
-        logMessage.AppendLine(message.Request.Uri!.AbsoluteUri);
+        StringBuilder logMessage = new StringBuilder();
+        PipelineResponse response = message.Response!;
+        logMessage.Append(response.Status.ToString());
+        logMessage.Append(' ');
+        logMessage.AppendLine(response.ReasonPhrase);
+        FormatHeaders(message, logMessage);
+        FormatContent(message, logMessage);
+        return logMessage.ToString();
     }
-    protected virtual void ComposeHeaders(PipelineMessage message, StringBuilder logMessage)
+
+    protected virtual void FormatRequestLine(PipelineMessage message, StringBuilder logMessage)
+    {
+        PipelineRequest request = message.Request;
+        logMessage.Append(request.Method);
+        logMessage.Append(' ');
+        logMessage.AppendLine(request.Uri!.AbsoluteUri);
+    }
+    protected virtual void FormatHeaders(PipelineMessage message, StringBuilder logMessage)
     {
         foreach (var header in message.Request.Headers)
         {
-            if (header.Key == "Authorization" || header.Key == "api-key")
-                Console.WriteLine($"{header.Key} : [REDACTED ...{header.Value.Length} characters]");
+            if (AllowedHeaders.Contains(header.Key))
+            {
+                logMessage.AppendLine($"{header.Key} : {header.Value}");
+            }
             else
-                Console.WriteLine($"{header.Key} : {header.Value}");
+            {
+                logMessage.AppendLine($"{header.Key} : [REDACTED ...{header.Value.Length} characters]");
+            }
         }
     }
-    protected virtual void ComposeContent(PipelineMessage message, StringBuilder logMessage)
+    protected virtual void FormatContent(PipelineMessage message, StringBuilder logMessage)
     {
         var stream = new MemoryStream();
         message.Request.Content!.WriteTo(stream);

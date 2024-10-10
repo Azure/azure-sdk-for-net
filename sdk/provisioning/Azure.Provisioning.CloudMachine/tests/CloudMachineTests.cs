@@ -8,6 +8,7 @@ using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CloudMachine.KeyVault;
 using Azure.Provisioning.CloudMachine.OpenAI;
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
 using OpenAI.Chat;
 
@@ -18,15 +19,37 @@ public class CloudMachineTests
     [Theory]
     [TestCase([new string[] { "--init" }])]
     [TestCase([new string[] { "" }])]
-    public void Configure(string[] args)
+    public void Provisioning(string[] args)
     {
         if (CloudMachineInfrastructure.Configure(args, (cm) => {
             //cm.AddFeature(new KeyVaultFeature());
-            cm.AddFeature(new OpenAIFeature("gpt-35-turbo", "0125"));
+            //cm.AddFeature(new OpenAIFeature("gpt-35-turbo", "0125"));
         })) return;
 
         CloudMachineClient cm = new();
         Console.WriteLine(cm.Id);
+    }
+
+    //[Ignore("no recordings yet")]
+    [Theory]
+    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "" }])]
+    public void Storage(string[] args)
+    {
+        //if (CloudMachineInfrastructure.Configure(args, (cm) =>
+        //{
+        //    cm.AddFeature(new KeyVaultFeature());
+        //}))return;
+
+        CloudMachineClient cm = new();
+
+        var uploaded = cm.UploadBlob(new
+        {
+            Foo = 5,
+            Bar = true
+        });
+        BinaryData downloaded = cm.DownloadBlob(uploaded);
+        Console.WriteLine(downloaded.ToString());
     }
 
     //[Ignore("no recordings yet")]
@@ -63,28 +86,6 @@ public class CloudMachineTests
         CloudMachineClient cm = new();
         SecretClient secrets = cm.GetKeyVaultSecretClient();
         secrets.SetSecret("testsecret", "don't tell anybody");
-    }
-
-    //[Ignore("no recordings yet")]
-    [Theory]
-    [TestCase([new string[] { "--init" }])]
-    [TestCase([new string[] { "" }])]
-    public void Storage(string[] args)
-    {
-        if (CloudMachineInfrastructure.Configure(args)) return;
-
-        CloudMachineClient cm = new();
-
-        cm.WhenBlobUploaded((string content) => {
-            Console.WriteLine(content);
-        });
-
-        var uploaded = cm.UploadBlob(new
-        {
-            Foo = 5,
-            Bar = true
-        });
-        BinaryData downloaded = cm.DownloadBlob(uploaded);
     }
 
     [Ignore("no recordings yet")]

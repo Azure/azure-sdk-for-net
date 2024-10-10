@@ -58,16 +58,16 @@ public static class OpenAIFeatureExtensions
         {
             AzureOpenAIClient aoia = cm.ClientCache.Get("aoai", () =>
             {
-                Uri endpoint = new("https://eastus.api.cognitive.microsoft.com/");
-                var op = new AzureOpenAIClientOptions();
-                op.AddPolicy(new LoggingPolicy(), PipelinePosition.BeforeTransport);
+                Uri endpoint = new("https://mochiai.openai.azure.com/");
+                var clientOptions = new AzureOpenAIClientOptions();
+                clientOptions.AddPolicy(new LoggingPolicy(), PipelinePosition.BeforeTransport);
                 string key = Environment.GetEnvironmentVariable("openai_cm_key");
                 //AzureOpenAIClient aoai = new(endpoint, new System.ClientModel.ApiKeyCredential(key), op);
-                AzureOpenAIClient aoai = new(endpoint, cm.Credential, op);
+                AzureOpenAIClient aoai = new(endpoint, cm.Credential, clientOptions);
                 return aoai;
             });
 
-            ChatClient chat = aoia.GetChatClient(cm.Id);
+            ChatClient chat = aoia.GetChatClient("gpt-4");
             return chat;
         });
 

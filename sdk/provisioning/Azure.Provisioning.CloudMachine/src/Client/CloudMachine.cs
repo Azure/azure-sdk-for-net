@@ -16,8 +16,7 @@ public partial class CloudMachineClient
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TokenCredential Credential { get; } = new ChainedTokenCredential(
-        new AzureCliCredential(),
-        new AzureDeveloperCliCredential()
+        new AzureCliCredential()
     );
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "<Pending>")]
