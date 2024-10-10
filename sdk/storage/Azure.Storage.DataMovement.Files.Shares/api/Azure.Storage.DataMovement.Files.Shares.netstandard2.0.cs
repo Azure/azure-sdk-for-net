@@ -19,12 +19,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Files.Shares.ShareDirectoryClient client, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
         public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Files.Shares.ShareFileClient client, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
         protected override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public Azure.Storage.DataMovement.StorageResource FromDirectory(string directoryUri, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
-        public Azure.Storage.DataMovement.StorageResource FromFile(string fileUri, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
+        public Azure.Storage.DataMovement.StorageResource FromDirectory(System.Uri directoryUri, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
+        public Azure.Storage.DataMovement.StorageResource FromFile(System.Uri fileUri, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
         protected override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromSourceAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public delegate Azure.AzureSasCredential GetAzureSasCredential(string uri, bool readOnly);
-        public delegate Azure.Storage.StorageSharedKeyCredential GetStorageSharedKeyCredential(string uri, bool readOnly);
-        public delegate Azure.Core.TokenCredential GetTokenCredential(string uri, bool readOnly);
+        public delegate Azure.AzureSasCredential GetAzureSasCredential(System.Uri uri, bool readOnly);
+        public delegate Azure.Storage.StorageSharedKeyCredential GetStorageSharedKeyCredential(System.Uri uri, bool readOnly);
+        public delegate Azure.Core.TokenCredential GetTokenCredential(System.Uri uri, bool readOnly);
     }
     public partial class ShareFileStorageResourceOptions
     {

@@ -69,10 +69,15 @@ public partial class MongoDBCollectionThroughputSetting : Resource
     /// <summary>
     /// Creates a new MongoDBCollectionThroughputSetting.
     /// </summary>
-    /// <param name="resourceName">Name of the MongoDBCollectionThroughputSetting.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the MongoDBCollectionThroughputSetting
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the MongoDBCollectionThroughputSetting.</param>
-    public MongoDBCollectionThroughputSetting(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections/throughputSettings", resourceVersion ?? "2024-08-15")
+    public MongoDBCollectionThroughputSetting(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections/throughputSettings", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -223,9 +228,14 @@ public partial class MongoDBCollectionThroughputSetting : Resource
     /// <summary>
     /// Creates a reference to an existing MongoDBCollectionThroughputSetting.
     /// </summary>
-    /// <param name="resourceName">Name of the MongoDBCollectionThroughputSetting.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the MongoDBCollectionThroughputSetting
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the MongoDBCollectionThroughputSetting.</param>
     /// <returns>The existing MongoDBCollectionThroughputSetting resource.</returns>
-    public static MongoDBCollectionThroughputSetting FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static MongoDBCollectionThroughputSetting FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
 
         void IJsonModel<CdiConfigProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CdiConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CdiConfigProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("engineName"u8);
             writer.WriteStringValue(EngineName);
             writer.WritePropertyName("engineVersion"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CdiConfigProperties IJsonModel<CdiConfigProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

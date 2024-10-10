@@ -92,10 +92,15 @@ public partial class ContainerRegistryTaskRun : Resource
     /// <summary>
     /// Creates a new ContainerRegistryTaskRun.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryTaskRun.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerRegistryTaskRun resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryTaskRun.</param>
-    public ContainerRegistryTaskRun(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/taskRuns", resourceVersion ?? "2019-06-01-preview")
+    public ContainerRegistryTaskRun(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.ContainerRegistry/registries/taskRuns", resourceVersion ?? "2019-06-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _forceUpdateTag = BicepValue<string>.DefineProperty(this, "ForceUpdateTag", ["properties", "forceUpdateTag"]);
@@ -123,9 +128,14 @@ public partial class ContainerRegistryTaskRun : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerRegistryTaskRun.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryTaskRun.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerRegistryTaskRun resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryTaskRun.</param>
     /// <returns>The existing ContainerRegistryTaskRun resource.</returns>
-    public static ContainerRegistryTaskRun FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerRegistryTaskRun FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

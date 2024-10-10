@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Synapse.Samples
                     Tier = "",
                     Name = "",
                 },
-                MaxSizeBytes = 0,
+                MaxSizeBytes = 0L,
                 Collation = "",
                 RestorePointInTime = DateTimeOffset.Parse("1970-01-01T00:00:00.000Z"),
             };

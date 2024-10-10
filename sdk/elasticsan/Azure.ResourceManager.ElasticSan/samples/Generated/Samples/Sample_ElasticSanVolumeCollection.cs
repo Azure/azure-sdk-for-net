@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // invoke the operation
             string volumeName = "volumename";
-            ElasticSanVolumeData data = new ElasticSanVolumeData(9)
+            ElasticSanVolumeData data = new ElasticSanVolumeData(9L)
             {
                 CreationData = new ElasticSanVolumeDataSourceInfo()
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // invoke the operation
             string volumeName = "volumename";
-            ElasticSanVolumeData data = new ElasticSanVolumeData(9);
+            ElasticSanVolumeData data = new ElasticSanVolumeData(9L);
             ArmOperation<ElasticSanVolumeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, data);
             ElasticSanVolumeResource result = lro.Value;
 

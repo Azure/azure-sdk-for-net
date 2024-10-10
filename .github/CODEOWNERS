@@ -562,10 +562,10 @@
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                                     @heaths @schaabs @JonathanCrd @jsquire @christothes
+/sdk/keyvault/                                                     @schaabs @JonathanCrd @jsquire @christothes
 
 # ServiceLabel: %KeyVault
-# AzureSdkOwners:                                                  @heaths
+# AzureSdkOwners:                                                  @JonathanCrd
 # ServiceOwners:                                                   @RandalliLama @jlichwa
 
 # ServiceLabel: %Kubernetes Configuration
@@ -605,9 +605,9 @@
 # ServiceOwners:                                                   @Lighthouse-Azure
 
 # PRLabel: %Maps
-/sdk/maps/                                                         @dubiety @jecmenicanikola
+/sdk/maps/                                                         @dubiety
 # ServiceLabel: %Maps
-# ServiceOwners:                                                   @dubiety @jecmenicanikola
+# ServiceOwners:                                                   @dubiety
 
 # ServiceLabel: %MariaDB
 # ServiceOwners:                                                   @ajlam @ambhatna @kummanish
@@ -628,7 +628,7 @@
 # ServiceOwners:                                                   @kpiteira
 
 # PRLabel: %Monitor
-/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/*                                                     @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
 
 # PRLabel: %Monitor
 /sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
@@ -756,10 +756,10 @@
 # ServiceOwners:                                                   @rhurey @dargilco
 
 # PRLabel: %Microsoft Playwright Testing
-/sdk/playwrighttesting/                                            @shreyaanand @mjmadhu
+/sdk/playwrighttesting/                                            @Sid200026 @puagarwa @ShreyaAnand
 
 # ServiceLabel: %Microsoft Playwright Testing
-# ServiceOwners:                                                   @shreyaanand @mjmadhu
+# ServiceOwners:                                                   @Sid200026 @puagarwa @ShreyaAnand
 
 # ServiceLabel: %Policy
 # ServiceOwners:                                                   @aperezcloud @kenieva

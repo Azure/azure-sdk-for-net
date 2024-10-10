@@ -90,10 +90,15 @@ public partial class ImmutabilityPolicy : Resource
     /// <summary>
     /// Creates a new ImmutabilityPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the ImmutabilityPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ImmutabilityPolicy resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ImmutabilityPolicy.</param>
-    public ImmutabilityPolicy(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies", resourceVersion ?? "2024-01-01")
+    public ImmutabilityPolicy(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _allowProtectedAppendWrites = BicepValue<bool>.DefineProperty(this, "AllowProtectedAppendWrites", ["properties", "allowProtectedAppendWrites"]);
@@ -225,9 +230,14 @@ public partial class ImmutabilityPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing ImmutabilityPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the ImmutabilityPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ImmutabilityPolicy resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ImmutabilityPolicy.</param>
     /// <returns>The existing ImmutabilityPolicy resource.</returns>
-    public static ImmutabilityPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ImmutabilityPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

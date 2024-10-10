@@ -224,8 +224,8 @@ namespace Azure.ResourceManager.StorageCache.Samples
                 {
                     Mode = AmlFileSystemSquashMode.All,
                     NoSquashNidLists = "10.0.0.[5-6]@tcp;10.0.1.2@tcp",
-                    SquashUID = 99,
-                    SquashGID = 99,
+                    SquashUID = 99L,
+                    SquashGID = 99L,
                 },
                 Tags =
 {

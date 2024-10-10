@@ -8,9 +8,10 @@ namespace Azure.CloudMachine;
 
 public static class MessagingServices
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0107:DO NOT call public asynchronous method in synchronous scope.", Justification = "<Pending>")]
     public static void Send(this CloudMachineClient cm, object serializable)
     {
-        ServiceBusSender sender = cm.ClientCache.Get("cm_default_topic", () =>
+        ServiceBusSender sender = cm.ClientCache.Get("cm_default_topic_sender", () =>
         {
             ServiceBusClient sb = cm.ClientCache.Get(cm.Properties.ServiceBusNamespace, () =>
             {
@@ -18,12 +19,14 @@ public static class MessagingServices
                 return sb;
             });
 
-            ServiceBusSender sender = sb.CreateSender("cm_default_topic");
+            ServiceBusSender sender = sb.CreateSender("cm_default_topic_sender");
             return sender;
         });
 
         BinaryData serialized = BinaryData.FromObjectAsJson(serializable);
         ServiceBusMessage message = new(serialized);
-        sender.SendMessageAsync(message);
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+        sender.SendMessageAsync(message).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
     }
 }

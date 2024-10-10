@@ -48,7 +48,7 @@ namespace Azure.Maps.Weather.Models
         public static bool operator ==(BasinId left, BasinId right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BasinId"/> values are not the same. </summary>
         public static bool operator !=(BasinId left, BasinId right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BasinId"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BasinId"/>. </summary>
         public static implicit operator BasinId(string value) => new BasinId(value);
 
         /// <inheritdoc />
