@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static bool operator ==(ScheduledActionOptimizationPreference left, ScheduledActionOptimizationPreference right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduledActionOptimizationPreference"/> values are not the same. </summary>
         public static bool operator !=(ScheduledActionOptimizationPreference left, ScheduledActionOptimizationPreference right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScheduledActionOptimizationPreference"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionOptimizationPreference"/>. </summary>
         public static implicit operator ScheduledActionOptimizationPreference(string value) => new ScheduledActionOptimizationPreference(value);
 
         /// <inheritdoc />

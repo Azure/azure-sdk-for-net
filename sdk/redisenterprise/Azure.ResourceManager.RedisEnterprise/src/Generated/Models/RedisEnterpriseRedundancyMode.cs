@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static bool operator ==(RedisEnterpriseRedundancyMode left, RedisEnterpriseRedundancyMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseRedundancyMode"/> values are not the same. </summary>
         public static bool operator !=(RedisEnterpriseRedundancyMode left, RedisEnterpriseRedundancyMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RedisEnterpriseRedundancyMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseRedundancyMode"/>. </summary>
         public static implicit operator RedisEnterpriseRedundancyMode(string value) => new RedisEnterpriseRedundancyMode(value);
 
         /// <inheritdoc />

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         void IJsonModel<GetOperationStatusContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GetOperationStatusContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("operationIds"u8);
             writer.WriteStartArray();
             foreach (var item in OperationIds)
@@ -34,7 +42,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("correlationid"u8);
-            writer.WriteStringValue(Correlationid);
+            writer.WriteStringValue(CorrelationId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -50,7 +58,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         GetOperationStatusContent IJsonModel<GetOperationStatusContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

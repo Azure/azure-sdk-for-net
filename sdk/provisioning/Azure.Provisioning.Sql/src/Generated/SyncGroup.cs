@@ -125,11 +125,15 @@ public partial class SyncGroup : Resource
     /// <summary>
     /// Creates a new SyncGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the SyncGroup.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SyncGroup resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SyncGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SyncGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/syncGroups", resourceVersion ?? "2021-11-01", context)
+    public SyncGroup(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/databases/syncGroups", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _conflictLoggingRetentionInDays = BicepValue<int>.DefineProperty(this, "ConflictLoggingRetentionInDays", ["properties", "conflictLoggingRetentionInDays"]);
@@ -169,11 +173,16 @@ public partial class SyncGroup : Resource
     /// <summary>
     /// Creates a reference to an existing SyncGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the SyncGroup.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SyncGroup resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SyncGroup.</param>
     /// <returns>The existing SyncGroup resource.</returns>
-    public static SyncGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SyncGroup FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this SyncGroup resource.

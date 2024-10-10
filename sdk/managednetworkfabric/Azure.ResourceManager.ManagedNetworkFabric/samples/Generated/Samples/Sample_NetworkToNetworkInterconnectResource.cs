@@ -82,7 +82,7 @@ new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/reso
                 },
                 OptionBLayer3Configuration = new OptionBLayer3Configuration()
                 {
-                    PeerAsn = 2345,
+                    PeerAsn = 2345L,
                     VlanId = 1235,
                     PrimaryIPv4Prefix = "20.0.0.12/29",
                     PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",

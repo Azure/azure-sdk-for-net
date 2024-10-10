@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(SapHanaPartitionOption left, SapHanaPartitionOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapHanaPartitionOption"/> values are not the same. </summary>
         public static bool operator !=(SapHanaPartitionOption left, SapHanaPartitionOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapHanaPartitionOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapHanaPartitionOption"/>. </summary>
         public static implicit operator SapHanaPartitionOption(string value) => new SapHanaPartitionOption(value);
 
         /// <inheritdoc />

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static bool operator ==(CloudHsmClusterProvisioningState left, CloudHsmClusterProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CloudHsmClusterProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(CloudHsmClusterProvisioningState left, CloudHsmClusterProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CloudHsmClusterProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudHsmClusterProvisioningState"/>. </summary>
         public static implicit operator CloudHsmClusterProvisioningState(string value) => new CloudHsmClusterProvisioningState(value);
 
         /// <inheritdoc />

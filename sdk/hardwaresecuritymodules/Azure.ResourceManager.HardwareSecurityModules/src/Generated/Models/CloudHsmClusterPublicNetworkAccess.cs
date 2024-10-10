@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static bool operator ==(CloudHsmClusterPublicNetworkAccess left, CloudHsmClusterPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CloudHsmClusterPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(CloudHsmClusterPublicNetworkAccess left, CloudHsmClusterPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CloudHsmClusterPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudHsmClusterPublicNetworkAccess"/>. </summary>
         public static implicit operator CloudHsmClusterPublicNetworkAccess(string value) => new CloudHsmClusterPublicNetworkAccess(value);
 
         /// <inheritdoc />

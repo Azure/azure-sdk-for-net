@@ -3,15 +3,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
 [CodeGenModel("PineconeChatDataSource")]
-public partial class PineconeChatDataSource : AzureChatDataSource
+[Experimental("AOAI001")]
+#if AZURE_OPENAI_GA
+[EditorBrowsable(EditorBrowsableState.Never)]
+#endif
+public partial class PineconeChatDataSource : ChatDataSource
 {
     [CodeGenMember("Parameters")]
     internal InternalPineconeChatDataSourceParameters InternalParameters { get; }
+
+#if !AZURE_OPENAI_GA
 
     /// <inheritdoc cref="InternalPineconeChatDataSourceParameters.Environment"/>
     required public string Environment
@@ -77,23 +84,31 @@ public partial class PineconeChatDataSource : AzureChatDataSource
     }
 
     /// <inheritdoc cref="InternalPineconeChatDataSourceParameters.AllowPartialResult"/>
-    public bool? AllowPartialResult
+    public bool? AllowPartialResults
     {
         get => InternalParameters.AllowPartialResult;
         set => InternalParameters.AllowPartialResult = value;
     }
 
-    /// <inheritdoc cref="InternalPineconeChatDataSourceParameters.OutputContextFlags"/>
-    public DataSourceOutputContexts? OutputContextFlags
+    /// <inheritdoc cref="InternalPineconeChatDataSourceParameters.OutputContexts"/>
+    public DataSourceOutputContexts? OutputContexts
     {
-        get => InternalParameters.OutputContextFlags;
-        set => InternalParameters.OutputContextFlags = value;
+        get => InternalParameters.OutputContexts;
+        set => InternalParameters.OutputContexts = value;
     }
 
     public PineconeChatDataSource() : base(type: "pinecone", serializedAdditionalRawData: null)
     {
         InternalParameters = new();
     }
+
+#else
+    public PineconeChatDataSource()
+    {
+        throw new InvalidOperationException($"Pinecone data sources are not supported in this GA version. Please use a preview library and service version for this integration.");
+    }
+
+#endif
 
     // CUSTOM: Made internal.
     /// <summary> Initializes a new instance of <see cref="PineconeChatDataSource"/>. </summary>

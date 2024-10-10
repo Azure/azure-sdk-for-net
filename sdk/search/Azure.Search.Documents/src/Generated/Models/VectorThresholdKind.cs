@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Models
         public static bool operator ==(VectorThresholdKind left, VectorThresholdKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VectorThresholdKind"/> values are not the same. </summary>
         public static bool operator !=(VectorThresholdKind left, VectorThresholdKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VectorThresholdKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VectorThresholdKind"/>. </summary>
         public static implicit operator VectorThresholdKind(string value) => new VectorThresholdKind(value);
 
         /// <inheritdoc />

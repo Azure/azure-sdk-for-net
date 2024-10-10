@@ -30,7 +30,7 @@ namespace Azure.Health.Deidentification
         public static bool operator ==(DocumentDataType left, DocumentDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentDataType"/> values are not the same. </summary>
         public static bool operator !=(DocumentDataType left, DocumentDataType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DocumentDataType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentDataType"/>. </summary>
         public static implicit operator DocumentDataType(string value) => new DocumentDataType(value);
 
         /// <inheritdoc />
