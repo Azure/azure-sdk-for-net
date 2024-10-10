@@ -73,8 +73,7 @@ function CompatibleConvertFrom-Yaml {
   )
 
   if (!($Content)) {
-    Write-Error "Content is required."
-    exit 1
+    throw "Content to parse is a required input."
   }
 
   # Initialize any variables or checks that need to be done once
