@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 Annotation = "annotation",
                 IPPrefixRules =
 {
-new IPPrefixRule(CommunityActionType.Permit,4155123341,"10.10.10.10/30")
+new IPPrefixRule(CommunityActionType.Permit,4155123341L,"10.10.10.10/30")
 {
 Condition = IPPrefixRuleCondition.GreaterThanOrEqualTo,
 SubnetMaskLength = "10",

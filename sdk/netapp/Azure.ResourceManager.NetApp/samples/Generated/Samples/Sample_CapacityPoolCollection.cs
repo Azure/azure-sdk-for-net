@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation
             string poolName = "pool1";
-            CapacityPoolData data = new CapacityPoolData(new AzureLocation("eastus"), 4398046511104, NetAppFileServiceLevel.Premium)
+            CapacityPoolData data = new CapacityPoolData(new AzureLocation("eastus"), 4398046511104L, NetAppFileServiceLevel.Premium)
             {
                 QosType = CapacityPoolQosType.Auto,
             };
