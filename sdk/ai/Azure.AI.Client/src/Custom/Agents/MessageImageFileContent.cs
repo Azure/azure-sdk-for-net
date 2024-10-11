@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.Client.Models;
 
 /*
@@ -18,4 +20,15 @@ public partial class MessageImageFileContent
     public string FileId => InternalDetails.InternalDetails;
 
     internal InternalMessageImageFileDetails InternalDetails { get; }
+
+    /// <summary> Initializes a new instance of <see cref="MessageImageFileContent"/>. </summary>
+    /// <param name="internalDetails"> The image file for this thread message content item. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="internalDetails"/> is null. </exception>
+    internal MessageImageFileContent(InternalMessageImageFileDetails internalDetails)
+    {
+        Argument.AssertNotNull(internalDetails, nameof(internalDetails));
+
+        Type = "image_file";
+        InternalDetails = internalDetails;
+    }
 }

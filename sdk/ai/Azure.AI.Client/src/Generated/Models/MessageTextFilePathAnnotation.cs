@@ -14,19 +14,6 @@ namespace Azure.AI.Client.Models
     public partial class MessageTextFilePathAnnotation : MessageTextAnnotation
     {
         /// <summary> Initializes a new instance of <see cref="MessageTextFilePathAnnotation"/>. </summary>
-        /// <param name="text"> The textual content associated with this text annotation item. </param>
-        /// <param name="internalDetails"> A URL for the file that's generated when the agent used the code_interpreter tool to generate a file. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="internalDetails"/> is null. </exception>
-        public MessageTextFilePathAnnotation(string text, InternalMessageTextFilePathDetails internalDetails) : base(text)
-        {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(internalDetails, nameof(internalDetails));
-
-            Type = "file_path";
-            InternalDetails = internalDetails;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MessageTextFilePathAnnotation"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>

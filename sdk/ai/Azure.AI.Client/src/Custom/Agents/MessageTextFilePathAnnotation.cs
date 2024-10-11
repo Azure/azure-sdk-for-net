@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.Client.Models;
 
 /*
@@ -18,4 +20,17 @@ public partial class MessageTextFilePathAnnotation : MessageTextAnnotation
     public string FileId => InternalDetails.FileId;
 
     internal InternalMessageTextFilePathDetails InternalDetails { get; }
+
+    /// <summary> Initializes a new instance of <see cref="MessageTextFilePathAnnotation"/>. </summary>
+    /// <param name="text"> The textual content associated with this text annotation item. </param>
+    /// <param name="internalDetails"> A URL for the file that's generated when the agent used the code_interpreter tool to generate a file. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="internalDetails"/> is null. </exception>
+    internal MessageTextFilePathAnnotation(string text, InternalMessageTextFilePathDetails internalDetails) : base(text)
+    {
+        Argument.AssertNotNull(text, nameof(text));
+        Argument.AssertNotNull(internalDetails, nameof(internalDetails));
+
+        Type = "file_path";
+        InternalDetails = internalDetails;
+    }
 }

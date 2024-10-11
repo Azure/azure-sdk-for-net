@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.AI.Client.Models;
@@ -23,4 +24,15 @@ public partial class MessageTextContent
     public IReadOnlyList<MessageTextAnnotation> Annotations => (IReadOnlyList<MessageTextAnnotation>)InternalDetails.Annotations;
 
     internal InternalMessageTextDetails InternalDetails { get; }
+
+    /// <summary> Initializes a new instance of <see cref="MessageTextContent"/>. </summary>
+    /// <param name="internalDetails"> The text and associated annotations for this thread message content item. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="internalDetails"/> is null. </exception>
+    internal MessageTextContent(InternalMessageTextDetails internalDetails)
+    {
+        Argument.AssertNotNull(internalDetails, nameof(internalDetails));
+
+        Type = "text";
+        InternalDetails = internalDetails;
+    }
 }

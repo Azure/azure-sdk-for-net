@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.Client;
 using Azure.AI.OpenAI.Assistants;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
@@ -27,10 +28,6 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
             : s_placeholderAzureResourceUrl;
 
     private static readonly string s_placeholderApiKey = "placeholder";
-    protected string NonAzureApiKey
-        => Recording?.Mode == RecordedTestMode.Record || Recording?.Mode == RecordedTestMode.Live
-            ? TestEnvironment.NonAzureOpenAIApiKey
-            : s_placeholderApiKey;
     protected AzureKeyCredential AzureApiKeyCredential
         => Recording?.Mode == RecordedTestMode.Record || Recording?.Mode == RecordedTestMode.Live
             ? new(TestEnvironment.AzureOpenAIApiKey)
@@ -56,47 +53,47 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
     }
 
     [OneTimeTearDown]
-    protected async Task ModuleCleanup()
-    {
-        if (Recording.Mode != RecordedTestMode.Playback)
-        {
-            foreach (OpenAIClientServiceTarget serviceTarget in new OpenAIClientServiceTarget[]
-            {
-                OpenAIClientServiceTarget.Azure,
-                OpenAIClientServiceTarget.NonAzure,
-            })
-            {
-                try
-                {
-                    // Best effort attempt to find items with the metadata key/value this run added and remove them
-                    // -- or to remove older runs' entries with the key and a different value.
-                    Agents client = GetTestClient(serviceTarget);
+    //protected async Task ModuleCleanup()
+    //{
+    //    if (Recording.Mode != RecordedTestMode.Playback)
+    //    {
+    //        foreach (OpenAIClientServiceTarget serviceTarget in new OpenAIClientServiceTarget[]
+    //        {
+    //            OpenAIClientServiceTarget.Azure,
+    //            OpenAIClientServiceTarget.NonAzure,
+    //        })
+    //        {
+    //            try
+    //            {
+    //                // Best effort attempt to find items with the metadata key/value this run added and remove them
+    //                // -- or to remove older runs' entries with the key and a different value.
+    //                Agents client = GetTestClient(serviceTarget);
 
-                    Response<PageableList<Assistant>> assistantListResponse = await client.GetAssistantsAsync();
+    //                Response<PageableList<Assistant>> assistantListResponse = await client.GetAssistantsAsync();
 
-                    IEnumerable<Assistant> assistantsToDelete = assistantListResponse.Value.Data
-                        .Where(assistant =>
-                        {
-                            bool hasMetadataKey = assistant.Metadata?.ContainsKey(s_testMetadataKey) == true;
-                            bool hasCurrentMetadataValue = hasMetadataKey && assistant.Metadata[s_testMetadataKey] == s_testMetadataValue;
-                            bool isOldEnoughToDeleteAnyway = assistant.CreatedAt < DateTime.Now - TimeSpan.FromHours(2);
-                            return hasCurrentMetadataValue || isOldEnoughToDeleteAnyway;
-                        });
-                    foreach (Assistant assistant in assistantsToDelete)
-                    {
-                        try
-                        {
-                            _ = await client.DeleteAssistantAsync(assistant.Id);
-                        }
-                        catch (Exception)
-                        { }
-                    }
-                }
-                catch (Exception)
-                { }
-            }
-        }
-    }
+    //                IEnumerable<Assistant> assistantsToDelete = assistantListResponse.Value.Data
+    //                    .Where(assistant =>
+    //                    {
+    //                        bool hasMetadataKey = assistant.Metadata?.ContainsKey(s_testMetadataKey) == true;
+    //                        bool hasCurrentMetadataValue = hasMetadataKey && assistant.Metadata[s_testMetadataKey] == s_testMetadataValue;
+    //                        bool isOldEnoughToDeleteAnyway = assistant.CreatedAt < DateTime.Now - TimeSpan.FromHours(2);
+    //                        return hasCurrentMetadataValue || isOldEnoughToDeleteAnyway;
+    //                    });
+    //                foreach (Assistant assistant in assistantsToDelete)
+    //                {
+    //                    try
+    //                    {
+    //                        _ = await client.DeleteAssistantAsync(assistant.Id);
+    //                    }
+    //                    catch (Exception)
+    //                    { }
+    //                }
+    //            }
+    //            catch (Exception)
+    //            { }
+    //        }
+    //    }
+    //}
 
     [TearDown]
     protected async Task TestCleanup()
@@ -124,40 +121,40 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
         }
     }
 
-    protected void AssertSuccessfulResponse<T>(Response<T> response, bool enforceMetadata = true)
-    {
-        Assert.That(response, Is.Not.Null);
+    //protected void AssertSuccessfulResponse<T>(Response<T> response, bool enforceMetadata = true)
+    //{
+    //    Assert.That(response, Is.Not.Null);
 
-        Response rawResponse = response.GetRawResponse();
-        Assert.That(rawResponse, Is.Not.Null);
-        Assert.That(rawResponse.Status, Is.EqualTo(200));
+    //    Response rawResponse = response.GetRawResponse();
+    //    Assert.That(rawResponse, Is.Not.Null);
+    //    Assert.That(rawResponse.Status, Is.EqualTo(200));
 
-        string rawResponseContent = rawResponse.Content.ToString();
-        Assert.That(rawResponseContent, Is.Not.Null.Or.Empty);
+    //    string rawResponseContent = rawResponse.Content.ToString();
+    //    Assert.That(rawResponseContent, Is.Not.Null.Or.Empty);
 
-        Assert.That(response.Value, Is.InstanceOf<T>());
+    //    Assert.That(response.Value, Is.InstanceOf<T>());
 
-        if (response is Response<bool> boolResponse)
-        {
-            // Revise if we'd ever *want* a false bool
-            Assert.That(boolResponse.Value, Is.True);
-        }
+    //    if (response is Response<bool> boolResponse)
+    //    {
+    //        // Revise if we'd ever *want* a false bool
+    //        Assert.That(boolResponse.Value, Is.True);
+    //    }
 
-        Func<IReadOnlyDictionary<string,string>> GetMetadata = response switch
-        {
-            Response<Assistant> assistantResponse => () => assistantResponse.Value.Metadata,
-            Response<AssistantThread> threadResponse => () => threadResponse.Value.Metadata,
-            Response<ThreadMessage> messageResponse => () => messageResponse.Value.Metadata as IReadOnlyDictionary<string, string>,
-            Response<ThreadRun> runResponse => () => runResponse.Value.Metadata,
-            _ => null,
-        };
+    //    Func<IReadOnlyDictionary<string,string>> GetMetadata = response switch
+    //    {
+    //        Response<Assistant> assistantResponse => () => assistantResponse.Value.Metadata,
+    //        Response<AssistantThread> threadResponse => () => threadResponse.Value.Metadata,
+    //        Response<ThreadMessage> messageResponse => () => messageResponse.Value.Metadata as IReadOnlyDictionary<string, string>,
+    //        Response<ThreadRun> runResponse => () => runResponse.Value.Metadata,
+    //        _ => null,
+    //    };
 
-        if (enforceMetadata && GetMetadata != null)
-        {
-            Assert.That(
-                GetMetadata.Invoke()?.Contains(TestMetadataPair),
-                Is.True,
-                $"Could not find expected test metadata pair in response value item!");
-        }
-    }
+    //    if (enforceMetadata && GetMetadata != null)
+    //    {
+    //        Assert.That(
+    //            GetMetadata.Invoke()?.Contains(TestMetadataPair),
+    //            Is.True,
+    //            $"Could not find expected test metadata pair in response value item!");
+    //    }
+    //}
 }

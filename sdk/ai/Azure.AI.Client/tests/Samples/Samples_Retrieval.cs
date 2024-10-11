@@ -11,86 +11,86 @@ using System.IO;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Azure.AI.OpenAI.Assistants.Samples;
+namespace Azure.AI.Client.Samples;
 
-public partial class Samples_AssistantsClient
+public partial class Samples_Agents
 {
-    [Test]
-    [Ignore("Only for sample compilation verification")]
-    public async Task AssistantsWithFilesSample()
-    {
-        // Patterned from https://platform.openai.com/docs/assistants/overview
+    //[Test]
+    //[Ignore("Only for sample compilation verification")]
+    //public async Task AssistantsWithFilesSample()
+    //{
+    //    // Patterned from https://platform.openai.com/docs/assistants/overview
 
-        bool isAzureOpenAI = false;
-        string azureResourceUrl = "https://my-resource.openai.azure.com";
-        string nonAzureApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-        string azureApiKey = Environment.GetEnvironmentVariable("AOAI_API_KEY");
+    //    bool isAzureOpenAI = false;
+    //    string azureResourceUrl = "https://my-resource.openai.azure.com";
+    //    string nonAzureApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+    //    string azureApiKey = Environment.GetEnvironmentVariable("AOAI_API_KEY");
 
-        Agents client = isAzureOpenAI
-            ? new Agents(new Uri(azureResourceUrl), new AzureKeyCredential(azureApiKey))
-            : new Agents(nonAzureApiKey);
+    //    Agents client = isAzureOpenAI
+    //        ? new Agents(new Uri(azureResourceUrl), new AzureKeyCredential(azureApiKey))
+    //        : new Agents(nonAzureApiKey);
 
-        #region Snippet:UploadAssistantFilesToUse
-        File.WriteAllText(
-            path: "sample_file_for_upload.txt",
-            contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        Response<OpenAIFile> uploadAssistantFileResponse = await client.UploadFileAsync(
-            localFilePath: "sample_file_for_upload.txt",
-            purpose: OpenAIFilePurpose.Assistants);
-        OpenAIFile uploadedAssistantFile = uploadAssistantFileResponse.Value;
-        #endregion
+    //    #region Snippet:UploadAssistantFilesToUse
+    //    File.WriteAllText(
+    //        path: "sample_file_for_upload.txt",
+    //        contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
+    //    Response<OpenAIFile> uploadAssistantFileResponse = await client.UploadFileAsync(
+    //        localFilePath: "sample_file_for_upload.txt",
+    //        purpose: OpenAIFilePurpose.Assistants);
+    //    OpenAIFile uploadedAssistantFile = uploadAssistantFileResponse.Value;
+    //    #endregion
 
-        #region Snippet:CreateAssistantWithFiles
-        Response<Assistant> assistantResponse = await client.CreateAssistantAsync(
-            new AssistantCreationOptions("gpt-4-1106-preview")
-            {
-                Name = "SDK Test Assistant - Retrieval",
-                Instructions = "You are a helpful assistant that can help fetch data from files you know about.",
-                Tools = { new RetrievalToolDefinition() },
-                FileIds = { uploadedAssistantFile.Id },
-            });
-        Assistant assistant = assistantResponse.Value;
-        #endregion
+    //    #region Snippet:CreateAssistantWithFiles
+    //    Response<Assistant> assistantResponse = await client.CreateAssistantAsync(
+    //        new AssistantCreationOptions("gpt-4-1106-preview")
+    //        {
+    //            Name = "SDK Test Assistant - Retrieval",
+    //            Instructions = "You are a helpful assistant that can help fetch data from files you know about.",
+    //            Tools = { new RetrievalToolDefinition() },
+    //            FileIds = { uploadedAssistantFile.Id },
+    //        });
+    //    Assistant assistant = assistantResponse.Value;
+    //    #endregion
 
-        Response<AssistantThread> threadResponse = await client.CreateThreadAsync();
-        AssistantThread thread = threadResponse.Value;
+    //    Response<AssistantThread> threadResponse = await client.CreateThreadAsync();
+    //    AssistantThread thread = threadResponse.Value;
 
-        Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
-            thread.Id,
-            MessageRole.User,
-            "Can you give me the documented codes for 'banana' and 'orange'?");
-        ThreadMessage message = messageResponse.Value;
+    //    Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
+    //        thread.Id,
+    //        MessageRole.User,
+    //        "Can you give me the documented codes for 'banana' and 'orange'?");
+    //    ThreadMessage message = messageResponse.Value;
 
-        Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, assistant);
+    //    Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, assistant);
 
-        do
-        {
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
-        }
-        while (runResponse.Value.Status == RunStatus.Queued
-            || runResponse.Value.Status == RunStatus.InProgress);
+    //    do
+    //    {
+    //        await Task.Delay(TimeSpan.FromMilliseconds(500));
+    //        runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
+    //    }
+    //    while (runResponse.Value.Status == RunStatus.Queued
+    //        || runResponse.Value.Status == RunStatus.InProgress);
 
-        Response<PageableList<ThreadMessage>> afterRunMessagesResponse
-            = await client.GetMessagesAsync(thread.Id);
-        IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
+    //    Response<PageableList<ThreadMessage>> afterRunMessagesResponse
+    //        = await client.GetMessagesAsync(thread.Id);
+    //    IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
 
-        // Note: messages iterate from newest to oldest, with the messages[0] being the most recent
-        foreach (ThreadMessage threadMessage in messages)
-        {
-            Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
-            foreach (MessageContent contentItem in threadMessage.ContentItems)
-            {
-                if (contentItem is MessageTextContent textItem)
-                {
-                    Console.Write(textItem.Text);
-                }
-                else if (contentItem is MessageImageFileContent imageFileItem)
-                {
-                    Console.Write($"<image from ID: {imageFileItem.FileId}");
-                }
-                Console.WriteLine();
-            }
-        }
-    }
+    //    // Note: messages iterate from newest to oldest, with the messages[0] being the most recent
+    //    foreach (ThreadMessage threadMessage in messages)
+    //    {
+    //        Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
+    //        foreach (MessageContent contentItem in threadMessage.ContentItems)
+    //        {
+    //            if (contentItem is MessageTextContent textItem)
+    //            {
+    //                Console.Write(textItem.Text);
+    //            }
+    //            else if (contentItem is MessageImageFileContent imageFileItem)
+    //            {
+    //                Console.Write($"<image from ID: {imageFileItem.FileId}");
+    //            }
+    //            Console.WriteLine();
+    //        }
+    //    }
+    //}
 }
