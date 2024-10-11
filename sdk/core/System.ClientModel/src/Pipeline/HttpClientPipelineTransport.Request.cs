@@ -21,6 +21,7 @@ public partial class HttpClientPipelineTransport
         private string _method;
         private Uri? _uri;
         private BinaryContent? _content;
+        private string _clientRequestId;
 
         private readonly PipelineRequestHeaders _headers;
 
@@ -30,6 +31,9 @@ public partial class HttpClientPipelineTransport
         {
             _method = HttpMethod.Get.Method;
             _headers = new ArrayBackedRequestHeaders();
+
+            // Support this by default or opt-in?
+            _clientRequestId = Guid.NewGuid().ToString();
         }
 
         protected override string MethodCore
@@ -61,6 +65,12 @@ public partial class HttpClientPipelineTransport
         }
 
         protected override PipelineRequestHeaders HeadersCore => _headers;
+
+        public override string? ClientRequestId
+        {
+            get => base.ClientRequestId;
+            set => base.ClientRequestId = value;
+        }
 
         // PATCH value needed for compat with pre-net5.0 TFMs
         private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");

@@ -111,6 +111,7 @@ public sealed partial class ClientPipeline
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
         pipelineLength++; // for retry policy
+        pipelineLength += (options.Logging.EnableLogging != false) ? 1 : 0; // for logging policy
         pipelineLength++; // for transport
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
@@ -155,6 +156,13 @@ public sealed partial class ClientPipeline
         }
 
         int beforeTransportIndex = index;
+
+        // TODO: validate logging options
+        if (options.Logging.EnableLogging != false)
+        {
+            policies[index++] = options.HttpLoggingPolicy ??
+                new HttpLoggingPolicy(options.Logging);
+        }
 
         // Add the transport.
         policies[index++] = options.Transport ?? HttpClientPipelineTransport.Shared;
