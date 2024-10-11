@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         void IJsonModel<ManagedClusterLoadBalancingRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterLoadBalancingRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterLoadBalancingRule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("frontendPort"u8);
             writer.WriteNumberValue(FrontendPort);
             writer.WritePropertyName("backendPort"u8);
@@ -64,7 +72,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagedClusterLoadBalancingRule IJsonModel<ManagedClusterLoadBalancingRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
