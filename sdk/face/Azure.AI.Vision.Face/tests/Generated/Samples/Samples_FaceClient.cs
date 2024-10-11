@@ -311,7 +311,7 @@ namespace Azure.AI.Vision.Face.Samples
             },
                 largePersonGroupId = "your_large_person_group_id",
                 maxNumOfCandidatesReturned = 9,
-                confidenceThreshold = 0.7,
+                confidenceThreshold = 0.7F,
             });
             Response response = client.IdentifyFromLargePersonGroup(content);
 
@@ -337,7 +337,7 @@ namespace Azure.AI.Vision.Face.Samples
             },
                 largePersonGroupId = "your_large_person_group_id",
                 maxNumOfCandidatesReturned = 9,
-                confidenceThreshold = 0.7,
+                confidenceThreshold = 0.7F,
             });
             Response response = await client.IdentifyFromLargePersonGroupAsync(content);
 
