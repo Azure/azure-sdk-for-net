@@ -3168,6 +3168,34 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task DownloadAsync_NFS()
+        {
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(nfs: true);
+            ShareFileClient file = test.File;
+
+            using Stream stream = new MemoryStream(data);
+            await file.UploadRangeAsync(
+                range: new HttpRange(0, Constants.KB),
+                content: stream);
+
+            // Act
+            Response<ShareFileDownloadInfo> response = await file.DownloadAsync();
+
+            // Assert
+            Assert.AreEqual(0, response.Value.Details.NfsProperties.Owner);
+            Assert.AreEqual(0, response.Value.Details.NfsProperties.Group);
+            Assert.AreEqual("0664", response.Value.Details.NfsProperties.FileMode.ToOctalFileMode());
+            Assert.AreEqual(1, response.Value.Details.NfsProperties.LinkCount);
+
+            Assert.IsNull(response.Value.Details.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.Details.SmbProperties.FilePermissionKey);
+        }
+
+        [RecordedTest]
         public async Task GetRangeListAsync()
         {
             // Arrange

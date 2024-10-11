@@ -124,7 +124,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// NFS properties.
         /// Note that this property is only applicable to files created in NFS shares.
         /// </summary>
-        public FileNfsProperties NfsProperties { get; set; }
+        public FileNfsProperties NfsProperties { get; internal set; }
 
         /// <summary>
         /// Constructor.
