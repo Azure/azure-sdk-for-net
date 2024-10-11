@@ -12,12 +12,6 @@
     - Dns Security Rules
     - DNS Resolver Domain Lists
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.1.0 (2023-11-27)
 
 ### Features Added
