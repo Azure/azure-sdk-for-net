@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 {
                     Mtu = 1500,
                     VlanId = 1001,
-                    PeerAsn = 65047,
+                    PeerAsn = 65047L,
                     BfdConfiguration = new BfdConfiguration()
                     {
                         IntervalInMilliSeconds = 300,
