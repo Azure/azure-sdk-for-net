@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(BareMetalMachineProvisioningState left, BareMetalMachineProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BareMetalMachineProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(BareMetalMachineProvisioningState left, BareMetalMachineProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BareMetalMachineProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineProvisioningState"/>. </summary>
         public static implicit operator BareMetalMachineProvisioningState(string value) => new BareMetalMachineProvisioningState(value);
 
         /// <inheritdoc />

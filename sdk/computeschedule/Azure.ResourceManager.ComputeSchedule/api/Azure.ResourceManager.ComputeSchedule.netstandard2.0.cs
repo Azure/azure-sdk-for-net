@@ -65,9 +65,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class CancelOperationsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent>
     {
-        public CancelOperationsContent(System.Collections.Generic.IEnumerable<string> operationIds, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public CancelOperationsContent(System.Collections.Generic.IEnumerable<string> operationIds, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public System.Collections.Generic.IList<string> OperationIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -78,6 +79,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     {
         internal CancelOperationsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult> Results { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -91,6 +93,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult> Results { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.DeallocateResourceOperationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.DeallocateResourceOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.DeallocateResourceOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.DeallocateResourceOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.DeallocateResourceOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -99,10 +102,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class ExecuteDeallocateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteDeallocateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteDeallocateContent>
     {
-        public ExecuteDeallocateContent(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public ExecuteDeallocateContent(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourcesIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.ExecuteDeallocateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteDeallocateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteDeallocateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.ExecuteDeallocateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteDeallocateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -111,10 +115,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class ExecuteHibernateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteHibernateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteHibernateContent>
     {
-        public ExecuteHibernateContent(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public ExecuteHibernateContent(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourcesIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.ExecuteHibernateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteHibernateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteHibernateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.ExecuteHibernateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteHibernateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -123,10 +128,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class ExecuteStartContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteStartContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteStartContent>
     {
-        public ExecuteStartContent(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public ExecuteStartContent(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourcesIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.ExecuteStartContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteStartContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteStartContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.ExecuteStartContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteStartContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -137,6 +143,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     {
         public GetOperationErrorsContent(System.Collections.Generic.IEnumerable<string> operationIds) { }
         public System.Collections.Generic.IList<string> OperationIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.GetOperationErrorsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationErrorsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationErrorsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.GetOperationErrorsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationErrorsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -147,6 +154,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     {
         internal GetOperationErrorsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ComputeSchedule.Models.OperationErrorsResult> Results { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.GetOperationErrorsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationErrorsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationErrorsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.GetOperationErrorsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationErrorsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -155,9 +163,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class GetOperationStatusContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusContent>
     {
-        public GetOperationStatusContent(System.Collections.Generic.IEnumerable<string> operationIds, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public GetOperationStatusContent(System.Collections.Generic.IEnumerable<string> operationIds, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public System.Collections.Generic.IList<string> OperationIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -168,6 +177,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     {
         internal GetOperationStatusResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult> Results { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -181,6 +191,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult> Results { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.HibernateResourceOperationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.HibernateResourceOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.HibernateResourceOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.HibernateResourceOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.HibernateResourceOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -194,6 +205,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public string ErrorCode { get { throw null; } }
         public System.DateTimeOffset ErrorDetails { get { throw null; } }
         public System.DateTimeOffset TimeStamp { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.OperationErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OperationErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OperationErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.OperationErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OperationErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -210,6 +222,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public string OperationId { get { throw null; } }
         public string RequestErrorCode { get { throw null; } }
         public string RequestErrorDetails { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.OperationErrorsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OperationErrorsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OperationErrorsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.OperationErrorsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OperationErrorsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -230,6 +243,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionOperationState State { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
         public string TimeZone { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -241,6 +255,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal ResourceOperationError() { }
         public string ErrorCode { get { throw null; } }
         public string ErrorDetails { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -254,6 +269,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public string ErrorDetails { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationDetails Operation { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -304,6 +320,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ScheduledActionExecutionParameterDetail() { }
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionOptimizationPreference? OptimizationPreference { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeSchedule.Models.UserRequestRetryPolicy RetryPolicy { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -361,6 +378,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult> Results { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.StartResourceOperationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.StartResourceOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.StartResourceOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.StartResourceOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.StartResourceOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -369,11 +387,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class SubmitDeallocateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitDeallocateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitDeallocateContent>
     {
-        public SubmitDeallocateContent(Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule schedule, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public SubmitDeallocateContent(Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule schedule, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourcesIds { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule Schedule { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.SubmitDeallocateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitDeallocateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitDeallocateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.SubmitDeallocateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitDeallocateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -382,11 +401,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class SubmitHibernateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitHibernateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitHibernateContent>
     {
-        public SubmitHibernateContent(Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule schedule, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public SubmitHibernateContent(Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule schedule, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourcesIds { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule Schedule { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.SubmitHibernateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitHibernateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitHibernateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.SubmitHibernateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitHibernateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -395,11 +415,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class SubmitStartContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitStartContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitStartContent>
     {
-        public SubmitStartContent(Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule schedule, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public SubmitStartContent(Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule schedule, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourcesIds { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule Schedule { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.SubmitStartContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitStartContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitStartContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.SubmitStartContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitStartContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -410,6 +431,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     {
         public UserRequestResources(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> ids) { }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> Ids { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -421,6 +443,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public UserRequestRetryPolicy() { }
         public int? RetryCount { get { throw null; } set { } }
         public int? RetryWindowInMinutes { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.UserRequestRetryPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.UserRequestRetryPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.UserRequestRetryPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.UserRequestRetryPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.UserRequestRetryPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -433,6 +456,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public System.DateTimeOffset DeadLine { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionDeadlineType DeadlineType { get { throw null; } }
         public string TimeZone { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

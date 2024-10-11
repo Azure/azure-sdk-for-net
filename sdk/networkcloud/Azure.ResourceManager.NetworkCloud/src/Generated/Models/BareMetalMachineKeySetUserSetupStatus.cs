@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(BareMetalMachineKeySetUserSetupStatus left, BareMetalMachineKeySetUserSetupStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BareMetalMachineKeySetUserSetupStatus"/> values are not the same. </summary>
         public static bool operator !=(BareMetalMachineKeySetUserSetupStatus left, BareMetalMachineKeySetUserSetupStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BareMetalMachineKeySetUserSetupStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineKeySetUserSetupStatus"/>. </summary>
         public static implicit operator BareMetalMachineKeySetUserSetupStatus(string value) => new BareMetalMachineKeySetUserSetupStatus(value);
 
         /// <inheritdoc />

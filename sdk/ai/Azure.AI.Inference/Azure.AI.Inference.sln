@@ -5,9 +5,9 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{ECC730C1-4AEA-420C-916A-66B19B79E4DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Inference", "src\Azure.AI.Inference.csproj", "{C3781FDB-93C7-4636-95B1-7A6F2C00E25F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Inference", "src\Azure.AI.Inference.csproj", "{C3781FDB-93C7-4636-95B1-7A6F2C00E25F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Inference.Tests", "tests\Azure.AI.Inference.Tests.csproj", "{5FDDC1E7-3A88-4BAF-948B-909BC6B65E1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Inference.Tests", "tests\Azure.AI.Inference.Tests.csproj", "{5FDDC1E7-3A88-4BAF-948B-909BC6B65E1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

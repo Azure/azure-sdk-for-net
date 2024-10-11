@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(IndexingMode left, IndexingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IndexingMode"/> values are not the same. </summary>
         public static bool operator !=(IndexingMode left, IndexingMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IndexingMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IndexingMode"/>. </summary>
         public static implicit operator IndexingMode(string value) => new IndexingMode(value);
 
         /// <inheritdoc />

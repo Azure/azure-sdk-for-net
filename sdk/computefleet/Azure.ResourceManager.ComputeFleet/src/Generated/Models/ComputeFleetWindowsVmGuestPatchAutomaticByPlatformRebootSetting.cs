@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting left, ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting left, ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
         public static implicit operator ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting(string value) => new ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting(value);
 
         /// <inheritdoc />

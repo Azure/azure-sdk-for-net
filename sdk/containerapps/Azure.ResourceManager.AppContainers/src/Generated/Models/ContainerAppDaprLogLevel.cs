@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static bool operator ==(ContainerAppDaprLogLevel left, ContainerAppDaprLogLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppDaprLogLevel"/> values are not the same. </summary>
         public static bool operator !=(ContainerAppDaprLogLevel left, ContainerAppDaprLogLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerAppDaprLogLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppDaprLogLevel"/>. </summary>
         public static implicit operator ContainerAppDaprLogLevel(string value) => new ContainerAppDaprLogLevel(value);
 
         /// <inheritdoc />

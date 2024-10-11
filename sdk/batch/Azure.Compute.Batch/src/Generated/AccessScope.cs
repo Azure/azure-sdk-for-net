@@ -30,7 +30,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(AccessScope left, AccessScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AccessScope"/> values are not the same. </summary>
         public static bool operator !=(AccessScope left, AccessScope right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AccessScope"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AccessScope"/>. </summary>
         public static implicit operator AccessScope(string value) => new AccessScope(value);
 
         /// <inheritdoc />

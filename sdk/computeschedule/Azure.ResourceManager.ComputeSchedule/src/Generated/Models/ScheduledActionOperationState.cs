@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static bool operator ==(ScheduledActionOperationState left, ScheduledActionOperationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduledActionOperationState"/> values are not the same. </summary>
         public static bool operator !=(ScheduledActionOperationState left, ScheduledActionOperationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScheduledActionOperationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionOperationState"/>. </summary>
         public static implicit operator ScheduledActionOperationState(string value) => new ScheduledActionOperationState(value);
 
         /// <inheritdoc />

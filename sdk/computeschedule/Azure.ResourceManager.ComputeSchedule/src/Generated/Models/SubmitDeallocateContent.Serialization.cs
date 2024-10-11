@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         void IJsonModel<SubmitDeallocateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SubmitDeallocateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SubmitDeallocateContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
             writer.WriteObjectValue(Schedule, options);
             writer.WritePropertyName("executionParameters"u8);
@@ -33,7 +41,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WritePropertyName("resources"u8);
             writer.WriteObjectValue(Resources, options);
             writer.WritePropertyName("correlationid"u8);
-            writer.WriteStringValue(Correlationid);
+            writer.WriteStringValue(CorrelationId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -49,7 +57,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SubmitDeallocateContent IJsonModel<SubmitDeallocateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

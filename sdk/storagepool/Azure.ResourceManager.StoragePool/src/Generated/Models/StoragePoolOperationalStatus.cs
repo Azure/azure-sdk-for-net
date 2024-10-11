@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         public static bool operator ==(StoragePoolOperationalStatus left, StoragePoolOperationalStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StoragePoolOperationalStatus"/> values are not the same. </summary>
         public static bool operator !=(StoragePoolOperationalStatus left, StoragePoolOperationalStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StoragePoolOperationalStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StoragePoolOperationalStatus"/>. </summary>
         public static implicit operator StoragePoolOperationalStatus(string value) => new StoragePoolOperationalStatus(value);
 
         /// <inheritdoc />

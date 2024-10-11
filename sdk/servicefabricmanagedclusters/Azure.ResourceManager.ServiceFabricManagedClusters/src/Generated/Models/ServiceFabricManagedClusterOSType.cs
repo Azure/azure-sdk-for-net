@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator ==(ServiceFabricManagedClusterOSType left, ServiceFabricManagedClusterOSType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterOSType"/> values are not the same. </summary>
         public static bool operator !=(ServiceFabricManagedClusterOSType left, ServiceFabricManagedClusterOSType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceFabricManagedClusterOSType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedClusterOSType"/>. </summary>
         public static implicit operator ServiceFabricManagedClusterOSType(string value) => new ServiceFabricManagedClusterOSType(value);
 
         /// <inheritdoc />

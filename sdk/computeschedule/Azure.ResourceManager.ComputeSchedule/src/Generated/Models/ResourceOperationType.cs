@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static bool operator ==(ResourceOperationType left, ResourceOperationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceOperationType"/> values are not the same. </summary>
         public static bool operator !=(ResourceOperationType left, ResourceOperationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourceOperationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceOperationType"/>. </summary>
         public static implicit operator ResourceOperationType(string value) => new ResourceOperationType(value);
 
         /// <inheritdoc />

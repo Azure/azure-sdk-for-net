@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(LoadDistribution left, LoadDistribution right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoadDistribution"/> values are not the same. </summary>
         public static bool operator !=(LoadDistribution left, LoadDistribution right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LoadDistribution"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LoadDistribution"/>. </summary>
         public static implicit operator LoadDistribution(string value) => new LoadDistribution(value);
 
         /// <inheritdoc />

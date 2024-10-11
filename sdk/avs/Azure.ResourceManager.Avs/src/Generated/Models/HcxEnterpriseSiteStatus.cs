@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(HcxEnterpriseSiteStatus left, HcxEnterpriseSiteStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HcxEnterpriseSiteStatus"/> values are not the same. </summary>
         public static bool operator !=(HcxEnterpriseSiteStatus left, HcxEnterpriseSiteStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HcxEnterpriseSiteStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HcxEnterpriseSiteStatus"/>. </summary>
         public static implicit operator HcxEnterpriseSiteStatus(string value) => new HcxEnterpriseSiteStatus(value);
 
         /// <inheritdoc />

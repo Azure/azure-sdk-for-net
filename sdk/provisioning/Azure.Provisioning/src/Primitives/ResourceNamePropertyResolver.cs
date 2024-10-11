@@ -180,7 +180,7 @@ public abstract class ResourceNamePropertyResolver : PropertyResolver
 
 /// <summary>
 /// Generate a unique name for a resource by combining the resource's
-/// <see cref="NamedProvisioningConstruct.ResourceName"/> as a prefix and a
+/// <see cref="NamedProvisioningConstruct.IdentifierName"/> as a prefix and a
 /// unique suffix based on the current resource group's ID.
 /// </summary>
 public class DynamicResourceNamePropertyResolver : ResourceNamePropertyResolver
@@ -191,7 +191,7 @@ public class DynamicResourceNamePropertyResolver : ResourceNamePropertyResolver
 
     /// <summary>
     /// Generate a unique name for a resource by combining the resource's
-    /// <see cref="NamedProvisioningConstruct.ResourceName"/> as a prefix and a
+    /// <see cref="NamedProvisioningConstruct.IdentifierName"/> as a prefix and a
     /// unique suffix based on the current resource group's ID.
     /// </summary>
     /// <param name="context">The provisioning context for this resource.</param>
@@ -203,7 +203,7 @@ public class DynamicResourceNamePropertyResolver : ResourceNamePropertyResolver
         Resource resource,
         ResourceNameRequirements requirements)
     {
-        string prefix = SanitizeText(resource.ResourceName, requirements.ValidCharacters);
+        string prefix = SanitizeText(resource.IdentifierName, requirements.ValidCharacters);
         string separator =
             requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Hyphen) ? "-" :
             requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Underscore) ? "_" :
@@ -233,7 +233,7 @@ public class DynamicResourceNamePropertyResolver : ResourceNamePropertyResolver
 
 /// <summary>
 /// Generate a unique name for a resource by combining the resource's
-/// <see cref="NamedProvisioningConstruct.ResourceName"/> as a prefix and a
+/// <see cref="NamedProvisioningConstruct.IdentifierName"/> as a prefix and a
 /// randomly generated suffix of allowed characters.
 /// </summary>
 public class StaticResourceNamePropertyResolver : ResourceNamePropertyResolver
@@ -247,7 +247,7 @@ public class StaticResourceNamePropertyResolver : ResourceNamePropertyResolver
         StringBuilder name = new(capacity: requirements.MaxLength);
 
         // Start with the sanitized resource name
-        name.Append(SanitizeText(resource.ResourceName, requirements.ValidCharacters));
+        name.Append(SanitizeText(resource.IdentifierName, requirements.ValidCharacters));
         if (name.Length >= requirements.MaxLength)
         {
             return name.ToString(0, requirements.MaxLength);

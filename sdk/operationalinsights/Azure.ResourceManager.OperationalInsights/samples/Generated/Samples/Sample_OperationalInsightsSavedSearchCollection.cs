@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             {
                 FunctionAlias = "heartbeat_func",
                 FunctionParameters = "a:int=1",
-                Version = 2,
+                Version = 2L,
                 Tags =
 {
 new OperationalInsightsTag("Group","Computer")

@@ -3,6 +3,7 @@
 ## 4.7.0-beta.1 (Unreleased)
 
 ### Features Added
+- Support for Continuous Access Evaluation (CAE).
 
 ### Breaking Changes
 

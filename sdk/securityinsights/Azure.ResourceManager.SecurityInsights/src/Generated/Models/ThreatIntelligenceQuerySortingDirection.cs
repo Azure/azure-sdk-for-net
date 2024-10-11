@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(ThreatIntelligenceQuerySortingDirection left, ThreatIntelligenceQuerySortingDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ThreatIntelligenceQuerySortingDirection"/> values are not the same. </summary>
         public static bool operator !=(ThreatIntelligenceQuerySortingDirection left, ThreatIntelligenceQuerySortingDirection right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ThreatIntelligenceQuerySortingDirection"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ThreatIntelligenceQuerySortingDirection"/>. </summary>
         public static implicit operator ThreatIntelligenceQuerySortingDirection(string value) => new ThreatIntelligenceQuerySortingDirection(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator ==(AutomationKeyName left, AutomationKeyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationKeyName"/> values are not the same. </summary>
         public static bool operator !=(AutomationKeyName left, AutomationKeyName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutomationKeyName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationKeyName"/>. </summary>
         public static implicit operator AutomationKeyName(string value) => new AutomationKeyName(value);
 
         /// <inheritdoc />
