@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanData data = new ElasticSanData(new AzureLocation("France Central"), new ElasticSanSku(ElasticSanSkuName.PremiumLrs)
             {
                 Tier = ElasticSanSkuTier.Premium,
-            }, 5, 25)
+            }, 1L, 3L)
             {
                 AvailabilityZones =
 {
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.ElasticSan.Samples
                 PublicNetworkAccess = ElasticSanPublicNetworkAccess.Enabled,
                 ScaleUpProperties = new ScaleUpProperties()
                 {
-                    UnusedSizeTiB = 24,
-                    IncreaseCapacityUnitByTiB = 4,
-                    CapacityUnitScaleUpLimitTiB = 17,
+                    UnusedSizeTiB = 24L,
+                    IncreaseCapacityUnitByTiB = 4L,
+                    CapacityUnitScaleUpLimitTiB = 17L,
                     AutoScalePolicyEnforcement = AutoScalePolicyEnforcement.None,
                 },
                 Tags =
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // invoke the operation
             string elasticSanName = "elasticsanname";
-            ElasticSanData data = new ElasticSanData(new AzureLocation("France Central"), new ElasticSanSku(ElasticSanSkuName.PremiumLrs), 1, 3);
+            ElasticSanData data = new ElasticSanData(new AzureLocation("France Central"), new ElasticSanSku(ElasticSanSkuName.PremiumLrs), 1L, 3L);
             ArmOperation<ElasticSanResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, elasticSanName, data);
             ElasticSanResource result = lro.Value;
 

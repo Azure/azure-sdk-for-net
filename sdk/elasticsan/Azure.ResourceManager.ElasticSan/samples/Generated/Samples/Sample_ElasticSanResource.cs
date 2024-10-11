@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 {
 ["key5945"] = "eufqmxresekerilkgvfzddolxzas",
 },
-                BaseSizeTiB = 21,
-                ExtendedCapacitySizeTiB = 10,
+                BaseSizeTiB = 21L,
+                ExtendedCapacitySizeTiB = 10L,
                 PublicNetworkAccess = ElasticSanPublicNetworkAccess.Enabled,
                 ScaleUpProperties = new ScaleUpProperties()
                 {
-                    UnusedSizeTiB = 24,
-                    IncreaseCapacityUnitByTiB = 4,
-                    CapacityUnitScaleUpLimitTiB = 17,
+                    UnusedSizeTiB = 24L,
+                    IncreaseCapacityUnitByTiB = 4L,
+                    CapacityUnitScaleUpLimitTiB = 17L,
                     AutoScalePolicyEnforcement = AutoScalePolicyEnforcement.None,
                 },
             };
