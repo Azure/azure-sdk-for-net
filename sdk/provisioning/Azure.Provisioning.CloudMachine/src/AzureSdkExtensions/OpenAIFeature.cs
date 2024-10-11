@@ -63,10 +63,10 @@ public static class OpenAIFeatureExtensions
 
             AzureOpenAIClient aoia = workspace.Subclients.Get(azureOpenAIClientId, () =>
             {
-                WorkspaceClientConnection? connectionMaybe = workspace.GetConnection(typeof(AzureOpenAIClient).FullName);
+                ClientConfiguration? connectionMaybe = workspace.GetConfiguration(typeof(AzureOpenAIClient).FullName);
                 if (connectionMaybe == null) throw new Exception("Connection not found");
 
-                WorkspaceClientConnection connection = connectionMaybe.Value;
+                ClientConfiguration connection = connectionMaybe.Value;
                 Uri endpoint = new(connection.Endpoint);
                 var clientOptions = new AzureOpenAIClientOptions();
                 //clientOptions.AddPolicy(new LoggingPolicy(), PipelinePosition.BeforeTransport);

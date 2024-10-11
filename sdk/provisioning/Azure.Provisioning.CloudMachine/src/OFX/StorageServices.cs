@@ -3,30 +3,31 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Messaging.ServiceBus;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.CloudMachine;
 
-public static class StorageServices
+public readonly struct StorageServices
 {
-    private static BlobContainerClient GetDefaultContainer(this WorkspaceClient cm)
+    private readonly CloudMachineClient _cm;
+    internal StorageServices(CloudMachineClient cm) => _cm = cm;
+
+    private BlobContainerClient GetDefaultContainer()
     {
         string blobContainerClientId = typeof(BlobContainerClient).FullName;
-
+        CloudMachineClient cm = _cm;
         BlobContainerClient container = cm.Subclients.Get(blobContainerClientId, () =>
         {
-            string endpoint = cm.GetConnection(blobContainerClientId)!.Value.Endpoint;
+            string endpoint = cm.GetConfiguration(blobContainerClientId)!.Value.Endpoint;
             BlobContainerClient container = new(new Uri(endpoint), cm.Credential);
             return container;
         });
         return container;
     }
-    public static string UploadBlob(this WorkspaceClient cm, object json, string? name = default)
+    public string UploadBlob(object json, string? name = default)
     {
-        BlobContainerClient container = cm.GetDefaultContainer();
+        BlobContainerClient container = GetDefaultContainer();
 
         if (name == default) name = $"b{Guid.NewGuid()}";
 
@@ -35,19 +36,19 @@ public static class StorageServices
         return name;
     }
 
-    public static BinaryData DownloadBlob(this CloudMachineClient cm, string name)
+    public BinaryData DownloadBlob(string name)
     {
-        BlobContainerClient container = cm.GetDefaultContainer();
+        BlobContainerClient container = GetDefaultContainer();
         BlobClient blob = container.GetBlobClient(name);
         BlobDownloadResult result = blob.DownloadContent();
         return result.Content;
     }
 
-    public static void WhenBlobUploaded(this CloudMachineClient cm, Action<string> function)
+    public void WhenBlobUploaded(Action<string> function)
     {
         throw new NotImplementedException();
     }
-    public static void WhenBlobCreated(this CloudMachineClient cm, Func<string, Task> function)
+    public void WhenBlobCreated(Func<string, Task> function)
     {
         throw new NotImplementedException();
     }

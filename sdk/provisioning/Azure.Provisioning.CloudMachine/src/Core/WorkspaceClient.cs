@@ -9,15 +9,15 @@ public abstract class WorkspaceClient
 {
     public abstract TokenCredential Credential { get; }
 
-    public abstract WorkspaceClientConnection? GetConnection(string clientId);
+    public abstract ClientConfiguration? GetConfiguration(string clientId, string? instanceId = default);
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ClientCache Subclients { get; } = new ClientCache();
 }
 
-public readonly struct WorkspaceClientConnection
+public readonly struct ClientConfiguration
 {
-    public WorkspaceClientConnection(string endpoint, string? apiKey = default)
+    public ClientConfiguration(string endpoint, string? apiKey = default)
     {
         Endpoint = endpoint;
         ApiKey = apiKey;

@@ -58,10 +58,12 @@ public static class KeyVaultExtensions
 {
     public static SecretClient GetKeyVaultSecretsClient(this WorkspaceClient workspace)
     {
-        WorkspaceClientConnection? connectionMaybe = workspace.GetConnection(typeof(SecretClient).FullName);
+        ClientConfiguration? connectionMaybe = workspace.GetConfiguration(typeof(SecretClient).FullName);
         if (connectionMaybe == null) throw new Exception("Connection not found");
 
-        WorkspaceClientConnection connection = connectionMaybe.Value;
+        ClientConfiguration connection = connectionMaybe.Value;
+        if (connection.CredentailType == CredentialType.EntraId)
         return new(new Uri(connection.Endpoint), workspace.Credential);
+        throw new Exception("ApiKey not supported");
     }
 }

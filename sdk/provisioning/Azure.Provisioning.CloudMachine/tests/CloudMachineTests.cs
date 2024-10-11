@@ -8,7 +8,6 @@ using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CloudMachine.KeyVault;
 using Azure.Provisioning.CloudMachine.OpenAI;
 using Azure.Security.KeyVault.Secrets;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 using OpenAI.Chat;
 
@@ -26,7 +25,7 @@ public class CloudMachineTests
             //cm.AddFeature(new OpenAIFeature("gpt-35-turbo", "0125"));
         })) return;
 
-        CloudMachineClient cm = new();
+        CloudMachineWorkspace cm = new();
         Console.WriteLine(cm.Id);
     }
 
@@ -36,19 +35,18 @@ public class CloudMachineTests
     [TestCase([new string[] { "" }])]
     public void Storage(string[] args)
     {
-        //if (CloudMachineInfrastructure.Configure(args, (cm) =>
-        //{
-        //    cm.AddFeature(new KeyVaultFeature());
-        //}))return;
+        if (CloudMachineInfrastructure.Configure(args, (cm) =>
+        {
+        })) return;
 
         CloudMachineClient cm = new();
 
-        var uploaded = cm.UploadBlob(new
+        var uploaded = cm.Storage.UploadBlob(new
         {
             Foo = 5,
             Bar = true
         });
-        BinaryData downloaded = cm.DownloadBlob(uploaded);
+        BinaryData downloaded = cm.Storage.DownloadBlob(uploaded);
         Console.WriteLine(downloaded.ToString());
     }
 
@@ -62,7 +60,7 @@ public class CloudMachineTests
             cm.AddFeature(new OpenAIFeature("gpt-35-turbo", "0125"));
         })) return;
 
-        CloudMachineClient cm = new();
+        CloudMachineWorkspace cm = new();
         ChatClient chat = cm.GetOpenAIChatClient();
         ChatCompletion completion = chat.CompleteChat("Is Azure programming easy?");
 
@@ -83,7 +81,7 @@ public class CloudMachineTests
             cm.AddFeature(new KeyVaultFeature());
         })) return;
 
-        CloudMachineClient cm = new();
+        CloudMachineWorkspace cm = new();
         SecretClient secrets = cm.GetKeyVaultSecretsClient();
         secrets.SetSecret("testsecret", "don't tell anybody");
     }
@@ -97,8 +95,8 @@ public class CloudMachineTests
         if (CloudMachineInfrastructure.Configure(args)) return;
 
         CloudMachineClient cm = new();
-        cm.WhenMessageReceived((string message) => Console.WriteLine(message));
-        cm.SendMessage(new
+        cm.Messaging.WhenMessageReceived((string message) => Console.WriteLine(message));
+        cm.Messaging.SendMessage(new
         {
             Foo = 5,
             Bar = true
@@ -116,13 +114,13 @@ public class CloudMachineTests
         CloudMachineClient cm = new();
 
         // setup
-        cm.WhenMessageReceived((string message) => cm.UploadBlob(message));
-        cm.WhenBlobUploaded((string content) => {
+        cm.Messaging.WhenMessageReceived((string message) => cm.Storage.UploadBlob(message));
+        cm.Storage.WhenBlobUploaded((string content) => {
             ChatCompletion completion = cm.GetOpenAIChatClient().CompleteChat(content);
             Console.WriteLine(completion.Content[0].Text);
         });
 
         // go!
-        cm.SendMessage("Tell me something about Redmond, WA.");
+        cm.Messaging.SendMessage("Tell me something about Redmond, WA.");
     }
 }
