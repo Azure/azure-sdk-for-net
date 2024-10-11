@@ -41,9 +41,10 @@ namespace Azure.AI.Inference.Tests
             UsingInternetLocation,
             UsingStream,
             UsingBinaryData,
+            UsingFilePath
         }
 
-        public ChatCompletionsClientTest(bool isAsync) : base(isAsync)
+        public ChatCompletionsClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             TestDiagnostics = false;
             JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
@@ -460,8 +461,14 @@ namespace Azure.AI.Inference.Tests
         [TestCase(ImageTestSourceKind.UsingInternetLocation)]
         [TestCase(ImageTestSourceKind.UsingStream)]
         [TestCase(ImageTestSourceKind.UsingBinaryData)]
+        [TestCase(ImageTestSourceKind.UsingFilePath)]
         public async Task TestChatCompletionsWithImages(ImageTestSourceKind imageSourceKind)
         {
+            if (imageSourceKind == ImageTestSourceKind.UsingFilePath && Mode == RecordedTestMode.Playback)
+            {
+                Assert.Inconclusive("Unable to run test with file path in playback mode.");
+            }
+
             var aoaiEndpoint = new Uri(TestEnvironment.AoaiEndpoint);
             var aoaiKey = new AzureKeyCredential(TestEnvironment.AoaiKey);
 
@@ -480,6 +487,7 @@ namespace Azure.AI.Inference.Tests
                 ImageTestSourceKind.UsingInternetLocation => new(GetTestImageInternetUri(), ChatMessageImageDetailLevel.Low),
                 ImageTestSourceKind.UsingStream => new(GetTestImageStream("image/jpg"), "image/jpg", ChatMessageImageDetailLevel.Low),
                 ImageTestSourceKind.UsingBinaryData => new(GetTestImageData("image/jpg"), "image/jpg", ChatMessageImageDetailLevel.Low),
+                ImageTestSourceKind.UsingFilePath => new(TestEnvironment.TestImageJpgInputPath, "image/jpg", ChatMessageImageDetailLevel.Low),
                 _ => throw new ArgumentException(nameof(imageSourceKind)),
             };
 

@@ -49,11 +49,6 @@ namespace Azure.AI.Inference
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AzureAIInferenceClientOptions();
 
-            // CUSTOM CODE NOTE: This mimics the TokenRequestContext internal to the BearerTokenAuthenticationPolicy used in the pipeline
-            TokenRequestContext context = new TokenRequestContext(AuthorizationScopes, null, null, null, isCaeEnabled: true, isProofOfPossessionEnabled: false, null, null, null);
-            var token = credential.GetToken(context, CancellationToken.None).Token;
-            options.AddPolicy(new AddApiKeyHeaderPolicy(token), HttpPipelinePosition.PerCall);
-
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
