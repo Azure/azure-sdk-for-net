@@ -3408,6 +3408,7 @@ namespace Azure.Storage.Files.Shares
                 options?.SmbProperties,
                 options?.FilePermission?.Permission,
                 options?.FilePermission?.PermissionFormat,
+                options?.NfsProperties,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -3450,6 +3451,7 @@ namespace Azure.Storage.Files.Shares
                 options?.SmbProperties,
                 options?.FilePermission?.Permission,
                 options?.FilePermission?.PermissionFormat,
+                options?.NfsProperties,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -3510,6 +3512,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
+                nfsProperties: default,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -3566,6 +3569,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
+                nfsProperties: default,
                 conditions: default,
                 async: false,
                 cancellationToken)
@@ -3626,6 +3630,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
+                nfsProperties: default,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -3681,6 +3686,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
+                nfsProperties: default,
                 conditions: default,
                 async: true,
                 cancellationToken)
@@ -3712,6 +3718,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionFormat">
         /// Optional file permission format.
         /// </param>
+        /// <param name="nfsProperties">
+        /// Optional NFS properties.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
@@ -3737,6 +3746,7 @@ namespace Azure.Storage.Files.Shares
             FileSmbProperties smbProperties,
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
+            FileNfsProperties nfsProperties,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -3772,6 +3782,9 @@ namespace Azure.Storage.Files.Shares
                             filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
+                            owner: nfsProperties?.Owner,
+                            group: nfsProperties?.Group,
+                            fileMode: nfsProperties?.FileMode.ToOctalFileMode(),
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -3788,6 +3801,9 @@ namespace Azure.Storage.Files.Shares
                             filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
+                            owner: nfsProperties?.Owner,
+                            group: nfsProperties?.Group,
+                            fileMode: nfsProperties?.FileMode.ToOctalFileMode(),
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);

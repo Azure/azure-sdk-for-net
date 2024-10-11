@@ -98,9 +98,10 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = default,
             string directoryName = default,
             string fileName = default,
-            ShareClientOptions options = default)
+            ShareClientOptions options = default,
+            bool nfs = false)
         {
-            DisposingDirectory test = await clientBuilder.GetTestDirectoryAsync(service, shareName, directoryName, options);
+            DisposingDirectory test = await clientBuilder.GetTestDirectoryAsync(service, shareName, directoryName, options, nfs: nfs);
             fileName ??= clientBuilder.GetNewFileName();
             ShareFileClient file = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(test.Directory.GetFileClient(fileName));
             return await DisposingFile.CreateAsync(test, file);
