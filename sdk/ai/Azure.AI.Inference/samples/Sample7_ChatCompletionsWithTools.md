@@ -52,10 +52,9 @@ var requestOptions = new ChatCompletionsOptions()
 };
 
 Response<ChatCompletions> response = client.Complete(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 
-ChatResponseMessage responseMessage = response.Value.Choices[0].Message;
-ChatCompletionsToolCall functionToolCall = responseMessage.ToolCalls[0] as ChatCompletionsToolCall;
+ChatCompletionsToolCall functionToolCall = response.Value.ToolCalls[0];
 
 ChatCompletionsOptions followupOptions = new()
 {
@@ -69,7 +68,7 @@ foreach (ChatRequestMessage originalMessage in requestOptions.Messages)
 }
 
 // Add the tool call message just received back from the assistant
-followupOptions.Messages.Add(new ChatRequestAssistantMessage(responseMessage));
+followupOptions.Messages.Add(new ChatRequestAssistantMessage(response.Value));
 
 // And also the tool message that resolves the tool call
 followupOptions.Messages.Add(new ChatRequestToolMessage(
@@ -77,7 +76,7 @@ followupOptions.Messages.Add(new ChatRequestToolMessage(
     content: "31 celsius"));
 
 Response<ChatCompletions> followupResponse = client.Complete(followupOptions);
-System.Console.WriteLine(followupResponse.Value.Choices[0].Message.Content);
+System.Console.WriteLine(followupResponse.Value.Content);
 ```
 
 An `async` option is also available.
@@ -124,10 +123,9 @@ var requestOptions = new ChatCompletionsOptions()
 };
 
 Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 
-ChatResponseMessage responseMessage = response.Value.Choices[0].Message;
-ChatCompletionsToolCall functionToolCall = responseMessage.ToolCalls[0] as ChatCompletionsToolCall;
+ChatCompletionsToolCall functionToolCall = response.Value.ToolCalls[0];
 
 ChatCompletionsOptions followupOptions = new()
 {
@@ -141,7 +139,7 @@ foreach (ChatRequestMessage originalMessage in requestOptions.Messages)
 }
 
 // Add the tool call message just received back from the assistant
-followupOptions.Messages.Add(new ChatRequestAssistantMessage(responseMessage));
+followupOptions.Messages.Add(new ChatRequestAssistantMessage(response.Value));
 
 // And also the tool message that resolves the tool call
 followupOptions.Messages.Add(new ChatRequestToolMessage(
@@ -149,5 +147,5 @@ followupOptions.Messages.Add(new ChatRequestToolMessage(
     content: "31 celsius"));
 
 Response<ChatCompletions> followupResponse = await client.CompleteAsync(followupOptions);
-System.Console.WriteLine(followupResponse.Value.Choices[0].Message.Content);
+System.Console.WriteLine(followupResponse.Value.Content);
 ```

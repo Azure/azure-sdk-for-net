@@ -177,7 +177,7 @@ var requestOptions = new ChatCompletionsOptions()
 };
 
 Response<ChatCompletions> response = client.Complete(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 ```
 
 The following types or messages are supported: `SystemMessage`,`UserMessage`, `AssistantMessage`, `ToolMessage`. See also samples:
@@ -207,7 +207,7 @@ BinaryData messages = BinaryData.FromString(jsonMessages);
 requestOptions = ModelReaderWriter.Read<ChatCompletionsOptions>(messages);
 
 Response<ChatCompletions> response = client.Complete(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 ```
 
 To generate completions for additional messages, simply call `client.Complete` multiple times using the same `client`.

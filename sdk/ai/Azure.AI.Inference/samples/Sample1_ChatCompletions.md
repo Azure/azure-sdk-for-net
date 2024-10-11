@@ -26,7 +26,7 @@ var requestOptions = new ChatCompletionsOptions()
 };
 
 Response<ChatCompletions> response = client.Complete(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 ```
 
 An `async` option is also available.
@@ -47,5 +47,5 @@ var requestOptions = new ChatCompletionsOptions()
 };
 
 Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 ```

@@ -24,14 +24,14 @@ var messages = new List<ChatRequestMessage>()
 var requestOptions = new ChatCompletionsOptions(messages);
 
 Response<ChatCompletions> response = client.Complete(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 
-messages.Add(new ChatRequestAssistantMessage(response.Value.Choices[0].Message));
+messages.Add(new ChatRequestAssistantMessage(response.Value));
 messages.Add(new ChatRequestUserMessage("And what was the estimated cost to build it?"));
 
 requestOptions = new ChatCompletionsOptions(messages);
 response = client.Complete(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 ```
 
 An `async` option is also available.
@@ -50,12 +50,12 @@ var messages = new List<ChatRequestMessage>()
 var requestOptions = new ChatCompletionsOptions(messages);
 
 Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 
-messages.Add(new ChatRequestAssistantMessage(response.Value.Choices[0].Message));
+messages.Add(new ChatRequestAssistantMessage(response.Value));
 messages.Add(new ChatRequestUserMessage("And what was the estimated cost to build it?"));
 
 requestOptions = new ChatCompletionsOptions(messages);
 response = await client.CompleteAsync(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 ```
