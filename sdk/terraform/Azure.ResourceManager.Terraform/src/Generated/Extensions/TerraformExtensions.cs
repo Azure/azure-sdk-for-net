@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Terraform
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AzureTerraform_ExportTerraform</description>
+        /// <description>ExportTerraform_ExportTerraform</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Terraform
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AzureTerraform_ExportTerraform</description>
+        /// <description>ExportTerraform_ExportTerraform</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Terraform
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OperationStatuses_Get</description>
+        /// <description>ExportTerraform_OperationStatuses</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Terraform
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.GetOperationStatus(WaitUntil,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.OperationStatuses(WaitUntil,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.Terraform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
-        public static async Task<ArmOperation> GetOperationStatusAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<OperationStatus>> OperationStatusesAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableTerraformSubscriptionResource(subscriptionResource).GetOperationStatusAsync(waitUntil, operationId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableTerraformSubscriptionResource(subscriptionResource).OperationStatusesAsync(waitUntil, operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Terraform
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OperationStatuses_Get</description>
+        /// <description>ExportTerraform_OperationStatuses</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Terraform
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.GetOperationStatus(WaitUntil,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.OperationStatuses(WaitUntil,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.Terraform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
-        public static ArmOperation GetOperationStatus(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        public static ArmOperation<OperationStatus> OperationStatuses(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableTerraformSubscriptionResource(subscriptionResource).GetOperationStatus(waitUntil, operationId, cancellationToken);
+            return GetMockableTerraformSubscriptionResource(subscriptionResource).OperationStatuses(waitUntil, operationId, cancellationToken);
         }
     }
 }

@@ -34,17 +34,14 @@ namespace Azure.ResourceManager.Terraform.Models
                 throw new FormatException($"The model {nameof(OperationStatus)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Id))
+            if (options.Format != "W" && Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceId))
-            {
-                writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceId);
-            }
-            if (Optional.IsDefined(Name))
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -59,22 +56,12 @@ namespace Azure.ResourceManager.Terraform.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
-            }
-            if (Optional.IsDefined(PercentComplete))
+            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
-            if (Optional.IsDefined(Error))
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -116,27 +103,29 @@ namespace Azure.ResourceManager.Terraform.Models
             {
                 return null;
             }
-            string id = default;
-            string resourceId = default;
+            ExportResult properties = default;
+            ResourceProvisioningState status = default;
             string name = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
-            string status = default;
             double? percentComplete = default;
-            ExportResult properties = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ExportResult.DeserializeExportResult(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("resourceId"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    status = new ResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -162,11 +151,6 @@ namespace Azure.ResourceManager.Terraform.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"u8))
-                {
-                    status = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("percentComplete"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -174,15 +158,6 @@ namespace Azure.ResourceManager.Terraform.Models
                         continue;
                     }
                     percentComplete = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = ExportResult.DeserializeExportResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -201,14 +176,12 @@ namespace Azure.ResourceManager.Terraform.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new OperationStatus(
-                id,
-                resourceId,
+                properties,
+                status,
                 name,
                 startTime,
                 endTime,
-                status,
                 percentComplete,
-                properties,
                 error,
                 serializedAdditionalRawData);
         }

@@ -46,52 +46,51 @@ namespace Azure.ResourceManager.Terraform.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
-        internal OperationStatus()
+        /// <param name="status"> The operation status. </param>
+        internal OperationStatus(ResourceProvisioningState status)
         {
+            Status = status;
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
-        /// <param name="id"> The operation status resource id. </param>
-        /// <param name="resourceId"> The fully qualified resource id of the resource for which the operation was performed. </param>
-        /// <param name="name"> The operation name. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="percentComplete"> The progress percentage of the operation, ranges from 0 to 100. </param>
-        /// <param name="properties"> The Terraform export result. </param>
-        /// <param name="error"> The error object. </param>
+        /// <param name="properties"> RP-specific properties for the operationStatus resource, only appears when operation ended with Succeeded status. </param>
+        /// <param name="status"> The operation status. </param>
+        /// <param name="name"> The name of the  operationStatus resource. </param>
+        /// <param name="startOn"> Operation start time. </param>
+        /// <param name="endOn"> Operation complete time. </param>
+        /// <param name="percentComplete"> The progress made toward completing the operation. </param>
+        /// <param name="error"> Errors that occurred if the operation ended with Canceled or Failed status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationStatus(string id, string resourceId, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, double? percentComplete, ExportResult properties, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OperationStatus(ExportResult properties, ResourceProvisioningState status, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            ResourceId = resourceId;
+            Properties = properties;
+            Status = status;
             Name = name;
             StartOn = startOn;
             EndOn = endOn;
-            Status = status;
             PercentComplete = percentComplete;
-            Properties = properties;
             Error = error;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The operation status resource id. </summary>
-        public string Id { get; }
-        /// <summary> The fully qualified resource id of the resource for which the operation was performed. </summary>
-        public string ResourceId { get; }
-        /// <summary> The operation name. </summary>
-        public string Name { get; }
-        /// <summary> The start time of the operation. </summary>
-        public DateTimeOffset? StartOn { get; }
-        /// <summary> The end time of the operation. </summary>
-        public DateTimeOffset? EndOn { get; }
-        /// <summary> The status of the operation. </summary>
-        public string Status { get; }
-        /// <summary> The progress percentage of the operation, ranges from 0 to 100. </summary>
-        public double? PercentComplete { get; }
-        /// <summary> The Terraform export result. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatus"/> for deserialization. </summary>
+        internal OperationStatus()
+        {
+        }
+
+        /// <summary> RP-specific properties for the operationStatus resource, only appears when operation ended with Succeeded status. </summary>
         public ExportResult Properties { get; }
-        /// <summary> The error object. </summary>
+        /// <summary> The operation status. </summary>
+        public ResourceProvisioningState Status { get; }
+        /// <summary> The name of the  operationStatus resource. </summary>
+        public string Name { get; }
+        /// <summary> Operation start time. </summary>
+        public DateTimeOffset? StartOn { get; }
+        /// <summary> Operation complete time. </summary>
+        public DateTimeOffset? EndOn { get; }
+        /// <summary> The progress made toward completing the operation. </summary>
+        public double? PercentComplete { get; }
+        /// <summary> Errors that occurred if the operation ended with Canceled or Failed status. </summary>
         public ResponseError Error { get; }
     }
 }

@@ -55,27 +55,23 @@ namespace Azure.ResourceManager.Terraform.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationStatus"/>. </summary>
-        /// <param name="id"> The operation status resource id. </param>
-        /// <param name="resourceId"> The fully qualified resource id of the resource for which the operation was performed. </param>
-        /// <param name="name"> The operation name. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="percentComplete"> The progress percentage of the operation, ranges from 0 to 100. </param>
-        /// <param name="properties"> The Terraform export result. </param>
-        /// <param name="error"> The error object. </param>
+        /// <param name="properties"> RP-specific properties for the operationStatus resource, only appears when operation ended with Succeeded status. </param>
+        /// <param name="status"> The operation status. </param>
+        /// <param name="name"> The name of the  operationStatus resource. </param>
+        /// <param name="startOn"> Operation start time. </param>
+        /// <param name="endOn"> Operation complete time. </param>
+        /// <param name="percentComplete"> The progress made toward completing the operation. </param>
+        /// <param name="error"> Errors that occurred if the operation ended with Canceled or Failed status. </param>
         /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
-        public static OperationStatus OperationStatus(string id = null, string resourceId = null, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string status = null, double? percentComplete = null, ExportResult properties = null, ResponseError error = null)
+        public static OperationStatus OperationStatus(ExportResult properties = null, ResourceProvisioningState status = default, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, ResponseError error = null)
         {
             return new OperationStatus(
-                id,
-                resourceId,
+                properties,
+                status,
                 name,
                 startOn,
                 endOn,
-                status,
                 percentComplete,
-                properties,
                 error,
                 serializedAdditionalRawData: null);
         }

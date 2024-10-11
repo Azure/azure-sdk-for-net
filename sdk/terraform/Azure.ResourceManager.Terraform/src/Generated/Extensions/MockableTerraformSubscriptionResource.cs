@@ -17,10 +17,8 @@ namespace Azure.ResourceManager.Terraform.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableTerraformSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _azureTerraformClientClientDiagnostics;
-        private AzureTerraformRestOperations _azureTerraformClientRestClient;
-        private ClientDiagnostics _operationStatusesClientDiagnostics;
-        private OperationStatusesRestOperations _operationStatusesRestClient;
+        private ClientDiagnostics _exportTerraformClientDiagnostics;
+        private ExportTerraformRestOperations _exportTerraformRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableTerraformSubscriptionResource"/> class for mocking. </summary>
         protected MockableTerraformSubscriptionResource()
@@ -34,10 +32,8 @@ namespace Azure.ResourceManager.Terraform.Mocking
         {
         }
 
-        private ClientDiagnostics AzureTerraformClientClientDiagnostics => _azureTerraformClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Terraform", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AzureTerraformRestOperations AzureTerraformClientRestClient => _azureTerraformClientRestClient ??= new AzureTerraformRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics OperationStatusesClientDiagnostics => _operationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Terraform", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationStatusesRestOperations OperationStatusesRestClient => _operationStatusesRestClient ??= new OperationStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ExportTerraformClientDiagnostics => _exportTerraformClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Terraform", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ExportTerraformRestOperations ExportTerraformRestClient => _exportTerraformRestClient ??= new ExportTerraformRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -54,7 +50,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AzureTerraform_ExportTerraform</description>
+        /// <description>ExportTerraform_ExportTerraform</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -70,12 +66,12 @@ namespace Azure.ResourceManager.Terraform.Mocking
         {
             Argument.AssertNotNull(exportParameter, nameof(exportParameter));
 
-            using var scope = AzureTerraformClientClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
+            using var scope = ExportTerraformClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
             scope.Start();
             try
             {
-                var response = await AzureTerraformClientRestClient.ExportTerraformAsync(Id.SubscriptionId, exportParameter, cancellationToken).ConfigureAwait(false);
-                var operation = new TerraformArmOperation<OperationStatus>(new OperationStatusOperationSource(), AzureTerraformClientClientDiagnostics, Pipeline, AzureTerraformClientRestClient.CreateExportTerraformRequest(Id.SubscriptionId, exportParameter).Request, response, OperationFinalStateVia.Location);
+                var response = await ExportTerraformRestClient.ExportTerraformAsync(Id.SubscriptionId, exportParameter, cancellationToken).ConfigureAwait(false);
+                var operation = new TerraformArmOperation<OperationStatus>(new OperationStatusOperationSource(), ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateExportTerraformRequest(Id.SubscriptionId, exportParameter).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +92,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AzureTerraform_ExportTerraform</description>
+        /// <description>ExportTerraform_ExportTerraform</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -112,12 +108,12 @@ namespace Azure.ResourceManager.Terraform.Mocking
         {
             Argument.AssertNotNull(exportParameter, nameof(exportParameter));
 
-            using var scope = AzureTerraformClientClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
+            using var scope = ExportTerraformClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
             scope.Start();
             try
             {
-                var response = AzureTerraformClientRestClient.ExportTerraform(Id.SubscriptionId, exportParameter, cancellationToken);
-                var operation = new TerraformArmOperation<OperationStatus>(new OperationStatusOperationSource(), AzureTerraformClientClientDiagnostics, Pipeline, AzureTerraformClientRestClient.CreateExportTerraformRequest(Id.SubscriptionId, exportParameter).Request, response, OperationFinalStateVia.Location);
+                var response = ExportTerraformRestClient.ExportTerraform(Id.SubscriptionId, exportParameter, cancellationToken);
+                var operation = new TerraformArmOperation<OperationStatus>(new OperationStatusOperationSource(), ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateExportTerraformRequest(Id.SubscriptionId, exportParameter).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -138,7 +134,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OperationStatuses_Get</description>
+        /// <description>ExportTerraform_OperationStatuses</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -151,18 +147,18 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<ArmOperation> GetOperationStatusAsync(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationStatus>> OperationStatusesAsync(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = OperationStatusesClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.GetOperationStatus");
+            using var scope = ExportTerraformClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.OperationStatuses");
             scope.Start();
             try
             {
-                var response = await OperationStatusesRestClient.GetAsync(operationId, Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                var operation = new TerraformArmOperation(OperationStatusesClientDiagnostics, Pipeline, OperationStatusesRestClient.CreateGetRequest(operationId, Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
+                var response = await ExportTerraformRestClient.OperationStatusesAsync(operationId, Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                var operation = new TerraformArmOperation<OperationStatus>(new OperationStatusOperationSource(), ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateOperationStatusesRequest(operationId, Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -181,7 +177,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OperationStatuses_Get</description>
+        /// <description>ExportTerraform_OperationStatuses</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -194,18 +190,18 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual ArmOperation GetOperationStatus(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationStatus> OperationStatuses(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = OperationStatusesClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.GetOperationStatus");
+            using var scope = ExportTerraformClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.OperationStatuses");
             scope.Start();
             try
             {
-                var response = OperationStatusesRestClient.Get(operationId, Id.SubscriptionId, cancellationToken);
-                var operation = new TerraformArmOperation(OperationStatusesClientDiagnostics, Pipeline, OperationStatusesRestClient.CreateGetRequest(operationId, Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
+                var response = ExportTerraformRestClient.OperationStatuses(operationId, Id.SubscriptionId, cancellationToken);
+                var operation = new TerraformArmOperation<OperationStatus>(new OperationStatusOperationSource(), ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateOperationStatusesRequest(operationId, Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
