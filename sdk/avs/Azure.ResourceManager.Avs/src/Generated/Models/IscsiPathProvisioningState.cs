@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(IscsiPathProvisioningState left, IscsiPathProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IscsiPathProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(IscsiPathProvisioningState left, IscsiPathProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IscsiPathProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IscsiPathProvisioningState"/>. </summary>
         public static implicit operator IscsiPathProvisioningState(string value) => new IscsiPathProvisioningState(value);
 
         /// <inheritdoc />

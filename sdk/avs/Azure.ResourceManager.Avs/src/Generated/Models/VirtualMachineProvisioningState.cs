@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(VirtualMachineProvisioningState left, VirtualMachineProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachineProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(VirtualMachineProvisioningState left, VirtualMachineProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualMachineProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachineProvisioningState"/>. </summary>
         public static implicit operator VirtualMachineProvisioningState(string value) => new VirtualMachineProvisioningState(value);
 
         /// <inheritdoc />

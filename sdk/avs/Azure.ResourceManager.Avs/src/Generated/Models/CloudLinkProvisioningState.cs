@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(CloudLinkProvisioningState left, CloudLinkProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CloudLinkProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(CloudLinkProvisioningState left, CloudLinkProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CloudLinkProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudLinkProvisioningState"/>. </summary>
         public static implicit operator CloudLinkProvisioningState(string value) => new CloudLinkProvisioningState(value);
 
         /// <inheritdoc />

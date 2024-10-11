@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.Avs
      [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class WorkloadNetworkResource : ArmResource
     {
-        // /// <summary>
-        // /// Generate the resource identifier of a <see cref="WorkloadNetworkResource"/> instance. </summary>
-        // /// <param name="subscriptionId"> The subscriptionId. </param>
-        // /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        // /// <param name="privateCloudName"> The privateCloudName. </param>
-        // /// <param name="workloadNetworkName"> The workloadNetworkName. </param>
-        // [EditorBrowsable(EditorBrowsableState.Never)]
-        // public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, WorkloadNetworkName workloadNetworkName)
-        // {
-        //     var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/{workloadNetworkName}";
-        //     return new ResourceIdentifier(resourceId);
-        // }
+        /// <summary>
+        /// Generate the resource identifier of a <see cref="WorkloadNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="workloadNetworkName"> The workloadNetworkName. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, WorkloadNetworkName workloadNetworkName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/{workloadNetworkName}";
+            return new ResourceIdentifier(resourceId);
+        }
     }
 }

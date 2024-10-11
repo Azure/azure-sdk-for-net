@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(ScriptPackageProvisioningState left, ScriptPackageProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptPackageProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ScriptPackageProvisioningState left, ScriptPackageProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScriptPackageProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptPackageProvisioningState"/>. </summary>
         public static implicit operator ScriptPackageProvisioningState(string value) => new ScriptPackageProvisioningState(value);
 
         /// <inheritdoc />
