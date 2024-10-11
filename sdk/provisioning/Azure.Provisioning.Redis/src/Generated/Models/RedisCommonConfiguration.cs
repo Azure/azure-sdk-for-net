@@ -11,8 +11,9 @@ namespace Azure.Provisioning.Redis;
 
 /// <summary>
 /// All Redis Settings. Few possible keys:
-/// rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value
-/// etc.
+/// rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,
+/// maxmemory-policy,notify-keyspace-events, aof-backup-enabled,
+/// aof-storage-connection-string-0, aof-storage-connection-string-1 etc.
 /// </summary>
 public partial class RedisCommonConfiguration : ProvisioningConstruct
 {
@@ -91,6 +92,12 @@ public partial class RedisCommonConfiguration : ProvisioningConstruct
     private readonly BicepValue<string> _maxClients;
 
     /// <summary>
+    /// The keyspace events which should be monitored.
+    /// </summary>
+    public BicepValue<string> NotifyKeyspaceEvents { get => _notifyKeyspaceEvents; set => _notifyKeyspaceEvents.Assign(value); }
+    private readonly BicepValue<string> _notifyKeyspaceEvents;
+
+    /// <summary>
     /// Preferred auth method to communicate to storage account used for data
     /// archive, specify SAS or ManagedIdentity, default value is SAS.
     /// </summary>
@@ -167,6 +174,7 @@ public partial class RedisCommonConfiguration : ProvisioningConstruct
         _maxMemoryReserved = BicepValue<string>.DefineProperty(this, "MaxMemoryReserved", ["maxmemory-reserved"]);
         _maxMemoryDelta = BicepValue<string>.DefineProperty(this, "MaxMemoryDelta", ["maxmemory-delta"]);
         _maxClients = BicepValue<string>.DefineProperty(this, "MaxClients", ["maxclients"], isOutput: true);
+        _notifyKeyspaceEvents = BicepValue<string>.DefineProperty(this, "NotifyKeyspaceEvents", ["notify-keyspace-events"]);
         _preferredDataArchiveAuthMethod = BicepValue<string>.DefineProperty(this, "PreferredDataArchiveAuthMethod", ["preferred-data-archive-auth-method"], isOutput: true);
         _preferredDataPersistenceAuthMethod = BicepValue<string>.DefineProperty(this, "PreferredDataPersistenceAuthMethod", ["preferred-data-persistence-auth-method"]);
         _zonalConfiguration = BicepValue<string>.DefineProperty(this, "ZonalConfiguration", ["zonal-configuration"], isOutput: true);

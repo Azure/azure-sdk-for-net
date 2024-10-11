@@ -141,7 +141,7 @@
     <PackageReference Update="Azure.ResourceManager.ManagedServiceIdentities" Version="1.2.3" />
     <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.2.2" />
     <PackageReference Update="Azure.ResourceManager.PostgreSql" Version="1.2.0-beta.6" />
-    <PackageReference Update="Azure.ResourceManager.Redis" Version="1.3.3" />
+    <PackageReference Update="Azure.ResourceManager.Redis" Version="1.4.0" />
     <PackageReference Update="Azure.ResourceManager.Resources" Version="1.7.3" />
     <PackageReference Update="Azure.ResourceManager.Search" Version="1.3.0-beta.3" />
     <PackageReference Update="Azure.ResourceManager.ServiceBus" Version="1.1.0-beta.7" />
@@ -228,7 +228,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20241009.4" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20241010.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20240813.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" PrivateAssets="All" />
@@ -354,7 +354,7 @@
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
-    <PackageReference Update="System.ClientModel" Version="1.2.0" />
+    <PackageReference Update="System.ClientModel" Version="1.2.1" />
     <PackageReference Update="System.Diagnostics.TraceSource" Version="4.3.0" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.IO.Pipelines" Version="4.5.1" />
