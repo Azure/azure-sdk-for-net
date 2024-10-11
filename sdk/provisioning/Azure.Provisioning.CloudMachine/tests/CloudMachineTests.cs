@@ -29,7 +29,7 @@ public class CloudMachineTests
         Console.WriteLine(cm.Id);
     }
 
-    //[Ignore("no recordings yet")]
+    [Ignore("no recordings yet")]
     [Theory]
     [TestCase([new string[] { "--init" }])]
     [TestCase([new string[] { "" }])]
@@ -50,7 +50,7 @@ public class CloudMachineTests
         Console.WriteLine(downloaded.ToString());
     }
 
-    //[Ignore("no recordings yet")]
+    [Ignore("no recordings yet")]
     [Theory]
     [TestCase([new string[] { "--init" }])]
     [TestCase([new string[] { "" }])]
