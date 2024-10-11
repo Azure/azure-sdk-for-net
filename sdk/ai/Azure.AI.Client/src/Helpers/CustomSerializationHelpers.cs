@@ -5,7 +5,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 
-namespace Azure.AI.OpenAI.Assistants;
+namespace Azure.AI.Client;
 internal static partial class CustomSerializationHelpers
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -161,7 +161,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="agentId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> DeleteAgent(string agentId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Agents.DeleteAssistant");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Agents.DeleteAgent");
             scope.Start();
             Response<InternalAgentDeletionStatus> baseResponse = InternalDeleteAgent(agentId, cancellationToken);
             bool simplifiedValue =
@@ -310,14 +310,14 @@ namespace Azure.AI.Client
         }
 
         /// <inheritdoc cref="InternalGetAgentsAsync(int?, ListSortOrder?, string, string, CancellationToken)"/>
-        public virtual async Task<Response<PageableList<Agent>>> GetAssistantsAsync(
+        public virtual async Task<Response<PageableList<Agent>>> GetAgentsAsync(
             int? limit = null,
             ListSortOrder? order = null,
             string after = null,
             string before = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Agents.GetAssistants");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Agents.GetAgents");
             scope.Start();
             Response<InternalOpenAIPageableListOfAgent> baseResponse
                 = await InternalGetAgentsAsync(limit, order, after, before, cancellationToken).ConfigureAwait(false);

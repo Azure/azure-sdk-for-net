@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.Client.Models;
-using Azure.Core;
 
 namespace Azure.AI.Client;
 
@@ -96,7 +95,7 @@ public static partial class AIClientModelFactory
     /// <summary> Initializes a new instance of <see cref="Models.ThreadRun"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
     /// <param name="threadId"> The ID of the thread associated with this run. </param>
-    /// <param name="assistantId"> The ID of the agent associated with the thread this run was performed against. </param>
+    /// <param name="agentId"> The ID of the agent associated with the thread this run was performed against. </param>
     /// <param name="status"> The status of the agent thread run. </param>
     /// <param name="requiredAction">
     /// The details of the action required for the agent thread run to continue.
@@ -130,12 +129,12 @@ public static partial class AIClientModelFactory
     /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
     /// <param name="parallelToolCalls"> Determines if tools can be executed in parallel within the run. </param>
     /// <returns> A new <see cref="Models.ThreadRun"/> instance for mocking. </returns>
-    public static ThreadRun ThreadRun(string id = null, string threadId = null, string assistantId = null, RunStatus status = default, RequiredAction requiredAction = null, RunError lastError = null, string model = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, DateTimeOffset createdAt = default, DateTimeOffset? expiresAt = null, DateTimeOffset? startedAt = null, DateTimeOffset? completedAt = null, DateTimeOffset? cancelledAt = null, DateTimeOffset? failedAt = null, IncompleteRunDetails? incompleteDetails = null, RunCompletionUsage usage = default, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, UpdateToolResourcesOptions toolResources = null, bool? parallelToolCalls = null)
+    public static ThreadRun ThreadRun(string id = null, string threadId = null, string agentId = null, RunStatus status = default, RequiredAction requiredAction = null, RunError lastError = null, string model = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, DateTimeOffset createdAt = default, DateTimeOffset? expiresAt = null, DateTimeOffset? startedAt = null, DateTimeOffset? completedAt = null, DateTimeOffset? cancelledAt = null, DateTimeOffset? failedAt = null, IncompleteRunDetails? incompleteDetails = null, RunCompletionUsage usage = default, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, UpdateToolResourcesOptions toolResources = null, bool? parallelToolCalls = null)
     {
         tools ??= new List<ToolDefinition>();
         metadata ??= new Dictionary<string, string>();
 
-        return new ThreadRun(id, @object: null, threadId, assistantId, status, requiredAction, lastError, model, instructions, tools.ToList(), createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, incompleteDetails, usage, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, metadata, toolResources, parallelToolCalls, serializedAdditionalRawData: null);
+        return new ThreadRun(id, @object: null, threadId, agentId, status, requiredAction, lastError, model, instructions, tools.ToList(), createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, incompleteDetails, usage, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, metadata, toolResources, parallelToolCalls, serializedAdditionalRawData: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="Models.OpenAIFile"/>. </summary>
@@ -153,7 +152,7 @@ public static partial class AIClientModelFactory
     /// <summary> Initializes a new instance of <see cref="Models.RunStep"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
     /// <param name="type"> The type of run step, which can be either message_creation or tool_calls. </param>
-    /// <param name="assistantId"> The ID of the agent associated with the run step. </param>
+    /// <param name="agentId"> The ID of the agent associated with the run step. </param>
     /// <param name="threadId"> The ID of the thread that was run. </param>
     /// <param name="runId"> The ID of the run that this run step is a part of. </param>
     /// <param name="status"> The status of this run step. </param>
@@ -167,11 +166,11 @@ public static partial class AIClientModelFactory
     /// <param name="usage"> Usage statistics related to the run step. </param>
     /// <param name="metadata"> A set of key/value pairs that can be attached to an object, used for storing additional information. </param>
     /// <returns> A new <see cref="Models.RunStep"/> instance for mocking. </returns>
-    public static RunStep RunStep(string id = null, RunStepType type = default, string assistantId = null, string threadId = null, string runId = null, RunStepStatus status = default, RunStepDetails stepDetails = null, RunStepError lastError = null, DateTimeOffset createdAt = default, DateTimeOffset? expiredAt = null, DateTimeOffset? completedAt = null, DateTimeOffset? cancelledAt = null, DateTimeOffset? failedAt = null, RunStepCompletionUsage usage = null, IReadOnlyDictionary<string, string> metadata = null)
+    public static RunStep RunStep(string id = null, RunStepType type = default, string agentId = null, string threadId = null, string runId = null, RunStepStatus status = default, RunStepDetails stepDetails = null, RunStepError lastError = null, DateTimeOffset createdAt = default, DateTimeOffset? expiredAt = null, DateTimeOffset? completedAt = null, DateTimeOffset? cancelledAt = null, DateTimeOffset? failedAt = null, RunStepCompletionUsage usage = null, IReadOnlyDictionary<string, string> metadata = null)
     {
         metadata ??= new Dictionary<string, string>();
 
-        return new RunStep(id, @object: null, type, assistantId, threadId, runId, status, stepDetails, lastError, createdAt, expiredAt, completedAt, cancelledAt, failedAt, usage, metadata, serializedAdditionalRawData: null);
+        return new RunStep(id, @object: null, type, agentId, threadId, runId, status, stepDetails, lastError, createdAt, expiredAt, completedAt, cancelledAt, failedAt, usage, metadata, serializedAdditionalRawData: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="Models.ThreadMessage"/>. </summary>
@@ -184,18 +183,18 @@ public static partial class AIClientModelFactory
     /// <param name="incompleteAt"> The Unix timestamp (in seconds) for when the message was marked as incomplete. </param>
     /// <param name="role"> The role associated with the agent thread message. </param>
     /// <param name="contentItems"> The list of content items associated with the agent thread message. </param>
-    /// <param name="assistantId"> If applicable, the ID of the agent that authored this message. </param>
+    /// <param name="agentId"> If applicable, the ID of the agent that authored this message. </param>
     /// <param name="runId"> If applicable, the ID of the run associated with the authoring of this message. </param>
     /// <param name="attachments"> A list of files attached to the message, and the tools they were added to. </param>
     /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. </param>
     /// <returns> A new <see cref="Models.ThreadMessage"/> instance for mocking. </returns>
-    public static ThreadMessage ThreadMessage(string id = null, DateTimeOffset createdAt = default, string threadId = null, MessageStatus status = default, MessageIncompleteDetails incompleteDetails = null, DateTimeOffset? completedAt = null, DateTimeOffset? incompleteAt = null, MessageRole role = default, IEnumerable<MessageContent> contentItems = null, string assistantId = null, string runId = null, IEnumerable<MessageAttachment> attachments = null, IDictionary<string, string> metadata = null)
+    public static ThreadMessage ThreadMessage(string id = null, DateTimeOffset createdAt = default, string threadId = null, MessageStatus status = default, MessageIncompleteDetails incompleteDetails = null, DateTimeOffset? completedAt = null, DateTimeOffset? incompleteAt = null, MessageRole role = default, IEnumerable<MessageContent> contentItems = null, string agentId = null, string runId = null, IEnumerable<MessageAttachment> attachments = null, IDictionary<string, string> metadata = null)
     {
         contentItems ??= new List<MessageContent>();
         attachments ??= new List<MessageAttachment>();
         metadata ??= new Dictionary<string, string>();
 
-        return new ThreadMessage(id, @object: null, createdAt, threadId, status, incompleteDetails, completedAt, incompleteAt, role, contentItems?.ToList(), assistantId, runId, attachments?.ToList(), metadata, serializedAdditionalRawData: null);
+        return new ThreadMessage(id, @object: null, createdAt, threadId, status, incompleteDetails, completedAt, incompleteAt, role, contentItems?.ToList(), agentId, runId, attachments?.ToList(), metadata, serializedAdditionalRawData: null);
     }
 
     public static RequiredFunctionToolCall RequiredFunctionToolCall(string toolCallId, string functionName, string functionArguments)
@@ -248,27 +247,23 @@ public static partial class AIClientModelFactory
     /// Creates a new instance of MessageFileCitationTextAnnotation.
     /// </summary>
     /// <param name="text"> The text for the citation. </param>
-    /// <param name="startIndex"> The start index of the citation. </param>
-    /// <param name="endIndex"> The end index of the citation. </param>
     /// <param name="fileId"> The file ID for the citation. </param>
     /// <param name="quote"> The quote for the citation. </param>
     /// <returns> A new instance of MessageFileCitationTextAnnotation. </returns>
-    public static MessageTextFileCitationAnnotation MessageFileCitationTextAnnotation(string text, int startIndex, int endIndex, string fileId, string quote)
+    public static MessageTextFileCitationAnnotation MessageFileCitationTextAnnotation(string text, string fileId, string quote)
     {
-        return new MessageTextFileCitationAnnotation(text, startIndex, endIndex, new InternalMessageTextFileCitationDetails(fileId, quote));
+        return new MessageTextFileCitationAnnotation(text, new InternalMessageTextFileCitationDetails(fileId, quote));
     }
 
     /// <summary>
     /// Creates a new instance of MessageFilePathTextAnnotation.
     /// </summary>
     /// <param name="text"> The text for the annotation. </param>
-    /// <param name="startIndex"> The start index for the annotation. </param>
-    /// <param name="endIndex"> The end index for the annotation. </param>
     /// <param name="fileId"> The file ID for the annotation. </param>
     /// <returns> A new instance of MessageFilePathTextAnnotation. </returns>
-    public static MessageTextFilePathAnnotation MessageFilePathTextAnnotation(string text, int startIndex, int endIndex, string fileId)
+    public static MessageTextFilePathAnnotation MessageFilePathTextAnnotation(string text, string fileId)
     {
-        return new MessageTextFilePathAnnotation(text, startIndex, endIndex, new InternalMessageTextFilePathDetails(fileId));
+        return new MessageTextFilePathAnnotation(text, new InternalMessageTextFilePathDetails(fileId));
     }
 
     /// <summary>
