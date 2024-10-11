@@ -68,11 +68,15 @@ public partial class SignalRCustomCertificate : Resource
     /// <summary>
     /// Creates a new SignalRCustomCertificate.
     /// </summary>
-    /// <param name="resourceName">Name of the SignalRCustomCertificate.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SignalRCustomCertificate resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SignalRCustomCertificate.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SignalRCustomCertificate(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.SignalRService/signalR/customCertificates", resourceVersion, context)
+    public SignalRCustomCertificate(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.SignalRService/signalR/customCertificates", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _keyVaultBaseUri = BicepValue<Uri>.DefineProperty(this, "KeyVaultBaseUri", ["properties", "keyVaultBaseUri"], isRequired: true);
@@ -85,11 +89,57 @@ public partial class SignalRCustomCertificate : Resource
     }
 
     /// <summary>
+    /// Supported SignalRCustomCertificate resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-04-01-preview.
+        /// </summary>
+        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
+
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2023-02-01.
+        /// </summary>
+        public static readonly string V2023_02_01 = "2023-02-01";
+
+        /// <summary>
+        /// 2022-02-01.
+        /// </summary>
+        public static readonly string V2022_02_01 = "2022-02-01";
+
+        /// <summary>
+        /// 2021-10-01.
+        /// </summary>
+        public static readonly string V2021_10_01 = "2021-10-01";
+
+        /// <summary>
+        /// 2020-05-01.
+        /// </summary>
+        public static readonly string V2020_05_01 = "2020-05-01";
+
+        /// <summary>
+        /// 2018-10-01.
+        /// </summary>
+        public static readonly string V2018_10_01 = "2018-10-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing SignalRCustomCertificate.
     /// </summary>
-    /// <param name="resourceName">Name of the SignalRCustomCertificate.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SignalRCustomCertificate resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SignalRCustomCertificate.</param>
     /// <returns>The existing SignalRCustomCertificate resource.</returns>
-    public static SignalRCustomCertificate FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SignalRCustomCertificate FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

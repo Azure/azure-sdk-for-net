@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator ==(SapSoftwareInstallationType left, SapSoftwareInstallationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapSoftwareInstallationType"/> values are not the same. </summary>
         public static bool operator !=(SapSoftwareInstallationType left, SapSoftwareInstallationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapSoftwareInstallationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapSoftwareInstallationType"/>. </summary>
         public static implicit operator SapSoftwareInstallationType(string value) => new SapSoftwareInstallationType(value);
 
         /// <inheritdoc />

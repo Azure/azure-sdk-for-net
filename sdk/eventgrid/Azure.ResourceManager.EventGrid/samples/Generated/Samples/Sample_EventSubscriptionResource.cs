@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
                 {
                     ResourceId = new ResourceIdentifier("/subscriptions/d33c5f7a-02ea-40f4-bf52-07f17e84d6a8/resourceGroups/TestRG/providers/Microsoft.Storage/storageAccounts/contosostg"),
                     QueueName = "queue1",
-                    QueueMessageTimeToLiveInSeconds = 300,
+                    QueueMessageTimeToLiveInSeconds = 300L,
                 },
                 Filter = new EventSubscriptionFilter()
                 {

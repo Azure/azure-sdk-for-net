@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(ZendeskAuthenticationType left, ZendeskAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ZendeskAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(ZendeskAuthenticationType left, ZendeskAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ZendeskAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ZendeskAuthenticationType"/>. </summary>
         public static implicit operator ZendeskAuthenticationType(string value) => new ZendeskAuthenticationType(value);
 
         /// <inheritdoc />

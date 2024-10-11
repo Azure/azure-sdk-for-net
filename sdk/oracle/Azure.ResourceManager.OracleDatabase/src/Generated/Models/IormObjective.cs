@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(IormObjective left, IormObjective right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IormObjective"/> values are not the same. </summary>
         public static bool operator !=(IormObjective left, IormObjective right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IormObjective"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IormObjective"/>. </summary>
         public static implicit operator IormObjective(string value) => new IormObjective(value);
 
         /// <inheritdoc />

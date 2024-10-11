@@ -26,6 +26,8 @@ namespace Azure.Identity.Tests
             LegacyExcludedHeaders.Add("x-client-SKU");
             LegacyExcludedHeaders.Add("x-client-CPU");
             LegacyExcludedHeaders.Add("x-client-Ver");
+            LegacyExcludedHeaders.Add("x-app-name");
+            LegacyExcludedHeaders.Add("x-app-ver");
             // x-ms-PKeyAuth is only added on MAC and Linux so recordings made on windows will fail on these platforms and vice-versa
             // ignoring this header as CI must run on all platforms
             LegacyExcludedHeaders.Add("x-ms-PKeyAuth");

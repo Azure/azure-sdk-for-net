@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(RoutingRuleDestinationType left, RoutingRuleDestinationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoutingRuleDestinationType"/> values are not the same. </summary>
         public static bool operator !=(RoutingRuleDestinationType left, RoutingRuleDestinationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RoutingRuleDestinationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RoutingRuleDestinationType"/>. </summary>
         public static implicit operator RoutingRuleDestinationType(string value) => new RoutingRuleDestinationType(value);
 
         /// <inheritdoc />

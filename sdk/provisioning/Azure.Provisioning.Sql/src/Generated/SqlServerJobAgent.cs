@@ -75,11 +75,15 @@ public partial class SqlServerJobAgent : Resource
     /// <summary>
     /// Creates a new SqlServerJobAgent.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerJobAgent.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerJobAgent resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerJobAgent.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerJobAgent(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/jobAgents", resourceVersion ?? "2021-11-01", context)
+    public SqlServerJobAgent(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/jobAgents", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -111,9 +115,14 @@ public partial class SqlServerJobAgent : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerJobAgent.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerJobAgent.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerJobAgent resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerJobAgent.</param>
     /// <returns>The existing SqlServerJobAgent resource.</returns>
-    public static SqlServerJobAgent FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerJobAgent FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

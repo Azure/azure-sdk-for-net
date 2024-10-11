@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(PolicyMode left, PolicyMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyMode"/> values are not the same. </summary>
         public static bool operator !=(PolicyMode left, PolicyMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PolicyMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyMode"/>. </summary>
         public static implicit operator PolicyMode(string value) => new PolicyMode(value);
 
         /// <inheritdoc />

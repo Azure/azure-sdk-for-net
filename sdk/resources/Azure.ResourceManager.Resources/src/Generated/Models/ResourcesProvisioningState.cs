@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(ResourcesProvisioningState left, ResourcesProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourcesProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ResourcesProvisioningState left, ResourcesProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourcesProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourcesProvisioningState"/>. </summary>
         public static implicit operator ResourcesProvisioningState(string value) => new ResourcesProvisioningState(value);
 
         /// <inheritdoc />

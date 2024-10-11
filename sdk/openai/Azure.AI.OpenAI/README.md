@@ -53,7 +53,7 @@ AzureOpenAIClient azureClient = new(
 ChatClient chatClient = azureClient.GetChatClient("my-gpt-4o-mini-deployment");
 ```
 
-##### Configure client for Azure sovereign cloud**
+##### Configure client for Azure sovereign cloud
 
 If your Microsoft Entra credentials are issued by an entity other than Azure Public Cloud, you can set the `Audience` property on `OpenAIClientOptions` to modify the token authorization scope used for requests.
 
@@ -88,7 +88,7 @@ string keyFromEnvironment = Environment.GetEnvironmentVariable("AZURE_OPENAI_API
 
 AzureOpenAIClient azureClient = new(
     new Uri("https://your-azure-openai-resource.com"),
-    new AzureKeyCredential(keyFromEnvironment));
+    new ApiKeyCredential(keyFromEnvironment));
 ChatClient chatClient = azureClient.GetChatClient("my-gpt-35-turbo-deployment");
 ```
 
@@ -319,10 +319,8 @@ tool call messages for assistant message history. Note that the model will ignor
 and that all streamed responses should map to a single, common choice index in the range of `[0..(ChoiceCount - 1)]`.
 
 ```C# Snippet:ChatTools:StreamingChatTools
-Dictionary<int, string> toolCallIdsByIndex = [];
-Dictionary<int, string> functionNamesByIndex = [];
-Dictionary<int, StringBuilder> functionArgumentBuildersByIndex = [];
 StringBuilder contentBuilder = new();
+StreamingChatToolCallsBuilder toolCallsBuilder = new();
 
 foreach (StreamingChatCompletionUpdate streamingChatUpdate
     in chatClient.CompleteChatStreaming(conversationMessages, options))
@@ -331,40 +329,22 @@ foreach (StreamingChatCompletionUpdate streamingChatUpdate
     {
         contentBuilder.Append(contentPart.Text);
     }
+
     foreach (StreamingChatToolCallUpdate toolCallUpdate in streamingChatUpdate.ToolCallUpdates)
     {
-        if (!string.IsNullOrEmpty(toolCallUpdate.Id))
-        {
-            toolCallIdsByIndex[toolCallUpdate.Index] = toolCallUpdate.Id;
-        }
-        if (!string.IsNullOrEmpty(toolCallUpdate.FunctionName))
-        {
-            functionNamesByIndex[toolCallUpdate.Index] = toolCallUpdate.FunctionName;
-        }
-        if (!string.IsNullOrEmpty(toolCallUpdate.FunctionArgumentsUpdate))
-        {
-            StringBuilder argumentsBuilder
-                = functionArgumentBuildersByIndex.TryGetValue(toolCallUpdate.Index, out StringBuilder existingBuilder)
-                    ? existingBuilder
-                    : new();
-            argumentsBuilder.Append(toolCallUpdate.FunctionArgumentsUpdate);
-            functionArgumentBuildersByIndex[toolCallUpdate.Index] = argumentsBuilder;
-        }
+        toolCallsBuilder.Append(toolCallUpdate);
     }
 }
 
-List<ChatToolCall> toolCalls = [];
-foreach (KeyValuePair<int, string> indexToIdPair in toolCallIdsByIndex)
+IReadOnlyList<ChatToolCall> toolCalls = toolCallsBuilder.Build();
+
+AssistantChatMessage assistantMessage = new AssistantChatMessage(toolCalls);
+if (contentBuilder.Length > 0)
 {
-    toolCalls.Add(ChatToolCall.CreateFunctionToolCall(
-        indexToIdPair.Value,
-        functionNamesByIndex[indexToIdPair.Key],
-        functionArgumentBuildersByIndex[indexToIdPair.Key].ToString()));
+    assistantMessage.Content.Add(ChatMessageContentPart.CreateTextPart(contentBuilder.ToString()));
 }
 
-var assistantChatMessage = new AssistantChatMessage(toolCalls);
-assistantChatMessage.Content.Add(ChatMessageContentPart.CreateTextPart(contentBuilder.ToString()));
-conversationMessages.Add(assistantChatMessage);
+conversationMessages.Add(assistantMessage);
 
 // Placeholder: each tool call must be resolved, like in the non-streaming case
 string GetToolCallOutput(ChatToolCall toolCall) => null;
@@ -404,13 +384,13 @@ ChatCompletion completion = chatClient.CompleteChat(
     ],
     options);
 
-AzureChatMessageContext onYourDataContext = completion.GetAzureMessageContext();
+ChatMessageContext onYourDataContext = completion.GetMessageContext();
 
 if (onYourDataContext?.Intent is not null)
 {
     Console.WriteLine($"Intent: {onYourDataContext.Intent}");
 }
-foreach (AzureChatCitation citation in onYourDataContext?.Citations ?? [])
+foreach (ChatCitation citation in onYourDataContext?.Citations ?? [])
 {
     Console.WriteLine($"Citation: {citation.Content}");
 }
@@ -470,7 +450,7 @@ RunCreationOptions runOptions = new()
     AdditionalInstructions = "When possible, talk like a pirate."
 };
 await foreach (StreamingUpdate streamingUpdate
-    in assistantClient.CreateRunStreamingAsync(thread, assistant, runOptions))
+    in assistantClient.CreateRunStreamingAsync(thread.Id, assistant.Id, runOptions))
 {
     if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
     {
@@ -492,8 +472,8 @@ reuse them later or, as demonstrated below, delete them when no longer desired.
 
 ```C# Snippet:Assistants:Cleanup
 // Optionally, delete persistent resources that are no longer needed.
-_ = await assistantClient.DeleteAssistantAsync(assistant);
-_ = await assistantClient.DeleteThreadAsync(thread);
+_ = await assistantClient.DeleteAssistantAsync(assistant.Id);
+_ = await assistantClient.DeleteThreadAsync(thread.Id);
 ```
 
 ## Next steps

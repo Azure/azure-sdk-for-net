@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(WindowsServerSubscription left, WindowsServerSubscription right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WindowsServerSubscription"/> values are not the same. </summary>
         public static bool operator !=(WindowsServerSubscription left, WindowsServerSubscription right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WindowsServerSubscription"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WindowsServerSubscription"/>. </summary>
         public static implicit operator WindowsServerSubscription(string value) => new WindowsServerSubscription(value);
 
         /// <inheritdoc />

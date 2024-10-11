@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static bool operator ==(PeeringConnectionState left, PeeringConnectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringConnectionState"/> values are not the same. </summary>
         public static bool operator !=(PeeringConnectionState left, PeeringConnectionState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PeeringConnectionState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PeeringConnectionState"/>. </summary>
         public static implicit operator PeeringConnectionState(string value) => new PeeringConnectionState(value);
 
         /// <inheritdoc />

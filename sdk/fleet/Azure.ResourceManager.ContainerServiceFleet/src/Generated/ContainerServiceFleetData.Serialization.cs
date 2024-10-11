@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(HubProfile))
+            {
+                writer.WritePropertyName("hubProfile"u8);
+                writer.WriteObjectValue(HubProfile, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -86,6 +91,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             ResourceType type = default;
             SystemData systemData = default;
             FleetProvisioningState? provisioningState = default;
+            FleetHubProfile hubProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,6 +175,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             provisioningState = new FleetProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("hubProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hubProfile = FleetHubProfile.DeserializeFleetHubProfile(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -188,6 +203,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 eTag,
                 identity,
                 provisioningState,
+                hubProfile,
                 serializedAdditionalRawData);
         }
 

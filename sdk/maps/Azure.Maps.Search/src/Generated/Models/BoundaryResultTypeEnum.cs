@@ -54,7 +54,7 @@ namespace Azure.Maps.Search.Models
         public static bool operator ==(BoundaryResultTypeEnum left, BoundaryResultTypeEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BoundaryResultTypeEnum"/> values are not the same. </summary>
         public static bool operator !=(BoundaryResultTypeEnum left, BoundaryResultTypeEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BoundaryResultTypeEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BoundaryResultTypeEnum"/>. </summary>
         public static implicit operator BoundaryResultTypeEnum(string value) => new BoundaryResultTypeEnum(value);
 
         /// <inheritdoc />

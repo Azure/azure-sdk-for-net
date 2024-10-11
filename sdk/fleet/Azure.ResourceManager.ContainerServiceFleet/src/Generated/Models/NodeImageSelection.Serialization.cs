@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    internal partial class NodeImageSelection : IUtf8JsonSerializable, IJsonModel<NodeImageSelection>
+    public partial class NodeImageSelection : IUtf8JsonSerializable, IJsonModel<NodeImageSelection>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NodeImageSelection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -36,6 +36,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SelectionType.ToString());
+            if (Optional.IsCollectionDefined(CustomNodeImageVersions))
+            {
+                writer.WritePropertyName("customNodeImageVersions"u8);
+                writer.WriteStartArray();
+                foreach (var item in CustomNodeImageVersions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -74,6 +84,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             NodeImageSelectionType type = default;
+            IList<NodeImageVersion> customNodeImageVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,13 +94,27 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     type = new NodeImageSelectionType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("customNodeImageVersions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<NodeImageVersion> array = new List<NodeImageVersion>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(NodeImageVersion.DeserializeNodeImageVersion(item, options));
+                    }
+                    customNodeImageVersions = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NodeImageSelection(type, serializedAdditionalRawData);
+            return new NodeImageSelection(type, customNodeImageVersions ?? new ChangeTrackingList<NodeImageVersion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeImageSelection>.Write(ModelReaderWriterOptions options)

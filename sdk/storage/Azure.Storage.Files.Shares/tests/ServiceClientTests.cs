@@ -432,6 +432,33 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/45675")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_01_05)]
+        public async Task ListSharesSegmentAsync_ProvisionedBilling()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+
+            // Ensure at least one share
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            List<ShareItem> shares = new List<ShareItem>();
+            await foreach (ShareItem item in service.GetSharesAsync())
+            {
+                shares.Add(item);
+            }
+
+            ShareItem shareItem = shares.FirstOrDefault();
+
+            // Assert
+            Assert.IsNotNull(shareItem.Properties.IncludedBurstIops);
+            Assert.IsNotNull(shareItem.Properties.MaxBurstCreditsForIops);
+            Assert.IsNotNull(shareItem.Properties.NextAllowedProvisionedIopsDowngradeTime);
+            Assert.IsNotNull(shareItem.Properties.NextAllowedProvisionedBandwidthDowngradeTime);
+        }
+
+        [RecordedTest]
         public async Task CreateShareAsync()
         {
             var name = GetNewShareName();

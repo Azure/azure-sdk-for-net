@@ -547,6 +547,7 @@
     "optional": false,
     "readOnly": false,
     "discriminator": true,
+    "flatten": false,
     "decorators": [],
     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationContent.kind"
    },
@@ -574,6 +575,7 @@
      "optional": false,
      "readOnly": false,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationContent.channelRegistrationId"
     },
@@ -600,6 +602,7 @@
      "optional": false,
      "readOnly": false,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationContent.to"
     },
@@ -644,6 +647,7 @@
        "optional": false,
        "readOnly": false,
        "discriminator": true,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.TextNotificationContent.kind"
       },
@@ -663,6 +667,7 @@
        "optional": false,
        "readOnly": false,
        "discriminator": false,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.TextNotificationContent.content"
       }
@@ -703,6 +708,7 @@
        "optional": false,
        "readOnly": false,
        "discriminator": true,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MediaNotificationContent.kind"
       },
@@ -722,6 +728,7 @@
        "optional": true,
        "readOnly": false,
        "discriminator": false,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MediaNotificationContent.content"
       },
@@ -741,6 +748,7 @@
        "optional": false,
        "readOnly": false,
        "discriminator": false,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MediaNotificationContent.mediaUri"
       }
@@ -781,6 +789,7 @@
        "optional": false,
        "readOnly": false,
        "discriminator": true,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.TemplateNotificationContent.kind"
       },
@@ -815,6 +824,7 @@
           "optional": false,
           "readOnly": false,
           "discriminator": false,
+          "flatten": false,
           "decorators": [],
           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplate.name"
          },
@@ -834,6 +844,7 @@
           "optional": false,
           "readOnly": false,
           "discriminator": false,
+          "flatten": false,
           "decorators": [],
           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplate.language"
          },
@@ -867,6 +878,7 @@
              "optional": false,
              "readOnly": false,
              "discriminator": true,
+             "flatten": false,
              "decorators": [],
              "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateValue.kind"
             },
@@ -887,6 +899,7 @@
               "optional": false,
               "readOnly": false,
               "discriminator": false,
+              "flatten": false,
               "decorators": [],
               "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateValue.name"
              },
@@ -931,6 +944,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": true,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateText.kind"
                },
@@ -950,6 +964,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateText.text"
                }
@@ -990,6 +1005,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": true,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateImage.kind"
                },
@@ -1009,6 +1025,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateImage.url"
                },
@@ -1028,6 +1045,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateImage.caption"
                },
@@ -1047,6 +1065,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateImage.fileName"
                }
@@ -1087,6 +1106,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": true,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateDocument.kind"
                },
@@ -1106,6 +1126,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateDocument.url"
                },
@@ -1125,6 +1146,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateDocument.caption"
                },
@@ -1144,6 +1166,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateDocument.fileName"
                }
@@ -1184,6 +1207,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": true,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateVideo.kind"
                },
@@ -1203,6 +1227,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateVideo.url"
                },
@@ -1222,6 +1247,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateVideo.caption"
                },
@@ -1241,6 +1267,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateVideo.fileName"
                }
@@ -1281,6 +1308,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": true,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateLocation.kind"
                },
@@ -1300,6 +1328,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateLocation.locationName"
                },
@@ -1319,6 +1348,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateLocation.address"
                },
@@ -1338,6 +1368,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateLocation.latitude"
                },
@@ -1357,6 +1388,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateLocation.longitude"
                }
@@ -1397,6 +1429,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": true,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateQuickAction.kind"
                },
@@ -1416,6 +1449,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateQuickAction.text"
                },
@@ -1435,6 +1469,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateQuickAction.payload"
                }
@@ -1448,6 +1483,7 @@
           "optional": true,
           "readOnly": false,
           "discriminator": false,
+          "flatten": false,
           "decorators": [],
           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplate.values"
          },
@@ -1477,6 +1513,7 @@
             "optional": false,
             "readOnly": false,
             "discriminator": true,
+            "flatten": false,
             "decorators": [],
             "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateBindings.kind"
            },
@@ -1522,6 +1559,7 @@
                "optional": false,
                "readOnly": false,
                "discriminator": true,
+               "flatten": false,
                "decorators": [],
                "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindings.kind"
               },
@@ -1560,6 +1598,7 @@
                    "optional": false,
                    "readOnly": false,
                    "discriminator": false,
+                   "flatten": false,
                    "decorators": [],
                    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsComponent.refValue"
                   }
@@ -1571,6 +1610,7 @@
                "optional": true,
                "readOnly": false,
                "discriminator": false,
+               "flatten": false,
                "decorators": [],
                "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindings.header"
               },
@@ -1593,6 +1633,7 @@
                "optional": true,
                "readOnly": false,
                "discriminator": false,
+               "flatten": false,
                "decorators": [],
                "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindings.body"
               },
@@ -1615,6 +1656,7 @@
                "optional": true,
                "readOnly": false,
                "discriminator": false,
+               "flatten": false,
                "decorators": [],
                "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindings.footer"
               },
@@ -1649,6 +1691,7 @@
                    "optional": false,
                    "readOnly": false,
                    "discriminator": false,
+                   "flatten": false,
                    "decorators": [],
                    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsButton.subType"
                   },
@@ -1668,6 +1711,7 @@
                    "optional": false,
                    "readOnly": false,
                    "discriminator": false,
+                   "flatten": false,
                    "decorators": [],
                    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsButton.refValue"
                   }
@@ -1679,6 +1723,7 @@
                "optional": true,
                "readOnly": false,
                "discriminator": false,
+               "flatten": false,
                "decorators": [],
                "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindings.buttons"
               }
@@ -1689,6 +1734,7 @@
           "optional": true,
           "readOnly": false,
           "discriminator": false,
+          "flatten": false,
           "decorators": [],
           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplate.bindings"
          }
@@ -1697,6 +1743,7 @@
        "optional": false,
        "readOnly": false,
        "discriminator": false,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.TemplateNotificationContent.template"
       }
@@ -1793,6 +1840,7 @@
          "optional": false,
          "readOnly": false,
          "discriminator": false,
+         "flatten": false,
          "decorators": [],
          "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageReceipt.messageId"
         },
@@ -1812,6 +1860,7 @@
          "optional": false,
          "readOnly": false,
          "discriminator": false,
+         "flatten": false,
          "decorators": [],
          "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageReceipt.to"
         }
@@ -1823,6 +1872,7 @@
      "optional": false,
      "readOnly": false,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.SendMessageResult.receipts"
     }
@@ -1851,6 +1901,7 @@
     "optional": false,
     "readOnly": false,
     "discriminator": true,
+    "flatten": false,
     "decorators": [],
     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem.kind"
    },
@@ -1871,6 +1922,7 @@
      "optional": false,
      "readOnly": true,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem.name"
     },
@@ -1890,6 +1942,7 @@
      "optional": false,
      "readOnly": false,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem.language"
     },
@@ -1905,6 +1958,7 @@
      "optional": false,
      "readOnly": false,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem.status"
     },
@@ -1935,7 +1989,7 @@
        "description": "WhatsApp platform's template content. This is the payload returned from WhatsApp API.",
        "type": {
         "$id": "195",
-        "kind": "any",
+        "kind": "unknown",
         "name": "unknown",
         "crossLanguageDefinitionId": "",
         "decorators": []
@@ -1943,6 +1997,7 @@
        "optional": true,
        "readOnly": false,
        "discriminator": false,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateItem.content"
       },
@@ -1968,6 +2023,7 @@
        "optional": false,
        "readOnly": false,
        "discriminator": true,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateItem.kind"
       }
@@ -2006,6 +2062,7 @@
      "optional": false,
      "readOnly": false,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage.value"
     },
@@ -2032,6 +2089,7 @@
      "optional": true,
      "readOnly": false,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage.nextLink"
     }
@@ -2553,6 +2611,7 @@
          "response": {
           "$ref": "246"
          },
+         "statusCode": 200,
          "bodyValue": {
           "$id": "260",
           "kind": "string",

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(SubscriptionTransferValidationErrorCode left, SubscriptionTransferValidationErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SubscriptionTransferValidationErrorCode"/> values are not the same. </summary>
         public static bool operator !=(SubscriptionTransferValidationErrorCode left, SubscriptionTransferValidationErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SubscriptionTransferValidationErrorCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionTransferValidationErrorCode"/>. </summary>
         public static implicit operator SubscriptionTransferValidationErrorCode(string value) => new SubscriptionTransferValidationErrorCode(value);
 
         /// <inheritdoc />

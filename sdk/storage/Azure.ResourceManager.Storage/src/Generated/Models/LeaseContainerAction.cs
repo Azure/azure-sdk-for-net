@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(LeaseContainerAction left, LeaseContainerAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LeaseContainerAction"/> values are not the same. </summary>
         public static bool operator !=(LeaseContainerAction left, LeaseContainerAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LeaseContainerAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LeaseContainerAction"/>. </summary>
         public static implicit operator LeaseContainerAction(string value) => new LeaseContainerAction(value);
 
         /// <inheritdoc />

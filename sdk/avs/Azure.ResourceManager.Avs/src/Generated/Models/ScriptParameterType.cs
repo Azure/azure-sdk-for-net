@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(ScriptParameterType left, ScriptParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptParameterType"/> values are not the same. </summary>
         public static bool operator !=(ScriptParameterType left, ScriptParameterType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScriptParameterType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptParameterType"/>. </summary>
         public static implicit operator ScriptParameterType(string value) => new ScriptParameterType(value);
 
         /// <inheritdoc />
