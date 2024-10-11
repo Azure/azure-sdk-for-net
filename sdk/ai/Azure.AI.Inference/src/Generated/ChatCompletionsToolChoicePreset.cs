@@ -42,7 +42,7 @@ namespace Azure.AI.Inference
         public static bool operator ==(ChatCompletionsToolChoicePreset left, ChatCompletionsToolChoicePreset right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChatCompletionsToolChoicePreset"/> values are not the same. </summary>
         public static bool operator !=(ChatCompletionsToolChoicePreset left, ChatCompletionsToolChoicePreset right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChatCompletionsToolChoicePreset"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ChatCompletionsToolChoicePreset"/>. </summary>
         public static implicit operator ChatCompletionsToolChoicePreset(string value) => new ChatCompletionsToolChoicePreset(value);
 
         /// <inheritdoc />

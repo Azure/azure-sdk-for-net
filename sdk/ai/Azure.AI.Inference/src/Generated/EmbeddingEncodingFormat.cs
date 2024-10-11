@@ -48,7 +48,7 @@ namespace Azure.AI.Inference
         public static bool operator ==(EmbeddingEncodingFormat left, EmbeddingEncodingFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EmbeddingEncodingFormat"/> values are not the same. </summary>
         public static bool operator !=(EmbeddingEncodingFormat left, EmbeddingEncodingFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EmbeddingEncodingFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EmbeddingEncodingFormat"/>. </summary>
         public static implicit operator EmbeddingEncodingFormat(string value) => new EmbeddingEncodingFormat(value);
 
         /// <inheritdoc />

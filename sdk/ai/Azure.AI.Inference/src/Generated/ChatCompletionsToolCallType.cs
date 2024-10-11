@@ -30,7 +30,7 @@ namespace Azure.AI.Inference
         public static bool operator ==(ChatCompletionsToolCallType left, ChatCompletionsToolCallType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChatCompletionsToolCallType"/> values are not the same. </summary>
         public static bool operator !=(ChatCompletionsToolCallType left, ChatCompletionsToolCallType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChatCompletionsToolCallType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ChatCompletionsToolCallType"/>. </summary>
         public static implicit operator ChatCompletionsToolCallType(string value) => new ChatCompletionsToolCallType(value);
 
         /// <inheritdoc />

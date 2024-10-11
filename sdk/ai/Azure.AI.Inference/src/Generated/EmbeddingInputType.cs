@@ -36,7 +36,7 @@ namespace Azure.AI.Inference
         public static bool operator ==(EmbeddingInputType left, EmbeddingInputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EmbeddingInputType"/> values are not the same. </summary>
         public static bool operator !=(EmbeddingInputType left, EmbeddingInputType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EmbeddingInputType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EmbeddingInputType"/>. </summary>
         public static implicit operator EmbeddingInputType(string value) => new EmbeddingInputType(value);
 
         /// <inheritdoc />
