@@ -840,7 +840,7 @@
 # ServiceOwners:                                                   @hmlam
 
 # PRLabel: %SignalR
-/sdk/signalr/                                                      @sffamily @chenkennt @vicancy @JialinXin @Y-Sindo
+/sdk/signalr/                                                      @chenkennt @vicancy @JialinXin @Y-Sindo
 
 # ServiceLabel: %SignalR
 # ServiceOwners:                                                   @sffamily @chenkennt @vicancy @JialinXin @Y-Sindo
