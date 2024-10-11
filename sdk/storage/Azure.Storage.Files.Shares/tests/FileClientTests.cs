@@ -760,6 +760,9 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(owner, response.Value.NfsProperties.Owner);
             Assert.AreEqual(group, response.Value.NfsProperties.Group);
             Assert.AreEqual(fileMode, response.Value.NfsProperties.FileMode.ToOctalFileMode());
+
+            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
         }
 
         [RecordedTest]
