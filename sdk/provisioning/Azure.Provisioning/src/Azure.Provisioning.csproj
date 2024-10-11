@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>Contains the core functionality for defining Azure infrastructure with dotnet code.</Description>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>
@@ -12,16 +12,4 @@
     <!-- Disable warning IDE0130: Namespace does not match folder structure-->
     <NoWarn>CS1591;AZC0012;IDE0130;$(NoWarn)</NoWarn>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
-    <PackageReference Include="Azure.ResourceManager" />
-    <PackageReference Include="Azure.ResourceManager.Resources" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\" />
-    <Folder Include="Roles\" />
-  </ItemGroup>
-
 </Project>

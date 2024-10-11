@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         void IJsonModel<FhirServiceExportConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FhirServiceExportConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FhirServiceExportConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FhirServiceExportConfiguration IJsonModel<FhirServiceExportConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

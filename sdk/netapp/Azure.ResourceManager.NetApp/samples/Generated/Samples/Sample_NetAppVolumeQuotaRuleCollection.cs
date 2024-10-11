@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             string volumeQuotaRuleName = "rule-0004";
             NetAppVolumeQuotaRuleData data = new NetAppVolumeQuotaRuleData(new AzureLocation("westus"))
             {
-                QuotaSizeInKiBs = 100005,
+                QuotaSizeInKiBs = 100005L,
                 QuotaType = NetAppVolumeQuotaType.IndividualUserQuota,
                 QuotaTarget = "1821",
             };

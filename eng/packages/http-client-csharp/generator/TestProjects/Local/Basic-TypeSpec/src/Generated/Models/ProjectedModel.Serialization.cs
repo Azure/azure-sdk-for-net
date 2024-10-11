@@ -39,9 +39,9 @@ namespace BasicTypeSpec.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
@@ -78,7 +78,7 @@ namespace BasicTypeSpec.Models
                 return null;
             }
             string name = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -88,10 +88,10 @@ namespace BasicTypeSpec.Models
                 }
                 if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectedModel(name, serializedAdditionalRawData);
+            return new ProjectedModel(name, additionalBinaryDataProperties);
         }
 
         BinaryData IPersistableModel<ProjectedModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);

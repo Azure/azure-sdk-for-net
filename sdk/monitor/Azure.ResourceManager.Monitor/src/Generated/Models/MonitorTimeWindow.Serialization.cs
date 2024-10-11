@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Monitor.Models
 
         void IJsonModel<MonitorTimeWindow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorTimeWindow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MonitorTimeWindow)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
@@ -50,7 +58,6 @@ namespace Azure.ResourceManager.Monitor.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MonitorTimeWindow IJsonModel<MonitorTimeWindow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

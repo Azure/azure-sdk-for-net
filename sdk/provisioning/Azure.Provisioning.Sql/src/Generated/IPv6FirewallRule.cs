@@ -26,20 +26,20 @@ public partial class IPv6FirewallRule : Resource
     /// The end IP address of the firewall rule. Must be IPv6 format. Must be
     /// greater than or equal to startIpv6Address.
     /// </summary>
-    public BicepValue<string> EndIPv6Address { get => _endIPv6Address; }
+    public BicepValue<string> EndIPv6Address { get => _endIPv6Address; set => _endIPv6Address.Assign(value); }
     private readonly BicepValue<string> _endIPv6Address;
+
+    /// <summary>
+    /// The start IP address of the firewall rule. Must be IPv6 format.
+    /// </summary>
+    public BicepValue<string> StartIPv6Address { get => _startIPv6Address; set => _startIPv6Address.Assign(value); }
+    private readonly BicepValue<string> _startIPv6Address;
 
     /// <summary>
     /// Resource ID.
     /// </summary>
     public BicepValue<ResourceIdentifier> Id { get => _id; }
     private readonly BicepValue<ResourceIdentifier> _id;
-
-    /// <summary>
-    /// The start IP address of the firewall rule. Must be IPv6 format.
-    /// </summary>
-    public BicepValue<string> StartIPv6Address { get => _startIPv6Address; }
-    private readonly BicepValue<string> _startIPv6Address;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlServer.
@@ -50,25 +50,60 @@ public partial class IPv6FirewallRule : Resource
     /// <summary>
     /// Creates a new IPv6FirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the IPv6FirewallRule.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the IPv6FirewallRule resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the IPv6FirewallRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public IPv6FirewallRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/ipv6FirewallRules", resourceVersion, context)
+    public IPv6FirewallRule(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/ipv6FirewallRules", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _endIPv6Address = BicepValue<string>.DefineProperty(this, "EndIPv6Address", ["properties", "endIPv6Address"], isOutput: true);
+        _endIPv6Address = BicepValue<string>.DefineProperty(this, "EndIPv6Address", ["properties", "endIPv6Address"]);
+        _startIPv6Address = BicepValue<string>.DefineProperty(this, "StartIPv6Address", ["properties", "startIPv6Address"]);
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _startIPv6Address = BicepValue<string>.DefineProperty(this, "StartIPv6Address", ["properties", "startIPv6Address"], isOutput: true);
         _parent = ResourceReference<SqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported IPv6FirewallRule resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2014-04-01.
+        /// </summary>
+        public static readonly string V2014_04_01 = "2014-04-01";
+
+        /// <summary>
+        /// 2014-01-01.
+        /// </summary>
+        public static readonly string V2014_01_01 = "2014-01-01";
     }
 
     /// <summary>
     /// Creates a reference to an existing IPv6FirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the IPv6FirewallRule.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the IPv6FirewallRule resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the IPv6FirewallRule.</param>
     /// <returns>The existing IPv6FirewallRule resource.</returns>
-    public static IPv6FirewallRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static IPv6FirewallRule FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

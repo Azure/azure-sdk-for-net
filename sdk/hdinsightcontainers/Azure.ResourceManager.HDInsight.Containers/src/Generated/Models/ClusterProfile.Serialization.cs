@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         void IJsonModel<ClusterProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("clusterVersion"u8);
             writer.WriteStringValue(ClusterVersion);
             writer.WritePropertyName("ossVersion"u8);
@@ -200,7 +208,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ClusterProfile IJsonModel<ClusterProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

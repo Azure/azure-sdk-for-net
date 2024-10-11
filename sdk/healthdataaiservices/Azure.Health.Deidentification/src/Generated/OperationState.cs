@@ -42,7 +42,7 @@ namespace Azure.Health.Deidentification
         public static bool operator ==(OperationState left, OperationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationState"/> values are not the same. </summary>
         public static bool operator !=(OperationState left, OperationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OperationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationState"/>. </summary>
         public static implicit operator OperationState(string value) => new OperationState(value);
 
         /// <inheritdoc />

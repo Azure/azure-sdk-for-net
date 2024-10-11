@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         void IJsonModel<ManagedHsmVirtualNetworkRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmVirtualNetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedHsmVirtualNetworkRule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(SubnetId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -44,7 +52,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagedHsmVirtualNetworkRule IJsonModel<ManagedHsmVirtualNetworkRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

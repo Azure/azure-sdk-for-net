@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Avs.Models
 
         void IJsonModel<WorkloadNetworkVmGroupsList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkVmGroupsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadNetworkVmGroupsList)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.Avs.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WorkloadNetworkVmGroupsList IJsonModel<WorkloadNetworkVmGroupsList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

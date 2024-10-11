@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(ArmApplicationDeploymentMode left, ArmApplicationDeploymentMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArmApplicationDeploymentMode"/> values are not the same. </summary>
         public static bool operator !=(ArmApplicationDeploymentMode left, ArmApplicationDeploymentMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ArmApplicationDeploymentMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ArmApplicationDeploymentMode"/>. </summary>
         public static implicit operator ArmApplicationDeploymentMode(string value) => new ArmApplicationDeploymentMode(value);
 
         /// <inheritdoc />

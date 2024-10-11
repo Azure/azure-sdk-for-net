@@ -109,6 +109,7 @@ internal static class BicepTypeMapping
             BicepValue v when (v.Kind == BicepValueKind.Expression) => v.Expression!,
             BicepValue v when (v.Source is not null) => v.Source.GetReference(),
             BicepValue v when (v.Kind == BicepValueKind.Literal) => ToBicep(v.GetLiteralValue()),
+            BicepValue v when (v.Self is not null) => v.Self.GetReference(),
             BicepValue v when (v.Kind == BicepValueKind.Unset) => BicepSyntax.Null(),
             _ => throw new InvalidOperationException($"Cannot convert {value} to a Bicep expression.")
         };

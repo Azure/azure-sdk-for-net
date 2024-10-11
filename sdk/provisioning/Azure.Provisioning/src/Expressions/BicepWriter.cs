@@ -27,7 +27,7 @@ internal class BicepWriter
         int indent = _indent;
         while (indent-- > 0)
         {
-            _text.Append("    ");
+            _text.Append("  ");
         }
         return this;
     }

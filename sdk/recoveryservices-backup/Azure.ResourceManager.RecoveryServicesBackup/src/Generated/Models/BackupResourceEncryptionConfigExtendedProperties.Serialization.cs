@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         void IJsonModel<BackupResourceEncryptionConfigExtendedProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfigExtendedProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
@@ -36,47 +45,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("useSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(UseSystemAssignedIdentity.Value);
             }
-            if (Optional.IsDefined(EncryptionAtRestType))
-            {
-                writer.WritePropertyName("encryptionAtRestType"u8);
-                writer.WriteStringValue(EncryptionAtRestType.Value.ToString());
-            }
-            if (Optional.IsDefined(KeyUri))
-            {
-                writer.WritePropertyName("keyUri"u8);
-                writer.WriteStringValue(KeyUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(SubscriptionId))
-            {
-                writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteStringValue(SubscriptionId);
-            }
-            if (Optional.IsDefined(LastUpdateStatus))
-            {
-                writer.WritePropertyName("lastUpdateStatus"u8);
-                writer.WriteStringValue(LastUpdateStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(InfrastructureEncryptionState))
-            {
-                writer.WritePropertyName("infrastructureEncryptionState"u8);
-                writer.WriteStringValue(InfrastructureEncryptionState.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         BackupResourceEncryptionConfigExtendedProperties IJsonModel<BackupResourceEncryptionConfigExtendedProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

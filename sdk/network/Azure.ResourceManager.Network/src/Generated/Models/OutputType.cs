@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(OutputType left, OutputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OutputType"/> values are not the same. </summary>
         public static bool operator !=(OutputType left, OutputType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OutputType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OutputType"/>. </summary>
         public static implicit operator OutputType(string value) => new OutputType(value);
 
         /// <inheritdoc />

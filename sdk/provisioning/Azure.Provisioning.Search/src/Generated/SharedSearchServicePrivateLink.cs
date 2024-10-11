@@ -52,11 +52,15 @@ public partial class SharedSearchServicePrivateLink : Resource
     /// <summary>
     /// Creates a new SharedSearchServicePrivateLink.
     /// </summary>
-    /// <param name="resourceName">Name of the SharedSearchServicePrivateLink.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SharedSearchServicePrivateLink
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SharedSearchServicePrivateLink.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SharedSearchServicePrivateLink(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Search/searchServices/sharedPrivateLinkResources", resourceVersion, context)
+    public SharedSearchServicePrivateLink(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Search/searchServices/sharedPrivateLinkResources", resourceVersion ?? "2023-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<SharedSearchServicePrivateLinkResourceProperties>.DefineProperty(this, "Properties", ["properties"]);
@@ -66,11 +70,87 @@ public partial class SharedSearchServicePrivateLink : Resource
     }
 
     /// <summary>
+    /// Supported SharedSearchServicePrivateLink resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-06-01-Preview.
+        /// </summary>
+        public static readonly string V2024_06_01_Preview = "2024-06-01-Preview";
+
+        /// <summary>
+        /// 2024-03-01-Preview.
+        /// </summary>
+        public static readonly string V2024_03_01_Preview = "2024-03-01-Preview";
+
+        /// <summary>
+        /// 2023-11-01.
+        /// </summary>
+        public static readonly string V2023_11_01 = "2023-11-01";
+
+        /// <summary>
+        /// 2022-09-01.
+        /// </summary>
+        public static readonly string V2022_09_01 = "2022-09-01";
+
+        /// <summary>
+        /// 2021-06-06-Preview.
+        /// </summary>
+        public static readonly string V2021_06_06_Preview = "2021-06-06-Preview";
+
+        /// <summary>
+        /// 2021-04-01-Preview.
+        /// </summary>
+        public static readonly string V2021_04_01_Preview = "2021-04-01-Preview";
+
+        /// <summary>
+        /// 2020-08-01-Preview.
+        /// </summary>
+        public static readonly string V2020_08_01_Preview = "2020-08-01-Preview";
+
+        /// <summary>
+        /// 2020-08-01.
+        /// </summary>
+        public static readonly string V2020_08_01 = "2020-08-01";
+
+        /// <summary>
+        /// 2020-03-13.
+        /// </summary>
+        public static readonly string V2020_03_13 = "2020-03-13";
+
+        /// <summary>
+        /// 2019-10-01-Preview.
+        /// </summary>
+        public static readonly string V2019_10_01_Preview = "2019-10-01-Preview";
+
+        /// <summary>
+        /// 2015-08-19.
+        /// </summary>
+        public static readonly string V2015_08_19 = "2015-08-19";
+
+        /// <summary>
+        /// 2015-02-28.
+        /// </summary>
+        public static readonly string V2015_02_28 = "2015-02-28";
+
+        /// <summary>
+        /// 2014-07-31-Preview.
+        /// </summary>
+        public static readonly string V2014_07_31_Preview = "2014-07-31-Preview";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing SharedSearchServicePrivateLink.
     /// </summary>
-    /// <param name="resourceName">Name of the SharedSearchServicePrivateLink.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SharedSearchServicePrivateLink
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SharedSearchServicePrivateLink.</param>
     /// <returns>The existing SharedSearchServicePrivateLink resource.</returns>
-    public static SharedSearchServicePrivateLink FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SharedSearchServicePrivateLink FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

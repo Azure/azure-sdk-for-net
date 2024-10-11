@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(FrontDoorRequiredMinimumTlsVersion left, FrontDoorRequiredMinimumTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorRequiredMinimumTlsVersion"/> values are not the same. </summary>
         public static bool operator !=(FrontDoorRequiredMinimumTlsVersion left, FrontDoorRequiredMinimumTlsVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FrontDoorRequiredMinimumTlsVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorRequiredMinimumTlsVersion"/>. </summary>
         public static implicit operator FrontDoorRequiredMinimumTlsVersion(string value) => new FrontDoorRequiredMinimumTlsVersion(value);
 
         /// <inheritdoc />

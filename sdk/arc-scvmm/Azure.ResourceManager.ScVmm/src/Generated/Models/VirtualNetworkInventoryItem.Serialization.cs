@@ -19,51 +19,22 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         void IJsonModel<VirtualNetworkInventoryItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualNetworkInventoryItem)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("inventoryType"u8);
-            writer.WriteStringValue(InventoryType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ManagedResourceId))
-            {
-                writer.WritePropertyName("managedResourceId"u8);
-                writer.WriteStringValue(ManagedResourceId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Uuid))
-            {
-                writer.WritePropertyName("uuid"u8);
-                writer.WriteStringValue(Uuid);
-            }
-            if (options.Format != "W" && Optional.IsDefined(InventoryItemName))
-            {
-                writer.WritePropertyName("inventoryItemName"u8);
-                writer.WriteStringValue(InventoryItemName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         VirtualNetworkInventoryItem IJsonModel<VirtualNetworkInventoryItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

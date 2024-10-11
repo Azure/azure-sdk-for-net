@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(AddonProvisioningState left, AddonProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AddonProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AddonProvisioningState left, AddonProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AddonProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AddonProvisioningState"/>. </summary>
         public static implicit operator AddonProvisioningState(string value) => new AddonProvisioningState(value);
 
         /// <inheritdoc />

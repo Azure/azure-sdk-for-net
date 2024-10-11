@@ -16,11 +16,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             #region Snippet:ServiceBusConfigureTransport
 #if SNIPPET
-            string connectionString = "<connection_string>";
+            string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+            DefaultAzureCredential credential = new();
 #else
-            string connectionString = TestEnvironment.ServiceBusConnectionString;
+            string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
+            var credential = TestEnvironment.Credential;
 #endif
-            var client = new ServiceBusClient(connectionString, new ServiceBusClientOptions
+            ServiceBusClient client = new(fullyQualifiedNamespace, credential, new ServiceBusClientOptions
             {
                 TransportType = ServiceBusTransportType.AmqpWebSockets,
                 WebProxy = new WebProxy("https://myproxyserver:80")
@@ -35,11 +37,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             #region Snippet:ServiceBusConfigureRetryOptions
 #if SNIPPET
-            string connectionString = "<connection_string>";
+            string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+            DefaultAzureCredential credential = new();
 #else
-            string connectionString = TestEnvironment.ServiceBusConnectionString;
+            string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
+            var credential = TestEnvironment.Credential;
 #endif
-            var client = new ServiceBusClient(connectionString, new ServiceBusClientOptions
+            ServiceBusClient client = new(fullyQualifiedNamespace, credential, new ServiceBusClientOptions
             {
                 RetryOptions = new ServiceBusRetryOptions
                 {
@@ -56,11 +60,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             #region Snippet:ServiceBusConfigurePrefetchReceiver
 #if SNIPPET
-            string connectionString = "<connection_string>";
+            string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+            DefaultAzureCredential credential = new();
 #else
-            string connectionString = TestEnvironment.ServiceBusConnectionString;
+            string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
+            var credential = TestEnvironment.Credential;
 #endif
-            var client = new ServiceBusClient(connectionString);
+            ServiceBusClient client = new(fullyQualifiedNamespace, credential);
             ServiceBusReceiver receiver = client.CreateReceiver("<queue-name>", new ServiceBusReceiverOptions
             {
                 PrefetchCount = 10
@@ -75,11 +81,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             #region Snippet:ServiceBusConfigurePrefetchProcessor
 #if SNIPPET
-            string connectionString = "<connection_string>";
+            string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+            DefaultAzureCredential credential = new();
 #else
-            string connectionString = TestEnvironment.ServiceBusConnectionString;
+            string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
+            var credential = TestEnvironment.Credential;
 #endif
-            var client = new ServiceBusClient(connectionString);
+            ServiceBusClient client = new(fullyQualifiedNamespace, credential);
             ServiceBusProcessor processor = client.CreateProcessor("<queue-name>", new ServiceBusProcessorOptions
             {
                 PrefetchCount = 10
@@ -95,11 +103,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             #region Snippet:ServiceBusProcessorLockLostHandler
 #if SNIPPET
-            string connectionString = "<connection_string>";
+            string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+            DefaultAzureCredential credential = new();
 #else
-            string connectionString = TestEnvironment.ServiceBusConnectionString;
+            string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
+            var credential = TestEnvironment.Credential;
 #endif
-            var client = new ServiceBusClient(connectionString);
+            ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
             // create a processor that we can use to process the messages
             await using ServiceBusProcessor processor = client.CreateProcessor("<queue-name>");
@@ -162,11 +172,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             #region Snippet:ServiceBusSessionProcessorLockLostHandler
 #if SNIPPET
-            string connectionString = "<connection_string>";
+            string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+            DefaultAzureCredential credential = new();
 #else
-            string connectionString = TestEnvironment.ServiceBusConnectionString;
+            string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
+            var credential = TestEnvironment.Credential;
 #endif
-            var client = new ServiceBusClient(connectionString);
+            var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
 
             // create a processor that we can use to process the messages
             await using ServiceBusSessionProcessor processor = client.CreateSessionProcessor("<queue-name>");

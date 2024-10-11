@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<ExecutePipelineActivityPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ExecutePipelineActivityPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExecutePipelineActivityPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IsSecureInputEnabled))
             {
                 writer.WritePropertyName("secureInput"u8);
@@ -43,7 +51,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         ExecutePipelineActivityPolicy IJsonModel<ExecutePipelineActivityPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -156,11 +156,15 @@ public partial class ContainerRegistryService : Resource
     /// <summary>
     /// Creates a new ContainerRegistryService.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryService.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerRegistryService resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerRegistryService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries", resourceVersion ?? "2023-07-01", context)
+    public ContainerRegistryService(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.ContainerRegistry/registries", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -229,11 +233,16 @@ public partial class ContainerRegistryService : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerRegistryService.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryService.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerRegistryService resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryService.</param>
     /// <returns>The existing ContainerRegistryService resource.</returns>
-    public static ContainerRegistryService FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerRegistryService FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ContainerRegistryService resource.
@@ -244,18 +253,38 @@ public partial class ContainerRegistryService : Resource
         new(minLength: 5, maxLength: 50, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers);
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// ContainerRegistryService.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this ContainerRegistryService.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(ContainerRegistryBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{identity.ResourceName}_{ContainerRegistryBuiltInRole.GetBuiltInRoleName(role)}_{ResourceName}")
+    public RoleAssignment CreateRoleAssignment(ContainerRegistryBuiltInRole role, UserAssignedIdentity identity) =>
+        new($"{IdentifierName}_{identity.IdentifierName}_{ContainerRegistryBuiltInRole.GetBuiltInRoleName(role)}")
         {
-            Scope = new IdentifierExpression(ResourceName),
+            Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
+            Scope = new IdentifierExpression(IdentifierName),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
+        };
+
+    /// <summary>
+    /// Creates a role assignment for a principal that grants access to this
+    /// ContainerRegistryService.
+    /// </summary>
+    /// <param name="role">The role to grant.</param>
+    /// <param name="principalType">The type of the principal to assign to.</param>
+    /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="identifierNameSuffix">Optional role assignment identifier name suffix.</param>
+    /// <returns>The <see cref="RoleAssignment"/>.</returns>
+    public RoleAssignment CreateRoleAssignment(ContainerRegistryBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? identifierNameSuffix = default) =>
+        new($"{IdentifierName}_{ContainerRegistryBuiltInRole.GetBuiltInRoleName(role)}{(identifierNameSuffix is null ? "" : "_")}{identifierNameSuffix}")
+        {
+            Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
+            Scope = new IdentifierExpression(IdentifierName),
+            PrincipalType = principalType,
+            RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
+            PrincipalId = principalId
         };
 }

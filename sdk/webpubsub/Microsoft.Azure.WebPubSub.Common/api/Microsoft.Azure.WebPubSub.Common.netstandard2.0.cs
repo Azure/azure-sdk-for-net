@@ -33,6 +33,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         public ConnectEventResponse() { }
         public ConnectEventResponse(string userId, System.Collections.Generic.IEnumerable<string> groups, string subprotocol, System.Collections.Generic.IEnumerable<string> roles) { }
         [System.Runtime.Serialization.IgnoreDataMemberAttribute]
+        [System.Text.Json.Serialization.JsonIgnoreAttribute]
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> ConnectionStates { get { throw null; } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="groups")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("groups")]
@@ -42,6 +43,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         public string[] Roles { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.Runtime.Serialization.IgnoreDataMemberAttribute]
+        [System.Text.Json.Serialization.JsonIgnoreAttribute]
         public System.Collections.Generic.IReadOnlyDictionary<string, object> States { get { throw null; } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="subprotocol")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("subprotocol")]
@@ -68,9 +70,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         public EventErrorResponse() { }
         public EventErrorResponse(Microsoft.Azure.WebPubSub.Common.WebPubSubErrorCode code, string message = null) { }
         [System.Runtime.Serialization.IgnoreDataMemberAttribute]
-        [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
         [System.Text.Json.Serialization.JsonIgnoreAttribute]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("code")]
         public Microsoft.Azure.WebPubSub.Common.WebPubSubErrorCode Code { get { throw null; } set { } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="errorMessage")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("errorMessage")]
