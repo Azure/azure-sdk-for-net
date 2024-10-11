@@ -1,5 +1,21 @@
 # Release History
 
+## 1.3.0-beta.1 (2023-07-01-preview)
+
+### Features Added
+
+- Add DNS Security Policy functionality for the following resources:
+    - DNS Security Policy
+    - DNS Security Policy Links
+    - Dns Security Rules
+    - DNS Resolver Domain Lists
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
