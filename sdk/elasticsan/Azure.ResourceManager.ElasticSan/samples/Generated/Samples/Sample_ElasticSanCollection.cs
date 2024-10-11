@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanData data = new ElasticSanData(new AzureLocation("France Central"), new ElasticSanSku(ElasticSanSkuName.PremiumLrs)
             {
                 Tier = ElasticSanSkuTier.Premium,
-            }, 1, 3)
+            }, 5, 25)
             {
                 AvailabilityZones =
 {

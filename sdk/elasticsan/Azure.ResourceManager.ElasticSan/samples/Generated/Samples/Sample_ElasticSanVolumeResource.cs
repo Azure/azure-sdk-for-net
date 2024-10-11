@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             // invoke the operation
             ElasticSanVolumePatch patch = new ElasticSanVolumePatch()
             {
-                SizeGiB = 11,
+                SizeGiB = 11L,
             };
             ArmOperation<ElasticSanVolumeResource> lro = await elasticSanVolume.UpdateAsync(WaitUntil.Completed, patch);
             ElasticSanVolumeResource result = lro.Value;

@@ -150,7 +150,7 @@ namespace Azure.Maps.Weather.Models
         public static bool operator ==(IconCode left, IconCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IconCode"/> values are not the same. </summary>
         public static bool operator !=(IconCode left, IconCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IconCode"/>. </summary>
+        /// <summary> Converts a <see cref="int"/> to a <see cref="IconCode"/>. </summary>
         public static implicit operator IconCode(int value) => new IconCode(value);
 
         /// <inheritdoc />
