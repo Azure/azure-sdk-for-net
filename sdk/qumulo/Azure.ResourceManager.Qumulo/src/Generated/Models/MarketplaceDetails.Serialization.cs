@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Qumulo.Models
 
         void IJsonModel<MarketplaceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(MarketplaceSubscriptionId))
             {
                 writer.WritePropertyName("marketplaceSubscriptionId"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.Qumulo.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MarketplaceDetails IJsonModel<MarketplaceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

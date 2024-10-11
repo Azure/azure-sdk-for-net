@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 ServerCountPerRack = 10,
                 IPv4Prefix = "10.18.0.0/17",
                 IPv6Prefix = "3FFE:FFFF:0:CD40::/60",
-                FabricAsn = 12345,
+                FabricAsn = 12345L,
                 TerminalServerConfiguration = new NetworkFabricPatchablePropertiesTerminalServerConfiguration()
                 {
                     PrimaryIPv4Prefix = "10.0.0.12/30",
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                             SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                             Mtu = 1501,
                             VlanId = 3001,
-                            PeerAsn = 1235,
+                            PeerAsn = 1235L,
                             BfdConfiguration = new BfdConfiguration()
                             {
                                 IntervalInMilliSeconds = 300,
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                             SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/126",
                             Mtu = 1500,
                             VlanId = 3000,
-                            PeerAsn = 61234,
+                            PeerAsn = 61234L,
                             BfdConfiguration = new BfdConfiguration()
                             {
                                 IntervalInMilliSeconds = 300,

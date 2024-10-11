@@ -84,11 +84,15 @@ public partial class OperationalInsightsDataSource : Resource
     /// <summary>
     /// Creates a new OperationalInsightsDataSource.
     /// </summary>
-    /// <param name="resourceName">Name of the OperationalInsightsDataSource.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the OperationalInsightsDataSource
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsDataSource.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public OperationalInsightsDataSource(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.OperationalInsights/workspaces/dataSources", resourceVersion ?? "2020-08-01", context)
+    public OperationalInsightsDataSource(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.OperationalInsights/workspaces/dataSources", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<OperationalInsightsDataSourceKind>.DefineProperty(this, "Kind", ["kind"], isRequired: true);
@@ -106,6 +110,11 @@ public partial class OperationalInsightsDataSource : Resource
     public static class ResourceVersions
     {
         /// <summary>
+        /// 2023-09-01.
+        /// </summary>
+        public static readonly string V2023_09_01 = "2023-09-01";
+
+        /// <summary>
         /// 2020-08-01.
         /// </summary>
         public static readonly string V2020_08_01 = "2020-08-01";
@@ -114,9 +123,14 @@ public partial class OperationalInsightsDataSource : Resource
     /// <summary>
     /// Creates a reference to an existing OperationalInsightsDataSource.
     /// </summary>
-    /// <param name="resourceName">Name of the OperationalInsightsDataSource.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the OperationalInsightsDataSource
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsDataSource.</param>
     /// <returns>The existing OperationalInsightsDataSource resource.</returns>
-    public static OperationalInsightsDataSource FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static OperationalInsightsDataSource FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

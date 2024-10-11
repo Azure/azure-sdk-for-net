@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static bool operator ==(PostgreSqlServerVersion left, PostgreSqlServerVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlServerVersion"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlServerVersion left, PostgreSqlServerVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlServerVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlServerVersion"/>. </summary>
         public static implicit operator PostgreSqlServerVersion(string value) => new PostgreSqlServerVersion(value);
 
         /// <inheritdoc />

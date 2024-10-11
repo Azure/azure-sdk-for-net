@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static bool operator ==(RedisEnterpriseHighAvailability left, RedisEnterpriseHighAvailability right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseHighAvailability"/> values are not the same. </summary>
         public static bool operator !=(RedisEnterpriseHighAvailability left, RedisEnterpriseHighAvailability right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RedisEnterpriseHighAvailability"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseHighAvailability"/>. </summary>
         public static implicit operator RedisEnterpriseHighAvailability(string value) => new RedisEnterpriseHighAvailability(value);
 
         /// <inheritdoc />

@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(StoredProcedureParameterType left, StoredProcedureParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StoredProcedureParameterType"/> values are not the same. </summary>
         public static bool operator !=(StoredProcedureParameterType left, StoredProcedureParameterType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StoredProcedureParameterType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StoredProcedureParameterType"/>. </summary>
         public static implicit operator StoredProcedureParameterType(string value) => new StoredProcedureParameterType(value);
 
         /// <inheritdoc />

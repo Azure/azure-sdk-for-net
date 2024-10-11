@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network.Samples
 {
 "https://csrncvhdstorage1.blob.core.windows.net/csrncvhdstoragecont/csrcloudinitconfig"
 },
-                VirtualApplianceAsn = 10000,
+                VirtualApplianceAsn = 10000L,
                 NetworkInterfaceConfigurations =
 {
 new VirtualApplianceNetworkInterfaceConfiguration()

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static bool operator ==(StorageCacheRestrictionReasonCode left, StorageCacheRestrictionReasonCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageCacheRestrictionReasonCode"/> values are not the same. </summary>
         public static bool operator !=(StorageCacheRestrictionReasonCode left, StorageCacheRestrictionReasonCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageCacheRestrictionReasonCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageCacheRestrictionReasonCode"/>. </summary>
         public static implicit operator StorageCacheRestrictionReasonCode(string value) => new StorageCacheRestrictionReasonCode(value);
 
         /// <inheritdoc />

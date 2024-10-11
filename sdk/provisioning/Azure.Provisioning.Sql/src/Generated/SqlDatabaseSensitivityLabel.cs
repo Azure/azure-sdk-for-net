@@ -100,11 +100,15 @@ public partial class SqlDatabaseSensitivityLabel : Resource
     /// <summary>
     /// Creates a new SqlDatabaseSensitivityLabel.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlDatabaseSensitivityLabel.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlDatabaseSensitivityLabel
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlDatabaseSensitivityLabel.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlDatabaseSensitivityLabel(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/schemas/tables/columns/sensitivityLabels", resourceVersion, context)
+    public SqlDatabaseSensitivityLabel(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/databases/schemas/tables/columns/sensitivityLabels", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _informationType = BicepValue<string>.DefineProperty(this, "InformationType", ["properties", "informationType"]);
@@ -124,9 +128,14 @@ public partial class SqlDatabaseSensitivityLabel : Resource
     /// <summary>
     /// Creates a reference to an existing SqlDatabaseSensitivityLabel.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlDatabaseSensitivityLabel.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlDatabaseSensitivityLabel
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlDatabaseSensitivityLabel.</param>
     /// <returns>The existing SqlDatabaseSensitivityLabel resource.</returns>
-    public static SqlDatabaseSensitivityLabel FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlDatabaseSensitivityLabel FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

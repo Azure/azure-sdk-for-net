@@ -22,127 +22,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         void IJsonModel<ThreatIntelligenceRelationship>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceRelationship>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreatIntelligenceRelationship)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Data))
-            {
-                writer.WritePropertyName("data"u8);
-                writer.WriteStartObject();
-                foreach (var item in Data)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
-            {
-                writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Source))
-            {
-                writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source);
-            }
-            if (options.Format != "W" && Optional.IsDefined(FirstIngestedOn))
-            {
-                writer.WritePropertyName("firstIngestedTimeUtc"u8);
-                writer.WriteStringValue(FirstIngestedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastIngestedOn))
-            {
-                writer.WritePropertyName("lastIngestedTimeUtc"u8);
-                writer.WriteStringValue(LastIngestedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(IngestionRulesVersion))
-            {
-                writer.WritePropertyName("ingestionRulesVersion"u8);
-                writer.WriteStringValue(IngestionRulesVersion.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdateMethod))
-            {
-                writer.WritePropertyName("lastUpdateMethod"u8);
-                writer.WriteStringValue(LastUpdateMethod);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
-            {
-                writer.WritePropertyName("lastModifiedBy"u8);
-                writer.WriteObjectValue(LastModifiedBy, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
-            {
-                writer.WritePropertyName("lastUpdatedDateTimeUtc"u8);
-                writer.WriteStringValue(LastUpdatedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RelationshipHints))
-            {
-                writer.WritePropertyName("relationshipHints"u8);
-                writer.WriteStartArray();
-                foreach (var item in RelationshipHints)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         ThreatIntelligenceRelationship IJsonModel<ThreatIntelligenceRelationship>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

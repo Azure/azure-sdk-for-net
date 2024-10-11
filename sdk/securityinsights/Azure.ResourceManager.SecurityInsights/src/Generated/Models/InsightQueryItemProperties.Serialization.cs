@@ -21,13 +21,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         void IJsonModel<InsightQueryItemProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<InsightQueryItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InsightQueryItemProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -75,69 +84,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("referenceTimeRange"u8);
                 writer.WriteObjectValue(ReferenceTimeRange, options);
             }
-            if (Optional.IsCollectionDefined(DataTypes))
-            {
-                writer.WritePropertyName("dataTypes"u8);
-                writer.WriteStartArray();
-                foreach (var item in DataTypes)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(InputEntityType))
-            {
-                writer.WritePropertyName("inputEntityType"u8);
-                writer.WriteStringValue(InputEntityType.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(RequiredInputFieldsSets))
-            {
-                writer.WritePropertyName("requiredInputFieldsSets"u8);
-                writer.WriteStartArray();
-                foreach (var item in RequiredInputFieldsSets)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        writer.WriteStringValue(item0);
-                    }
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(EntitiesFilter))
-            {
-                writer.WritePropertyName("entitiesFilter"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EntitiesFilter);
-#else
-                using (JsonDocument document = JsonDocument.Parse(EntitiesFilter))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         InsightQueryItemProperties IJsonModel<InsightQueryItemProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

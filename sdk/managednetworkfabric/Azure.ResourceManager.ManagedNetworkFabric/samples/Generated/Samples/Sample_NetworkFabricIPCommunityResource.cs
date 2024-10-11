@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             {
                 IPCommunityRules =
 {
-new IPCommunityRule(CommunityActionType.Permit,4155123341,new string[]
+new IPCommunityRule(CommunityActionType.Permit,4155123341L,new string[]
 {
 "1:1"
 })

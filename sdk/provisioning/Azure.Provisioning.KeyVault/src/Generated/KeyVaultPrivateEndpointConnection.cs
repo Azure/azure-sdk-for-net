@@ -83,11 +83,15 @@ public partial class KeyVaultPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new KeyVaultPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the KeyVaultPrivateEndpointConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the KeyVaultPrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the KeyVaultPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public KeyVaultPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.KeyVault/vaults/privateEndpointConnections", resourceVersion, context)
+    public KeyVaultPrivateEndpointConnection(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.KeyVault/vaults/privateEndpointConnections", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<KeyVaultPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -102,11 +106,77 @@ public partial class KeyVaultPrivateEndpointConnection : Resource
     }
 
     /// <summary>
+    /// Supported KeyVaultPrivateEndpointConnection resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-04-01-preview.
+        /// </summary>
+        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
+
+        /// <summary>
+        /// 2023-08-01-PREVIEW.
+        /// </summary>
+        public static readonly string V2023_08_01_PREVIEW = "2023-08-01-PREVIEW";
+
+        /// <summary>
+        /// 2023-07-01.
+        /// </summary>
+        public static readonly string V2023_07_01 = "2023-07-01";
+
+        /// <summary>
+        /// 2023-02-01.
+        /// </summary>
+        public static readonly string V2023_02_01 = "2023-02-01";
+
+        /// <summary>
+        /// 2022-11-01.
+        /// </summary>
+        public static readonly string V2022_11_01 = "2022-11-01";
+
+        /// <summary>
+        /// 2022-07-01.
+        /// </summary>
+        public static readonly string V2022_07_01 = "2022-07-01";
+
+        /// <summary>
+        /// 2021-10-01.
+        /// </summary>
+        public static readonly string V2021_10_01 = "2021-10-01";
+
+        /// <summary>
+        /// 2019-09-01.
+        /// </summary>
+        public static readonly string V2019_09_01 = "2019-09-01";
+
+        /// <summary>
+        /// 2018-02-14.
+        /// </summary>
+        public static readonly string V2018_02_14 = "2018-02-14";
+
+        /// <summary>
+        /// 2016-10-01.
+        /// </summary>
+        public static readonly string V2016_10_01 = "2016-10-01";
+
+        /// <summary>
+        /// 2015-06-01.
+        /// </summary>
+        public static readonly string V2015_06_01 = "2015-06-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing KeyVaultPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the KeyVaultPrivateEndpointConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the KeyVaultPrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the KeyVaultPrivateEndpointConnection.</param>
     /// <returns>The existing KeyVaultPrivateEndpointConnection resource.</returns>
-    public static KeyVaultPrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static KeyVaultPrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningUnderlyingResourceAction left, MachineLearningUnderlyingResourceAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningUnderlyingResourceAction"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningUnderlyingResourceAction left, MachineLearningUnderlyingResourceAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningUnderlyingResourceAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningUnderlyingResourceAction"/>. </summary>
         public static implicit operator MachineLearningUnderlyingResourceAction(string value) => new MachineLearningUnderlyingResourceAction(value);
 
         /// <inheritdoc />

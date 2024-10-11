@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(DataFlowComputeType left, DataFlowComputeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFlowComputeType"/> values are not the same. </summary>
         public static bool operator !=(DataFlowComputeType left, DataFlowComputeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataFlowComputeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFlowComputeType"/>. </summary>
         public static implicit operator DataFlowComputeType(string value) => new DataFlowComputeType(value);
 
         /// <inheritdoc />

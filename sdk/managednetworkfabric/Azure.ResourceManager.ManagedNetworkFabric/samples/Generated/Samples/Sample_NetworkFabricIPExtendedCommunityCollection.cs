@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             string ipExtendedCommunityName = "example-ipExtendedCommunity";
             NetworkFabricIPExtendedCommunityData data = new NetworkFabricIPExtendedCommunityData(new AzureLocation("eastus"), new IPExtendedCommunityRule[]
             {
-new IPExtendedCommunityRule(CommunityActionType.Permit,4155123341,new string[]
+new IPExtendedCommunityRule(CommunityActionType.Permit,4155123341L,new string[]
 {
 "1234:2345"
 })
