@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         void IJsonModel<VirtualMachineResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineResourceSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -67,34 +76,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WritePropertyName("targetAvailabilitySetId"u8);
                 writer.WriteStringValue(TargetAvailabilitySetId);
             }
-            writer.WritePropertyName("resourceType"u8);
-            writer.WriteStringValue(ResourceType);
-            if (Optional.IsDefined(TargetResourceName))
-            {
-                writer.WritePropertyName("targetResourceName"u8);
-                writer.WriteStringValue(TargetResourceName);
-            }
-            if (Optional.IsDefined(TargetResourceGroupName))
-            {
-                writer.WritePropertyName("targetResourceGroupName"u8);
-                writer.WriteStringValue(TargetResourceGroupName);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         VirtualMachineResourceSettings IJsonModel<VirtualMachineResourceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

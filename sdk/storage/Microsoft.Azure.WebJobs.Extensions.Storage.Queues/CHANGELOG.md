@@ -1,5 +1,15 @@
 # Release History
 
+## 5.4.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 5.3.3 (2024-10-10)
 
 ### Other Changes

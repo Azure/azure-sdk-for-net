@@ -199,6 +199,18 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.AreEqual("secret-value", response.Value.Value);
         }
 
+        [Test]
+        public void GetClaimsFromChallengeHeaders()
+        {
+            MockResponse response401WithClaims = new MockResponse(401)
+                .WithHeader("WWW-Authenticate", @"Bearer realm="""", authorization_uri=""https://login.microsoftonline.com/common/oauth2/authorize"", error=""insufficient_claims"", claims=""eyJhY2Nlc3NfdG9rZW4iOnsiYWNycyI6eyJlc3NlbnRpYWwiOnRydWUsInZhbHVlIjoiY3AxIn19fQ==""");
+            Assert.AreEqual(ChallengeBasedAuthenticationPolicy.getDecodedClaimsParameter("insufficient_claims", response401WithClaims), @"{""access_token"":{""acrs"":{""essential"":true,""value"":""cp1""}}}");
+
+            MockResponse response401 = new MockResponse(401)
+                    .WithHeader("WWW-Authenticate", @"Bearer authorization=""https://login.windows.net/de763a21-49f7-4b08-a8e1-52c8fbc103b4"", resource=""https://vault.azure.net""");
+            Assert.IsNull(ChallengeBasedAuthenticationPolicy.getDecodedClaimsParameter(null, response401));
+        }
+
         private class MockTransportBuilder
         {
             private const string AuthorizationHeader = "Authorization";
