@@ -74,10 +74,15 @@ public partial class SqlServerDatabaseRestorePoint : Resource
     /// <summary>
     /// Creates a new SqlServerDatabaseRestorePoint.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerDatabaseRestorePoint.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerDatabaseRestorePoint
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerDatabaseRestorePoint.</param>
-    public SqlServerDatabaseRestorePoint(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/restorePoints", resourceVersion ?? "2021-11-01")
+    public SqlServerDatabaseRestorePoint(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/databases/restorePoints", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _earliestRestoreOn = BicepValue<DateTimeOffset>.DefineProperty(this, "EarliestRestoreOn", ["properties", "earliestRestoreDate"], isOutput: true);
@@ -124,9 +129,14 @@ public partial class SqlServerDatabaseRestorePoint : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerDatabaseRestorePoint.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerDatabaseRestorePoint.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerDatabaseRestorePoint
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerDatabaseRestorePoint.</param>
     /// <returns>The existing SqlServerDatabaseRestorePoint resource.</returns>
-    public static SqlServerDatabaseRestorePoint FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerDatabaseRestorePoint FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

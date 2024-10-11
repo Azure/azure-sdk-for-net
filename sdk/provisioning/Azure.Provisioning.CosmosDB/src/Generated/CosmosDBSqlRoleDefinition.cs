@@ -75,10 +75,15 @@ public partial class CosmosDBSqlRoleDefinition : Resource
     /// <summary>
     /// Creates a new CosmosDBSqlRoleDefinition.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBSqlRoleDefinition.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CosmosDBSqlRoleDefinition
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlRoleDefinition.</param>
-    public CosmosDBSqlRoleDefinition(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions", resourceVersion ?? "2024-08-15")
+    public CosmosDBSqlRoleDefinition(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _assignableScopes = BicepList<string>.DefineProperty(this, "AssignableScopes", ["properties", "assignableScopes"]);
@@ -229,9 +234,14 @@ public partial class CosmosDBSqlRoleDefinition : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBSqlRoleDefinition.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBSqlRoleDefinition.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CosmosDBSqlRoleDefinition
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlRoleDefinition.</param>
     /// <returns>The existing CosmosDBSqlRoleDefinition resource.</returns>
-    public static CosmosDBSqlRoleDefinition FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBSqlRoleDefinition FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

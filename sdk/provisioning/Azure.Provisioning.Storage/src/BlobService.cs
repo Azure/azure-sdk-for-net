@@ -24,7 +24,7 @@ public partial class BlobService
     /// <inheritdoc/>
     IEnumerable<ProvisioningOutput> IClientCreator.GetOutputs()
     {
-        yield return new ProvisioningOutput($"{ResourceName}_endpoint", typeof(string))
+        yield return new ProvisioningOutput($"{IdentifierName}_endpoint", typeof(string))
         {
             Value = Parent!.PrimaryEndpoints.Value!.BlobUri
         };
@@ -50,10 +50,10 @@ public partial class BlobService
         BlobClientOptions? options)
     {
         // TODO: Move into a shared helper off ProvCtx's namescoping
-        string qualifiedName = $"{ResourceName}_endpoint";
+        string qualifiedName = $"{IdentifierName}_endpoint";
         string endpoint = (deploymentOutputs.TryGetValue(qualifiedName, out object? raw) && raw is string value) ?
             value :
-            throw new InvalidOperationException($"Could not find output value {qualifiedName} to construct {GetType().Name} resource {ResourceName}.");
+            throw new InvalidOperationException($"Could not find output value {qualifiedName} to construct {GetType().Name} resource {IdentifierName}.");
         return new BlobServiceClient(new Uri(endpoint), credential, options);
     }
 }

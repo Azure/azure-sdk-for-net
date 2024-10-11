@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Avs.Samples
 },
                     GatewayAddress = "40.20.20.20/16",
                 },
-                Revision = 1,
+                Revision = 1L,
             };
             ArmOperation<WorkloadNetworkSegmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, segmentId, data);
             WorkloadNetworkSegmentResource result = lro.Value;

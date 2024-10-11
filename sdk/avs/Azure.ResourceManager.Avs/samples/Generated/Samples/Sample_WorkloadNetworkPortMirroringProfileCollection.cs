@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Avs.Samples
                 Direction = PortMirroringProfileDirection.Bidirectional,
                 Source = "vmGroup1",
                 Destination = "vmGroup2",
-                Revision = 1,
+                Revision = 1L,
             };
             ArmOperation<WorkloadNetworkPortMirroringProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, portMirroringId, data);
             WorkloadNetworkPortMirroringProfileResource result = lro.Value;

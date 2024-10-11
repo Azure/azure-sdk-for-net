@@ -50,10 +50,16 @@ public partial class ManagedInstanceAzureADOnlyAuthentication : Resource
     /// <summary>
     /// Creates a new ManagedInstanceAzureADOnlyAuthentication.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceAzureADOnlyAuthentication.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ManagedInstanceAzureADOnlyAuthentication resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAzureADOnlyAuthentication.</param>
-    public ManagedInstanceAzureADOnlyAuthentication(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/azureADOnlyAuthentications", resourceVersion ?? "2021-11-01")
+    public ManagedInstanceAzureADOnlyAuthentication(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/managedInstances/azureADOnlyAuthentications", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _isAzureADOnlyAuthenticationEnabled = BicepValue<bool>.DefineProperty(this, "IsAzureADOnlyAuthenticationEnabled", ["properties", "azureADOnlyAuthentication"]);
@@ -82,9 +88,15 @@ public partial class ManagedInstanceAzureADOnlyAuthentication : Resource
     /// Creates a reference to an existing
     /// ManagedInstanceAzureADOnlyAuthentication.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceAzureADOnlyAuthentication.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ManagedInstanceAzureADOnlyAuthentication resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAzureADOnlyAuthentication.</param>
     /// <returns>The existing ManagedInstanceAzureADOnlyAuthentication resource.</returns>
-    public static ManagedInstanceAzureADOnlyAuthentication FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceAzureADOnlyAuthentication FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

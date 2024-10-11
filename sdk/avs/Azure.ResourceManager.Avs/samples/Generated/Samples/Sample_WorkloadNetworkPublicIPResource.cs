@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Avs.Samples
             WorkloadNetworkPublicIPData data = new WorkloadNetworkPublicIPData()
             {
                 DisplayName = "publicIP1",
-                NumberOfPublicIPs = 32,
+                NumberOfPublicIPs = 32L,
             };
             ArmOperation<WorkloadNetworkPublicIPResource> lro = await workloadNetworkPublicIP.UpdateAsync(WaitUntil.Completed, data);
             WorkloadNetworkPublicIPResource result = lro.Value;

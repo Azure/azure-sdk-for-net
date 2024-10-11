@@ -9,7 +9,7 @@ Azure.Provisioning.KeyVault simplifies declarative resource provisioning in .NET
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.KeyVault
+dotnet add package Azure.Provisioning.KeyVault --prerelease
 ```
 
 ### Prerequisites

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Avs.Samples
 {
 "564d43da-fefc-2a3b-1d92-42855622fa50"
 },
-                Revision = 1,
+                Revision = 1L,
             };
             ArmOperation<WorkloadNetworkVmGroupResource> lro = await workloadNetworkVmGroup.UpdateAsync(WaitUntil.Completed, data);
             WorkloadNetworkVmGroupResource result = lro.Value;

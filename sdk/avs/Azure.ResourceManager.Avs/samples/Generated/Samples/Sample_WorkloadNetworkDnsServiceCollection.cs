@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Avs.Samples
 "fqdnZone1"
 },
                 LogLevel = DnsServiceLogLevel.Info,
-                Revision = 1,
+                Revision = 1L,
             };
             ArmOperation<WorkloadNetworkDnsServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dnsServiceId, data);
             WorkloadNetworkDnsServiceResource result = lro.Value;
