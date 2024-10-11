@@ -1064,7 +1064,7 @@
 # ServiceOwners:                                                   @sunkun99
 
 # PRLabel: %Compute - Fleet
-/sdk/computefleet/                                                 @sahilarora92 @dhruvil009 @rahuls-microsoft
+/sdk/computefleet/                                                 @sahilarora92 @dhruvil009
 
 # ServiceLabel: %Compute - Fleet
 # ServiceOwners:                                                   @sahilarora92 @dhruvil009
