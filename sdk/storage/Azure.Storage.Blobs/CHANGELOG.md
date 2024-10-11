@@ -1,5 +1,15 @@
 # Release History
 
+## 12.22.2 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.22.1 (2024-09-25)
+
+### Other Changes
+- Integrated decryption for CSE v2.1
+
 ## 12.22.0 (2024-09-18)
 
 ### Features Added
