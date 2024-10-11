@@ -89,7 +89,7 @@ namespace Azure.Storage.Files.Shares
         public long? Owner => _response.Headers.TryGetValue("x-ms-owner", out long? value) ? value : null;
         /// <summary> NFS only. The owning group of the file or directory. </summary>
         public long? Group => _response.Headers.TryGetValue("x-ms-group", out long? value) ? value : null;
-        /// <summary> The link count of the file or directory. </summary>
+        /// <summary> NFS only. The link count of the file or directory. </summary>
         public long? LinkCount => _response.Headers.TryGetValue("x-ms-link-count", out long? value) ? value : null;
     }
 }
