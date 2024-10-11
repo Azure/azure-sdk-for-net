@@ -199,7 +199,7 @@ info = "Example Owner Info",
                     status = "ACTIVE",
                     createdBy = "ExampleCreator",
                     updatedBy = "ExampleUpdator",
-                    version = 0,
+                    version = 0L,
                 },
             });
             Response response = client.CreateOrUpdate(content);
@@ -252,7 +252,7 @@ info = "Example Owner Info",
                     status = "ACTIVE",
                     createdBy = "ExampleCreator",
                     updatedBy = "ExampleUpdator",
-                    version = 0,
+                    version = 0L,
                 },
             });
             Response response = await client.CreateOrUpdateAsync(content);
@@ -288,7 +288,7 @@ info = "Example Owner Info",
                     CreatedBy = "ExampleCreator",
                     Status = EntityStatus.Active,
                     UpdatedBy = "ExampleUpdator",
-                    Version = 0,
+                    Version = 0L,
                     Contacts =
 {
 ["Expert"] = {new ContactInfo
@@ -334,7 +334,7 @@ Info = "Example Owner Info",
                     CreatedBy = "ExampleCreator",
                     Status = EntityStatus.Active,
                     UpdatedBy = "ExampleUpdator",
-                    Version = 0,
+                    Version = 0L,
                     Contacts =
 {
 ["Expert"] = {new ContactInfo
@@ -383,7 +383,7 @@ Info = "Example Owner Info",
                     status = "ACTIVE",
                     createdBy = "ExampleCreator",
                     updatedBy = "ExampleUpdator",
-                    version = 0,
+                    version = 0L,
                 },
             });
             Response response = client.CreateOrUpdate(content);
@@ -422,7 +422,7 @@ Info = "Example Owner Info",
                     status = "ACTIVE",
                     createdBy = "ExampleCreator",
                     updatedBy = "ExampleUpdator",
-                    version = 0,
+                    version = 0L,
                 },
             });
             Response response = await client.CreateOrUpdateAsync(content);
@@ -463,7 +463,7 @@ Info = "Example Owner Info",
 },
                     Status = EntityStatus.Active,
                     UpdatedBy = "ExampleUpdator",
-                    Version = 0,
+                    Version = 0L,
                 },
             };
             Response<EntityMutationResult> response = client.CreateOrUpdate(body);
@@ -501,7 +501,7 @@ Info = "Example Owner Info",
 },
                     Status = EntityStatus.Active,
                     UpdatedBy = "ExampleUpdator",
-                    Version = 0,
+                    Version = 0L,
                 },
             };
             Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body);
@@ -551,7 +551,7 @@ info = "Example Owner Info",
                     status = "ACTIVE",
                     createdBy = "ExampleCreator",
                     updatedBy = "ExampleUpdator",
-                    version = 0,
+                    version = 0L,
                 },
             });
             Response response = client.CreateOrUpdate(content);
@@ -604,7 +604,7 @@ info = "Example Owner Info",
                     status = "ACTIVE",
                     createdBy = "ExampleCreator",
                     updatedBy = "ExampleUpdator",
-                    version = 0,
+                    version = 0L,
                 },
             });
             Response response = await client.CreateOrUpdateAsync(content);
@@ -640,7 +640,7 @@ info = "Example Owner Info",
                     CreatedBy = "ExampleCreator",
                     Status = EntityStatus.Active,
                     UpdatedBy = "ExampleUpdator",
-                    Version = 0,
+                    Version = 0L,
                     Contacts =
 {
 ["Expert"] = {new ContactInfo
@@ -686,7 +686,7 @@ Info = "Example Owner Info",
                     CreatedBy = "ExampleCreator",
                     Status = EntityStatus.Active,
                     UpdatedBy = "ExampleUpdator",
-                    Version = 0,
+                    Version = 0L,
                     Contacts =
 {
 ["Expert"] = {new ContactInfo
@@ -801,7 +801,7 @@ info = "Example Owner Info",
 status = "ACTIVE",
 createdBy = "ExampleCreator",
 updatedBy = "ExampleUpdator",
-version = 0,
+version = 0L,
 },
 new
 {
@@ -837,7 +837,7 @@ info = "Example Owner Info",
 status = "ACTIVE",
 createdBy = "ExampleCreator",
 updatedBy = "ExampleUpdator",
-version = 0,
+version = 0L,
 }
             },
             });
@@ -893,7 +893,7 @@ info = "Example Owner Info",
 status = "ACTIVE",
 createdBy = "ExampleCreator",
 updatedBy = "ExampleUpdator",
-version = 0,
+version = 0L,
 },
 new
 {
@@ -929,7 +929,7 @@ info = "Example Owner Info",
 status = "ACTIVE",
 createdBy = "ExampleCreator",
 updatedBy = "ExampleUpdator",
-version = 0,
+version = 0L,
 }
             },
             });
@@ -966,7 +966,7 @@ TypeName = "azure_storage_account",
 CreatedBy = "ExampleCreator",
 Status = EntityStatus.Active,
 UpdatedBy = "ExampleUpdator",
-Version = 0,
+Version = 0L,
 Contacts =
 {
 ["Expert"] = {new ContactInfo
@@ -996,7 +996,7 @@ TypeName = "azure_storage_account",
 CreatedBy = "ExampleCreator",
 Status = EntityStatus.Active,
 UpdatedBy = "ExampleUpdator",
-Version = 0,
+Version = 0L,
 Contacts =
 {
 ["Expert"] = {new ContactInfo
@@ -1042,7 +1042,7 @@ TypeName = "azure_storage_account",
 CreatedBy = "ExampleCreator",
 Status = EntityStatus.Active,
 UpdatedBy = "ExampleUpdator",
-Version = 0,
+Version = 0L,
 Contacts =
 {
 ["Expert"] = {new ContactInfo
@@ -1072,7 +1072,7 @@ TypeName = "azure_storage_account",
 CreatedBy = "ExampleCreator",
 Status = EntityStatus.Active,
 UpdatedBy = "ExampleUpdator",
-Version = 0,
+Version = 0L,
 Contacts =
 {
 ["Expert"] = {new ContactInfo
@@ -1773,7 +1773,6 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
             {
                 entity = new
                 {
-                    createTime = 1605766397985,
                     createdBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
                     guid = "dc507ccf-0c57-4165-9327-f37b0d13fda0",
                     relationshipAttributes = new
@@ -1782,10 +1781,9 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
                         meanings = Array.Empty<object>(),
                     },
                     status = "ACTIVE",
-                    updateTime = 1605766397985,
                     updatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
                     lastModifiedTS = "1",
-                    version = 0,
+                    version = 0L,
                     attributes = new
                     {
                         owner = "ExampleOwner",
@@ -1815,7 +1813,6 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
             {
                 entity = new
                 {
-                    createTime = 1605766397985,
                     createdBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
                     guid = "dc507ccf-0c57-4165-9327-f37b0d13fda0",
                     relationshipAttributes = new
@@ -1824,10 +1821,9 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
                         meanings = Array.Empty<object>(),
                     },
                     status = "ACTIVE",
-                    updateTime = 1605766397985,
                     updatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
                     lastModifiedTS = "1",
-                    version = 0,
+                    version = 0L,
                     attributes = new
                     {
                         owner = "ExampleOwner",
@@ -1867,7 +1863,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
 },
                     TypeName = "azure_storage_account",
                     LastModifiedTS = "1",
-                    CreateTime = 1605766397985,
+                    CreateTime = default,
                     CreatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
                     Guid = "dc507ccf-0c57-4165-9327-f37b0d13fda0",
                     RelationshipAttributes =
@@ -1876,9 +1872,9 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
 ["meanings"] = BinaryData.FromObjectAsJson(Array.Empty<object>())
 },
                     Status = EntityStatus.Active,
-                    UpdateTime = 1605766397985,
+                    UpdateTime = default,
                     UpdatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
-                    Version = 0,
+                    Version = 0L,
                 },
             };
             Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("azure_storage_account", body);
@@ -1906,7 +1902,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
 },
                     TypeName = "azure_storage_account",
                     LastModifiedTS = "1",
-                    CreateTime = 1605766397985,
+                    CreateTime = default,
                     CreatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
                     Guid = "dc507ccf-0c57-4165-9327-f37b0d13fda0",
                     RelationshipAttributes =
@@ -1915,9 +1911,9 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
 ["meanings"] = BinaryData.FromObjectAsJson(Array.Empty<object>())
 },
                     Status = EntityStatus.Active,
-                    UpdateTime = 1605766397985,
+                    UpdateTime = default,
                     UpdatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
-                    Version = 0,
+                    Version = 0L,
                 },
             };
             Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAsync("azure_storage_account", body);
