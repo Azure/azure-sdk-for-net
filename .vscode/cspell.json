@@ -174,7 +174,8 @@
     "westcentralus",
     "westus",
     "Wmem",
-    "xunit"
+    "xunit",
+    "Rdma"
   ],
   "overrides": [
     {
