@@ -292,19 +292,11 @@ namespace Azure.Storage.Files.Shares
                 NfsProperties = new FileNfsProperties()
                 {
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
+                    Owner = Convert.ToUInt32(response.Headers.Owner),
+                    Group = Convert.ToUInt32(response.Headers.Group),
                     FileType = response.Headers.NfsFileType,
                 }
             };
-
-            if (uint.TryParse(response.Headers.Owner, out uint owner))
-            {
-                shareFileInfo.NfsProperties.Owner = owner;
-            }
-
-            if (uint.TryParse(response.Headers.Group, out uint group))
-            {
-                shareFileInfo.NfsProperties.Group = group;
-            }
 
             return shareFileInfo;
         }

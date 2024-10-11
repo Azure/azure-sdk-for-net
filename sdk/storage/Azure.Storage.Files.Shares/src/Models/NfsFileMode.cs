@@ -90,7 +90,7 @@ namespace Azure.Storage.Files.Shares.Models
                 return null;
             }
 
-            if (modeString.Length == 4)
+            if (modeString.Length != 4)
             {
                 throw Errors.InvalidFormat(nameof(modeString));
             }

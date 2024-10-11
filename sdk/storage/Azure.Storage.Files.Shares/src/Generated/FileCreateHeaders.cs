@@ -41,9 +41,9 @@ namespace Azure.Storage.Files.Shares
         /// <summary> NFS only. The mode of the file or directory. </summary>
         public string FileMode => _response.Headers.TryGetValue("x-ms-mode", out string value) ? value : null;
         /// <summary> NFS only. The owner of the file or directory. </summary>
-        public string Owner => _response.Headers.TryGetValue("x-ms-owner", out string value) ? value : null;
+        public long? Owner => _response.Headers.TryGetValue("x-ms-owner", out long? value) ? value : null;
         /// <summary> NFS only. The owning group of the file or directory. </summary>
-        public string Group => _response.Headers.TryGetValue("x-ms-group", out string value) ? value : null;
+        public long? Group => _response.Headers.TryGetValue("x-ms-group", out long? value) ? value : null;
         /// <summary> NFS only. Type of the file or directory. </summary>
         public NfsFileType? NfsFileType => _response.Headers.TryGetValue("x-ms-file-file-type", out string value) ? new NfsFileType(value) : (NfsFileType?)null;
     }
