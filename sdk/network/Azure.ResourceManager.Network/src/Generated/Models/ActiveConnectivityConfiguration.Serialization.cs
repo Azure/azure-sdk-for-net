@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.Network.Models
 
         void IJsonModel<ActiveConnectivityConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ActiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ActiveConnectivityConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(CommittedOn))
             {
                 writer.WritePropertyName("commitTime"u8);
@@ -36,90 +45,6 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsCollectionDefined(ConfigurationGroups))
-            {
-                writer.WritePropertyName("configurationGroups"u8);
-                writer.WriteStartArray();
-                foreach (var item in ConfigurationGroups)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(ConnectivityTopology))
-            {
-                writer.WritePropertyName("connectivityTopology"u8);
-                writer.WriteStringValue(ConnectivityTopology.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Hubs))
-            {
-                writer.WritePropertyName("hubs"u8);
-                writer.WriteStartArray();
-                foreach (var item in Hubs)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsGlobal))
-            {
-                writer.WritePropertyName("isGlobal"u8);
-                writer.WriteStringValue(IsGlobal.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(AppliesToGroups))
-            {
-                writer.WritePropertyName("appliesToGroups"u8);
-                writer.WriteStartArray();
-                foreach (var item in AppliesToGroups)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(DeleteExistingPeering))
-            {
-                writer.WritePropertyName("deleteExistingPeering"u8);
-                writer.WriteStringValue(DeleteExistingPeering.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
-            {
-                writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid.Value);
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         ActiveConnectivityConfiguration IJsonModel<ActiveConnectivityConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
