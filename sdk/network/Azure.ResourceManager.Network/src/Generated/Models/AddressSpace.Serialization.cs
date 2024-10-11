@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class AddressSpace : IUtf8JsonSerializable, IJsonModel<AddressSpace>
+    public partial class AddressSpace : IUtf8JsonSerializable, IJsonModel<AddressSpace>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddressSpace>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -33,6 +33,16 @@ namespace Azure.ResourceManager.Network.Models
                 foreach (var item in AddressPrefixes)
                 {
                     writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IpamPoolPrefixAllocations))
+            {
+                writer.WritePropertyName("ipamPoolPrefixAllocations"u8);
+                writer.WriteStartArray();
+                foreach (var item in IpamPoolPrefixAllocations)
+                {
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,6 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IList<string> addressPrefixes = default;
+            IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,13 +104,27 @@ namespace Azure.ResourceManager.Network.Models
                     addressPrefixes = array;
                     continue;
                 }
+                if (property.NameEquals("ipamPoolPrefixAllocations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<IpamPoolPrefixAllocation> array = new List<IpamPoolPrefixAllocation>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(IpamPoolPrefixAllocation.DeserializeIpamPoolPrefixAllocation(item, options));
+                    }
+                    ipamPoolPrefixAllocations = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AddressSpace(addressPrefixes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AddressSpace(addressPrefixes ?? new ChangeTrackingList<string>(), ipamPoolPrefixAllocations ?? new ChangeTrackingList<IpamPoolPrefixAllocation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AddressSpace>.Write(ModelReaderWriterOptions options)

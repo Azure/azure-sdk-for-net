@@ -64,17 +64,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> A description of the security configuration. </param>
         /// <param name="applyOnNetworkIntentPolicyBasedServices"> Enum list of network intent policy based services. </param>
+        /// <param name="networkGroupAddressSpaceAggregationOption"> Determine update behavior for changes to network groups referenced within the rules in this configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="commonResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAdminConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices, NetworkProvisioningState? provisioningState, Guid? resourceGuid, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityAdminConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices, AddressSpaceAggregationOption? networkGroupAddressSpaceAggregationOption, NetworkProvisioningState? provisioningState, Guid? resourceGuid, string commonResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ApplyOnNetworkIntentPolicyBasedServices = applyOnNetworkIntentPolicyBasedServices;
+            NetworkGroupAddressSpaceAggregationOption = networkGroupAddressSpaceAggregationOption;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
-            ETag = etag;
+            CommonResourceType = commonResourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -82,11 +84,13 @@ namespace Azure.ResourceManager.Network
         public string Description { get; set; }
         /// <summary> Enum list of network intent policy based services. </summary>
         public IList<NetworkIntentPolicyBasedService> ApplyOnNetworkIntentPolicyBasedServices { get; }
+        /// <summary> Determine update behavior for changes to network groups referenced within the rules in this configuration. </summary>
+        public AddressSpaceAggregationOption? NetworkGroupAddressSpaceAggregationOption { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Unique identifier for this resource. </summary>
         public Guid? ResourceGuid { get; }
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? ETag { get; }
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        public string CommonResourceType { get; }
     }
 }

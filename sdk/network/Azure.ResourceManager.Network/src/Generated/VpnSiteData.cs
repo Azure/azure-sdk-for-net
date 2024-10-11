@@ -81,18 +81,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The key for vpn-site that can be used for connections. </summary>
         public string SiteKey { get; set; }
         /// <summary> The AddressSpace that contains an array of IP address ranges. </summary>
-        internal AddressSpace AddressSpace { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> AddressPrefixes
-        {
-            get
-            {
-                if (AddressSpace is null)
-                    AddressSpace = new AddressSpace();
-                return AddressSpace.AddressPrefixes;
-            }
-        }
-
+        public AddressSpace AddressSpace { get; set; }
         /// <summary> The set of bgp properties. </summary>
         public BgpSettings BgpProperties { get; set; }
         /// <summary> The provisioning state of the VPN site resource. </summary>

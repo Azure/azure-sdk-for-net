@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && Optional.IsDefined(CommonResourceType))
             {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(CommonResourceType);
             }
             if (options.Format != "W")
             {
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             AdminRuleKind kind = default;
-            ETag? etag = default;
+            string type = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType type0 = default;
             SystemData systemData = default;
             string description = default;
             SecurityConfigurationRuleProtocol? protocol = default;
@@ -196,13 +196,9 @@ namespace Azure.ResourceManager.Network.Models
                     kind = new AdminRuleKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("etag"u8))
+                if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -217,7 +213,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    type0 = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
@@ -365,10 +361,10 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkAdminRule(
                 id,
                 name,
-                type,
+                type0,
                 systemData,
                 kind,
-                etag,
+                type,
                 serializedAdditionalRawData,
                 description,
                 protocol,
