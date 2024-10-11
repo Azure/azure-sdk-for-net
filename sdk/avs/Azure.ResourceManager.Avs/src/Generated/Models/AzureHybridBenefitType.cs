@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(AzureHybridBenefitType left, AzureHybridBenefitType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureHybridBenefitType"/> values are not the same. </summary>
         public static bool operator !=(AzureHybridBenefitType left, AzureHybridBenefitType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AzureHybridBenefitType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureHybridBenefitType"/>. </summary>
         public static implicit operator AzureHybridBenefitType(string value) => new AzureHybridBenefitType(value);
 
         /// <inheritdoc />

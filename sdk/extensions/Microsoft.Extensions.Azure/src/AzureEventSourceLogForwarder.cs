@@ -37,7 +37,7 @@ namespace Microsoft.Extensions.Azure
         /// </summary>
         public void Start()
         {
-            _listener ??= new AzureEventSourceListener((e, s) => LogEvent(e), EventLevel.Verbose);
+            _listener ??= new AzureEventSourceListener(LogEvent, EventLevel.Verbose);
         }
 
         private void LogEvent(EventWrittenEventArgs eventData)

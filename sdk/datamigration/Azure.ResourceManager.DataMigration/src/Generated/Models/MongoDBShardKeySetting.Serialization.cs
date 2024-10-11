@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         void IJsonModel<MongoDBShardKeySetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBShardKeySetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("fields"u8);
             writer.WriteStartArray();
             foreach (var item in Fields)
@@ -53,7 +61,6 @@ namespace Azure.ResourceManager.DataMigration.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MongoDBShardKeySetting IJsonModel<MongoDBShardKeySetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

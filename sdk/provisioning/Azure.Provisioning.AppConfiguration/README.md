@@ -9,7 +9,7 @@ Azure.Provisioning.AppConfiguration simplifies declarative resource provisioning
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.AppConfiguration
+dotnet add package Azure.Provisioning.AppConfiguration --prerelease
 ```
 
 ### Prerequisites

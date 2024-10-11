@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static bool operator ==(TermStatus left, TermStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TermStatus"/> values are not the same. </summary>
         public static bool operator !=(TermStatus left, TermStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TermStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TermStatus"/>. </summary>
         public static implicit operator TermStatus(string value) => new TermStatus(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static bool operator ==(ContainerAppNameUnavailableReason left, ContainerAppNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppNameUnavailableReason"/> values are not the same. </summary>
         public static bool operator !=(ContainerAppNameUnavailableReason left, ContainerAppNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerAppNameUnavailableReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppNameUnavailableReason"/>. </summary>
         public static implicit operator ContainerAppNameUnavailableReason(string value) => new ContainerAppNameUnavailableReason(value);
 
         /// <inheritdoc />

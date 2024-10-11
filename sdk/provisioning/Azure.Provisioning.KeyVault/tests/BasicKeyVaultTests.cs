@@ -20,28 +20,37 @@ public class BasicKeyVaultTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter skuName =
+                Infrastructure infra = new();
+
+                ProvisioningParameter skuName =
                     new(nameof(skuName), typeof(string))
                     {
                         Value = KeyVaultSkuName.Standard,
                         Description = "Vault type"
                     };
-                BicepParameter secretValue =
+                infra.Add(skuName);
+
+                ProvisioningParameter secretValue =
                     new(nameof(secretValue), typeof(string))
                     {
                         Description = "Specifies the value of the secret that you want to create.",
                         IsSecure = true
                     };
-                BicepParameter objectId =
+                infra.Add(secretValue);
+
+                ProvisioningParameter objectId =
                     new(nameof(objectId), typeof(string))
                     {
                         Description = "Specifies the object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault."
                     };
-                BicepVariable tenantId =
+                infra.Add(objectId);
+
+                ProvisioningVariable tenantId =
                     new(nameof(tenantId), typeof(string))
                     {
                         Value = BicepFunction.GetSubscription().TenantId
                     };
+                infra.Add(tenantId);
 
                 KeyVaultService kv =
                     new(nameof(kv))
@@ -75,6 +84,7 @@ public class BasicKeyVaultTests(bool async)
                                     }
                             }
                     };
+                infra.Add(kv);
 
                 KeyVaultSecret secret =
                     new(nameof(secret))
@@ -83,9 +93,12 @@ public class BasicKeyVaultTests(bool async)
                         Name = "myDarkNecessities",
                         Properties = new SecretProperties { Value = secretValue }
                     };
+                infra.Add(secret);
 
-                _ = new BicepOutput("name", typeof(string)) { Value = kv.Name };
-                _ = new BicepOutput("resourceId", typeof(string)) { Value = kv.Id };
+                infra.Add(new ProvisioningOutput("name", typeof(string)) { Value = kv.Name });
+                infra.Add(new ProvisioningOutput("resourceId", typeof(string)) { Value = kv.Id });
+
+                return infra;
             })
         .Compare(
             """
@@ -104,7 +117,7 @@ public class BasicKeyVaultTests(bool async)
 
             var tenantId = subscription().tenantId
 
-            resource kv 'Microsoft.KeyVault/vaults@2019-09-01' = {
+            resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
               name: take('kv-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
@@ -136,7 +149,7 @@ public class BasicKeyVaultTests(bool async)
               }
             }
 
-            resource secret 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
+            resource secret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
               name: 'myDarkNecessities'
               properties: {
                 value: secretValue

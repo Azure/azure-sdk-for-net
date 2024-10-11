@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 DefaultAction = CommunityActionType.Deny,
                 Statements =
 {
-new RoutePolicyStatementProperties(7,new StatementConditionProperties()
+new RoutePolicyStatementProperties(7L,new StatementConditionProperties()
 {
 RoutePolicyConditionType = RoutePolicyConditionType.Or,
 IPPrefixId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/example-ipPrefix"),
@@ -61,7 +61,7 @@ new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/reso
 },
 },new StatementActionProperties(RoutePolicyActionType.Permit)
 {
-LocalPreference = 20,
+LocalPreference = 20L,
 IPCommunityProperties = new ActionIPCommunityProperties()
 {
 DeleteIPCommunityIds =

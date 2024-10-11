@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<StorageTaskAssignmentUpdateExecutionContext>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StorageTaskAssignmentUpdateExecutionContext>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageTaskAssignmentUpdateExecutionContext)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StorageTaskAssignmentUpdateExecutionContext IJsonModel<StorageTaskAssignmentUpdateExecutionContext>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

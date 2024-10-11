@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         public static bool operator ==(PlaywrightTestingQuotaName left, PlaywrightTestingQuotaName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlaywrightTestingQuotaName"/> values are not the same. </summary>
         public static bool operator !=(PlaywrightTestingQuotaName left, PlaywrightTestingQuotaName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PlaywrightTestingQuotaName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PlaywrightTestingQuotaName"/>. </summary>
         public static implicit operator PlaywrightTestingQuotaName(string value) => new PlaywrightTestingQuotaName(value);
 
         /// <inheritdoc />

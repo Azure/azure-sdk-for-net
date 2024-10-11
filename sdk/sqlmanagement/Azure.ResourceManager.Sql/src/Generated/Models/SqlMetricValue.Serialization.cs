@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Sql.Models
 
         void IJsonModel<SqlMetricValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SqlMetricValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlMetricValue)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
@@ -72,7 +80,6 @@ namespace Azure.ResourceManager.Sql.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SqlMetricValue IJsonModel<SqlMetricValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

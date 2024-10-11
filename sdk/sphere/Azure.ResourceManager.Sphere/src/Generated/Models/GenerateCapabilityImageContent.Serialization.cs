@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Sphere.Models
 
         void IJsonModel<GenerateCapabilityImageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<GenerateCapabilityImageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GenerateCapabilityImageContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("capabilities"u8);
             writer.WriteStartArray();
             foreach (var item in Capabilities)
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.Sphere.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         GenerateCapabilityImageContent IJsonModel<GenerateCapabilityImageContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

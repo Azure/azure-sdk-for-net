@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         void IJsonModel<ResourceGuardOperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceGuardOperationDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(VaultCriticalOperation))
             {
                 writer.WritePropertyName("vaultCriticalOperation"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ResourceGuardOperationDetails IJsonModel<ResourceGuardOperationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

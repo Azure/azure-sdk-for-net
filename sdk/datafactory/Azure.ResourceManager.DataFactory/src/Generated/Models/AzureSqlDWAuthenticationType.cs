@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(AzureSqlDWAuthenticationType left, AzureSqlDWAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureSqlDWAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(AzureSqlDWAuthenticationType left, AzureSqlDWAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AzureSqlDWAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureSqlDWAuthenticationType"/>. </summary>
         public static implicit operator AzureSqlDWAuthenticationType(string value) => new AzureSqlDWAuthenticationType(value);
 
         /// <inheritdoc />

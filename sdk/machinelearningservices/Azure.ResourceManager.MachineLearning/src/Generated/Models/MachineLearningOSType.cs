@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningOSType left, MachineLearningOSType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningOSType"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningOSType left, MachineLearningOSType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningOSType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningOSType"/>. </summary>
         public static implicit operator MachineLearningOSType(string value) => new MachineLearningOSType(value);
 
         /// <inheritdoc />
