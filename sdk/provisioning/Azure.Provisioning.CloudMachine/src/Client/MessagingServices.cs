@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
-using Azure.Provisioning.Expressions;
 
 namespace Azure.CloudMachine;
 
@@ -13,15 +11,21 @@ public static class MessagingServices
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0107:DO NOT call public asynchronous method in synchronous scope.", Justification = "<Pending>")]
     public static void SendMessage(this CloudMachineClient cm, object serializable)
     {
-        ServiceBusSender sender = cm.ClientCache.Get("cm_default_topic_sender", () =>
+        string senderClientId = typeof(ServiceBusSender).FullName;
+        ServiceBusSender sender = cm.Subclients.Get(senderClientId, () =>
         {
-            ServiceBusClient sb = cm.ClientCache.Get(cm.Properties.ServiceBusNamespace, () =>
+            string serviceBusClientId = typeof(ServiceBusClient).FullName;
+            ServiceBusClient sb = cm.Subclients.Get(serviceBusClientId, () =>
             {
-                ServiceBusClient sb = new(cm.Properties.ServiceBusNamespace, cm.Credential);
+                string sbNamespace = cm.GetConnection(serviceBusClientId)!.Value.Endpoint;
+
+                ServiceBusClient sb = new(sbNamespace, cm.Credential);
                 return sb;
             });
 
-            ServiceBusSender sender = sb.CreateSender("cm_default_topic_sender");
+            string ServiceBusSenderId = typeof(ServiceBusClient).FullName;
+            string defaultTopic = cm.GetConnection(ServiceBusSenderId)!.Value.Endpoint;
+            ServiceBusSender sender = sb.CreateSender(defaultTopic);
             return sender;
         });
 

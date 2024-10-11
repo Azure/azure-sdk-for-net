@@ -6,6 +6,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using Azure.AI.OpenAI;
 using Azure.CloudMachine;
+using Azure.Core;
 using Azure.Provisioning.CognitiveServices;
 using OpenAI.Chat;
 
@@ -52,19 +53,33 @@ public class OpenAIFeature : CloudMachineFeature
 
 public static class OpenAIFeatureExtensions
 {
-    public static ChatClient GetOpenAIClient(this CloudMachineClient cm)
+    public static ChatClient GetOpenAIChatClient(this WorkspaceClient workspace)
     {
-        ChatClient client = cm.ClientCache.Get("aiai_chat", () =>
+        string chatClientId = typeof(ChatClient).FullName;
+
+        ChatClient client = workspace.Subclients.Get(chatClientId, () =>
         {
-            AzureOpenAIClient aoia = cm.ClientCache.Get("aoai", () =>
+            string azureOpenAIClientId = typeof(AzureOpenAIClient).FullName;
+
+            AzureOpenAIClient aoia = workspace.Subclients.Get(azureOpenAIClientId, () =>
             {
-                Uri endpoint = new("https://mochiai.openai.azure.com/");
+                WorkspaceClientConnection? connectionMaybe = workspace.GetConnection(typeof(AzureOpenAIClient).FullName);
+                if (connectionMaybe == null) throw new Exception("Connection not found");
+
+                WorkspaceClientConnection connection = connectionMaybe.Value;
+                Uri endpoint = new(connection.Endpoint);
                 var clientOptions = new AzureOpenAIClientOptions();
-                clientOptions.AddPolicy(new LoggingPolicy(), PipelinePosition.BeforeTransport);
-                string key = Environment.GetEnvironmentVariable("openai_cm_key");
-                //AzureOpenAIClient aoai = new(endpoint, new System.ClientModel.ApiKeyCredential(key), op);
-                AzureOpenAIClient aoai = new(endpoint, cm.Credential, clientOptions);
-                return aoai;
+                //clientOptions.AddPolicy(new LoggingPolicy(), PipelinePosition.BeforeTransport);
+                if (connection.CredentailType == CredentialType.EntraId)
+                {
+                    AzureOpenAIClient aoai = new(endpoint, workspace.Credential, clientOptions);
+                    return aoai;
+                }
+                else
+                {
+                    AzureOpenAIClient aoai = new(endpoint, new ApiKeyCredential(connection.ApiKey!), clientOptions);
+                    return aoai;
+                }
             });
 
             ChatClient chat = aoia.GetChatClient("gpt-4");

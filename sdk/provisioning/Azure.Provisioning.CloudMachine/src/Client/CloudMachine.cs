@@ -3,23 +3,25 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
 namespace Azure.CloudMachine;
 
-public partial class CloudMachineClient
+public partial class CloudMachineClient : WorkspaceClient
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     public string Id { get; }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public TokenCredential Credential { get; } = new ChainedTokenCredential(
-        new AzureCliCredential()
+    public override TokenCredential Credential { get; } = new ChainedTokenCredential(
+        new AzureCliCredential(),
+        new AzureDeveloperCliCredential()
     );
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "<Pending>")]
+    [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "<Pending>")]
     public CloudMachineClient(DefaultAzureCredential? credential = default, IConfiguration? configuration = default)
     {
         if (credential != default)
@@ -42,35 +44,38 @@ public partial class CloudMachineClient
         Id = cmid!;
     }
 
-    protected CloudMachineClient()
+    // this ctor is for mocking
+    protected CloudMachineClient() => Id = "CM";
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override WorkspaceClientConnection? GetConnection(string clientId)
     {
-        Id = "CM";
-    }
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public ClientCache ClientCache { get; } = new ClientCache();
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public CloudMachineProperties Properties => new CloudMachineProperties(this);
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public struct CloudMachineProperties
-    {
-        private readonly CloudMachineClient _cm;
-
-        internal CloudMachineProperties(CloudMachineClient cm) => _cm = cm;
-        public Uri DefaultContainerUri => new Uri($"https://{_cm.Id}.blob.core.windows.net/default");
-        public Uri BlobServiceUri => new Uri($"https://{_cm.Id}.blob.core.windows.net/");
-        public Uri KeyVaultUri => new Uri($"https://{_cm.Id}.vault.azure.net/");
-
-        public string ServiceBusNamespace => $"{_cm.Id}.servicebus.windows.net";
+        switch (clientId)
+        {
+            case "Azure.Security.KeyVault.Secrets.SecretClient":
+                return new WorkspaceClientConnection($"https://{this.Id}.vault.azure.net/");
+            case "Azure.Messaging.ServiceBus.ServiceBusClient":
+                return new WorkspaceClientConnection($"{this.Id}.servicebus.windows.net");
+            case "Azure.Messaging.ServiceBus.ServiceBusSender":
+                return new WorkspaceClientConnection($"cm_default_topic_sender");
+            case "Azure.Storage.Blobs.BlobContainerClient":
+                return new WorkspaceClientConnection($"https://{this.Id}.blob.core.windows.net/default");
+            case "Azure.AI.OpenAI.AzureOpenAIClient":
+                string endpoint = $"https://{this.Id}.openai.azure.com";
+                string key = Environment.GetEnvironmentVariable("openai_cm_key");
+                if (key != null)
+                    return new WorkspaceClientConnection(endpoint, key);
+                else
+                    return new WorkspaceClientConnection(endpoint);
+            default:
+                throw new Exception("unknown client");
+        }
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override bool Equals(object? obj) => base.Equals(obj);
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override int GetHashCode() => base.GetHashCode();
-
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override string ToString() => Id;
 }

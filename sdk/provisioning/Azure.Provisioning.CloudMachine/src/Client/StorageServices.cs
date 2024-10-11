@@ -3,6 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Messaging.ServiceBus;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
@@ -10,13 +12,21 @@ namespace Azure.CloudMachine;
 
 public static class StorageServices
 {
-    public static string UploadBlob(this CloudMachineClient cm, object json, string? name = default)
+    private static BlobContainerClient GetDefaultContainer(this WorkspaceClient cm)
     {
-        BlobContainerClient container = cm.ClientCache.Get(cm.Properties.DefaultContainerUri.AbsoluteUri, () =>
+        string blobContainerClientId = typeof(BlobContainerClient).FullName;
+
+        BlobContainerClient container = cm.Subclients.Get(blobContainerClientId, () =>
         {
-            BlobContainerClient container = new(cm.Properties.DefaultContainerUri, cm.Credential);
+            string endpoint = cm.GetConnection(blobContainerClientId)!.Value.Endpoint;
+            BlobContainerClient container = new(new Uri(endpoint), cm.Credential);
             return container;
         });
+        return container;
+    }
+    public static string UploadBlob(this WorkspaceClient cm, object json, string? name = default)
+    {
+        BlobContainerClient container = cm.GetDefaultContainer();
 
         if (name == default) name = $"b{Guid.NewGuid()}";
 
@@ -27,12 +37,7 @@ public static class StorageServices
 
     public static BinaryData DownloadBlob(this CloudMachineClient cm, string name)
     {
-        BlobContainerClient container = cm.ClientCache.Get(cm.Properties.DefaultContainerUri.AbsoluteUri, () =>
-        {
-            BlobContainerClient container = new(cm.Properties.DefaultContainerUri, cm.Credential);
-            return container;
-        });
-
+        BlobContainerClient container = cm.GetDefaultContainer();
         BlobClient blob = container.GetBlobClient(name);
         BlobDownloadResult result = blob.DownloadContent();
         return result.Content;

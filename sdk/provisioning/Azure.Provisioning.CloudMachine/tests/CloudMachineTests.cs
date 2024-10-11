@@ -63,7 +63,7 @@ public class CloudMachineTests
         })) return;
 
         CloudMachineClient cm = new();
-        ChatClient chat = cm.GetOpenAIClient();
+        ChatClient chat = cm.GetOpenAIChatClient();
         ChatCompletion completion = chat.CompleteChat("Is Azure programming easy?");
 
         ChatMessageContent content = completion.Content;
@@ -84,7 +84,7 @@ public class CloudMachineTests
         })) return;
 
         CloudMachineClient cm = new();
-        SecretClient secrets = cm.GetKeyVaultSecretClient();
+        SecretClient secrets = cm.GetKeyVaultSecretsClient();
         secrets.SetSecret("testsecret", "don't tell anybody");
     }
 
@@ -118,7 +118,7 @@ public class CloudMachineTests
         // setup
         cm.WhenMessageReceived((string message) => cm.UploadBlob(message));
         cm.WhenBlobUploaded((string content) => {
-            ChatCompletion completion = cm.GetOpenAIClient().CompleteChat(content);
+            ChatCompletion completion = cm.GetOpenAIChatClient().CompleteChat(content);
             Console.WriteLine(completion.Content[0].Text);
         });
 

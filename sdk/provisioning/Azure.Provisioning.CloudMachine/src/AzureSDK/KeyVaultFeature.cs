@@ -1,7 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.CloudMachine;
+using System;
+using Azure.Core;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.KeyVault;
@@ -55,8 +56,12 @@ public class KeyVaultFeature : CloudMachineFeature
 
 public static class KeyVaultExtensions
 {
-    public static SecretClient GetKeyVaultSecretClient(this CloudMachineClient client)
+    public static SecretClient GetKeyVaultSecretsClient(this WorkspaceClient workspace)
     {
-        return new(new($"https://{client.Id}.vault.azure.net/"), client.Credential);
+        WorkspaceClientConnection? connectionMaybe = workspace.GetConnection(typeof(SecretClient).FullName);
+        if (connectionMaybe == null) throw new Exception("Connection not found");
+
+        WorkspaceClientConnection connection = connectionMaybe.Value;
+        return new(new Uri(connection.Endpoint), workspace.Credential);
     }
 }
