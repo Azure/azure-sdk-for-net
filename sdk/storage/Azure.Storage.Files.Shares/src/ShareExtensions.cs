@@ -351,7 +351,15 @@ namespace Azure.Storage.Files.Shares
                 },
                 LeaseDuration = response.Headers.LeaseDuration.GetValueOrDefault(),
                 LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
-                LeaseStatus = response.Headers.LeaseStatus.GetValueOrDefault()
+                LeaseStatus = response.Headers.LeaseStatus.GetValueOrDefault(),
+                NfsProperties = new FileNfsProperties()
+                {
+                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
+                    Owner = Convert.ToUInt32(response.Headers.Owner),
+                    Group = Convert.ToUInt32(response.Headers.Group),
+                    FileType = response.Headers.NfsFileType,
+                    LinkCount = response.Headers.LinkCount
+                }
             };
 
             if (response.Headers.ContentEncoding != null)
