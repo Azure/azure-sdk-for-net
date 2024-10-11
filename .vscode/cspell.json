@@ -141,6 +141,7 @@
     "referer",
     "renormalize",
     "retriable",
+	"Rdma",
     "Servfail",
     "setsas",
     "signalr",
@@ -174,8 +175,7 @@
     "westcentralus",
     "westus",
     "Wmem",
-    "xunit",
-    "Rdma"
+    "xunit"
   ],
   "overrides": [
     {
