@@ -7,7 +7,7 @@
 
 namespace BasicTypeSpec.Models
 {
-    /// <summary> float fixed enum. </summary>
+    /// <summary></summary>
     public enum FloatFixedEnum
     {
         /// <summary> OneDotOne. </summary>

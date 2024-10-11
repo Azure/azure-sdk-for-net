@@ -10,12 +10,12 @@ using System.ClientModel.Primitives;
 
 namespace BasicTypeSpec
 {
-    internal partial class ErrorResult<T> : ClientResult<T>
+    internal partial class ErrorResult<T> : System.ClientModel.ClientResult<T>
     {
-        private readonly PipelineResponse _response;
-        private readonly ClientResultException _exception;
+        private readonly System.ClientModel.Primitives.PipelineResponse _response;
+        private readonly System.ClientModel.ClientResultException _exception;
 
-        public ErrorResult(PipelineResponse response, ClientResultException exception) : base(default, response)
+        public ErrorResult(System.ClientModel.Primitives.PipelineResponse response, System.ClientModel.ClientResultException exception) : base(default, response)
         {
             _response = response;
             _exception = exception;

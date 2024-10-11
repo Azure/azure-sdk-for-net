@@ -146,7 +146,7 @@ namespace BasicTypeSpec
             TimeSpan timeSpan when format != null => ToString(timeSpan, format),
             TimeSpan timeSpan0 => System.Xml.XmlConvert.ToString(timeSpan0),
             Guid guid => guid.ToString(),
-            BinaryData binaryData => ConvertToString(binaryData.ToArray(), format),
+            System.BinaryData binaryData => TypeFormatters.ConvertToString(binaryData.ToArray(), format),
             _ => value.ToString()
         };
     }

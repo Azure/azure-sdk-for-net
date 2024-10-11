@@ -10,24 +10,24 @@ using System.Collections.Generic;
 
 namespace BasicTypeSpec.Models
 {
-    /// <summary> this is not a friendly model but with a friendly name. </summary>
+    /// <summary> The Friend. </summary>
     public partial class Friend
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected IDictionary<string, System.BinaryData> _additionalBinaryDataProperties;
 
         internal Friend(string name)
         {
             Name = name;
         }
 
-        internal Friend(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Friend(string name, IDictionary<string, System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> name of the NotFriend. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public string Name { get; set; }
     }
 }

@@ -14,13 +14,13 @@ namespace BasicTypeSpec.Models
     public partial class ReturnsAnonymousModelResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected IDictionary<string, System.BinaryData> _additionalBinaryDataProperties;
 
         internal ReturnsAnonymousModelResponse()
         {
         }
 
-        internal ReturnsAnonymousModelResponse(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReturnsAnonymousModelResponse(IDictionary<string, System.BinaryData> additionalBinaryDataProperties)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

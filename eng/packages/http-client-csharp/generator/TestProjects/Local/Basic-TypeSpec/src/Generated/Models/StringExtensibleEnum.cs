@@ -11,7 +11,7 @@ using BasicTypeSpec;
 
 namespace BasicTypeSpec.Models
 {
-    /// <summary> Extensible enum. </summary>
+    /// <summary></summary>
     public readonly partial struct StringExtensibleEnum : IEquatable<StringExtensibleEnum>
     {
         private readonly string _value;

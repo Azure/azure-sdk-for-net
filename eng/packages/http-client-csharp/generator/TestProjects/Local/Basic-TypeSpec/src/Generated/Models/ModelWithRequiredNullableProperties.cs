@@ -10,16 +10,16 @@ using System.Collections.Generic;
 
 namespace BasicTypeSpec.Models
 {
-    /// <summary> A model with a few required nullable properties. </summary>
+    /// <summary> The ModelWithRequiredNullableProperties. </summary>
     public partial class ModelWithRequiredNullableProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected IDictionary<string, System.BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ModelWithRequiredNullableProperties"/>. </summary>
-        /// <param name="requiredNullablePrimitive"> required nullable primitive type. </param>
-        /// <param name="requiredExtensibleEnum"> required nullable extensible enum type. </param>
-        /// <param name="requiredFixedEnum"> required nullable fixed enum type. </param>
+        /// <param name="requiredNullablePrimitive"></param>
+        /// <param name="requiredExtensibleEnum"></param>
+        /// <param name="requiredFixedEnum"></param>
         public ModelWithRequiredNullableProperties(int? requiredNullablePrimitive, StringExtensibleEnum? requiredExtensibleEnum, StringFixedEnum? requiredFixedEnum)
         {
             RequiredNullablePrimitive = requiredNullablePrimitive;
@@ -27,7 +27,7 @@ namespace BasicTypeSpec.Models
             RequiredFixedEnum = requiredFixedEnum;
         }
 
-        internal ModelWithRequiredNullableProperties(int? requiredNullablePrimitive, StringExtensibleEnum? requiredExtensibleEnum, StringFixedEnum? requiredFixedEnum, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelWithRequiredNullableProperties(int? requiredNullablePrimitive, StringExtensibleEnum? requiredExtensibleEnum, StringFixedEnum? requiredFixedEnum, IDictionary<string, System.BinaryData> additionalBinaryDataProperties)
         {
             RequiredNullablePrimitive = requiredNullablePrimitive;
             RequiredExtensibleEnum = requiredExtensibleEnum;
@@ -35,13 +35,13 @@ namespace BasicTypeSpec.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> required nullable primitive type. </summary>
+        /// <summary> Gets or sets the RequiredNullablePrimitive. </summary>
         public int? RequiredNullablePrimitive { get; set; }
 
-        /// <summary> required nullable extensible enum type. </summary>
+        /// <summary> Gets or sets the RequiredExtensibleEnum. </summary>
         public StringExtensibleEnum? RequiredExtensibleEnum { get; set; }
 
-        /// <summary> required nullable fixed enum type. </summary>
+        /// <summary> Gets or sets the RequiredFixedEnum. </summary>
         public StringFixedEnum? RequiredFixedEnum { get; set; }
     }
 }

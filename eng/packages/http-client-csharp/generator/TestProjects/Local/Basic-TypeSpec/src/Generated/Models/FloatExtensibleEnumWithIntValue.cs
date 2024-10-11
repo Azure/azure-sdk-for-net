@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace BasicTypeSpec.Models
 {
-    /// <summary> float fixed enum. </summary>
+    /// <summary></summary>
     public readonly partial struct FloatExtensibleEnumWithIntValue : IEquatable<FloatExtensibleEnumWithIntValue>
     {
         private readonly float _value;

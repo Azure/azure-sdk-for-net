@@ -23,7 +23,7 @@
     "dist/**"
   ],
   "dependencies": {
-    "@typespec/http-client-csharp": "0.1.9-alpha.20240913.1"
+    "@typespec/http-client-csharp": "0.1.9-alpha.20241010.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.2.0",
