@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(BfdEnabled left, BfdEnabled right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BfdEnabled"/> values are not the same. </summary>
         public static bool operator !=(BfdEnabled left, BfdEnabled right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BfdEnabled"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BfdEnabled"/>. </summary>
         public static implicit operator BfdEnabled(string value) => new BfdEnabled(value);
 
         /// <inheritdoc />

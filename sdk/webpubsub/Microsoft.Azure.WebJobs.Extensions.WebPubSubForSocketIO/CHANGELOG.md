@@ -1,5 +1,21 @@
 # Release History
 
+## 1.0.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.4 (2024-09-30)
+
+### Bugs Fixed
+
+- Fix the issue that Python can't use return to ack message.
+
 ## 1.0.0-beta.3 (2024-09-24)
 
 ### Bugs Fixed

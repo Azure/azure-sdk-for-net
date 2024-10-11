@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public bool? IsEnabled { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo> ParametersValueFilesInfo { get { throw null; } }
         public string Publisher { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -73,6 +74,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string Publisher { get { throw null; } }
         public string TargetOSType { get { throw null; } }
         public string Title { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -127,6 +129,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? Status { get { throw null; } set { } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public System.Uri Uri { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -206,6 +209,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost TargetCost { get { throw null; } set { } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabCostData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabCostData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabCostData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabCostData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabCostData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -267,6 +271,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd Vhd { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm Vm { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -321,6 +326,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public string VaultName { get { throw null; } }
         public string VmCreationResourceGroup { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -358,6 +364,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string ProvisioningState { get { throw null; } }
         public string StorageAccountId { get { throw null; } set { } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabDiskData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabDiskData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabDiskData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabDiskData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabDiskData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -419,6 +426,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string ProvisioningState { get { throw null; } }
         public string ResourceGroupId { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -478,6 +486,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string OSType { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -583,6 +592,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string ProvisioningState { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public System.Uri WebHookUri { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -645,6 +655,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus? Status { get { throw null; } set { } }
         public string Threshold { get { throw null; } set { } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -783,6 +794,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string TimeZoneId { get { throw null; } set { } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails WeeklyRecurrence { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -839,6 +851,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string ProvisioningState { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public string Value { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabSecretData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabSecretData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabSecretData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabSecretData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabSecretData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -895,6 +908,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string ExternalServiceFabricId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -995,6 +1009,7 @@ namespace Azure.ResourceManager.DevTestLabs
     {
         public DevTestLabServiceRunnerData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity Identity { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1085,6 +1100,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore SecretStore { get { throw null; } set { } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabUserData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabUserData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabUserData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabUserData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabUserData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1156,6 +1172,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride> SubnetOverrides { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1242,6 +1259,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public string UserName { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource? VmCreationSource { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabVmData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabVmData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.DevTestLabVmData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.DevTestLabVmData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.DevTestLabVmData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1440,6 +1458,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string DiskName { get { throw null; } set { } }
         public int? DiskSizeGiB { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? DiskType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1453,6 +1472,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public System.Uri DiskUri { get { throw null; } }
         public string ManagedDiskId { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.ComputeDataDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.ComputeDataDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.ComputeDataDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.ComputeDataDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.ComputeDataDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1465,6 +1485,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string Code { get { throw null; } }
         public string DisplayStatus { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1481,6 +1502,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string OSType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.ComputeVmInstanceViewStatus> Statuses { get { throw null; } }
         public string VmSize { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.ComputeVmProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1497,6 +1519,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string ProvisioningState { get { throw null; } }
         public string Title { get { throw null; } set { } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1508,6 +1531,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabApplicableSchedule(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData LabVmsShutdown { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData LabVmsStartup { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1519,6 +1543,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         internal DevTestLabArmTemplateInfo() { }
         public System.BinaryData Parameters { get { throw null; } }
         public System.BinaryData Template { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1530,6 +1555,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabArmTemplateParameter() { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1542,6 +1568,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public int? ArtifactsApplied { get { throw null; } }
         public string DeploymentStatus { get { throw null; } }
         public int? TotalArtifacts { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1555,6 +1582,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter> Parameters { get { throw null; } }
         public string VmName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGenerateArmTemplateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGenerateArmTemplateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGenerateArmTemplateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGenerateArmTemplateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGenerateArmTemplateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1571,6 +1599,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter> Parameters { get { throw null; } }
         public string Status { get { throw null; } set { } }
         public string VmExtensionStatusMessage { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1582,6 +1611,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabArtifactParameter() { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1591,6 +1621,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabArtifactSourcePatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourcePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourcePatch>
     {
         public DevTestLabArtifactSourcePatch() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1603,6 +1634,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public double? Cost { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType? CostType { get { throw null; } }
         public System.DateTimeOffset? On { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1617,6 +1649,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus? SendNotificationWhenExceeded { get { throw null; } set { } }
         public string ThresholdId { get { throw null; } set { } }
         public double? ThresholdValue { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThreshold System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThreshold>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThreshold>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThreshold System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThreshold>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1682,6 +1715,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabCustomImagePatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch>
     {
         public DevTestLabCustomImagePatch() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1694,6 +1728,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string Id { get { throw null; } set { } }
         public string Offer { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1706,6 +1741,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string ImageName { get { throw null; } set { } }
         public bool? IsSysPrepEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType OSType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVhd>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1718,6 +1754,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState? LinuxOSState { get { throw null; } set { } }
         public string SourceVmId { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.WindowsOSState? WindowsOSState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageVm>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1730,6 +1767,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.ResourceManager.DevTestLabs.Models.AttachNewDataDiskDetails AttachNewDataDiskOptions { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ExistingLabDiskId { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption? HostCaching { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1741,6 +1779,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabDataDiskStorageTypeInfo() { }
         public string Lun { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType? StorageType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDataDiskStorageTypeInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1751,6 +1790,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabDiskAttachContent() { }
         public Azure.Core.ResourceIdentifier LeasedByLabVmId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskAttachContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskAttachContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskAttachContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskAttachContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskAttachContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1761,6 +1801,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabDiskDetachContent() { }
         public Azure.Core.ResourceIdentifier LeasedByLabVmId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskDetachContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskDetachContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskDetachContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskDetachContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskDetachContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1770,6 +1811,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabDiskPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch>
     {
         public DevTestLabDiskPatch() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1799,6 +1841,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabEnvironmentDeployment() { }
         public Azure.Core.ResourceIdentifier ArmTemplateId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter> Parameters { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1808,6 +1851,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabEnvironmentPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPatch>
     {
         public DevTestLabEnvironmentPatch() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1836,6 +1880,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabEvaluatePoliciesContent() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy> Policies { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1846,6 +1891,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal DevTestLabEvaluatePoliciesResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult> Results { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePoliciesResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1859,6 +1905,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string FactName { get { throw null; } set { } }
         public string UserObjectId { get { throw null; } set { } }
         public string ValueOffset { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabEvaluatePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1870,6 +1917,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabExportResourceUsageContent() { }
         public System.Uri BlobStorageAbsoluteSasUri { get { throw null; } set { } }
         public System.DateTimeOffset? UsageStartOn { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExportResourceUsageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1881,6 +1929,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         internal DevTestLabExternalSubnet() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabExternalSubnet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1908,6 +1957,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabFormulaPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch>
     {
         public DevTestLabFormulaPatch() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1925,6 +1975,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public bool? IsEnabled { get { throw null; } set { } }
         public bool? IsPlanAuthorized { get { throw null; } set { } }
         public string PlanId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1939,6 +1990,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string Publisher { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImageReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1949,6 +2001,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabGenerateUploadUriContent() { }
         public string BlobName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1959,6 +2012,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal DevTestLabGenerateUploadUriResult() { }
         public System.Uri UploadUri { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGenerateUploadUriResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1970,6 +2024,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabGlobalScheduleRetargetContent() { }
         public Azure.Core.ResourceIdentifier CurrentResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2000,6 +2055,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabImportVmContent() { }
         public string DestinationVmName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceVmResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2012,6 +2068,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public int? BackendPort { get { throw null; } set { } }
         public int? FrontendPort { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol? TransportProtocol { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2062,6 +2119,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string SshAuthority { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2072,6 +2130,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabNotificationChannelEvent() { }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType? EventName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2101,6 +2160,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabNotificationChannelNotifyContent() { }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType? EventName { get { throw null; } set { } }
         public string JsonPayload { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelNotifyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelNotifyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelNotifyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelNotifyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelNotifyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2110,6 +2170,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabNotificationChannelPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch>
     {
         public DevTestLabNotificationChannelPatch() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2124,6 +2185,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? Status { get { throw null; } set { } }
         public int? TimeInMinutes { get { throw null; } set { } }
         public System.Uri WebhookUri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2135,6 +2197,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabParameter() { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2146,6 +2209,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         internal DevTestLabParametersValueFileInfo() { }
         public string FileName { get { throw null; } }
         public System.BinaryData ParametersValueInfo { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParametersValueFileInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2155,6 +2219,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch>
     {
         public DevTestLabPatch() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2208,6 +2273,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabPolicyPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyPatch>
     {
         public DevTestLabPolicyPatch() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2219,6 +2285,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         internal DevTestLabPolicySetResult() { }
         public bool? HasError { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation> PolicyViolations { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicySetResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2248,6 +2315,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         internal DevTestLabPolicyViolation() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyViolation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2259,6 +2327,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabPort() { }
         public int? BackendPort { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol? TransportProtocol { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPort System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPort>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPort>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabPort System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPort>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2287,6 +2356,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal DevTestLabRdpConnection() { }
         public string Contents { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabRdpConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2323,6 +2393,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string ResourceStatus { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public string ResourceUniqueId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceCost>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2333,6 +2404,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabResourcePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2353,6 +2425,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string TaskType { get { throw null; } set { } }
         public string TimeZoneId { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails WeeklyRecurrence { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCreationParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2362,6 +2435,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabSchedulePatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch>
     {
         public DevTestLabSchedulePatch() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2371,6 +2445,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabSecretPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretPatch>
     {
         public DevTestLabSecretPatch() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2380,6 +2455,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabServiceFabricPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch>
     {
         public DevTestLabServiceFabricPatch() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2430,6 +2506,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType? AllowPublicIP { get { throw null; } set { } }
         public string LabSubnetName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2445,6 +2522,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType? UseInVmCreationPermission { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType? UsePublicIPAddressPermission { get { throw null; } set { } }
         public string VirtualNetworkPoolName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnetOverride>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2456,6 +2534,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabSupport() { }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus? Enabled { get { throw null; } set { } }
         public string Markdown { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSupport>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2471,6 +2550,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType? CycleType { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus? Status { get { throw null; } set { } }
         public int? Target { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCost>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2540,6 +2620,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string PrincipalId { get { throw null; } set { } }
         public string PrincipalName { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2549,6 +2630,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabUserPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserPatch>
     {
         public DevTestLabUserPatch() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2560,6 +2642,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabUserSecretStore() { }
         public Azure.Core.ResourceIdentifier KeyVaultId { get { throw null; } set { } }
         public System.Uri KeyVaultUri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserSecretStore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2569,6 +2652,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabVirtualNetworkPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkPatch>
     {
         public DevTestLabVirtualNetworkPatch() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2579,6 +2663,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabVmApplyArtifactsContent() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo> Artifacts { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmApplyArtifactsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmApplyArtifactsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmApplyArtifactsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmApplyArtifactsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmApplyArtifactsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2615,6 +2700,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string StorageType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string UserName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2644,6 +2730,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabVmDetachDataDiskContent() { }
         public Azure.Core.ResourceIdentifier ExistingLabDiskId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmDetachDataDiskContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmDetachDataDiskContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmDetachDataDiskContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmDetachDataDiskContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmDetachDataDiskContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2653,6 +2740,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabVmPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch>
     {
         public DevTestLabVmPatch() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2663,6 +2751,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabVmResizeContent() { }
         public string Size { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmResizeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmResizeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmResizeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmResizeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmResizeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2674,6 +2763,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabWeekDetails() { }
         public string Time { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Weekdays { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

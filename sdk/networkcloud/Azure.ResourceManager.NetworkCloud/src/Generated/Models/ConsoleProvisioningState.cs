@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(ConsoleProvisioningState left, ConsoleProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConsoleProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ConsoleProvisioningState left, ConsoleProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConsoleProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConsoleProvisioningState"/>. </summary>
         public static implicit operator ConsoleProvisioningState(string value) => new ConsoleProvisioningState(value);
 
         /// <inheritdoc />

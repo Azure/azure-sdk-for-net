@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(SourceControlType left, SourceControlType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceControlType"/> values are not the same. </summary>
         public static bool operator !=(SourceControlType left, SourceControlType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SourceControlType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlType"/>. </summary>
         public static implicit operator SourceControlType(string value) => new SourceControlType(value);
 
         /// <inheritdoc />

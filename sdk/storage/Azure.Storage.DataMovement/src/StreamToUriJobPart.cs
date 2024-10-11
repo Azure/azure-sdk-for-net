@@ -9,6 +9,7 @@ using System.Threading;
 using System.Buffers;
 using Azure.Storage.Shared;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
@@ -140,6 +141,9 @@ namespace Azure.Storage.DataMovement
             StorageResourceItem destinationResource,
             long? length = default)
         {
+            Argument.AssertNotNull(sourceResource, nameof(sourceResource));
+            Argument.AssertNotNull(destinationResource, nameof(destinationResource));
+
             // Create Job Part file as we're initializing the job part
             StreamToUriJobPart part = new StreamToUriJobPart(
                 job: job,
@@ -304,8 +308,9 @@ namespace Azure.Storage.DataMovement
                 StorageResourceReadStreamResult result = await _sourceResource.ReadStreamAsync(
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
-                using Stream stream = result.Content;
-                await _destinationResource.CopyFromStreamAsync(
+                using (Stream stream = result.Content)
+                {
+                    await _destinationResource.CopyFromStreamAsync(
                         stream: stream,
                         overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
                         streamLength: blockSize,
@@ -315,6 +320,7 @@ namespace Azure.Storage.DataMovement
                             SourceProperties = sourceProperties
                         },
                         cancellationToken: _cancellationToken).ConfigureAwait(false);
+                }
 
                 // Report bytes written before completion
                 ReportBytesWritten(blockSize);
@@ -324,19 +330,19 @@ namespace Azure.Storage.DataMovement
             }
             else
             {
-                Stream slicedStream = Stream.Null;
                 StorageResourceReadStreamResult result = await _sourceResource.ReadStreamAsync(
                     position: 0,
                     length: blockSize,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
-                using (Stream stream = result.Content)
+
+                using (Stream contentStream = result.Content)
+                using (Stream slicedStream = await GetOffsetPartitionInternal(
+                    contentStream,
+                    0L,
+                    blockSize,
+                    UploadArrayPool,
+                    _cancellationToken).ConfigureAwait(false))
                 {
-                    slicedStream = await GetOffsetPartitionInternal(
-                        stream,
-                        0L,
-                        blockSize,
-                        UploadArrayPool,
-                        _cancellationToken).ConfigureAwait(false);
                     await _destinationResource.CopyFromStreamAsync(
                         stream: slicedStream,
                         streamLength: blockSize,
@@ -390,19 +396,19 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                Stream slicedStream = Stream.Null;
                 StorageResourceReadStreamResult result = await _sourceResource.ReadStreamAsync(
                     position: offset,
                     length: blockLength,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
-                using (Stream stream = result.Content)
+
+                using (Stream contentStream = result.Content)
+                using (Stream slicedStream = await GetOffsetPartitionInternal(
+                    contentStream,
+                    offset,
+                    blockLength,
+                    UploadArrayPool,
+                    _cancellationToken).ConfigureAwait(false))
                 {
-                    slicedStream = await GetOffsetPartitionInternal(
-                        stream,
-                        offset,
-                        blockLength,
-                        UploadArrayPool,
-                        _cancellationToken).ConfigureAwait(false);
                     await _destinationResource.CopyFromStreamAsync(
                         stream: slicedStream,
                         streamLength: blockLength,

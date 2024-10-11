@@ -52,7 +52,7 @@ public partial class AzureOpenAISamples
             AdditionalInstructions = "When possible, talk like a pirate."
         };
         await foreach (StreamingUpdate streamingUpdate
-            in assistantClient.CreateRunStreamingAsync(thread, assistant, runOptions))
+            in assistantClient.CreateRunStreamingAsync(thread.Id, assistant.Id, runOptions))
         {
             if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
             {
@@ -71,8 +71,8 @@ public partial class AzureOpenAISamples
 
         #region Snippet:Assistants:Cleanup
         // Optionally, delete persistent resources that are no longer needed.
-        _ = await assistantClient.DeleteAssistantAsync(assistant);
-        _ = await assistantClient.DeleteThreadAsync(thread);
+        _ = await assistantClient.DeleteAssistantAsync(assistant.Id);
+        _ = await assistantClient.DeleteThreadAsync(thread.Id);
         #endregion
     }
 }

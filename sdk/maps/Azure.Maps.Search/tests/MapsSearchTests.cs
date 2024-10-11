@@ -104,6 +104,7 @@ namespace Azure.Maps.Search.Tests
             GeoPosition coordinates = new GeoPosition(-122.34255, 47.0);
             var response = await client.GetReverseGeocodingAsync(coordinates);
             Assert.AreEqual("Graham", response.Value.Features[0].Properties.Address.Locality);
+            Assert.AreEqual("US", response.Value.Features[0].Properties.Address.CountryRegion.Iso);
         }
 
         [RecordedTest]

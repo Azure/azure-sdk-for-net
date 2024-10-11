@@ -1,0 +1,50 @@
+{{- include "stress-test-addons.deploy-job-template.from-pod" (list . "stress.deploy-example") -}}
+  {{- define "stress.deploy-example" -}}
+metadata:
+  labels:
+    chaos: "{{ default false .Stress.chaos }}"
+    testInstance: "{{.Stress.Scenario}}-{{ .Stress.BaseName }}-{{ .Release.Revision }}"
+spec:
+  nodeSelector:
+    sku: default
+  shareProcessNamespace: true
+  containers:
+    - name: fault-injector
+      image: azsdkengsys.azurecr.io/stress/httpfaultinjector
+      imagePullPolicy: Always
+      command: ['sh', '-c']
+      args:
+        - |
+          set -ex;
+          dotnet dev-certs https --export-path /mnt/outputs/dev-cert.pfx;
+          /root/.dotnet/tools/http-fault-injector;
+      resources:
+        limits:
+          memory: 1Gi
+          cpu: "0.5"
+      {{- include "stress-test-addons.container-env" . | nindent 6 }}
+    - name: main
+      image:  {{ .Stress.imageTag }}
+      command: ['dotnet', "Azure.Storage.DataMovement.Stress.dll", "--test", "{{ .Stress.testScenario }}"]
+      args:
+        - |
+          set -xa;
+          set -o pipefail;
+          mkdir -p "$DEBUG_SHARE";
+          . /mnt/outputs/.env;
+          export AZURE_HTTP_CLIENT_IMPLEMENTATION=com.azure.core.http.netty.NettyAsyncHttpClientProvider;
+          echo "setting http client implementation to $AZURE_HTTP_CLIENT_IMPLEMENTATION";
+          echo "dotnet run";
+          code=$?;
+          echo "before the kill command";
+          kill `pidof http-fault-injector`;
+          echo "HTTP Fault Injector killed";
+          exit $code;
+      imagePullPolicy: Always
+      resources:
+        limits:
+          memory: {{ default "1Gi" .Stress.memory }}
+          cpu: "0.7"
+      {{- include "stress-test-addons.container-env" . | nindent 6 }}
+
+{{- end -}}

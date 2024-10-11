@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI.Chat
 {
     /// <summary> Unknown version of AzureChatDataSource. </summary>
-    internal partial class InternalUnknownAzureChatDataSource : AzureChatDataSource
+    internal partial class InternalUnknownAzureChatDataSource : ChatDataSource
     {
         /// <summary> Initializes a new instance of <see cref="InternalUnknownAzureChatDataSource"/>. </summary>
         /// <param name="type"> The differentiating type identifier for the data source. </param>

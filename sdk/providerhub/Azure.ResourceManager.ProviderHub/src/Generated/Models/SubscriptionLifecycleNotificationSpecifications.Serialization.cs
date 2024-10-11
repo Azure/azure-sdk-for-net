@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         void IJsonModel<SubscriptionLifecycleNotificationSpecifications>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionLifecycleNotificationSpecifications>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SubscriptionLifecycleNotificationSpecifications)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SubscriptionStateOverrideActions))
             {
                 writer.WritePropertyName("subscriptionStateOverrideActions"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SubscriptionLifecycleNotificationSpecifications IJsonModel<SubscriptionLifecycleNotificationSpecifications>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

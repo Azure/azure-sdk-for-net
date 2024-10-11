@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.Monitor.Models
 
         void IJsonModel<MetricAlertSingleResourceMultipleMetricCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MetricAlertSingleResourceMultipleMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MetricAlertSingleResourceMultipleMetricCriteria)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(AllOf))
             {
                 writer.WritePropertyName("allOf"u8);
@@ -36,8 +45,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("odata.type"u8);
-            writer.WriteStringValue(OdataType.ToString());
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -50,7 +57,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         MetricAlertSingleResourceMultipleMetricCriteria IJsonModel<MetricAlertSingleResourceMultipleMetricCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(AlternateLocationRecoveryOption left, AlternateLocationRecoveryOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlternateLocationRecoveryOption"/> values are not the same. </summary>
         public static bool operator !=(AlternateLocationRecoveryOption left, AlternateLocationRecoveryOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AlternateLocationRecoveryOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AlternateLocationRecoveryOption"/>. </summary>
         public static implicit operator AlternateLocationRecoveryOption(string value) => new AlternateLocationRecoveryOption(value);
 
         /// <inheritdoc />

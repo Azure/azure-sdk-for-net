@@ -100,11 +100,15 @@ public partial class SubscriptionPolicySetDefinition : Resource
     /// <summary>
     /// Creates a new SubscriptionPolicySetDefinition.
     /// </summary>
-    /// <param name="resourceName">Name of the SubscriptionPolicySetDefinition.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SubscriptionPolicySetDefinition
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SubscriptionPolicySetDefinition.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SubscriptionPolicySetDefinition(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Authorization/policySetDefinitions", resourceVersion, context)
+    public SubscriptionPolicySetDefinition(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Authorization/policySetDefinitions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
@@ -121,11 +125,16 @@ public partial class SubscriptionPolicySetDefinition : Resource
     /// <summary>
     /// Creates a reference to an existing SubscriptionPolicySetDefinition.
     /// </summary>
-    /// <param name="resourceName">Name of the SubscriptionPolicySetDefinition.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SubscriptionPolicySetDefinition
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SubscriptionPolicySetDefinition.</param>
     /// <returns>The existing SubscriptionPolicySetDefinition resource.</returns>
-    public static SubscriptionPolicySetDefinition FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SubscriptionPolicySetDefinition FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this SubscriptionPolicySetDefinition

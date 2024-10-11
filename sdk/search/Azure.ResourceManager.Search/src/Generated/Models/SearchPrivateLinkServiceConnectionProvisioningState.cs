@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Search.Models
         public static bool operator ==(SearchPrivateLinkServiceConnectionProvisioningState left, SearchPrivateLinkServiceConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchPrivateLinkServiceConnectionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(SearchPrivateLinkServiceConnectionProvisioningState left, SearchPrivateLinkServiceConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SearchPrivateLinkServiceConnectionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchPrivateLinkServiceConnectionProvisioningState"/>. </summary>
         public static implicit operator SearchPrivateLinkServiceConnectionProvisioningState(string value) => new SearchPrivateLinkServiceConnectionProvisioningState(value);
 
         /// <inheritdoc />

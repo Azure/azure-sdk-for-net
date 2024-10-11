@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static bool operator ==(NotificationHubsPrivateEndpointConnectionProvisioningState left, NotificationHubsPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationHubsPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(NotificationHubsPrivateEndpointConnectionProvisioningState left, NotificationHubsPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NotificationHubsPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationHubsPrivateEndpointConnectionProvisioningState"/>. </summary>
         public static implicit operator NotificationHubsPrivateEndpointConnectionProvisioningState(string value) => new NotificationHubsPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(BlobRestoreProgressStatus left, BlobRestoreProgressStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobRestoreProgressStatus"/> values are not the same. </summary>
         public static bool operator !=(BlobRestoreProgressStatus left, BlobRestoreProgressStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BlobRestoreProgressStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobRestoreProgressStatus"/>. </summary>
         public static implicit operator BlobRestoreProgressStatus(string value) => new BlobRestoreProgressStatus(value);
 
         /// <inheritdoc />

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(VmGuestPatchRebootStatus left, VmGuestPatchRebootStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmGuestPatchRebootStatus"/> values are not the same. </summary>
         public static bool operator !=(VmGuestPatchRebootStatus left, VmGuestPatchRebootStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VmGuestPatchRebootStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VmGuestPatchRebootStatus"/>. </summary>
         public static implicit operator VmGuestPatchRebootStatus(string value) => new VmGuestPatchRebootStatus(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(TableTemporalType left, TableTemporalType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TableTemporalType"/> values are not the same. </summary>
         public static bool operator !=(TableTemporalType left, TableTemporalType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TableTemporalType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TableTemporalType"/>. </summary>
         public static implicit operator TableTemporalType(string value) => new TableTemporalType(value);
 
         /// <inheritdoc />

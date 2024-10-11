@@ -515,9 +515,9 @@ try {
 
     # Try to detect the shell based on the parent process name (e.g. launch via shebang).
     $shell, $shellExportFormat = if (($parentProcessName = (Get-Process -Id $PID).Parent.ProcessName) -and $parentProcessName -eq 'cmd') {
-        'cmd', 'set {0}={1}'
+        'cmd', 'set {0}=''{1}'''
     } elseif (@('bash', 'csh', 'tcsh', 'zsh') -contains $parentProcessName) {
-        'shell', 'export {0}={1}'
+        'shell', 'export {0}=''{1}'''
     } else {
         'PowerShell', '${{env:{0}}} = ''{1}'''
     }

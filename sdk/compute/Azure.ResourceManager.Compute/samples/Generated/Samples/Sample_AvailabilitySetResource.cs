@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Samples
                 {
                     Name = "DSv3-Type1",
                     Tier = "aaa",
-                    Capacity = 7,
+                    Capacity = 7L,
                 },
                 PlatformUpdateDomainCount = 20,
                 PlatformFaultDomainCount = 2,

@@ -33,7 +33,7 @@ namespace Azure.AI.DocumentIntelligence
         public static bool operator ==(LengthUnit left, LengthUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LengthUnit"/> values are not the same. </summary>
         public static bool operator !=(LengthUnit left, LengthUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LengthUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LengthUnit"/>. </summary>
         public static implicit operator LengthUnit(string value) => new LengthUnit(value);
 
         /// <inheritdoc />

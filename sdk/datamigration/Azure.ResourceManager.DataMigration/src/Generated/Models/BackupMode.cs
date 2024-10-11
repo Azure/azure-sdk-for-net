@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(BackupMode left, BackupMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupMode"/> values are not the same. </summary>
         public static bool operator !=(BackupMode left, BackupMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupMode"/>. </summary>
         public static implicit operator BackupMode(string value) => new BackupMode(value);
 
         /// <inheritdoc />

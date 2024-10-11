@@ -82,11 +82,15 @@ public partial class ServiceBusNetworkRuleSet : Resource
     /// <summary>
     /// Creates a new ServiceBusNetworkRuleSet.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusNetworkRuleSet.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ServiceBusNetworkRuleSet resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusNetworkRuleSet.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ServiceBusNetworkRuleSet(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/networkRuleSets", resourceVersion, context)
+    public ServiceBusNetworkRuleSet(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.ServiceBus/namespaces/networkRuleSets", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _defaultAction = BicepValue<ServiceBusNetworkRuleSetDefaultAction>.DefineProperty(this, "DefaultAction", ["properties", "defaultAction"]);
@@ -101,11 +105,37 @@ public partial class ServiceBusNetworkRuleSet : Resource
     }
 
     /// <summary>
+    /// Supported ServiceBusNetworkRuleSet resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-01-01.
+        /// </summary>
+        public static readonly string V2024_01_01 = "2024-01-01";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2017-04-01.
+        /// </summary>
+        public static readonly string V2017_04_01 = "2017-04-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing ServiceBusNetworkRuleSet.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusNetworkRuleSet.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ServiceBusNetworkRuleSet resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusNetworkRuleSet.</param>
     /// <returns>The existing ServiceBusNetworkRuleSet resource.</returns>
-    public static ServiceBusNetworkRuleSet FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusNetworkRuleSet FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

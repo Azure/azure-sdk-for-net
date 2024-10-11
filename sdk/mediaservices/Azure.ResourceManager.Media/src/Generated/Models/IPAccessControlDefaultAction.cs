@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(IPAccessControlDefaultAction left, IPAccessControlDefaultAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IPAccessControlDefaultAction"/> values are not the same. </summary>
         public static bool operator !=(IPAccessControlDefaultAction left, IPAccessControlDefaultAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IPAccessControlDefaultAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IPAccessControlDefaultAction"/>. </summary>
         public static implicit operator IPAccessControlDefaultAction(string value) => new IPAccessControlDefaultAction(value);
 
         /// <inheritdoc />

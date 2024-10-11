@@ -20,8 +20,7 @@ namespace Azure.Identity.Broker.Tests
             var pipelineOptions = new HttpPipelineOptions(options);
             pipelineOptions.PerRetryPolicies.Add(new PopTokenAuthenticationPolicy(credential, "https://graph.microsoft.com/.default"));
             _pipeline = HttpPipelineBuilder.Build(
-                pipelineOptions,
-                new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = (_) => true });
+                pipelineOptions);
         }
 
         [ForwardsClientCalls(true)]
