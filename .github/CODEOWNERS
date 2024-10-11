@@ -840,10 +840,10 @@
 # ServiceOwners:                                                   @hmlam
 
 # PRLabel: %SignalR
-/sdk/signalr/                                                      @sffamily @chenkennt @Y-Sindo
+/sdk/signalr/                                                      @chenkennt @vicancy @JialinXin @Y-Sindo
 
 # ServiceLabel: %SignalR
-# ServiceOwners:                                                   @sffamily @chenkennt @Y-Sindo
+# ServiceOwners:                                                   @sffamily @chenkennt @vicancy @JialinXin @Y-Sindo
 
 # ServiceLabel: %SQL
 # ServiceOwners:                                                   @azureSQLGitHub
