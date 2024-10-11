@@ -4,9 +4,11 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.Contracts;
 using Azure.AI.OpenAI;
 using Azure.CloudMachine;
 using Azure.Core;
+using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CognitiveServices;
 using OpenAI.Chat;
 
@@ -19,23 +21,32 @@ public class OpenAIFeature : CloudMachineFeature
 
     public OpenAIFeature(string model, string modelVersion) {  Model = model; ModelVersion = modelVersion; }
 
-    public override void AddTo(CloudMachineInfrastructure cm)
+    public override void AddTo(CloudMachineInfrastructure infrastructure)
     {
-        CognitiveServicesAccount cs = new("openai", "2023-05-01")
+        CognitiveServicesAccount cognitiveServices = new("openai", "2023-05-01")
         {
-            Name = cm.Id,
+            Name = infrastructure.Id,
             Kind = "OpenAI",
             Sku = new CognitiveServicesSku { Name = "S0" },
             Properties = new CognitiveServicesAccountProperties()
             {
-                PublicNetworkAccess = ServiceAccountPublicNetworkAccess.Enabled
-            }
+                PublicNetworkAccess = ServiceAccountPublicNetworkAccess.Enabled,
+                CustomSubDomainName = infrastructure.Id
+            },
         };
 
+        infrastructure.AddResource(cognitiveServices.CreateRoleAssignment(
+            CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor,
+            RoleManagementPrincipalType.User,
+            infrastructure.PrincipalIdParameter)
+        );
+
+        // TODO: if we every support more than one deployment, they need to be chained using DependsOn.
+        // The reason is that deployments need to be deployed/created serially.
         CognitiveServicesAccountDeployment deployment = new("openai_deployment", "2023-05-01")
         {
-            Parent = cs,
-            Name = cm.Id,
+            Parent = cognitiveServices,
+            Name = infrastructure.Id,
             Properties = new CognitiveServicesAccountDeploymentProperties()
             {
                 Model = new CognitiveServicesAccountDeploymentModel() {
@@ -43,11 +54,11 @@ public class OpenAIFeature : CloudMachineFeature
                     Format = "OpenAI",
                     Version = this.ModelVersion
                 }
-            }
+            },
         };
 
-        cm.AddResource(cs);
-        cm.AddResource(deployment);
+        infrastructure.AddResource(cognitiveServices);
+        infrastructure.AddResource(deployment);
     }
 }
 
@@ -69,7 +80,6 @@ public static class OpenAIFeatureExtensions
                 ClientConfiguration connection = connectionMaybe.Value;
                 Uri endpoint = new(connection.Endpoint);
                 var clientOptions = new AzureOpenAIClientOptions();
-                //clientOptions.AddPolicy(new LoggingPolicy(), PipelinePosition.BeforeTransport);
                 if (connection.CredentailType == CredentialType.EntraId)
                 {
                     AzureOpenAIClient aoai = new(endpoint, workspace.Credential, clientOptions);
@@ -82,7 +92,11 @@ public static class OpenAIFeatureExtensions
                 }
             });
 
-            ChatClient chat = aoia.GetChatClient("gpt-4");
+            string azureOpenAIChatClientId = typeof(ChatClient).FullName;
+            ClientConfiguration? connectionMaybe = workspace.GetConfiguration(azureOpenAIChatClientId);
+            if (connectionMaybe == null) throw new Exception("Connection not found");
+            var connection = connectionMaybe.Value;
+            ChatClient chat = aoia.GetChatClient(connection.Endpoint);
             return chat;
         });
 

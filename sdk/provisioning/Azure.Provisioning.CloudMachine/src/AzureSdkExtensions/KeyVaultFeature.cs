@@ -14,12 +14,12 @@ public class KeyVaultFeature : CloudMachineFeature
 {
     public KeyVaultSku Sku { get; set; } = new KeyVaultSku { Name = KeyVaultSkuName.Standard, Family = KeyVaultSkuFamily.A, };
 
-    public override void AddTo(CloudMachineInfrastructure cm)
+    public override void AddTo(CloudMachineInfrastructure infrastructure)
     {
         // Add a KeyVault to the CloudMachine infrastructure.
-        KeyVaultService _keyVault = new("cm_kv")
+        KeyVaultService keyVaultResource = new("cm_kv")
         {
-            Name = cm.Id,
+            Name = infrastructure.Id,
             Properties =
                 new KeyVaultProperties
                 {
@@ -28,29 +28,29 @@ public class KeyVaultFeature : CloudMachineFeature
                     EnabledForDeployment = true,
                     AccessPolicies = [
                         new KeyVaultAccessPolicy() {
-                            ObjectId = cm.PrincipalIdParameter,
+                            ObjectId = infrastructure.PrincipalIdParameter,
                             Permissions = new IdentityAccessPermissions() {
                                 Secrets =  [IdentityAccessSecretPermission.Get, IdentityAccessSecretPermission.Set]
                             },
-                            TenantId = cm.Identity.TenantId
+                            TenantId = infrastructure.Identity.TenantId
                         }
                     ]
                 },
         };
 
-        cm.AddResource(_keyVault);
+        infrastructure.AddResource(keyVaultResource);
 
-        RoleAssignment ra = _keyVault.CreateRoleAssignment(KeyVaultBuiltInRole.KeyVaultAdministrator, RoleManagementPrincipalType.User, cm.PrincipalIdParameter);
-        cm.AddResource(ra);
+        RoleAssignment ra = keyVaultResource.CreateRoleAssignment(KeyVaultBuiltInRole.KeyVaultAdministrator, RoleManagementPrincipalType.User, infrastructure.PrincipalIdParameter);
+        infrastructure.AddResource(ra);
 
         // necessary until ResourceName is settable via AssignRole.
-        RoleAssignment kvMiRoleAssignment = new RoleAssignment(_keyVault.IdentifierName + "_" + cm.Identity.IdentifierName + "_" + KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator));
-        kvMiRoleAssignment.Name = BicepFunction.CreateGuid(_keyVault.Id, cm.Identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", KeyVaultBuiltInRole.KeyVaultAdministrator.ToString()));
-        kvMiRoleAssignment.Scope = new IdentifierExpression(_keyVault.IdentifierName);
+        RoleAssignment kvMiRoleAssignment = new RoleAssignment(keyVaultResource.IdentifierName + "_" + infrastructure.Identity.IdentifierName + "_" + KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator));
+        kvMiRoleAssignment.Name = BicepFunction.CreateGuid(keyVaultResource.Id, infrastructure.Identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", KeyVaultBuiltInRole.KeyVaultAdministrator.ToString()));
+        kvMiRoleAssignment.Scope = new IdentifierExpression(keyVaultResource.IdentifierName);
         kvMiRoleAssignment.PrincipalType = RoleManagementPrincipalType.ServicePrincipal;
         kvMiRoleAssignment.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", KeyVaultBuiltInRole.KeyVaultAdministrator.ToString());
-        kvMiRoleAssignment.PrincipalId = cm.Identity.PrincipalId;
-        cm.AddResource(kvMiRoleAssignment);
+        kvMiRoleAssignment.PrincipalId = infrastructure.Identity.PrincipalId;
+        infrastructure.AddResource(kvMiRoleAssignment);
     }
 }
 

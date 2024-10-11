@@ -21,8 +21,8 @@ public class CloudMachineTests
     public void Provisioning(string[] args)
     {
         if (CloudMachineInfrastructure.Configure(args, (cm) => {
-            //cm.AddFeature(new KeyVaultFeature());
-            //cm.AddFeature(new OpenAIFeature("gpt-35-turbo", "0125"));
+            cm.AddFeature(new KeyVaultFeature());
+            cm.AddFeature(new OpenAIFeature("gpt-35-turbo", "0125"));
         })) return;
 
         CloudMachineWorkspace cm = new();

@@ -61,13 +61,15 @@ public class CloudMachineWorkspace : WorkspaceClient
                 return new ClientConfiguration($"https://{this.Id}.blob.core.windows.net/{instanceId}");
             case "Azure.AI.OpenAI.AzureOpenAIClient":
                 string endpoint = $"https://{this.Id}.openai.azure.com";
-                string key = Environment.GetEnvironmentVariable("openai_cm_key");
+                string? key = null; // Environment.GetEnvironmentVariable("openai_cm_key");
                 if (key != null)
                     return new ClientConfiguration(endpoint, key);
                 else
                     return new ClientConfiguration(endpoint);
+            case "OpenAI.Chat.ChatClient":
+                return new ClientConfiguration(this.Id);
             default:
-                throw new Exception("unknown client");
+                throw new Exception($"unknown client {clientId}");
         }
     }
 
