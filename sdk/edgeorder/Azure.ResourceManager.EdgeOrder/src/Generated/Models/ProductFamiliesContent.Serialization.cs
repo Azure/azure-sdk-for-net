@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         void IJsonModel<ProductFamiliesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ProductFamiliesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProductFamiliesContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("filterableProperties"u8);
             writer.WriteStartObject();
             foreach (var item in FilterableProperties)
@@ -64,7 +72,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ProductFamiliesContent IJsonModel<ProductFamiliesContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

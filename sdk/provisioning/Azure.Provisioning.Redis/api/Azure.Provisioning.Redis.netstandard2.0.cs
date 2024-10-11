@@ -130,6 +130,7 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepValue<string> MaxMemoryDelta { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MaxMemoryPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MaxMemoryReserved { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> NotifyKeyspaceEvents { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PreferredDataArchiveAuthMethod { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> PreferredDataPersistenceAuthMethod { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RdbBackupFrequency { get { throw null; } set { } }
@@ -361,6 +362,7 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ManagedServiceIdentity> Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Redis.RedisInstanceDetails> Instances { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAccessKeyAuthenticationDisabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.SubResource> LinkedServers { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisTlsVersion> MinimumTlsVersion { get { throw null; } set { } }

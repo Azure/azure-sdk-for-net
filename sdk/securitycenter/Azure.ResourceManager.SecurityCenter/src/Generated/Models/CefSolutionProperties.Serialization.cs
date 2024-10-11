@@ -20,13 +20,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         void IJsonModel<CefSolutionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CefSolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CefSolutionProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
@@ -42,21 +51,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("lastEventReceived"u8);
                 writer.WriteStringValue(LastEventReceived);
             }
-            if (Optional.IsDefined(DeviceVendor))
-            {
-                writer.WritePropertyName("deviceVendor"u8);
-                writer.WriteStringValue(DeviceVendor);
-            }
-            if (Optional.IsDefined(DeviceType))
-            {
-                writer.WritePropertyName("deviceType"u8);
-                writer.WriteStringValue(DeviceType);
-            }
-            if (Optional.IsDefined(Workspace))
-            {
-                writer.WritePropertyName("workspace"u8);
-                JsonSerializer.Serialize(writer, Workspace);
-            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -69,7 +63,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         CefSolutionProperties IJsonModel<CefSolutionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
