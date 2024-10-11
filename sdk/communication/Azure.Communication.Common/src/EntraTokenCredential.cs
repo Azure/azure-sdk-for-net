@@ -38,12 +38,13 @@ namespace Azure.Communication
         private HttpPipeline CreatePipelineFromOptions(EntraCommunicationTokenCredentialOptions options, HttpPipelineTransport pipelineTransport)
         {
             var authenticationPolicy = new BearerTokenAuthenticationPolicy(options.TokenCredential, options.Scopes);
+            var entraTokenGuardPolicy = new EntraTokenGuardPolicy();
             var clientOptions = ClientOptions.Default;
             if (pipelineTransport != null)
             {
                 clientOptions.Transport = pipelineTransport;
             }
-            return HttpPipelineBuilder.Build(clientOptions, authenticationPolicy);
+            return HttpPipelineBuilder.Build(clientOptions, authenticationPolicy, entraTokenGuardPolicy);
         }
 
         /// <inheritdoc />
