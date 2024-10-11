@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
-        protected AzureLocation DefaultLocation => "eastus";
+        protected AzureLocation DefaultLocation => "centraluseuap";
 
         private ResourceGroupResource _resourceGroup;
 
