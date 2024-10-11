@@ -204,6 +204,9 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int PurgeMessagesCompleteEvent = 120;
         internal const int PurgeMessagesExceptionEvent = 121;
 
+        internal const int ReceiverAcceptSessionTimeoutEvent = 122;
+        internal const int ReceiverAcceptSessionCanceledEvent = 123;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -345,6 +348,27 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(ReceiveDeferredMessageExceptionEvent, identifier, exception);
+            }
+        }
+
+        [Event(ReceiverAcceptSessionCanceledEvent, Level = EventLevel.Verbose, Message = "An accept session operation for a receiver was canceled. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
+        public void ReceiverAcceptSessionCanceled(string fullyQualifiedNamespace, string entityPath, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ReceiverAcceptSessionCanceledEvent, fullyQualifiedNamespace, entityPath, exception);
+            }
+        }
+
+        [Event(ReceiverAcceptSessionTimeoutEvent, Level = EventLevel.Verbose, Message = "The receiver accept session call timed out. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
+        public virtual void ReceiverAcceptSessionTimeout(
+            string fullyQualifiedNamespace,
+            string entityPath,
+            string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ReceiverAcceptSessionTimeoutEvent, fullyQualifiedNamespace, entityPath, exception);
             }
         }
         #endregion

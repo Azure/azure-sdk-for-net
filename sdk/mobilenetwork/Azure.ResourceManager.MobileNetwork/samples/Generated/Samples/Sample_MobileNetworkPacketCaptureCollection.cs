@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
 {
 "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/TestPacketCoreCP","/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/TestPacketCoreCP/packetCoreDataPlanes/TestPacketCoreDP","/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/TestPacketCoreCP/packetCoreDataPlanes/TestPacketCoreDP/attachedDataNetworks/TestADN"
 },
-                BytesToCapturePerPacket = 10000,
-                TotalBytesPerSession = 100000,
+                BytesToCapturePerPacket = 10000L,
+                TotalBytesPerSession = 100000L,
                 TimeLimitInSeconds = 100,
             };
             ArmOperation<MobileNetworkPacketCaptureResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, packetCaptureName, data);

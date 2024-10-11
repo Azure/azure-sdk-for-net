@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ApplicationGatewayProtocol left, ApplicationGatewayProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayProtocol"/> values are not the same. </summary>
         public static bool operator !=(ApplicationGatewayProtocol left, ApplicationGatewayProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationGatewayProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayProtocol"/>. </summary>
         public static implicit operator ApplicationGatewayProtocol(string value) => new ApplicationGatewayProtocol(value);
 
         /// <inheritdoc />

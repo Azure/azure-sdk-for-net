@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static bool operator ==(ResponsibilityType left, ResponsibilityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResponsibilityType"/> values are not the same. </summary>
         public static bool operator !=(ResponsibilityType left, ResponsibilityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResponsibilityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResponsibilityType"/>. </summary>
         public static implicit operator ResponsibilityType(string value) => new ResponsibilityType(value);
 
         /// <inheritdoc />

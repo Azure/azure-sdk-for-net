@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Quota.Models
         public static bool operator ==(QuotaRequestStatus left, QuotaRequestStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QuotaRequestStatus"/> values are not the same. </summary>
         public static bool operator !=(QuotaRequestStatus left, QuotaRequestStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QuotaRequestStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="QuotaRequestStatus"/>. </summary>
         public static implicit operator QuotaRequestStatus(string value) => new QuotaRequestStatus(value);
 
         /// <inheritdoc />

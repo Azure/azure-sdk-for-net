@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(KillChainIntent left, KillChainIntent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KillChainIntent"/> values are not the same. </summary>
         public static bool operator !=(KillChainIntent left, KillChainIntent right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KillChainIntent"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KillChainIntent"/>. </summary>
         public static implicit operator KillChainIntent(string value) => new KillChainIntent(value);
 
         /// <inheritdoc />

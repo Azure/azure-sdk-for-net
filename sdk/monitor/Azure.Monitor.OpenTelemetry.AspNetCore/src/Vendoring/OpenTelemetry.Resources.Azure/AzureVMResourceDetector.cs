@@ -1,7 +1,6 @@
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
-using System.Collections.Generic;
 using OpenTelemetry.Trace;
 
 namespace OpenTelemetry.Resources.Azure;

@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.SecurityDevOps
     {
         public AzureDevOpsConnectorData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -80,6 +81,7 @@ namespace Azure.ResourceManager.SecurityDevOps
     {
         public AzureDevOpsOrgData() { }
         public Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsOrgProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -127,6 +129,7 @@ namespace Azure.ResourceManager.SecurityDevOps
     {
         public AzureDevOpsProjectData() { }
         public Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsProjectProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -174,6 +177,7 @@ namespace Azure.ResourceManager.SecurityDevOps
     {
         public AzureDevOpsRepoData() { }
         public Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsRepoProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -218,6 +222,7 @@ namespace Azure.ResourceManager.SecurityDevOps
     {
         public GitHubConnectorData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.GitHubConnectorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.GitHubConnectorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.GitHubConnectorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.GitHubConnectorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubConnectorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -277,6 +282,7 @@ namespace Azure.ResourceManager.SecurityDevOps
     {
         public GitHubOwnerData() { }
         public Azure.ResourceManager.SecurityDevOps.Models.GitHubOwnerProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.GitHubOwnerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.GitHubOwnerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.GitHubOwnerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.GitHubOwnerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubOwnerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -324,6 +330,7 @@ namespace Azure.ResourceManager.SecurityDevOps
     {
         public GitHubRepoData() { }
         public Azure.ResourceManager.SecurityDevOps.Models.GitHubRepoProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.GitHubRepoData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.GitHubRepoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.GitHubRepoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.GitHubRepoData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.GitHubRepoData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -409,6 +416,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediationRuleCategory> Categories { get { throw null; } }
         public System.Collections.Generic.IList<string> SeverityLevels { get { throw null; } }
         public Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediationState? State { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.Models.ActionableRemediation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -492,6 +500,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public string AuthorizationCode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsOrgMetadata> Orgs { get { throw null; } }
         public Azure.ResourceManager.SecurityDevOps.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -502,6 +511,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     {
         public AzureDevOpsConnectorStats() { }
         public Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorStatsProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorStats System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorStats>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorStats>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorStats System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorStats>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -515,6 +525,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public long? ProjectsCount { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityDevOps.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
         public long? ReposCount { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorStatsProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorStatsProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorStatsProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorStatsProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorStatsProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -527,6 +538,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public Azure.ResourceManager.SecurityDevOps.Models.AutoDiscovery? AutoDiscovery { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsProjectMetadata> Projects { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsOrgMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsOrgMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsOrgMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsOrgMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsOrgMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -538,6 +550,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public AzureDevOpsOrgProperties() { }
         public Azure.ResourceManager.SecurityDevOps.Models.AutoDiscovery? AutoDiscovery { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityDevOps.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsOrgProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsOrgProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsOrgProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsOrgProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsOrgProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -550,6 +563,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public Azure.ResourceManager.SecurityDevOps.Models.AutoDiscovery? AutoDiscovery { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Repos { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsProjectMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsProjectMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsProjectMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsProjectMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsProjectMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -563,6 +577,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public string OrgName { get { throw null; } set { } }
         public string ProjectId { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityDevOps.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsProjectProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsProjectProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsProjectProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsProjectProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsProjectProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -579,6 +594,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public string RepoId { get { throw null; } set { } }
         public System.Uri RepoUri { get { throw null; } set { } }
         public string Visibility { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsRepoProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsRepoProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsRepoProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsRepoProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsRepoProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -590,6 +606,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public GitHubConnectorProperties() { }
         public string Code { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityDevOps.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -600,6 +617,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     {
         public GitHubConnectorStats() { }
         public Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorStatsProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorStats System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorStats>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorStats>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorStats System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorStats>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -612,6 +630,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public long? OwnersCount { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityDevOps.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
         public long? ReposCount { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorStatsProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorStatsProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorStatsProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorStatsProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorStatsProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -623,6 +642,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public GitHubOwnerProperties() { }
         public System.Uri OwnerUri { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityDevOps.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.GitHubOwnerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.GitHubOwnerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.GitHubOwnerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.GitHubOwnerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.Models.GitHubOwnerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -636,6 +656,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public string OwnerName { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityDevOps.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
         public System.Uri RepoUri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.GitHubRepoProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.GitHubRepoProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityDevOps.Models.GitHubRepoProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityDevOps.Models.GitHubRepoProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityDevOps.Models.GitHubRepoProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

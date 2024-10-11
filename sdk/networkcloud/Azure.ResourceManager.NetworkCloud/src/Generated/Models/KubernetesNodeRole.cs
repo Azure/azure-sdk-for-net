@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(KubernetesNodeRole left, KubernetesNodeRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesNodeRole"/> values are not the same. </summary>
         public static bool operator !=(KubernetesNodeRole left, KubernetesNodeRole right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KubernetesNodeRole"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KubernetesNodeRole"/>. </summary>
         public static implicit operator KubernetesNodeRole(string value) => new KubernetesNodeRole(value);
 
         /// <inheritdoc />

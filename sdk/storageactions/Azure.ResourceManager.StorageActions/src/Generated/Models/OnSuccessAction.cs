@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         public static bool operator ==(OnSuccessAction left, OnSuccessAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OnSuccessAction"/> values are not the same. </summary>
         public static bool operator !=(OnSuccessAction left, OnSuccessAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OnSuccessAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OnSuccessAction"/>. </summary>
         public static implicit operator OnSuccessAction(string value) => new OnSuccessAction(value);
 
         /// <inheritdoc />

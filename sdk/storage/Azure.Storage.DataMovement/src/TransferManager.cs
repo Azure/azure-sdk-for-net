@@ -64,8 +64,7 @@ namespace Azure.Storage.DataMovement
             new(ArrayPool<byte>.Shared,
                 options?.ErrorHandling ?? DataTransferErrorMode.StopOnAnyFailure,
                 new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),
-                (options?.CheckpointerOptions != default ? new TransferCheckpointStoreOptions(options.CheckpointerOptions) : default)
-                    ?.GetCheckpointer() ?? CreateDefaultCheckpointer(),
+                CheckpointerExtensions.BuildCheckpointer(options?.CheckpointerOptions),
                 options?.ResumeProviders != null ? new List<StorageResourceProvider>(options.ResumeProviders) : new(),
                 default)
         {}
@@ -209,6 +208,11 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken = default)
         {
             cancellationToken = LinkCancellation(cancellationToken);
+            if (_checkpointer is DisabledTransferCheckpointer)
+            {
+                throw Errors.CheckpointerDisabled("ResumeAllTransfersAsync");
+            }
+
             List<DataTransfer> transfers = new();
             await foreach (DataTransferProperties properties in GetResumableTransfersAsync().ConfigureAwait(false))
             {
@@ -235,6 +239,10 @@ namespace Azure.Storage.DataMovement
             cancellationToken = LinkCancellation(cancellationToken);
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Argument.AssertNotNullOrWhiteSpace(transferId, nameof(transferId));
+            if (_checkpointer is DisabledTransferCheckpointer)
+            {
+                throw Errors.CheckpointerDisabled("ResumeTransferAsync");
+            }
 
             if (!await _checkpointer.IsResumableAsync(transferId, cancellationToken).ConfigureAwait(false))
             {
@@ -354,6 +362,9 @@ namespace Azure.Storage.DataMovement
                 destinationResource,
                 cancellationToken).ConfigureAwait(false);
 
+            // TODO: if the below fails for any reason, this job will still be in the checkpointer.
+            // That seems not desirable.
+
             DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
                 sourceResource,
                 destinationResource,
@@ -391,22 +402,6 @@ namespace Azure.Storage.DataMovement
             return transfer;
         }
         #endregion
-
-        /// <summary>
-        /// Returns a default checkpointer if not specified by the user already.
-        ///
-        /// By default a local folder will be used to store the job transfer files.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="LocalTransferCheckpointer"/> using the folder
-        /// where the application is stored with and making a new folder called
-        /// .azstoragedml to store all the job plan files.
-        /// </returns>
-        private static LocalTransferCheckpointer CreateDefaultCheckpointer()
-        {
-            // Return checkpointer
-            return new LocalTransferCheckpointer(default);
-        }
 
         private async Task SetDataTransfers()
         {

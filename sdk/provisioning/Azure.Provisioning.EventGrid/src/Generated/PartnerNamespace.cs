@@ -120,11 +120,15 @@ public partial class PartnerNamespace : Resource
     /// <summary>
     /// Creates a new PartnerNamespace.
     /// </summary>
-    /// <param name="resourceName">Name of the PartnerNamespace.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the PartnerNamespace resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PartnerNamespace.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PartnerNamespace(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/partnerNamespaces", resourceVersion ?? "2022-06-15", context)
+    public PartnerNamespace(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.EventGrid/partnerNamespaces", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -161,9 +165,14 @@ public partial class PartnerNamespace : Resource
     /// <summary>
     /// Creates a reference to an existing PartnerNamespace.
     /// </summary>
-    /// <param name="resourceName">Name of the PartnerNamespace.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the PartnerNamespace resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PartnerNamespace.</param>
     /// <returns>The existing PartnerNamespace resource.</returns>
-    public static PartnerNamespace FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PartnerNamespace FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

@@ -58,11 +58,15 @@ public partial class ManagedInstanceAdvancedThreatProtection : Resource
     /// <summary>
     /// Creates a new ManagedInstanceAdvancedThreatProtection.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceAdvancedThreatProtection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ManagedInstanceAdvancedThreatProtection resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAdvancedThreatProtection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceAdvancedThreatProtection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/advancedThreatProtectionSettings", resourceVersion ?? "2024-05-01-preview", context)
+    public ManagedInstanceAdvancedThreatProtection(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/managedInstances/advancedThreatProtectionSettings", resourceVersion ?? "2024-05-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<AdvancedThreatProtectionState>.DefineProperty(this, "State", ["properties", "state"]);
@@ -87,9 +91,14 @@ public partial class ManagedInstanceAdvancedThreatProtection : Resource
     /// Creates a reference to an existing
     /// ManagedInstanceAdvancedThreatProtection.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceAdvancedThreatProtection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ManagedInstanceAdvancedThreatProtection resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAdvancedThreatProtection.</param>
     /// <returns>The existing ManagedInstanceAdvancedThreatProtection resource.</returns>
-    public static ManagedInstanceAdvancedThreatProtection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceAdvancedThreatProtection FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

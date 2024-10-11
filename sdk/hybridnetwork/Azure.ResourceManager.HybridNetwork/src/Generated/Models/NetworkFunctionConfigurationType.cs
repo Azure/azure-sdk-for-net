@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static bool operator ==(NetworkFunctionConfigurationType left, NetworkFunctionConfigurationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkFunctionConfigurationType"/> values are not the same. </summary>
         public static bool operator !=(NetworkFunctionConfigurationType left, NetworkFunctionConfigurationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkFunctionConfigurationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFunctionConfigurationType"/>. </summary>
         public static implicit operator NetworkFunctionConfigurationType(string value) => new NetworkFunctionConfigurationType(value);
 
         /// <inheritdoc />

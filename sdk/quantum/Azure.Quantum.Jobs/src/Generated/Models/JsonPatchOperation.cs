@@ -45,7 +45,7 @@ namespace Azure.Quantum.Jobs.Models
         public static bool operator ==(JsonPatchOperation left, JsonPatchOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JsonPatchOperation"/> values are not the same. </summary>
         public static bool operator !=(JsonPatchOperation left, JsonPatchOperation right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JsonPatchOperation"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JsonPatchOperation"/>. </summary>
         public static implicit operator JsonPatchOperation(string value) => new JsonPatchOperation(value);
 
         /// <inheritdoc />

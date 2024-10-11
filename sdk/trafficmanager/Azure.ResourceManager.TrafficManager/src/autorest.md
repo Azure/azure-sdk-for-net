@@ -16,6 +16,7 @@ sample-gen:
   clear-output-folder: true
 skip-csproj: true
 use-model-reader-writer: true
+use-write-core: true
 
 rename-mapping:
   CheckTrafficManagerRelativeDnsNameAvailabilityParameters: TrafficManagerRelativeDnsNameAvailabilityContent

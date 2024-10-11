@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(InputVideoStretchMode left, InputVideoStretchMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InputVideoStretchMode"/> values are not the same. </summary>
         public static bool operator !=(InputVideoStretchMode left, InputVideoStretchMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InputVideoStretchMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InputVideoStretchMode"/>. </summary>
         public static implicit operator InputVideoStretchMode(string value) => new InputVideoStretchMode(value);
 
         /// <inheritdoc />

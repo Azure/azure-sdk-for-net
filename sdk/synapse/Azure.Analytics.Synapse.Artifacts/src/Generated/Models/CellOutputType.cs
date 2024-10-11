@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(CellOutputType left, CellOutputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CellOutputType"/> values are not the same. </summary>
         public static bool operator !=(CellOutputType left, CellOutputType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CellOutputType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CellOutputType"/>. </summary>
         public static implicit operator CellOutputType(string value) => new CellOutputType(value);
 
         /// <inheritdoc />

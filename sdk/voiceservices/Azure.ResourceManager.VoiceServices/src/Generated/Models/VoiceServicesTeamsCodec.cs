@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
         public static bool operator ==(VoiceServicesTeamsCodec left, VoiceServicesTeamsCodec right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VoiceServicesTeamsCodec"/> values are not the same. </summary>
         public static bool operator !=(VoiceServicesTeamsCodec left, VoiceServicesTeamsCodec right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VoiceServicesTeamsCodec"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VoiceServicesTeamsCodec"/>. </summary>
         public static implicit operator VoiceServicesTeamsCodec(string value) => new VoiceServicesTeamsCodec(value);
 
         /// <inheritdoc />

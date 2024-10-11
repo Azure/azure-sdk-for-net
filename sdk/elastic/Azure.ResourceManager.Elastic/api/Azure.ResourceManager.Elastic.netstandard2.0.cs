@@ -113,6 +113,7 @@ namespace Azure.ResourceManager.Elastic
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Elastic.Models.MonitorProperties Properties { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.ElasticMonitorResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.ElasticMonitorResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.ElasticMonitorResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.ElasticMonitorResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.ElasticMonitorResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -140,6 +141,7 @@ namespace Azure.ResourceManager.Elastic
     {
         public MonitoredSubscriptionPropertyData() { }
         public Azure.ResourceManager.Elastic.Models.ElasticModelSubscriptionList Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.MonitoredSubscriptionPropertyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.MonitoredSubscriptionPropertyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.MonitoredSubscriptionPropertyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.MonitoredSubscriptionPropertyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.MonitoredSubscriptionPropertyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -186,6 +188,7 @@ namespace Azure.ResourceManager.Elastic
     {
         public MonitoringTagRuleData() { }
         public Azure.ResourceManager.Elastic.Models.MonitoringTagRulesProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.MonitoringTagRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.MonitoringTagRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.MonitoringTagRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.MonitoringTagRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.MonitoringTagRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -232,6 +235,7 @@ namespace Azure.ResourceManager.Elastic
     {
         public OpenAIIntegrationRPModelData() { }
         public Azure.ResourceManager.Elastic.Models.OpenAIIntegrationProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.OpenAIIntegrationRPModelData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.OpenAIIntegrationRPModelData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.OpenAIIntegrationRPModelData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.OpenAIIntegrationRPModelData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.OpenAIIntegrationRPModelData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -330,6 +334,7 @@ namespace Azure.ResourceManager.Elastic.Models
         internal BillingInfoResponse() { }
         public Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo MarketplaceSaasInfo { get { throw null; } }
         public Azure.ResourceManager.Elastic.Models.PartnerBillingEntity PartnerBillingEntity { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.BillingInfoResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.BillingInfoResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.BillingInfoResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.BillingInfoResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.BillingInfoResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -344,6 +349,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string Domain { get { throw null; } set { } }
         public string EmployeesNumber { get { throw null; } set { } }
         public string State { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.CompanyInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.CompanyInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.CompanyInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.CompanyInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.CompanyInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -357,6 +363,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string PartnerDeploymentName { get { throw null; } }
         public System.Uri PartnerDeploymentUri { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -367,6 +374,7 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         internal ConnectedPartnerResourcesListFormat() { }
         public Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourceProperties Properties { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourcesListFormat System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourcesListFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourcesListFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourcesListFormat System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourcesListFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -383,6 +391,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string MemoryCapacity { get { throw null; } }
         public Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus? Status { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.DeploymentInfoResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.DeploymentInfoResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.DeploymentInfoResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.DeploymentInfoResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.DeploymentInfoResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -399,6 +408,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public System.Uri KibanaServiceUri { get { throw null; } }
         public System.Uri KibanaSsoUri { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticCloudDeployment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticCloudDeployment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticCloudDeployment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticCloudDeployment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ElasticCloudDeployment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -411,6 +421,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public System.Uri ElasticCloudSsoDefaultUri { get { throw null; } }
         public string EmailAddress { get { throw null; } }
         public string Id { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticCloudUser System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticCloudUser>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticCloudUser>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticCloudUser System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ElasticCloudUser>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -482,6 +493,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Elastic.Models.MonitoredSubscription> MonitoredSubscriptionList { get { throw null; } }
         public Azure.ResourceManager.Elastic.Models.ElasticModelOperation? Operation { get { throw null; } set { } }
         public Azure.ResourceManager.Elastic.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticModelSubscriptionList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticModelSubscriptionList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticModelSubscriptionList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticModelSubscriptionList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ElasticModelSubscriptionList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -510,6 +522,7 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         public ElasticModelUserEmailId() { }
         public string EmailId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticModelUserEmailId System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticModelUserEmailId>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticModelUserEmailId>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticModelUserEmailId System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ElasticModelUserEmailId>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -520,6 +533,7 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         public ElasticMonitorResourcePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticMonitorResourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticMonitorResourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticMonitorResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticMonitorResourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ElasticMonitorResourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -530,6 +544,7 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         public ElasticMonitorUpgrade() { }
         public string Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticMonitorUpgrade System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticMonitorUpgrade>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticMonitorUpgrade>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticMonitorUpgrade System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ElasticMonitorUpgrade>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -540,6 +555,7 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         internal ElasticOrganizationToAzureSubscriptionMappingResponse() { }
         public Azure.ResourceManager.Elastic.Models.ElasticOrganizationToAzureSubscriptionMappingResponseProperties Properties { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticOrganizationToAzureSubscriptionMappingResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticOrganizationToAzureSubscriptionMappingResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticOrganizationToAzureSubscriptionMappingResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticOrganizationToAzureSubscriptionMappingResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ElasticOrganizationToAzureSubscriptionMappingResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -553,6 +569,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string ElasticOrganizationId { get { throw null; } }
         public string ElasticOrganizationName { get { throw null; } }
         public Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo MarketplaceSaasInfo { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticOrganizationToAzureSubscriptionMappingResponseProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticOrganizationToAzureSubscriptionMappingResponseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticOrganizationToAzureSubscriptionMappingResponseProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticOrganizationToAzureSubscriptionMappingResponseProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ElasticOrganizationToAzureSubscriptionMappingResponseProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -564,6 +581,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public ElasticProperties() { }
         public Azure.ResourceManager.Elastic.Models.ElasticCloudDeployment ElasticCloudDeployment { get { throw null; } set { } }
         public Azure.ResourceManager.Elastic.Models.ElasticCloudUser ElasticCloudUser { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ElasticProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -580,6 +598,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string Name { get { throw null; } }
         public string Region { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterRule> Rules { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticTrafficFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticTrafficFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -590,6 +609,7 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         internal ElasticTrafficFilterResponse() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilter> Rulesets { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -604,6 +624,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string Description { get { throw null; } }
         public string Id { get { throw null; } }
         public string Source { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -614,6 +635,7 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         internal ElasticVersionListFormat() { }
         public string Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticVersionListFormat System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticVersionListFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticVersionListFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticVersionListFormat System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ElasticVersionListFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -628,6 +650,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string Password { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Roles { get { throw null; } }
         public string UserName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ExternalUserContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ExternalUserContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ExternalUserContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ExternalUserContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ExternalUserContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -638,6 +661,7 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         internal ExternalUserCreationResponse() { }
         public bool? Created { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ExternalUserCreationResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ExternalUserCreationResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ExternalUserCreationResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ExternalUserCreationResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ExternalUserCreationResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -650,6 +674,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public Azure.ResourceManager.Elastic.Models.TagAction? Action { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.FilteringTag System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.FilteringTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.FilteringTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.FilteringTag System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.FilteringTag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -681,6 +706,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public bool? SendAadLogs { get { throw null; } set { } }
         public bool? SendActivityLogs { get { throw null; } set { } }
         public bool? SendSubscriptionLogs { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.LogRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.LogRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.LogRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.LogRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.LogRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -696,6 +722,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string MarketplaceStatus { get { throw null; } }
         public Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfoMarketplaceSubscription MarketplaceSubscription { get { throw null; } }
         public bool? Subscribed { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -708,6 +735,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string Id { get { throw null; } }
         public string OfferId { get { throw null; } }
         public string PublisherId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfoMarketplaceSubscription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfoMarketplaceSubscription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfoMarketplaceSubscription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfoMarketplaceSubscription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfoMarketplaceSubscription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -720,6 +748,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string Id { get { throw null; } }
         public string ReasonForLogsStatus { get { throw null; } }
         public Azure.ResourceManager.Elastic.Models.SendingLog? SendingLogs { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.MonitoredResourceContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MonitoredResourceContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MonitoredResourceContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.MonitoredResourceContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MonitoredResourceContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -733,6 +762,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public Azure.ResourceManager.Elastic.Models.ElasticModelStatus? Status { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
         public Azure.ResourceManager.Elastic.Models.MonitoringTagRulesProperties TagRules { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.MonitoredSubscription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MonitoredSubscription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MonitoredSubscription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.MonitoredSubscription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MonitoredSubscription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -762,6 +792,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public MonitoringTagRulesProperties() { }
         public Azure.ResourceManager.Elastic.Models.LogRules LogRules { get { throw null; } set { } }
         public Azure.ResourceManager.Elastic.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.MonitoringTagRulesProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MonitoringTagRulesProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MonitoringTagRulesProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.MonitoringTagRulesProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MonitoringTagRulesProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -784,6 +815,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string SubscriptionState { get { throw null; } set { } }
         public Azure.ResourceManager.Elastic.Models.UserInfo UserInfo { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.MonitorProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MonitorProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MonitorProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.MonitorProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MonitorProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -798,6 +830,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string OpenAIConnectorId { get { throw null; } set { } }
         public string OpenAIResourceEndpoint { get { throw null; } set { } }
         public string OpenAIResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.OpenAIIntegrationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.OpenAIIntegrationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.OpenAIIntegrationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.OpenAIIntegrationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.OpenAIIntegrationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -808,6 +841,7 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         internal OpenAIIntegrationStatusResponse() { }
         public string Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.OpenAIIntegrationStatusResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.OpenAIIntegrationStatusResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.OpenAIIntegrationStatusResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.OpenAIIntegrationStatusResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.OpenAIIntegrationStatusResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -838,6 +872,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Uri PartnerEntityUri { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.PartnerBillingEntity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.PartnerBillingEntity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.PartnerBillingEntity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.PartnerBillingEntity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.PartnerBillingEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -852,6 +887,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string PlanName { get { throw null; } set { } }
         public string PublisherId { get { throw null; } set { } }
         public string TermId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.PlanDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.PlanDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.PlanDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.PlanDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.PlanDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -891,6 +927,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string ResourceGroup { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
         public string Term { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ResubscribeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ResubscribeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ResubscribeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ResubscribeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ResubscribeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -938,6 +975,7 @@ namespace Azure.ResourceManager.Elastic.Models
         internal UpgradableVersionsList() { }
         public string CurrentVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> UpgradableVersions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.UpgradableVersionsList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.UpgradableVersionsList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.UpgradableVersionsList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.UpgradableVersionsList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.UpgradableVersionsList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -948,6 +986,7 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         internal UserApiKeyResponse() { }
         public string ApiKey { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.UserApiKeyResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.UserApiKeyResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.UserApiKeyResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.UserApiKeyResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.UserApiKeyResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -962,6 +1001,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string EmailAddress { get { throw null; } set { } }
         public string FirstName { get { throw null; } set { } }
         public string LastName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.UserInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.UserInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.UserInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.UserInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.UserInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -973,6 +1013,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public VmCollectionUpdate() { }
         public Azure.ResourceManager.Elastic.Models.OperationName? OperationName { get { throw null; } set { } }
         public string VmResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.VmCollectionUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.VmCollectionUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.VmCollectionUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.VmCollectionUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.VmCollectionUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -984,6 +1025,7 @@ namespace Azure.ResourceManager.Elastic.Models
         internal VmIngestionDetailsResponse() { }
         public string CloudId { get { throw null; } }
         public string IngestionKey { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.VmIngestionDetailsResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.VmIngestionDetailsResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.VmIngestionDetailsResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.VmIngestionDetailsResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.VmIngestionDetailsResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -994,6 +1036,7 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         internal VmResources() { }
         public string VmResourceId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.VmResources System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.VmResources>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.VmResources>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.VmResources System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.VmResources>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

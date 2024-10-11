@@ -22,6 +22,7 @@ namespace Azure
         [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Serialization.JsonPropertyNames propertyNameFormat, string dateTimeFormat = "o") { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1189,6 +1190,7 @@ namespace Azure.Core.Serialization
 }
 namespace Azure.Messaging
 {
+    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
     public partial class CloudEvent
     {
         public CloudEvent(string source, string type, System.BinaryData? data, string? dataContentType, Azure.Messaging.CloudEventDataFormat dataFormat = Azure.Messaging.CloudEventDataFormat.Binary) { }
