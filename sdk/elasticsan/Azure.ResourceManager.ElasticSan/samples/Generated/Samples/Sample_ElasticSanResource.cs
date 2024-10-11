@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 {
 ["key1931"] = "yhjwkgmrrwrcoxblgwgzjqusch",
 },
-                BaseSizeTiB = 13,
-                ExtendedCapacitySizeTiB = 29,
+                BaseSizeTiB = 13L,
+                ExtendedCapacitySizeTiB = 29L,
                 PublicNetworkAccess = ElasticSanPublicNetworkAccess.Enabled,
             };
             ArmOperation<ElasticSanResource> lro = await elasticSan.UpdateAsync(WaitUntil.Completed, patch);

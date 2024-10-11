@@ -42,7 +42,7 @@ namespace Azure.Maps.Routing.Models
         public static bool operator ==(DelayMagnitude left, DelayMagnitude right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DelayMagnitude"/> values are not the same. </summary>
         public static bool operator !=(DelayMagnitude left, DelayMagnitude right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DelayMagnitude"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DelayMagnitude"/>. </summary>
         public static implicit operator DelayMagnitude(string value) => new DelayMagnitude(value);
 
         /// <inheritdoc />

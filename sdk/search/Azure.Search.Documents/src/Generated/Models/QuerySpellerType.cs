@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Models
         public static bool operator ==(QuerySpellerType left, QuerySpellerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QuerySpellerType"/> values are not the same. </summary>
         public static bool operator !=(QuerySpellerType left, QuerySpellerType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QuerySpellerType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="QuerySpellerType"/>. </summary>
         public static implicit operator QuerySpellerType(string value) => new QuerySpellerType(value);
 
         /// <inheritdoc />

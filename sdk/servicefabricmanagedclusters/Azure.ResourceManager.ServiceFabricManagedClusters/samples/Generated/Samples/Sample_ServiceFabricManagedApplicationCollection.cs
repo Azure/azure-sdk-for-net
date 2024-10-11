@@ -169,9 +169,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
                     },
                     ForceRestart = false,
                     RollingUpgradeMonitoringPolicy = new RollingUpgradeMonitoringPolicy(PolicyViolationCompensationAction.Rollback, TimeSpan.Parse("00:02:00"), TimeSpan.Parse("00:05:00"), TimeSpan.Parse("00:10:00"), TimeSpan.Parse("01:00:00"), TimeSpan.Parse("00:15:00")),
-                    InstanceCloseDelayDurationInSeconds = 600,
+                    InstanceCloseDelayDurationInSeconds = 600L,
                     UpgradeMode = RollingUpgradeMode.UnmonitoredAuto,
-                    UpgradeReplicaSetCheckTimeout = 3600,
+                    UpgradeReplicaSetCheckTimeout = 3600L,
                     RecreateApplication = false,
                 },
                 Tags =

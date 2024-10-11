@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(BackupEncryptionAtRestType left, BackupEncryptionAtRestType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupEncryptionAtRestType"/> values are not the same. </summary>
         public static bool operator !=(BackupEncryptionAtRestType left, BackupEncryptionAtRestType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupEncryptionAtRestType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupEncryptionAtRestType"/>. </summary>
         public static implicit operator BackupEncryptionAtRestType(string value) => new BackupEncryptionAtRestType(value);
 
         /// <inheritdoc />

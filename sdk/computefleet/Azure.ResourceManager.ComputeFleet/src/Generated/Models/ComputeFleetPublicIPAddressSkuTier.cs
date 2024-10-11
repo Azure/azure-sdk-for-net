@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetPublicIPAddressSkuTier left, ComputeFleetPublicIPAddressSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetPublicIPAddressSkuTier"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetPublicIPAddressSkuTier left, ComputeFleetPublicIPAddressSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetPublicIPAddressSkuTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetPublicIPAddressSkuTier"/>. </summary>
         public static implicit operator ComputeFleetPublicIPAddressSkuTier(string value) => new ComputeFleetPublicIPAddressSkuTier(value);
 
         /// <inheritdoc />

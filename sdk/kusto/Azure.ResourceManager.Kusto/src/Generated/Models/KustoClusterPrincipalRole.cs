@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator ==(KustoClusterPrincipalRole left, KustoClusterPrincipalRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoClusterPrincipalRole"/> values are not the same. </summary>
         public static bool operator !=(KustoClusterPrincipalRole left, KustoClusterPrincipalRole right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KustoClusterPrincipalRole"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoClusterPrincipalRole"/>. </summary>
         public static implicit operator KustoClusterPrincipalRole(string value) => new KustoClusterPrincipalRole(value);
 
         /// <inheritdoc />

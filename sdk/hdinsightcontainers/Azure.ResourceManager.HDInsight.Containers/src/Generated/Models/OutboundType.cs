@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(OutboundType left, OutboundType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OutboundType"/> values are not the same. </summary>
         public static bool operator !=(OutboundType left, OutboundType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OutboundType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OutboundType"/>. </summary>
         public static implicit operator OutboundType(string value) => new OutboundType(value);
 
         /// <inheritdoc />

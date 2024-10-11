@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(MetricCriteriaOperator left, MetricCriteriaOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricCriteriaOperator"/> values are not the same. </summary>
         public static bool operator !=(MetricCriteriaOperator left, MetricCriteriaOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MetricCriteriaOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MetricCriteriaOperator"/>. </summary>
         public static implicit operator MetricCriteriaOperator(string value) => new MetricCriteriaOperator(value);
 
         /// <inheritdoc />

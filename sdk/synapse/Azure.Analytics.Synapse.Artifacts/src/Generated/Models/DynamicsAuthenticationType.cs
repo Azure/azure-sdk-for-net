@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(DynamicsAuthenticationType left, DynamicsAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynamicsAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(DynamicsAuthenticationType left, DynamicsAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DynamicsAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DynamicsAuthenticationType"/>. </summary>
         public static implicit operator DynamicsAuthenticationType(string value) => new DynamicsAuthenticationType(value);
 
         /// <inheritdoc />

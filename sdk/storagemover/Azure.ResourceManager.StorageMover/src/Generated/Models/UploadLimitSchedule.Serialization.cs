@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         void IJsonModel<UploadLimitSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<UploadLimitSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UploadLimitSchedule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(WeeklyRecurrences))
             {
                 writer.WritePropertyName("weeklyRecurrences"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.StorageMover.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         UploadLimitSchedule IJsonModel<UploadLimitSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

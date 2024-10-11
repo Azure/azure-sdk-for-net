@@ -3,15 +3,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
 [CodeGenModel("ElasticsearchChatDataSource")]
-public partial class ElasticsearchChatDataSource : AzureChatDataSource
+[Experimental("AOAI001")]
+#if AZURE_OPENAI_GA
+[EditorBrowsable(EditorBrowsableState.Never)]
+#endif
+public partial class ElasticsearchChatDataSource : ChatDataSource
 {
     [CodeGenMember("Parameters")]
     internal InternalElasticsearchChatDataSourceParameters InternalParameters { get; }
+
+#if !AZURE_OPENAI_GA
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.Endpoint"/>
     required public Uri Endpoint
@@ -63,17 +70,17 @@ public partial class ElasticsearchChatDataSource : AzureChatDataSource
     }
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.AllowPartialResult"/>
-    public bool? AllowPartialResult
+    public bool? AllowPartialResults
     {
         get => InternalParameters.AllowPartialResult;
         set => InternalParameters.AllowPartialResult = value;
     }
 
-    /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.OutputContextFlags"/>
-    public DataSourceOutputContexts? OutputContextFlags
+    /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.OutputContexts"/>
+    public DataSourceOutputContexts? OutputContexts
     {
-        get => InternalParameters.OutputContextFlags;
-        set => InternalParameters.OutputContextFlags = value;
+        get => InternalParameters.OutputContexts;
+        set => InternalParameters.OutputContexts = value;
     }
 
     /// <inheritdoc cref="InternalElasticsearchChatDataSourceParameters.FieldMappings"/>
@@ -101,6 +108,13 @@ public partial class ElasticsearchChatDataSource : AzureChatDataSource
     {
         InternalParameters = new();
     }
+
+#else
+    public ElasticsearchChatDataSource()
+    {
+        throw new InvalidOperationException($"Elasticsearch data sources are not supported in this GA version. Please use a preview library and service version for this integration.");
+    }
+#endif
 
     // CUSTOM: Made internal.
     /// <summary> Initializes a new instance of <see cref="ElasticsearchChatDataSource"/>. </summary>

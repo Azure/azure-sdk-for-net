@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(AggregatedReplicationState left, AggregatedReplicationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AggregatedReplicationState"/> values are not the same. </summary>
         public static bool operator !=(AggregatedReplicationState left, AggregatedReplicationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AggregatedReplicationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AggregatedReplicationState"/>. </summary>
         public static implicit operator AggregatedReplicationState(string value) => new AggregatedReplicationState(value);
 
         /// <inheritdoc />

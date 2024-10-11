@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Batch.Models
         public static bool operator ==(BatchIssueType left, BatchIssueType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchIssueType"/> values are not the same. </summary>
         public static bool operator !=(BatchIssueType left, BatchIssueType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BatchIssueType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchIssueType"/>. </summary>
         public static implicit operator BatchIssueType(string value) => new BatchIssueType(value);
 
         /// <inheritdoc />

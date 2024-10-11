@@ -150,11 +150,15 @@ public partial class TopicEventSubscription : Resource
     /// <summary>
     /// Creates a new TopicEventSubscription.
     /// </summary>
-    /// <param name="resourceName">Name of the TopicEventSubscription.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the TopicEventSubscription resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TopicEventSubscription.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public TopicEventSubscription(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/topics/eventSubscriptions", resourceVersion, context)
+    public TopicEventSubscription(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.EventGrid/topics/eventSubscriptions", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _deadLetterDestination = BicepValue<DeadLetterDestination>.DefineProperty(this, "DeadLetterDestination", ["properties", "deadLetterDestination"]);
@@ -174,11 +178,57 @@ public partial class TopicEventSubscription : Resource
     }
 
     /// <summary>
+    /// Supported TopicEventSubscription resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-06-01-preview.
+        /// </summary>
+        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
+
+        /// <summary>
+        /// 2022-06-15.
+        /// </summary>
+        public static readonly string V2022_06_15 = "2022-06-15";
+
+        /// <summary>
+        /// 2021-12-01.
+        /// </summary>
+        public static readonly string V2021_12_01 = "2021-12-01";
+
+        /// <summary>
+        /// 2020-06-01.
+        /// </summary>
+        public static readonly string V2020_06_01 = "2020-06-01";
+
+        /// <summary>
+        /// 2019-06-01.
+        /// </summary>
+        public static readonly string V2019_06_01 = "2019-06-01";
+
+        /// <summary>
+        /// 2019-01-01.
+        /// </summary>
+        public static readonly string V2019_01_01 = "2019-01-01";
+
+        /// <summary>
+        /// 2018-01-01.
+        /// </summary>
+        public static readonly string V2018_01_01 = "2018-01-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing TopicEventSubscription.
     /// </summary>
-    /// <param name="resourceName">Name of the TopicEventSubscription.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the TopicEventSubscription resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TopicEventSubscription.</param>
     /// <returns>The existing TopicEventSubscription resource.</returns>
-    public static TopicEventSubscription FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static TopicEventSubscription FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

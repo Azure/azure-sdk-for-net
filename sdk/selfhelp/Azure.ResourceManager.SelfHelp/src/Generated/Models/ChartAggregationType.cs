@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator ==(ChartAggregationType left, ChartAggregationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChartAggregationType"/> values are not the same. </summary>
         public static bool operator !=(ChartAggregationType left, ChartAggregationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChartAggregationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ChartAggregationType"/>. </summary>
         public static implicit operator ChartAggregationType(string value) => new ChartAggregationType(value);
 
         /// <inheritdoc />

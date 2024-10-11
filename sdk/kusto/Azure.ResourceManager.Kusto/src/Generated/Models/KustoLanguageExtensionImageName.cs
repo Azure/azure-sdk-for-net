@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator ==(KustoLanguageExtensionImageName left, KustoLanguageExtensionImageName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoLanguageExtensionImageName"/> values are not the same. </summary>
         public static bool operator !=(KustoLanguageExtensionImageName left, KustoLanguageExtensionImageName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KustoLanguageExtensionImageName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoLanguageExtensionImageName"/>. </summary>
         public static implicit operator KustoLanguageExtensionImageName(string value) => new KustoLanguageExtensionImageName(value);
 
         /// <inheritdoc />
