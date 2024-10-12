@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="AcsMessageInteractiveListReplyContent"/>. </summary>
         /// <param name="listItemId"> The ID of the selected list item. </param>
         /// <param name="title"> The title of the selected list item. </param>
-        /// <param name="description"> The sescription of the selected row. </param>
+        /// <param name="description"> The description of the selected row. </param>
         internal AcsMessageInteractiveListReplyContent(string listItemId, string title, string description)
         {
             ListItemId = listItemId;
@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string ListItemId { get; }
         /// <summary> The title of the selected list item. </summary>
         public string Title { get; }
-        /// <summary> The sescription of the selected row. </summary>
+        /// <summary> The description of the selected row. </summary>
         public string Description { get; }
     }
 }
