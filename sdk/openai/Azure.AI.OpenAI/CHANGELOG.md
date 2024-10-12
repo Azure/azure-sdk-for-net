@@ -1,5 +1,49 @@
 # Release History
 
+## 2.1.0-beta.1 (2024-10-01)
+
+Relative to the prior GA release, this update restores preview surfaces, retargeting to the latest `2024-08-01-preview` service `api-version` label. It also brings early support for the newly-announced `/realtime` capabilities with `gpt-4o-realtime-preview`. You can read more about Azure OpenAI support for `/realtime` in the annoucement post here: https://azure.microsoft.com/blog/announcing-new-products-and-features-for-azure-openai-service-including-gpt-4o-realtime-preview-with-audio-and-speech-capabilities/
+
+### Features Added
+
+- Added a new `RealtimeConversationClient` in a corresponding scenario namespace. ([ff75da4](https://github.com/openai/openai-dotnet/commit/ff75da4167bc83fa85eb69ac142cab88a963ed06))
+  - This maps to the new `/realtime` beta endpoint and is thus marked with a new `[Experimental("OPENAI002")]` diagnostic tag. 
+  - This is a very early version of the convenience surface and thus subject to significant change
+  - Documentation and samples will arrive soon; in the interim, see the scenario test files (in `/tests`) for basic usage
+  - You can also find an external sample employing this client, together with Azure OpenAI support, at https://github.com/Azure-Samples/aoai-realtime-audio-sdk/tree/main/dotnet/samples/console
+
+## 2.0.0 (2024-09-30)
+
+This update marks the first stable library version for `Azure.AI.OpenAI`. It snaps its dependency to `OpenAI`'s matched `2.0.0` stable version and targets the latest Azure OpenAI Service stable `api-version` label of `2024-06-01`. As a GA label, the `2.0.0` stable version exposes a subset of preview features, with preview library labels continuing to support preview features.
+
+Specifically included in the GA library release:
+
+- `AudioClient`, supporting transcription and translation using the `whisper` model
+- `ChatClient`, supporting chat completions, including Azure-specific features:
+  - Embedded request and response content filter annotations
+  - Azure Search and Cosmos DB data sources for Azure OpenAI On Your Data
+- `EmbeddingClient`, supporting `text-embedding` model embedding operations
+- `ImageClient`, supporting `dall-e-3` image generation
+
+Assistants, Audio Generation, Batch, Files, Fine-Tuning, and Vector Stores are not yet included in the GA surface; they will continue to be available in preview library releases and the originating Azure OpenAI Service `api-version` labels.
+
+### Breaking Changes
+
+- `AzureOpenAIClient` constructors accepting `AzureKeyCredential` have been removed; please use the `ApiKeyCredential` constructors, instead. Note that `AzureKeyCredential` will inherit from `ApiKeyCredential` in a future update and that `AzureKeyCredential` has [a non-browsable Key property](https://github.com/Azure/azure-sdk-for-net/blob/448d80d80ad0f3df69b96df080da6cf8b537e9d2/sdk/core/Azure.Core/src/AzureKeyCredential.cs#L19) that may be used for conversion in the interim.
+- The `AzureOpenAIClientOptions` `ApplicationId` has been renamed to a more descriptive `UserAgentApplicationId`.
+
+**From OpenAI 2.0.0 stable**
+
+- Implemented `ChatMessageContent` to encapsulate the representation of content parts in `ChatMessage`, `ChatCompletion`, and `StreamingChatCompletionUpdate`. (commit_hash)
+- Changed the representation of function arguments to `BinaryData` in `ChatToolCall`, `StreamingChatToolCallUpdate`, `ChatFunctionCall`, and `StreamingChatFunctionCallUpdate`. (commit_hash)
+- Renamed `OpenAIClientOptions`'s `ApplicationId` to `UserAgentApplicationId` (commit_hash)
+- Renamed `StreamingChatToolCallUpdate`'s `Id` to `ToolCallId` (commit_hash)
+- Renamed `StreamingChatCompletionUpdate`'s `Id` to `CompletionId` (commit_hash)
+- Replaced `Auto` and `None` in the deprecated `ChatFunctionChoice` with `CreateAutoChoice()` and `CreateNoneChoice()` (commit_hash)
+- Replaced the deprecated `ChatFunctionChoice(ChatFunction)` constructor with `CreateNamedChoice(string functionName)` (commit_hash)
+- Renamed `FileClient` to `OpenAIFileClient` and the corresponding `GetFileClient()` method in `OpenAIClient` to `GetOpenAIFileClient()`. (commit_hash)
+- Renamed `ModelClient` to `OpenAIModelClient` and the corresponding `GetModelClient()` method in `OpenAIClient` to `GetOpenAIModelClient()`. (commit_hash)
+
 ## 2.0.0-beta.6 (2024-09-23)
 
 This version increments library compatibility to `OpenAI 2.0.0-beta.12`, including support for `o1` models with reasoning tokens and a number of breaking changes to method names.

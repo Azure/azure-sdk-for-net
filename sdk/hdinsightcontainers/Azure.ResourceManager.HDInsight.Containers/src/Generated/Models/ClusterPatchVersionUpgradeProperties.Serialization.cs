@@ -19,51 +19,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         void IJsonModel<ClusterPatchVersionUpgradeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterPatchVersionUpgradeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterPatchVersionUpgradeProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(TargetOssVersion))
-            {
-                writer.WritePropertyName("targetOssVersion"u8);
-                writer.WriteStringValue(TargetOssVersion);
-            }
-            if (Optional.IsDefined(TargetClusterVersion))
-            {
-                writer.WritePropertyName("targetClusterVersion"u8);
-                writer.WriteStringValue(TargetClusterVersion);
-            }
-            if (Optional.IsDefined(TargetBuildNumber))
-            {
-                writer.WritePropertyName("targetBuildNumber"u8);
-                writer.WriteStringValue(TargetBuildNumber);
-            }
-            if (Optional.IsDefined(ComponentName))
-            {
-                writer.WritePropertyName("componentName"u8);
-                writer.WriteStringValue(ComponentName);
-            }
-            writer.WritePropertyName("upgradeType"u8);
-            writer.WriteStringValue(UpgradeType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         ClusterPatchVersionUpgradeProperties IJsonModel<ClusterPatchVersionUpgradeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

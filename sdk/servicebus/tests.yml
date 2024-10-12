@@ -4,7 +4,6 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     MaxParallel: 4
-    UseFederatedAuth: true
     ServiceDirectory: servicebus
     SDKType: client
     TimeoutInMinutes: 240

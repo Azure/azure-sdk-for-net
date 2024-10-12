@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         void IJsonModel<RestoreFileSpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RestoreFileSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestoreFileSpec)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.StorageSync.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RestoreFileSpec IJsonModel<RestoreFileSpec>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

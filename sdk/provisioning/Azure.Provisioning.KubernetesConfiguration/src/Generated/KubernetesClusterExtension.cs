@@ -156,10 +156,15 @@ public partial class KubernetesClusterExtension : Resource
     /// <summary>
     /// Creates a new KubernetesClusterExtension.
     /// </summary>
-    /// <param name="resourceName">Name of the KubernetesClusterExtension.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the KubernetesClusterExtension
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the KubernetesClusterExtension.</param>
-    public KubernetesClusterExtension(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.KubernetesConfiguration/extensions", resourceVersion ?? "2023-05-01")
+    public KubernetesClusterExtension(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.KubernetesConfiguration/extensions", resourceVersion ?? "2023-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _aksAssignedIdentity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "AksAssignedIdentity", ["properties", "aksAssignedIdentity"]);
@@ -212,42 +217,48 @@ public partial class KubernetesClusterExtension : Resource
     /// <summary>
     /// Creates a reference to an existing KubernetesClusterExtension.
     /// </summary>
-    /// <param name="resourceName">Name of the KubernetesClusterExtension.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the KubernetesClusterExtension
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the KubernetesClusterExtension.</param>
     /// <returns>The existing KubernetesClusterExtension resource.</returns>
-    public static KubernetesClusterExtension FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static KubernetesClusterExtension FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// KubernetesClusterExtension.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this KubernetesClusterExtension.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(KubernetesConfigurationBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{ResourceName}_{identity.ResourceName}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(KubernetesConfigurationBuiltInRole role, UserAssignedIdentity identity) =>
+        new($"{IdentifierName}_{identity.IdentifierName}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(IdentifierName),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
         };
 
     /// <summary>
-    /// Assign a role to a principal that grants access to this
+    /// Creates a role assignment for a principal that grants access to this
     /// KubernetesClusterExtension.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="identifierNameSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(KubernetesConfigurationBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{ResourceName}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(KubernetesConfigurationBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? identifierNameSuffix = default) =>
+        new($"{IdentifierName}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}{(identifierNameSuffix is null ? "" : "_")}{identifierNameSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(IdentifierName),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

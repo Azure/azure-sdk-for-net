@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         void IJsonModel<DevTestLabUserIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabUserIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevTestLabUserIdentity)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PrincipalName))
             {
                 writer.WritePropertyName("principalName"u8);
@@ -66,7 +74,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DevTestLabUserIdentity IJsonModel<DevTestLabUserIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

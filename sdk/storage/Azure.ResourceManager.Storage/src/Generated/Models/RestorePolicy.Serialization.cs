@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Storage.Models
 
         void IJsonModel<RestorePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RestorePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestorePolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(Days))
@@ -59,7 +67,6 @@ namespace Azure.ResourceManager.Storage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RestorePolicy IJsonModel<RestorePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

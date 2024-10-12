@@ -68,10 +68,15 @@ public partial class ResourceGroup : Resource
     /// <summary>
     /// Creates a new ResourceGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the ResourceGroup.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ResourceGroup resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ResourceGroup.</param>
-    public ResourceGroup(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Resources/resourceGroups", resourceVersion ?? "2023-07-01")
+    public ResourceGroup(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Resources/resourceGroups", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -306,11 +311,16 @@ public partial class ResourceGroup : Resource
     /// <summary>
     /// Creates a reference to an existing ResourceGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the ResourceGroup.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ResourceGroup resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ResourceGroup.</param>
     /// <returns>The existing ResourceGroup resource.</returns>
-    public static ResourceGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ResourceGroup FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Creates a new ResourceGroup resource from a Bicep expression that
@@ -323,7 +333,7 @@ public partial class ResourceGroup : Resource
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static ResourceGroup FromExpression(Expression expression)
     {
-        ResourceGroup resource = new(expression.ToString());
+        ResourceGroup resource = new(nameof(ResourceGroup));
         resource.OverrideWithExpression(expression);
         return resource;
     }

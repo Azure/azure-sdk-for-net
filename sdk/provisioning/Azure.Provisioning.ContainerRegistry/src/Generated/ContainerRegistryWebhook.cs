@@ -100,10 +100,15 @@ public partial class ContainerRegistryWebhook : Resource
     /// <summary>
     /// Creates a new ContainerRegistryWebhook.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryWebhook.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerRegistryWebhook resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryWebhook.</param>
-    public ContainerRegistryWebhook(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/webhooks", resourceVersion ?? "2023-07-01")
+    public ContainerRegistryWebhook(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.ContainerRegistry/registries/webhooks", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -158,11 +163,16 @@ public partial class ContainerRegistryWebhook : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerRegistryWebhook.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryWebhook.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerRegistryWebhook resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryWebhook.</param>
     /// <returns>The existing ContainerRegistryWebhook resource.</returns>
-    public static ContainerRegistryWebhook FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerRegistryWebhook FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ContainerRegistryWebhook resource.

@@ -62,10 +62,15 @@ public partial class ManagedInstanceServerTrustCertificate : Resource
     /// <summary>
     /// Creates a new ManagedInstanceServerTrustCertificate.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceServerTrustCertificate.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ManagedInstanceServerTrustCertificate resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceServerTrustCertificate.</param>
-    public ManagedInstanceServerTrustCertificate(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/serverTrustCertificates", resourceVersion ?? "2021-11-01")
+    public ManagedInstanceServerTrustCertificate(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/managedInstances/serverTrustCertificates", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _publicBlob = BicepValue<string>.DefineProperty(this, "PublicBlob", ["properties", "publicBlob"]);
@@ -96,9 +101,14 @@ public partial class ManagedInstanceServerTrustCertificate : Resource
     /// Creates a reference to an existing
     /// ManagedInstanceServerTrustCertificate.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceServerTrustCertificate.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ManagedInstanceServerTrustCertificate resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceServerTrustCertificate.</param>
     /// <returns>The existing ManagedInstanceServerTrustCertificate resource.</returns>
-    public static ManagedInstanceServerTrustCertificate FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceServerTrustCertificate FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }
