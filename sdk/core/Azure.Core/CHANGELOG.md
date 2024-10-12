@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.44.1 (2024-10-09)
+
+### Other Changes
+
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix ([#46134](https://github.com/Azure/azure-sdk-for-net/pull/46508)).
+
 ## 1.44.0 (2024-10-03)
 
 ### Features Added

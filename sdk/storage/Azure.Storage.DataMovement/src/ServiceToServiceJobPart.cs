@@ -183,10 +183,11 @@ namespace Azure.Storage.DataMovement
         {
             await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
 
-            long? fileLength = _sourceResource.Length;
+            long? fileLength = default;
             StorageResourceItemProperties sourceProperties = default;
             try
             {
+                fileLength = _sourceResource.Length;
                 sourceProperties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
                 await _destinationResource.SetPermissionsAsync(
                     _sourceResource,

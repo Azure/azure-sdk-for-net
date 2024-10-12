@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 ["key1"] = "myvalue1",
 ["key2"] = "myvalue2",
 },
-                CollectionInterval = 15,
+                CollectionInterval = 15L,
                 EnabledMetrics =
 {
 "metric1","metric2"
