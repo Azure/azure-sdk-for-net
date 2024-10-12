@@ -16,7 +16,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [TestCase("J")]
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceNonGeneric(string format)
-              => RoundTripTest(format, new JsonInterfaceAsObjectStrategy<T>());
+            => RoundTripTest(format, new JsonInterfaceAsObjectStrategy<T>());
 
         [TestCase("J")]
         [TestCase("W")]
