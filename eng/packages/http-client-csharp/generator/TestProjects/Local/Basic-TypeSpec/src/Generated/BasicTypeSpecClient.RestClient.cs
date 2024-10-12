@@ -14,21 +14,21 @@ namespace BasicTypeSpec
     /// <summary></summary>
     public partial class BasicTypeSpecClient
     {
-        private static System.ClientModel.Primitives.PipelineMessageClassifier _pipelineMessageClassifier200;
-        private static System.ClientModel.Primitives.PipelineMessageClassifier _pipelineMessageClassifier204;
+        private static PipelineMessageClassifier _pipelineMessageClassifier200;
+        private static PipelineMessageClassifier _pipelineMessageClassifier204;
         private static Classifier2xxAnd4xx _pipelineMessageClassifier2xxAnd4xx;
 
-        private static System.ClientModel.Primitives.PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        private static System.ClientModel.Primitives.PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = System.ClientModel.Primitives.PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
+        private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
         private static Classifier2xxAnd4xx PipelineMessageClassifier2xxAnd4xx => _pipelineMessageClassifier2xxAnd4xx ??= new Classifier2xxAnd4xx();
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateSayHiRequest(string headParameter, string queryParameter, string optionalQuery, System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateSayHiRequest(string headParameter, string queryParameter, string optionalQuery, RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -45,11 +45,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateHelloAgainRequest(string p2, string p1, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateHelloAgainRequest(string p2, string p1, BinaryContent content, RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -64,11 +64,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateNoContentTypeRequest(string p2, string p1, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateNoContentTypeRequest(string p2, string p1, BinaryContent content, RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -83,11 +83,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateHelloDemo2Request(System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateHelloDemo2Request(RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -98,11 +98,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateCreateLiteralRequest(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateCreateLiteralRequest(BinaryContent content, RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -115,11 +115,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateHelloLiteralRequest(System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateHelloLiteralRequest(RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -133,11 +133,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateTopActionRequest(DateTimeOffset action, System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateTopActionRequest(DateTimeOffset action, RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -149,11 +149,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateTopAction2Request(System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateTopAction2Request(RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -164,11 +164,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreatePatchActionRequest(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreatePatchActionRequest(BinaryContent content, RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "PATCH";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -181,11 +181,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateAnonymousBodyRequest(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateAnonymousBodyRequest(BinaryContent content, RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -198,11 +198,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateFriendlyModelRequest(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateFriendlyModelRequest(BinaryContent content, RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -215,11 +215,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateAddTimeHeaderRequest(System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateAddTimeHeaderRequest(RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier204;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -230,11 +230,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateProjectedNameModelRequest(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateProjectedNameModelRequest(BinaryContent content, RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -247,11 +247,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateReturnsAnonymousModelRequest(System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateReturnsAnonymousModelRequest(RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -262,11 +262,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateGetUnknownValueRequest(string accept, System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateGetUnknownValueRequest(string accept, RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -277,11 +277,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateInternalProtocolRequest(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateInternalProtocolRequest(BinaryContent content, RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -294,11 +294,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateStillConvenientRequest(System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateStillConvenientRequest(RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier204;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -308,11 +308,11 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal System.ClientModel.Primitives.PipelineMessage CreateHeadAsBooleanRequest(string id, System.ClientModel.Primitives.RequestOptions options)
+        internal PipelineMessage CreateHeadAsBooleanRequest(string id, RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineMessage message = Pipeline.CreateMessage();
+            PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier2xxAnd4xx;
-            System.ClientModel.Primitives.PipelineRequest request = message.Request;
+            PipelineRequest request = message.Request;
             request.Method = "HEAD";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -323,9 +323,9 @@ namespace BasicTypeSpec
             return message;
         }
 
-        private class Classifier2xxAnd4xx : System.ClientModel.Primitives.PipelineMessageClassifier
+        private class Classifier2xxAnd4xx : PipelineMessageClassifier
         {
-            public override bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, out bool isError)
+            public override bool TryClassify(PipelineMessage message, out bool isError)
             {
                 isError = false;
                 if (message.Response == null)
@@ -341,7 +341,7 @@ namespace BasicTypeSpec
                 return true;
             }
 
-            public override bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, Exception exception, out bool isRetryable)
+            public override bool TryClassify(PipelineMessage message, Exception exception, out bool isRetryable)
             {
                 isRetryable = false;
                 return false;

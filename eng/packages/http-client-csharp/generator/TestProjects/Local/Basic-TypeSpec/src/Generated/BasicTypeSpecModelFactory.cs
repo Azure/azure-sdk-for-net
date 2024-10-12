@@ -30,7 +30,7 @@ namespace BasicTypeSpec.Models
         /// <param name="optionalNullableList"></param>
         /// <param name="requiredNullableList"></param>
         /// <returns> A new <see cref="Models.Thing"/> instance for mocking. </returns>
-        public static Thing Thing(string name = default, System.BinaryData requiredUnion = default, ThingRequiredLiteralString requiredLiteralString = default, ThingRequiredLiteralInt requiredLiteralInt = default, ThingRequiredLiteralFloat requiredLiteralFloat = default, bool requiredLiteralBool = default, ThingOptionalLiteralString? optionalLiteralString = default, ThingOptionalLiteralInt? optionalLiteralInt = default, ThingOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, string requiredBadDescription = default, IEnumerable<int> optionalNullableList = default, IEnumerable<int> requiredNullableList = default)
+        public static Thing Thing(string name = default, BinaryData requiredUnion = default, ThingRequiredLiteralString requiredLiteralString = default, ThingRequiredLiteralInt requiredLiteralInt = default, ThingRequiredLiteralFloat requiredLiteralFloat = default, bool requiredLiteralBool = default, ThingOptionalLiteralString? optionalLiteralString = default, ThingOptionalLiteralInt? optionalLiteralInt = default, ThingOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, string requiredBadDescription = default, IEnumerable<int> optionalNullableList = default, IEnumerable<int> requiredNullableList = default)
         {
             optionalNullableList ??= new ChangeTrackingList<int>();
             requiredNullableList ??= new ChangeTrackingList<int>();
@@ -78,7 +78,7 @@ namespace BasicTypeSpec.Models
         /// <param name="modelWithRequiredNullable"></param>
         /// <param name="requiredBytes"></param>
         /// <returns> A new <see cref="Models.RoundTripModel"/> instance for mocking. </returns>
-        public static RoundTripModel RoundTripModel(string requiredString = default, int requiredInt = default, IEnumerable<StringFixedEnum> requiredCollection = default, IDictionary<string, StringExtensibleEnum> requiredDictionary = default, Thing requiredModel = default, IntExtensibleEnum? intExtensibleEnum = default, IEnumerable<IntExtensibleEnum> intExtensibleEnumCollection = default, FloatExtensibleEnum? floatExtensibleEnum = default, FloatExtensibleEnumWithIntValue? floatExtensibleEnumWithIntValue = default, IEnumerable<FloatExtensibleEnum> floatExtensibleEnumCollection = default, FloatFixedEnum? floatFixedEnum = default, FloatFixedEnumWithIntValue? floatFixedEnumWithIntValue = default, IEnumerable<FloatFixedEnum> floatFixedEnumCollection = default, IntFixedEnum? intFixedEnum = default, IEnumerable<IntFixedEnum> intFixedEnumCollection = default, StringFixedEnum? stringFixedEnum = default, System.BinaryData requiredUnknown = default, System.BinaryData optionalUnknown = default, IDictionary<string, System.BinaryData> requiredRecordUnknown = default, IDictionary<string, System.BinaryData> optionalRecordUnknown = default, IReadOnlyDictionary<string, System.BinaryData> readOnlyRequiredRecordUnknown = default, IReadOnlyDictionary<string, System.BinaryData> readOnlyOptionalRecordUnknown = default, ModelWithRequiredNullableProperties modelWithRequiredNullable = default, System.BinaryData requiredBytes = default)
+        public static RoundTripModel RoundTripModel(string requiredString = default, int requiredInt = default, IEnumerable<StringFixedEnum> requiredCollection = default, IDictionary<string, StringExtensibleEnum> requiredDictionary = default, Thing requiredModel = default, IntExtensibleEnum? intExtensibleEnum = default, IEnumerable<IntExtensibleEnum> intExtensibleEnumCollection = default, FloatExtensibleEnum? floatExtensibleEnum = default, FloatExtensibleEnumWithIntValue? floatExtensibleEnumWithIntValue = default, IEnumerable<FloatExtensibleEnum> floatExtensibleEnumCollection = default, FloatFixedEnum? floatFixedEnum = default, FloatFixedEnumWithIntValue? floatFixedEnumWithIntValue = default, IEnumerable<FloatFixedEnum> floatFixedEnumCollection = default, IntFixedEnum? intFixedEnum = default, IEnumerable<IntFixedEnum> intFixedEnumCollection = default, StringFixedEnum? stringFixedEnum = default, BinaryData requiredUnknown = default, BinaryData optionalUnknown = default, IDictionary<string, BinaryData> requiredRecordUnknown = default, IDictionary<string, BinaryData> optionalRecordUnknown = default, IReadOnlyDictionary<string, BinaryData> readOnlyRequiredRecordUnknown = default, IReadOnlyDictionary<string, BinaryData> readOnlyOptionalRecordUnknown = default, ModelWithRequiredNullableProperties modelWithRequiredNullable = default, BinaryData requiredBytes = default)
         {
             requiredCollection ??= new ChangeTrackingList<StringFixedEnum>();
             requiredDictionary ??= new ChangeTrackingDictionary<string, StringExtensibleEnum>();
@@ -86,10 +86,10 @@ namespace BasicTypeSpec.Models
             floatExtensibleEnumCollection ??= new ChangeTrackingList<FloatExtensibleEnum>();
             floatFixedEnumCollection ??= new ChangeTrackingList<FloatFixedEnum>();
             intFixedEnumCollection ??= new ChangeTrackingList<IntFixedEnum>();
-            requiredRecordUnknown ??= new ChangeTrackingDictionary<string, System.BinaryData>();
-            optionalRecordUnknown ??= new ChangeTrackingDictionary<string, System.BinaryData>();
-            readOnlyRequiredRecordUnknown ??= new ChangeTrackingDictionary<string, System.BinaryData>();
-            readOnlyOptionalRecordUnknown ??= new ChangeTrackingDictionary<string, System.BinaryData>();
+            requiredRecordUnknown ??= new ChangeTrackingDictionary<string, BinaryData>();
+            optionalRecordUnknown ??= new ChangeTrackingDictionary<string, BinaryData>();
+            readOnlyRequiredRecordUnknown ??= new ChangeTrackingDictionary<string, BinaryData>();
+            readOnlyOptionalRecordUnknown ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new RoundTripModel(
                 requiredString,

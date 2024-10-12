@@ -14,14 +14,14 @@ namespace BasicTypeSpec.Models
     public partial class ProjectedModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected IDictionary<string, System.BinaryData> _additionalBinaryDataProperties;
+        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         internal ProjectedModel(string name)
         {
             Name = name;
         }
 
-        internal ProjectedModel(string name, IDictionary<string, System.BinaryData> additionalBinaryDataProperties)
+        internal ProjectedModel(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

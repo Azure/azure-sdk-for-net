@@ -14,7 +14,7 @@ namespace BasicTypeSpec
 {
     internal partial class ClientUriBuilder
     {
-        private System.UriBuilder _uriBuilder;
+        private UriBuilder _uriBuilder;
         private StringBuilder _pathBuilder;
         private StringBuilder _queryBuilder;
 
@@ -22,15 +22,15 @@ namespace BasicTypeSpec
         {
         }
 
-        private System.UriBuilder UriBuilder => _uriBuilder  ??=  new System.UriBuilder();
+        private UriBuilder UriBuilder => _uriBuilder  ??=  new UriBuilder();
 
         private StringBuilder PathBuilder => _pathBuilder  ??=  new StringBuilder(UriBuilder.Path);
 
         private StringBuilder QueryBuilder => _queryBuilder  ??=  new StringBuilder(UriBuilder.Query);
 
-        public void Reset(System.Uri uri)
+        public void Reset(Uri uri)
         {
-            _uriBuilder = new System.UriBuilder(uri);
+            _uriBuilder = new UriBuilder(uri);
             _pathBuilder = new StringBuilder(UriBuilder.Path);
             _queryBuilder = new StringBuilder(UriBuilder.Query);
         }
@@ -39,7 +39,7 @@ namespace BasicTypeSpec
         {
             if (escape)
             {
-                value = System.Uri.EscapeDataString(value);
+                value = Uri.EscapeDataString(value);
             }
             if (PathBuilder.Length > 0 && PathBuilder[PathBuilder.Length - 1] == '/' && value[0] == '/')
             {
@@ -77,7 +77,7 @@ namespace BasicTypeSpec
             }
             if (escape)
             {
-                value = System.Uri.EscapeDataString(value);
+                value = Uri.EscapeDataString(value);
             }
             QueryBuilder.Append(name);
             QueryBuilder.Append('=');
@@ -118,7 +118,7 @@ namespace BasicTypeSpec
             AppendQuery(name, string.Join(delimiter, stringValues), escape);
         }
 
-        public System.Uri ToUri()
+        public Uri ToUri()
         {
             if (_pathBuilder != null)
             {

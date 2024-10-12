@@ -43,9 +43,9 @@ namespace BasicTypeSpec
             return value != null;
         }
 
-        public static bool IsDefined(System.Text.Json.JsonElement value)
+        public static bool IsDefined(JsonElement value)
         {
-            return value.ValueKind != System.Text.Json.JsonValueKind.Undefined;
+            return value.ValueKind != JsonValueKind.Undefined;
         }
     }
 }

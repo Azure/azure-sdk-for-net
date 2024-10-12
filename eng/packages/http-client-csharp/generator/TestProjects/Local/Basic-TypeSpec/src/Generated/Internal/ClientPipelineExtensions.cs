@@ -13,57 +13,57 @@ namespace BasicTypeSpec
 {
     internal static partial class ClientPipelineExtensions
     {
-        public static async ValueTask<System.ClientModel.Primitives.PipelineResponse> ProcessMessageAsync(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.RequestOptions options)
+        public static async ValueTask<PipelineResponse> ProcessMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
         {
             await pipeline.SendAsync(message).ConfigureAwait(false);
 
-            if (message.Response.IsError && (options?.ErrorOptions & System.ClientModel.Primitives.ClientErrorBehaviors.NoThrow) != System.ClientModel.Primitives.ClientErrorBehaviors.NoThrow)
+            if (message.Response.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
             {
-                throw await System.ClientModel.ClientResultException.CreateAsync(message.Response).ConfigureAwait(false);
+                throw await ClientResultException.CreateAsync(message.Response).ConfigureAwait(false);
             }
 
-            System.ClientModel.Primitives.PipelineResponse response = message.BufferResponse ? message.Response : message.ExtractResponse();
+            PipelineResponse response = message.BufferResponse ? message.Response : message.ExtractResponse();
             return response;
         }
 
-        public static System.ClientModel.Primitives.PipelineResponse ProcessMessage(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.RequestOptions options)
+        public static PipelineResponse ProcessMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
         {
             pipeline.Send(message);
 
-            if (message.Response.IsError && (options?.ErrorOptions & System.ClientModel.Primitives.ClientErrorBehaviors.NoThrow) != System.ClientModel.Primitives.ClientErrorBehaviors.NoThrow)
+            if (message.Response.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
             {
-                throw new System.ClientModel.ClientResultException(message.Response);
+                throw new ClientResultException(message.Response);
             }
 
-            System.ClientModel.Primitives.PipelineResponse response = message.BufferResponse ? message.Response : message.ExtractResponse();
+            PipelineResponse response = message.BufferResponse ? message.Response : message.ExtractResponse();
             return response;
         }
 
-        public static async ValueTask<System.ClientModel.ClientResult<bool>> ProcessHeadAsBoolMessageAsync(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.RequestOptions options)
+        public static async ValueTask<ClientResult<bool>> ProcessHeadAsBoolMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineResponse response = await pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            PipelineResponse response = await pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
             switch (response.Status)
             {
                 case >= 200 and < 300:
-                    return System.ClientModel.ClientResult.FromValue<bool>(true, response);
+                    return ClientResult.FromValue(true, response);
                 case >= 400 and < 500:
-                    return System.ClientModel.ClientResult.FromValue<bool>(false, response);
+                    return ClientResult.FromValue(false, response);
                 default:
-                    return new ErrorResult<bool>(response, new System.ClientModel.ClientResultException(response));
+                    return new ErrorResult<bool>(response, new ClientResultException(response));
             }
         }
 
-        public static System.ClientModel.ClientResult<bool> ProcessHeadAsBoolMessage(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.RequestOptions options)
+        public static ClientResult<bool> ProcessHeadAsBoolMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
         {
-            System.ClientModel.Primitives.PipelineResponse response = pipeline.ProcessMessage(message, options);
+            PipelineResponse response = pipeline.ProcessMessage(message, options);
             switch (response.Status)
             {
                 case >= 200 and < 300:
-                    return System.ClientModel.ClientResult.FromValue<bool>(true, response);
+                    return ClientResult.FromValue(true, response);
                 case >= 400 and < 500:
-                    return System.ClientModel.ClientResult.FromValue<bool>(false, response);
+                    return ClientResult.FromValue(false, response);
                 default:
-                    return new ErrorResult<bool>(response, new System.ClientModel.ClientResultException(response));
+                    return new ErrorResult<bool>(response, new ClientResultException(response));
             }
         }
     }
