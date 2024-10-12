@@ -94,10 +94,15 @@ public partial class EventHub : Resource
     /// <summary>
     /// Creates a new EventHub.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHub.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the EventHub resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHub.</param>
-    public EventHub(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/eventhubs", resourceVersion ?? "2024-01-01")
+    public EventHub(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.EventHub/namespaces/eventhubs", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _captureDescription = BicepValue<CaptureDescription>.DefineProperty(this, "CaptureDescription", ["properties", "captureDescription"]);
@@ -142,9 +147,14 @@ public partial class EventHub : Resource
     /// <summary>
     /// Creates a reference to an existing EventHub.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHub.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the EventHub resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHub.</param>
     /// <returns>The existing EventHub resource.</returns>
-    public static EventHub FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EventHub FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

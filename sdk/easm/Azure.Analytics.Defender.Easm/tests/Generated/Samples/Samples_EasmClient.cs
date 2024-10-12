@@ -429,7 +429,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 description = "This is a disco group",
-                frequencyMilliseconds = 604800000,
+                frequencyMilliseconds = 604800000L,
                 tier = "advanced",
                 seeds = new object[]
             {
@@ -457,7 +457,7 @@ kind = "host",
             using RequestContent content = RequestContent.Create(new
             {
                 description = "This is a disco group",
-                frequencyMilliseconds = 604800000,
+                frequencyMilliseconds = 604800000L,
                 tier = "advanced",
                 seeds = new object[]
             {
@@ -486,7 +486,7 @@ kind = "host",
             {
                 Description = "This is a disco group",
                 Tier = "advanced",
-                FrequencyMilliseconds = 604800000,
+                FrequencyMilliseconds = 604800000L,
                 Seeds = {new DiscoverySource
 {
 Kind = DiscoverySourceKind.Host,
@@ -508,7 +508,7 @@ Name = "thisisatest.microsoft.com",
             {
                 Description = "This is a disco group",
                 Tier = "advanced",
-                FrequencyMilliseconds = 604800000,
+                FrequencyMilliseconds = 604800000L,
                 Seeds = {new DiscoverySource
 {
 Kind = DiscoverySourceKind.Host,
@@ -579,7 +579,7 @@ Name = "thisisatest.microsoft.com",
             using RequestContent content = RequestContent.Create(new
             {
                 description = "This is a disco group",
-                frequencyMilliseconds = 604800000,
+                frequencyMilliseconds = 604800000L,
                 tier = "advanced",
                 seeds = new object[]
             {
@@ -607,7 +607,7 @@ kind = "host",
             using RequestContent content = RequestContent.Create(new
             {
                 description = "This is a disco group",
-                frequencyMilliseconds = 604800000,
+                frequencyMilliseconds = 604800000L,
                 tier = "advanced",
                 seeds = new object[]
             {
@@ -636,7 +636,7 @@ kind = "host",
             {
                 Description = "This is a disco group",
                 Tier = "advanced",
-                FrequencyMilliseconds = 604800000,
+                FrequencyMilliseconds = 604800000L,
                 Seeds = {new DiscoverySource
 {
 Kind = DiscoverySourceKind.Host,
@@ -658,7 +658,7 @@ Name = "thisisatest.microsoft.com",
             {
                 Description = "This is a disco group",
                 Tier = "advanced",
-                FrequencyMilliseconds = 604800000,
+                FrequencyMilliseconds = 604800000L,
                 Seeds = {new DiscoverySource
 {
 Kind = DiscoverySourceKind.Host,

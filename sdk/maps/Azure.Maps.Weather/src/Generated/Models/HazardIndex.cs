@@ -52,7 +52,7 @@ namespace Azure.Maps.Weather.Models
         public static bool operator ==(HazardIndex left, HazardIndex right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HazardIndex"/> values are not the same. </summary>
         public static bool operator !=(HazardIndex left, HazardIndex right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HazardIndex"/>. </summary>
+        /// <summary> Converts a <see cref="int"/> to a <see cref="HazardIndex"/>. </summary>
         public static implicit operator HazardIndex(int value) => new HazardIndex(value);
 
         /// <inheritdoc />

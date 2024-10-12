@@ -217,8 +217,8 @@ Operator = MonitorConditionOperator.GreaterThan,
 Threshold = 70,
 FailingPeriods = new ConditionFailingPeriods()
 {
-NumberOfEvaluationPeriods = 1,
-MinFailingPeriodsToAlert = 1,
+NumberOfEvaluationPeriods = 1L,
+MinFailingPeriodsToAlert = 1L,
 },
 }
 },
@@ -302,8 +302,8 @@ Operator = MonitorConditionOperator.GreaterThan,
 Threshold = 360,
 FailingPeriods = new ConditionFailingPeriods()
 {
-NumberOfEvaluationPeriods = 1,
-MinFailingPeriodsToAlert = 1,
+NumberOfEvaluationPeriods = 1L,
+MinFailingPeriodsToAlert = 1L,
 },
 }
 },
@@ -396,8 +396,8 @@ Operator = MonitorConditionOperator.GreaterThan,
 Threshold = 70,
 FailingPeriods = new ConditionFailingPeriods()
 {
-NumberOfEvaluationPeriods = 1,
-MinFailingPeriodsToAlert = 1,
+NumberOfEvaluationPeriods = 1L,
+MinFailingPeriodsToAlert = 1L,
 },
 }
 },

@@ -76,10 +76,15 @@ public partial class LogsSiteConfig : Resource
     /// <summary>
     /// Creates a new LogsSiteConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the LogsSiteConfig.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the LogsSiteConfig resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the LogsSiteConfig.</param>
-    public LogsSiteConfig(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/config", resourceVersion ?? "2024-04-01")
+    public LogsSiteConfig(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/sites/config", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _applicationLogs = BicepValue<ApplicationLogsConfig>.DefineProperty(this, "ApplicationLogs", ["properties", "applicationLogs"]);
@@ -256,9 +261,14 @@ public partial class LogsSiteConfig : Resource
     /// <summary>
     /// Creates a reference to an existing LogsSiteConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the LogsSiteConfig.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the LogsSiteConfig resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the LogsSiteConfig.</param>
     /// <returns>The existing LogsSiteConfig resource.</returns>
-    public static LogsSiteConfig FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static LogsSiteConfig FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

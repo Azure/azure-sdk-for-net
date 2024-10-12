@@ -379,6 +379,7 @@ namespace Azure.Storage.DataMovement
         {
             if (ex is not OperationCanceledException &&
                 ex is not TaskCanceledException &&
+                ex.InnerException is not TaskCanceledException &&
                 !ex.Message.Contains("The request was canceled."))
             {
                 if (ex is RequestFailedException requestFailedException)

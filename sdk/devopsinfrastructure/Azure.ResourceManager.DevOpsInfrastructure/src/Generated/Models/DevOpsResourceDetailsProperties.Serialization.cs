@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         void IJsonModel<DevOpsResourceDetailsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DevOpsResourceDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevOpsResourceDetailsProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("image"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DevOpsResourceDetailsProperties IJsonModel<DevOpsResourceDetailsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

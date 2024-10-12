@@ -85,10 +85,15 @@ public partial class CustomDnsSuffixConfiguration : Resource
     /// <summary>
     /// Creates a new CustomDnsSuffixConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the CustomDnsSuffixConfiguration.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CustomDnsSuffixConfiguration
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CustomDnsSuffixConfiguration.</param>
-    public CustomDnsSuffixConfiguration(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/hostingEnvironments/configurations", resourceVersion ?? "2024-04-01")
+    public CustomDnsSuffixConfiguration(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/hostingEnvironments/configurations", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _certificateUri = BicepValue<Uri>.DefineProperty(this, "CertificateUri", ["properties", "certificateUrl"]);
@@ -266,9 +271,14 @@ public partial class CustomDnsSuffixConfiguration : Resource
     /// <summary>
     /// Creates a reference to an existing CustomDnsSuffixConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the CustomDnsSuffixConfiguration.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CustomDnsSuffixConfiguration
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CustomDnsSuffixConfiguration.</param>
     /// <returns>The existing CustomDnsSuffixConfiguration resource.</returns>
-    public static CustomDnsSuffixConfiguration FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CustomDnsSuffixConfiguration FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

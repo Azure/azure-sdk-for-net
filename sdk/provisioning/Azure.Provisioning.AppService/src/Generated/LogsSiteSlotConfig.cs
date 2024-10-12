@@ -76,10 +76,15 @@ public partial class LogsSiteSlotConfig : Resource
     /// <summary>
     /// Creates a new LogsSiteSlotConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the LogsSiteSlotConfig.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the LogsSiteSlotConfig resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the LogsSiteSlotConfig.</param>
-    public LogsSiteSlotConfig(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/config", resourceVersion ?? "2024-04-01")
+    public LogsSiteSlotConfig(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/sites/slots/config", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _applicationLogs = BicepValue<ApplicationLogsConfig>.DefineProperty(this, "ApplicationLogs", ["properties", "applicationLogs"]);
@@ -256,9 +261,14 @@ public partial class LogsSiteSlotConfig : Resource
     /// <summary>
     /// Creates a reference to an existing LogsSiteSlotConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the LogsSiteSlotConfig.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the LogsSiteSlotConfig resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the LogsSiteSlotConfig.</param>
     /// <returns>The existing LogsSiteSlotConfig resource.</returns>
-    public static LogsSiteSlotConfig FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static LogsSiteSlotConfig FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }
