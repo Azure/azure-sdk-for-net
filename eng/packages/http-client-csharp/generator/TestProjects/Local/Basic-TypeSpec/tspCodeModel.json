@@ -36,7 +36,7 @@
    "description": "The Thing_requiredLiteralString",
    "isFixed": false,
    "isFlags": false,
-   "usage": "Input,Output,Json",
+   "usage": "Input,Output,Spread,Json",
    "decorators": []
   },
   {
@@ -69,7 +69,7 @@
    "description": "The Thing_requiredLiteralInt",
    "isFixed": false,
    "isFlags": false,
-   "usage": "Input,Output,Json",
+   "usage": "Input,Output,Spread,Json",
    "decorators": []
   },
   {
@@ -102,7 +102,7 @@
    "description": "The Thing_requiredLiteralFloat",
    "isFixed": false,
    "isFlags": false,
-   "usage": "Input,Output,Json",
+   "usage": "Input,Output,Spread,Json",
    "decorators": []
   },
   {
@@ -135,7 +135,7 @@
    "description": "The Thing_optionalLiteralString",
    "isFixed": false,
    "isFlags": false,
-   "usage": "Input,Output,Json",
+   "usage": "Input,Output,Spread,Json",
    "decorators": []
   },
   {
@@ -168,7 +168,7 @@
    "description": "The Thing_optionalLiteralInt",
    "isFixed": false,
    "isFlags": false,
-   "usage": "Input,Output,Json",
+   "usage": "Input,Output,Spread,Json",
    "decorators": []
   },
   {
@@ -201,7 +201,7 @@
    "description": "The Thing_optionalLiteralFloat",
    "isFixed": false,
    "isFlags": false,
-   "usage": "Input,Output,Json",
+   "usage": "Input,Output,Spread,Json",
    "decorators": []
   },
   {
@@ -824,7 +824,7 @@
    "kind": "model",
    "name": "Thing",
    "crossLanguageDefinitionId": "BasicTypeSpec.Thing",
-   "usage": "Input,Output,Json",
+   "usage": "Input,Output,Spread,Json",
    "decorators": [],
    "properties": [
     {
@@ -1729,7 +1729,7 @@
    "kind": "model",
    "name": "Friend",
    "crossLanguageDefinitionId": "BasicTypeSpec.NotFriend",
-   "usage": "Spread,Json",
+   "usage": "Output,Spread,Json",
    "decorators": [],
    "properties": [
     {
@@ -1758,7 +1758,7 @@
    "kind": "model",
    "name": "ProjectedModel",
    "crossLanguageDefinitionId": "BasicTypeSpec.ModelWithProjectedName",
-   "usage": "Spread,Json",
+   "usage": "Output,Spread,Json",
    "decorators": [],
    "properties": [
     {
