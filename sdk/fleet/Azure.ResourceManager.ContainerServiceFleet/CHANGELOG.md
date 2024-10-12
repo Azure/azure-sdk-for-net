@@ -6,6 +6,7 @@
 
 - Add AutoUpgrade and AutoUpgradeProfile support
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.0.0 (2023-12-13)
 
