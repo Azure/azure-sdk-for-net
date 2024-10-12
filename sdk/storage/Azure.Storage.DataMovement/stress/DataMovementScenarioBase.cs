@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement.Stress;
 ///   The test scenario responsible for running all of the roles needed for the send receive test scenario.
 /// </summary>
 ///
-public abstract class DataMovementScenarioBase : TestScenarioBase
+public abstract class DataMovementScenarioBase : TestScenarioBase, IDisposable
 {
     protected internal readonly TransferManagerOptions _transferManagerOptions;
     protected internal readonly DataTransferOptions _dataTransferOptions;
@@ -26,15 +26,42 @@ public abstract class DataMovementScenarioBase : TestScenarioBase
         _transferManagerOptions = transferManagerOptions;
         _dataTransferOptions = dataTransferOptions;
 
-        // Add metric call backs when progress is made
-        _dataTransferOptions.TransferStatusChanged += (sender, e) =>
-        {
-            _metrics.AddMetric(e);
-        };
+        // Add metric call backs when transfer has updated
+        _dataTransferOptions.TransferStatusChanged += AddStatusMetricArg;
+        _dataTransferOptions.ItemTransferFailed += AddFailedMetricArg;
+        _dataTransferOptions.ItemTransferCompleted += AddCompletedItemMetricArg;
+        _dataTransferOptions.ItemTransferSkipped += AddSkippedItemMetricArg;
     }
 
-    public Task DisposeAsync()
+    public void Dispose()
     {
+        _dataTransferOptions.TransferStatusChanged -= AddStatusMetricArg;
+        _dataTransferOptions.ItemTransferFailed -= AddFailedMetricArg;
+        _dataTransferOptions.ItemTransferCompleted -= AddCompletedItemMetricArg;
+        _dataTransferOptions.ItemTransferSkipped -= AddSkippedItemMetricArg;
+    }
 
+    private Task AddFailedMetricArg(TransferItemFailedEventArgs args)
+    {
+        _metrics.Client.GetMetric(Metrics.TransferFailedItem).TrackValue(1);
+        return Task.CompletedTask;
+    }
+
+    private Task AddStatusMetricArg(TransferStatusEventArgs args)
+    {
+        _metrics.Client.GetMetric(Metrics.TransferStatusChanged).TrackValue(args.TransferStatus);
+        return Task.CompletedTask;
+    }
+
+    private Task AddCompletedItemMetricArg(TransferItemCompletedEventArgs args)
+    {
+        _metrics.Client.GetMetric(Metrics.ItemTransferCompleted).TrackValue(1);
+        return Task.CompletedTask;
+    }
+
+    private Task AddSkippedItemMetricArg(TransferItemSkippedEventArgs args)
+    {
+        _metrics.Client.GetMetric(Metrics.ItemTransferSkipped).TrackValue(1);
+        return Task.CompletedTask;
     }
 }
