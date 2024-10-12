@@ -7,8 +7,8 @@
 
 namespace Azure.AI.Client.Models
 {
-    /// <summary> to do. </summary>
-    internal enum AuthenticationType
+    /// <summary> Authentication type used by Azure AI service to connect to another service. </summary>
+    public enum AuthenticationType
     {
         /// <summary> API Key authentication. </summary>
         ApiKey,

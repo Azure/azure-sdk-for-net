@@ -15,7 +15,6 @@ namespace Azure.AI.Client.Models
         {
             EndpointType.AzureOpenAI => "AzureOpenAI",
             EndpointType.Serverless => "Serverless",
-            EndpointType.Agent => "Agent",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EndpointType value.")
         };
 
@@ -23,7 +22,6 @@ namespace Azure.AI.Client.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureOpenAI")) return EndpointType.AzureOpenAI;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Serverless")) return EndpointType.Serverless;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Agent")) return EndpointType.Agent;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EndpointType value.");
         }
     }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Client.Models
 {
-    /// <summary> to do. </summary>
+    /// <summary> The credentials needed for API key authentication. </summary>
     internal partial class CredentialsApiKeyAuth
     {
         /// <summary>
@@ -46,7 +46,7 @@ namespace Azure.AI.Client.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CredentialsApiKeyAuth"/>. </summary>
-        /// <param name="key"> to do. </param>
+        /// <param name="key"> The API key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         internal CredentialsApiKeyAuth(string key)
         {
@@ -56,7 +56,7 @@ namespace Azure.AI.Client.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CredentialsApiKeyAuth"/>. </summary>
-        /// <param name="key"> to do. </param>
+        /// <param name="key"> The API key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CredentialsApiKeyAuth(string key, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,7 +69,7 @@ namespace Azure.AI.Client.Models
         {
         }
 
-        /// <summary> to do. </summary>
+        /// <summary> The API key. </summary>
         public string Key { get; }
     }
 }

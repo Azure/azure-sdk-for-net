@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Client.Models
 {
-    /// <summary> to do. </summary>
+    /// <summary> Response from the listSecrets operation. </summary>
     internal partial class ConnectionsListSecretsResponse
     {
         /// <summary>

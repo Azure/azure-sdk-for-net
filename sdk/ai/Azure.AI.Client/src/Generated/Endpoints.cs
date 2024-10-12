@@ -25,7 +25,7 @@ namespace Azure.AI.Client
         private readonly Uri _endpoint;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _workspaceName;
+        private readonly string _projectName;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -46,9 +46,9 @@ namespace Azure.AI.Client
         /// <param name="endpoint"> The Azure AI Studio project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
-        /// <param name="workspaceName"> The name of the Azure AI Studio hub. </param>
+        /// <param name="projectName"> The Azure AI Studio project name. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Endpoints(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion)
+        internal Endpoints(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -56,7 +56,7 @@ namespace Azure.AI.Client
             _endpoint = endpoint;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _workspaceName = workspaceName;
+            _projectName = projectName;
             _apiVersion = apiVersion;
         }
 
@@ -297,12 +297,12 @@ namespace Azure.AI.Client
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
             uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/resourceGroups/", false);
             uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/", false);
-            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/connections", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -317,12 +317,12 @@ namespace Azure.AI.Client
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
             uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/resourceGroups/", false);
             uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/", false);
-            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionNameInUrl, true);
             uri.AppendPath("/listsecrets", false);

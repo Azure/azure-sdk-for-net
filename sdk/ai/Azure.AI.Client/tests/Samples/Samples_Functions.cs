@@ -9,7 +9,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Azure.AI.Client.Samples;
+namespace Azure.AI.Client.Tests;
 
 public partial class Samples_Functions
 {

@@ -25,7 +25,7 @@ namespace Azure.AI.Client
         private readonly Uri _endpoint;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _workspaceName;
+        private readonly string _projectName;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -46,9 +46,9 @@ namespace Azure.AI.Client
         /// <param name="endpoint"> The Azure AI Studio project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
-        /// <param name="workspaceName"> The name of the Azure AI Studio hub. </param>
+        /// <param name="projectName"> The Azure AI Studio project name. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Evaluations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName, string apiVersion)
+        internal Evaluations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -56,7 +56,7 @@ namespace Azure.AI.Client
             _endpoint = endpoint;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _workspaceName = workspaceName;
+            _projectName = projectName;
             _apiVersion = apiVersion;
         }
 
@@ -64,7 +64,6 @@ namespace Azure.AI.Client
         /// <param name="evaluation"> Properties of Evaluation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateAsync(Evaluation,CancellationToken)']/*" />
         public virtual async Task<Response<Evaluation>> CreateAsync(Evaluation evaluation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(evaluation, nameof(evaluation));
@@ -79,7 +78,6 @@ namespace Azure.AI.Client
         /// <param name="evaluation"> Properties of Evaluation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='Create(Evaluation,CancellationToken)']/*" />
         public virtual Response<Evaluation> Create(Evaluation evaluation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(evaluation, nameof(evaluation));
@@ -110,7 +108,6 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -149,7 +146,6 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='Create(RequestContent,RequestContext)']/*" />
         public virtual Response Create(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -185,7 +181,6 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='UpdateAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAsync(string id, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -222,7 +217,6 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='Update(string,RequestContent,RequestContext)']/*" />
         public virtual Response Update(string id, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -247,7 +241,6 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluationAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<Evaluation>> GetEvaluationAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -262,7 +255,6 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluation(string,CancellationToken)']/*" />
         public virtual Response<Evaluation> GetEvaluation(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -293,7 +285,6 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluationAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetEvaluationAsync(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -333,7 +324,6 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluation(string,RequestContext)']/*" />
         public virtual Response GetEvaluation(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -356,7 +346,6 @@ namespace Azure.AI.Client
         /// <param name="body"> Properties of Evaluation Schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateScheduleAsync(EvaluationSchedule,CancellationToken)']/*" />
         public virtual async Task<Response<EvaluationSchedule>> CreateScheduleAsync(EvaluationSchedule body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -371,7 +360,6 @@ namespace Azure.AI.Client
         /// <param name="body"> Properties of Evaluation Schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateSchedule(EvaluationSchedule,CancellationToken)']/*" />
         public virtual Response<EvaluationSchedule> CreateSchedule(EvaluationSchedule body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -402,7 +390,6 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateScheduleAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateScheduleAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -441,7 +428,6 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateSchedule(RequestContent,RequestContext)']/*" />
         public virtual Response CreateSchedule(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -465,7 +451,6 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetScheduleAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<EvaluationSchedule>> GetScheduleAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -480,7 +465,6 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetSchedule(string,CancellationToken)']/*" />
         public virtual Response<EvaluationSchedule> GetSchedule(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -511,7 +495,6 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetScheduleAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetScheduleAsync(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -551,7 +534,6 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetSchedule(string,RequestContext)']/*" />
         public virtual Response GetSchedule(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -587,7 +569,6 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='DeleteScheduleAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteScheduleAsync(string id, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -623,7 +604,6 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='DeleteSchedule(string,RequestContext)']/*" />
         public virtual Response DeleteSchedule(string id, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -647,7 +627,6 @@ namespace Azure.AI.Client
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluationsAsync(int?,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<Evaluation> GetEvaluationsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -661,7 +640,6 @@ namespace Azure.AI.Client
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluations(int?,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<Evaluation> GetEvaluations(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -691,7 +669,6 @@ namespace Azure.AI.Client
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluationsAsync(int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEvaluationsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(maxCount, skip, maxpagesize, context);
@@ -720,7 +697,6 @@ namespace Azure.AI.Client
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluations(int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEvaluations(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(maxCount, skip, maxpagesize, context);
@@ -733,7 +709,6 @@ namespace Azure.AI.Client
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetSchedulesAsync(int?,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<EvaluationSchedule> GetSchedulesAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -747,7 +722,6 @@ namespace Azure.AI.Client
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetSchedules(int?,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<EvaluationSchedule> GetSchedules(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -777,7 +751,6 @@ namespace Azure.AI.Client
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetSchedulesAsync(int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSchedulesAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(maxCount, skip, maxpagesize, context);
@@ -806,7 +779,6 @@ namespace Azure.AI.Client
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetSchedules(int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSchedules(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(maxCount, skip, maxpagesize, context);
@@ -822,7 +794,6 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetScheduleEvaluationsAsync(string,int?,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<Evaluation> GetScheduleEvaluationsAsync(string id, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -841,7 +812,6 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetScheduleEvaluations(string,int?,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<Evaluation> GetScheduleEvaluations(string id, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -876,7 +846,6 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetScheduleEvaluationsAsync(string,int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetScheduleEvaluationsAsync(string id, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -910,7 +879,6 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetScheduleEvaluations(string,int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetScheduleEvaluations(string id, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -927,12 +895,12 @@ namespace Azure.AI.Client
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
             uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/resourceGroups/", false);
             uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/", false);
-            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/evaluations/create", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -949,12 +917,12 @@ namespace Azure.AI.Client
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
             uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/resourceGroups/", false);
             uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/", false);
-            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/evaluations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxCount != null)
@@ -981,12 +949,12 @@ namespace Azure.AI.Client
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
             uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/resourceGroups/", false);
             uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/", false);
-            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/evaluations/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1004,12 +972,12 @@ namespace Azure.AI.Client
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
             uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/resourceGroups/", false);
             uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/", false);
-            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/evaluations/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1025,12 +993,12 @@ namespace Azure.AI.Client
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
             uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/resourceGroups/", false);
             uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/", false);
-            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/evaluations/schedules/create", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1047,12 +1015,12 @@ namespace Azure.AI.Client
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
             uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/resourceGroups/", false);
             uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/", false);
-            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/evaluations/schedules/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1068,12 +1036,12 @@ namespace Azure.AI.Client
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
             uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/resourceGroups/", false);
             uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/", false);
-            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/evaluations/schedules", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxCount != null)
@@ -1100,12 +1068,12 @@ namespace Azure.AI.Client
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
             uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/resourceGroups/", false);
             uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/", false);
-            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/evaluations/schedules/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/runs", false);
@@ -1134,12 +1102,12 @@ namespace Azure.AI.Client
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
             uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/resourceGroups/", false);
             uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/", false);
-            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/evaluations/schedules/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1155,12 +1123,12 @@ namespace Azure.AI.Client
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
             uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/resourceGroups/", false);
             uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/", false);
-            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1174,12 +1142,12 @@ namespace Azure.AI.Client
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
             uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/resourceGroups/", false);
             uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/", false);
-            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1193,12 +1161,12 @@ namespace Azure.AI.Client
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
             uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/", false);
+            uri.AppendRaw("/resourceGroups/", false);
             uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/", false);
-            uri.AppendRaw(_workspaceName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

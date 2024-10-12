@@ -19,11 +19,11 @@ namespace Microsoft.Extensions.Azure
         /// <param name="endpoint"> The Azure AI Studio project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
-        /// <param name="workspaceName"> The name of the Azure AI Studio hub. </param>
-        public static IAzureClientBuilder<AzureAIClient, AzureAIClientOptions> AddAzureAIClient<TBuilder>(this TBuilder builder, Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName)
+        /// <param name="projectName"> The Azure AI Studio project name. </param>
+        public static IAzureClientBuilder<AzureAIClient, AzureAIClientOptions> AddAzureAIClient<TBuilder>(this TBuilder builder, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<AzureAIClient, AzureAIClientOptions>((options, cred) => new AzureAIClient(endpoint, subscriptionId, resourceGroupName, workspaceName, cred, options));
+            return builder.RegisterClientFactory<AzureAIClient, AzureAIClientOptions>((options, cred) => new AzureAIClient(endpoint, subscriptionId, resourceGroupName, projectName, cred, options));
         }
 
         /// <summary> Registers a <see cref="AzureAIClient"/> instance. </summary>

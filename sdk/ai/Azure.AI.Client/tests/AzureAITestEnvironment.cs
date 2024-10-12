@@ -4,8 +4,8 @@
 using System;
 using Azure.Core.TestFramework;
 
-namespace Azure.AI.OpenAI.Assistants.Tests;
-public class OpenAITestEnvironment : TestEnvironment
+namespace Azure.AI.Client.Tests;
+public class AzureAITestEnvironment : TestEnvironment
 {
     public string AzureOpenAIResourceUri => GetOptionalVariable("AZURE_OPENAI_RESOURCE_URI");
 

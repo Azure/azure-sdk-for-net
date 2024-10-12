@@ -8,13 +8,11 @@
 namespace Azure.AI.Client.Models
 {
     /// <summary> The Type (or category) of the connection. </summary>
-    internal enum EndpointType
+    public enum EndpointType
     {
-        /// <summary> Azure OpenAI. </summary>
+        /// <summary> Azure OpenAI service. </summary>
         AzureOpenAI,
-        /// <summary> Serverless API. </summary>
-        Serverless,
-        /// <summary> Agent. </summary>
-        Agent
+        /// <summary> Serverless API service. </summary>
+        Serverless
     }
 }

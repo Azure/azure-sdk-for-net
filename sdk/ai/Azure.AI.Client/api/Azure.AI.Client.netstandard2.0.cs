@@ -178,8 +178,8 @@ namespace Azure.AI.Client
     public partial class AzureAIClient
     {
         protected AzureAIClient() { }
-        public AzureAIClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName, Azure.Core.TokenCredential credential) { }
-        public AzureAIClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName, Azure.Core.TokenCredential credential, Azure.AI.Client.AzureAIClientOptions options) { }
+        public AzureAIClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) { }
+        public AzureAIClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Client.AzureAIClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.AI.Client.Agents GetAgentsClient(string apiVersion = "2024-07-01-preview") { throw null; }
         public virtual Azure.AI.Client.Endpoints GetEndpointsClient(string apiVersion = "2024-07-01-preview") { throw null; }
@@ -489,6 +489,12 @@ namespace Azure.AI.Client.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Client.Models.AppInsightsConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Client.Models.AppInsightsConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public enum AuthenticationType
+    {
+        ApiKey = 0,
+        AAD = 1,
+        SAS = 2,
+    }
     public partial class CodeInterpreterToolDefinition : Azure.AI.Client.Models.ToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Client.Models.CodeInterpreterToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Client.Models.CodeInterpreterToolDefinition>
     {
         public CodeInterpreterToolDefinition() { }
@@ -534,6 +540,11 @@ namespace Azure.AI.Client.Models
         public static implicit operator Azure.AI.Client.Models.DoneEvent (string value) { throw null; }
         public static bool operator !=(Azure.AI.Client.Models.DoneEvent left, Azure.AI.Client.Models.DoneEvent right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public enum EndpointType
+    {
+        AzureOpenAI = 0,
+        Serverless = 1,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ErrorEvent : System.IEquatable<Azure.AI.Client.Models.ErrorEvent>
@@ -2371,7 +2382,7 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AIClientClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Client.AzureAIClient, Azure.AI.Client.AzureAIClientOptions> AddAzureAIClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Client.AzureAIClient, Azure.AI.Client.AzureAIClientOptions> AddAzureAIClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Client.AzureAIClient, Azure.AI.Client.AzureAIClientOptions> AddAzureAIClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

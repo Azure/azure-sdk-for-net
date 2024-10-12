@@ -21,7 +21,7 @@ namespace Azure.AI.Client
         private readonly Uri _endpoint;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _workspaceName;
+        private readonly string _projectName;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -38,11 +38,11 @@ namespace Azure.AI.Client
         /// <param name="endpoint"> The Azure AI Studio project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
-        /// <param name="workspaceName"> The name of the Azure AI Studio hub. </param>
+        /// <param name="projectName"> The Azure AI Studio project name. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public AzureAIClient(Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName, TokenCredential credential) : this(endpoint, subscriptionId, resourceGroupName, workspaceName, credential, new AzureAIClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public AzureAIClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential) : this(endpoint, subscriptionId, resourceGroupName, projectName, credential, new AzureAIClientOptions())
         {
         }
 
@@ -50,17 +50,17 @@ namespace Azure.AI.Client
         /// <param name="endpoint"> The Azure AI Studio project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
-        /// <param name="workspaceName"> The name of the Azure AI Studio hub. </param>
+        /// <param name="projectName"> The Azure AI Studio project name. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public AzureAIClient(Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName, TokenCredential credential, AzureAIClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public AzureAIClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential, AzureAIClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AzureAIClientOptions();
 
@@ -70,7 +70,7 @@ namespace Azure.AI.Client
             _endpoint = endpoint;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _workspaceName = workspaceName;
+            _projectName = projectName;
         }
 
         /// <summary> Initializes a new instance of Agents. </summary>
@@ -80,7 +80,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new Agents(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _workspaceName, apiVersion);
+            return new Agents(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
         }
 
         /// <summary> Initializes a new instance of Endpoints. </summary>
@@ -90,7 +90,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new Endpoints(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _workspaceName, apiVersion);
+            return new Endpoints(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
         }
 
         /// <summary> Initializes a new instance of Evaluations. </summary>
@@ -100,7 +100,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new Evaluations(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _workspaceName, apiVersion);
+            return new Evaluations(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
         }
     }
 }

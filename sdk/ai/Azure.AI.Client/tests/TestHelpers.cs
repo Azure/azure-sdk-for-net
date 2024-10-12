@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.OpenAI.Assistants;
 using Azure.Core.TestFramework;
 
-namespace Azure.AI.OpenAI.Assistants.Tests;
-public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEnvironment>
+namespace Azure.AI.Client.Tests;
+public abstract partial class AssistantsTestBase : RecordedTestBase<AzureAITestEnvironment>
 {
     //public enum OpenAIClientServiceTarget
     //{

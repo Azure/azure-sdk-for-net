@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.OpenAI.Assistants.Tests;
+namespace Azure.AI.Client.Tests;
 
 public class AssistantsTests : AssistantsTestBase
 {

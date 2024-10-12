@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 
-namespace Azure.AI.OpenAI.Assistants.Tests;
+namespace Azure.AI.Client.Tests;
 
 public class AssistantsModelFactoryTests
 {

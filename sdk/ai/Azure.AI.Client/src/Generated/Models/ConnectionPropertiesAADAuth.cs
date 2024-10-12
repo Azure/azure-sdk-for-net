@@ -15,7 +15,7 @@ namespace Azure.AI.Client.Models
     {
         /// <summary> Initializes a new instance of <see cref="ConnectionPropertiesAADAuth"/>. </summary>
         /// <param name="category"> Category of the connection. </param>
-        /// <param name="target"> to do. </param>
+        /// <param name="target"> The connection URL to be used for this service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="target"/> is null. </exception>
         internal ConnectionPropertiesAADAuth(EndpointType category, string target)
         {
@@ -30,7 +30,7 @@ namespace Azure.AI.Client.Models
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="category"> Category of the connection. </param>
-        /// <param name="target"> to do. </param>
+        /// <param name="target"> The connection URL to be used for this service. </param>
         internal ConnectionPropertiesAADAuth(AuthenticationType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, EndpointType category, string target) : base(authType, serializedAdditionalRawData)
         {
             Category = category;
@@ -44,7 +44,7 @@ namespace Azure.AI.Client.Models
 
         /// <summary> Category of the connection. </summary>
         public EndpointType Category { get; }
-        /// <summary> to do. </summary>
+        /// <summary> The connection URL to be used for this service. </summary>
         public string Target { get; }
     }
 }

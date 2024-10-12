@@ -13,22 +13,20 @@ using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.AI.Client.Samples;
+namespace Azure.AI.Client.Tests;
 
 public partial class Samples_Agents
 {
     [Test]
-    public async Task OverviewSample()
+    public async Task AgentSample()
     {
-        // Patterned from https://platform.openai.com/docs/assistants/overview
-
-       // string azureResourceUrl = "https://my-resource.openai.azure.com";
-       // string azureApiKey = Environment.GetEnvironmentVariable("AOAI_API_KEY");
-
         #region Snippet:OverviewCreateClient
-        Uri endpoint = new Uri("<endpoint>");
-        TokenCredential credential = new DefaultAzureCredential();
-        Agents client = new AzureAIClient(endpoint, null, null, null, credential).GetAgentsClient(apiVersion: "2024-07-01-preview");
+        Agents client = new AzureAIClient(
+            endpoint: new Uri(Environment.GetEnvironmentVariable("AZURE_AI_ENDPOINT")),
+            subscriptionId: Environment.GetEnvironmentVariable("AZURE_AI_SUBSCRIPTION_ID"),
+            resourceGroupName: Environment.GetEnvironmentVariable("AZURE_AI_RESOURCE_GROUP_NAME"),
+            projectName: Environment.GetEnvironmentVariable("AZURE_AI_PROJECT_NAME"),
+            credential: new DefaultAzureCredential()).GetAgentsClient();
         #endregion
 
         // Step 1: Create an assistant
@@ -47,70 +45,68 @@ public partial class Samples_Agents
         Response<PageableList<Agent>> agentListResponse = await client.GetAgentsAsync();
 
         //// Step 2: Create a thread
-        //#region Snippet:OverviewCreateThread
-        //Response<AssistantThread> threadResponse = await client.CreateThreadAsync();
-        //AssistantThread thread = threadResponse.Value;
-        //#endregion
+        #region Snippet:OverviewCreateThread
+        Response<AgentThread> threadResponse = await client.CreateThreadAsync();
+        AgentThread thread = threadResponse.Value;
+        #endregion
 
-        //// Step 3: Add a message to a thread
-        //#region Snippet:OverviewCreateMessage
-        //Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
-        //    thread.Id,
-        //    MessageRole.User,
-        //    "I need to solve the equation `3x + 11 = 14`. Can you help me?");
-        //ThreadMessage message = messageResponse.Value;
-        //#endregion
+        // Step 3: Add a message to a thread
+        #region Snippet:OverviewCreateMessage
+        Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
+            thread.Id,
+            MessageRole.User,
+            "I need to solve the equation `3x + 11 = 14`. Can you help me?");
+        ThreadMessage message = messageResponse.Value;
+        #endregion
 
-        //// Intermission: message is now correlated with thread
-        //// Intermission: listing messages will retrieve the message just added
+        // Intermission: message is now correlated with thread
+        // Intermission: listing messages will retrieve the message just added
 
-        //Response<PageableList<ThreadMessage>> messagesListResponse = await client.GetMessagesAsync(thread.Id);
-        //Assert.That(messagesListResponse.Value.Data[0].Id == message.Id);
+        Response<PageableList<ThreadMessage>> messagesListResponse = await client.GetMessagesAsync(thread.Id);
+        Assert.That(messagesListResponse.Value.Data[0].Id == message.Id);
 
-        //// Step 4: Run the assistant
+        // Step 4: Run the agent
 
-        //#region Snippet:OverviewCreateRun
-        //Response<ThreadRun> runResponse = await client.CreateRunAsync(
-        //    thread.Id,
-        //    new CreateRunOptions(assistant.Id)
-        //    {
-        //        AdditionalInstructions = "Please address the user as Jane Doe. The user has a premium account.",
-        //    });
-        //ThreadRun run = runResponse.Value;
-        //#endregion
+        #region Snippet:OverviewCreateRun
+        Response<ThreadRun> runResponse = await client.CreateRunAsync(
+            thread.Id,
+            assistant.Id,
+            additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
+        ThreadRun run = runResponse.Value;
+        #endregion
 
-        //#region Snippet:OverviewWaitForRun
-        //do
-        //{
-        //    await Task.Delay(TimeSpan.FromMilliseconds(500));
-        //    runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
-        //}
-        //while (runResponse.Value.Status == RunStatus.Queued
-        //    || runResponse.Value.Status == RunStatus.InProgress);
-        //#endregion
+        #region Snippet:OverviewWaitForRun
+        do
+        {
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+            runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
+        }
+        while (runResponse.Value.Status == RunStatus.Queued
+            || runResponse.Value.Status == RunStatus.InProgress);
+        #endregion
 
-        //#region Snippet:OverviewListUpdatedMessages
-        //Response<PageableList<ThreadMessage>> afterRunMessagesResponse
-        //    = await client.GetMessagesAsync(thread.Id);
-        //IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
+        #region Snippet:OverviewListUpdatedMessages
+        Response<PageableList<ThreadMessage>> afterRunMessagesResponse
+            = await client.GetMessagesAsync(thread.Id);
+        IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
 
-        //// Note: messages iterate from newest to oldest, with the messages[0] being the most recent
-        //foreach (ThreadMessage threadMessage in messages)
-        //{
-        //    Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
-        //    foreach (MessageContent contentItem in threadMessage.ContentItems)
-        //    {
-        //        if (contentItem is MessageTextContent textItem)
-        //        {
-        //            Console.Write(textItem.Text);
-        //        }
-        //        else if (contentItem is MessageImageFileContent imageFileItem)
-        //        {
-        //            Console.Write($"<image from ID: {imageFileItem.FileId}");
-        //        }
-        //        Console.WriteLine();
-        //    }
-        //}
-        //#endregion
+        // Note: messages iterate from newest to oldest, with the messages[0] being the most recent
+        foreach (ThreadMessage threadMessage in messages)
+        {
+            Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
+            foreach (MessageContent contentItem in threadMessage.ContentItems)
+            {
+                if (contentItem is MessageTextContent textItem)
+                {
+                    Console.Write(textItem.Text);
+                }
+                else if (contentItem is MessageImageFileContent imageFileItem)
+                {
+                    Console.Write($"<image from ID: {imageFileItem.FileId}");
+                }
+                Console.WriteLine();
+            }
+        }
+        #endregion
     }
 }

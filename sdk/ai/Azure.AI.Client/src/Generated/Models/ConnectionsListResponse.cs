@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.AI.Client.Models
 {
-    /// <summary> to do. </summary>
+    /// <summary> Response from the list operation. </summary>
     internal partial class ConnectionsListResponse
     {
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.AI.Client.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnectionsListResponse"/>. </summary>
-        /// <param name="value"> to do. </param>
+        /// <param name="value"> A list of connection list secrets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ConnectionsListResponse(IEnumerable<ConnectionsListSecretsResponse> value)
         {
@@ -57,7 +57,7 @@ namespace Azure.AI.Client.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionsListResponse"/>. </summary>
-        /// <param name="value"> to do. </param>
+        /// <param name="value"> A list of connection list secrets. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectionsListResponse(IReadOnlyList<ConnectionsListSecretsResponse> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +70,7 @@ namespace Azure.AI.Client.Models
         {
         }
 
-        /// <summary> to do. </summary>
+        /// <summary> A list of connection list secrets. </summary>
         public IReadOnlyList<ConnectionsListSecretsResponse> Value { get; }
     }
 }

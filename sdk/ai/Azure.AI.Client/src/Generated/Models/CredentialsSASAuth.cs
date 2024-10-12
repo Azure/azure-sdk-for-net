@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Client.Models
 {
-    /// <summary> to do. </summary>
+    /// <summary> The credentials neede for Shared Access Signatures (SAS) authentication. </summary>
     internal partial class CredentialsSASAuth
     {
         /// <summary>
@@ -46,7 +46,7 @@ namespace Azure.AI.Client.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CredentialsSASAuth"/>. </summary>
-        /// <param name="sas"> to do. </param>
+        /// <param name="sas"> The Shared Access Signatures (SAS) token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sas"/> is null. </exception>
         internal CredentialsSASAuth(string sas)
         {
@@ -56,7 +56,7 @@ namespace Azure.AI.Client.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CredentialsSASAuth"/>. </summary>
-        /// <param name="sas"> to do. </param>
+        /// <param name="sas"> The Shared Access Signatures (SAS) token. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CredentialsSASAuth(string sas, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,7 +69,7 @@ namespace Azure.AI.Client.Models
         {
         }
 
-        /// <summary> to do. </summary>
+        /// <summary> The Shared Access Signatures (SAS) token. </summary>
         public string SAS { get; }
     }
 }

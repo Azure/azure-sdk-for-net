@@ -5,6 +5,11 @@
     <!-- We don't care about XML doc comments on test types and members -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="SessionRecords\**" />
+    <EmbeddedResource Remove="SessionRecords\**" />
+    <None Remove="SessionRecords\**" />
+  </ItemGroup>
 
   <!-- Reference the Client Library -->
   <ItemGroup>
@@ -19,11 +24,6 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
-    <None Include="SessionRecords\**\*" />
   </ItemGroup>
 
 </Project>

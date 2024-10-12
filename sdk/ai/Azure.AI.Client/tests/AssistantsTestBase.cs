@@ -3,17 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Azure.AI.Client;
-using Azure.AI.OpenAI.Assistants;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
 
-namespace Azure.AI.OpenAI.Assistants.Tests;
+namespace Azure.AI.Client.Tests;
 
-public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEnvironment>
+public abstract partial class AssistantsTestBase : RecordedTestBase<AzureAITestEnvironment>
 {
     protected static readonly string s_testMetadataKey = "aoai_net_sdk_test_run_id";
     private static readonly string s_testMetadataValue = Guid.NewGuid().ToString();
