@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -26,8 +27,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="identity"> Managed identity. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="hubProfile"> The FleetHubProfile configures the Fleet's hub. </param>
         /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetData ContainerServiceFleetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? eTag = null, ManagedServiceIdentity identity = null, FleetProvisioningState? provisioningState = null)
+        public static ContainerServiceFleetData ContainerServiceFleetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? eTag = null, ManagedServiceIdentity identity = null, FleetProvisioningState? provisioningState = null, FleetHubProfile hubProfile = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -41,6 +43,60 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 eTag,
                 identity,
                 provisioningState,
+                hubProfile,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FleetHubProfile"/>. </summary>
+        /// <param name="dnsPrefix"> DNS prefix used to create the FQDN for the Fleet hub. </param>
+        /// <param name="apiServerAccessProfile"> The access profile for the Fleet hub API server. </param>
+        /// <param name="agentProfile"> The agent profile for the Fleet hub. </param>
+        /// <param name="fqdn"> The FQDN of the Fleet hub. </param>
+        /// <param name="kubernetesVersion"> The Kubernetes version of the Fleet hub. </param>
+        /// <param name="portalFqdn"> The Azure Portal FQDN of the Fleet hub. </param>
+        /// <returns> A new <see cref="Models.FleetHubProfile"/> instance for mocking. </returns>
+        public static FleetHubProfile FleetHubProfile(string dnsPrefix = null, ContainerServiceFleetAPIServerAccessProfile apiServerAccessProfile = null, ContainerServiceFleetAgentProfile agentProfile = null, string fqdn = null, string kubernetesVersion = null, string portalFqdn = null)
+        {
+            return new FleetHubProfile(
+                dnsPrefix,
+                apiServerAccessProfile,
+                agentProfile,
+                fqdn,
+                kubernetesVersion,
+                portalFqdn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.AutoUpgradeProfileData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="provisioningState"> The provisioning state of the AutoUpgradeProfile resource. </param>
+        /// <param name="updateStrategyId"> The resource id of the UpdateStrategy resource to reference. If not specified, the auto upgrade will run on all clusters which are members of the fleet. </param>
+        /// <param name="channel"> Configures how auto-upgrade will be run. </param>
+        /// <param name="selectionType"> The node image upgrade to be applied to the target clusters in auto upgrade. </param>
+        /// <param name="disabled">
+        /// If set to False: the auto upgrade has effect - target managed clusters will be upgraded on schedule.
+        /// If set to True: the auto upgrade has no effect - no upgrade will be run on the target managed clusters.
+        /// This is a boolean and not an enum because enabled/disabled are all available states of the auto upgrade profile.
+        /// By default, this is set to False.
+        /// </param>
+        /// <returns> A new <see cref="ContainerServiceFleet.AutoUpgradeProfileData"/> instance for mocking. </returns>
+        public static AutoUpgradeProfileData AutoUpgradeProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = null, AutoUpgradeProfileProvisioningState? provisioningState = null, ResourceIdentifier updateStrategyId = null, UpgradeChannel? channel = null, AutoUpgradeNodeImageSelectionType? selectionType = null, bool? disabled = null)
+        {
+            return new AutoUpgradeProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                eTag,
+                provisioningState,
+                updateStrategyId,
+                channel,
+                selectionType.HasValue ? new AutoUpgradeNodeImageSelection(selectionType.Value, serializedAdditionalRawData: null) : null,
+                disabled,
                 serializedAdditionalRawData: null);
         }
 
@@ -134,6 +190,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.NodeImageVersion"/>. </summary>
+        /// <param name="version"> The image version to upgrade the nodes to (e.g., 'AKSUbuntu-1804gen2containerd-2022.12.13'). </param>
+        /// <returns> A new <see cref="Models.NodeImageVersion"/> instance for mocking. </returns>
+        public static NodeImageVersion NodeImageVersion(string version = null)
+        {
+            return new NodeImageVersion(version, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceFleetUpdateRunStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateRun. </param>
         /// <param name="stages"> The stages composing an update run. Stages are run sequentially withing an UpdateRun. </param>
@@ -210,14 +274,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetWaitStatus(status, waitDurationInSeconds, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NodeImageVersion"/>. </summary>
-        /// <param name="version"> The image version to upgrade the nodes to (e.g., 'AKSUbuntu-1804gen2containerd-2022.12.13'). </param>
-        /// <returns> A new <see cref="Models.NodeImageVersion"/> instance for mocking. </returns>
-        public static NodeImageVersion NodeImageVersion(string version = null)
-        {
-            return new NodeImageVersion(version, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.FleetUpdateStrategyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -240,6 +296,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 provisioningState,
                 strategyStages != null ? new ContainerServiceFleetUpdateRunStrategy(strategyStages?.ToList(), serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="identity"> Managed identity. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ContainerServiceFleet.ContainerServiceFleetData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContainerServiceFleetData ContainerServiceFleetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, ManagedServiceIdentity identity, FleetProvisioningState? provisioningState)
+        {
+            return ContainerServiceFleetData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, eTag: eTag, identity: identity, provisioningState: provisioningState, hubProfile: default);
         }
     }
 }

@@ -31,245 +31,245 @@ namespace Azure.AI.AnomalyDetector.Samples
 new
 {
 timestamp = "1972-01-01T00:00:00Z",
-value = 826,
+value = 826F,
 },
 new
 {
 timestamp = "1972-02-01T00:00:00Z",
-value = 799,
+value = 799F,
 },
 new
 {
 timestamp = "1972-03-01T00:00:00Z",
-value = 890,
+value = 890F,
 },
 new
 {
 timestamp = "1972-04-01T00:00:00Z",
-value = 900,
+value = 900F,
 },
 new
 {
 timestamp = "1972-05-01T00:00:00Z",
-value = 961,
+value = 961F,
 },
 new
 {
 timestamp = "1972-06-01T00:00:00Z",
-value = 935,
+value = 935F,
 },
 new
 {
 timestamp = "1972-07-01T00:00:00Z",
-value = 894,
+value = 894F,
 },
 new
 {
 timestamp = "1972-08-01T00:00:00Z",
-value = 855,
+value = 855F,
 },
 new
 {
 timestamp = "1972-09-01T00:00:00Z",
-value = 809,
+value = 809F,
 },
 new
 {
 timestamp = "1972-10-01T00:00:00Z",
-value = 810,
+value = 810F,
 },
 new
 {
 timestamp = "1972-11-01T00:00:00Z",
-value = 766,
+value = 766F,
 },
 new
 {
 timestamp = "1972-12-01T00:00:00Z",
-value = 805,
+value = 805F,
 },
 new
 {
 timestamp = "1973-01-01T00:00:00Z",
-value = 821,
+value = 821F,
 },
 new
 {
 timestamp = "1973-02-01T00:00:00Z",
-value = 773,
+value = 773F,
 },
 new
 {
 timestamp = "1973-03-01T00:00:00Z",
-value = 883,
+value = 883F,
 },
 new
 {
 timestamp = "1973-04-01T00:00:00Z",
-value = 898,
+value = 898F,
 },
 new
 {
 timestamp = "1973-05-01T00:00:00Z",
-value = 957,
+value = 957F,
 },
 new
 {
 timestamp = "1973-06-01T00:00:00Z",
-value = 924,
+value = 924F,
 },
 new
 {
 timestamp = "1973-07-01T00:00:00Z",
-value = 881,
+value = 881F,
 },
 new
 {
 timestamp = "1973-08-01T00:00:00Z",
-value = 837,
+value = 837F,
 },
 new
 {
 timestamp = "1973-09-01T00:00:00Z",
-value = 784,
+value = 784F,
 },
 new
 {
 timestamp = "1973-10-01T00:00:00Z",
-value = 791,
+value = 791F,
 },
 new
 {
 timestamp = "1973-11-01T00:00:00Z",
-value = 760,
+value = 760F,
 },
 new
 {
 timestamp = "1973-12-01T00:00:00Z",
-value = 802,
+value = 802F,
 },
 new
 {
 timestamp = "1974-01-01T00:00:00Z",
-value = 828,
+value = 828F,
 },
 new
 {
 timestamp = "1974-02-01T00:00:00Z",
-value = 1030,
+value = 1030F,
 },
 new
 {
 timestamp = "1974-03-01T00:00:00Z",
-value = 889,
+value = 889F,
 },
 new
 {
 timestamp = "1974-04-01T00:00:00Z",
-value = 902,
+value = 902F,
 },
 new
 {
 timestamp = "1974-05-01T00:00:00Z",
-value = 969,
+value = 969F,
 },
 new
 {
 timestamp = "1974-06-01T00:00:00Z",
-value = 947,
+value = 947F,
 },
 new
 {
 timestamp = "1974-07-01T00:00:00Z",
-value = 908,
+value = 908F,
 },
 new
 {
 timestamp = "1974-08-01T00:00:00Z",
-value = 867,
+value = 867F,
 },
 new
 {
 timestamp = "1974-09-01T00:00:00Z",
-value = 815,
+value = 815F,
 },
 new
 {
 timestamp = "1974-10-01T00:00:00Z",
-value = 812,
+value = 812F,
 },
 new
 {
 timestamp = "1974-11-01T00:00:00Z",
-value = 773,
+value = 773F,
 },
 new
 {
 timestamp = "1974-12-01T00:00:00Z",
-value = 813,
+value = 813F,
 },
 new
 {
 timestamp = "1975-01-01T00:00:00Z",
-value = 834,
+value = 834F,
 },
 new
 {
 timestamp = "1975-02-01T00:00:00Z",
-value = 782,
+value = 782F,
 },
 new
 {
 timestamp = "1975-03-01T00:00:00Z",
-value = 892,
+value = 892F,
 },
 new
 {
 timestamp = "1975-04-01T00:00:00Z",
-value = 903,
+value = 903F,
 },
 new
 {
 timestamp = "1975-05-01T00:00:00Z",
-value = 966,
+value = 966F,
 },
 new
 {
 timestamp = "1975-06-01T00:00:00Z",
-value = 937,
+value = 937F,
 },
 new
 {
 timestamp = "1975-07-01T00:00:00Z",
-value = 896,
+value = 896F,
 },
 new
 {
 timestamp = "1975-08-01T00:00:00Z",
-value = 858,
+value = 858F,
 },
 new
 {
 timestamp = "1975-09-01T00:00:00Z",
-value = 817,
+value = 817F,
 },
 new
 {
 timestamp = "1975-10-01T00:00:00Z",
-value = 827,
+value = 827F,
 },
 new
 {
 timestamp = "1975-11-01T00:00:00Z",
-value = 797,
+value = 797F,
 },
 new
 {
 timestamp = "1975-12-01T00:00:00Z",
-value = 843,
+value = 843F,
 }
             },
-                maxAnomalyRatio = 0.25,
+                maxAnomalyRatio = 0.25F,
                 sensitivity = 95,
                 granularity = "monthly",
                 imputeMode = "auto",
@@ -301,245 +301,245 @@ value = 843,
 new
 {
 timestamp = "1972-01-01T00:00:00Z",
-value = 826,
+value = 826F,
 },
 new
 {
 timestamp = "1972-02-01T00:00:00Z",
-value = 799,
+value = 799F,
 },
 new
 {
 timestamp = "1972-03-01T00:00:00Z",
-value = 890,
+value = 890F,
 },
 new
 {
 timestamp = "1972-04-01T00:00:00Z",
-value = 900,
+value = 900F,
 },
 new
 {
 timestamp = "1972-05-01T00:00:00Z",
-value = 961,
+value = 961F,
 },
 new
 {
 timestamp = "1972-06-01T00:00:00Z",
-value = 935,
+value = 935F,
 },
 new
 {
 timestamp = "1972-07-01T00:00:00Z",
-value = 894,
+value = 894F,
 },
 new
 {
 timestamp = "1972-08-01T00:00:00Z",
-value = 855,
+value = 855F,
 },
 new
 {
 timestamp = "1972-09-01T00:00:00Z",
-value = 809,
+value = 809F,
 },
 new
 {
 timestamp = "1972-10-01T00:00:00Z",
-value = 810,
+value = 810F,
 },
 new
 {
 timestamp = "1972-11-01T00:00:00Z",
-value = 766,
+value = 766F,
 },
 new
 {
 timestamp = "1972-12-01T00:00:00Z",
-value = 805,
+value = 805F,
 },
 new
 {
 timestamp = "1973-01-01T00:00:00Z",
-value = 821,
+value = 821F,
 },
 new
 {
 timestamp = "1973-02-01T00:00:00Z",
-value = 773,
+value = 773F,
 },
 new
 {
 timestamp = "1973-03-01T00:00:00Z",
-value = 883,
+value = 883F,
 },
 new
 {
 timestamp = "1973-04-01T00:00:00Z",
-value = 898,
+value = 898F,
 },
 new
 {
 timestamp = "1973-05-01T00:00:00Z",
-value = 957,
+value = 957F,
 },
 new
 {
 timestamp = "1973-06-01T00:00:00Z",
-value = 924,
+value = 924F,
 },
 new
 {
 timestamp = "1973-07-01T00:00:00Z",
-value = 881,
+value = 881F,
 },
 new
 {
 timestamp = "1973-08-01T00:00:00Z",
-value = 837,
+value = 837F,
 },
 new
 {
 timestamp = "1973-09-01T00:00:00Z",
-value = 784,
+value = 784F,
 },
 new
 {
 timestamp = "1973-10-01T00:00:00Z",
-value = 791,
+value = 791F,
 },
 new
 {
 timestamp = "1973-11-01T00:00:00Z",
-value = 760,
+value = 760F,
 },
 new
 {
 timestamp = "1973-12-01T00:00:00Z",
-value = 802,
+value = 802F,
 },
 new
 {
 timestamp = "1974-01-01T00:00:00Z",
-value = 828,
+value = 828F,
 },
 new
 {
 timestamp = "1974-02-01T00:00:00Z",
-value = 1030,
+value = 1030F,
 },
 new
 {
 timestamp = "1974-03-01T00:00:00Z",
-value = 889,
+value = 889F,
 },
 new
 {
 timestamp = "1974-04-01T00:00:00Z",
-value = 902,
+value = 902F,
 },
 new
 {
 timestamp = "1974-05-01T00:00:00Z",
-value = 969,
+value = 969F,
 },
 new
 {
 timestamp = "1974-06-01T00:00:00Z",
-value = 947,
+value = 947F,
 },
 new
 {
 timestamp = "1974-07-01T00:00:00Z",
-value = 908,
+value = 908F,
 },
 new
 {
 timestamp = "1974-08-01T00:00:00Z",
-value = 867,
+value = 867F,
 },
 new
 {
 timestamp = "1974-09-01T00:00:00Z",
-value = 815,
+value = 815F,
 },
 new
 {
 timestamp = "1974-10-01T00:00:00Z",
-value = 812,
+value = 812F,
 },
 new
 {
 timestamp = "1974-11-01T00:00:00Z",
-value = 773,
+value = 773F,
 },
 new
 {
 timestamp = "1974-12-01T00:00:00Z",
-value = 813,
+value = 813F,
 },
 new
 {
 timestamp = "1975-01-01T00:00:00Z",
-value = 834,
+value = 834F,
 },
 new
 {
 timestamp = "1975-02-01T00:00:00Z",
-value = 782,
+value = 782F,
 },
 new
 {
 timestamp = "1975-03-01T00:00:00Z",
-value = 892,
+value = 892F,
 },
 new
 {
 timestamp = "1975-04-01T00:00:00Z",
-value = 903,
+value = 903F,
 },
 new
 {
 timestamp = "1975-05-01T00:00:00Z",
-value = 966,
+value = 966F,
 },
 new
 {
 timestamp = "1975-06-01T00:00:00Z",
-value = 937,
+value = 937F,
 },
 new
 {
 timestamp = "1975-07-01T00:00:00Z",
-value = 896,
+value = 896F,
 },
 new
 {
 timestamp = "1975-08-01T00:00:00Z",
-value = 858,
+value = 858F,
 },
 new
 {
 timestamp = "1975-09-01T00:00:00Z",
-value = 817,
+value = 817F,
 },
 new
 {
 timestamp = "1975-10-01T00:00:00Z",
-value = 827,
+value = 827F,
 },
 new
 {
 timestamp = "1975-11-01T00:00:00Z",
-value = 797,
+value = 797F,
 },
 new
 {
 timestamp = "1975-12-01T00:00:00Z",
-value = 843,
+value = 843F,
 }
             },
-                maxAnomalyRatio = 0.25,
+                maxAnomalyRatio = 0.25F,
                 sensitivity = 95,
                 granularity = "monthly",
                 imputeMode = "auto",
@@ -571,249 +571,249 @@ value = 843,
 new
 {
 timestamp = "1972-01-01T00:00:00Z",
-value = 826,
+value = 826F,
 },
 new
 {
 timestamp = "1972-02-01T00:00:00Z",
-value = 799,
+value = 799F,
 },
 new
 {
 timestamp = "1972-03-01T00:00:00Z",
-value = 890,
+value = 890F,
 },
 new
 {
 timestamp = "1972-04-01T00:00:00Z",
-value = 900,
+value = 900F,
 },
 new
 {
 timestamp = "1972-05-01T00:00:00Z",
-value = 961,
+value = 961F,
 },
 new
 {
 timestamp = "1972-06-01T00:00:00Z",
-value = 935,
+value = 935F,
 },
 new
 {
 timestamp = "1972-07-01T00:00:00Z",
-value = 894,
+value = 894F,
 },
 new
 {
 timestamp = "1972-08-01T00:00:00Z",
-value = 855,
+value = 855F,
 },
 new
 {
 timestamp = "1972-09-01T00:00:00Z",
-value = 809,
+value = 809F,
 },
 new
 {
 timestamp = "1972-10-01T00:00:00Z",
-value = 810,
+value = 810F,
 },
 new
 {
 timestamp = "1972-11-01T00:00:00Z",
-value = 766,
+value = 766F,
 },
 new
 {
 timestamp = "1972-12-01T00:00:00Z",
-value = 805,
+value = 805F,
 },
 new
 {
 timestamp = "1973-01-01T00:00:00Z",
-value = 821,
+value = 821F,
 },
 new
 {
 timestamp = "1973-02-01T00:00:00Z",
-value = 773,
+value = 773F,
 },
 new
 {
 timestamp = "1973-03-01T00:00:00Z",
-value = 883,
+value = 883F,
 },
 new
 {
 timestamp = "1973-04-01T00:00:00Z",
-value = 898,
+value = 898F,
 },
 new
 {
 timestamp = "1973-05-01T00:00:00Z",
-value = 957,
+value = 957F,
 },
 new
 {
 timestamp = "1973-06-01T00:00:00Z",
-value = 924,
+value = 924F,
 },
 new
 {
 timestamp = "1973-07-01T00:00:00Z",
-value = 881,
+value = 881F,
 },
 new
 {
 timestamp = "1973-08-01T00:00:00Z",
-value = 837,
+value = 837F,
 },
 new
 {
 timestamp = "1973-09-01T00:00:00Z",
-value = 784,
+value = 784F,
 },
 new
 {
 timestamp = "1973-10-01T00:00:00Z",
-value = 791,
+value = 791F,
 },
 new
 {
 timestamp = "1973-11-01T00:00:00Z",
-value = 760,
+value = 760F,
 },
 new
 {
 timestamp = "1973-12-01T00:00:00Z",
-value = 802,
+value = 802F,
 },
 new
 {
 timestamp = "1974-01-01T00:00:00Z",
-value = 828,
+value = 828F,
 },
 new
 {
 timestamp = "1974-02-01T00:00:00Z",
-value = 1030,
+value = 1030F,
 },
 new
 {
 timestamp = "1974-03-01T00:00:00Z",
-value = 889,
+value = 889F,
 },
 new
 {
 timestamp = "1974-04-01T00:00:00Z",
-value = 902,
+value = 902F,
 },
 new
 {
 timestamp = "1974-05-01T00:00:00Z",
-value = 969,
+value = 969F,
 },
 new
 {
 timestamp = "1974-06-01T00:00:00Z",
-value = 947,
+value = 947F,
 },
 new
 {
 timestamp = "1974-07-01T00:00:00Z",
-value = 908,
+value = 908F,
 },
 new
 {
 timestamp = "1974-08-01T00:00:00Z",
-value = 867,
+value = 867F,
 },
 new
 {
 timestamp = "1974-09-01T00:00:00Z",
-value = 815,
+value = 815F,
 },
 new
 {
 timestamp = "1974-10-01T00:00:00Z",
-value = 812,
+value = 812F,
 },
 new
 {
 timestamp = "1974-11-01T00:00:00Z",
-value = 773,
+value = 773F,
 },
 new
 {
 timestamp = "1974-12-01T00:00:00Z",
-value = 813,
+value = 813F,
 },
 new
 {
 timestamp = "1975-01-01T00:00:00Z",
-value = 834,
+value = 834F,
 },
 new
 {
 timestamp = "1975-02-01T00:00:00Z",
-value = 782,
+value = 782F,
 },
 new
 {
 timestamp = "1975-03-01T00:00:00Z",
-value = 892,
+value = 892F,
 },
 new
 {
 timestamp = "1975-04-01T00:00:00Z",
-value = 903,
+value = 903F,
 },
 new
 {
 timestamp = "1975-05-01T00:00:00Z",
-value = 966,
+value = 966F,
 },
 new
 {
 timestamp = "1975-06-01T00:00:00Z",
-value = 937,
+value = 937F,
 },
 new
 {
 timestamp = "1975-07-01T00:00:00Z",
-value = 896,
+value = 896F,
 },
 new
 {
 timestamp = "1975-08-01T00:00:00Z",
-value = 858,
+value = 858F,
 },
 new
 {
 timestamp = "1975-09-01T00:00:00Z",
-value = 817,
+value = 817F,
 },
 new
 {
 timestamp = "1975-10-01T00:00:00Z",
-value = 827,
+value = 827F,
 },
 new
 {
 timestamp = "1975-11-01T00:00:00Z",
-value = 797,
+value = 797F,
 },
 new
 {
 timestamp = "1975-12-01T00:00:00Z",
-value = 843,
+value = 843F,
 }
             },
-                maxAnomalyRatio = 0.25,
+                maxAnomalyRatio = 0.25F,
                 sensitivity = 95,
                 granularity = "monthly",
                 imputeMode = "fixed",
-                imputeFixedValue = 800,
+                imputeFixedValue = 800F,
             });
             Response response = client.DetectUnivariateLastPoint(content);
 
@@ -843,249 +843,249 @@ value = 843,
 new
 {
 timestamp = "1972-01-01T00:00:00Z",
-value = 826,
+value = 826F,
 },
 new
 {
 timestamp = "1972-02-01T00:00:00Z",
-value = 799,
+value = 799F,
 },
 new
 {
 timestamp = "1972-03-01T00:00:00Z",
-value = 890,
+value = 890F,
 },
 new
 {
 timestamp = "1972-04-01T00:00:00Z",
-value = 900,
+value = 900F,
 },
 new
 {
 timestamp = "1972-05-01T00:00:00Z",
-value = 961,
+value = 961F,
 },
 new
 {
 timestamp = "1972-06-01T00:00:00Z",
-value = 935,
+value = 935F,
 },
 new
 {
 timestamp = "1972-07-01T00:00:00Z",
-value = 894,
+value = 894F,
 },
 new
 {
 timestamp = "1972-08-01T00:00:00Z",
-value = 855,
+value = 855F,
 },
 new
 {
 timestamp = "1972-09-01T00:00:00Z",
-value = 809,
+value = 809F,
 },
 new
 {
 timestamp = "1972-10-01T00:00:00Z",
-value = 810,
+value = 810F,
 },
 new
 {
 timestamp = "1972-11-01T00:00:00Z",
-value = 766,
+value = 766F,
 },
 new
 {
 timestamp = "1972-12-01T00:00:00Z",
-value = 805,
+value = 805F,
 },
 new
 {
 timestamp = "1973-01-01T00:00:00Z",
-value = 821,
+value = 821F,
 },
 new
 {
 timestamp = "1973-02-01T00:00:00Z",
-value = 773,
+value = 773F,
 },
 new
 {
 timestamp = "1973-03-01T00:00:00Z",
-value = 883,
+value = 883F,
 },
 new
 {
 timestamp = "1973-04-01T00:00:00Z",
-value = 898,
+value = 898F,
 },
 new
 {
 timestamp = "1973-05-01T00:00:00Z",
-value = 957,
+value = 957F,
 },
 new
 {
 timestamp = "1973-06-01T00:00:00Z",
-value = 924,
+value = 924F,
 },
 new
 {
 timestamp = "1973-07-01T00:00:00Z",
-value = 881,
+value = 881F,
 },
 new
 {
 timestamp = "1973-08-01T00:00:00Z",
-value = 837,
+value = 837F,
 },
 new
 {
 timestamp = "1973-09-01T00:00:00Z",
-value = 784,
+value = 784F,
 },
 new
 {
 timestamp = "1973-10-01T00:00:00Z",
-value = 791,
+value = 791F,
 },
 new
 {
 timestamp = "1973-11-01T00:00:00Z",
-value = 760,
+value = 760F,
 },
 new
 {
 timestamp = "1973-12-01T00:00:00Z",
-value = 802,
+value = 802F,
 },
 new
 {
 timestamp = "1974-01-01T00:00:00Z",
-value = 828,
+value = 828F,
 },
 new
 {
 timestamp = "1974-02-01T00:00:00Z",
-value = 1030,
+value = 1030F,
 },
 new
 {
 timestamp = "1974-03-01T00:00:00Z",
-value = 889,
+value = 889F,
 },
 new
 {
 timestamp = "1974-04-01T00:00:00Z",
-value = 902,
+value = 902F,
 },
 new
 {
 timestamp = "1974-05-01T00:00:00Z",
-value = 969,
+value = 969F,
 },
 new
 {
 timestamp = "1974-06-01T00:00:00Z",
-value = 947,
+value = 947F,
 },
 new
 {
 timestamp = "1974-07-01T00:00:00Z",
-value = 908,
+value = 908F,
 },
 new
 {
 timestamp = "1974-08-01T00:00:00Z",
-value = 867,
+value = 867F,
 },
 new
 {
 timestamp = "1974-09-01T00:00:00Z",
-value = 815,
+value = 815F,
 },
 new
 {
 timestamp = "1974-10-01T00:00:00Z",
-value = 812,
+value = 812F,
 },
 new
 {
 timestamp = "1974-11-01T00:00:00Z",
-value = 773,
+value = 773F,
 },
 new
 {
 timestamp = "1974-12-01T00:00:00Z",
-value = 813,
+value = 813F,
 },
 new
 {
 timestamp = "1975-01-01T00:00:00Z",
-value = 834,
+value = 834F,
 },
 new
 {
 timestamp = "1975-02-01T00:00:00Z",
-value = 782,
+value = 782F,
 },
 new
 {
 timestamp = "1975-03-01T00:00:00Z",
-value = 892,
+value = 892F,
 },
 new
 {
 timestamp = "1975-04-01T00:00:00Z",
-value = 903,
+value = 903F,
 },
 new
 {
 timestamp = "1975-05-01T00:00:00Z",
-value = 966,
+value = 966F,
 },
 new
 {
 timestamp = "1975-06-01T00:00:00Z",
-value = 937,
+value = 937F,
 },
 new
 {
 timestamp = "1975-07-01T00:00:00Z",
-value = 896,
+value = 896F,
 },
 new
 {
 timestamp = "1975-08-01T00:00:00Z",
-value = 858,
+value = 858F,
 },
 new
 {
 timestamp = "1975-09-01T00:00:00Z",
-value = 817,
+value = 817F,
 },
 new
 {
 timestamp = "1975-10-01T00:00:00Z",
-value = 827,
+value = 827F,
 },
 new
 {
 timestamp = "1975-11-01T00:00:00Z",
-value = 797,
+value = 797F,
 },
 new
 {
 timestamp = "1975-12-01T00:00:00Z",
-value = 843,
+value = 843F,
 }
             },
-                maxAnomalyRatio = 0.25,
+                maxAnomalyRatio = 0.25F,
                 sensitivity = 95,
                 granularity = "monthly",
                 imputeMode = "fixed",
-                imputeFixedValue = 800,
+                imputeFixedValue = 800F,
             });
             Response response = await client.DetectUnivariateLastPointAsync(content);
 
@@ -1110,205 +1110,205 @@ value = 843,
 
             UnivariateDetectionOptions options = new UnivariateDetectionOptions(new TimeSeriesPoint[]
             {
-new TimeSeriesPoint(826)
+new TimeSeriesPoint(826F)
 {
 Timestamp = DateTimeOffset.Parse("1972-01-01T00:00:00Z"),
 },
-new TimeSeriesPoint(799)
+new TimeSeriesPoint(799F)
 {
 Timestamp = DateTimeOffset.Parse("1972-02-01T00:00:00Z"),
 },
-new TimeSeriesPoint(890)
+new TimeSeriesPoint(890F)
 {
 Timestamp = DateTimeOffset.Parse("1972-03-01T00:00:00Z"),
 },
-new TimeSeriesPoint(900)
+new TimeSeriesPoint(900F)
 {
 Timestamp = DateTimeOffset.Parse("1972-04-01T00:00:00Z"),
 },
-new TimeSeriesPoint(961)
+new TimeSeriesPoint(961F)
 {
 Timestamp = DateTimeOffset.Parse("1972-05-01T00:00:00Z"),
 },
-new TimeSeriesPoint(935)
+new TimeSeriesPoint(935F)
 {
 Timestamp = DateTimeOffset.Parse("1972-06-01T00:00:00Z"),
 },
-new TimeSeriesPoint(894)
+new TimeSeriesPoint(894F)
 {
 Timestamp = DateTimeOffset.Parse("1972-07-01T00:00:00Z"),
 },
-new TimeSeriesPoint(855)
+new TimeSeriesPoint(855F)
 {
 Timestamp = DateTimeOffset.Parse("1972-08-01T00:00:00Z"),
 },
-new TimeSeriesPoint(809)
+new TimeSeriesPoint(809F)
 {
 Timestamp = DateTimeOffset.Parse("1972-09-01T00:00:00Z"),
 },
-new TimeSeriesPoint(810)
+new TimeSeriesPoint(810F)
 {
 Timestamp = DateTimeOffset.Parse("1972-10-01T00:00:00Z"),
 },
-new TimeSeriesPoint(766)
+new TimeSeriesPoint(766F)
 {
 Timestamp = DateTimeOffset.Parse("1972-11-01T00:00:00Z"),
 },
-new TimeSeriesPoint(805)
+new TimeSeriesPoint(805F)
 {
 Timestamp = DateTimeOffset.Parse("1972-12-01T00:00:00Z"),
 },
-new TimeSeriesPoint(821)
+new TimeSeriesPoint(821F)
 {
 Timestamp = DateTimeOffset.Parse("1973-01-01T00:00:00Z"),
 },
-new TimeSeriesPoint(773)
+new TimeSeriesPoint(773F)
 {
 Timestamp = DateTimeOffset.Parse("1973-02-01T00:00:00Z"),
 },
-new TimeSeriesPoint(883)
+new TimeSeriesPoint(883F)
 {
 Timestamp = DateTimeOffset.Parse("1973-03-01T00:00:00Z"),
 },
-new TimeSeriesPoint(898)
+new TimeSeriesPoint(898F)
 {
 Timestamp = DateTimeOffset.Parse("1973-04-01T00:00:00Z"),
 },
-new TimeSeriesPoint(957)
+new TimeSeriesPoint(957F)
 {
 Timestamp = DateTimeOffset.Parse("1973-05-01T00:00:00Z"),
 },
-new TimeSeriesPoint(924)
+new TimeSeriesPoint(924F)
 {
 Timestamp = DateTimeOffset.Parse("1973-06-01T00:00:00Z"),
 },
-new TimeSeriesPoint(881)
+new TimeSeriesPoint(881F)
 {
 Timestamp = DateTimeOffset.Parse("1973-07-01T00:00:00Z"),
 },
-new TimeSeriesPoint(837)
+new TimeSeriesPoint(837F)
 {
 Timestamp = DateTimeOffset.Parse("1973-08-01T00:00:00Z"),
 },
-new TimeSeriesPoint(784)
+new TimeSeriesPoint(784F)
 {
 Timestamp = DateTimeOffset.Parse("1973-09-01T00:00:00Z"),
 },
-new TimeSeriesPoint(791)
+new TimeSeriesPoint(791F)
 {
 Timestamp = DateTimeOffset.Parse("1973-10-01T00:00:00Z"),
 },
-new TimeSeriesPoint(760)
+new TimeSeriesPoint(760F)
 {
 Timestamp = DateTimeOffset.Parse("1973-11-01T00:00:00Z"),
 },
-new TimeSeriesPoint(802)
+new TimeSeriesPoint(802F)
 {
 Timestamp = DateTimeOffset.Parse("1973-12-01T00:00:00Z"),
 },
-new TimeSeriesPoint(828)
+new TimeSeriesPoint(828F)
 {
 Timestamp = DateTimeOffset.Parse("1974-01-01T00:00:00Z"),
 },
-new TimeSeriesPoint(1030)
+new TimeSeriesPoint(1030F)
 {
 Timestamp = DateTimeOffset.Parse("1974-02-01T00:00:00Z"),
 },
-new TimeSeriesPoint(889)
+new TimeSeriesPoint(889F)
 {
 Timestamp = DateTimeOffset.Parse("1974-03-01T00:00:00Z"),
 },
-new TimeSeriesPoint(902)
+new TimeSeriesPoint(902F)
 {
 Timestamp = DateTimeOffset.Parse("1974-04-01T00:00:00Z"),
 },
-new TimeSeriesPoint(969)
+new TimeSeriesPoint(969F)
 {
 Timestamp = DateTimeOffset.Parse("1974-05-01T00:00:00Z"),
 },
-new TimeSeriesPoint(947)
+new TimeSeriesPoint(947F)
 {
 Timestamp = DateTimeOffset.Parse("1974-06-01T00:00:00Z"),
 },
-new TimeSeriesPoint(908)
+new TimeSeriesPoint(908F)
 {
 Timestamp = DateTimeOffset.Parse("1974-07-01T00:00:00Z"),
 },
-new TimeSeriesPoint(867)
+new TimeSeriesPoint(867F)
 {
 Timestamp = DateTimeOffset.Parse("1974-08-01T00:00:00Z"),
 },
-new TimeSeriesPoint(815)
+new TimeSeriesPoint(815F)
 {
 Timestamp = DateTimeOffset.Parse("1974-09-01T00:00:00Z"),
 },
-new TimeSeriesPoint(812)
+new TimeSeriesPoint(812F)
 {
 Timestamp = DateTimeOffset.Parse("1974-10-01T00:00:00Z"),
 },
-new TimeSeriesPoint(773)
+new TimeSeriesPoint(773F)
 {
 Timestamp = DateTimeOffset.Parse("1974-11-01T00:00:00Z"),
 },
-new TimeSeriesPoint(813)
+new TimeSeriesPoint(813F)
 {
 Timestamp = DateTimeOffset.Parse("1974-12-01T00:00:00Z"),
 },
-new TimeSeriesPoint(834)
+new TimeSeriesPoint(834F)
 {
 Timestamp = DateTimeOffset.Parse("1975-01-01T00:00:00Z"),
 },
-new TimeSeriesPoint(782)
+new TimeSeriesPoint(782F)
 {
 Timestamp = DateTimeOffset.Parse("1975-02-01T00:00:00Z"),
 },
-new TimeSeriesPoint(892)
+new TimeSeriesPoint(892F)
 {
 Timestamp = DateTimeOffset.Parse("1975-03-01T00:00:00Z"),
 },
-new TimeSeriesPoint(903)
+new TimeSeriesPoint(903F)
 {
 Timestamp = DateTimeOffset.Parse("1975-04-01T00:00:00Z"),
 },
-new TimeSeriesPoint(966)
+new TimeSeriesPoint(966F)
 {
 Timestamp = DateTimeOffset.Parse("1975-05-01T00:00:00Z"),
 },
-new TimeSeriesPoint(937)
+new TimeSeriesPoint(937F)
 {
 Timestamp = DateTimeOffset.Parse("1975-06-01T00:00:00Z"),
 },
-new TimeSeriesPoint(896)
+new TimeSeriesPoint(896F)
 {
 Timestamp = DateTimeOffset.Parse("1975-07-01T00:00:00Z"),
 },
-new TimeSeriesPoint(858)
+new TimeSeriesPoint(858F)
 {
 Timestamp = DateTimeOffset.Parse("1975-08-01T00:00:00Z"),
 },
-new TimeSeriesPoint(817)
+new TimeSeriesPoint(817F)
 {
 Timestamp = DateTimeOffset.Parse("1975-09-01T00:00:00Z"),
 },
-new TimeSeriesPoint(827)
+new TimeSeriesPoint(827F)
 {
 Timestamp = DateTimeOffset.Parse("1975-10-01T00:00:00Z"),
 },
-new TimeSeriesPoint(797)
+new TimeSeriesPoint(797F)
 {
 Timestamp = DateTimeOffset.Parse("1975-11-01T00:00:00Z"),
 },
-new TimeSeriesPoint(843)
+new TimeSeriesPoint(843F)
 {
 Timestamp = DateTimeOffset.Parse("1975-12-01T00:00:00Z"),
 }
             })
             {
                 Granularity = TimeGranularity.Monthly,
-                MaxAnomalyRatio = (float)0.25,
+                MaxAnomalyRatio = 0.25F,
                 Sensitivity = 95,
                 ImputeMode = ImputeMode.Fixed,
-                ImputeFixedValue = 800,
+                ImputeFixedValue = 800F,
             };
             Response<UnivariateLastDetectionResult> response = client.DetectUnivariateLastPoint(options);
         }
@@ -1323,205 +1323,205 @@ Timestamp = DateTimeOffset.Parse("1975-12-01T00:00:00Z"),
 
             UnivariateDetectionOptions options = new UnivariateDetectionOptions(new TimeSeriesPoint[]
             {
-new TimeSeriesPoint(826)
+new TimeSeriesPoint(826F)
 {
 Timestamp = DateTimeOffset.Parse("1972-01-01T00:00:00Z"),
 },
-new TimeSeriesPoint(799)
+new TimeSeriesPoint(799F)
 {
 Timestamp = DateTimeOffset.Parse("1972-02-01T00:00:00Z"),
 },
-new TimeSeriesPoint(890)
+new TimeSeriesPoint(890F)
 {
 Timestamp = DateTimeOffset.Parse("1972-03-01T00:00:00Z"),
 },
-new TimeSeriesPoint(900)
+new TimeSeriesPoint(900F)
 {
 Timestamp = DateTimeOffset.Parse("1972-04-01T00:00:00Z"),
 },
-new TimeSeriesPoint(961)
+new TimeSeriesPoint(961F)
 {
 Timestamp = DateTimeOffset.Parse("1972-05-01T00:00:00Z"),
 },
-new TimeSeriesPoint(935)
+new TimeSeriesPoint(935F)
 {
 Timestamp = DateTimeOffset.Parse("1972-06-01T00:00:00Z"),
 },
-new TimeSeriesPoint(894)
+new TimeSeriesPoint(894F)
 {
 Timestamp = DateTimeOffset.Parse("1972-07-01T00:00:00Z"),
 },
-new TimeSeriesPoint(855)
+new TimeSeriesPoint(855F)
 {
 Timestamp = DateTimeOffset.Parse("1972-08-01T00:00:00Z"),
 },
-new TimeSeriesPoint(809)
+new TimeSeriesPoint(809F)
 {
 Timestamp = DateTimeOffset.Parse("1972-09-01T00:00:00Z"),
 },
-new TimeSeriesPoint(810)
+new TimeSeriesPoint(810F)
 {
 Timestamp = DateTimeOffset.Parse("1972-10-01T00:00:00Z"),
 },
-new TimeSeriesPoint(766)
+new TimeSeriesPoint(766F)
 {
 Timestamp = DateTimeOffset.Parse("1972-11-01T00:00:00Z"),
 },
-new TimeSeriesPoint(805)
+new TimeSeriesPoint(805F)
 {
 Timestamp = DateTimeOffset.Parse("1972-12-01T00:00:00Z"),
 },
-new TimeSeriesPoint(821)
+new TimeSeriesPoint(821F)
 {
 Timestamp = DateTimeOffset.Parse("1973-01-01T00:00:00Z"),
 },
-new TimeSeriesPoint(773)
+new TimeSeriesPoint(773F)
 {
 Timestamp = DateTimeOffset.Parse("1973-02-01T00:00:00Z"),
 },
-new TimeSeriesPoint(883)
+new TimeSeriesPoint(883F)
 {
 Timestamp = DateTimeOffset.Parse("1973-03-01T00:00:00Z"),
 },
-new TimeSeriesPoint(898)
+new TimeSeriesPoint(898F)
 {
 Timestamp = DateTimeOffset.Parse("1973-04-01T00:00:00Z"),
 },
-new TimeSeriesPoint(957)
+new TimeSeriesPoint(957F)
 {
 Timestamp = DateTimeOffset.Parse("1973-05-01T00:00:00Z"),
 },
-new TimeSeriesPoint(924)
+new TimeSeriesPoint(924F)
 {
 Timestamp = DateTimeOffset.Parse("1973-06-01T00:00:00Z"),
 },
-new TimeSeriesPoint(881)
+new TimeSeriesPoint(881F)
 {
 Timestamp = DateTimeOffset.Parse("1973-07-01T00:00:00Z"),
 },
-new TimeSeriesPoint(837)
+new TimeSeriesPoint(837F)
 {
 Timestamp = DateTimeOffset.Parse("1973-08-01T00:00:00Z"),
 },
-new TimeSeriesPoint(784)
+new TimeSeriesPoint(784F)
 {
 Timestamp = DateTimeOffset.Parse("1973-09-01T00:00:00Z"),
 },
-new TimeSeriesPoint(791)
+new TimeSeriesPoint(791F)
 {
 Timestamp = DateTimeOffset.Parse("1973-10-01T00:00:00Z"),
 },
-new TimeSeriesPoint(760)
+new TimeSeriesPoint(760F)
 {
 Timestamp = DateTimeOffset.Parse("1973-11-01T00:00:00Z"),
 },
-new TimeSeriesPoint(802)
+new TimeSeriesPoint(802F)
 {
 Timestamp = DateTimeOffset.Parse("1973-12-01T00:00:00Z"),
 },
-new TimeSeriesPoint(828)
+new TimeSeriesPoint(828F)
 {
 Timestamp = DateTimeOffset.Parse("1974-01-01T00:00:00Z"),
 },
-new TimeSeriesPoint(1030)
+new TimeSeriesPoint(1030F)
 {
 Timestamp = DateTimeOffset.Parse("1974-02-01T00:00:00Z"),
 },
-new TimeSeriesPoint(889)
+new TimeSeriesPoint(889F)
 {
 Timestamp = DateTimeOffset.Parse("1974-03-01T00:00:00Z"),
 },
-new TimeSeriesPoint(902)
+new TimeSeriesPoint(902F)
 {
 Timestamp = DateTimeOffset.Parse("1974-04-01T00:00:00Z"),
 },
-new TimeSeriesPoint(969)
+new TimeSeriesPoint(969F)
 {
 Timestamp = DateTimeOffset.Parse("1974-05-01T00:00:00Z"),
 },
-new TimeSeriesPoint(947)
+new TimeSeriesPoint(947F)
 {
 Timestamp = DateTimeOffset.Parse("1974-06-01T00:00:00Z"),
 },
-new TimeSeriesPoint(908)
+new TimeSeriesPoint(908F)
 {
 Timestamp = DateTimeOffset.Parse("1974-07-01T00:00:00Z"),
 },
-new TimeSeriesPoint(867)
+new TimeSeriesPoint(867F)
 {
 Timestamp = DateTimeOffset.Parse("1974-08-01T00:00:00Z"),
 },
-new TimeSeriesPoint(815)
+new TimeSeriesPoint(815F)
 {
 Timestamp = DateTimeOffset.Parse("1974-09-01T00:00:00Z"),
 },
-new TimeSeriesPoint(812)
+new TimeSeriesPoint(812F)
 {
 Timestamp = DateTimeOffset.Parse("1974-10-01T00:00:00Z"),
 },
-new TimeSeriesPoint(773)
+new TimeSeriesPoint(773F)
 {
 Timestamp = DateTimeOffset.Parse("1974-11-01T00:00:00Z"),
 },
-new TimeSeriesPoint(813)
+new TimeSeriesPoint(813F)
 {
 Timestamp = DateTimeOffset.Parse("1974-12-01T00:00:00Z"),
 },
-new TimeSeriesPoint(834)
+new TimeSeriesPoint(834F)
 {
 Timestamp = DateTimeOffset.Parse("1975-01-01T00:00:00Z"),
 },
-new TimeSeriesPoint(782)
+new TimeSeriesPoint(782F)
 {
 Timestamp = DateTimeOffset.Parse("1975-02-01T00:00:00Z"),
 },
-new TimeSeriesPoint(892)
+new TimeSeriesPoint(892F)
 {
 Timestamp = DateTimeOffset.Parse("1975-03-01T00:00:00Z"),
 },
-new TimeSeriesPoint(903)
+new TimeSeriesPoint(903F)
 {
 Timestamp = DateTimeOffset.Parse("1975-04-01T00:00:00Z"),
 },
-new TimeSeriesPoint(966)
+new TimeSeriesPoint(966F)
 {
 Timestamp = DateTimeOffset.Parse("1975-05-01T00:00:00Z"),
 },
-new TimeSeriesPoint(937)
+new TimeSeriesPoint(937F)
 {
 Timestamp = DateTimeOffset.Parse("1975-06-01T00:00:00Z"),
 },
-new TimeSeriesPoint(896)
+new TimeSeriesPoint(896F)
 {
 Timestamp = DateTimeOffset.Parse("1975-07-01T00:00:00Z"),
 },
-new TimeSeriesPoint(858)
+new TimeSeriesPoint(858F)
 {
 Timestamp = DateTimeOffset.Parse("1975-08-01T00:00:00Z"),
 },
-new TimeSeriesPoint(817)
+new TimeSeriesPoint(817F)
 {
 Timestamp = DateTimeOffset.Parse("1975-09-01T00:00:00Z"),
 },
-new TimeSeriesPoint(827)
+new TimeSeriesPoint(827F)
 {
 Timestamp = DateTimeOffset.Parse("1975-10-01T00:00:00Z"),
 },
-new TimeSeriesPoint(797)
+new TimeSeriesPoint(797F)
 {
 Timestamp = DateTimeOffset.Parse("1975-11-01T00:00:00Z"),
 },
-new TimeSeriesPoint(843)
+new TimeSeriesPoint(843F)
 {
 Timestamp = DateTimeOffset.Parse("1975-12-01T00:00:00Z"),
 }
             })
             {
                 Granularity = TimeGranularity.Monthly,
-                MaxAnomalyRatio = (float)0.25,
+                MaxAnomalyRatio = 0.25F,
                 Sensitivity = 95,
                 ImputeMode = ImputeMode.Fixed,
-                ImputeFixedValue = 800,
+                ImputeFixedValue = 800F,
             };
             Response<UnivariateLastDetectionResult> response = await client.DetectUnivariateLastPointAsync(options);
         }
@@ -1541,1293 +1541,1293 @@ Timestamp = DateTimeOffset.Parse("1975-12-01T00:00:00Z"),
 new
 {
 timestamp = "2017-01-01T06:45:00Z",
-value = 1639196,
+value = 1639196F,
 },
 new
 {
 timestamp = "2017-01-01T06:50:00Z",
-value = 1639290,
+value = 1639290F,
 },
 new
 {
 timestamp = "2017-01-01T06:55:00Z",
-value = 1667293,
+value = 1667293F,
 },
 new
 {
 timestamp = "2017-01-01T07:00:00Z",
-value = 1703130,
+value = 1703130F,
 },
 new
 {
 timestamp = "2017-01-01T07:05:00Z",
-value = 1650912,
+value = 1650912F,
 },
 new
 {
 timestamp = "2017-01-01T07:10:00Z",
-value = 1653596,
+value = 1653596F,
 },
 new
 {
 timestamp = "2017-01-01T07:15:00Z",
-value = 1653793,
+value = 1653793F,
 },
 new
 {
 timestamp = "2017-01-01T07:20:00Z",
-value = 1653795,
+value = 1653795F,
 },
 new
 {
 timestamp = "2017-01-01T07:25:00Z",
-value = 1663471,
+value = 1663471F,
 },
 new
 {
 timestamp = "2017-01-01T07:30:00Z",
-value = 1662358,
+value = 1662358F,
 },
 new
 {
 timestamp = "2017-01-01T07:35:00Z",
-value = 1664320,
+value = 1664320F,
 },
 new
 {
 timestamp = "2017-01-01T07:40:00Z",
-value = 1664942,
+value = 1664942F,
 },
 new
 {
 timestamp = "2017-01-01T07:45:00Z",
-value = 1664966,
+value = 1664966F,
 },
 new
 {
 timestamp = "2017-01-01T07:50:00Z",
-value = 1724271,
+value = 1724271F,
 },
 new
 {
 timestamp = "2017-01-01T07:55:00Z",
-value = 1678720,
+value = 1678720F,
 },
 new
 {
 timestamp = "2017-01-01T08:00:00Z",
-value = 1672536,
+value = 1672536F,
 },
 new
 {
 timestamp = "2017-01-01T08:05:00Z",
-value = 1672544,
+value = 1672544F,
 },
 new
 {
 timestamp = "2017-01-01T08:10:00Z",
-value = 1672364,
+value = 1672364F,
 },
 new
 {
 timestamp = "2017-01-01T08:15:00Z",
-value = 1672912,
+value = 1672912F,
 },
 new
 {
 timestamp = "2017-01-01T08:20:00Z",
-value = 1672736,
+value = 1672736F,
 },
 new
 {
 timestamp = "2017-01-01T08:25:00Z",
-value = 1672725,
+value = 1672725F,
 },
 new
 {
 timestamp = "2017-01-01T08:30:00Z",
-value = 1673247,
+value = 1673247F,
 },
 new
 {
 timestamp = "2017-01-01T08:35:00Z",
-value = 1673109,
+value = 1673109F,
 },
 new
 {
 timestamp = "2017-01-01T08:40:00Z",
-value = 1690088,
+value = 1690088F,
 },
 new
 {
 timestamp = "2017-01-01T08:45:00Z",
-value = 1703865,
+value = 1703865F,
 },
 new
 {
 timestamp = "2017-01-01T08:50:00Z",
-value = 1703865,
+value = 1703865F,
 },
 new
 {
 timestamp = "2017-01-01T08:55:00Z",
-value = 1786581,
+value = 1786581F,
 },
 new
 {
 timestamp = "2017-01-01T09:00:00Z",
-value = 1800945,
+value = 1800945F,
 },
 new
 {
 timestamp = "2017-01-01T09:05:00Z",
-value = 1800957,
+value = 1800957F,
 },
 new
 {
 timestamp = "2017-01-01T09:10:00Z",
-value = 1801191,
+value = 1801191F,
 },
 new
 {
 timestamp = "2017-01-01T09:15:00Z",
-value = 1801412,
+value = 1801412F,
 },
 new
 {
 timestamp = "2017-01-01T09:20:00Z",
-value = 1801621,
+value = 1801621F,
 },
 new
 {
 timestamp = "2017-01-01T09:25:00Z",
-value = 1801621,
+value = 1801621F,
 },
 new
 {
 timestamp = "2017-01-01T09:30:00Z",
-value = 1801654,
+value = 1801654F,
 },
 new
 {
 timestamp = "2017-01-01T09:35:00Z",
-value = 1802105,
+value = 1802105F,
 },
 new
 {
 timestamp = "2017-01-01T09:40:00Z",
-value = 1801800,
+value = 1801800F,
 },
 new
 {
 timestamp = "2017-01-01T09:45:00Z",
-value = 1803040,
+value = 1803040F,
 },
 new
 {
 timestamp = "2017-01-01T09:50:00Z",
-value = 1803672,
+value = 1803672F,
 },
 new
 {
 timestamp = "2017-01-01T09:55:00Z",
-value = 1803535,
+value = 1803535F,
 },
 new
 {
 timestamp = "2017-01-01T10:00:00Z",
-value = 1803541,
+value = 1803541F,
 },
 new
 {
 timestamp = "2017-01-01T10:05:00Z",
-value = 1803545,
+value = 1803545F,
 },
 new
 {
 timestamp = "2017-01-01T10:10:00Z",
-value = 1803599,
+value = 1803599F,
 },
 new
 {
 timestamp = "2017-01-01T10:15:00Z",
-value = 1803616,
+value = 1803616F,
 },
 new
 {
 timestamp = "2017-01-01T10:20:00Z",
-value = 1803619,
+value = 1803619F,
 },
 new
 {
 timestamp = "2017-01-01T10:25:00Z",
-value = 1809942,
+value = 1809942F,
 },
 new
 {
 timestamp = "2017-01-01T10:30:00Z",
-value = 1802720,
+value = 1802720F,
 },
 new
 {
 timestamp = "2017-01-01T10:35:00Z",
-value = 1802720,
+value = 1802720F,
 },
 new
 {
 timestamp = "2017-01-01T10:40:00Z",
-value = 1802888,
+value = 1802888F,
 },
 new
 {
 timestamp = "2017-01-01T10:45:00Z",
-value = 1809574,
+value = 1809574F,
 },
 new
 {
 timestamp = "2017-01-01T10:50:00Z",
-value = 1803896,
+value = 1803896F,
 },
 new
 {
 timestamp = "2017-01-01T10:55:00Z",
-value = 1803850,
+value = 1803850F,
 },
 new
 {
 timestamp = "2017-01-01T11:00:00Z",
-value = 1803854,
+value = 1803854F,
 },
 new
 {
 timestamp = "2017-01-01T11:05:00Z",
-value = 1803854,
+value = 1803854F,
 },
 new
 {
 timestamp = "2017-01-01T11:10:00Z",
-value = 1803797,
+value = 1803797F,
 },
 new
 {
 timestamp = "2017-01-01T11:15:00Z",
-value = 1803921,
+value = 1803921F,
 },
 new
 {
 timestamp = "2017-01-01T11:20:00Z",
-value = 1803933,
+value = 1803933F,
 },
 new
 {
 timestamp = "2017-01-01T11:25:00Z",
-value = 1804040,
+value = 1804040F,
 },
 new
 {
 timestamp = "2017-01-01T11:30:00Z",
-value = 1804044,
+value = 1804044F,
 },
 new
 {
 timestamp = "2017-01-01T11:35:00Z",
-value = 1804070,
+value = 1804070F,
 },
 new
 {
 timestamp = "2017-01-01T11:40:00Z",
-value = 1804070,
+value = 1804070F,
 },
 new
 {
 timestamp = "2017-01-01T11:45:00Z",
-value = 1804068,
+value = 1804068F,
 },
 new
 {
 timestamp = "2017-01-01T11:50:00Z",
-value = 1804073,
+value = 1804073F,
 },
 new
 {
 timestamp = "2017-01-01T11:55:00Z",
-value = 1804101,
+value = 1804101F,
 },
 new
 {
 timestamp = "2017-01-01T12:00:00Z",
-value = 1804674,
+value = 1804674F,
 },
 new
 {
 timestamp = "2017-01-01T12:05:00Z",
-value = 1804714,
+value = 1804714F,
 },
 new
 {
 timestamp = "2017-01-01T12:10:00Z",
-value = 1804730,
+value = 1804730F,
 },
 new
 {
 timestamp = "2017-01-01T12:15:00Z",
-value = 1804816,
+value = 1804816F,
 },
 new
 {
 timestamp = "2017-01-01T12:20:00Z",
-value = 1803996,
+value = 1803996F,
 },
 new
 {
 timestamp = "2017-01-01T12:25:00Z",
-value = 1803998,
+value = 1803998F,
 },
 new
 {
 timestamp = "2017-01-01T12:30:00Z",
-value = 1804015,
+value = 1804015F,
 },
 new
 {
 timestamp = "2017-01-01T12:35:00Z",
-value = 1804047,
+value = 1804047F,
 },
 new
 {
 timestamp = "2017-01-01T12:40:00Z",
-value = 1804050,
+value = 1804050F,
 },
 new
 {
 timestamp = "2017-01-01T12:45:00Z",
-value = 1804218,
+value = 1804218F,
 },
 new
 {
 timestamp = "2017-01-01T12:50:00Z",
-value = 1804217,
+value = 1804217F,
 },
 new
 {
 timestamp = "2017-01-01T12:55:00Z",
-value = 1804217,
+value = 1804217F,
 },
 new
 {
 timestamp = "2017-01-01T13:00:00Z",
-value = 1804205,
+value = 1804205F,
 },
 new
 {
 timestamp = "2017-01-01T13:05:00Z",
-value = 1804728,
+value = 1804728F,
 },
 new
 {
 timestamp = "2017-01-01T13:10:00Z",
-value = 1804748,
+value = 1804748F,
 },
 new
 {
 timestamp = "2017-01-01T13:15:00Z",
-value = 1805232,
+value = 1805232F,
 },
 new
 {
 timestamp = "2017-01-01T13:20:00Z",
-value = 1814121,
+value = 1814121F,
 },
 new
 {
 timestamp = "2017-01-01T13:25:00Z",
-value = 1806789,
+value = 1806789F,
 },
 new
 {
 timestamp = "2017-01-01T13:30:00Z",
-value = 1806119,
+value = 1806119F,
 },
 new
 {
 timestamp = "2017-01-01T13:35:00Z",
-value = 1806329,
+value = 1806329F,
 },
 new
 {
 timestamp = "2017-01-01T13:40:00Z",
-value = 1806454,
+value = 1806454F,
 },
 new
 {
 timestamp = "2017-01-01T13:45:00Z",
-value = 1806852,
+value = 1806852F,
 },
 new
 {
 timestamp = "2017-01-01T13:50:00Z",
-value = 1807347,
+value = 1807347F,
 },
 new
 {
 timestamp = "2017-01-01T13:55:00Z",
-value = 1812144,
+value = 1812144F,
 },
 new
 {
 timestamp = "2017-01-01T14:00:00Z",
-value = 1807418,
+value = 1807418F,
 },
 new
 {
 timestamp = "2017-01-01T14:05:00Z",
-value = 1807418,
+value = 1807418F,
 },
 new
 {
 timestamp = "2017-01-01T14:10:00Z",
-value = 1807432,
+value = 1807432F,
 },
 new
 {
 timestamp = "2017-01-01T14:15:00Z",
-value = 1808540,
+value = 1808540F,
 },
 new
 {
 timestamp = "2017-01-01T14:20:00Z",
-value = 1808541,
+value = 1808541F,
 },
 new
 {
 timestamp = "2017-01-01T14:25:00Z",
-value = 1807831,
+value = 1807831F,
 },
 new
 {
 timestamp = "2017-01-01T14:30:00Z",
-value = 1807852,
+value = 1807852F,
 },
 new
 {
 timestamp = "2017-01-01T14:35:00Z",
-value = 1807811,
+value = 1807811F,
 },
 new
 {
 timestamp = "2017-01-01T14:40:00Z",
-value = 2214285,
+value = 2214285F,
 },
 new
 {
 timestamp = "2017-01-01T14:45:00Z",
-value = 2215019,
+value = 2215019F,
 },
 new
 {
 timestamp = "2017-01-01T14:50:00Z",
-value = 2215329,
+value = 2215329F,
 },
 new
 {
 timestamp = "2017-01-01T14:55:00Z",
-value = 2215097,
+value = 2215097F,
 },
 new
 {
 timestamp = "2017-01-01T15:00:00Z",
-value = 2215129,
+value = 2215129F,
 },
 new
 {
 timestamp = "2017-01-01T15:05:00Z",
-value = 2215120,
+value = 2215120F,
 },
 new
 {
 timestamp = "2017-01-01T15:10:00Z",
-value = 2217056,
+value = 2217056F,
 },
 new
 {
 timestamp = "2017-01-01T15:15:00Z",
-value = 2217056,
+value = 2217056F,
 },
 new
 {
 timestamp = "2017-01-01T15:20:00Z",
-value = 2222126,
+value = 2222126F,
 },
 new
 {
 timestamp = "2017-01-01T15:25:00Z",
-value = 2226472,
+value = 2226472F,
 },
 new
 {
 timestamp = "2017-01-01T15:30:00Z",
-value = 2226722,
+value = 2226722F,
 },
 new
 {
 timestamp = "2017-01-01T15:35:00Z",
-value = 2226729,
+value = 2226729F,
 },
 new
 {
 timestamp = "2017-01-01T15:40:00Z",
-value = 2226735,
+value = 2226735F,
 },
 new
 {
 timestamp = "2017-01-01T15:45:00Z",
-value = 2226735,
+value = 2226735F,
 },
 new
 {
 timestamp = "2017-01-01T15:50:00Z",
-value = 2226735,
+value = 2226735F,
 },
 new
 {
 timestamp = "2017-01-01T15:55:00Z",
-value = 2226952,
+value = 2226952F,
 },
 new
 {
 timestamp = "2017-01-01T16:00:00Z",
-value = 2226962,
+value = 2226962F,
 },
 new
 {
 timestamp = "2017-01-01T16:05:00Z",
-value = 2649337,
+value = 2649337F,
 },
 new
 {
 timestamp = "2017-01-01T16:10:00Z",
-value = 2092796,
+value = 2092796F,
 },
 new
 {
 timestamp = "2017-01-01T16:15:00Z",
-value = 2092839,
+value = 2092839F,
 },
 new
 {
 timestamp = "2017-01-01T16:20:00Z",
-value = 2092940,
+value = 2092940F,
 },
 new
 {
 timestamp = "2017-01-01T16:25:00Z",
-value = 2092940,
+value = 2092940F,
 },
 new
 {
 timestamp = "2017-01-01T16:30:00Z",
-value = 2092965,
+value = 2092965F,
 },
 new
 {
 timestamp = "2017-01-01T16:35:00Z",
-value = 2092979,
+value = 2092979F,
 },
 new
 {
 timestamp = "2017-01-01T16:40:00Z",
-value = 2095588,
+value = 2095588F,
 },
 new
 {
 timestamp = "2017-01-01T16:45:00Z",
-value = 2099586,
+value = 2099586F,
 },
 new
 {
 timestamp = "2017-01-01T16:50:00Z",
-value = 2102981,
+value = 2102981F,
 },
 new
 {
 timestamp = "2017-01-01T16:55:00Z",
-value = 2108053,
+value = 2108053F,
 },
 new
 {
 timestamp = "2017-01-01T17:00:00Z",
-value = 2107907,
+value = 2107907F,
 },
 new
 {
 timestamp = "2017-01-01T17:05:00Z",
-value = 2108241,
+value = 2108241F,
 },
 new
 {
 timestamp = "2017-01-01T17:10:00Z",
-value = 2100321,
+value = 2100321F,
 },
 new
 {
 timestamp = "2017-01-01T17:15:00Z",
-value = 2100448,
+value = 2100448F,
 },
 new
 {
 timestamp = "2017-01-01T17:20:00Z",
-value = 2100483,
+value = 2100483F,
 },
 new
 {
 timestamp = "2017-01-01T17:25:00Z",
-value = 2103042,
+value = 2103042F,
 },
 new
 {
 timestamp = "2017-01-01T17:30:00Z",
-value = 2103037,
+value = 2103037F,
 },
 new
 {
 timestamp = "2017-01-01T17:35:00Z",
-value = 2103040,
+value = 2103040F,
 },
 new
 {
 timestamp = "2017-01-01T17:40:00Z",
-value = 2103054,
+value = 2103054F,
 },
 new
 {
 timestamp = "2017-01-01T17:45:00Z",
-value = 2103058,
+value = 2103058F,
 },
 new
 {
 timestamp = "2017-01-01T17:50:00Z",
-value = 1830757,
+value = 1830757F,
 },
 new
 {
 timestamp = "2017-01-01T17:55:00Z",
-value = 1830855,
+value = 1830855F,
 },
 new
 {
 timestamp = "2017-01-01T18:00:00Z",
-value = 1831495,
+value = 1831495F,
 },
 new
 {
 timestamp = "2017-01-01T18:05:00Z",
-value = 1831463,
+value = 1831463F,
 },
 new
 {
 timestamp = "2017-01-01T18:10:00Z",
-value = 1831963,
+value = 1831963F,
 },
 new
 {
 timestamp = "2017-01-01T18:15:00Z",
-value = 1832046,
+value = 1832046F,
 },
 new
 {
 timestamp = "2017-01-01T18:20:00Z",
-value = 1832070,
+value = 1832070F,
 },
 new
 {
 timestamp = "2017-01-01T18:25:00Z",
-value = 1835511,
+value = 1835511F,
 },
 new
 {
 timestamp = "2017-01-01T18:30:00Z",
-value = 1835265,
+value = 1835265F,
 },
 new
 {
 timestamp = "2017-01-01T18:35:00Z",
-value = 1835481,
+value = 1835481F,
 },
 new
 {
 timestamp = "2017-01-01T18:40:00Z",
-value = 1835578,
+value = 1835578F,
 },
 new
 {
 timestamp = "2017-01-01T18:45:00Z",
-value = 1835611,
+value = 1835611F,
 },
 new
 {
 timestamp = "2017-01-01T18:50:00Z",
-value = 1836314,
+value = 1836314F,
 },
 new
 {
 timestamp = "2017-01-01T18:55:00Z",
-value = 1836369,
+value = 1836369F,
 },
 new
 {
 timestamp = "2017-01-01T19:00:00Z",
-value = 1837280,
+value = 1837280F,
 },
 new
 {
 timestamp = "2017-01-01T19:05:00Z",
-value = 1842939,
+value = 1842939F,
 },
 new
 {
 timestamp = "2017-01-01T19:10:00Z",
-value = 1843126,
+value = 1843126F,
 },
 new
 {
 timestamp = "2017-01-01T19:15:00Z",
-value = 1845840,
+value = 1845840F,
 },
 new
 {
 timestamp = "2017-01-01T19:20:00Z",
-value = 1842444,
+value = 1842444F,
 },
 new
 {
 timestamp = "2017-01-01T19:25:00Z",
-value = 1839891,
+value = 1839891F,
 },
 new
 {
 timestamp = "2017-01-01T19:30:00Z",
-value = 1839875,
+value = 1839875F,
 },
 new
 {
 timestamp = "2017-01-01T19:35:00Z",
-value = 1839870,
+value = 1839870F,
 },
 new
 {
 timestamp = "2017-01-01T19:40:00Z",
-value = 1840090,
+value = 1840090F,
 },
 new
 {
 timestamp = "2017-01-01T19:45:00Z",
-value = 1840479,
+value = 1840479F,
 },
 new
 {
 timestamp = "2017-01-01T19:50:00Z",
-value = 1840479,
+value = 1840479F,
 },
 new
 {
 timestamp = "2017-01-01T19:55:00Z",
-value = 1840482,
+value = 1840482F,
 },
 new
 {
 timestamp = "2017-01-01T20:00:00Z",
-value = 1841522,
+value = 1841522F,
 },
 new
 {
 timestamp = "2017-01-01T20:05:00Z",
-value = 1841836,
+value = 1841836F,
 },
 new
 {
 timestamp = "2017-01-01T20:10:00Z",
-value = 1842377,
+value = 1842377F,
 },
 new
 {
 timestamp = "2017-01-01T20:15:00Z",
-value = 1842388,
+value = 1842388F,
 },
 new
 {
 timestamp = "2017-01-01T20:20:00Z",
-value = 1842489,
+value = 1842489F,
 },
 new
 {
 timestamp = "2017-01-01T20:25:00Z",
-value = 1842489,
+value = 1842489F,
 },
 new
 {
 timestamp = "2017-01-01T20:30:00Z",
-value = 1842489,
+value = 1842489F,
 },
 new
 {
 timestamp = "2017-01-01T20:35:00Z",
-value = 1842496,
+value = 1842496F,
 },
 new
 {
 timestamp = "2017-01-01T20:40:00Z",
-value = 1842689,
+value = 1842689F,
 },
 new
 {
 timestamp = "2017-01-01T20:45:00Z",
-value = 1843117,
+value = 1843117F,
 },
 new
 {
 timestamp = "2017-01-01T20:50:00Z",
-value = 1843116,
+value = 1843116F,
 },
 new
 {
 timestamp = "2017-01-01T20:55:00Z",
-value = 1843227,
+value = 1843227F,
 },
 new
 {
 timestamp = "2017-01-01T21:00:00Z",
-value = 1843138,
+value = 1843138F,
 },
 new
 {
 timestamp = "2017-01-01T21:05:00Z",
-value = 1843141,
+value = 1843141F,
 },
 new
 {
 timestamp = "2017-01-01T21:10:00Z",
-value = 1843310,
+value = 1843310F,
 },
 new
 {
 timestamp = "2017-01-01T21:15:00Z",
-value = 1843310,
+value = 1843310F,
 },
 new
 {
 timestamp = "2017-01-01T21:20:00Z",
-value = 1843507,
+value = 1843507F,
 },
 new
 {
 timestamp = "2017-01-01T21:25:00Z",
-value = 1843953,
+value = 1843953F,
 },
 new
 {
 timestamp = "2017-01-01T21:30:00Z",
-value = 1844778,
+value = 1844778F,
 },
 new
 {
 timestamp = "2017-01-01T21:35:00Z",
-value = 1843918,
+value = 1843918F,
 },
 new
 {
 timestamp = "2017-01-01T21:40:00Z",
-value = 1882692,
+value = 1882692F,
 },
 new
 {
 timestamp = "2017-01-01T21:45:00Z",
-value = 1974888,
+value = 1974888F,
 },
 new
 {
 timestamp = "2017-01-01T21:50:00Z",
-value = 2157136,
+value = 2157136F,
 },
 new
 {
 timestamp = "2017-01-01T21:55:00Z",
-value = 2154987,
+value = 2154987F,
 },
 new
 {
 timestamp = "2017-01-01T22:00:00Z",
-value = 2155664,
+value = 2155664F,
 },
 new
 {
 timestamp = "2017-01-01T22:05:00Z",
-value = 2155660,
+value = 2155660F,
 },
 new
 {
 timestamp = "2017-01-01T22:10:00Z",
-value = 2155824,
+value = 2155824F,
 },
 new
 {
 timestamp = "2017-01-01T22:15:00Z",
-value = 2155824,
+value = 2155824F,
 },
 new
 {
 timestamp = "2017-01-01T22:20:00Z",
-value = 2156329,
+value = 2156329F,
 },
 new
 {
 timestamp = "2017-01-01T22:25:00Z",
-value = 2156479,
+value = 2156479F,
 },
 new
 {
 timestamp = "2017-01-01T22:30:00Z",
-value = 2165269,
+value = 2165269F,
 },
 new
 {
 timestamp = "2017-01-01T22:35:00Z",
-value = 2165433,
+value = 2165433F,
 },
 new
 {
 timestamp = "2017-01-01T22:40:00Z",
-value = 2165739,
+value = 2165739F,
 },
 new
 {
 timestamp = "2017-01-01T22:45:00Z",
-value = 2165931,
+value = 2165931F,
 },
 new
 {
 timestamp = "2017-01-01T22:50:00Z",
-value = 2165928,
+value = 2165928F,
 },
 new
 {
 timestamp = "2017-01-01T22:55:00Z",
-value = 2165989,
+value = 2165989F,
 },
 new
 {
 timestamp = "2017-01-01T23:00:00Z",
-value = 2228961,
+value = 2228961F,
 },
 new
 {
 timestamp = "2017-01-01T23:05:00Z",
-value = 2228961,
+value = 2228961F,
 },
 new
 {
 timestamp = "2017-01-01T23:10:00Z",
-value = 2228961,
+value = 2228961F,
 },
 new
 {
 timestamp = "2017-01-01T23:15:00Z",
-value = 2485802,
+value = 2485802F,
 },
 new
 {
 timestamp = "2017-01-01T23:20:00Z",
-value = 2485802,
+value = 2485802F,
 },
 new
 {
 timestamp = "2017-01-01T23:25:00Z",
-value = 2486021,
+value = 2486021F,
 },
 new
 {
 timestamp = "2017-01-01T23:30:00Z",
-value = 2485293,
+value = 2485293F,
 },
 new
 {
 timestamp = "2017-01-01T23:35:00Z",
-value = 2485293,
+value = 2485293F,
 },
 new
 {
 timestamp = "2017-01-01T23:40:00Z",
-value = 2485324,
+value = 2485324F,
 },
 new
 {
 timestamp = "2017-01-01T23:45:00Z",
-value = 2489142,
+value = 2489142F,
 },
 new
 {
 timestamp = "2017-01-01T23:50:00Z",
-value = 2526312,
+value = 2526312F,
 },
 new
 {
 timestamp = "2017-01-01T23:55:00Z",
-value = 2526313,
+value = 2526313F,
 },
 new
 {
 timestamp = "2017-01-02T00:00:00Z",
-value = 2526314,
+value = 2526314F,
 },
 new
 {
 timestamp = "2017-01-02T00:05:00Z",
-value = 2526324,
+value = 2526324F,
 },
 new
 {
 timestamp = "2017-01-02T00:10:00Z",
-value = 2526325,
+value = 2526325F,
 },
 new
 {
 timestamp = "2017-01-02T00:15:00Z",
-value = 2526205,
+value = 2526205F,
 },
 new
 {
 timestamp = "2017-01-02T00:20:00Z",
-value = 2526226,
+value = 2526226F,
 },
 new
 {
 timestamp = "2017-01-02T00:25:00Z",
-value = 2526475,
+value = 2526475F,
 },
 new
 {
 timestamp = "2017-01-02T00:30:00Z",
-value = 2526471,
+value = 2526471F,
 },
 new
 {
 timestamp = "2017-01-02T00:35:00Z",
-value = 2526471,
+value = 2526471F,
 },
 new
 {
 timestamp = "2017-01-02T00:40:00Z",
-value = 2526534,
+value = 2526534F,
 },
 new
 {
 timestamp = "2017-01-02T00:45:00Z",
-value = 2526646,
+value = 2526646F,
 },
 new
 {
 timestamp = "2017-01-02T00:50:00Z",
-value = 2526646,
+value = 2526646F,
 },
 new
 {
 timestamp = "2017-01-02T00:55:00Z",
-value = 2526648,
+value = 2526648F,
 },
 new
 {
 timestamp = "2017-01-02T01:00:00Z",
-value = 2526658,
+value = 2526658F,
 },
 new
 {
 timestamp = "2017-01-02T01:05:00Z",
-value = 2526771,
+value = 2526771F,
 },
 new
 {
 timestamp = "2017-01-02T01:10:00Z",
-value = 2526773,
+value = 2526773F,
 },
 new
 {
 timestamp = "2017-01-02T01:15:00Z",
-value = 2526793,
+value = 2526793F,
 },
 new
 {
 timestamp = "2017-01-02T01:20:00Z",
-value = 2527010,
+value = 2527010F,
 },
 new
 {
 timestamp = "2017-01-02T01:25:00Z",
-value = 2527031,
+value = 2527031F,
 },
 new
 {
 timestamp = "2017-01-02T01:30:00Z",
-value = 3178096,
+value = 3178096F,
 },
 new
 {
 timestamp = "2017-01-02T01:35:00Z",
-value = 3196305,
+value = 3196305F,
 },
 new
 {
 timestamp = "2017-01-02T01:40:00Z",
-value = 3196202,
+value = 3196202F,
 },
 new
 {
 timestamp = "2017-01-02T01:45:00Z",
-value = 3196202,
+value = 3196202F,
 },
 new
 {
 timestamp = "2017-01-02T01:50:00Z",
-value = 3196205,
+value = 3196205F,
 },
 new
 {
 timestamp = "2017-01-02T01:55:00Z",
-value = 3229232,
+value = 3229232F,
 },
 new
 {
 timestamp = "2017-01-02T02:00:00Z",
-value = 3230463,
+value = 3230463F,
 },
 new
 {
 timestamp = "2017-01-02T02:05:00Z",
-value = 3230468,
+value = 3230468F,
 },
 new
 {
 timestamp = "2017-01-02T02:10:00Z",
-value = 3230468,
+value = 3230468F,
 },
 new
 {
 timestamp = "2017-01-02T02:15:00Z",
-value = 3230468,
+value = 3230468F,
 },
 new
 {
 timestamp = "2017-01-02T02:20:00Z",
-value = 3230470,
+value = 3230470F,
 },
 new
 {
 timestamp = "2017-01-02T02:25:00Z",
-value = 3230467,
+value = 3230467F,
 },
 new
 {
 timestamp = "2017-01-02T02:30:00Z",
-value = 3230506,
+value = 3230506F,
 },
 new
 {
 timestamp = "2017-01-02T02:35:00Z",
-value = 3231536,
+value = 3231536F,
 },
 new
 {
 timestamp = "2017-01-02T02:40:00Z",
-value = 3230723,
+value = 3230723F,
 },
 new
 {
 timestamp = "2017-01-02T02:45:00Z",
-value = 3230727,
+value = 3230727F,
 },
 new
 {
 timestamp = "2017-01-02T02:50:00Z",
-value = 3230727,
+value = 3230727F,
 },
 new
 {
 timestamp = "2017-01-02T02:55:00Z",
-value = 3230727,
+value = 3230727F,
 },
 new
 {
 timestamp = "2017-01-02T03:00:00Z",
-value = 3231880,
+value = 3231880F,
 },
 new
 {
 timestamp = "2017-01-02T03:05:00Z",
-value = 3232283,
+value = 3232283F,
 },
 new
 {
 timestamp = "2017-01-02T03:10:00Z",
-value = 3232283,
+value = 3232283F,
 },
 new
 {
 timestamp = "2017-01-02T03:15:00Z",
-value = 3232283,
+value = 3232283F,
 },
 new
 {
 timestamp = "2017-01-02T03:20:00Z",
-value = 3232325,
+value = 3232325F,
 },
 new
 {
 timestamp = "2017-01-02T03:25:00Z",
-value = 3232323,
+value = 3232323F,
 },
 new
 {
 timestamp = "2017-01-02T03:30:00Z",
-value = 3232327,
+value = 3232327F,
 },
 new
 {
 timestamp = "2017-01-02T03:35:00Z",
-value = 3232340,
+value = 3232340F,
 },
 new
 {
 timestamp = "2017-01-02T03:40:00Z",
-value = 3232713,
+value = 3232713F,
 },
 new
 {
 timestamp = "2017-01-02T03:45:00Z",
-value = 3232729,
+value = 3232729F,
 },
 new
 {
 timestamp = "2017-01-02T03:50:00Z",
-value = 3232756,
+value = 3232756F,
 },
 new
 {
 timestamp = "2017-01-02T03:55:00Z",
-value = 3233500,
+value = 3233500F,
 },
 new
 {
 timestamp = "2017-01-02T04:00:00Z",
-value = 3233500,
+value = 3233500F,
 },
 new
 {
 timestamp = "2017-01-02T04:05:00Z",
-value = 3233500,
+value = 3233500F,
 }
             },
                 granularity = "minutely",
                 customInterval = 5,
                 stableTrendWindow = 10,
-                threshold = 0.99,
+                threshold = 0.99F,
                 period = 0,
             });
             Response response = client.DetectUnivariateChangePoint(content);
@@ -2851,1293 +2851,1293 @@ value = 3233500,
 new
 {
 timestamp = "2017-01-01T06:45:00Z",
-value = 1639196,
+value = 1639196F,
 },
 new
 {
 timestamp = "2017-01-01T06:50:00Z",
-value = 1639290,
+value = 1639290F,
 },
 new
 {
 timestamp = "2017-01-01T06:55:00Z",
-value = 1667293,
+value = 1667293F,
 },
 new
 {
 timestamp = "2017-01-01T07:00:00Z",
-value = 1703130,
+value = 1703130F,
 },
 new
 {
 timestamp = "2017-01-01T07:05:00Z",
-value = 1650912,
+value = 1650912F,
 },
 new
 {
 timestamp = "2017-01-01T07:10:00Z",
-value = 1653596,
+value = 1653596F,
 },
 new
 {
 timestamp = "2017-01-01T07:15:00Z",
-value = 1653793,
+value = 1653793F,
 },
 new
 {
 timestamp = "2017-01-01T07:20:00Z",
-value = 1653795,
+value = 1653795F,
 },
 new
 {
 timestamp = "2017-01-01T07:25:00Z",
-value = 1663471,
+value = 1663471F,
 },
 new
 {
 timestamp = "2017-01-01T07:30:00Z",
-value = 1662358,
+value = 1662358F,
 },
 new
 {
 timestamp = "2017-01-01T07:35:00Z",
-value = 1664320,
+value = 1664320F,
 },
 new
 {
 timestamp = "2017-01-01T07:40:00Z",
-value = 1664942,
+value = 1664942F,
 },
 new
 {
 timestamp = "2017-01-01T07:45:00Z",
-value = 1664966,
+value = 1664966F,
 },
 new
 {
 timestamp = "2017-01-01T07:50:00Z",
-value = 1724271,
+value = 1724271F,
 },
 new
 {
 timestamp = "2017-01-01T07:55:00Z",
-value = 1678720,
+value = 1678720F,
 },
 new
 {
 timestamp = "2017-01-01T08:00:00Z",
-value = 1672536,
+value = 1672536F,
 },
 new
 {
 timestamp = "2017-01-01T08:05:00Z",
-value = 1672544,
+value = 1672544F,
 },
 new
 {
 timestamp = "2017-01-01T08:10:00Z",
-value = 1672364,
+value = 1672364F,
 },
 new
 {
 timestamp = "2017-01-01T08:15:00Z",
-value = 1672912,
+value = 1672912F,
 },
 new
 {
 timestamp = "2017-01-01T08:20:00Z",
-value = 1672736,
+value = 1672736F,
 },
 new
 {
 timestamp = "2017-01-01T08:25:00Z",
-value = 1672725,
+value = 1672725F,
 },
 new
 {
 timestamp = "2017-01-01T08:30:00Z",
-value = 1673247,
+value = 1673247F,
 },
 new
 {
 timestamp = "2017-01-01T08:35:00Z",
-value = 1673109,
+value = 1673109F,
 },
 new
 {
 timestamp = "2017-01-01T08:40:00Z",
-value = 1690088,
+value = 1690088F,
 },
 new
 {
 timestamp = "2017-01-01T08:45:00Z",
-value = 1703865,
+value = 1703865F,
 },
 new
 {
 timestamp = "2017-01-01T08:50:00Z",
-value = 1703865,
+value = 1703865F,
 },
 new
 {
 timestamp = "2017-01-01T08:55:00Z",
-value = 1786581,
+value = 1786581F,
 },
 new
 {
 timestamp = "2017-01-01T09:00:00Z",
-value = 1800945,
+value = 1800945F,
 },
 new
 {
 timestamp = "2017-01-01T09:05:00Z",
-value = 1800957,
+value = 1800957F,
 },
 new
 {
 timestamp = "2017-01-01T09:10:00Z",
-value = 1801191,
+value = 1801191F,
 },
 new
 {
 timestamp = "2017-01-01T09:15:00Z",
-value = 1801412,
+value = 1801412F,
 },
 new
 {
 timestamp = "2017-01-01T09:20:00Z",
-value = 1801621,
+value = 1801621F,
 },
 new
 {
 timestamp = "2017-01-01T09:25:00Z",
-value = 1801621,
+value = 1801621F,
 },
 new
 {
 timestamp = "2017-01-01T09:30:00Z",
-value = 1801654,
+value = 1801654F,
 },
 new
 {
 timestamp = "2017-01-01T09:35:00Z",
-value = 1802105,
+value = 1802105F,
 },
 new
 {
 timestamp = "2017-01-01T09:40:00Z",
-value = 1801800,
+value = 1801800F,
 },
 new
 {
 timestamp = "2017-01-01T09:45:00Z",
-value = 1803040,
+value = 1803040F,
 },
 new
 {
 timestamp = "2017-01-01T09:50:00Z",
-value = 1803672,
+value = 1803672F,
 },
 new
 {
 timestamp = "2017-01-01T09:55:00Z",
-value = 1803535,
+value = 1803535F,
 },
 new
 {
 timestamp = "2017-01-01T10:00:00Z",
-value = 1803541,
+value = 1803541F,
 },
 new
 {
 timestamp = "2017-01-01T10:05:00Z",
-value = 1803545,
+value = 1803545F,
 },
 new
 {
 timestamp = "2017-01-01T10:10:00Z",
-value = 1803599,
+value = 1803599F,
 },
 new
 {
 timestamp = "2017-01-01T10:15:00Z",
-value = 1803616,
+value = 1803616F,
 },
 new
 {
 timestamp = "2017-01-01T10:20:00Z",
-value = 1803619,
+value = 1803619F,
 },
 new
 {
 timestamp = "2017-01-01T10:25:00Z",
-value = 1809942,
+value = 1809942F,
 },
 new
 {
 timestamp = "2017-01-01T10:30:00Z",
-value = 1802720,
+value = 1802720F,
 },
 new
 {
 timestamp = "2017-01-01T10:35:00Z",
-value = 1802720,
+value = 1802720F,
 },
 new
 {
 timestamp = "2017-01-01T10:40:00Z",
-value = 1802888,
+value = 1802888F,
 },
 new
 {
 timestamp = "2017-01-01T10:45:00Z",
-value = 1809574,
+value = 1809574F,
 },
 new
 {
 timestamp = "2017-01-01T10:50:00Z",
-value = 1803896,
+value = 1803896F,
 },
 new
 {
 timestamp = "2017-01-01T10:55:00Z",
-value = 1803850,
+value = 1803850F,
 },
 new
 {
 timestamp = "2017-01-01T11:00:00Z",
-value = 1803854,
+value = 1803854F,
 },
 new
 {
 timestamp = "2017-01-01T11:05:00Z",
-value = 1803854,
+value = 1803854F,
 },
 new
 {
 timestamp = "2017-01-01T11:10:00Z",
-value = 1803797,
+value = 1803797F,
 },
 new
 {
 timestamp = "2017-01-01T11:15:00Z",
-value = 1803921,
+value = 1803921F,
 },
 new
 {
 timestamp = "2017-01-01T11:20:00Z",
-value = 1803933,
+value = 1803933F,
 },
 new
 {
 timestamp = "2017-01-01T11:25:00Z",
-value = 1804040,
+value = 1804040F,
 },
 new
 {
 timestamp = "2017-01-01T11:30:00Z",
-value = 1804044,
+value = 1804044F,
 },
 new
 {
 timestamp = "2017-01-01T11:35:00Z",
-value = 1804070,
+value = 1804070F,
 },
 new
 {
 timestamp = "2017-01-01T11:40:00Z",
-value = 1804070,
+value = 1804070F,
 },
 new
 {
 timestamp = "2017-01-01T11:45:00Z",
-value = 1804068,
+value = 1804068F,
 },
 new
 {
 timestamp = "2017-01-01T11:50:00Z",
-value = 1804073,
+value = 1804073F,
 },
 new
 {
 timestamp = "2017-01-01T11:55:00Z",
-value = 1804101,
+value = 1804101F,
 },
 new
 {
 timestamp = "2017-01-01T12:00:00Z",
-value = 1804674,
+value = 1804674F,
 },
 new
 {
 timestamp = "2017-01-01T12:05:00Z",
-value = 1804714,
+value = 1804714F,
 },
 new
 {
 timestamp = "2017-01-01T12:10:00Z",
-value = 1804730,
+value = 1804730F,
 },
 new
 {
 timestamp = "2017-01-01T12:15:00Z",
-value = 1804816,
+value = 1804816F,
 },
 new
 {
 timestamp = "2017-01-01T12:20:00Z",
-value = 1803996,
+value = 1803996F,
 },
 new
 {
 timestamp = "2017-01-01T12:25:00Z",
-value = 1803998,
+value = 1803998F,
 },
 new
 {
 timestamp = "2017-01-01T12:30:00Z",
-value = 1804015,
+value = 1804015F,
 },
 new
 {
 timestamp = "2017-01-01T12:35:00Z",
-value = 1804047,
+value = 1804047F,
 },
 new
 {
 timestamp = "2017-01-01T12:40:00Z",
-value = 1804050,
+value = 1804050F,
 },
 new
 {
 timestamp = "2017-01-01T12:45:00Z",
-value = 1804218,
+value = 1804218F,
 },
 new
 {
 timestamp = "2017-01-01T12:50:00Z",
-value = 1804217,
+value = 1804217F,
 },
 new
 {
 timestamp = "2017-01-01T12:55:00Z",
-value = 1804217,
+value = 1804217F,
 },
 new
 {
 timestamp = "2017-01-01T13:00:00Z",
-value = 1804205,
+value = 1804205F,
 },
 new
 {
 timestamp = "2017-01-01T13:05:00Z",
-value = 1804728,
+value = 1804728F,
 },
 new
 {
 timestamp = "2017-01-01T13:10:00Z",
-value = 1804748,
+value = 1804748F,
 },
 new
 {
 timestamp = "2017-01-01T13:15:00Z",
-value = 1805232,
+value = 1805232F,
 },
 new
 {
 timestamp = "2017-01-01T13:20:00Z",
-value = 1814121,
+value = 1814121F,
 },
 new
 {
 timestamp = "2017-01-01T13:25:00Z",
-value = 1806789,
+value = 1806789F,
 },
 new
 {
 timestamp = "2017-01-01T13:30:00Z",
-value = 1806119,
+value = 1806119F,
 },
 new
 {
 timestamp = "2017-01-01T13:35:00Z",
-value = 1806329,
+value = 1806329F,
 },
 new
 {
 timestamp = "2017-01-01T13:40:00Z",
-value = 1806454,
+value = 1806454F,
 },
 new
 {
 timestamp = "2017-01-01T13:45:00Z",
-value = 1806852,
+value = 1806852F,
 },
 new
 {
 timestamp = "2017-01-01T13:50:00Z",
-value = 1807347,
+value = 1807347F,
 },
 new
 {
 timestamp = "2017-01-01T13:55:00Z",
-value = 1812144,
+value = 1812144F,
 },
 new
 {
 timestamp = "2017-01-01T14:00:00Z",
-value = 1807418,
+value = 1807418F,
 },
 new
 {
 timestamp = "2017-01-01T14:05:00Z",
-value = 1807418,
+value = 1807418F,
 },
 new
 {
 timestamp = "2017-01-01T14:10:00Z",
-value = 1807432,
+value = 1807432F,
 },
 new
 {
 timestamp = "2017-01-01T14:15:00Z",
-value = 1808540,
+value = 1808540F,
 },
 new
 {
 timestamp = "2017-01-01T14:20:00Z",
-value = 1808541,
+value = 1808541F,
 },
 new
 {
 timestamp = "2017-01-01T14:25:00Z",
-value = 1807831,
+value = 1807831F,
 },
 new
 {
 timestamp = "2017-01-01T14:30:00Z",
-value = 1807852,
+value = 1807852F,
 },
 new
 {
 timestamp = "2017-01-01T14:35:00Z",
-value = 1807811,
+value = 1807811F,
 },
 new
 {
 timestamp = "2017-01-01T14:40:00Z",
-value = 2214285,
+value = 2214285F,
 },
 new
 {
 timestamp = "2017-01-01T14:45:00Z",
-value = 2215019,
+value = 2215019F,
 },
 new
 {
 timestamp = "2017-01-01T14:50:00Z",
-value = 2215329,
+value = 2215329F,
 },
 new
 {
 timestamp = "2017-01-01T14:55:00Z",
-value = 2215097,
+value = 2215097F,
 },
 new
 {
 timestamp = "2017-01-01T15:00:00Z",
-value = 2215129,
+value = 2215129F,
 },
 new
 {
 timestamp = "2017-01-01T15:05:00Z",
-value = 2215120,
+value = 2215120F,
 },
 new
 {
 timestamp = "2017-01-01T15:10:00Z",
-value = 2217056,
+value = 2217056F,
 },
 new
 {
 timestamp = "2017-01-01T15:15:00Z",
-value = 2217056,
+value = 2217056F,
 },
 new
 {
 timestamp = "2017-01-01T15:20:00Z",
-value = 2222126,
+value = 2222126F,
 },
 new
 {
 timestamp = "2017-01-01T15:25:00Z",
-value = 2226472,
+value = 2226472F,
 },
 new
 {
 timestamp = "2017-01-01T15:30:00Z",
-value = 2226722,
+value = 2226722F,
 },
 new
 {
 timestamp = "2017-01-01T15:35:00Z",
-value = 2226729,
+value = 2226729F,
 },
 new
 {
 timestamp = "2017-01-01T15:40:00Z",
-value = 2226735,
+value = 2226735F,
 },
 new
 {
 timestamp = "2017-01-01T15:45:00Z",
-value = 2226735,
+value = 2226735F,
 },
 new
 {
 timestamp = "2017-01-01T15:50:00Z",
-value = 2226735,
+value = 2226735F,
 },
 new
 {
 timestamp = "2017-01-01T15:55:00Z",
-value = 2226952,
+value = 2226952F,
 },
 new
 {
 timestamp = "2017-01-01T16:00:00Z",
-value = 2226962,
+value = 2226962F,
 },
 new
 {
 timestamp = "2017-01-01T16:05:00Z",
-value = 2649337,
+value = 2649337F,
 },
 new
 {
 timestamp = "2017-01-01T16:10:00Z",
-value = 2092796,
+value = 2092796F,
 },
 new
 {
 timestamp = "2017-01-01T16:15:00Z",
-value = 2092839,
+value = 2092839F,
 },
 new
 {
 timestamp = "2017-01-01T16:20:00Z",
-value = 2092940,
+value = 2092940F,
 },
 new
 {
 timestamp = "2017-01-01T16:25:00Z",
-value = 2092940,
+value = 2092940F,
 },
 new
 {
 timestamp = "2017-01-01T16:30:00Z",
-value = 2092965,
+value = 2092965F,
 },
 new
 {
 timestamp = "2017-01-01T16:35:00Z",
-value = 2092979,
+value = 2092979F,
 },
 new
 {
 timestamp = "2017-01-01T16:40:00Z",
-value = 2095588,
+value = 2095588F,
 },
 new
 {
 timestamp = "2017-01-01T16:45:00Z",
-value = 2099586,
+value = 2099586F,
 },
 new
 {
 timestamp = "2017-01-01T16:50:00Z",
-value = 2102981,
+value = 2102981F,
 },
 new
 {
 timestamp = "2017-01-01T16:55:00Z",
-value = 2108053,
+value = 2108053F,
 },
 new
 {
 timestamp = "2017-01-01T17:00:00Z",
-value = 2107907,
+value = 2107907F,
 },
 new
 {
 timestamp = "2017-01-01T17:05:00Z",
-value = 2108241,
+value = 2108241F,
 },
 new
 {
 timestamp = "2017-01-01T17:10:00Z",
-value = 2100321,
+value = 2100321F,
 },
 new
 {
 timestamp = "2017-01-01T17:15:00Z",
-value = 2100448,
+value = 2100448F,
 },
 new
 {
 timestamp = "2017-01-01T17:20:00Z",
-value = 2100483,
+value = 2100483F,
 },
 new
 {
 timestamp = "2017-01-01T17:25:00Z",
-value = 2103042,
+value = 2103042F,
 },
 new
 {
 timestamp = "2017-01-01T17:30:00Z",
-value = 2103037,
+value = 2103037F,
 },
 new
 {
 timestamp = "2017-01-01T17:35:00Z",
-value = 2103040,
+value = 2103040F,
 },
 new
 {
 timestamp = "2017-01-01T17:40:00Z",
-value = 2103054,
+value = 2103054F,
 },
 new
 {
 timestamp = "2017-01-01T17:45:00Z",
-value = 2103058,
+value = 2103058F,
 },
 new
 {
 timestamp = "2017-01-01T17:50:00Z",
-value = 1830757,
+value = 1830757F,
 },
 new
 {
 timestamp = "2017-01-01T17:55:00Z",
-value = 1830855,
+value = 1830855F,
 },
 new
 {
 timestamp = "2017-01-01T18:00:00Z",
-value = 1831495,
+value = 1831495F,
 },
 new
 {
 timestamp = "2017-01-01T18:05:00Z",
-value = 1831463,
+value = 1831463F,
 },
 new
 {
 timestamp = "2017-01-01T18:10:00Z",
-value = 1831963,
+value = 1831963F,
 },
 new
 {
 timestamp = "2017-01-01T18:15:00Z",
-value = 1832046,
+value = 1832046F,
 },
 new
 {
 timestamp = "2017-01-01T18:20:00Z",
-value = 1832070,
+value = 1832070F,
 },
 new
 {
 timestamp = "2017-01-01T18:25:00Z",
-value = 1835511,
+value = 1835511F,
 },
 new
 {
 timestamp = "2017-01-01T18:30:00Z",
-value = 1835265,
+value = 1835265F,
 },
 new
 {
 timestamp = "2017-01-01T18:35:00Z",
-value = 1835481,
+value = 1835481F,
 },
 new
 {
 timestamp = "2017-01-01T18:40:00Z",
-value = 1835578,
+value = 1835578F,
 },
 new
 {
 timestamp = "2017-01-01T18:45:00Z",
-value = 1835611,
+value = 1835611F,
 },
 new
 {
 timestamp = "2017-01-01T18:50:00Z",
-value = 1836314,
+value = 1836314F,
 },
 new
 {
 timestamp = "2017-01-01T18:55:00Z",
-value = 1836369,
+value = 1836369F,
 },
 new
 {
 timestamp = "2017-01-01T19:00:00Z",
-value = 1837280,
+value = 1837280F,
 },
 new
 {
 timestamp = "2017-01-01T19:05:00Z",
-value = 1842939,
+value = 1842939F,
 },
 new
 {
 timestamp = "2017-01-01T19:10:00Z",
-value = 1843126,
+value = 1843126F,
 },
 new
 {
 timestamp = "2017-01-01T19:15:00Z",
-value = 1845840,
+value = 1845840F,
 },
 new
 {
 timestamp = "2017-01-01T19:20:00Z",
-value = 1842444,
+value = 1842444F,
 },
 new
 {
 timestamp = "2017-01-01T19:25:00Z",
-value = 1839891,
+value = 1839891F,
 },
 new
 {
 timestamp = "2017-01-01T19:30:00Z",
-value = 1839875,
+value = 1839875F,
 },
 new
 {
 timestamp = "2017-01-01T19:35:00Z",
-value = 1839870,
+value = 1839870F,
 },
 new
 {
 timestamp = "2017-01-01T19:40:00Z",
-value = 1840090,
+value = 1840090F,
 },
 new
 {
 timestamp = "2017-01-01T19:45:00Z",
-value = 1840479,
+value = 1840479F,
 },
 new
 {
 timestamp = "2017-01-01T19:50:00Z",
-value = 1840479,
+value = 1840479F,
 },
 new
 {
 timestamp = "2017-01-01T19:55:00Z",
-value = 1840482,
+value = 1840482F,
 },
 new
 {
 timestamp = "2017-01-01T20:00:00Z",
-value = 1841522,
+value = 1841522F,
 },
 new
 {
 timestamp = "2017-01-01T20:05:00Z",
-value = 1841836,
+value = 1841836F,
 },
 new
 {
 timestamp = "2017-01-01T20:10:00Z",
-value = 1842377,
+value = 1842377F,
 },
 new
 {
 timestamp = "2017-01-01T20:15:00Z",
-value = 1842388,
+value = 1842388F,
 },
 new
 {
 timestamp = "2017-01-01T20:20:00Z",
-value = 1842489,
+value = 1842489F,
 },
 new
 {
 timestamp = "2017-01-01T20:25:00Z",
-value = 1842489,
+value = 1842489F,
 },
 new
 {
 timestamp = "2017-01-01T20:30:00Z",
-value = 1842489,
+value = 1842489F,
 },
 new
 {
 timestamp = "2017-01-01T20:35:00Z",
-value = 1842496,
+value = 1842496F,
 },
 new
 {
 timestamp = "2017-01-01T20:40:00Z",
-value = 1842689,
+value = 1842689F,
 },
 new
 {
 timestamp = "2017-01-01T20:45:00Z",
-value = 1843117,
+value = 1843117F,
 },
 new
 {
 timestamp = "2017-01-01T20:50:00Z",
-value = 1843116,
+value = 1843116F,
 },
 new
 {
 timestamp = "2017-01-01T20:55:00Z",
-value = 1843227,
+value = 1843227F,
 },
 new
 {
 timestamp = "2017-01-01T21:00:00Z",
-value = 1843138,
+value = 1843138F,
 },
 new
 {
 timestamp = "2017-01-01T21:05:00Z",
-value = 1843141,
+value = 1843141F,
 },
 new
 {
 timestamp = "2017-01-01T21:10:00Z",
-value = 1843310,
+value = 1843310F,
 },
 new
 {
 timestamp = "2017-01-01T21:15:00Z",
-value = 1843310,
+value = 1843310F,
 },
 new
 {
 timestamp = "2017-01-01T21:20:00Z",
-value = 1843507,
+value = 1843507F,
 },
 new
 {
 timestamp = "2017-01-01T21:25:00Z",
-value = 1843953,
+value = 1843953F,
 },
 new
 {
 timestamp = "2017-01-01T21:30:00Z",
-value = 1844778,
+value = 1844778F,
 },
 new
 {
 timestamp = "2017-01-01T21:35:00Z",
-value = 1843918,
+value = 1843918F,
 },
 new
 {
 timestamp = "2017-01-01T21:40:00Z",
-value = 1882692,
+value = 1882692F,
 },
 new
 {
 timestamp = "2017-01-01T21:45:00Z",
-value = 1974888,
+value = 1974888F,
 },
 new
 {
 timestamp = "2017-01-01T21:50:00Z",
-value = 2157136,
+value = 2157136F,
 },
 new
 {
 timestamp = "2017-01-01T21:55:00Z",
-value = 2154987,
+value = 2154987F,
 },
 new
 {
 timestamp = "2017-01-01T22:00:00Z",
-value = 2155664,
+value = 2155664F,
 },
 new
 {
 timestamp = "2017-01-01T22:05:00Z",
-value = 2155660,
+value = 2155660F,
 },
 new
 {
 timestamp = "2017-01-01T22:10:00Z",
-value = 2155824,
+value = 2155824F,
 },
 new
 {
 timestamp = "2017-01-01T22:15:00Z",
-value = 2155824,
+value = 2155824F,
 },
 new
 {
 timestamp = "2017-01-01T22:20:00Z",
-value = 2156329,
+value = 2156329F,
 },
 new
 {
 timestamp = "2017-01-01T22:25:00Z",
-value = 2156479,
+value = 2156479F,
 },
 new
 {
 timestamp = "2017-01-01T22:30:00Z",
-value = 2165269,
+value = 2165269F,
 },
 new
 {
 timestamp = "2017-01-01T22:35:00Z",
-value = 2165433,
+value = 2165433F,
 },
 new
 {
 timestamp = "2017-01-01T22:40:00Z",
-value = 2165739,
+value = 2165739F,
 },
 new
 {
 timestamp = "2017-01-01T22:45:00Z",
-value = 2165931,
+value = 2165931F,
 },
 new
 {
 timestamp = "2017-01-01T22:50:00Z",
-value = 2165928,
+value = 2165928F,
 },
 new
 {
 timestamp = "2017-01-01T22:55:00Z",
-value = 2165989,
+value = 2165989F,
 },
 new
 {
 timestamp = "2017-01-01T23:00:00Z",
-value = 2228961,
+value = 2228961F,
 },
 new
 {
 timestamp = "2017-01-01T23:05:00Z",
-value = 2228961,
+value = 2228961F,
 },
 new
 {
 timestamp = "2017-01-01T23:10:00Z",
-value = 2228961,
+value = 2228961F,
 },
 new
 {
 timestamp = "2017-01-01T23:15:00Z",
-value = 2485802,
+value = 2485802F,
 },
 new
 {
 timestamp = "2017-01-01T23:20:00Z",
-value = 2485802,
+value = 2485802F,
 },
 new
 {
 timestamp = "2017-01-01T23:25:00Z",
-value = 2486021,
+value = 2486021F,
 },
 new
 {
 timestamp = "2017-01-01T23:30:00Z",
-value = 2485293,
+value = 2485293F,
 },
 new
 {
 timestamp = "2017-01-01T23:35:00Z",
-value = 2485293,
+value = 2485293F,
 },
 new
 {
 timestamp = "2017-01-01T23:40:00Z",
-value = 2485324,
+value = 2485324F,
 },
 new
 {
 timestamp = "2017-01-01T23:45:00Z",
-value = 2489142,
+value = 2489142F,
 },
 new
 {
 timestamp = "2017-01-01T23:50:00Z",
-value = 2526312,
+value = 2526312F,
 },
 new
 {
 timestamp = "2017-01-01T23:55:00Z",
-value = 2526313,
+value = 2526313F,
 },
 new
 {
 timestamp = "2017-01-02T00:00:00Z",
-value = 2526314,
+value = 2526314F,
 },
 new
 {
 timestamp = "2017-01-02T00:05:00Z",
-value = 2526324,
+value = 2526324F,
 },
 new
 {
 timestamp = "2017-01-02T00:10:00Z",
-value = 2526325,
+value = 2526325F,
 },
 new
 {
 timestamp = "2017-01-02T00:15:00Z",
-value = 2526205,
+value = 2526205F,
 },
 new
 {
 timestamp = "2017-01-02T00:20:00Z",
-value = 2526226,
+value = 2526226F,
 },
 new
 {
 timestamp = "2017-01-02T00:25:00Z",
-value = 2526475,
+value = 2526475F,
 },
 new
 {
 timestamp = "2017-01-02T00:30:00Z",
-value = 2526471,
+value = 2526471F,
 },
 new
 {
 timestamp = "2017-01-02T00:35:00Z",
-value = 2526471,
+value = 2526471F,
 },
 new
 {
 timestamp = "2017-01-02T00:40:00Z",
-value = 2526534,
+value = 2526534F,
 },
 new
 {
 timestamp = "2017-01-02T00:45:00Z",
-value = 2526646,
+value = 2526646F,
 },
 new
 {
 timestamp = "2017-01-02T00:50:00Z",
-value = 2526646,
+value = 2526646F,
 },
 new
 {
 timestamp = "2017-01-02T00:55:00Z",
-value = 2526648,
+value = 2526648F,
 },
 new
 {
 timestamp = "2017-01-02T01:00:00Z",
-value = 2526658,
+value = 2526658F,
 },
 new
 {
 timestamp = "2017-01-02T01:05:00Z",
-value = 2526771,
+value = 2526771F,
 },
 new
 {
 timestamp = "2017-01-02T01:10:00Z",
-value = 2526773,
+value = 2526773F,
 },
 new
 {
 timestamp = "2017-01-02T01:15:00Z",
-value = 2526793,
+value = 2526793F,
 },
 new
 {
 timestamp = "2017-01-02T01:20:00Z",
-value = 2527010,
+value = 2527010F,
 },
 new
 {
 timestamp = "2017-01-02T01:25:00Z",
-value = 2527031,
+value = 2527031F,
 },
 new
 {
 timestamp = "2017-01-02T01:30:00Z",
-value = 3178096,
+value = 3178096F,
 },
 new
 {
 timestamp = "2017-01-02T01:35:00Z",
-value = 3196305,
+value = 3196305F,
 },
 new
 {
 timestamp = "2017-01-02T01:40:00Z",
-value = 3196202,
+value = 3196202F,
 },
 new
 {
 timestamp = "2017-01-02T01:45:00Z",
-value = 3196202,
+value = 3196202F,
 },
 new
 {
 timestamp = "2017-01-02T01:50:00Z",
-value = 3196205,
+value = 3196205F,
 },
 new
 {
 timestamp = "2017-01-02T01:55:00Z",
-value = 3229232,
+value = 3229232F,
 },
 new
 {
 timestamp = "2017-01-02T02:00:00Z",
-value = 3230463,
+value = 3230463F,
 },
 new
 {
 timestamp = "2017-01-02T02:05:00Z",
-value = 3230468,
+value = 3230468F,
 },
 new
 {
 timestamp = "2017-01-02T02:10:00Z",
-value = 3230468,
+value = 3230468F,
 },
 new
 {
 timestamp = "2017-01-02T02:15:00Z",
-value = 3230468,
+value = 3230468F,
 },
 new
 {
 timestamp = "2017-01-02T02:20:00Z",
-value = 3230470,
+value = 3230470F,
 },
 new
 {
 timestamp = "2017-01-02T02:25:00Z",
-value = 3230467,
+value = 3230467F,
 },
 new
 {
 timestamp = "2017-01-02T02:30:00Z",
-value = 3230506,
+value = 3230506F,
 },
 new
 {
 timestamp = "2017-01-02T02:35:00Z",
-value = 3231536,
+value = 3231536F,
 },
 new
 {
 timestamp = "2017-01-02T02:40:00Z",
-value = 3230723,
+value = 3230723F,
 },
 new
 {
 timestamp = "2017-01-02T02:45:00Z",
-value = 3230727,
+value = 3230727F,
 },
 new
 {
 timestamp = "2017-01-02T02:50:00Z",
-value = 3230727,
+value = 3230727F,
 },
 new
 {
 timestamp = "2017-01-02T02:55:00Z",
-value = 3230727,
+value = 3230727F,
 },
 new
 {
 timestamp = "2017-01-02T03:00:00Z",
-value = 3231880,
+value = 3231880F,
 },
 new
 {
 timestamp = "2017-01-02T03:05:00Z",
-value = 3232283,
+value = 3232283F,
 },
 new
 {
 timestamp = "2017-01-02T03:10:00Z",
-value = 3232283,
+value = 3232283F,
 },
 new
 {
 timestamp = "2017-01-02T03:15:00Z",
-value = 3232283,
+value = 3232283F,
 },
 new
 {
 timestamp = "2017-01-02T03:20:00Z",
-value = 3232325,
+value = 3232325F,
 },
 new
 {
 timestamp = "2017-01-02T03:25:00Z",
-value = 3232323,
+value = 3232323F,
 },
 new
 {
 timestamp = "2017-01-02T03:30:00Z",
-value = 3232327,
+value = 3232327F,
 },
 new
 {
 timestamp = "2017-01-02T03:35:00Z",
-value = 3232340,
+value = 3232340F,
 },
 new
 {
 timestamp = "2017-01-02T03:40:00Z",
-value = 3232713,
+value = 3232713F,
 },
 new
 {
 timestamp = "2017-01-02T03:45:00Z",
-value = 3232729,
+value = 3232729F,
 },
 new
 {
 timestamp = "2017-01-02T03:50:00Z",
-value = 3232756,
+value = 3232756F,
 },
 new
 {
 timestamp = "2017-01-02T03:55:00Z",
-value = 3233500,
+value = 3233500F,
 },
 new
 {
 timestamp = "2017-01-02T04:00:00Z",
-value = 3233500,
+value = 3233500F,
 },
 new
 {
 timestamp = "2017-01-02T04:05:00Z",
-value = 3233500,
+value = 3233500F,
 }
             },
                 granularity = "minutely",
                 customInterval = 5,
                 stableTrendWindow = 10,
-                threshold = 0.99,
+                threshold = 0.99F,
                 period = 0,
             });
             Response response = await client.DetectUnivariateChangePointAsync(content);
@@ -4156,1031 +4156,1031 @@ value = 3233500,
 
             UnivariateChangePointDetectionOptions options = new UnivariateChangePointDetectionOptions(new TimeSeriesPoint[]
             {
-new TimeSeriesPoint(1639196)
+new TimeSeriesPoint(1639196F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T06:45:00Z"),
 },
-new TimeSeriesPoint(1639290)
+new TimeSeriesPoint(1639290F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T06:50:00Z"),
 },
-new TimeSeriesPoint(1667293)
+new TimeSeriesPoint(1667293F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T06:55:00Z"),
 },
-new TimeSeriesPoint(1703130)
+new TimeSeriesPoint(1703130F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:00:00Z"),
 },
-new TimeSeriesPoint(1650912)
+new TimeSeriesPoint(1650912F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:05:00Z"),
 },
-new TimeSeriesPoint(1653596)
+new TimeSeriesPoint(1653596F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:10:00Z"),
 },
-new TimeSeriesPoint(1653793)
+new TimeSeriesPoint(1653793F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:15:00Z"),
 },
-new TimeSeriesPoint(1653795)
+new TimeSeriesPoint(1653795F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:20:00Z"),
 },
-new TimeSeriesPoint(1663471)
+new TimeSeriesPoint(1663471F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:25:00Z"),
 },
-new TimeSeriesPoint(1662358)
+new TimeSeriesPoint(1662358F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:30:00Z"),
 },
-new TimeSeriesPoint(1664320)
+new TimeSeriesPoint(1664320F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:35:00Z"),
 },
-new TimeSeriesPoint(1664942)
+new TimeSeriesPoint(1664942F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:40:00Z"),
 },
-new TimeSeriesPoint(1664966)
+new TimeSeriesPoint(1664966F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:45:00Z"),
 },
-new TimeSeriesPoint(1724271)
+new TimeSeriesPoint(1724271F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:50:00Z"),
 },
-new TimeSeriesPoint(1678720)
+new TimeSeriesPoint(1678720F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:55:00Z"),
 },
-new TimeSeriesPoint(1672536)
+new TimeSeriesPoint(1672536F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:00:00Z"),
 },
-new TimeSeriesPoint(1672544)
+new TimeSeriesPoint(1672544F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:05:00Z"),
 },
-new TimeSeriesPoint(1672364)
+new TimeSeriesPoint(1672364F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:10:00Z"),
 },
-new TimeSeriesPoint(1672912)
+new TimeSeriesPoint(1672912F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:15:00Z"),
 },
-new TimeSeriesPoint(1672736)
+new TimeSeriesPoint(1672736F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:20:00Z"),
 },
-new TimeSeriesPoint(1672725)
+new TimeSeriesPoint(1672725F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:25:00Z"),
 },
-new TimeSeriesPoint(1673247)
+new TimeSeriesPoint(1673247F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:30:00Z"),
 },
-new TimeSeriesPoint(1673109)
+new TimeSeriesPoint(1673109F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:35:00Z"),
 },
-new TimeSeriesPoint(1690088)
+new TimeSeriesPoint(1690088F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:40:00Z"),
 },
-new TimeSeriesPoint(1703865)
+new TimeSeriesPoint(1703865F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:45:00Z"),
 },
-new TimeSeriesPoint(1703865)
+new TimeSeriesPoint(1703865F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:50:00Z"),
 },
-new TimeSeriesPoint(1786581)
+new TimeSeriesPoint(1786581F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:55:00Z"),
 },
-new TimeSeriesPoint(1800945)
+new TimeSeriesPoint(1800945F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:00:00Z"),
 },
-new TimeSeriesPoint(1800957)
+new TimeSeriesPoint(1800957F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:05:00Z"),
 },
-new TimeSeriesPoint(1801191)
+new TimeSeriesPoint(1801191F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:10:00Z"),
 },
-new TimeSeriesPoint(1801412)
+new TimeSeriesPoint(1801412F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:15:00Z"),
 },
-new TimeSeriesPoint(1801621)
+new TimeSeriesPoint(1801621F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:20:00Z"),
 },
-new TimeSeriesPoint(1801621)
+new TimeSeriesPoint(1801621F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:25:00Z"),
 },
-new TimeSeriesPoint(1801654)
+new TimeSeriesPoint(1801654F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:30:00Z"),
 },
-new TimeSeriesPoint(1802105)
+new TimeSeriesPoint(1802105F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:35:00Z"),
 },
-new TimeSeriesPoint(1801800)
+new TimeSeriesPoint(1801800F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:40:00Z"),
 },
-new TimeSeriesPoint(1803040)
+new TimeSeriesPoint(1803040F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:45:00Z"),
 },
-new TimeSeriesPoint(1803672)
+new TimeSeriesPoint(1803672F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:50:00Z"),
 },
-new TimeSeriesPoint(1803535)
+new TimeSeriesPoint(1803535F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:55:00Z"),
 },
-new TimeSeriesPoint(1803541)
+new TimeSeriesPoint(1803541F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:00:00Z"),
 },
-new TimeSeriesPoint(1803545)
+new TimeSeriesPoint(1803545F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:05:00Z"),
 },
-new TimeSeriesPoint(1803599)
+new TimeSeriesPoint(1803599F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:10:00Z"),
 },
-new TimeSeriesPoint(1803616)
+new TimeSeriesPoint(1803616F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:15:00Z"),
 },
-new TimeSeriesPoint(1803619)
+new TimeSeriesPoint(1803619F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:20:00Z"),
 },
-new TimeSeriesPoint(1809942)
+new TimeSeriesPoint(1809942F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:25:00Z"),
 },
-new TimeSeriesPoint(1802720)
+new TimeSeriesPoint(1802720F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:30:00Z"),
 },
-new TimeSeriesPoint(1802720)
+new TimeSeriesPoint(1802720F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:35:00Z"),
 },
-new TimeSeriesPoint(1802888)
+new TimeSeriesPoint(1802888F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:40:00Z"),
 },
-new TimeSeriesPoint(1809574)
+new TimeSeriesPoint(1809574F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:45:00Z"),
 },
-new TimeSeriesPoint(1803896)
+new TimeSeriesPoint(1803896F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:50:00Z"),
 },
-new TimeSeriesPoint(1803850)
+new TimeSeriesPoint(1803850F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:55:00Z"),
 },
-new TimeSeriesPoint(1803854)
+new TimeSeriesPoint(1803854F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:00:00Z"),
 },
-new TimeSeriesPoint(1803854)
+new TimeSeriesPoint(1803854F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:05:00Z"),
 },
-new TimeSeriesPoint(1803797)
+new TimeSeriesPoint(1803797F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:10:00Z"),
 },
-new TimeSeriesPoint(1803921)
+new TimeSeriesPoint(1803921F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:15:00Z"),
 },
-new TimeSeriesPoint(1803933)
+new TimeSeriesPoint(1803933F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:20:00Z"),
 },
-new TimeSeriesPoint(1804040)
+new TimeSeriesPoint(1804040F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:25:00Z"),
 },
-new TimeSeriesPoint(1804044)
+new TimeSeriesPoint(1804044F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:30:00Z"),
 },
-new TimeSeriesPoint(1804070)
+new TimeSeriesPoint(1804070F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:35:00Z"),
 },
-new TimeSeriesPoint(1804070)
+new TimeSeriesPoint(1804070F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:40:00Z"),
 },
-new TimeSeriesPoint(1804068)
+new TimeSeriesPoint(1804068F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:45:00Z"),
 },
-new TimeSeriesPoint(1804073)
+new TimeSeriesPoint(1804073F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:50:00Z"),
 },
-new TimeSeriesPoint(1804101)
+new TimeSeriesPoint(1804101F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:55:00Z"),
 },
-new TimeSeriesPoint(1804674)
+new TimeSeriesPoint(1804674F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:00:00Z"),
 },
-new TimeSeriesPoint(1804714)
+new TimeSeriesPoint(1804714F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:05:00Z"),
 },
-new TimeSeriesPoint(1804730)
+new TimeSeriesPoint(1804730F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:10:00Z"),
 },
-new TimeSeriesPoint(1804816)
+new TimeSeriesPoint(1804816F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:15:00Z"),
 },
-new TimeSeriesPoint(1803996)
+new TimeSeriesPoint(1803996F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:20:00Z"),
 },
-new TimeSeriesPoint(1803998)
+new TimeSeriesPoint(1803998F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:25:00Z"),
 },
-new TimeSeriesPoint(1804015)
+new TimeSeriesPoint(1804015F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:30:00Z"),
 },
-new TimeSeriesPoint(1804047)
+new TimeSeriesPoint(1804047F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:35:00Z"),
 },
-new TimeSeriesPoint(1804050)
+new TimeSeriesPoint(1804050F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:40:00Z"),
 },
-new TimeSeriesPoint(1804218)
+new TimeSeriesPoint(1804218F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:45:00Z"),
 },
-new TimeSeriesPoint(1804217)
+new TimeSeriesPoint(1804217F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:50:00Z"),
 },
-new TimeSeriesPoint(1804217)
+new TimeSeriesPoint(1804217F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:55:00Z"),
 },
-new TimeSeriesPoint(1804205)
+new TimeSeriesPoint(1804205F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:00:00Z"),
 },
-new TimeSeriesPoint(1804728)
+new TimeSeriesPoint(1804728F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:05:00Z"),
 },
-new TimeSeriesPoint(1804748)
+new TimeSeriesPoint(1804748F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:10:00Z"),
 },
-new TimeSeriesPoint(1805232)
+new TimeSeriesPoint(1805232F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:15:00Z"),
 },
-new TimeSeriesPoint(1814121)
+new TimeSeriesPoint(1814121F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:20:00Z"),
 },
-new TimeSeriesPoint(1806789)
+new TimeSeriesPoint(1806789F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:25:00Z"),
 },
-new TimeSeriesPoint(1806119)
+new TimeSeriesPoint(1806119F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:30:00Z"),
 },
-new TimeSeriesPoint(1806329)
+new TimeSeriesPoint(1806329F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:35:00Z"),
 },
-new TimeSeriesPoint(1806454)
+new TimeSeriesPoint(1806454F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:40:00Z"),
 },
-new TimeSeriesPoint(1806852)
+new TimeSeriesPoint(1806852F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:45:00Z"),
 },
-new TimeSeriesPoint(1807347)
+new TimeSeriesPoint(1807347F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:50:00Z"),
 },
-new TimeSeriesPoint(1812144)
+new TimeSeriesPoint(1812144F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:55:00Z"),
 },
-new TimeSeriesPoint(1807418)
+new TimeSeriesPoint(1807418F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:00:00Z"),
 },
-new TimeSeriesPoint(1807418)
+new TimeSeriesPoint(1807418F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:05:00Z"),
 },
-new TimeSeriesPoint(1807432)
+new TimeSeriesPoint(1807432F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:10:00Z"),
 },
-new TimeSeriesPoint(1808540)
+new TimeSeriesPoint(1808540F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:15:00Z"),
 },
-new TimeSeriesPoint(1808541)
+new TimeSeriesPoint(1808541F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:20:00Z"),
 },
-new TimeSeriesPoint(1807831)
+new TimeSeriesPoint(1807831F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:25:00Z"),
 },
-new TimeSeriesPoint(1807852)
+new TimeSeriesPoint(1807852F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:30:00Z"),
 },
-new TimeSeriesPoint(1807811)
+new TimeSeriesPoint(1807811F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:35:00Z"),
 },
-new TimeSeriesPoint(2214285)
+new TimeSeriesPoint(2214285F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:40:00Z"),
 },
-new TimeSeriesPoint(2215019)
+new TimeSeriesPoint(2215019F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:45:00Z"),
 },
-new TimeSeriesPoint(2215329)
+new TimeSeriesPoint(2215329F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:50:00Z"),
 },
-new TimeSeriesPoint(2215097)
+new TimeSeriesPoint(2215097F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:55:00Z"),
 },
-new TimeSeriesPoint(2215129)
+new TimeSeriesPoint(2215129F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:00:00Z"),
 },
-new TimeSeriesPoint(2215120)
+new TimeSeriesPoint(2215120F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:05:00Z"),
 },
-new TimeSeriesPoint(2217056)
+new TimeSeriesPoint(2217056F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:10:00Z"),
 },
-new TimeSeriesPoint(2217056)
+new TimeSeriesPoint(2217056F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:15:00Z"),
 },
-new TimeSeriesPoint(2222126)
+new TimeSeriesPoint(2222126F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:20:00Z"),
 },
-new TimeSeriesPoint(2226472)
+new TimeSeriesPoint(2226472F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:25:00Z"),
 },
-new TimeSeriesPoint(2226722)
+new TimeSeriesPoint(2226722F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:30:00Z"),
 },
-new TimeSeriesPoint(2226729)
+new TimeSeriesPoint(2226729F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:35:00Z"),
 },
-new TimeSeriesPoint(2226735)
+new TimeSeriesPoint(2226735F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:40:00Z"),
 },
-new TimeSeriesPoint(2226735)
+new TimeSeriesPoint(2226735F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:45:00Z"),
 },
-new TimeSeriesPoint(2226735)
+new TimeSeriesPoint(2226735F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:50:00Z"),
 },
-new TimeSeriesPoint(2226952)
+new TimeSeriesPoint(2226952F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:55:00Z"),
 },
-new TimeSeriesPoint(2226962)
+new TimeSeriesPoint(2226962F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:00:00Z"),
 },
-new TimeSeriesPoint(2649337)
+new TimeSeriesPoint(2649337F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:05:00Z"),
 },
-new TimeSeriesPoint(2092796)
+new TimeSeriesPoint(2092796F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:10:00Z"),
 },
-new TimeSeriesPoint(2092839)
+new TimeSeriesPoint(2092839F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:15:00Z"),
 },
-new TimeSeriesPoint(2092940)
+new TimeSeriesPoint(2092940F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:20:00Z"),
 },
-new TimeSeriesPoint(2092940)
+new TimeSeriesPoint(2092940F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:25:00Z"),
 },
-new TimeSeriesPoint(2092965)
+new TimeSeriesPoint(2092965F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:30:00Z"),
 },
-new TimeSeriesPoint(2092979)
+new TimeSeriesPoint(2092979F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:35:00Z"),
 },
-new TimeSeriesPoint(2095588)
+new TimeSeriesPoint(2095588F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:40:00Z"),
 },
-new TimeSeriesPoint(2099586)
+new TimeSeriesPoint(2099586F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:45:00Z"),
 },
-new TimeSeriesPoint(2102981)
+new TimeSeriesPoint(2102981F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:50:00Z"),
 },
-new TimeSeriesPoint(2108053)
+new TimeSeriesPoint(2108053F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:55:00Z"),
 },
-new TimeSeriesPoint(2107907)
+new TimeSeriesPoint(2107907F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:00:00Z"),
 },
-new TimeSeriesPoint(2108241)
+new TimeSeriesPoint(2108241F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:05:00Z"),
 },
-new TimeSeriesPoint(2100321)
+new TimeSeriesPoint(2100321F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:10:00Z"),
 },
-new TimeSeriesPoint(2100448)
+new TimeSeriesPoint(2100448F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:15:00Z"),
 },
-new TimeSeriesPoint(2100483)
+new TimeSeriesPoint(2100483F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:20:00Z"),
 },
-new TimeSeriesPoint(2103042)
+new TimeSeriesPoint(2103042F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:25:00Z"),
 },
-new TimeSeriesPoint(2103037)
+new TimeSeriesPoint(2103037F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:30:00Z"),
 },
-new TimeSeriesPoint(2103040)
+new TimeSeriesPoint(2103040F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:35:00Z"),
 },
-new TimeSeriesPoint(2103054)
+new TimeSeriesPoint(2103054F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:40:00Z"),
 },
-new TimeSeriesPoint(2103058)
+new TimeSeriesPoint(2103058F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:45:00Z"),
 },
-new TimeSeriesPoint(1830757)
+new TimeSeriesPoint(1830757F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:50:00Z"),
 },
-new TimeSeriesPoint(1830855)
+new TimeSeriesPoint(1830855F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:55:00Z"),
 },
-new TimeSeriesPoint(1831495)
+new TimeSeriesPoint(1831495F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:00:00Z"),
 },
-new TimeSeriesPoint(1831463)
+new TimeSeriesPoint(1831463F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:05:00Z"),
 },
-new TimeSeriesPoint(1831963)
+new TimeSeriesPoint(1831963F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:10:00Z"),
 },
-new TimeSeriesPoint(1832046)
+new TimeSeriesPoint(1832046F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:15:00Z"),
 },
-new TimeSeriesPoint(1832070)
+new TimeSeriesPoint(1832070F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:20:00Z"),
 },
-new TimeSeriesPoint(1835511)
+new TimeSeriesPoint(1835511F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:25:00Z"),
 },
-new TimeSeriesPoint(1835265)
+new TimeSeriesPoint(1835265F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:30:00Z"),
 },
-new TimeSeriesPoint(1835481)
+new TimeSeriesPoint(1835481F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:35:00Z"),
 },
-new TimeSeriesPoint(1835578)
+new TimeSeriesPoint(1835578F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:40:00Z"),
 },
-new TimeSeriesPoint(1835611)
+new TimeSeriesPoint(1835611F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:45:00Z"),
 },
-new TimeSeriesPoint(1836314)
+new TimeSeriesPoint(1836314F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:50:00Z"),
 },
-new TimeSeriesPoint(1836369)
+new TimeSeriesPoint(1836369F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:55:00Z"),
 },
-new TimeSeriesPoint(1837280)
+new TimeSeriesPoint(1837280F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:00:00Z"),
 },
-new TimeSeriesPoint(1842939)
+new TimeSeriesPoint(1842939F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:05:00Z"),
 },
-new TimeSeriesPoint(1843126)
+new TimeSeriesPoint(1843126F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:10:00Z"),
 },
-new TimeSeriesPoint(1845840)
+new TimeSeriesPoint(1845840F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:15:00Z"),
 },
-new TimeSeriesPoint(1842444)
+new TimeSeriesPoint(1842444F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:20:00Z"),
 },
-new TimeSeriesPoint(1839891)
+new TimeSeriesPoint(1839891F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:25:00Z"),
 },
-new TimeSeriesPoint(1839875)
+new TimeSeriesPoint(1839875F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:30:00Z"),
 },
-new TimeSeriesPoint(1839870)
+new TimeSeriesPoint(1839870F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:35:00Z"),
 },
-new TimeSeriesPoint(1840090)
+new TimeSeriesPoint(1840090F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:40:00Z"),
 },
-new TimeSeriesPoint(1840479)
+new TimeSeriesPoint(1840479F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:45:00Z"),
 },
-new TimeSeriesPoint(1840479)
+new TimeSeriesPoint(1840479F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:50:00Z"),
 },
-new TimeSeriesPoint(1840482)
+new TimeSeriesPoint(1840482F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:55:00Z"),
 },
-new TimeSeriesPoint(1841522)
+new TimeSeriesPoint(1841522F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:00:00Z"),
 },
-new TimeSeriesPoint(1841836)
+new TimeSeriesPoint(1841836F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:05:00Z"),
 },
-new TimeSeriesPoint(1842377)
+new TimeSeriesPoint(1842377F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:10:00Z"),
 },
-new TimeSeriesPoint(1842388)
+new TimeSeriesPoint(1842388F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:15:00Z"),
 },
-new TimeSeriesPoint(1842489)
+new TimeSeriesPoint(1842489F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:20:00Z"),
 },
-new TimeSeriesPoint(1842489)
+new TimeSeriesPoint(1842489F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:25:00Z"),
 },
-new TimeSeriesPoint(1842489)
+new TimeSeriesPoint(1842489F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:30:00Z"),
 },
-new TimeSeriesPoint(1842496)
+new TimeSeriesPoint(1842496F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:35:00Z"),
 },
-new TimeSeriesPoint(1842689)
+new TimeSeriesPoint(1842689F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:40:00Z"),
 },
-new TimeSeriesPoint(1843117)
+new TimeSeriesPoint(1843117F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:45:00Z"),
 },
-new TimeSeriesPoint(1843116)
+new TimeSeriesPoint(1843116F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:50:00Z"),
 },
-new TimeSeriesPoint(1843227)
+new TimeSeriesPoint(1843227F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:55:00Z"),
 },
-new TimeSeriesPoint(1843138)
+new TimeSeriesPoint(1843138F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:00:00Z"),
 },
-new TimeSeriesPoint(1843141)
+new TimeSeriesPoint(1843141F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:05:00Z"),
 },
-new TimeSeriesPoint(1843310)
+new TimeSeriesPoint(1843310F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:10:00Z"),
 },
-new TimeSeriesPoint(1843310)
+new TimeSeriesPoint(1843310F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:15:00Z"),
 },
-new TimeSeriesPoint(1843507)
+new TimeSeriesPoint(1843507F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:20:00Z"),
 },
-new TimeSeriesPoint(1843953)
+new TimeSeriesPoint(1843953F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:25:00Z"),
 },
-new TimeSeriesPoint(1844778)
+new TimeSeriesPoint(1844778F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:30:00Z"),
 },
-new TimeSeriesPoint(1843918)
+new TimeSeriesPoint(1843918F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:35:00Z"),
 },
-new TimeSeriesPoint(1882692)
+new TimeSeriesPoint(1882692F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:40:00Z"),
 },
-new TimeSeriesPoint(1974888)
+new TimeSeriesPoint(1974888F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:45:00Z"),
 },
-new TimeSeriesPoint(2157136)
+new TimeSeriesPoint(2157136F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:50:00Z"),
 },
-new TimeSeriesPoint(2154987)
+new TimeSeriesPoint(2154987F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:55:00Z"),
 },
-new TimeSeriesPoint(2155664)
+new TimeSeriesPoint(2155664F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:00:00Z"),
 },
-new TimeSeriesPoint(2155660)
+new TimeSeriesPoint(2155660F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:05:00Z"),
 },
-new TimeSeriesPoint(2155824)
+new TimeSeriesPoint(2155824F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:10:00Z"),
 },
-new TimeSeriesPoint(2155824)
+new TimeSeriesPoint(2155824F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:15:00Z"),
 },
-new TimeSeriesPoint(2156329)
+new TimeSeriesPoint(2156329F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:20:00Z"),
 },
-new TimeSeriesPoint(2156479)
+new TimeSeriesPoint(2156479F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:25:00Z"),
 },
-new TimeSeriesPoint(2165269)
+new TimeSeriesPoint(2165269F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:30:00Z"),
 },
-new TimeSeriesPoint(2165433)
+new TimeSeriesPoint(2165433F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:35:00Z"),
 },
-new TimeSeriesPoint(2165739)
+new TimeSeriesPoint(2165739F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:40:00Z"),
 },
-new TimeSeriesPoint(2165931)
+new TimeSeriesPoint(2165931F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:45:00Z"),
 },
-new TimeSeriesPoint(2165928)
+new TimeSeriesPoint(2165928F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:50:00Z"),
 },
-new TimeSeriesPoint(2165989)
+new TimeSeriesPoint(2165989F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:55:00Z"),
 },
-new TimeSeriesPoint(2228961)
+new TimeSeriesPoint(2228961F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:00:00Z"),
 },
-new TimeSeriesPoint(2228961)
+new TimeSeriesPoint(2228961F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:05:00Z"),
 },
-new TimeSeriesPoint(2228961)
+new TimeSeriesPoint(2228961F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:10:00Z"),
 },
-new TimeSeriesPoint(2485802)
+new TimeSeriesPoint(2485802F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:15:00Z"),
 },
-new TimeSeriesPoint(2485802)
+new TimeSeriesPoint(2485802F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:20:00Z"),
 },
-new TimeSeriesPoint(2486021)
+new TimeSeriesPoint(2486021F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:25:00Z"),
 },
-new TimeSeriesPoint(2485293)
+new TimeSeriesPoint(2485293F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:30:00Z"),
 },
-new TimeSeriesPoint(2485293)
+new TimeSeriesPoint(2485293F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:35:00Z"),
 },
-new TimeSeriesPoint(2485324)
+new TimeSeriesPoint(2485324F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:40:00Z"),
 },
-new TimeSeriesPoint(2489142)
+new TimeSeriesPoint(2489142F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:45:00Z"),
 },
-new TimeSeriesPoint(2526312)
+new TimeSeriesPoint(2526312F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:50:00Z"),
 },
-new TimeSeriesPoint(2526313)
+new TimeSeriesPoint(2526313F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:55:00Z"),
 },
-new TimeSeriesPoint(2526314)
+new TimeSeriesPoint(2526314F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:00:00Z"),
 },
-new TimeSeriesPoint(2526324)
+new TimeSeriesPoint(2526324F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:05:00Z"),
 },
-new TimeSeriesPoint(2526325)
+new TimeSeriesPoint(2526325F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:10:00Z"),
 },
-new TimeSeriesPoint(2526205)
+new TimeSeriesPoint(2526205F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:15:00Z"),
 },
-new TimeSeriesPoint(2526226)
+new TimeSeriesPoint(2526226F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:20:00Z"),
 },
-new TimeSeriesPoint(2526475)
+new TimeSeriesPoint(2526475F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:25:00Z"),
 },
-new TimeSeriesPoint(2526471)
+new TimeSeriesPoint(2526471F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:30:00Z"),
 },
-new TimeSeriesPoint(2526471)
+new TimeSeriesPoint(2526471F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:35:00Z"),
 },
-new TimeSeriesPoint(2526534)
+new TimeSeriesPoint(2526534F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:40:00Z"),
 },
-new TimeSeriesPoint(2526646)
+new TimeSeriesPoint(2526646F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:45:00Z"),
 },
-new TimeSeriesPoint(2526646)
+new TimeSeriesPoint(2526646F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:50:00Z"),
 },
-new TimeSeriesPoint(2526648)
+new TimeSeriesPoint(2526648F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:55:00Z"),
 },
-new TimeSeriesPoint(2526658)
+new TimeSeriesPoint(2526658F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:00:00Z"),
 },
-new TimeSeriesPoint(2526771)
+new TimeSeriesPoint(2526771F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:05:00Z"),
 },
-new TimeSeriesPoint(2526773)
+new TimeSeriesPoint(2526773F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:10:00Z"),
 },
-new TimeSeriesPoint(2526793)
+new TimeSeriesPoint(2526793F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:15:00Z"),
 },
-new TimeSeriesPoint(2527010)
+new TimeSeriesPoint(2527010F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:20:00Z"),
 },
-new TimeSeriesPoint(2527031)
+new TimeSeriesPoint(2527031F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:25:00Z"),
 },
-new TimeSeriesPoint(3178096)
+new TimeSeriesPoint(3178096F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:30:00Z"),
 },
-new TimeSeriesPoint(3196305)
+new TimeSeriesPoint(3196305F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:35:00Z"),
 },
-new TimeSeriesPoint(3196202)
+new TimeSeriesPoint(3196202F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:40:00Z"),
 },
-new TimeSeriesPoint(3196202)
+new TimeSeriesPoint(3196202F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:45:00Z"),
 },
-new TimeSeriesPoint(3196205)
+new TimeSeriesPoint(3196205F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:50:00Z"),
 },
-new TimeSeriesPoint(3229232)
+new TimeSeriesPoint(3229232F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:55:00Z"),
 },
-new TimeSeriesPoint(3230463)
+new TimeSeriesPoint(3230463F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:00:00Z"),
 },
-new TimeSeriesPoint(3230468)
+new TimeSeriesPoint(3230468F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:05:00Z"),
 },
-new TimeSeriesPoint(3230468)
+new TimeSeriesPoint(3230468F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:10:00Z"),
 },
-new TimeSeriesPoint(3230468)
+new TimeSeriesPoint(3230468F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:15:00Z"),
 },
-new TimeSeriesPoint(3230470)
+new TimeSeriesPoint(3230470F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:20:00Z"),
 },
-new TimeSeriesPoint(3230467)
+new TimeSeriesPoint(3230467F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:25:00Z"),
 },
-new TimeSeriesPoint(3230506)
+new TimeSeriesPoint(3230506F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:30:00Z"),
 },
-new TimeSeriesPoint(3231536)
+new TimeSeriesPoint(3231536F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:35:00Z"),
 },
-new TimeSeriesPoint(3230723)
+new TimeSeriesPoint(3230723F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:40:00Z"),
 },
-new TimeSeriesPoint(3230727)
+new TimeSeriesPoint(3230727F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:45:00Z"),
 },
-new TimeSeriesPoint(3230727)
+new TimeSeriesPoint(3230727F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:50:00Z"),
 },
-new TimeSeriesPoint(3230727)
+new TimeSeriesPoint(3230727F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:55:00Z"),
 },
-new TimeSeriesPoint(3231880)
+new TimeSeriesPoint(3231880F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:00:00Z"),
 },
-new TimeSeriesPoint(3232283)
+new TimeSeriesPoint(3232283F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:05:00Z"),
 },
-new TimeSeriesPoint(3232283)
+new TimeSeriesPoint(3232283F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:10:00Z"),
 },
-new TimeSeriesPoint(3232283)
+new TimeSeriesPoint(3232283F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:15:00Z"),
 },
-new TimeSeriesPoint(3232325)
+new TimeSeriesPoint(3232325F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:20:00Z"),
 },
-new TimeSeriesPoint(3232323)
+new TimeSeriesPoint(3232323F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:25:00Z"),
 },
-new TimeSeriesPoint(3232327)
+new TimeSeriesPoint(3232327F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:30:00Z"),
 },
-new TimeSeriesPoint(3232340)
+new TimeSeriesPoint(3232340F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:35:00Z"),
 },
-new TimeSeriesPoint(3232713)
+new TimeSeriesPoint(3232713F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:40:00Z"),
 },
-new TimeSeriesPoint(3232729)
+new TimeSeriesPoint(3232729F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:45:00Z"),
 },
-new TimeSeriesPoint(3232756)
+new TimeSeriesPoint(3232756F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:50:00Z"),
 },
-new TimeSeriesPoint(3233500)
+new TimeSeriesPoint(3233500F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:55:00Z"),
 },
-new TimeSeriesPoint(3233500)
+new TimeSeriesPoint(3233500F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T04:00:00Z"),
 },
-new TimeSeriesPoint(3233500)
+new TimeSeriesPoint(3233500F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T04:05:00Z"),
 }
@@ -5189,7 +5189,7 @@ Timestamp = DateTimeOffset.Parse("2017-01-02T04:05:00Z"),
                 CustomInterval = 5,
                 Period = 0,
                 StableTrendWindow = 10,
-                Threshold = (float)0.99,
+                Threshold = 0.99F,
             };
             Response<UnivariateChangePointDetectionResult> response = client.DetectUnivariateChangePoint(options);
         }
@@ -5204,1031 +5204,1031 @@ Timestamp = DateTimeOffset.Parse("2017-01-02T04:05:00Z"),
 
             UnivariateChangePointDetectionOptions options = new UnivariateChangePointDetectionOptions(new TimeSeriesPoint[]
             {
-new TimeSeriesPoint(1639196)
+new TimeSeriesPoint(1639196F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T06:45:00Z"),
 },
-new TimeSeriesPoint(1639290)
+new TimeSeriesPoint(1639290F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T06:50:00Z"),
 },
-new TimeSeriesPoint(1667293)
+new TimeSeriesPoint(1667293F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T06:55:00Z"),
 },
-new TimeSeriesPoint(1703130)
+new TimeSeriesPoint(1703130F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:00:00Z"),
 },
-new TimeSeriesPoint(1650912)
+new TimeSeriesPoint(1650912F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:05:00Z"),
 },
-new TimeSeriesPoint(1653596)
+new TimeSeriesPoint(1653596F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:10:00Z"),
 },
-new TimeSeriesPoint(1653793)
+new TimeSeriesPoint(1653793F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:15:00Z"),
 },
-new TimeSeriesPoint(1653795)
+new TimeSeriesPoint(1653795F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:20:00Z"),
 },
-new TimeSeriesPoint(1663471)
+new TimeSeriesPoint(1663471F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:25:00Z"),
 },
-new TimeSeriesPoint(1662358)
+new TimeSeriesPoint(1662358F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:30:00Z"),
 },
-new TimeSeriesPoint(1664320)
+new TimeSeriesPoint(1664320F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:35:00Z"),
 },
-new TimeSeriesPoint(1664942)
+new TimeSeriesPoint(1664942F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:40:00Z"),
 },
-new TimeSeriesPoint(1664966)
+new TimeSeriesPoint(1664966F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:45:00Z"),
 },
-new TimeSeriesPoint(1724271)
+new TimeSeriesPoint(1724271F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:50:00Z"),
 },
-new TimeSeriesPoint(1678720)
+new TimeSeriesPoint(1678720F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T07:55:00Z"),
 },
-new TimeSeriesPoint(1672536)
+new TimeSeriesPoint(1672536F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:00:00Z"),
 },
-new TimeSeriesPoint(1672544)
+new TimeSeriesPoint(1672544F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:05:00Z"),
 },
-new TimeSeriesPoint(1672364)
+new TimeSeriesPoint(1672364F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:10:00Z"),
 },
-new TimeSeriesPoint(1672912)
+new TimeSeriesPoint(1672912F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:15:00Z"),
 },
-new TimeSeriesPoint(1672736)
+new TimeSeriesPoint(1672736F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:20:00Z"),
 },
-new TimeSeriesPoint(1672725)
+new TimeSeriesPoint(1672725F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:25:00Z"),
 },
-new TimeSeriesPoint(1673247)
+new TimeSeriesPoint(1673247F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:30:00Z"),
 },
-new TimeSeriesPoint(1673109)
+new TimeSeriesPoint(1673109F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:35:00Z"),
 },
-new TimeSeriesPoint(1690088)
+new TimeSeriesPoint(1690088F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:40:00Z"),
 },
-new TimeSeriesPoint(1703865)
+new TimeSeriesPoint(1703865F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:45:00Z"),
 },
-new TimeSeriesPoint(1703865)
+new TimeSeriesPoint(1703865F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:50:00Z"),
 },
-new TimeSeriesPoint(1786581)
+new TimeSeriesPoint(1786581F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T08:55:00Z"),
 },
-new TimeSeriesPoint(1800945)
+new TimeSeriesPoint(1800945F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:00:00Z"),
 },
-new TimeSeriesPoint(1800957)
+new TimeSeriesPoint(1800957F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:05:00Z"),
 },
-new TimeSeriesPoint(1801191)
+new TimeSeriesPoint(1801191F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:10:00Z"),
 },
-new TimeSeriesPoint(1801412)
+new TimeSeriesPoint(1801412F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:15:00Z"),
 },
-new TimeSeriesPoint(1801621)
+new TimeSeriesPoint(1801621F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:20:00Z"),
 },
-new TimeSeriesPoint(1801621)
+new TimeSeriesPoint(1801621F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:25:00Z"),
 },
-new TimeSeriesPoint(1801654)
+new TimeSeriesPoint(1801654F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:30:00Z"),
 },
-new TimeSeriesPoint(1802105)
+new TimeSeriesPoint(1802105F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:35:00Z"),
 },
-new TimeSeriesPoint(1801800)
+new TimeSeriesPoint(1801800F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:40:00Z"),
 },
-new TimeSeriesPoint(1803040)
+new TimeSeriesPoint(1803040F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:45:00Z"),
 },
-new TimeSeriesPoint(1803672)
+new TimeSeriesPoint(1803672F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:50:00Z"),
 },
-new TimeSeriesPoint(1803535)
+new TimeSeriesPoint(1803535F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T09:55:00Z"),
 },
-new TimeSeriesPoint(1803541)
+new TimeSeriesPoint(1803541F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:00:00Z"),
 },
-new TimeSeriesPoint(1803545)
+new TimeSeriesPoint(1803545F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:05:00Z"),
 },
-new TimeSeriesPoint(1803599)
+new TimeSeriesPoint(1803599F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:10:00Z"),
 },
-new TimeSeriesPoint(1803616)
+new TimeSeriesPoint(1803616F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:15:00Z"),
 },
-new TimeSeriesPoint(1803619)
+new TimeSeriesPoint(1803619F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:20:00Z"),
 },
-new TimeSeriesPoint(1809942)
+new TimeSeriesPoint(1809942F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:25:00Z"),
 },
-new TimeSeriesPoint(1802720)
+new TimeSeriesPoint(1802720F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:30:00Z"),
 },
-new TimeSeriesPoint(1802720)
+new TimeSeriesPoint(1802720F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:35:00Z"),
 },
-new TimeSeriesPoint(1802888)
+new TimeSeriesPoint(1802888F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:40:00Z"),
 },
-new TimeSeriesPoint(1809574)
+new TimeSeriesPoint(1809574F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:45:00Z"),
 },
-new TimeSeriesPoint(1803896)
+new TimeSeriesPoint(1803896F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:50:00Z"),
 },
-new TimeSeriesPoint(1803850)
+new TimeSeriesPoint(1803850F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T10:55:00Z"),
 },
-new TimeSeriesPoint(1803854)
+new TimeSeriesPoint(1803854F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:00:00Z"),
 },
-new TimeSeriesPoint(1803854)
+new TimeSeriesPoint(1803854F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:05:00Z"),
 },
-new TimeSeriesPoint(1803797)
+new TimeSeriesPoint(1803797F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:10:00Z"),
 },
-new TimeSeriesPoint(1803921)
+new TimeSeriesPoint(1803921F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:15:00Z"),
 },
-new TimeSeriesPoint(1803933)
+new TimeSeriesPoint(1803933F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:20:00Z"),
 },
-new TimeSeriesPoint(1804040)
+new TimeSeriesPoint(1804040F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:25:00Z"),
 },
-new TimeSeriesPoint(1804044)
+new TimeSeriesPoint(1804044F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:30:00Z"),
 },
-new TimeSeriesPoint(1804070)
+new TimeSeriesPoint(1804070F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:35:00Z"),
 },
-new TimeSeriesPoint(1804070)
+new TimeSeriesPoint(1804070F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:40:00Z"),
 },
-new TimeSeriesPoint(1804068)
+new TimeSeriesPoint(1804068F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:45:00Z"),
 },
-new TimeSeriesPoint(1804073)
+new TimeSeriesPoint(1804073F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:50:00Z"),
 },
-new TimeSeriesPoint(1804101)
+new TimeSeriesPoint(1804101F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T11:55:00Z"),
 },
-new TimeSeriesPoint(1804674)
+new TimeSeriesPoint(1804674F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:00:00Z"),
 },
-new TimeSeriesPoint(1804714)
+new TimeSeriesPoint(1804714F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:05:00Z"),
 },
-new TimeSeriesPoint(1804730)
+new TimeSeriesPoint(1804730F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:10:00Z"),
 },
-new TimeSeriesPoint(1804816)
+new TimeSeriesPoint(1804816F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:15:00Z"),
 },
-new TimeSeriesPoint(1803996)
+new TimeSeriesPoint(1803996F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:20:00Z"),
 },
-new TimeSeriesPoint(1803998)
+new TimeSeriesPoint(1803998F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:25:00Z"),
 },
-new TimeSeriesPoint(1804015)
+new TimeSeriesPoint(1804015F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:30:00Z"),
 },
-new TimeSeriesPoint(1804047)
+new TimeSeriesPoint(1804047F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:35:00Z"),
 },
-new TimeSeriesPoint(1804050)
+new TimeSeriesPoint(1804050F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:40:00Z"),
 },
-new TimeSeriesPoint(1804218)
+new TimeSeriesPoint(1804218F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:45:00Z"),
 },
-new TimeSeriesPoint(1804217)
+new TimeSeriesPoint(1804217F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:50:00Z"),
 },
-new TimeSeriesPoint(1804217)
+new TimeSeriesPoint(1804217F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T12:55:00Z"),
 },
-new TimeSeriesPoint(1804205)
+new TimeSeriesPoint(1804205F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:00:00Z"),
 },
-new TimeSeriesPoint(1804728)
+new TimeSeriesPoint(1804728F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:05:00Z"),
 },
-new TimeSeriesPoint(1804748)
+new TimeSeriesPoint(1804748F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:10:00Z"),
 },
-new TimeSeriesPoint(1805232)
+new TimeSeriesPoint(1805232F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:15:00Z"),
 },
-new TimeSeriesPoint(1814121)
+new TimeSeriesPoint(1814121F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:20:00Z"),
 },
-new TimeSeriesPoint(1806789)
+new TimeSeriesPoint(1806789F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:25:00Z"),
 },
-new TimeSeriesPoint(1806119)
+new TimeSeriesPoint(1806119F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:30:00Z"),
 },
-new TimeSeriesPoint(1806329)
+new TimeSeriesPoint(1806329F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:35:00Z"),
 },
-new TimeSeriesPoint(1806454)
+new TimeSeriesPoint(1806454F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:40:00Z"),
 },
-new TimeSeriesPoint(1806852)
+new TimeSeriesPoint(1806852F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:45:00Z"),
 },
-new TimeSeriesPoint(1807347)
+new TimeSeriesPoint(1807347F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:50:00Z"),
 },
-new TimeSeriesPoint(1812144)
+new TimeSeriesPoint(1812144F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T13:55:00Z"),
 },
-new TimeSeriesPoint(1807418)
+new TimeSeriesPoint(1807418F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:00:00Z"),
 },
-new TimeSeriesPoint(1807418)
+new TimeSeriesPoint(1807418F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:05:00Z"),
 },
-new TimeSeriesPoint(1807432)
+new TimeSeriesPoint(1807432F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:10:00Z"),
 },
-new TimeSeriesPoint(1808540)
+new TimeSeriesPoint(1808540F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:15:00Z"),
 },
-new TimeSeriesPoint(1808541)
+new TimeSeriesPoint(1808541F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:20:00Z"),
 },
-new TimeSeriesPoint(1807831)
+new TimeSeriesPoint(1807831F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:25:00Z"),
 },
-new TimeSeriesPoint(1807852)
+new TimeSeriesPoint(1807852F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:30:00Z"),
 },
-new TimeSeriesPoint(1807811)
+new TimeSeriesPoint(1807811F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:35:00Z"),
 },
-new TimeSeriesPoint(2214285)
+new TimeSeriesPoint(2214285F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:40:00Z"),
 },
-new TimeSeriesPoint(2215019)
+new TimeSeriesPoint(2215019F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:45:00Z"),
 },
-new TimeSeriesPoint(2215329)
+new TimeSeriesPoint(2215329F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:50:00Z"),
 },
-new TimeSeriesPoint(2215097)
+new TimeSeriesPoint(2215097F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T14:55:00Z"),
 },
-new TimeSeriesPoint(2215129)
+new TimeSeriesPoint(2215129F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:00:00Z"),
 },
-new TimeSeriesPoint(2215120)
+new TimeSeriesPoint(2215120F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:05:00Z"),
 },
-new TimeSeriesPoint(2217056)
+new TimeSeriesPoint(2217056F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:10:00Z"),
 },
-new TimeSeriesPoint(2217056)
+new TimeSeriesPoint(2217056F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:15:00Z"),
 },
-new TimeSeriesPoint(2222126)
+new TimeSeriesPoint(2222126F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:20:00Z"),
 },
-new TimeSeriesPoint(2226472)
+new TimeSeriesPoint(2226472F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:25:00Z"),
 },
-new TimeSeriesPoint(2226722)
+new TimeSeriesPoint(2226722F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:30:00Z"),
 },
-new TimeSeriesPoint(2226729)
+new TimeSeriesPoint(2226729F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:35:00Z"),
 },
-new TimeSeriesPoint(2226735)
+new TimeSeriesPoint(2226735F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:40:00Z"),
 },
-new TimeSeriesPoint(2226735)
+new TimeSeriesPoint(2226735F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:45:00Z"),
 },
-new TimeSeriesPoint(2226735)
+new TimeSeriesPoint(2226735F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:50:00Z"),
 },
-new TimeSeriesPoint(2226952)
+new TimeSeriesPoint(2226952F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T15:55:00Z"),
 },
-new TimeSeriesPoint(2226962)
+new TimeSeriesPoint(2226962F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:00:00Z"),
 },
-new TimeSeriesPoint(2649337)
+new TimeSeriesPoint(2649337F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:05:00Z"),
 },
-new TimeSeriesPoint(2092796)
+new TimeSeriesPoint(2092796F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:10:00Z"),
 },
-new TimeSeriesPoint(2092839)
+new TimeSeriesPoint(2092839F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:15:00Z"),
 },
-new TimeSeriesPoint(2092940)
+new TimeSeriesPoint(2092940F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:20:00Z"),
 },
-new TimeSeriesPoint(2092940)
+new TimeSeriesPoint(2092940F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:25:00Z"),
 },
-new TimeSeriesPoint(2092965)
+new TimeSeriesPoint(2092965F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:30:00Z"),
 },
-new TimeSeriesPoint(2092979)
+new TimeSeriesPoint(2092979F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:35:00Z"),
 },
-new TimeSeriesPoint(2095588)
+new TimeSeriesPoint(2095588F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:40:00Z"),
 },
-new TimeSeriesPoint(2099586)
+new TimeSeriesPoint(2099586F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:45:00Z"),
 },
-new TimeSeriesPoint(2102981)
+new TimeSeriesPoint(2102981F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:50:00Z"),
 },
-new TimeSeriesPoint(2108053)
+new TimeSeriesPoint(2108053F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T16:55:00Z"),
 },
-new TimeSeriesPoint(2107907)
+new TimeSeriesPoint(2107907F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:00:00Z"),
 },
-new TimeSeriesPoint(2108241)
+new TimeSeriesPoint(2108241F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:05:00Z"),
 },
-new TimeSeriesPoint(2100321)
+new TimeSeriesPoint(2100321F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:10:00Z"),
 },
-new TimeSeriesPoint(2100448)
+new TimeSeriesPoint(2100448F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:15:00Z"),
 },
-new TimeSeriesPoint(2100483)
+new TimeSeriesPoint(2100483F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:20:00Z"),
 },
-new TimeSeriesPoint(2103042)
+new TimeSeriesPoint(2103042F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:25:00Z"),
 },
-new TimeSeriesPoint(2103037)
+new TimeSeriesPoint(2103037F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:30:00Z"),
 },
-new TimeSeriesPoint(2103040)
+new TimeSeriesPoint(2103040F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:35:00Z"),
 },
-new TimeSeriesPoint(2103054)
+new TimeSeriesPoint(2103054F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:40:00Z"),
 },
-new TimeSeriesPoint(2103058)
+new TimeSeriesPoint(2103058F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:45:00Z"),
 },
-new TimeSeriesPoint(1830757)
+new TimeSeriesPoint(1830757F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:50:00Z"),
 },
-new TimeSeriesPoint(1830855)
+new TimeSeriesPoint(1830855F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T17:55:00Z"),
 },
-new TimeSeriesPoint(1831495)
+new TimeSeriesPoint(1831495F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:00:00Z"),
 },
-new TimeSeriesPoint(1831463)
+new TimeSeriesPoint(1831463F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:05:00Z"),
 },
-new TimeSeriesPoint(1831963)
+new TimeSeriesPoint(1831963F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:10:00Z"),
 },
-new TimeSeriesPoint(1832046)
+new TimeSeriesPoint(1832046F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:15:00Z"),
 },
-new TimeSeriesPoint(1832070)
+new TimeSeriesPoint(1832070F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:20:00Z"),
 },
-new TimeSeriesPoint(1835511)
+new TimeSeriesPoint(1835511F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:25:00Z"),
 },
-new TimeSeriesPoint(1835265)
+new TimeSeriesPoint(1835265F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:30:00Z"),
 },
-new TimeSeriesPoint(1835481)
+new TimeSeriesPoint(1835481F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:35:00Z"),
 },
-new TimeSeriesPoint(1835578)
+new TimeSeriesPoint(1835578F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:40:00Z"),
 },
-new TimeSeriesPoint(1835611)
+new TimeSeriesPoint(1835611F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:45:00Z"),
 },
-new TimeSeriesPoint(1836314)
+new TimeSeriesPoint(1836314F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:50:00Z"),
 },
-new TimeSeriesPoint(1836369)
+new TimeSeriesPoint(1836369F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T18:55:00Z"),
 },
-new TimeSeriesPoint(1837280)
+new TimeSeriesPoint(1837280F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:00:00Z"),
 },
-new TimeSeriesPoint(1842939)
+new TimeSeriesPoint(1842939F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:05:00Z"),
 },
-new TimeSeriesPoint(1843126)
+new TimeSeriesPoint(1843126F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:10:00Z"),
 },
-new TimeSeriesPoint(1845840)
+new TimeSeriesPoint(1845840F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:15:00Z"),
 },
-new TimeSeriesPoint(1842444)
+new TimeSeriesPoint(1842444F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:20:00Z"),
 },
-new TimeSeriesPoint(1839891)
+new TimeSeriesPoint(1839891F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:25:00Z"),
 },
-new TimeSeriesPoint(1839875)
+new TimeSeriesPoint(1839875F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:30:00Z"),
 },
-new TimeSeriesPoint(1839870)
+new TimeSeriesPoint(1839870F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:35:00Z"),
 },
-new TimeSeriesPoint(1840090)
+new TimeSeriesPoint(1840090F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:40:00Z"),
 },
-new TimeSeriesPoint(1840479)
+new TimeSeriesPoint(1840479F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:45:00Z"),
 },
-new TimeSeriesPoint(1840479)
+new TimeSeriesPoint(1840479F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:50:00Z"),
 },
-new TimeSeriesPoint(1840482)
+new TimeSeriesPoint(1840482F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T19:55:00Z"),
 },
-new TimeSeriesPoint(1841522)
+new TimeSeriesPoint(1841522F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:00:00Z"),
 },
-new TimeSeriesPoint(1841836)
+new TimeSeriesPoint(1841836F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:05:00Z"),
 },
-new TimeSeriesPoint(1842377)
+new TimeSeriesPoint(1842377F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:10:00Z"),
 },
-new TimeSeriesPoint(1842388)
+new TimeSeriesPoint(1842388F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:15:00Z"),
 },
-new TimeSeriesPoint(1842489)
+new TimeSeriesPoint(1842489F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:20:00Z"),
 },
-new TimeSeriesPoint(1842489)
+new TimeSeriesPoint(1842489F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:25:00Z"),
 },
-new TimeSeriesPoint(1842489)
+new TimeSeriesPoint(1842489F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:30:00Z"),
 },
-new TimeSeriesPoint(1842496)
+new TimeSeriesPoint(1842496F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:35:00Z"),
 },
-new TimeSeriesPoint(1842689)
+new TimeSeriesPoint(1842689F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:40:00Z"),
 },
-new TimeSeriesPoint(1843117)
+new TimeSeriesPoint(1843117F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:45:00Z"),
 },
-new TimeSeriesPoint(1843116)
+new TimeSeriesPoint(1843116F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:50:00Z"),
 },
-new TimeSeriesPoint(1843227)
+new TimeSeriesPoint(1843227F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T20:55:00Z"),
 },
-new TimeSeriesPoint(1843138)
+new TimeSeriesPoint(1843138F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:00:00Z"),
 },
-new TimeSeriesPoint(1843141)
+new TimeSeriesPoint(1843141F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:05:00Z"),
 },
-new TimeSeriesPoint(1843310)
+new TimeSeriesPoint(1843310F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:10:00Z"),
 },
-new TimeSeriesPoint(1843310)
+new TimeSeriesPoint(1843310F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:15:00Z"),
 },
-new TimeSeriesPoint(1843507)
+new TimeSeriesPoint(1843507F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:20:00Z"),
 },
-new TimeSeriesPoint(1843953)
+new TimeSeriesPoint(1843953F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:25:00Z"),
 },
-new TimeSeriesPoint(1844778)
+new TimeSeriesPoint(1844778F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:30:00Z"),
 },
-new TimeSeriesPoint(1843918)
+new TimeSeriesPoint(1843918F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:35:00Z"),
 },
-new TimeSeriesPoint(1882692)
+new TimeSeriesPoint(1882692F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:40:00Z"),
 },
-new TimeSeriesPoint(1974888)
+new TimeSeriesPoint(1974888F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:45:00Z"),
 },
-new TimeSeriesPoint(2157136)
+new TimeSeriesPoint(2157136F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:50:00Z"),
 },
-new TimeSeriesPoint(2154987)
+new TimeSeriesPoint(2154987F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T21:55:00Z"),
 },
-new TimeSeriesPoint(2155664)
+new TimeSeriesPoint(2155664F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:00:00Z"),
 },
-new TimeSeriesPoint(2155660)
+new TimeSeriesPoint(2155660F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:05:00Z"),
 },
-new TimeSeriesPoint(2155824)
+new TimeSeriesPoint(2155824F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:10:00Z"),
 },
-new TimeSeriesPoint(2155824)
+new TimeSeriesPoint(2155824F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:15:00Z"),
 },
-new TimeSeriesPoint(2156329)
+new TimeSeriesPoint(2156329F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:20:00Z"),
 },
-new TimeSeriesPoint(2156479)
+new TimeSeriesPoint(2156479F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:25:00Z"),
 },
-new TimeSeriesPoint(2165269)
+new TimeSeriesPoint(2165269F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:30:00Z"),
 },
-new TimeSeriesPoint(2165433)
+new TimeSeriesPoint(2165433F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:35:00Z"),
 },
-new TimeSeriesPoint(2165739)
+new TimeSeriesPoint(2165739F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:40:00Z"),
 },
-new TimeSeriesPoint(2165931)
+new TimeSeriesPoint(2165931F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:45:00Z"),
 },
-new TimeSeriesPoint(2165928)
+new TimeSeriesPoint(2165928F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:50:00Z"),
 },
-new TimeSeriesPoint(2165989)
+new TimeSeriesPoint(2165989F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T22:55:00Z"),
 },
-new TimeSeriesPoint(2228961)
+new TimeSeriesPoint(2228961F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:00:00Z"),
 },
-new TimeSeriesPoint(2228961)
+new TimeSeriesPoint(2228961F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:05:00Z"),
 },
-new TimeSeriesPoint(2228961)
+new TimeSeriesPoint(2228961F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:10:00Z"),
 },
-new TimeSeriesPoint(2485802)
+new TimeSeriesPoint(2485802F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:15:00Z"),
 },
-new TimeSeriesPoint(2485802)
+new TimeSeriesPoint(2485802F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:20:00Z"),
 },
-new TimeSeriesPoint(2486021)
+new TimeSeriesPoint(2486021F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:25:00Z"),
 },
-new TimeSeriesPoint(2485293)
+new TimeSeriesPoint(2485293F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:30:00Z"),
 },
-new TimeSeriesPoint(2485293)
+new TimeSeriesPoint(2485293F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:35:00Z"),
 },
-new TimeSeriesPoint(2485324)
+new TimeSeriesPoint(2485324F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:40:00Z"),
 },
-new TimeSeriesPoint(2489142)
+new TimeSeriesPoint(2489142F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:45:00Z"),
 },
-new TimeSeriesPoint(2526312)
+new TimeSeriesPoint(2526312F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:50:00Z"),
 },
-new TimeSeriesPoint(2526313)
+new TimeSeriesPoint(2526313F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-01T23:55:00Z"),
 },
-new TimeSeriesPoint(2526314)
+new TimeSeriesPoint(2526314F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:00:00Z"),
 },
-new TimeSeriesPoint(2526324)
+new TimeSeriesPoint(2526324F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:05:00Z"),
 },
-new TimeSeriesPoint(2526325)
+new TimeSeriesPoint(2526325F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:10:00Z"),
 },
-new TimeSeriesPoint(2526205)
+new TimeSeriesPoint(2526205F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:15:00Z"),
 },
-new TimeSeriesPoint(2526226)
+new TimeSeriesPoint(2526226F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:20:00Z"),
 },
-new TimeSeriesPoint(2526475)
+new TimeSeriesPoint(2526475F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:25:00Z"),
 },
-new TimeSeriesPoint(2526471)
+new TimeSeriesPoint(2526471F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:30:00Z"),
 },
-new TimeSeriesPoint(2526471)
+new TimeSeriesPoint(2526471F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:35:00Z"),
 },
-new TimeSeriesPoint(2526534)
+new TimeSeriesPoint(2526534F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:40:00Z"),
 },
-new TimeSeriesPoint(2526646)
+new TimeSeriesPoint(2526646F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:45:00Z"),
 },
-new TimeSeriesPoint(2526646)
+new TimeSeriesPoint(2526646F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:50:00Z"),
 },
-new TimeSeriesPoint(2526648)
+new TimeSeriesPoint(2526648F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T00:55:00Z"),
 },
-new TimeSeriesPoint(2526658)
+new TimeSeriesPoint(2526658F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:00:00Z"),
 },
-new TimeSeriesPoint(2526771)
+new TimeSeriesPoint(2526771F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:05:00Z"),
 },
-new TimeSeriesPoint(2526773)
+new TimeSeriesPoint(2526773F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:10:00Z"),
 },
-new TimeSeriesPoint(2526793)
+new TimeSeriesPoint(2526793F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:15:00Z"),
 },
-new TimeSeriesPoint(2527010)
+new TimeSeriesPoint(2527010F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:20:00Z"),
 },
-new TimeSeriesPoint(2527031)
+new TimeSeriesPoint(2527031F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:25:00Z"),
 },
-new TimeSeriesPoint(3178096)
+new TimeSeriesPoint(3178096F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:30:00Z"),
 },
-new TimeSeriesPoint(3196305)
+new TimeSeriesPoint(3196305F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:35:00Z"),
 },
-new TimeSeriesPoint(3196202)
+new TimeSeriesPoint(3196202F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:40:00Z"),
 },
-new TimeSeriesPoint(3196202)
+new TimeSeriesPoint(3196202F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:45:00Z"),
 },
-new TimeSeriesPoint(3196205)
+new TimeSeriesPoint(3196205F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:50:00Z"),
 },
-new TimeSeriesPoint(3229232)
+new TimeSeriesPoint(3229232F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T01:55:00Z"),
 },
-new TimeSeriesPoint(3230463)
+new TimeSeriesPoint(3230463F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:00:00Z"),
 },
-new TimeSeriesPoint(3230468)
+new TimeSeriesPoint(3230468F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:05:00Z"),
 },
-new TimeSeriesPoint(3230468)
+new TimeSeriesPoint(3230468F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:10:00Z"),
 },
-new TimeSeriesPoint(3230468)
+new TimeSeriesPoint(3230468F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:15:00Z"),
 },
-new TimeSeriesPoint(3230470)
+new TimeSeriesPoint(3230470F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:20:00Z"),
 },
-new TimeSeriesPoint(3230467)
+new TimeSeriesPoint(3230467F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:25:00Z"),
 },
-new TimeSeriesPoint(3230506)
+new TimeSeriesPoint(3230506F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:30:00Z"),
 },
-new TimeSeriesPoint(3231536)
+new TimeSeriesPoint(3231536F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:35:00Z"),
 },
-new TimeSeriesPoint(3230723)
+new TimeSeriesPoint(3230723F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:40:00Z"),
 },
-new TimeSeriesPoint(3230727)
+new TimeSeriesPoint(3230727F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:45:00Z"),
 },
-new TimeSeriesPoint(3230727)
+new TimeSeriesPoint(3230727F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:50:00Z"),
 },
-new TimeSeriesPoint(3230727)
+new TimeSeriesPoint(3230727F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T02:55:00Z"),
 },
-new TimeSeriesPoint(3231880)
+new TimeSeriesPoint(3231880F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:00:00Z"),
 },
-new TimeSeriesPoint(3232283)
+new TimeSeriesPoint(3232283F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:05:00Z"),
 },
-new TimeSeriesPoint(3232283)
+new TimeSeriesPoint(3232283F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:10:00Z"),
 },
-new TimeSeriesPoint(3232283)
+new TimeSeriesPoint(3232283F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:15:00Z"),
 },
-new TimeSeriesPoint(3232325)
+new TimeSeriesPoint(3232325F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:20:00Z"),
 },
-new TimeSeriesPoint(3232323)
+new TimeSeriesPoint(3232323F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:25:00Z"),
 },
-new TimeSeriesPoint(3232327)
+new TimeSeriesPoint(3232327F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:30:00Z"),
 },
-new TimeSeriesPoint(3232340)
+new TimeSeriesPoint(3232340F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:35:00Z"),
 },
-new TimeSeriesPoint(3232713)
+new TimeSeriesPoint(3232713F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:40:00Z"),
 },
-new TimeSeriesPoint(3232729)
+new TimeSeriesPoint(3232729F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:45:00Z"),
 },
-new TimeSeriesPoint(3232756)
+new TimeSeriesPoint(3232756F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:50:00Z"),
 },
-new TimeSeriesPoint(3233500)
+new TimeSeriesPoint(3233500F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T03:55:00Z"),
 },
-new TimeSeriesPoint(3233500)
+new TimeSeriesPoint(3233500F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T04:00:00Z"),
 },
-new TimeSeriesPoint(3233500)
+new TimeSeriesPoint(3233500F)
 {
 Timestamp = DateTimeOffset.Parse("2017-01-02T04:05:00Z"),
 }
@@ -6237,7 +6237,7 @@ Timestamp = DateTimeOffset.Parse("2017-01-02T04:05:00Z"),
                 CustomInterval = 5,
                 Period = 0,
                 StableTrendWindow = 10,
-                Threshold = (float)0.99,
+                Threshold = 0.99F,
             };
             Response<UnivariateChangePointDetectionResult> response = await client.DetectUnivariateChangePointAsync(options);
         }

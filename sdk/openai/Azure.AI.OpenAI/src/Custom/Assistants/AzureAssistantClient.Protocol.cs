@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if !AZURE_OPENAI_GA
+
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
@@ -613,3 +615,5 @@ internal partial class AzureAssistantClient : AssistantClient
         => NewJsonGetBuilder(options)
         .WithCommonListParameters(limit, order, after, before);
 }
+
+#endif

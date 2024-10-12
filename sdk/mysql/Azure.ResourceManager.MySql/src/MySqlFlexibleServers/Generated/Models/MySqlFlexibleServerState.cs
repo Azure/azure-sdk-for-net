@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator ==(MySqlFlexibleServerState left, MySqlFlexibleServerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerState"/> values are not the same. </summary>
         public static bool operator !=(MySqlFlexibleServerState left, MySqlFlexibleServerState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerState"/>. </summary>
         public static implicit operator MySqlFlexibleServerState(string value) => new MySqlFlexibleServerState(value);
 
         /// <inheritdoc />

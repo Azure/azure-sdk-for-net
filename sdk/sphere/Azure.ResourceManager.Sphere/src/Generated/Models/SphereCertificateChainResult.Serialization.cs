@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Sphere.Models
 
         void IJsonModel<SphereCertificateChainResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SphereCertificateChainResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SphereCertificateChainResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(CertificateChain))
             {
                 writer.WritePropertyName("certificateChain"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.Sphere.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SphereCertificateChainResult IJsonModel<SphereCertificateChainResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

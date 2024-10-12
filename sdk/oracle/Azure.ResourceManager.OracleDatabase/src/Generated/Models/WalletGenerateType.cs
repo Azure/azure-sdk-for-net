@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(WalletGenerateType left, WalletGenerateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WalletGenerateType"/> values are not the same. </summary>
         public static bool operator !=(WalletGenerateType left, WalletGenerateType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WalletGenerateType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WalletGenerateType"/>. </summary>
         public static implicit operator WalletGenerateType(string value) => new WalletGenerateType(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static bool operator ==(NotificationHubPublicNetworkAccess left, NotificationHubPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationHubPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(NotificationHubPublicNetworkAccess left, NotificationHubPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NotificationHubPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationHubPublicNetworkAccess"/>. </summary>
         public static implicit operator NotificationHubPublicNetworkAccess(string value) => new NotificationHubPublicNetworkAccess(value);
 
         /// <inheritdoc />

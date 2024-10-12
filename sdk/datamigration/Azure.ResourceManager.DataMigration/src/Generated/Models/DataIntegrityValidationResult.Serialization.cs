@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         void IJsonModel<DataIntegrityValidationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataIntegrityValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataIntegrityValidationResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(FailedObjects))
             {
                 writer.WritePropertyName("failedObjects"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.DataMigration.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataIntegrityValidationResult IJsonModel<DataIntegrityValidationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

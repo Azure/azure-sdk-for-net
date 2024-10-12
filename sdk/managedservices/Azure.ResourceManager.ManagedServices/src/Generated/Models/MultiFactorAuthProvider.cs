@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         public static bool operator ==(MultiFactorAuthProvider left, MultiFactorAuthProvider right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MultiFactorAuthProvider"/> values are not the same. </summary>
         public static bool operator !=(MultiFactorAuthProvider left, MultiFactorAuthProvider right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MultiFactorAuthProvider"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MultiFactorAuthProvider"/>. </summary>
         public static implicit operator MultiFactorAuthProvider(string value) => new MultiFactorAuthProvider(value);
 
         /// <inheritdoc />

@@ -68,11 +68,15 @@ public partial class ResourceGroup : Resource
     /// <summary>
     /// Creates a new ResourceGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the ResourceGroup.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ResourceGroup resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ResourceGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ResourceGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Resources/resourceGroups", resourceVersion, context)
+    public ResourceGroup(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Resources/resourceGroups", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -84,13 +88,239 @@ public partial class ResourceGroup : Resource
     }
 
     /// <summary>
+    /// Supported ResourceGroup resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2023-07-01-preview.
+        /// </summary>
+        public static readonly string V2023_07_01_preview = "2023-07-01-preview";
+
+        /// <summary>
+        /// 2023-07-01.
+        /// </summary>
+        public static readonly string V2023_07_01 = "2023-07-01";
+
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+
+        /// <summary>
+        /// 2022-09-01.
+        /// </summary>
+        public static readonly string V2022_09_01 = "2022-09-01";
+
+        /// <summary>
+        /// 2022-06-01.
+        /// </summary>
+        public static readonly string V2022_06_01 = "2022-06-01";
+
+        /// <summary>
+        /// 2022-05-01.
+        /// </summary>
+        public static readonly string V2022_05_01 = "2022-05-01";
+
+        /// <summary>
+        /// 2022-01-01.
+        /// </summary>
+        public static readonly string V2022_01_01 = "2022-01-01";
+
+        /// <summary>
+        /// 2021-04-01.
+        /// </summary>
+        public static readonly string V2021_04_01 = "2021-04-01";
+
+        /// <summary>
+        /// 2021-01-01.
+        /// </summary>
+        public static readonly string V2021_01_01 = "2021-01-01";
+
+        /// <summary>
+        /// 2020-10-01.
+        /// </summary>
+        public static readonly string V2020_10_01 = "2020-10-01";
+
+        /// <summary>
+        /// 2020-09-01.
+        /// </summary>
+        public static readonly string V2020_09_01 = "2020-09-01";
+
+        /// <summary>
+        /// 2020-08-01.
+        /// </summary>
+        public static readonly string V2020_08_01 = "2020-08-01";
+
+        /// <summary>
+        /// 2020-07-01.
+        /// </summary>
+        public static readonly string V2020_07_01 = "2020-07-01";
+
+        /// <summary>
+        /// 2020-06-01.
+        /// </summary>
+        public static readonly string V2020_06_01 = "2020-06-01";
+
+        /// <summary>
+        /// 2020-05-01.
+        /// </summary>
+        public static readonly string V2020_05_01 = "2020-05-01";
+
+        /// <summary>
+        /// 2020-01-01.
+        /// </summary>
+        public static readonly string V2020_01_01 = "2020-01-01";
+
+        /// <summary>
+        /// 2019-11-01.
+        /// </summary>
+        public static readonly string V2019_11_01 = "2019-11-01";
+
+        /// <summary>
+        /// 2019-10-01.
+        /// </summary>
+        public static readonly string V2019_10_01 = "2019-10-01";
+
+        /// <summary>
+        /// 2019-09-01.
+        /// </summary>
+        public static readonly string V2019_09_01 = "2019-09-01";
+
+        /// <summary>
+        /// 2019-08-01.
+        /// </summary>
+        public static readonly string V2019_08_01 = "2019-08-01";
+
+        /// <summary>
+        /// 2019-07-01.
+        /// </summary>
+        public static readonly string V2019_07_01 = "2019-07-01";
+
+        /// <summary>
+        /// 2019-06-01.
+        /// </summary>
+        public static readonly string V2019_06_01 = "2019-06-01";
+
+        /// <summary>
+        /// 2019-05-01.
+        /// </summary>
+        public static readonly string V2019_05_01 = "2019-05-01";
+
+        /// <summary>
+        /// 2019-04-01.
+        /// </summary>
+        public static readonly string V2019_04_01 = "2019-04-01";
+
+        /// <summary>
+        /// 2019-03-01.
+        /// </summary>
+        public static readonly string V2019_03_01 = "2019-03-01";
+
+        /// <summary>
+        /// 2018-11-01.
+        /// </summary>
+        public static readonly string V2018_11_01 = "2018-11-01";
+
+        /// <summary>
+        /// 2018-09-01.
+        /// </summary>
+        public static readonly string V2018_09_01 = "2018-09-01";
+
+        /// <summary>
+        /// 2018-08-01.
+        /// </summary>
+        public static readonly string V2018_08_01 = "2018-08-01";
+
+        /// <summary>
+        /// 2018-07-01.
+        /// </summary>
+        public static readonly string V2018_07_01 = "2018-07-01";
+
+        /// <summary>
+        /// 2018-05-01.
+        /// </summary>
+        public static readonly string V2018_05_01 = "2018-05-01";
+
+        /// <summary>
+        /// 2018-02-01.
+        /// </summary>
+        public static readonly string V2018_02_01 = "2018-02-01";
+
+        /// <summary>
+        /// 2018-01-01.
+        /// </summary>
+        public static readonly string V2018_01_01 = "2018-01-01";
+
+        /// <summary>
+        /// 2017-08-01.
+        /// </summary>
+        public static readonly string V2017_08_01 = "2017-08-01";
+
+        /// <summary>
+        /// 2017-06-01.
+        /// </summary>
+        public static readonly string V2017_06_01 = "2017-06-01";
+
+        /// <summary>
+        /// 2017-05-10.
+        /// </summary>
+        public static readonly string V2017_05_10 = "2017-05-10";
+
+        /// <summary>
+        /// 2017-05-01.
+        /// </summary>
+        public static readonly string V2017_05_01 = "2017-05-01";
+
+        /// <summary>
+        /// 2017-03-01.
+        /// </summary>
+        public static readonly string V2017_03_01 = "2017-03-01";
+
+        /// <summary>
+        /// 2016-09-01.
+        /// </summary>
+        public static readonly string V2016_09_01 = "2016-09-01";
+
+        /// <summary>
+        /// 2016-07-01.
+        /// </summary>
+        public static readonly string V2016_07_01 = "2016-07-01";
+
+        /// <summary>
+        /// 2016-06-01.
+        /// </summary>
+        public static readonly string V2016_06_01 = "2016-06-01";
+
+        /// <summary>
+        /// 2016-02-01.
+        /// </summary>
+        public static readonly string V2016_02_01 = "2016-02-01";
+
+        /// <summary>
+        /// 2015-11-01.
+        /// </summary>
+        public static readonly string V2015_11_01 = "2015-11-01";
+
+        /// <summary>
+        /// 2015-01-01.
+        /// </summary>
+        public static readonly string V2015_01_01 = "2015-01-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing ResourceGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the ResourceGroup.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ResourceGroup resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ResourceGroup.</param>
     /// <returns>The existing ResourceGroup resource.</returns>
-    public static ResourceGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ResourceGroup FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Creates a new ResourceGroup resource from a Bicep expression that
@@ -103,7 +333,7 @@ public partial class ResourceGroup : Resource
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static ResourceGroup FromExpression(Expression expression)
     {
-        ResourceGroup resource = new(expression.ToString());
+        ResourceGroup resource = new(nameof(ResourceGroup));
         resource.OverrideWithExpression(expression);
         return resource;
     }

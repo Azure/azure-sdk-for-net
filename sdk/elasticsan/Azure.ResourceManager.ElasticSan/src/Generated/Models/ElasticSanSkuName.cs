@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static bool operator ==(ElasticSanSkuName left, ElasticSanSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticSanSkuName"/> values are not the same. </summary>
         public static bool operator !=(ElasticSanSkuName left, ElasticSanSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ElasticSanSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticSanSkuName"/>. </summary>
         public static implicit operator ElasticSanSkuName(string value) => new ElasticSanSkuName(value);
 
         /// <inheritdoc />

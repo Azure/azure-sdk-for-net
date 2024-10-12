@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(RecoveryPlanGroupType left, RecoveryPlanGroupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryPlanGroupType"/> values are not the same. </summary>
         public static bool operator !=(RecoveryPlanGroupType left, RecoveryPlanGroupType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RecoveryPlanGroupType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryPlanGroupType"/>. </summary>
         public static implicit operator RecoveryPlanGroupType(string value) => new RecoveryPlanGroupType(value);
 
         /// <inheritdoc />

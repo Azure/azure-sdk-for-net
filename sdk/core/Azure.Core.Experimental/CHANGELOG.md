@@ -1,16 +1,24 @@
 # Release History
 
-## 0.1.0-preview.36 (Unreleased)
+## 0.1.0-preview.37 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Removed the `PopTokenRequestContext` type and added the proof of possession-related properties to `TokenRequestContext` in Azure.Core ([45134](https://github.com/Azure/azure-sdk-for-net/pull/45134)).
-
 ### Bugs Fixed
 
 ### Other Changes
+
+## 0.1.0-preview.36 (2024-10-03)
+
+### Breaking Changes
+
+- Removed the `PopTokenRequestContext` type and added the proof of possession-related properties to `TokenRequestContext` in Azure.Core ([45134](https://github.com/Azure/azure-sdk-for-net/pull/45134)).
+
+### Other Changes
+
+- Upgraded `System.Memory.Data` package dependency to 6.0.0 ([#46134](https://github.com/Azure/azure-sdk-for-net/pull/46134)).
 
 ## 0.1.0-preview.35 (2024-09-12)
 

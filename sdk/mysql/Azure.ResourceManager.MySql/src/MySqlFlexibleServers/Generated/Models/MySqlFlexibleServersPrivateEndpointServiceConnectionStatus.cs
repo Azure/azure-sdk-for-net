@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator ==(MySqlFlexibleServersPrivateEndpointServiceConnectionStatus left, MySqlFlexibleServersPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServersPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(MySqlFlexibleServersPrivateEndpointServiceConnectionStatus left, MySqlFlexibleServersPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MySqlFlexibleServersPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServersPrivateEndpointServiceConnectionStatus"/>. </summary>
         public static implicit operator MySqlFlexibleServersPrivateEndpointServiceConnectionStatus(string value) => new MySqlFlexibleServersPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc />

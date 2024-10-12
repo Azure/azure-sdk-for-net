@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(InsightsColumnOutputType left, InsightsColumnOutputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InsightsColumnOutputType"/> values are not the same. </summary>
         public static bool operator !=(InsightsColumnOutputType left, InsightsColumnOutputType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InsightsColumnOutputType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InsightsColumnOutputType"/>. </summary>
         public static implicit operator InsightsColumnOutputType(string value) => new InsightsColumnOutputType(value);
 
         /// <inheritdoc />
