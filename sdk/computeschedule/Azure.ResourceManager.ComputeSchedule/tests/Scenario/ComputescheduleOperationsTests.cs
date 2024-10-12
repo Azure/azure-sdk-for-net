@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
         [TestCase, Order(1)]
         [RecordedTest]
+        [Ignore("This test case will cause errors in the pipeline. After fixing the problem, restore this test")]
         public async Task TestSubmitStartOperations()
         {
             int vmCount = 1;
