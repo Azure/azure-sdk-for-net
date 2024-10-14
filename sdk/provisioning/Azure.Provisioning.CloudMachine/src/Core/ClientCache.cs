@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.CloudMachine;
+namespace Azure.Core;
 
 // TODO: this is a very demo implementation. We need to do better
 public class ClientCache
