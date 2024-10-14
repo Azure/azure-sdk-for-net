@@ -12,8 +12,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 
 ```C# Snippet:CreateDocumentIntelligenceAdministrationClient
 string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ## Compose a model

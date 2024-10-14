@@ -26,8 +26,7 @@ The source client that contains the custom model to copy.
 
 ```C# Snippet:DocumentIntelligenceSampleCreateCopySourceClient
 string sourceEndpoint = "<sourceEndpoint>";
-string sourceApiKey = "<sourceApiKey>";
-var sourceClient = new DocumentIntelligenceAdministrationClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceApiKey));
+var sourceClient = new DocumentIntelligenceAdministrationClient(new Uri(sourceEndpoint), new DefaultAzureCredential());
 ```
 
 ### Target client
@@ -36,8 +35,7 @@ The target client to copy the custom model to.
 
 ```C# Snippet:DocumentIntelligenceSampleCreateCopyTargetClient
 string targetEndpoint = "<targetEndpoint>";
-string targetApiKey = "<targetApiKey>";
-var targetClient = new DocumentIntelligenceAdministrationClient(new Uri(targetEndpoint), new AzureKeyCredential(targetApiKey));
+var targetClient = new DocumentIntelligenceAdministrationClient(new Uri(targetEndpoint), new DefaultAzureCredential());
 ```
 
 ### Authorize the copy

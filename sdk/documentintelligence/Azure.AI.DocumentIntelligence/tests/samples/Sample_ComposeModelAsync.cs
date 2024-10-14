@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
+using Azure.Identity;
 
 namespace Azure.AI.DocumentIntelligence.Samples
 {
@@ -15,8 +15,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task ComposeModelAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
 
             #region Snippet:DocumentIntelligenceSampleBuildVariousModels
             // For this sample, you can use the training documents found in the `trainingFiles` folder.

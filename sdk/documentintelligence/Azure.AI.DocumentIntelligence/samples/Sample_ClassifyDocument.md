@@ -12,8 +12,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 
 ```C# Snippet:CreateDocumentIntelligenceClient
 string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var client = new DocumentIntelligenceClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ## Classify a document from a URI

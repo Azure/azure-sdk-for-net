@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.DocumentIntelligence.Samples
 {
@@ -15,12 +16,10 @@ namespace Azure.AI.DocumentIntelligence.Samples
             #region Snippet:DocumentIntelligenceSampleCreateCopySourceClient
 #if SNIPPET
             string sourceEndpoint = "<sourceEndpoint>";
-            string sourceApiKey = "<sourceApiKey>";
 #else
             string sourceEndpoint = TestEnvironment.Endpoint;
-            string sourceApiKey = TestEnvironment.ApiKey;
 #endif
-            var sourceClient = new DocumentIntelligenceAdministrationClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceApiKey));
+            var sourceClient = new DocumentIntelligenceAdministrationClient(new Uri(sourceEndpoint), new DefaultAzureCredential());
             #endregion
 
             // For the purpose of this sample, we are going to create a model to copy. Note that
@@ -38,12 +37,10 @@ namespace Azure.AI.DocumentIntelligence.Samples
             #region Snippet:DocumentIntelligenceSampleCreateCopyTargetClient
 #if SNIPPET
             string targetEndpoint = "<targetEndpoint>";
-            string targetApiKey = "<targetApiKey>";
 #else
             string targetEndpoint = TestEnvironment.Endpoint;
-            string targetApiKey = TestEnvironment.ApiKey;
 #endif
-            var targetClient = new DocumentIntelligenceAdministrationClient(new Uri(targetEndpoint), new AzureKeyCredential(targetApiKey));
+            var targetClient = new DocumentIntelligenceAdministrationClient(new Uri(targetEndpoint), new DefaultAzureCredential());
             #endregion
 
             #region Snippet:DocumentIntelligenceSampleGetCopyAuthorization

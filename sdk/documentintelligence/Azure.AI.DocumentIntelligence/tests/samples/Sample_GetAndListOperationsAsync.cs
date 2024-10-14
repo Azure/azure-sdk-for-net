@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.DocumentIntelligence.Samples
 {
@@ -13,8 +14,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task GetAndListOperationsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
 
             // Build a custom model to make sure that there is at least one operation.
             string modelId = Guid.NewGuid().ToString();

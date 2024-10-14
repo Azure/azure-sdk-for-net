@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.DocumentIntelligence.Tests;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.DocumentIntelligence.Samples
 {
@@ -15,8 +16,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task AnalyzeWithPrebuiltModelFromUriAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), new DefaultAzureCredential());
 
             #region Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 #if SNIPPET
