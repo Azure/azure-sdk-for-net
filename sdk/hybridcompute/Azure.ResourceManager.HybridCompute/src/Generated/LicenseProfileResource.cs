@@ -17,53 +17,52 @@ using Azure.ResourceManager.HybridCompute.Models;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
-    /// A Class representing a HybridComputeMachineExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridComputeMachineExtensionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetHybridComputeMachineExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HybridComputeMachineResource"/> using the GetHybridComputeMachineExtension method.
+    /// A Class representing a LicenseProfile along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LicenseProfileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLicenseProfileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HybridComputeMachineResource"/> using the GetLicenseProfile method.
     /// </summary>
-    public partial class HybridComputeMachineExtensionResource : ArmResource
+    public partial class LicenseProfileResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="HybridComputeMachineExtensionResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="LicenseProfileResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="machineName"> The machineName. </param>
-        /// <param name="extensionName"> The extensionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string machineName, string extensionName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string machineName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/default";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics;
-        private readonly MachineExtensionsRestOperations _hybridComputeMachineExtensionMachineExtensionsRestClient;
-        private readonly HybridComputeMachineExtensionData _data;
+        private readonly ClientDiagnostics _licenseProfileClientDiagnostics;
+        private readonly LicenseProfilesRestOperations _licenseProfileRestClient;
+        private readonly LicenseProfileData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/machines/extensions";
+        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/machines/licenseProfiles";
 
-        /// <summary> Initializes a new instance of the <see cref="HybridComputeMachineExtensionResource"/> class for mocking. </summary>
-        protected HybridComputeMachineExtensionResource()
+        /// <summary> Initializes a new instance of the <see cref="LicenseProfileResource"/> class for mocking. </summary>
+        protected LicenseProfileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HybridComputeMachineExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LicenseProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HybridComputeMachineExtensionResource(ArmClient client, HybridComputeMachineExtensionData data) : this(client, data.Id)
+        internal LicenseProfileResource(ArmClient client, LicenseProfileData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HybridComputeMachineExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LicenseProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HybridComputeMachineExtensionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal LicenseProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string hybridComputeMachineExtensionMachineExtensionsApiVersion);
-            _hybridComputeMachineExtensionMachineExtensionsRestClient = new MachineExtensionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeMachineExtensionMachineExtensionsApiVersion);
+            _licenseProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string licenseProfileApiVersion);
+            _licenseProfileRestClient = new LicenseProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, licenseProfileApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual HybridComputeMachineExtensionData Data
+        public virtual LicenseProfileData Data
         {
             get
             {
@@ -91,15 +90,15 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// The operation to get the extension.
+        /// Retrieves information about the view of a license profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/{licenseProfileName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MachineExtensions_Get</description>
+        /// <description>LicenseProfiles_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -107,21 +106,21 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineExtensionResource"/></description>
+        /// <description><see cref="LicenseProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HybridComputeMachineExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LicenseProfileResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.Get");
+            using var scope = _licenseProfileClientDiagnostics.CreateScope("LicenseProfileResource.Get");
             scope.Start();
             try
             {
-                var response = await _hybridComputeMachineExtensionMachineExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _licenseProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridComputeMachineExtensionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LicenseProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -131,15 +130,15 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// The operation to get the extension.
+        /// Retrieves information about the view of a license profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/{licenseProfileName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MachineExtensions_Get</description>
+        /// <description>LicenseProfiles_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -147,21 +146,21 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineExtensionResource"/></description>
+        /// <description><see cref="LicenseProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HybridComputeMachineExtensionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<LicenseProfileResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.Get");
+            using var scope = _licenseProfileClientDiagnostics.CreateScope("LicenseProfileResource.Get");
             scope.Start();
             try
             {
-                var response = _hybridComputeMachineExtensionMachineExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _licenseProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridComputeMachineExtensionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LicenseProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -171,15 +170,15 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// The operation to delete the extension.
+        /// The operation to delete a license profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/{licenseProfileName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MachineExtensions_Delete</description>
+        /// <description>LicenseProfiles_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -187,7 +186,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineExtensionResource"/></description>
+        /// <description><see cref="LicenseProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,12 +194,12 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.Delete");
+            using var scope = _licenseProfileClientDiagnostics.CreateScope("LicenseProfileResource.Delete");
             scope.Start();
             try
             {
-                var response = await _hybridComputeMachineExtensionMachineExtensionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation(_hybridComputeMachineExtensionMachineExtensionsClientDiagnostics, Pipeline, _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _licenseProfileRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridComputeArmOperation(_licenseProfileClientDiagnostics, Pipeline, _licenseProfileRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -213,15 +212,15 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// The operation to delete the extension.
+        /// The operation to delete a license profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/{licenseProfileName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MachineExtensions_Delete</description>
+        /// <description>LicenseProfiles_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineExtensionResource"/></description>
+        /// <description><see cref="LicenseProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,12 +236,12 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.Delete");
+            using var scope = _licenseProfileClientDiagnostics.CreateScope("LicenseProfileResource.Delete");
             scope.Start();
             try
             {
-                var response = _hybridComputeMachineExtensionMachineExtensionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new HybridComputeArmOperation(_hybridComputeMachineExtensionMachineExtensionsClientDiagnostics, Pipeline, _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _licenseProfileRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var operation = new HybridComputeArmOperation(_licenseProfileClientDiagnostics, Pipeline, _licenseProfileRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -255,15 +254,15 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// The operation to update the extension.
+        /// The operation to update a license profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/{licenseProfileName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MachineExtensions_Update</description>
+        /// <description>LicenseProfiles_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -271,24 +270,24 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineExtensionResource"/></description>
+        /// <description><see cref="LicenseProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Parameters supplied to the Create Machine Extension operation. </param>
+        /// <param name="patch"> Parameters supplied to the Update license profile operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<HybridComputeMachineExtensionResource>> UpdateAsync(WaitUntil waitUntil, HybridComputeMachineExtensionPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LicenseProfileResource>> UpdateAsync(WaitUntil waitUntil, LicenseProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.Update");
+            using var scope = _licenseProfileClientDiagnostics.CreateScope("LicenseProfileResource.Update");
             scope.Start();
             try
             {
-                var response = await _hybridComputeMachineExtensionMachineExtensionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation<HybridComputeMachineExtensionResource>(new HybridComputeMachineExtensionOperationSource(Client), _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics, Pipeline, _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _licenseProfileRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridComputeArmOperation<LicenseProfileResource>(new LicenseProfileOperationSource(Client), _licenseProfileClientDiagnostics, Pipeline, _licenseProfileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -301,15 +300,15 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// The operation to update the extension.
+        /// The operation to update a license profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/{licenseProfileName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MachineExtensions_Update</description>
+        /// <description>LicenseProfiles_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -317,24 +316,116 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineExtensionResource"/></description>
+        /// <description><see cref="LicenseProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Parameters supplied to the Create Machine Extension operation. </param>
+        /// <param name="patch"> Parameters supplied to the Update license profile operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<HybridComputeMachineExtensionResource> Update(WaitUntil waitUntil, HybridComputeMachineExtensionPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LicenseProfileResource> Update(WaitUntil waitUntil, LicenseProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.Update");
+            using var scope = _licenseProfileClientDiagnostics.CreateScope("LicenseProfileResource.Update");
             scope.Start();
             try
             {
-                var response = _hybridComputeMachineExtensionMachineExtensionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new HybridComputeArmOperation<HybridComputeMachineExtensionResource>(new HybridComputeMachineExtensionOperationSource(Client), _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics, Pipeline, _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _licenseProfileRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, patch, cancellationToken);
+                var operation = new HybridComputeArmOperation<LicenseProfileResource>(new LicenseProfileOperationSource(Client), _licenseProfileClientDiagnostics, Pipeline, _licenseProfileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, patch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to create or update a license profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/{licenseProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LicenseProfiles_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LicenseProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Parameters supplied to the Create or Update license profile operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<LicenseProfileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, LicenseProfileData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _licenseProfileClientDiagnostics.CreateScope("LicenseProfileResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _licenseProfileRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridComputeArmOperation<LicenseProfileResource>(new LicenseProfileOperationSource(Client), _licenseProfileClientDiagnostics, Pipeline, _licenseProfileRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to create or update a license profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/{licenseProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LicenseProfiles_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LicenseProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Parameters supplied to the Create or Update license profile operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<LicenseProfileResource> CreateOrUpdate(WaitUntil waitUntil, LicenseProfileData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _licenseProfileClientDiagnostics.CreateScope("LicenseProfileResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _licenseProfileRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
+                var operation = new HybridComputeArmOperation<LicenseProfileResource>(new LicenseProfileOperationSource(Client), _licenseProfileClientDiagnostics, Pipeline, _licenseProfileRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -351,11 +442,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/{licenseProfileName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MachineExtensions_Get</description>
+        /// <description>LicenseProfiles_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -363,7 +454,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineExtensionResource"/></description>
+        /// <description><see cref="LicenseProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,12 +462,12 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<HybridComputeMachineExtensionResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LicenseProfileResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.AddTag");
+            using var scope = _licenseProfileClientDiagnostics.CreateScope("LicenseProfileResource.AddTag");
             scope.Start();
             try
             {
@@ -385,13 +476,13 @@ namespace Azure.ResourceManager.HybridCompute
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _hybridComputeMachineExtensionMachineExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new HybridComputeMachineExtensionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _licenseProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new LicenseProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new HybridComputeMachineExtensionPatch();
+                    var patch = new LicenseProfilePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -413,11 +504,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/{licenseProfileName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MachineExtensions_Get</description>
+        /// <description>LicenseProfiles_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -425,7 +516,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineExtensionResource"/></description>
+        /// <description><see cref="LicenseProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -433,12 +524,12 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<HybridComputeMachineExtensionResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<LicenseProfileResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.AddTag");
+            using var scope = _licenseProfileClientDiagnostics.CreateScope("LicenseProfileResource.AddTag");
             scope.Start();
             try
             {
@@ -447,13 +538,13 @@ namespace Azure.ResourceManager.HybridCompute
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _hybridComputeMachineExtensionMachineExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new HybridComputeMachineExtensionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _licenseProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                    return Response.FromValue(new LicenseProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new HybridComputeMachineExtensionPatch();
+                    var patch = new LicenseProfilePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -475,11 +566,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/{licenseProfileName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MachineExtensions_Get</description>
+        /// <description>LicenseProfiles_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -487,18 +578,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineExtensionResource"/></description>
+        /// <description><see cref="LicenseProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<HybridComputeMachineExtensionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LicenseProfileResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.SetTags");
+            using var scope = _licenseProfileClientDiagnostics.CreateScope("LicenseProfileResource.SetTags");
             scope.Start();
             try
             {
@@ -508,13 +599,13 @@ namespace Azure.ResourceManager.HybridCompute
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _hybridComputeMachineExtensionMachineExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new HybridComputeMachineExtensionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _licenseProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new LicenseProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new HybridComputeMachineExtensionPatch();
+                    var patch = new LicenseProfilePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -532,11 +623,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/{licenseProfileName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MachineExtensions_Get</description>
+        /// <description>LicenseProfiles_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -544,18 +635,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineExtensionResource"/></description>
+        /// <description><see cref="LicenseProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<HybridComputeMachineExtensionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<LicenseProfileResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.SetTags");
+            using var scope = _licenseProfileClientDiagnostics.CreateScope("LicenseProfileResource.SetTags");
             scope.Start();
             try
             {
@@ -565,13 +656,13 @@ namespace Azure.ResourceManager.HybridCompute
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _hybridComputeMachineExtensionMachineExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new HybridComputeMachineExtensionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _licenseProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                    return Response.FromValue(new LicenseProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new HybridComputeMachineExtensionPatch();
+                    var patch = new LicenseProfilePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -589,11 +680,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/{licenseProfileName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MachineExtensions_Get</description>
+        /// <description>LicenseProfiles_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -601,18 +692,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineExtensionResource"/></description>
+        /// <description><see cref="LicenseProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<HybridComputeMachineExtensionResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LicenseProfileResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.RemoveTag");
+            using var scope = _licenseProfileClientDiagnostics.CreateScope("LicenseProfileResource.RemoveTag");
             scope.Start();
             try
             {
@@ -621,13 +712,13 @@ namespace Azure.ResourceManager.HybridCompute
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _hybridComputeMachineExtensionMachineExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new HybridComputeMachineExtensionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _licenseProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new LicenseProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new HybridComputeMachineExtensionPatch();
+                    var patch = new LicenseProfilePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -649,11 +740,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/licenseProfiles/{licenseProfileName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MachineExtensions_Get</description>
+        /// <description>LicenseProfiles_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -661,18 +752,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineExtensionResource"/></description>
+        /// <description><see cref="LicenseProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<HybridComputeMachineExtensionResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<LicenseProfileResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.RemoveTag");
+            using var scope = _licenseProfileClientDiagnostics.CreateScope("LicenseProfileResource.RemoveTag");
             scope.Start();
             try
             {
@@ -681,13 +772,13 @@ namespace Azure.ResourceManager.HybridCompute
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _hybridComputeMachineExtensionMachineExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new HybridComputeMachineExtensionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _licenseProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                    return Response.FromValue(new LicenseProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new HybridComputeMachineExtensionPatch();
+                    var patch = new LicenseProfilePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

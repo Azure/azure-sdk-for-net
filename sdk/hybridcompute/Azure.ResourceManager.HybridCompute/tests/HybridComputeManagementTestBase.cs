@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         public SubscriptionResource Subscription { get; set; }
         public HybridComputePrivateLinkScopeCollection scopeCollection { get; set; }
         public string subscriptionId = "b24cc8ee-df4f-48ac-94cf-46edf36b0fae";
-        public string resourceGroupName = "ytongtest";
-        public string scopeName = "myPrivateLinkScope";
-        public string machineName = "testmachine";
+        public string resourceGroupName = "dakirbytest";
+        public string scopeName = "myScope";
+        public string machineName = "dakirby_ws2012r2";
         public string extensionName = "CustomScriptExtension";
         // need to run private-endpoint-connection list and obtain from the 'name' property
         public string privateEndpointConnectionName = "myprivateendpoint.dc6c8829-b4b5-4059-b130-e9f309c83173";

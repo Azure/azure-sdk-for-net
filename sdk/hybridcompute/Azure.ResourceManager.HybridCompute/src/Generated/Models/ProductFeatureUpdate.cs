@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> The List license operation response. </summary>
-    internal partial class GatewaysListResult
+    /// <summary> Product Feature. </summary>
+    public partial class ProductFeatureUpdate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GatewaysListResult"/>. </summary>
-        /// <param name="value"> The list of Gateways. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal GatewaysListResult(IEnumerable<HybridComputeGatewayData> value)
+        /// <summary> Initializes a new instance of <see cref="ProductFeatureUpdate"/>. </summary>
+        public ProductFeatureUpdate()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GatewaysListResult"/>. </summary>
-        /// <param name="value"> The list of Gateways. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of Gateways. Call ListNext() with this URI to fetch the next page of Gateways. </param>
+        /// <summary> Initializes a new instance of <see cref="ProductFeatureUpdate"/>. </summary>
+        /// <param name="name"> Product feature name. </param>
+        /// <param name="subscriptionStatus"> Indicates the new status of the product feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GatewaysListResult(IReadOnlyList<HybridComputeGatewayData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductFeatureUpdate(string name, LicenseProfileSubscriptionStatusUpdate? subscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Name = name;
+            SubscriptionStatus = subscriptionStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GatewaysListResult"/> for deserialization. </summary>
-        internal GatewaysListResult()
-        {
-        }
-
-        /// <summary> The list of Gateways. </summary>
-        public IReadOnlyList<HybridComputeGatewayData> Value { get; }
-        /// <summary> The URI to fetch the next page of Gateways. Call ListNext() with this URI to fetch the next page of Gateways. </summary>
-        public string NextLink { get; }
+        /// <summary> Product feature name. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
+        /// <summary> Indicates the new status of the product feature. </summary>
+        [WirePath("subscriptionStatus")]
+        public LicenseProfileSubscriptionStatusUpdate? SubscriptionStatus { get; set; }
     }
 }
