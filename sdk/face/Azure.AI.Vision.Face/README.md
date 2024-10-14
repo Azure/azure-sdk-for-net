@@ -100,6 +100,10 @@ var client = new FaceClient(endpoint, credential);
 
 ### Service API versions
 
+The client library targets the latest service API version by default. A client instance accepts an optional service API version parameter from its options to specify which API version service to communicate.
+
+#### Select a service API version
+
 You have the flexibility to explicitly select a supported service API version when instantiating a client by configuring its associated options. This ensures that the client can communicate with services using the specified API version.
 
 For example,
