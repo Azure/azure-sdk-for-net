@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Globalization;
 using System.IO.Pipes;
@@ -28,6 +29,9 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     {
         /// <summary>The name to use for the event source.</summary>
         private const string EventSourceName = "Azure-Messaging-EventHubs";
+
+        private const string EventSourceRequiresUnreferencedCodeMessage = "EventSource will serialize the whole object graph. Trimmer will not safely handle this case because properties may be trimmed. This can be suppressed if the object is a primitive type";
+        private const string EventSourceSuppressMessage = "Parameters to this method are primitive and are trimmer safe.";
 
         /// <summary>
         ///   Provides a singleton instance of the event source for callers to
@@ -848,6 +852,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="durationSeconds">The duration that the end-to-end stop operation took for the partition, in seconds.</param>
         ///
         [Event(42, Level = EventLevel.Verbose, Message = "Completed stopping processing for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}. Duration: '{4:0.00}' seconds.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         public virtual void EventProcessorPartitionProcessingStopComplete(string partitionId,
                                                                           string identifier,
                                                                           string eventHubName,
@@ -988,6 +993,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="endSequenceNumber">The ending sequence number of partition state used for publishing.</param>
         ///
         [Event(49, Level = EventLevel.Verbose, Message = "Idempotently publishing for Event Hub: {0} (Partition Id: '{1}') is publishing events with the sequence number range from '{2}` to '{3}'.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         public virtual void IdempotentSequencePublish(string eventHubName,
                                                       string partitionId,
                                                       long startSequenceNumber,
@@ -1009,6 +1015,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="newSequenceNumber">The sequence number of partition state after the update.</param>
         ///
         [Event(50, Level = EventLevel.Verbose, Message = "Idempotently publishing for Event Hub: {0} (Partition Id: '{1}') has updated the tracked sequence number from '{2}` to '{3}'.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         public virtual void IdempotentSequenceUpdate(string eventHubName,
                                                      string partitionId,
                                                      long oldSequenceNumber,
@@ -1067,6 +1074,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="lastPublishedSequence">The sequence number last published to the partition for the producer group.</param>
         ///
         [Event(53, Level = EventLevel.Informational, Message = "Initializing idempotent publishing state for Event Hub: {0} (Partition Id: '{1}'). Producer Group Id: '{2}', Owner Level: '{3}', Last Published Sequence: '{4}'.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         public virtual void IdempotentPublishInitializeState(string eventHubName,
                                                              string partitionId,
                                                              long producerGroupId,
@@ -1717,6 +1725,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="delaySeconds">The delay, in seconds, that will be observed before the next cycle starts.</param>
         ///
         [Event(85, Level = EventLevel.Verbose, Message = "A background management cycle has completed for the buffered producer instance with identifier '{0}' for Event Hub: {1}.  Total partition count: '{2}'.  Duration: '{3:0.00}' seconds.  Next cycle in '{4:0.00}' seconds.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         public virtual void BufferedProducerManagementCycleComplete(string identifier,
                                                                     string eventHubName,
                                                                     int totalPartitionCount,
@@ -1808,6 +1817,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="durationSeconds">The total duration that the cycle took to complete, in seconds.</param>
         ///
         [Event(89, Level = EventLevel.Informational, Message = "Completed publishing a batch of events for buffered producer instance with identifier '{0}' to Event Hub: {1},  Partition Id: '{2}', Operation Id: '{3}',  Events in the Batch: '{4}', Duration: '{5:0.00}' seconds.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         public virtual void BufferedProducerEventBatchPublishComplete(string identifier,
                                                                       string eventHubName,
                                                                       string partitionId,
@@ -1856,6 +1866,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="durationSeconds">The duration that operation has been running, in seconds.</param>
         ///
         [Event(91, Level = EventLevel.Verbose, Message = "An event has been added to a batch being published for buffered producer instance with identifier '{0}' to Event Hub: {1}, Partition Id: '{2}', Operation Id: '{3}'.  Events in the Batch: '{4}'.  Current duration of batch building: {5:0.00} seconds.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         public virtual void BufferedProducerEventBatchPublishEventAdded(string identifier,
                                                                         string eventHubName,
                                                                         string partitionId,
@@ -1881,6 +1892,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="totalDurationSeconds">The duration that operation has been running, in seconds.</param>
         ///
         [Event(92, Level = EventLevel.Verbose, Message = "No event was available to be read for the batch being published for buffered producer instance with identifier '{0}' to Event Hub: {1}, Partition Id: '{2}', Operation Id: '{3}'.  Delay before reading again: {4:0.00} seconds.  Current duration of batch building: {5:0.00} seconds.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         public virtual void BufferedProducerEventBatchPublishNoEventRead(string identifier,
                                                                          string eventHubName,
                                                                          string partitionId,
@@ -2078,6 +2090,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="ownedPartitionCount">The number of partitions owned at the beginning of the cycle.</param>
         ///
         [Event(101, Level = EventLevel.Verbose, Message = "A load balancing cycle has started for the processor instance with identifier '{0}' for Event Hub: {1}.  Total partition count: '{2}'.  Owned partition count: '{3}'. ")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         public virtual void EventProcessorLoadBalancingCycleStart(string identifier,
                                                                   string eventHubName,
                                                                   int totalPartitionCount,
@@ -2554,6 +2567,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="backOffCount">The message for the exception that occurred.</param>
         ///
         [Event(122, Level = EventLevel.Warning, Message = "The Event Hubs service is throttling the buffered producer instance with identifier '{0}' for Event Hub: {1}, Partition Id: '{2}', Operation Id: '{3}'.  To avoid overloading the service, publishing of this batch will delay for {4} seconds.  This batch has attempted a delay to avoid throttling {5} times.  This is non-fatal and publishing will continue to retry.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         public virtual void BufferedProducerThrottleDelay(string identifier,
                                                           string eventHubName,
                                                           string partitionId,
@@ -2799,6 +2813,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="troubleshootingGuideLink">A link to the Event Hubs troubleshooting guide.</param>
         ///
         [Event(103, Level = EventLevel.Warning, Message = "A load balancing cycle has taken too long to complete for the processor instance with identifier '{0}' for Event Hub: {1}.  A slow cycle can cause stability issues with partition ownership.  Consider investigating storage latency and thread pool health.  Common causes are latency in storage operations and too many partitions owned.  You may also want to consider increasing the 'PartitionOwnershipExpirationInterval' in the processor options.  Cycle Duration: '{2:0.00}' seconds.  Partition Ownership Duration: '{3:0.00}' seconds.  {4}")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private void EventProcessorLoadBalancingCycleSlowWarningCore(string identifier,
                                                                      string eventHubName,
                                                                      double durationSeconds,
@@ -2821,6 +2836,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="troubleshootingGuideLink">A link to the Event Hubs troubleshooting guide.</param>
         ///
         [Event(104, Level = EventLevel.Warning, Message = "The processor instance with identifier '{0}' for Event Hub: {1} owns a higher than recommended number of partitions for average workloads.  Owning too many partitions may cause slow performance and stability issues.  Consider monitoring performance and partition ownership stability to ensure that they meet expectations.  If not, adding processors to the group may help.  Total partition count: '{2}'.  Owned partition count: '{3}'.  Maximum recommended partitions owned: '{4}'.  This warning is based on a general heuristic that will differ between applications.  If you are not experiencing issues, this warning is safe to ignore.  {5}")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private void EventProcessorHighPartitionOwnershipWarningCore(string identifier,
                                                                      string eventHubName,
                                                                      int totalPartitionCount,
@@ -2869,6 +2885,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="troubleshootingGuideLink">A link to the Event Hubs troubleshooting guide.</param>
         ///
         [Event(128, Level = EventLevel.Warning, Message = "The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured using intervals that may cause stability issues with partition ownership for the processor instance with identifier '{0}' for Event Hub: {1}.  It is recommended that the 'PartitionOwnershipExpirationInterval' be at least 3 times greater than the 'LoadBalancingUpdateInterval' and very strongly advised that it should be no less than twice as long.  When these intervals are too close together, ownership may expire before it is renewed during load balancing which will cause partitions to migrate.  Consider adjusting the intervals in the processor options if you experience issues.  Load Balancing Interval '{2:0.00}' seconds.  Partition Ownership Interval '{3:0.00}' seconds.  {4}")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private void ProcessorLoadBalancingIntervalsTooCloseWarningCore(string identifier,
                                                                         string eventHubName,
                                                                         double loadBalancingIntervalSeconds,
@@ -2897,6 +2914,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void EventReceiveCompleteCore(int eventId,
                                                      string eventHubName,
                                                      string consumerGroup,
@@ -2970,6 +2988,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void EventPublishCompleteCore(int eventId,
                                                      string eventHubName,
                                                      string partitionIdOrKey,
@@ -3018,6 +3037,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void EventProcessorLoadBalancingCycleCompleteCore(int eventId,
                                                                          string identifier,
                                                                          string eventHubName,
@@ -3067,6 +3087,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void BufferedProducerPublishingAwaitAllStartCore(int eventId,
                                                                         string identifier,
                                                                         string eventHubName,
@@ -3110,6 +3131,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void BufferedProducerPublishingAwaitCompleteCore(int eventId,
                                                                         string identifier,
                                                                         string eventHubName,
@@ -3157,6 +3179,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void BufferedProducerPublishingAwaitStartCore(int eventId,
                                                                      string identifier,
                                                                      string eventHubName,
@@ -3201,6 +3224,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void BufferedProducerPublishingAwaitAllCompleteCore(int eventId,
                                                                            string identifier,
                                                                            string eventHubName,
@@ -3249,6 +3273,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void BufferedProducerEventEnqueuedCore(int eventId,
                                                               string identifier,
                                                               string eventHubName,
@@ -3304,6 +3329,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void EventProcessorProcessingHandlerStartCore(int eventId,
                                                                      string partitionId,
                                                                      string identifier,
@@ -3368,6 +3394,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void EventProcessorProcessingHandlerCompleteCore(int eventId,
                                                                         string partitionId,
                                                                         string identifier,
@@ -3424,6 +3451,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void BufferedProducerIdleCompleteCore(int eventId,
                                                              string identifier,
                                                              string eventHubName,
@@ -3470,6 +3498,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void EventProcessorPartitionProcessingCycleCompleteCore(int eventId,
                                                                                string partitionId,
                                                                                string identifier,
@@ -3540,6 +3569,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [RequiresUnreferencedCode(EventSourceRequiresUnreferencedCodeMessage)]
         private unsafe void WriteEvent<TValue1, TValue2>(int eventId,
                                                          string arg1,
                                                          string arg2,
@@ -3583,6 +3613,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [RequiresUnreferencedCode(EventSourceRequiresUnreferencedCodeMessage)]
         private unsafe void WriteEvent<TValue1, TValue2, TValue3>(int eventId,
                                                                   string arg1,
                                                                   string arg2,
@@ -3632,6 +3663,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [RequiresUnreferencedCode(EventSourceRequiresUnreferencedCodeMessage)]
         private unsafe void WriteEvent<TValue1, TValue2, TValue3>(int eventId,
                                                                   string arg1,
                                                                   string arg2,
@@ -3685,6 +3717,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [RequiresUnreferencedCode(EventSourceRequiresUnreferencedCodeMessage)]
         private unsafe void WriteEvent<TValue1>(int eventId,
                                                 string arg1,
                                                 string arg2,
@@ -3734,6 +3767,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [RequiresUnreferencedCode(EventSourceRequiresUnreferencedCodeMessage)]
         private unsafe void WriteEvent<TValue1, TValue2>(int eventId,
                                                          string arg1,
                                                          string arg2,
@@ -3789,6 +3823,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [RequiresUnreferencedCode(EventSourceRequiresUnreferencedCodeMessage)]
         private unsafe void WriteEvent<TValue1, TValue2, TValue3>(int eventId,
                                                                   string arg1,
                                                                   string arg2,
@@ -3847,6 +3882,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [RequiresUnreferencedCode(EventSourceRequiresUnreferencedCodeMessage)]
         private unsafe void WriteEvent<TValue1, TValue2>(int eventId,
                                                          string arg1,
                                                          string arg2,
@@ -3894,6 +3930,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
@@ -3937,6 +3974,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
@@ -3986,6 +4024,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
@@ -4041,6 +4080,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
@@ -4102,6 +4142,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
@@ -4168,6 +4209,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [RequiresUnreferencedCode(EventSourceRequiresUnreferencedCodeMessage)]
         private unsafe void WriteEvent<TValue1>(int eventId,
                                                 string arg1,
                                                 string arg2,
