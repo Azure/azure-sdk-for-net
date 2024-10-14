@@ -19,91 +19,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         void IJsonModel<BackupServerEngine>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BackupServerEngine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupServerEngine)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
-            {
-                writer.WritePropertyName("friendlyName"u8);
-                writer.WriteStringValue(FriendlyName);
-            }
-            if (Optional.IsDefined(BackupManagementType))
-            {
-                writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
-            }
-            if (Optional.IsDefined(RegistrationStatus))
-            {
-                writer.WritePropertyName("registrationStatus"u8);
-                writer.WriteStringValue(RegistrationStatus);
-            }
-            if (Optional.IsDefined(BackupEngineState))
-            {
-                writer.WritePropertyName("backupEngineState"u8);
-                writer.WriteStringValue(BackupEngineState);
-            }
-            if (Optional.IsDefined(HealthStatus))
-            {
-                writer.WritePropertyName("healthStatus"u8);
-                writer.WriteStringValue(HealthStatus);
-            }
-            writer.WritePropertyName("backupEngineType"u8);
-            writer.WriteStringValue(BackupEngineType.ToString());
-            if (Optional.IsDefined(CanReRegister))
-            {
-                writer.WritePropertyName("canReRegister"u8);
-                writer.WriteBooleanValue(CanReRegister.Value);
-            }
-            if (Optional.IsDefined(BackupEngineId))
-            {
-                writer.WritePropertyName("backupEngineId"u8);
-                writer.WriteStringValue(BackupEngineId);
-            }
-            if (Optional.IsDefined(DpmVersion))
-            {
-                writer.WritePropertyName("dpmVersion"u8);
-                writer.WriteStringValue(DpmVersion);
-            }
-            if (Optional.IsDefined(AzureBackupAgentVersion))
-            {
-                writer.WritePropertyName("azureBackupAgentVersion"u8);
-                writer.WriteStringValue(AzureBackupAgentVersion);
-            }
-            if (Optional.IsDefined(IsAzureBackupAgentUpgradeAvailable))
-            {
-                writer.WritePropertyName("isAzureBackupAgentUpgradeAvailable"u8);
-                writer.WriteBooleanValue(IsAzureBackupAgentUpgradeAvailable.Value);
-            }
-            if (Optional.IsDefined(IsDpmUpgradeAvailable))
-            {
-                writer.WritePropertyName("isDpmUpgradeAvailable"u8);
-                writer.WriteBooleanValue(IsDpmUpgradeAvailable.Value);
-            }
-            if (Optional.IsDefined(ExtendedInfo))
-            {
-                writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         BackupServerEngine IJsonModel<BackupServerEngine>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -54,6 +54,13 @@ public partial class RedisResource : Resource
     private readonly BicepValue<ManagedServiceIdentity> _identity;
 
     /// <summary>
+    /// Authentication to Redis through access keys is disabled when set as
+    /// true. Default value is false.
+    /// </summary>
+    public BicepValue<bool> IsAccessKeyAuthenticationDisabled { get => _isAccessKeyAuthenticationDisabled; set => _isAccessKeyAuthenticationDisabled.Assign(value); }
+    private readonly BicepValue<bool> _isAccessKeyAuthenticationDisabled;
+
+    /// <summary>
     /// Optional: requires clients to use a specified TLS version (or higher)
     /// to connect (e,g, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;).
     /// </summary>
@@ -71,8 +78,9 @@ public partial class RedisResource : Resource
 
     /// <summary>
     /// All Redis Settings. Few possible keys:
-    /// rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value
-    /// etc.
+    /// rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,
+    /// maxmemory-policy,notify-keyspace-events, aof-backup-enabled,
+    /// aof-storage-connection-string-0, aof-storage-connection-string-1 etc.
     /// </summary>
     public BicepValue<RedisCommonConfiguration> RedisConfiguration { get => _redisConfiguration; set => _redisConfiguration.Assign(value); }
     private readonly BicepValue<RedisCommonConfiguration> _redisConfiguration;
@@ -229,6 +237,7 @@ public partial class RedisResource : Resource
         _sku = BicepValue<RedisSku>.DefineProperty(this, "Sku", ["properties", "sku"], isRequired: true);
         _enableNonSslPort = BicepValue<bool>.DefineProperty(this, "EnableNonSslPort", ["properties", "enableNonSslPort"]);
         _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
+        _isAccessKeyAuthenticationDisabled = BicepValue<bool>.DefineProperty(this, "IsAccessKeyAuthenticationDisabled", ["properties", "disableAccessKeyAuthentication"]);
         _minimumTlsVersion = BicepValue<RedisTlsVersion>.DefineProperty(this, "MinimumTlsVersion", ["properties", "minimumTlsVersion"]);
         _publicNetworkAccess = BicepValue<RedisPublicNetworkAccess>.DefineProperty(this, "PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
         _redisConfiguration = BicepValue<RedisCommonConfiguration>.DefineProperty(this, "RedisConfiguration", ["properties", "redisConfiguration"]);
