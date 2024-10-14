@@ -1,16 +1,10 @@
 # Release History
 
-## 1.0.0-beta.11 (Unreleased)
-
-### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
+## 1.0.0 (2024-10-13)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag from 'package-preview-2024-05' to 'package-2024-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/15b16d1b5c3cccdecdd1cfe936f6a8005680c557/specification/hybridcompute/resource-manager/readme.md
 
 ## 1.0.0-beta.10 (2024-07-19)
 
