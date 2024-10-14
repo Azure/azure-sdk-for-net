@@ -19,96 +19,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         void IJsonModel<VmWorkloadSqlDatabaseProtectableItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlDatabaseProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VmWorkloadSqlDatabaseProtectableItem)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ParentName))
-            {
-                writer.WritePropertyName("parentName"u8);
-                writer.WriteStringValue(ParentName);
-            }
-            if (Optional.IsDefined(ParentUniqueName))
-            {
-                writer.WritePropertyName("parentUniqueName"u8);
-                writer.WriteStringValue(ParentUniqueName);
-            }
-            if (Optional.IsDefined(ServerName))
-            {
-                writer.WritePropertyName("serverName"u8);
-                writer.WriteStringValue(ServerName);
-            }
-            if (Optional.IsDefined(IsAutoProtectable))
-            {
-                writer.WritePropertyName("isAutoProtectable"u8);
-                writer.WriteBooleanValue(IsAutoProtectable.Value);
-            }
-            if (Optional.IsDefined(IsAutoProtected))
-            {
-                writer.WritePropertyName("isAutoProtected"u8);
-                writer.WriteBooleanValue(IsAutoProtected.Value);
-            }
-            if (Optional.IsDefined(SubInquiredItemCount))
-            {
-                writer.WritePropertyName("subinquireditemcount"u8);
-                writer.WriteNumberValue(SubInquiredItemCount.Value);
-            }
-            if (Optional.IsDefined(SubProtectableItemCount))
-            {
-                writer.WritePropertyName("subprotectableitemcount"u8);
-                writer.WriteNumberValue(SubProtectableItemCount.Value);
-            }
-            if (Optional.IsDefined(PreBackupValidation))
-            {
-                writer.WritePropertyName("prebackupvalidation"u8);
-                writer.WriteObjectValue(PreBackupValidation, options);
-            }
-            if (Optional.IsDefined(IsProtectable))
-            {
-                writer.WritePropertyName("isProtectable"u8);
-                writer.WriteBooleanValue(IsProtectable.Value);
-            }
-            if (Optional.IsDefined(BackupManagementType))
-            {
-                writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType);
-            }
-            if (Optional.IsDefined(WorkloadType))
-            {
-                writer.WritePropertyName("workloadType"u8);
-                writer.WriteStringValue(WorkloadType);
-            }
-            writer.WritePropertyName("protectableItemType"u8);
-            writer.WriteStringValue(ProtectableItemType);
-            if (Optional.IsDefined(FriendlyName))
-            {
-                writer.WritePropertyName("friendlyName"u8);
-                writer.WriteStringValue(FriendlyName);
-            }
-            if (Optional.IsDefined(ProtectionState))
-            {
-                writer.WritePropertyName("protectionState"u8);
-                writer.WriteStringValue(ProtectionState.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         VmWorkloadSqlDatabaseProtectableItem IJsonModel<VmWorkloadSqlDatabaseProtectableItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
