@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 - Fixed bug where network download streams were not properly disposed.
-- Fixed bug where DownloadToAsync() did not dispose all it's network streams on error in some cases.
+- Fixed bug where DownloadToAsync() did not dispose all its network streams on error in some cases.
 
 ### Other Changes
 
