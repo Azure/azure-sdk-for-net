@@ -20,6 +20,8 @@ public class BasicApplicationInsightsTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 ApplicationInsightsComponent appInsights =
                     new(nameof(appInsights))
                     {
@@ -27,9 +29,12 @@ public class BasicApplicationInsightsTests(bool async)
                         ApplicationType = ApplicationInsightsApplicationType.Web,
                         RequestSource = ComponentRequestSource.Rest
                     };
+                infra.Add(appInsights);
 
-                _ = new BicepOutput("appInsightsName", typeof(string)) { Value = appInsights.Name };
-                _ = new BicepOutput("appInsightsKey", typeof(string)) { Value = appInsights.InstrumentationKey };
+                infra.Add(new ProvisioningOutput("appInsightsName", typeof(string)) { Value = appInsights.Name });
+                infra.Add(new ProvisioningOutput("appInsightsKey", typeof(string)) { Value = appInsights.InstrumentationKey });
+
+                return infra;
             })
         .Compare(
             """

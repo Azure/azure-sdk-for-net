@@ -79,11 +79,15 @@ public partial class StaticSiteBuildDatabaseConnection : Resource
     /// <summary>
     /// Creates a new StaticSiteBuildDatabaseConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteBuildDatabaseConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StaticSiteBuildDatabaseConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteBuildDatabaseConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StaticSiteBuildDatabaseConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/staticSites/builds/databaseConnections", resourceVersion ?? "2020-06-01", context)
+    public StaticSiteBuildDatabaseConnection(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/staticSites/builds/databaseConnections", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionIdentity = BicepValue<string>.DefineProperty(this, "ConnectionIdentity", ["properties", "connectionIdentity"]);
@@ -101,6 +105,11 @@ public partial class StaticSiteBuildDatabaseConnection : Resource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
         /// <summary>
         /// 2023-12-01.
         /// </summary>
@@ -170,9 +179,14 @@ public partial class StaticSiteBuildDatabaseConnection : Resource
     /// <summary>
     /// Creates a reference to an existing StaticSiteBuildDatabaseConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteBuildDatabaseConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StaticSiteBuildDatabaseConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteBuildDatabaseConnection.</param>
     /// <returns>The existing StaticSiteBuildDatabaseConnection resource.</returns>
-    public static StaticSiteBuildDatabaseConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StaticSiteBuildDatabaseConnection FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

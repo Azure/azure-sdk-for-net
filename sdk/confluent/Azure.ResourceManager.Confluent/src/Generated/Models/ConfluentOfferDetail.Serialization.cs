@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Confluent.Models
 
         void IJsonModel<ConfluentOfferDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ConfluentOfferDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConfluentOfferDetail)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("publisherId"u8);
             writer.WriteStringValue(PublisherId);
             writer.WritePropertyName("id"u8);
@@ -76,7 +84,6 @@ namespace Azure.ResourceManager.Confluent.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ConfluentOfferDetail IJsonModel<ConfluentOfferDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(DatabaseCompatLevel left, DatabaseCompatLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatabaseCompatLevel"/> values are not the same. </summary>
         public static bool operator !=(DatabaseCompatLevel left, DatabaseCompatLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DatabaseCompatLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DatabaseCompatLevel"/>. </summary>
         public static implicit operator DatabaseCompatLevel(string value) => new DatabaseCompatLevel(value);
 
         /// <inheritdoc />

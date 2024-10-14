@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static bool operator ==(NotificationHubNamespaceTypeExt left, NotificationHubNamespaceTypeExt right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationHubNamespaceTypeExt"/> values are not the same. </summary>
         public static bool operator !=(NotificationHubNamespaceTypeExt left, NotificationHubNamespaceTypeExt right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NotificationHubNamespaceTypeExt"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationHubNamespaceTypeExt"/>. </summary>
         public static implicit operator NotificationHubNamespaceTypeExt(string value) => new NotificationHubNamespaceTypeExt(value);
 
         /// <inheritdoc />

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Elastic
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-07-01-preview";
+            _apiVersion = apiVersion ?? "2024-06-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary> Update the vm details that will be monitored by the Elastic monitor resource. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the Elastic resource belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="body"> VM resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary> Update the vm details that will be monitored by the Elastic monitor resource. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the Elastic resource belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="body"> VM resource Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

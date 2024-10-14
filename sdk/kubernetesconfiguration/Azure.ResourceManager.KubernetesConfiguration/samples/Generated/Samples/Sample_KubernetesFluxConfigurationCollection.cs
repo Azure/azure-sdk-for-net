@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Samples
                 GitRepository = new KubernetesGitRepository()
                 {
                     Uri = new Uri("https://github.com/Azure/arc-k8s-demo"),
-                    TimeoutInSeconds = 600,
-                    SyncIntervalInSeconds = 600,
+                    TimeoutInSeconds = 600L,
+                    SyncIntervalInSeconds = 600L,
                     RepositoryRef = new KubernetesGitRepositoryRef()
                     {
                         Branch = "master",
@@ -184,8 +184,8 @@ Path = "./test/path",
 DependsOn =
 {
 },
-TimeoutInSeconds = 600,
-SyncIntervalInSeconds = 600,
+TimeoutInSeconds = 600L,
+SyncIntervalInSeconds = 600L,
 },
 ["srs-kustomization2"] = new Kustomization()
 {
@@ -194,9 +194,9 @@ DependsOn =
 {
 "srs-kustomization1"
 },
-TimeoutInSeconds = 600,
-SyncIntervalInSeconds = 600,
-RetryIntervalInSeconds = 600,
+TimeoutInSeconds = 600L,
+SyncIntervalInSeconds = 600L,
+RetryIntervalInSeconds = 600L,
 Prune = false,
 },
 },
@@ -249,8 +249,8 @@ Prune = false,
                 {
                     Uri = new Uri("https://fluxminiotest.az.minio.io"),
                     BucketName = "flux",
-                    TimeoutInSeconds = 1000,
-                    SyncIntervalInSeconds = 1000,
+                    TimeoutInSeconds = 1000L,
+                    SyncIntervalInSeconds = 1000L,
                     AccessKey = "fluxminiotest",
                 },
                 Kustomizations =
@@ -261,8 +261,8 @@ Path = "./test/path",
 DependsOn =
 {
 },
-TimeoutInSeconds = 600,
-SyncIntervalInSeconds = 600,
+TimeoutInSeconds = 600L,
+SyncIntervalInSeconds = 600L,
 },
 ["srs-kustomization2"] = new Kustomization()
 {
@@ -271,9 +271,9 @@ DependsOn =
 {
 "srs-kustomization1"
 },
-TimeoutInSeconds = 600,
-SyncIntervalInSeconds = 600,
-RetryIntervalInSeconds = 600,
+TimeoutInSeconds = 600L,
+SyncIntervalInSeconds = 600L,
+RetryIntervalInSeconds = 600L,
 Prune = false,
 },
 },

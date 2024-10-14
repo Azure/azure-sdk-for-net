@@ -304,8 +304,8 @@
   {
    "$id": "34",
    "kind": "enum",
-   "name": "MessageTemplateStatus",
-   "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateStatus",
+   "name": "Versions",
+   "crossLanguageDefinitionId": "Azure.Communication.MessagesService.Versions",
    "valueType": {
     "$id": "35",
     "kind": "string",
@@ -317,8 +317,8 @@
     {
      "$id": "36",
      "kind": "enumvalue",
-     "name": "approved",
-     "value": "approved",
+     "name": "c2024_02_01",
+     "value": "2024-02-01",
      "valueType": {
       "$id": "37",
       "kind": "string",
@@ -329,32 +329,34 @@
      "enumType": {
       "$ref": "34"
      },
-     "description": "Message template is approved.",
+     "description": "Azure Communication Messages 2024-02-01 api version",
      "decorators": []
-    },
-    {
-     "$id": "38",
-     "kind": "enumvalue",
-     "name": "rejected",
-     "value": "rejected",
-     "valueType": {
-      "$id": "39",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "enumType": {
-      "$ref": "34"
-     },
-     "description": "Message template is rejected.",
-     "decorators": []
-    },
+    }
+   ],
+   "description": "Azure Communication Messages Versions",
+   "isFixed": true,
+   "isFlags": false,
+   "usage": "ApiVersionEnum",
+   "decorators": []
+  },
+  {
+   "$id": "38",
+   "kind": "enum",
+   "name": "MessageTemplateStatus",
+   "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateStatus",
+   "valueType": {
+    "$id": "39",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
     {
      "$id": "40",
      "kind": "enumvalue",
-     "name": "pending",
-     "value": "pending",
+     "name": "approved",
+     "value": "approved",
      "valueType": {
       "$id": "41",
       "kind": "string",
@@ -363,16 +365,16 @@
       "decorators": []
      },
      "enumType": {
-      "$ref": "34"
+      "$ref": "38"
      },
-     "description": "Message template is pending.",
+     "description": "Message template is approved.",
      "decorators": []
     },
     {
      "$id": "42",
      "kind": "enumvalue",
-     "name": "paused",
-     "value": "paused",
+     "name": "rejected",
+     "value": "rejected",
      "valueType": {
       "$id": "43",
       "kind": "string",
@@ -381,7 +383,43 @@
       "decorators": []
      },
      "enumType": {
-      "$ref": "34"
+      "$ref": "38"
+     },
+     "description": "Message template is rejected.",
+     "decorators": []
+    },
+    {
+     "$id": "44",
+     "kind": "enumvalue",
+     "name": "pending",
+     "value": "pending",
+     "valueType": {
+      "$id": "45",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "38"
+     },
+     "description": "Message template is pending.",
+     "decorators": []
+    },
+    {
+     "$id": "46",
+     "kind": "enumvalue",
+     "name": "paused",
+     "value": "paused",
+     "valueType": {
+      "$id": "47",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "38"
      },
      "description": "Message template is paused.",
      "decorators": []
@@ -394,48 +432,10 @@
    "decorators": []
   },
   {
-   "$id": "44",
+   "$id": "48",
    "kind": "enum",
    "name": "CommunicationMessagesChannel",
    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.CommunicationMessagesChannel",
-   "valueType": {
-    "$id": "45",
-    "kind": "string",
-    "name": "string",
-    "crossLanguageDefinitionId": "TypeSpec.string",
-    "decorators": []
-   },
-   "values": [
-    {
-     "$id": "46",
-     "kind": "enumvalue",
-     "name": "whatsApp",
-     "value": "whatsApp",
-     "valueType": {
-      "$id": "47",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "enumType": {
-      "$ref": "44"
-     },
-     "description": "The WhatsApp communication messages channel type.",
-     "decorators": []
-    }
-   ],
-   "description": "The type of the communication messages channel.",
-   "isFixed": false,
-   "isFlags": false,
-   "usage": "Output,Json",
-   "decorators": []
-  },
-  {
-   "$id": "48",
-   "kind": "enum",
-   "name": "Versions",
-   "crossLanguageDefinitionId": "Azure.Communication.MessagesService.Versions",
    "valueType": {
     "$id": "49",
     "kind": "string",
@@ -447,8 +447,8 @@
     {
      "$id": "50",
      "kind": "enumvalue",
-     "name": "c2024_02_01",
-     "value": "2024-02-01",
+     "name": "whatsApp",
+     "value": "whatsApp",
      "valueType": {
       "$id": "51",
       "kind": "string",
@@ -459,14 +459,14 @@
      "enumType": {
       "$ref": "48"
      },
-     "description": "Azure Communication Messages 2024-02-01 api version",
+     "description": "The WhatsApp communication messages channel type.",
      "decorators": []
     }
    ],
-   "description": "Azure Communication Messages Versions",
-   "isFixed": true,
+   "description": "The type of the communication messages channel.",
+   "isFixed": false,
    "isFlags": false,
-   "usage": "ApiVersionEnum",
+   "usage": "Output,Json",
    "decorators": []
   },
   {
@@ -522,7 +522,7 @@
    "description": "Repeatability Result header options",
    "isFixed": true,
    "isFlags": false,
-   "usage": "None",
+   "usage": "Output",
    "decorators": []
   }
  ],
@@ -547,6 +547,7 @@
     "optional": false,
     "readOnly": false,
     "discriminator": true,
+    "flatten": false,
     "decorators": [],
     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationContent.kind"
    },
@@ -574,6 +575,7 @@
      "optional": false,
      "readOnly": false,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationContent.channelRegistrationId"
     },
@@ -600,6 +602,7 @@
      "optional": false,
      "readOnly": false,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationContent.to"
     },
@@ -644,6 +647,7 @@
        "optional": false,
        "readOnly": false,
        "discriminator": true,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.TextNotificationContent.kind"
       },
@@ -663,6 +667,7 @@
        "optional": false,
        "readOnly": false,
        "discriminator": false,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.TextNotificationContent.content"
       }
@@ -703,6 +708,7 @@
        "optional": false,
        "readOnly": false,
        "discriminator": true,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MediaNotificationContent.kind"
       },
@@ -722,6 +728,7 @@
        "optional": true,
        "readOnly": false,
        "discriminator": false,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MediaNotificationContent.content"
       },
@@ -741,6 +748,7 @@
        "optional": false,
        "readOnly": false,
        "discriminator": false,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MediaNotificationContent.mediaUri"
       }
@@ -781,6 +789,7 @@
        "optional": false,
        "readOnly": false,
        "discriminator": true,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.TemplateNotificationContent.kind"
       },
@@ -815,6 +824,7 @@
           "optional": false,
           "readOnly": false,
           "discriminator": false,
+          "flatten": false,
           "decorators": [],
           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplate.name"
          },
@@ -834,6 +844,7 @@
           "optional": false,
           "readOnly": false,
           "discriminator": false,
+          "flatten": false,
           "decorators": [],
           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplate.language"
          },
@@ -867,6 +878,7 @@
              "optional": false,
              "readOnly": false,
              "discriminator": true,
+             "flatten": false,
              "decorators": [],
              "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateValue.kind"
             },
@@ -887,6 +899,7 @@
               "optional": false,
               "readOnly": false,
               "discriminator": false,
+              "flatten": false,
               "decorators": [],
               "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateValue.name"
              },
@@ -931,6 +944,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": true,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateText.kind"
                },
@@ -950,6 +964,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateText.text"
                }
@@ -990,6 +1005,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": true,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateImage.kind"
                },
@@ -1009,6 +1025,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateImage.url"
                },
@@ -1028,6 +1045,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateImage.caption"
                },
@@ -1047,6 +1065,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateImage.fileName"
                }
@@ -1087,6 +1106,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": true,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateDocument.kind"
                },
@@ -1106,6 +1126,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateDocument.url"
                },
@@ -1125,6 +1146,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateDocument.caption"
                },
@@ -1144,6 +1166,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateDocument.fileName"
                }
@@ -1184,6 +1207,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": true,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateVideo.kind"
                },
@@ -1203,6 +1227,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateVideo.url"
                },
@@ -1222,6 +1247,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateVideo.caption"
                },
@@ -1241,6 +1267,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateVideo.fileName"
                }
@@ -1281,6 +1308,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": true,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateLocation.kind"
                },
@@ -1300,6 +1328,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateLocation.locationName"
                },
@@ -1319,6 +1348,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateLocation.address"
                },
@@ -1338,6 +1368,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateLocation.latitude"
                },
@@ -1357,6 +1388,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateLocation.longitude"
                }
@@ -1397,6 +1429,7 @@
                 "optional": false,
                 "readOnly": false,
                 "discriminator": true,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateQuickAction.kind"
                },
@@ -1416,6 +1449,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateQuickAction.text"
                },
@@ -1435,6 +1469,7 @@
                 "optional": true,
                 "readOnly": false,
                 "discriminator": false,
+                "flatten": false,
                 "decorators": [],
                 "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateQuickAction.payload"
                }
@@ -1448,6 +1483,7 @@
           "optional": true,
           "readOnly": false,
           "discriminator": false,
+          "flatten": false,
           "decorators": [],
           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplate.values"
          },
@@ -1477,6 +1513,7 @@
             "optional": false,
             "readOnly": false,
             "discriminator": true,
+            "flatten": false,
             "decorators": [],
             "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateBindings.kind"
            },
@@ -1522,6 +1559,7 @@
                "optional": false,
                "readOnly": false,
                "discriminator": true,
+               "flatten": false,
                "decorators": [],
                "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindings.kind"
               },
@@ -1560,6 +1598,7 @@
                    "optional": false,
                    "readOnly": false,
                    "discriminator": false,
+                   "flatten": false,
                    "decorators": [],
                    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsComponent.refValue"
                   }
@@ -1571,6 +1610,7 @@
                "optional": true,
                "readOnly": false,
                "discriminator": false,
+               "flatten": false,
                "decorators": [],
                "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindings.header"
               },
@@ -1593,6 +1633,7 @@
                "optional": true,
                "readOnly": false,
                "discriminator": false,
+               "flatten": false,
                "decorators": [],
                "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindings.body"
               },
@@ -1615,6 +1656,7 @@
                "optional": true,
                "readOnly": false,
                "discriminator": false,
+               "flatten": false,
                "decorators": [],
                "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindings.footer"
               },
@@ -1649,6 +1691,7 @@
                    "optional": false,
                    "readOnly": false,
                    "discriminator": false,
+                   "flatten": false,
                    "decorators": [],
                    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsButton.subType"
                   },
@@ -1668,6 +1711,7 @@
                    "optional": false,
                    "readOnly": false,
                    "discriminator": false,
+                   "flatten": false,
                    "decorators": [],
                    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsButton.refValue"
                   }
@@ -1679,6 +1723,7 @@
                "optional": true,
                "readOnly": false,
                "discriminator": false,
+               "flatten": false,
                "decorators": [],
                "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindings.buttons"
               }
@@ -1689,6 +1734,7 @@
           "optional": true,
           "readOnly": false,
           "discriminator": false,
+          "flatten": false,
           "decorators": [],
           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplate.bindings"
          }
@@ -1697,6 +1743,7 @@
        "optional": false,
        "readOnly": false,
        "discriminator": false,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.TemplateNotificationContent.template"
       }
@@ -1793,6 +1840,7 @@
          "optional": false,
          "readOnly": false,
          "discriminator": false,
+         "flatten": false,
          "decorators": [],
          "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageReceipt.messageId"
         },
@@ -1812,6 +1860,7 @@
          "optional": false,
          "readOnly": false,
          "discriminator": false,
+         "flatten": false,
          "decorators": [],
          "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageReceipt.to"
         }
@@ -1823,6 +1872,7 @@
      "optional": false,
      "readOnly": false,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.SendMessageResult.receipts"
     }
@@ -1846,11 +1896,12 @@
     "serializedName": "kind",
     "description": "The type discriminator describing a template type.",
     "type": {
-     "$ref": "44"
+     "$ref": "48"
     },
     "optional": false,
     "readOnly": false,
     "discriminator": true,
+    "flatten": false,
     "decorators": [],
     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem.kind"
    },
@@ -1871,6 +1922,7 @@
      "optional": false,
      "readOnly": true,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem.name"
     },
@@ -1890,6 +1942,7 @@
      "optional": false,
      "readOnly": false,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem.language"
     },
@@ -1900,11 +1953,12 @@
      "serializedName": "status",
      "description": "The aggregated template status.",
      "type": {
-      "$ref": "34"
+      "$ref": "38"
      },
      "optional": false,
      "readOnly": false,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem.status"
     },
@@ -1935,7 +1989,7 @@
        "description": "WhatsApp platform's template content. This is the payload returned from WhatsApp API.",
        "type": {
         "$id": "195",
-        "kind": "any",
+        "kind": "unknown",
         "name": "unknown",
         "crossLanguageDefinitionId": "",
         "decorators": []
@@ -1943,6 +1997,7 @@
        "optional": true,
        "readOnly": false,
        "discriminator": false,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateItem.content"
       },
@@ -1968,6 +2023,7 @@
        "optional": false,
        "readOnly": false,
        "discriminator": true,
+       "flatten": false,
        "decorators": [],
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateItem.kind"
       }
@@ -1983,7 +2039,7 @@
    "kind": "model",
    "name": "PagedMessageTemplateItem",
    "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage",
-   "usage": "None",
+   "usage": "Output,Json",
    "description": "Paged collection of MessageTemplateItem items",
    "decorators": [],
    "properties": [
@@ -2006,6 +2062,7 @@
      "optional": false,
      "readOnly": false,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage.value"
     },
@@ -2032,6 +2089,7 @@
      "optional": true,
      "readOnly": false,
      "discriminator": false,
+     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage.nextLink"
     }
@@ -2509,11 +2567,67 @@
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
      "CrossLanguageDefinitionId": "ClientForAcsMessages.NotificationMessagesClient.downloadMedia",
-     "Decorators": []
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "254",
+       "kind": "http",
+       "name": "Download media",
+       "description": "Download media",
+       "filePath": "2024-02-01/Stream_GetMedia.json",
+       "parameters": [
+        {
+         "$id": "255",
+         "parameter": {
+          "$ref": "234"
+         },
+         "value": {
+          "$id": "256",
+          "kind": "string",
+          "type": {
+           "$ref": "235"
+          },
+          "value": "2024-02-01"
+         }
+        },
+        {
+         "$id": "257",
+         "parameter": {
+          "$ref": "238"
+         },
+         "value": {
+          "$id": "258",
+          "kind": "string",
+          "type": {
+           "$ref": "239"
+          },
+          "value": "d19e68ec-bdd6-4a50-8dfb-cbb1642df6ab"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "259",
+         "response": {
+          "$ref": "246"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "260",
+          "kind": "string",
+          "type": {
+           "$ref": "247"
+          },
+          "value": "<binary_media_data>"
+         }
+        }
+       ]
+      }
+     ]
     }
    ],
    "Protocol": {
-    "$id": "254"
+    "$id": "261"
    },
    "Parameters": [
     {
@@ -2523,23 +2637,23 @@
    "Decorators": []
   },
   {
-   "$id": "255",
+   "$id": "262",
    "Name": "MessageTemplateClient",
    "Operations": [
     {
-     "$id": "256",
+     "$id": "263",
      "Name": "getTemplates",
      "ResourceName": "MessageTemplateItem",
      "Description": "List all templates for given Azure Communication Services channel",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "257",
+       "$id": "264",
        "Name": "endpoint",
        "NameInRequest": "endpoint",
        "Description": "The communication resource, for example https://my-resource.communication.azure.com",
        "Type": {
-        "$id": "258",
+        "$id": "265",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -2555,12 +2669,12 @@
        "Kind": "Client"
       },
       {
-       "$id": "259",
+       "$id": "266",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
        "Description": "The API version to use for this operation.",
        "Type": {
-        "$id": "260",
+        "$id": "267",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2574,9 +2688,9 @@
        "IsRequired": true,
        "Kind": "Client",
        "DefaultValue": {
-        "$id": "261",
+        "$id": "268",
         "Type": {
-         "$id": "262",
+         "$id": "269",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2587,17 +2701,17 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "263",
+       "$id": "270",
        "Name": "channelId",
        "NameInRequest": "channelId",
        "Description": "The registration ID of the channel.",
        "Type": {
-        "$id": "264",
+        "$id": "271",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "265",
+         "$id": "272",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2616,12 +2730,12 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "266",
+       "$id": "273",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "267",
+        "$id": "274",
         "kind": "int32",
         "name": "int32",
         "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -2638,17 +2752,17 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "268",
+       "$id": "275",
        "Name": "clientRequestId",
        "NameInRequest": "x-ms-client-request-id",
        "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
-        "$id": "269",
+        "$id": "276",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "270",
+         "$id": "277",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2667,14 +2781,14 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "271",
+       "$id": "278",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "272",
+        "$id": "279",
         "kind": "constant",
         "valueType": {
-         "$id": "273",
+         "$id": "280",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2696,7 +2810,7 @@
      ],
      "Responses": [
       {
-       "$id": "274",
+       "$id": "281",
        "StatusCodes": [
         200
        ],
@@ -2706,17 +2820,17 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "275",
+         "$id": "282",
          "Name": "clientRequestId",
          "NameInResponse": "x-ms-client-request-id",
          "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
-          "$id": "276",
+          "$id": "283",
           "kind": "string",
           "name": "uuid",
           "crossLanguageDefinitionId": "Azure.Core.uuid",
           "baseType": {
-           "$id": "277",
+           "$id": "284",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2738,7 +2852,7 @@
      "Path": "/messages/channels/{channelId}/templates",
      "BufferResponse": true,
      "Paging": {
-      "$id": "278",
+      "$id": "285",
       "ItemName": "value",
       "NextLinkName": "nextLink"
      },
@@ -2749,26 +2863,26 @@
     }
    ],
    "Protocol": {
-    "$id": "279"
+    "$id": "286"
    },
    "Parameters": [
     {
-     "$ref": "257"
+     "$ref": "264"
     }
    ],
    "Decorators": []
   }
  ],
  "Auth": {
-  "$id": "280",
+  "$id": "287",
   "OAuth2": {
-   "$id": "281",
+   "$id": "288",
    "Scopes": [
     "https://communication.azure.com/.default"
    ]
   },
   "ApiKey": {
-   "$id": "282",
+   "$id": "289",
    "Name": "Authorization"
   }
  }

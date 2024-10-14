@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static bool operator ==(HybridContainerServiceOSSku left, HybridContainerServiceOSSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridContainerServiceOSSku"/> values are not the same. </summary>
         public static bool operator !=(HybridContainerServiceOSSku left, HybridContainerServiceOSSku right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HybridContainerServiceOSSku"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridContainerServiceOSSku"/>. </summary>
         public static implicit operator HybridContainerServiceOSSku(string value) => new HybridContainerServiceOSSku(value);
 
         /// <inheritdoc />

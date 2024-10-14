@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(SqlDataDirectoryType left, SqlDataDirectoryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlDataDirectoryType"/> values are not the same. </summary>
         public static bool operator !=(SqlDataDirectoryType left, SqlDataDirectoryType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlDataDirectoryType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlDataDirectoryType"/>. </summary>
         public static implicit operator SqlDataDirectoryType(string value) => new SqlDataDirectoryType(value);
 
         /// <inheritdoc />

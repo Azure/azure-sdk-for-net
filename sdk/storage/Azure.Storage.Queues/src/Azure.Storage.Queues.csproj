@@ -4,9 +4,13 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Queues client library</AssemblyTitle>
+<<<<<<< HEAD
     <Version>12.20.1</Version>
+=======
+    <Version>12.21.0-beta.3</Version>
+>>>>>>> main
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>12.19.1</ApiCompatVersion>
+    <ApiCompatVersion>12.20.0</ApiCompatVersion>
     <DefineConstants>QueueSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Queues;Microsoft;Azure;Queues;Queue;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
     <Description>

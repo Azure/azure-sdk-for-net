@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI.Chat
         /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceApiKeyAuthenticationOptions"/>. </summary>
         /// <param name="key"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        internal InternalAzureChatDataSourceApiKeyAuthenticationOptions(string key)
+        public InternalAzureChatDataSourceApiKeyAuthenticationOptions(string key)
         {
             Argument.AssertNotNull(key, nameof(key));
 

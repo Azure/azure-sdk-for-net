@@ -1,10 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.3.0-beta.2 (2024-10-11)
 
 ### Bugs Fixed
 
@@ -21,7 +17,14 @@
 * Fixed a bug in LiveMetrics that counted all manually created Dependencies as failures.
   ([#45103](https://github.com/Azure/azure-sdk-for-net/pull/45103))
 
+* Fixed a bug in LiveMetrics that caused incorrect counts for telemetry.
+  ([#46429](https://github.com/Azure/azure-sdk-for-net/pull/46429))
+
 ### Other Changes
+
+* Updated the code of vendored resource detector library `OpenTelemetry.Resources.Azure` from the OpenTelemetry .NET contrib repository.
+  Code has been updated to [1.0.0-beta.9](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/Resources.Azure-1.0.0-beta.9/src/OpenTelemetry.Resources.Azure).
+  ([#46207](https://github.com/Azure/azure-sdk-for-net/pull/46207))
 
 * Updated field mappings for telemetry sent to LiveMetrics.
   ([#45103](https://github.com/Azure/azure-sdk-for-net/pull/45103))
@@ -31,6 +34,8 @@
   with the Azure SDK for
   .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging).
   ([#45649](https://github.com/Azure/azure-sdk-for-net/pull/45649))
+
+* Improved the efficiency of `AzureEventSourceLogForwarder` by eliminating message formatting. ([#46202](https://github.com/Azure/azure-sdk-for-net/pull/46202))
 
 ## 1.3.0-beta.1 (2024-07-12)
 

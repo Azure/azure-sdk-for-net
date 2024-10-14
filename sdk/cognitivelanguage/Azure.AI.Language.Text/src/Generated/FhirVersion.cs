@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(FhirVersion left, FhirVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FhirVersion"/> values are not the same. </summary>
         public static bool operator !=(FhirVersion left, FhirVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FhirVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FhirVersion"/>. </summary>
         public static implicit operator FhirVersion(string value) => new FhirVersion(value);
 
         /// <inheritdoc />

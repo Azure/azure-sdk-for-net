@@ -80,10 +80,12 @@
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <!--
-      .NET 8 now produces security warnings for nuget packages in dotnet restore. Keep these as warnings in T1 to avoid needing to update T1 library dependencies.
-      See: https://learn.microsoft.com/en-us/dotnet/core/compatibility/sdk/8.0/dotnet-restore-audit#recommended-action
+      .NET 8 now produces security warnings for nuget packages in dotnet restore. We want to keep all but critical (NU1904) as warnings and not turn them to errors.
+      For T1 we want to keep them all as warnings as we cannot easily fix them all currently and plan to remove the libraries in the future.
+      See: https://learn.microsoft.com/en-us/nuget/reference/errors-and-warnings/nu1901-nu1904
     -->
-    <WarningsNotAsErrors Condition="'$(IsClientLibrary)' != 'true'">NU1901;NU1902;NU1903;NU1904</WarningsNotAsErrors>
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);NU1901;NU1902;NU1903</WarningsNotAsErrors>
+    <WarningsNotAsErrors Condition="'$(IsClientLibrary)' != 'true'">$(WarningsNotAsErrors);NU1904</WarningsNotAsErrors>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>symbols.nupkg</SymbolPackageFormat>
@@ -137,7 +139,7 @@
     <RequiredTargetFrameworks Condition="'$(IsGeneratorLibrary)' == 'true'">net8.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
+  <PropertyGroup Condition="'$(IsGeneratorLibrary)' != 'true' and ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true')">
     <IsPackable>false</IsPackable>
     <!-- List newest targets first so that recordings are made with latest, running tests from editor runs latest, etc. -->
     <RequiredTargetFrameworks>net8.0;net6.0</RequiredTargetFrameworks>

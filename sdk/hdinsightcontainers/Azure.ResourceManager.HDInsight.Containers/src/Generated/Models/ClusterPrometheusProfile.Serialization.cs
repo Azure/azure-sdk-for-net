@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         void IJsonModel<ClusterPrometheusProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterPrometheusProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterPrometheusProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -44,7 +52,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ClusterPrometheusProfile IJsonModel<ClusterPrometheusProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

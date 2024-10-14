@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Synapse.Samples
                     Tier = "",
                     Name = "",
                 },
-                MaxSizeBytes = 0,
+                MaxSizeBytes = 0L,
                 Collation = "",
                 SourceDatabaseId = "",
                 RecoverableDatabaseId = "",

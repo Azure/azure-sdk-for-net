@@ -39,7 +39,7 @@ namespace Azure.AI.ContentSafety
         public static bool operator ==(ImageCategory left, ImageCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageCategory"/> values are not the same. </summary>
         public static bool operator !=(ImageCategory left, ImageCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ImageCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ImageCategory"/>. </summary>
         public static implicit operator ImageCategory(string value) => new ImageCategory(value);
 
         /// <inheritdoc />
