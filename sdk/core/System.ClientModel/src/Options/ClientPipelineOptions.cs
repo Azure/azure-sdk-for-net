@@ -30,12 +30,17 @@ public class ClientPipelineOptions
     public ClientPipelineOptions()
     {
         Observability = new();
+        Retries = new();
     }
-
     /// <summary>
     /// TBD.
     /// </summary>
     public ClientObservabilityOptions Observability { get; }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    public ClientRetryOptions Retries { get; }
 
     #region Pipeline creation: Overrides of default pipeline policies
 

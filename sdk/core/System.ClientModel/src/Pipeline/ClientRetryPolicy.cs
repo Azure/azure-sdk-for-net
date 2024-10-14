@@ -22,9 +22,6 @@ public class ClientRetryPolicy : PipelinePolicy
     /// </summary>
     public static ClientRetryPolicy Default { get; } = new ClientRetryPolicy();
 
-    private const int DefaultMaxRetries = 3;
-    private static readonly TimeSpan DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
-
     private readonly int _maxRetries;
     private readonly TimeSpan _initialDelay;
 
@@ -32,10 +29,19 @@ public class ClientRetryPolicy : PipelinePolicy
     /// Creates a new instance of the <see cref="ClientRetryPolicy"/> class.
     /// </summary>
     /// <param name="maxRetries">The maximum number of retries to attempt.</param>
-    public ClientRetryPolicy(int maxRetries = DefaultMaxRetries)
+    public ClientRetryPolicy(int maxRetries = ClientRetryOptions.DefaultMaxRetries)
     {
         _maxRetries = maxRetries;
-        _initialDelay = DefaultInitialDelay;
+        _initialDelay = ClientRetryOptions.DefaultInitialDelay;
+    }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="options"></param>
+    public ClientRetryPolicy(ClientRetryOptions options)
+    {
+        // TODO: wire these up
     }
 
     /// <inheritdoc/>
