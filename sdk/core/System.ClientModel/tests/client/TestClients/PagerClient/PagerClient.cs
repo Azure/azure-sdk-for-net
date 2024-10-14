@@ -7,22 +7,22 @@ using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ClientModel.ReferenceClients.PagingClient;
+namespace ClientModel.ReferenceClients.PagerClient;
 
-public class PagingClient
+public class PagerClient
 {
     private readonly Uri _endpoint;
     private readonly ApiKeyCredential _credential;
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
-    private readonly PagingClientOptions _options;
+    private readonly PagerClientOptions _options;
 
-    public PagingClient(Uri endpoint, ApiKeyCredential credential, PagingClientOptions? options = default)
+    public PagerClient(Uri endpoint, ApiKeyCredential credential, PagerClientOptions? options = default)
     {
         Argument.AssertNotNull(endpoint, nameof(endpoint));
         Argument.AssertNotNull(credential, nameof(credential));
 
-        options ??= new PagingClientOptions();
+        options ??= new PagerClientOptions();
 
         _endpoint = endpoint;
         _credential = credential;
@@ -44,7 +44,7 @@ public class PagingClient
     public Uri Endpoint => _endpoint;
 
     // public for test purposes
-    public PagingClientOptions Options => _options;
+    public PagerClientOptions Options => _options;
 
     // Convenience method - async
     public Task<ClientResult<OutputModel>> GetModelAsync(InputModel input, CancellationToken cancellationToken = default)

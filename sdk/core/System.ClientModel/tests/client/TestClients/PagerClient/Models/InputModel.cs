@@ -5,7 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace ClientModel.ReferenceClients.PagingClient;
+namespace ClientModel.ReferenceClients.PagerClient;
 
 public class InputModel : IJsonModel<InputModel>
 {

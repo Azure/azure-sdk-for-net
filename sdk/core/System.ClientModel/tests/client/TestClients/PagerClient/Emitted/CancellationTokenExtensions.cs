@@ -4,7 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Threading;
 
-namespace ClientModel.ReferenceClients.PagingClient;
+namespace ClientModel.ReferenceClients.PagerClient;
 
 internal static class CancellationTokenExtensions
 {

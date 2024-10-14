@@ -4,19 +4,19 @@
 using System;
 using System.ClientModel.Primitives;
 
-namespace ClientModel.ReferenceClients.PagingClient;
+namespace ClientModel.ReferenceClients.PagerClient;
 
-public class PagingClientOptions : ClientPipelineOptions
+public class PagerClientOptions : ClientPipelineOptions
 {
     private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
     // TODO: Change to generated code pattern needed to support DI binding
     // from IConfiguration settings.
-    public PagingClientOptions() : this(LatestVersion)
+    public PagerClientOptions() : this(LatestVersion)
     {
     }
 
-    public PagingClientOptions(ServiceVersion version)
+    public PagerClientOptions(ServiceVersion version)
     {
         Version = version switch
         {

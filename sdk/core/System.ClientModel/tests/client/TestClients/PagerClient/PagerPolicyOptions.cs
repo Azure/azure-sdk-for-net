@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClientModel.ReferenceClients.PagingClient;
+namespace ClientModel.ReferenceClients.PagerClient;
 
 internal class PagerPolicyOptions
 {

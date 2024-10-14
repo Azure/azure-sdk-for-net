@@ -3,7 +3,7 @@
 
 using System;
 
-namespace ClientModel.ReferenceClients.PagingClient;
+namespace ClientModel.ReferenceClients.PagerClient;
 
 internal static class Argument
 {

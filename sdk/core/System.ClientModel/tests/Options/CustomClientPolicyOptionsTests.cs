@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using ClientModel.ReferenceClients.PagingPolicyClient;
-using ClientModel.ReferenceClients.PagingClient;
+using ClientModel.ReferenceClients.PagerClient;
 
 using NUnit.Framework;
 
@@ -59,10 +59,10 @@ public class CustomClientPolicyOptionsTests
         // make the policy public to take the options type as a required
         // parameter, you'd need to EBN the prior properties.
 
-        PagingClientOptions clientOptions = new();
+        PagerClientOptions clientOptions = new();
         clientOptions.PagerNumber = "555-555-1234";
 
-        PagingClient client = new PagingClient(
+        PagerClient client = new(
             new Uri("https://example.com"),
             new ApiKeyCredential("fake key"),
             clientOptions);
