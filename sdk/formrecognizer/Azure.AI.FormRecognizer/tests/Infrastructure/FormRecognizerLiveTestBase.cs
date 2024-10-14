@@ -54,6 +54,21 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = InstrumentClientOptions(new FormRecognizerClientOptions(_serviceVersion));
+            switch (TestEnvironment.AuthorityHostUrl)
+            {
+                case "https://login.microsoftonline.com/":
+                    options.Audience = FormRecognizerAudience.AzurePublicCloud;
+                    break;
+                case "https://login.microsoftonline.us/":
+                    options.Audience = FormRecognizerAudience.AzureGovernment;
+                    break;
+                case "https://login.chinacloudapi.cn/":
+                    options.Audience = FormRecognizerAudience.AzureChina;
+                    break;
+                default:
+                    options.Audience = FormRecognizerAudience.AzurePublicCloud;
+                    break;
+            }
 
             if (useTokenCredential)
             {
@@ -89,6 +104,21 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = InstrumentClientOptions(new FormRecognizerClientOptions(_serviceVersion));
+            switch (TestEnvironment.AuthorityHostUrl)
+            {
+                case "https://login.microsoftonline.com/":
+                    options.Audience = FormRecognizerAudience.AzurePublicCloud;
+                    break;
+                case "https://login.microsoftonline.us/":
+                    options.Audience = FormRecognizerAudience.AzureGovernment;
+                    break;
+                case "https://login.chinacloudapi.cn/":
+                    options.Audience = FormRecognizerAudience.AzureChina;
+                    break;
+                default:
+                    options.Audience = FormRecognizerAudience.AzurePublicCloud;
+                    break;
+            }
 
             if (useTokenCredential)
             {

@@ -10,7 +10,7 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: formrecognizer
-    TimeoutInMinutes: 180
+    TimeoutInMinutes: 200
     CloudConfig:
       Public:
         ServiceConnection: azure-sdk-tests
@@ -22,5 +22,11 @@ extends:
         SubscriptionConfigurationFilePaths:
           - eng/common/TestResources/sub-config/AzurePublicMsft.json
         Location: 'centraluseuap'
+      UsGov:
+        SubscriptionConfiguration: $(sub-config-gov-test-resources)
+        Location: 'usgovvirginia'
+      China:
+        SubscriptionConfiguration: $(sub-config-cn-test-resources)
+        Location: 'chinaeast2'
     Clouds: 'Public'
-    SupportedClouds: 'Public, Canary'
+    SupportedClouds: 'Public,Canary,UsGov,China'
