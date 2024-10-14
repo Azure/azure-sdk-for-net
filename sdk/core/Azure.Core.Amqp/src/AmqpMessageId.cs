@@ -43,7 +43,7 @@ namespace Azure.Core.Amqp
         /// <see langword="true" /> if the specified object is equal to the current object; otherwise, <see langword="false" />.
         /// </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is AmqpMessageId messageId)
             {

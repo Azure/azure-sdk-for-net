@@ -16,7 +16,7 @@ public class ClientCache
     {
         lock (_clients)
         {
-            if (_clients.TryGetValue(id, out object cached))
+            if (_clients.TryGetValue(id, out object? cached))
             {
                 T client = (T)cached;
                 return client;
