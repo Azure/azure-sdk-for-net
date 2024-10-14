@@ -21,24 +21,24 @@ public class OpenAIFeature : CloudMachineFeature
 
     public OpenAIFeature(string model, string modelVersion) {  Model = model; ModelVersion = modelVersion; }
 
-    public override void AddTo(CloudMachineInfrastructure infrastructure)
+    public override void AddTo(CloudMachineInfrastructure cloudMachine)
     {
         CognitiveServicesAccount cognitiveServices = new("openai", "2023-05-01")
         {
-            Name = infrastructure.Id,
+            Name = cloudMachine.Id,
             Kind = "OpenAI",
             Sku = new CognitiveServicesSku { Name = "S0" },
             Properties = new CognitiveServicesAccountProperties()
             {
                 PublicNetworkAccess = ServiceAccountPublicNetworkAccess.Enabled,
-                CustomSubDomainName = infrastructure.Id
+                CustomSubDomainName = cloudMachine.Id
             },
         };
 
-        infrastructure.AddResource(cognitiveServices.CreateRoleAssignment(
+        cloudMachine.AddResource(cognitiveServices.CreateRoleAssignment(
             CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor,
             RoleManagementPrincipalType.User,
-            infrastructure.PrincipalIdParameter)
+            cloudMachine.PrincipalIdParameter)
         );
 
         // TODO: if we every support more than one deployment, they need to be chained using DependsOn.
@@ -46,7 +46,7 @@ public class OpenAIFeature : CloudMachineFeature
         CognitiveServicesAccountDeployment deployment = new("openai_deployment", "2023-05-01")
         {
             Parent = cognitiveServices,
-            Name = infrastructure.Id,
+            Name = cloudMachine.Id,
             Properties = new CognitiveServicesAccountDeploymentProperties()
             {
                 Model = new CognitiveServicesAccountDeploymentModel() {
@@ -57,8 +57,8 @@ public class OpenAIFeature : CloudMachineFeature
             },
         };
 
-        infrastructure.AddResource(cognitiveServices);
-        infrastructure.AddResource(deployment);
+        cloudMachine.AddResource(cognitiveServices);
+        cloudMachine.AddResource(deployment);
     }
 }
 
