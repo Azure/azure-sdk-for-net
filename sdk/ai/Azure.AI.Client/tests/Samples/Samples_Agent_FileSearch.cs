@@ -7,75 +7,57 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.Client.Models;
-using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Client.Tests;
 
-public partial class Samples_Agents
+public partial class Sample_Agent_FileSearch
 {
     [Test]
-    public async Task AgentSample()
+    public async Task FilesSearchExample()
     {
-        #region Snippet:OverviewCreateClient
         Agents client = new AzureAIClient(
             endpoint: new Uri(Environment.GetEnvironmentVariable("AZURE_AI_ENDPOINT")),
             subscriptionId: Environment.GetEnvironmentVariable("AZURE_AI_SUBSCRIPTION_ID"),
             resourceGroupName: Environment.GetEnvironmentVariable("AZURE_AI_RESOURCE_GROUP_NAME"),
             projectName: Environment.GetEnvironmentVariable("AZURE_AI_PROJECT_NAME"),
             credential: new DefaultAzureCredential()).GetAgentsClient();
+
+        #region Snippet:UploadAgentFilesToUse
+        File.WriteAllText(
+            path: "sample_file_for_upload.txt",
+            contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
+        Response<OpenAIFile> uploadAgentFileResponse = await client.UploadFileAsync(
+            localFilePath: "sample_file_for_upload.txt",
+            purpose: OpenAIFilePurpose.Agents);
+        OpenAIFile uploadedAgentFile = uploadAgentFileResponse.Value;
         #endregion
 
-        // Step 1: Create an assistant
-        #region Snippet:OverviewCreateAssistant
+        #region Snippet:CreateAgentWithFiles
         Response<Agent> agentResponse = await client.CreateAgentAsync(
-            model: "gpt-4-1106-preview",
-            name: "Math Tutor",
-            instructions: "You are a personal math tutor. Write and run code to answer math questions.",
-            tools: new List<ToolDefinition> { new CodeInterpreterToolDefinition() }
-            );
-        Agent assistant = agentResponse.Value;
+                model: "gpt-4-1106-preview",
+                name: "SDK Test Agent - Retrieval",
+                instructions: "You are a helpful agent that can help fetch data from files you know about.",
+                tools: new List<ToolDefinition> { new FileSearchToolDefinition() });
+                //toolResources: new ToolResources() { FileSearch = new FileSearchToolResource() { VectorStoreIds.Add(uploadedAgentFile.Id) },
+        Agent agent = agentResponse.Value;
         #endregion
 
-        // Intermission: assistant should now be listed
-
-        Response<PageableList<Agent>> agentListResponse = await client.GetAgentsAsync();
-
-        //// Step 2: Create a thread
-        #region Snippet:OverviewCreateThread
         Response<AgentThread> threadResponse = await client.CreateThreadAsync();
         AgentThread thread = threadResponse.Value;
-        #endregion
 
-        // Step 3: Add a message to a thread
-        #region Snippet:OverviewCreateMessage
         Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
-            "I need to solve the equation `3x + 11 = 14`. Can you help me?");
+            "Can you give me the documented codes for 'banana' and 'orange'?");
         ThreadMessage message = messageResponse.Value;
-        #endregion
 
-        // Intermission: message is now correlated with thread
-        // Intermission: listing messages will retrieve the message just added
+        Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, agent);
 
-        Response<PageableList<ThreadMessage>> messagesListResponse = await client.GetMessagesAsync(thread.Id);
-        Assert.That(messagesListResponse.Value.Data[0].Id == message.Id);
-
-        // Step 4: Run the agent
-
-        #region Snippet:OverviewCreateRun
-        Response<ThreadRun> runResponse = await client.CreateRunAsync(
-            thread.Id,
-            assistant.Id,
-            additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
-        ThreadRun run = runResponse.Value;
-        #endregion
-
-        #region Snippet:OverviewWaitForRun
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -83,9 +65,7 @@ public partial class Samples_Agents
         }
         while (runResponse.Value.Status == RunStatus.Queued
             || runResponse.Value.Status == RunStatus.InProgress);
-        #endregion
 
-        #region Snippet:OverviewListUpdatedMessages
         Response<PageableList<ThreadMessage>> afterRunMessagesResponse
             = await client.GetMessagesAsync(thread.Id);
         IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
@@ -107,6 +87,5 @@ public partial class Samples_Agents
                 Console.WriteLine();
             }
         }
-        #endregion
     }
 }

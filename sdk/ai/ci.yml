@@ -9,8 +9,6 @@ trigger:
   paths:
     include:
     - sdk/ai/
-    - sdk/ai/ci.yml
-    - sdk/ai/Azure.AI.Assistants
 
 pr:
   branches:
@@ -22,8 +20,6 @@ pr:
   paths:
     include:
     - sdk/ai/
-    - sdk/ai/ci.yml
-    - sdk/ai/Azure.AI.Assistants
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -33,5 +29,5 @@ extends:
     Artifacts:
     - name: Azure.AI.Inference
       safeName: AzureAIInference
-    - name: Azure.AI.Assistants
-      safeName: AzureAIAssistants
+    - name: Azure.AI.Client
+      safeName: AzureAIClient

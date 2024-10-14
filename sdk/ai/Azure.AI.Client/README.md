@@ -32,9 +32,12 @@ creating, running, and using assistants and threads.
 
 To get started, create an `AssistantsClient`:
 ```C# Snippet:OverviewCreateClient
-AssistantsClient client = isAzureOpenAI
-    ? new AssistantsClient(new Uri(azureResourceUrl), new AzureKeyCredential(azureApiKey))
-    : new AssistantsClient(nonAzureApiKey);
+Agents client = new AzureAIClient(
+    endpoint: new Uri(Environment.GetEnvironmentVariable("AZURE_AI_ENDPOINT")),
+    subscriptionId: Environment.GetEnvironmentVariable("AZURE_AI_SUBSCRIPTION_ID"),
+    resourceGroupName: Environment.GetEnvironmentVariable("AZURE_AI_RESOURCE_GROUP_NAME"),
+    projectName: Environment.GetEnvironmentVariable("AZURE_AI_PROJECT_NAME"),
+    credential: new DefaultAzureCredential()).GetAgentsClient();
 ```
 
 > **NOTE**: The Assistants API should always be used from a trusted device. Because the same authentication mechanism for running threads also allows changing persistent resources like Assistant instructions, a malicious user could extract an API key and modify Assistant behavior for other customers.
@@ -51,21 +54,19 @@ For an overview of Assistants and the pertinent key concepts like Threads, Messa
 ### Examples
 
 With an authenticated client, an assistant can be created:
-```C# Snippet:OverviewCreateAssistant
-Response<Assistant> assistantResponse = await client.CreateAssistantAsync(
-    new AssistantCreationOptions("gpt-4-1106-preview")
-    {
-        Name = "Math Tutor",
-        Instructions = "You are a personal math tutor. Write and run code to answer math questions.",
-        Tools = { new CodeInterpreterToolDefinition() }
-    });
-Assistant assistant = assistantResponse.Value;
+```C# Snippet:OverviewCreateAgent
+Response<Agent> agentResponse = await client.CreateAgentAsync(
+    model: "gpt-4-1106-preview",
+    name: "Math Tutor",
+    instructions: "You are a personal math tutor. Write and run code to answer math questions.",
+    tools: new List<ToolDefinition> { new CodeInterpreterToolDefinition() });
+Agent agent = agentResponse.Value;
 ```
 
 Next, create a thread:
 ```C# Snippet:OverviewCreateThread
-Response<AssistantThread> threadResponse = await client.CreateThreadAsync();
-AssistantThread thread = threadResponse.Value;
+Response<AgentThread> threadResponse = await client.CreateThreadAsync();
+AgentThread thread = threadResponse.Value;
 ```
 
 With a thread created, messages can be created on it:
@@ -81,10 +82,8 @@ A run can then be started that evaluates the thread against an assistant:
 ```C# Snippet:OverviewCreateRun
 Response<ThreadRun> runResponse = await client.CreateRunAsync(
     thread.Id,
-    new CreateRunOptions(assistant.Id)
-    {
-        AdditionalInstructions = "Please address the user as Jane Doe. The user has a premium account.",
-    });
+    agent.Id,
+    additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
 ThreadRun run = runResponse.Value;
 ```
 
@@ -135,28 +134,26 @@ Example output from this sequence:
 
 Files can be uploaded and then referenced by assistants or messages. First, use the generalized upload API with a
 purpose of 'assistants' to make a file ID available:
-```C# Snippet:UploadAssistantFilesToUse
+```C# Snippet:UploadAgentFilesToUse
 File.WriteAllText(
     path: "sample_file_for_upload.txt",
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-Response<OpenAIFile> uploadAssistantFileResponse = await client.UploadFileAsync(
+Response<OpenAIFile> uploadAgentFileResponse = await client.UploadFileAsync(
     localFilePath: "sample_file_for_upload.txt",
-    purpose: OpenAIFilePurpose.Assistants);
-OpenAIFile uploadedAssistantFile = uploadAssistantFileResponse.Value;
+    purpose: OpenAIFilePurpose.Agents);
+OpenAIFile uploadedAgentFile = uploadAgentFileResponse.Value;
 ```
 
 Once uploaded, the file ID can then be provided to an assistant upon creation. Note that file IDs will only be used
 if an appropriate tool like Code Interpreter or Retrieval is enabled.
-```C# Snippet:CreateAssistantWithFiles
-Response<Assistant> assistantResponse = await client.CreateAssistantAsync(
-    new AssistantCreationOptions("gpt-4-1106-preview")
-    {
-        Name = "SDK Test Assistant - Retrieval",
-        Instructions = "You are a helpful assistant that can help fetch data from files you know about.",
-        Tools = { new RetrievalToolDefinition() },
-        FileIds = { uploadedAssistantFile.Id },
-    });
-Assistant assistant = assistantResponse.Value;
+```C# Snippet:CreateAgentWithFiles
+Response<Agent> agentResponse = await client.CreateAgentAsync(
+        model: "gpt-4-1106-preview",
+        name: "SDK Test Agent - Retrieval",
+        instructions: "You are a helpful agent that can help fetch data from files you know about.",
+        tools: new List<ToolDefinition> { new FileSearchToolDefinition() });
+        //toolResources: new ToolResources() { FileSearch = new FileSearchToolResource() { VectorStoreIds.Add(uploadedAgentFile.Id) },
+Agent agent = agentResponse.Value;
 ```
 
 With a file ID association and a supported tool enabled, the assistant will then be able to consume the associated
@@ -238,23 +235,17 @@ FunctionToolDefinition getCurrentWeatherAtLocationTool = new(
 
 With the functions defined in their appropriate tools, an assistant can be now created that has those tools enabled:
 
-```C# Snippet:FunctionsCreateAssistantWithFunctionTools
-Response<Assistant> assistantResponse = await client.CreateAssistantAsync(
-    // note: parallel function calling is only supported with newer models like gpt-4-1106-preview
-    new AssistantCreationOptions("gpt-4-1106-preview")
-    {
-        Name = "SDK Test Assistant - Functions",
-        Instructions = "You are a weather bot. Use the provided functions to help answer questions. "
+```C# Snippet:FunctionsCreateAgentWithFunctionTools
+// note: parallel function calling is only supported with newer models like gpt-4-1106-preview
+Response<Agent> agentResponse = await client.CreateAgentAsync(
+    model: "gpt-4-1106-preview",
+    name: "SDK Test Agent - Functions",
+        instructions: "You are a weather bot. Use the provided functions to help answer questions. "
             + "Customize your responses to the user's preferences as much as possible and use friendly "
             + "nicknames for cities whenever possible.",
-        Tools =
-        {
-            getUserFavoriteCityTool,
-            getCityNicknameTool,
-            getCurrentWeatherAtLocationTool,
-        },
-    });
-Assistant assistant = assistantResponse.Value;
+    tools: new List<ToolDefinition> { getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool }
+    );
+Agent agent = agentResponse.Value;
 ```
 
 If the assistant calls tools, the calling code will need to resolve `ToolCall` instances into matching
@@ -410,7 +401,7 @@ You have the flexibility to explicitly select a supported service API version wh
 
 For example,
 
-```C# Snippet:Create<YourService>ClientForSpecificApiVersion
+```C#
 Uri endpoint = new Uri("<your endpoint>");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 <YourService>ClientOptions options = new <YourService>ClientOptions(<YourService>ClientOptions.ServiceVersion.<API Version>)
