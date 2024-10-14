@@ -14,7 +14,7 @@ public class SimpleClientOptions : ClientPipelineOptions
     // from IConfiguration settings.
     public SimpleClientOptions() : this(LatestVersion)
     {
-        Logging.AllowedHeaderNames.Add("x-simple-client-allowed");
+        Observability.AllowedHeaderNames.Add("x-simple-client-allowed");
     }
 
     public SimpleClientOptions(ServiceVersion version)

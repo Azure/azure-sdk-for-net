@@ -22,7 +22,7 @@ public static class MapsClientServiceCollectionExtensions
                 .Configure<IOptions<ClientPipelineOptions>>((clientOptions, commonOptions) =>
                 {
                     // TODO: devise strategy for copying common options to client options
-                    clientOptions.Logging.LoggerFactory = commonOptions.Value.Logging.LoggerFactory;
+                    clientOptions.Observability.LoggerFactory = commonOptions.Value.Observability.LoggerFactory;
                 });
 
         services.AddSingleton<MapsClient>(sp =>
@@ -62,7 +62,7 @@ public static class MapsClientServiceCollectionExtensions
                 .Configure<IOptions<ClientPipelineOptions>>((clientOptions, commonOptions) =>
                 {
                     // TODO: devise strategy for copying common options to client options
-                    clientOptions.Logging.LoggerFactory = commonOptions.Value.Logging.LoggerFactory;
+                    clientOptions.Observability.LoggerFactory = commonOptions.Value.Observability.LoggerFactory;
                 })
             .Bind(commonConfigurationSection)
 

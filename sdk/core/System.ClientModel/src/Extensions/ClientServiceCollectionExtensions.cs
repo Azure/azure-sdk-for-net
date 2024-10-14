@@ -44,14 +44,14 @@ public static class ClientServiceCollectionExtensions
             services.AddOptions<ClientPipelineOptions>()
                     .Configure<ILoggerFactory>((options, loggerFactory) =>
                     {
-                        options.Logging.LoggerFactory = loggerFactory;
+                        options.Observability.LoggerFactory = loggerFactory;
                     });
 
         // Add common policy options to the service collection
-        services.AddSingleton<ClientLoggingOptions>(sp =>
+        services.AddSingleton<ClientObservabilityOptions>(sp =>
         {
             IOptions<ClientPipelineOptions> options = sp.GetRequiredService<IOptions<ClientPipelineOptions>>();
-            return options.Value.Logging;
+            return options.Value.Observability;
         });
 
         return builder;

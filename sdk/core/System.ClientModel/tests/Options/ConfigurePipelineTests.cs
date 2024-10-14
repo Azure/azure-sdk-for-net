@@ -98,17 +98,17 @@ public class ConfigurePipelineTests
         // and their own client config blocks and not the headers from other client's
         // customizations or config blocks.
 
-        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "Content-Length");
-        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
-        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
-        CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-client-allowed");
-        CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
+        CollectionAssert.Contains(simpleClient.Options.Observability.AllowedHeaderNames, "Content-Length");
+        CollectionAssert.Contains(simpleClient.Options.Observability.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.Contains(simpleClient.Options.Observability.AllowedHeaderNames, "x-simple-config-allowed");
+        CollectionAssert.DoesNotContain(simpleClient.Options.Observability.AllowedHeaderNames, "x-maps-client-allowed");
+        CollectionAssert.DoesNotContain(simpleClient.Options.Observability.AllowedHeaderNames, "x-maps-config-allowed");
 
-        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "Content-Length");
-        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-maps-client-allowed");
-        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
-        CollectionAssert.DoesNotContain(mapsClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
-        CollectionAssert.DoesNotContain(mapsClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
+        CollectionAssert.Contains(mapsClient.Options.Observability.AllowedHeaderNames, "Content-Length");
+        CollectionAssert.Contains(mapsClient.Options.Observability.AllowedHeaderNames, "x-maps-client-allowed");
+        CollectionAssert.Contains(mapsClient.Options.Observability.AllowedHeaderNames, "x-maps-config-allowed");
+        CollectionAssert.DoesNotContain(mapsClient.Options.Observability.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.DoesNotContain(mapsClient.Options.Observability.AllowedHeaderNames, "x-simple-config-allowed");
     }
 
     [Test]
@@ -150,13 +150,13 @@ public class ConfigurePipelineTests
 
         // Validate that both clients have headers from the common config block
 
-        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
-        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
-        CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
+        CollectionAssert.Contains(simpleClient.Options.Observability.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.Contains(simpleClient.Options.Observability.AllowedHeaderNames, "x-simple-config-allowed");
+        CollectionAssert.DoesNotContain(simpleClient.Options.Observability.AllowedHeaderNames, "x-maps-config-allowed");
 
-        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
-        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
-        CollectionAssert.DoesNotContain(mapsClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
+        CollectionAssert.Contains(mapsClient.Options.Observability.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.Contains(mapsClient.Options.Observability.AllowedHeaderNames, "x-maps-config-allowed");
+        CollectionAssert.DoesNotContain(mapsClient.Options.Observability.AllowedHeaderNames, "x-simple-config-allowed");
     }
 
     [Test]
@@ -244,14 +244,14 @@ public class ConfigurePipelineTests
             (sp, sco) =>
             {
                 SimpleClientOptions options = sp.GetRequiredService<IOptions<SimpleClientOptions>>().Value;
-                return new CustomHttpLoggingPolicy(options.Logging);
+                return new CustomHttpLoggingPolicy(options.Observability);
             });
 
         services.AddKeyedSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>(typeof(MapsClientOptions),
             (sp, mco) =>
             {
                 MapsClientOptions options = sp.GetRequiredService<IOptions<MapsClientOptions>>().Value;
-                return new CustomHttpLoggingPolicy(options.Logging);
+                return new CustomHttpLoggingPolicy(options.Observability);
             });
 
         // Add the two clients
@@ -269,19 +269,19 @@ public class ConfigurePipelineTests
 
         // Validate that both clients have headers from the common config block
 
-        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "Content-Length");
-        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
-        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
-        CollectionAssert.Contains(simpleClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
-        CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-client-allowed");
-        CollectionAssert.DoesNotContain(simpleClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
+        CollectionAssert.Contains(simpleClient.Options.Observability.AllowedHeaderNames, "Content-Length");
+        CollectionAssert.Contains(simpleClient.Options.Observability.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.Contains(simpleClient.Options.Observability.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.Contains(simpleClient.Options.Observability.AllowedHeaderNames, "x-simple-config-allowed");
+        CollectionAssert.DoesNotContain(simpleClient.Options.Observability.AllowedHeaderNames, "x-maps-client-allowed");
+        CollectionAssert.DoesNotContain(simpleClient.Options.Observability.AllowedHeaderNames, "x-maps-config-allowed");
 
-        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "Content-Length");
-        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-maps-client-allowed");
-        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
-        CollectionAssert.Contains(mapsClient.Options.Logging.AllowedHeaderNames, "x-maps-config-allowed");
-        CollectionAssert.DoesNotContain(mapsClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
-        CollectionAssert.DoesNotContain(mapsClient.Options.Logging.AllowedHeaderNames, "x-simple-config-allowed");
+        CollectionAssert.Contains(mapsClient.Options.Observability.AllowedHeaderNames, "Content-Length");
+        CollectionAssert.Contains(mapsClient.Options.Observability.AllowedHeaderNames, "x-maps-client-allowed");
+        CollectionAssert.Contains(mapsClient.Options.Observability.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.Contains(mapsClient.Options.Observability.AllowedHeaderNames, "x-maps-config-allowed");
+        CollectionAssert.DoesNotContain(mapsClient.Options.Observability.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.DoesNotContain(mapsClient.Options.Observability.AllowedHeaderNames, "x-simple-config-allowed");
 
         // Validate that the custom policy for each client is configured according to that client's options
 
@@ -353,16 +353,16 @@ public class ConfigurePipelineTests
         // Validate that both clients have headers from appropriate common config blocks
 
         Assert.AreEqual(publicUriString, publicClient.Endpoint.ToString());
-        CollectionAssert.Contains(publicClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
-        CollectionAssert.Contains(publicClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
-        CollectionAssert.Contains(publicClient.Options.Logging.AllowedHeaderNames, "x-public-config-allowed");
-        CollectionAssert.DoesNotContain(publicClient.Options.Logging.AllowedHeaderNames, "x-private-config-allowed");
+        CollectionAssert.Contains(publicClient.Options.Observability.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.Contains(publicClient.Options.Observability.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.Contains(publicClient.Options.Observability.AllowedHeaderNames, "x-public-config-allowed");
+        CollectionAssert.DoesNotContain(publicClient.Options.Observability.AllowedHeaderNames, "x-private-config-allowed");
 
         Assert.AreEqual(privateUriString, privateClient.Endpoint.ToString());
-        CollectionAssert.Contains(privateClient.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
-        CollectionAssert.Contains(privateClient.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
-        CollectionAssert.Contains(privateClient.Options.Logging.AllowedHeaderNames, "x-private-config-allowed");
-        CollectionAssert.DoesNotContain(privateClient.Options.Logging.AllowedHeaderNames, "x-public-config-allowed");
+        CollectionAssert.Contains(privateClient.Options.Observability.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.Contains(privateClient.Options.Observability.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.Contains(privateClient.Options.Observability.AllowedHeaderNames, "x-private-config-allowed");
+        CollectionAssert.DoesNotContain(privateClient.Options.Observability.AllowedHeaderNames, "x-public-config-allowed");
     }
 
     [Test]

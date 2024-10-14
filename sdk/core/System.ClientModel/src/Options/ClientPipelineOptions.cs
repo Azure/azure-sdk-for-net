@@ -29,13 +29,13 @@ public class ClientPipelineOptions
     /// </summary>
     public ClientPipelineOptions()
     {
-        Logging = new();
+        Observability = new();
     }
 
     /// <summary>
     /// TBD.
     /// </summary>
-    public ClientLoggingOptions Logging { get; }
+    public ClientObservabilityOptions Observability { get; }
 
     #region Pipeline creation: Overrides of default pipeline policies
 
@@ -191,7 +191,7 @@ public class ClientPipelineOptions
     /// </summary>
     public virtual void Freeze()
     {
-        Logging.Freeze();
+        Observability.Freeze();
 
         _frozen = true;
     }

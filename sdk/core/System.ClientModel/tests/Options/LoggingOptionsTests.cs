@@ -37,7 +37,7 @@ public class LoggingOptionsTests
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
 
-        Assert.AreEqual(false, client.Options.Logging.EnableLogging);
+        Assert.AreEqual(false, client.Options.Observability.EnableLogging);
 
         // TODO: we should also add a pipeline test that there is no logging
         // policy in the pipeline.  This can be separate in PipelineOptions tests.
@@ -71,13 +71,13 @@ public class LoggingOptionsTests
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
 
         // SCM defaults
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "Content-Length");
+        CollectionAssert.Contains(client.Options.Observability.AllowedHeaderNames, "Content-Length");
 
         // Client defaults (client-author additions)
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.Contains(client.Options.Observability.AllowedHeaderNames, "x-simple-client-allowed");
 
         // User additions
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-config-allowed");
+        CollectionAssert.Contains(client.Options.Observability.AllowedHeaderNames, "x-config-allowed");
     }
 
     [Test]
@@ -105,7 +105,7 @@ public class LoggingOptionsTests
         ILoggerFactory loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
 
         Assert.AreEqual(uriString, client.Endpoint.ToString());
-        Assert.AreEqual(loggerFactory, client.Options.Logging.LoggerFactory);
+        Assert.AreEqual(loggerFactory, client.Options.Observability.LoggerFactory);
     }
 
     [Test]
@@ -159,7 +159,7 @@ public class LoggingOptionsTests
         Assert.IsNotNull(client.Options.HttpLoggingPolicy);
         Assert.AreEqual(typeof(CustomHttpLoggingPolicy), client.Options.HttpLoggingPolicy!.GetType());
 
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-common-config-allowed");
+        CollectionAssert.Contains(client.Options.Observability.AllowedHeaderNames, "x-common-config-allowed");
 
         // TODO: validate that it doesn't have client-specific values configured
     }
@@ -187,7 +187,7 @@ public class LoggingOptionsTests
         // Add custom logging policy to service collection
         services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>(sp =>
         {
-            ClientLoggingOptions options = new();
+            ClientObservabilityOptions options = new();
             options.AllowedHeaderNames.Add("x-custom-allowed");
             return new CustomHttpLoggingPolicy(options);
         });
@@ -200,9 +200,9 @@ public class LoggingOptionsTests
         ServiceProvider serviceProvider = services.BuildServiceProvider();
         SimpleClient client = serviceProvider.GetRequiredService<SimpleClient>();
 
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "Content-Length");
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-simple-client-allowed");
-        CollectionAssert.Contains(client.Options.Logging.AllowedHeaderNames, "x-config-allowed");
+        CollectionAssert.Contains(client.Options.Observability.AllowedHeaderNames, "Content-Length");
+        CollectionAssert.Contains(client.Options.Observability.AllowedHeaderNames, "x-simple-client-allowed");
+        CollectionAssert.Contains(client.Options.Observability.AllowedHeaderNames, "x-config-allowed");
 
         // Validate that custom logging policy has been configured from the custom options
         // provided in the custom policy factory above.
@@ -221,15 +221,15 @@ public class LoggingOptionsTests
     #region Helpers
     public class CustomHttpLoggingPolicy : HttpLoggingPolicy
     {
-        private readonly ClientLoggingOptions _options;
+        private readonly ClientObservabilityOptions _options;
 
-        public CustomHttpLoggingPolicy(ClientLoggingOptions options) : base(options)
+        public CustomHttpLoggingPolicy(ClientObservabilityOptions options) : base(options)
         {
             _options = options;
         }
 
         // public for tests
-        public ClientLoggingOptions Options => _options;
+        public ClientObservabilityOptions Options => _options;
     }
     #endregion
 }
