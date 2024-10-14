@@ -3,7 +3,7 @@
 
 using System;
 
-namespace ClientModel.ReferenceClients.CustomPolicyClient;
+namespace ClientModel.ReferenceClients.PagingPolicyClient;
 
 internal static class Argument
 {

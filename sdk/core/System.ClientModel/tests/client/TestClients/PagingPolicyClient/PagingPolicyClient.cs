@@ -7,22 +7,22 @@ using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ClientModel.ReferenceClients.CustomPolicyClient;
+namespace ClientModel.ReferenceClients.PagingPolicyClient;
 
-public class CustomPolicyClient
+public class PagingPolicyClient
 {
     private readonly Uri _endpoint;
     private readonly ApiKeyCredential _credential;
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
-    private readonly CustomPolicyClientOptions _options;
+    private readonly PagingPolicyClientOptions _options;
 
-    public CustomPolicyClient(Uri endpoint, ApiKeyCredential credential, CustomPolicyClientOptions? options = default)
+    public PagingPolicyClient(Uri endpoint, ApiKeyCredential credential, PagingPolicyClientOptions? options = default)
     {
         Argument.AssertNotNull(endpoint, nameof(endpoint));
         Argument.AssertNotNull(credential, nameof(credential));
 
-        options ??= new CustomPolicyClientOptions();
+        options ??= new PagingPolicyClientOptions();
 
         _endpoint = endpoint;
         _credential = credential;
@@ -41,7 +41,7 @@ public class CustomPolicyClient
     public Uri Endpoint => _endpoint;
 
     // public for test purposes
-    public CustomPolicyClientOptions Options => _options;
+    public PagingPolicyClientOptions Options => _options;
 
     // Convenience method - async
     public Task<ClientResult<OutputModel>> GetModelAsync(InputModel input, CancellationToken cancellationToken = default)

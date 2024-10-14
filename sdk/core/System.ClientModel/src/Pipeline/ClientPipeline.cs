@@ -164,6 +164,8 @@ public sealed partial class ClientPipeline
                 new HttpLoggingPolicy(options.Observability);
         }
 
+        // TODO: issue with shared transport
+
         // Add the transport.
         policies[index++] = options.Transport ?? HttpClientPipelineTransport.Shared;
 

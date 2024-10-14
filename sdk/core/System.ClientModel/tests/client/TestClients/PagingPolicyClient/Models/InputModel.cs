@@ -5,7 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace ClientModel.ReferenceClients.CustomPolicyClient;
+namespace ClientModel.ReferenceClients.PagingPolicyClient;
 
 public class InputModel : IJsonModel<InputModel>
 {

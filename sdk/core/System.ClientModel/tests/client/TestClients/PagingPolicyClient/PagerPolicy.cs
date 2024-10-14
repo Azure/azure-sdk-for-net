@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ClientModel.ReferenceClients.CustomPolicyClient;
+namespace ClientModel.ReferenceClients.PagingPolicyClient;
 
 public class PagerPolicy : PipelinePolicy
 {

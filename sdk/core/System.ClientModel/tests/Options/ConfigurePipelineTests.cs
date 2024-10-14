@@ -3,6 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Reflection;
 using ClientModel.ReferenceClients.MapsClient;
 using ClientModel.ReferenceClients.SimpleClient;
@@ -376,6 +377,21 @@ public class ConfigurePipelineTests
     {
         throw new NotImplementedException();
     }
+
+    [Test]
+    public void CanApplyObservabilityOptionsToInjectedHttpClient()
+    {
+        // The HttpClient to inject
+        HttpClient httpClient = new();
+
+        SimpleClientOptions clientOptions = new();
+        clientOptions.Observability.AllowedHeaderNames.Add("x-user-allowed");
+        clientOptions.Transport = new HttpClientPipelineTransport(httpClient);
+
+        SimpleClient client = new(new Uri("https://example.com"),
+            new ApiKeyCredential("fake key"),
+            clientOptions);
+    }
 }
 
 #region Helpers
@@ -387,6 +403,19 @@ internal static class ReflectionExtensions
         Type type = obj.GetType();
         FieldInfo? field = type.GetField(name, flags);
         return (T)field!.GetValue(obj)!;
+    }
+}
+
+internal static class HttpClientExtensions
+{
+    public static void EnableLoggingHeaderName(this HttpClient httpClient, string headerName)
+    {
+        // TODO: What is this API?
+    }
+
+    public static void EnableLoggingQueryParameter(this HttpClient httpClient, string headerName)
+    {
+        // TODO: What is this API?
     }
 }
 #endregion

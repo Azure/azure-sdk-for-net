@@ -4,7 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Threading;
 
-namespace ClientModel.ReferenceClients.CustomPolicyClient;
+namespace ClientModel.ReferenceClients.PagingPolicyClient;
 
 internal static class CancellationTokenExtensions
 {

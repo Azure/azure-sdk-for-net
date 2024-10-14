@@ -4,19 +4,19 @@
 using System;
 using System.ClientModel.Primitives;
 
-namespace ClientModel.ReferenceClients.CustomPolicyClient;
+namespace ClientModel.ReferenceClients.PagingPolicyClient;
 
-public class CustomPolicyClientOptions : ClientPipelineOptions
+public class PagingPolicyClientOptions : ClientPipelineOptions
 {
     private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
     // TODO: Change to generated code pattern needed to support DI binding
     // from IConfiguration settings.
-    public CustomPolicyClientOptions() : this(LatestVersion)
+    public PagingPolicyClientOptions() : this(LatestVersion)
     {
     }
 
-    public CustomPolicyClientOptions(ServiceVersion version)
+    public PagingPolicyClientOptions(ServiceVersion version)
     {
         Pager = new();
 

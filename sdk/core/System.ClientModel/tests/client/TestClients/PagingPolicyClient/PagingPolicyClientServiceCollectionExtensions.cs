@@ -8,26 +8,26 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace ClientModel.ReferenceClients.CustomPolicyClient;
+namespace ClientModel.ReferenceClients.PagingPolicyClient;
 
-public static class CustomPolicyClientServiceCollectionExtensions
+public static class PagingPolicyClientServiceCollectionExtensions
 {
     // No parameters uses client defaults
     // See: https://learn.microsoft.com/en-us/dotnet/core/extensions/options-library-authors#parameterless
-    public static IServiceCollection AddCustomPolicyClient(this IServiceCollection services)
+    public static IServiceCollection AddPagingPolicyClient(this IServiceCollection services)
     {
         // Add common options
         services.AddCommonOptions();
 
         // Add client options
-        services.AddOptions<CustomPolicyClientOptions>()
+        services.AddOptions<PagingPolicyClientOptions>()
                 .Configure<IOptions<ClientPipelineOptions>>((clientOptions, commonOptions) =>
                     {
                         // TODO: devise strategy for copying common options to client options
                         clientOptions.Observability.LoggerFactory = commonOptions.Value.Observability.LoggerFactory;
                     });
 
-        services.AddSingleton<CustomPolicyClient>(sp =>
+        services.AddSingleton<PagingPolicyClient>(sp =>
         {
             // TODO: factor out configuration lookup cases per proposed schema
             IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
@@ -41,12 +41,12 @@ public static class CustomPolicyClientServiceCollectionExtensions
 
             // TODO: to roll a credential, this will need to be IOptionsMonitor
             // not IOptions -- come back to this.
-            IOptions<CustomPolicyClientOptions> iOptions = sp.GetRequiredService<IOptions<CustomPolicyClientOptions>>();
-            CustomPolicyClientOptions options = iOptions.Value;
+            IOptions<PagingPolicyClientOptions> iOptions = sp.GetRequiredService<IOptions<PagingPolicyClientOptions>>();
+            PagingPolicyClientOptions options = iOptions.Value;
 
             options = options.ConfigurePolicies(sp);
 
-            return new CustomPolicyClient(endpoint, credential, options);
+            return new PagingPolicyClient(endpoint, credential, options);
         });
 
         return services;

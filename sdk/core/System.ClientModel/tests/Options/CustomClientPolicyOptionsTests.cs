@@ -11,10 +11,10 @@ public class CustomClientPolicyOptionsTests
     [Test]
     public void CanSetClientPolicyBehaviorsFromClientOptions()
     {
-        CustomPolicyClientOptions clientOptions = new();
+        PagingPolicyClientOptions clientOptions = new();
         clientOptions.Pager.PhoneNumber = "555-555-1234";
 
-        CustomPolicyClient client = new CustomPolicyClient(
+        PagingPolicyClient client = new PagingPolicyClient(
             new Uri("https://example.com"),
             new ApiKeyCredential("fake key"),
             clientOptions);
@@ -26,10 +26,10 @@ public class CustomClientPolicyOptionsTests
         PagerPolicyOptions policyOptions = new();
         policyOptions.PhoneNumber = "555-555-1234";
 
-        CustomPolicyClientOptions clientOptions = new();
+        PagingPolicyClientOptions clientOptions = new();
         clientOptions.PagerPolicy = new PagerPolicy(policyOptions);
 
-        CustomPolicyClient client = new CustomPolicyClient(
+        PagingPolicyClient client = new PagingPolicyClient(
             new Uri("https://example.com"),
             new ApiKeyCredential("fake key"),
             clientOptions);
