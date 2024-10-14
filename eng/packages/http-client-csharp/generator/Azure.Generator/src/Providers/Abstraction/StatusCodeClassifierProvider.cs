@@ -11,8 +11,8 @@ namespace Azure.Generator.Providers.Abstraction
 {
     internal record StatusCodeClassifierProvider : StatusCodeClassifierApi
     {
-        private static IStatusCodeClassifierApi? _instance;
-        internal static IStatusCodeClassifierApi Instance => _instance ??= new StatusCodeClassifierProvider();
+        private static StatusCodeClassifierApi? _instance;
+        internal static StatusCodeClassifierApi Instance => _instance ??= new StatusCodeClassifierProvider();
         private StatusCodeClassifierProvider() : base(typeof(StatusCodeClassifier), Empty)
         {
         }

@@ -31,7 +31,7 @@ namespace Azure.Generator
         public override IHttpMessageApi HttpMessageApi => HttpMessageProvider.Instance;
 
         /// <inheritdoc/>
-        public override IHttpRequestApi HttpRequestApi => HttpRequestProvider.Instance;
+        public override IExpressionApi<HttpRequestApi> HttpRequestApi => HttpRequestProvider.Instance;
 
         /// <inheritdoc/>
         public override IStatusCodeClassifierApi StatusCodeClassifierApi => StatusCodeClassifierProvider.Instance;

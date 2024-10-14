@@ -10,8 +10,8 @@ namespace Azure.Generator.Providers.Abstraction
 {
     internal record HttpRequestOptionsProvider : HttpRequestOptionsApi
     {
-        private static IHttpRequestOptionsApi? _instance;
-        internal static IHttpRequestOptionsApi Instance => _instance ??= new HttpRequestOptionsProvider();
+        private static HttpRequestOptionsApi? _instance;
+        internal static HttpRequestOptionsApi Instance => _instance ??= new HttpRequestOptionsProvider();
         private HttpRequestOptionsProvider() : base(typeof(RequestContext), Empty)
         {
         }

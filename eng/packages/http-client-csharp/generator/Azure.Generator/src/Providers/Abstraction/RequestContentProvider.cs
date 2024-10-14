@@ -14,8 +14,8 @@ namespace Azure.Generator.Providers
 {
     internal record RequestContentProvider : RequestContentApi
     {
-        private static IRequestContentApi? _instance;
-        internal static IRequestContentApi Instance => _instance ??= new RequestContentProvider();
+        private static RequestContentApi? _instance;
+        internal static RequestContentApi Instance => _instance ??= new RequestContentProvider();
         private RequestContentProvider() : base(typeof(RequestContent), Empty)
         {
         }

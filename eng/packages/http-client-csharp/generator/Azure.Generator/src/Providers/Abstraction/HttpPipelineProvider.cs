@@ -12,8 +12,8 @@ namespace Azure.Generator.Providers.Abstraction
 {
     internal record HttpPipelineProvider : ClientPipelineApi
     {
-        private static IClientPipelineApi? _instance;
-        internal static IClientPipelineApi Instance => _instance ??= new HttpPipelineProvider();
+        private static ClientPipelineApi? _instance;
+        internal static ClientPipelineApi Instance => _instance ??= new HttpPipelineProvider();
         private HttpPipelineProvider() : base(typeof(HttpPipeline), Empty)
         {
         }

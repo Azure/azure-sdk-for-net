@@ -13,8 +13,8 @@ namespace Azure.Generator.Providers
 {
     internal record HttpRequestProvider : HttpRequestApi
     {
-        private static IHttpRequestApi? _instance;
-        internal static IHttpRequestApi Instance => _instance ??= new HttpRequestProvider();
+        private static HttpRequestApi? _instance;
+        internal static HttpRequestApi Instance => _instance ??= new HttpRequestProvider();
         private HttpRequestProvider() : base(typeof(Request), Empty)
         {
         }
