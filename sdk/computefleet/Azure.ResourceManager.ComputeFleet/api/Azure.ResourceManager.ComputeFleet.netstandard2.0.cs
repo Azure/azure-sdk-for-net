@@ -1,6 +1,5 @@
 namespace Azure.ResourceManager.ComputeFleet
 {
-	//cspell:ignore Rdma
     public partial class ComputeFleetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ComputeFleet.ComputeFleetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.ComputeFleetResource>, System.Collections.IEnumerable
     {
         protected ComputeFleetCollection() { }
