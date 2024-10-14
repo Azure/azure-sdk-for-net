@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// By default, this is set to False.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, AutoUpgradeProfileProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, UpgradeChannel? channel, AutoUpgradeNodeImageSelection nodeImageSelection, bool? disabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AutoUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, AutoUpgradeProfileProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, ContainerServiceFleetUpgradeChannel? channel, AutoUpgradeNodeImageSelection nodeImageSelection, bool? disabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = eTag;
             ProvisioningState = provisioningState;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <summary> The resource id of the UpdateStrategy resource to reference. If not specified, the auto upgrade will run on all clusters which are members of the fleet. </summary>
         public ResourceIdentifier UpdateStrategyId { get; set; }
         /// <summary> Configures how auto-upgrade will be run. </summary>
-        public UpgradeChannel? Channel { get; set; }
+        public ContainerServiceFleetUpgradeChannel? Channel { get; set; }
         /// <summary> The node image upgrade to be applied to the target clusters in auto upgrade. </summary>
         internal AutoUpgradeNodeImageSelection NodeImageSelection { get; set; }
         /// <summary> The node image upgrade type. </summary>
