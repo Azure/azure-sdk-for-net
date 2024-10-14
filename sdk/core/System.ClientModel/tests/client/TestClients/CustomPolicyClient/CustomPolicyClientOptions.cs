@@ -14,11 +14,12 @@ public class CustomPolicyClientOptions : ClientPipelineOptions
     // from IConfiguration settings.
     public CustomPolicyClientOptions() : this(LatestVersion)
     {
-        Observability.AllowedHeaderNames.Add("x-simple-client-allowed");
     }
 
     public CustomPolicyClientOptions(ServiceVersion version)
     {
+        Pager = new();
+
         Version = version switch
         {
             ServiceVersion.V1 => "1.0",
@@ -28,8 +29,14 @@ public class CustomPolicyClientOptions : ClientPipelineOptions
 
     internal string Version { get; }
 
+    public PagerPolicyOptions Pager { get; }
+
+    public PipelinePolicy? PagerPolicy { get; set; }
+
     public enum ServiceVersion
     {
         V1 = 1
     }
+
+    // TODO: do we need an "on freeze" ?
 }
