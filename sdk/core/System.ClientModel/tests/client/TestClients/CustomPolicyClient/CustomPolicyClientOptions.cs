@@ -1,0 +1,35 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ClientModel.Primitives;
+
+namespace ClientModel.ReferenceClients.CustomPolicyClient;
+
+public class CustomPolicyClientOptions : ClientPipelineOptions
+{
+    private const ServiceVersion LatestVersion = ServiceVersion.V1;
+
+    // TODO: Change to generated code pattern needed to support DI binding
+    // from IConfiguration settings.
+    public CustomPolicyClientOptions() : this(LatestVersion)
+    {
+        Observability.AllowedHeaderNames.Add("x-simple-client-allowed");
+    }
+
+    public CustomPolicyClientOptions(ServiceVersion version)
+    {
+        Version = version switch
+        {
+            ServiceVersion.V1 => "1.0",
+            _ => throw new NotSupportedException()
+        };
+    }
+
+    internal string Version { get; }
+
+    public enum ServiceVersion
+    {
+        V1 = 1
+    }
+}
