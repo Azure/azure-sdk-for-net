@@ -1,15 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics.CodeAnalysis;
-using Azure.Identity;
+using Azure.Core;
 using Microsoft.Extensions.Configuration;
 
 namespace Azure.CloudMachine;
 
 public partial class CloudMachineClient : CloudMachineWorkspace
 {
-    public CloudMachineClient(DefaultAzureCredential? credential = default, IConfiguration? configuration = default)
+    public CloudMachineClient(TokenCredential? credential = default, IConfiguration? configuration = default)
         : base(credential, configuration)
     {
     }

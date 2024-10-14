@@ -22,7 +22,7 @@ public class CloudMachineWorkspace : WorkspaceClient
     );
 
     [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "<Pending>")]
-    public CloudMachineWorkspace(DefaultAzureCredential? credential = default, IConfiguration? configuration = default)
+    public CloudMachineWorkspace(TokenCredential? credential = default, IConfiguration? configuration = default)
     {
         if (credential != default)
         {

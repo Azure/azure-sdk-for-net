@@ -23,7 +23,7 @@ public class OpenAIFeature : CloudMachineFeature
 
     public override void AddTo(CloudMachineInfrastructure cloudMachine)
     {
-        CognitiveServicesAccount cognitiveServices = new("openai", "2023-05-01")
+        CognitiveServicesAccount cognitiveServices = new("openai")
         {
             Name = cloudMachine.Id,
             Kind = "OpenAI",
@@ -80,7 +80,7 @@ public static class OpenAIFeatureExtensions
                 ClientConfiguration connection = connectionMaybe.Value;
                 Uri endpoint = new(connection.Endpoint);
                 var clientOptions = new AzureOpenAIClientOptions();
-                if (connection.CredentailType == CredentialType.EntraId)
+                if (connection.CredentialType == CredentialType.EntraId)
                 {
                     AzureOpenAIClient aoai = new(endpoint, workspace.Credential, clientOptions);
                     return aoai;

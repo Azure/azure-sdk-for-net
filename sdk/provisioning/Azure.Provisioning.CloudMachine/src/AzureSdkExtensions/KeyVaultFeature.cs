@@ -12,8 +12,16 @@ namespace Azure.Provisioning.CloudMachine.KeyVault;
 
 public class KeyVaultFeature : CloudMachineFeature
 {
-    public KeyVaultSku Sku { get; set; } = new KeyVaultSku { Name = KeyVaultSkuName.Standard, Family = KeyVaultSkuFamily.A, };
+    public KeyVaultSku Sku { get; set; }
 
+    public KeyVaultFeature(KeyVaultSku? sku = default)
+    {
+        if (sku == null)
+        {
+            sku = new KeyVaultSku { Name = KeyVaultSkuName.Standard, Family = KeyVaultSkuFamily.A, };
+        }
+        Sku = sku;
+    }
     public override void AddTo(CloudMachineInfrastructure infrastructure)
     {
         // Add a KeyVault to the CloudMachine infrastructure.
@@ -59,11 +67,16 @@ public static class KeyVaultExtensions
     public static SecretClient GetKeyVaultSecretsClient(this WorkspaceClient workspace)
     {
         ClientConfiguration? connectionMaybe = workspace.GetConfiguration(typeof(SecretClient).FullName);
-        if (connectionMaybe == null) throw new Exception("Connection not found");
+        if (connectionMaybe == null)
+        {
+            throw new Exception("Connection not found");
+        }
 
         ClientConfiguration connection = connectionMaybe.Value;
-        if (connection.CredentailType == CredentialType.EntraId)
-        return new(new Uri(connection.Endpoint), workspace.Credential);
+        if (connection.CredentialType == CredentialType.EntraId)
+        {
+            return new(new Uri(connection.Endpoint), workspace.Credential);
+        }
         throw new Exception("ApiKey not supported");
     }
 }

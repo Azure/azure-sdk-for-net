@@ -2,13 +2,13 @@ namespace Azure.CloudMachine
 {
     public partial class CloudMachineClient : Azure.CloudMachine.CloudMachineWorkspace
     {
-        public CloudMachineClient(Azure.Identity.DefaultAzureCredential? credential = null, Microsoft.Extensions.Configuration.IConfiguration? configuration = null) : base (default(Azure.Identity.DefaultAzureCredential), default(Microsoft.Extensions.Configuration.IConfiguration)) { }
+        public CloudMachineClient(Azure.Core.TokenCredential? credential = null, Microsoft.Extensions.Configuration.IConfiguration? configuration = null) : base (default(Azure.Core.TokenCredential), default(Microsoft.Extensions.Configuration.IConfiguration)) { }
         public Azure.CloudMachine.MessagingServices Messaging { get { throw null; } }
         public Azure.CloudMachine.StorageServices Storage { get { throw null; } }
     }
     public partial class CloudMachineWorkspace : Azure.Core.WorkspaceClient
     {
-        public CloudMachineWorkspace(Azure.Identity.DefaultAzureCredential? credential = null, Microsoft.Extensions.Configuration.IConfiguration? configuration = null) { }
+        public CloudMachineWorkspace(Azure.Core.TokenCredential? credential = null, Microsoft.Extensions.Configuration.IConfiguration? configuration = null) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Core.TokenCredential Credential { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -55,7 +55,7 @@ namespace Azure.Core
         private readonly int _dummyPrimitive;
         public ClientConfiguration(string endpoint, string? apiKey = null) { throw null; }
         public string? ApiKey { get { throw null; } }
-        public Azure.Core.CredentialType CredentailType { get { throw null; } }
+        public Azure.Core.CredentialType CredentialType { get { throw null; } }
         public string Endpoint { get { throw null; } }
     }
     public enum CredentialType
@@ -100,7 +100,7 @@ namespace Azure.Provisioning.CloudMachine.KeyVault
     }
     public partial class KeyVaultFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
     {
-        public KeyVaultFeature() { }
+        public KeyVaultFeature(Azure.Provisioning.KeyVault.KeyVaultSku? sku = null) { }
         public Azure.Provisioning.KeyVault.KeyVaultSku Sku { get { throw null; } set { } }
         public override void AddTo(Azure.Provisioning.CloudMachine.CloudMachineInfrastructure infrastructure) { }
     }

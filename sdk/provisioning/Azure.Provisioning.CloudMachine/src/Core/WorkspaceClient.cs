@@ -21,11 +21,11 @@ public readonly struct ClientConfiguration
     {
         Endpoint = endpoint;
         ApiKey = apiKey;
-        CredentailType = apiKey == default ? CredentialType.EntraId : CredentialType.ApiKey;
+        CredentialType = apiKey == default ? CredentialType.EntraId : CredentialType.ApiKey;
     }
     public string Endpoint { get; }
     public string? ApiKey { get; }
-    public CredentialType CredentailType { get; }
+    public CredentialType CredentialType { get; }
 }
 
 public enum CredentialType
