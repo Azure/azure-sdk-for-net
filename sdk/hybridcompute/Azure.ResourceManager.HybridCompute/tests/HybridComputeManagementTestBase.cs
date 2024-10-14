@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         public SubscriptionResource Subscription { get; set; }
         public HybridComputePrivateLinkScopeCollection scopeCollection { get; set; }
         public string subscriptionId = "b24cc8ee-df4f-48ac-94cf-46edf36b0fae";
-        public string resourceGroupName = "dakirbytest";
+        public string resourceGroupName = "ytongtest";
         public string scopeName = "myScope";
-        public string machineName = "dakirby_ws2012r2";
+        public string machineName = "testmachine";
         public string extensionName = "CustomScriptExtension";
         // need to run private-endpoint-connection list and obtain from the 'name' property
         public string privateEndpointConnectionName = "myprivateendpoint.dc6c8829-b4b5-4059-b130-e9f309c83173";
@@ -336,90 +336,90 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             return connectionCollection;
         }
 
-        protected async Task<MachineRunCommandData> createRunCommand()
-        {
-            HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
-            MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
+        // protected async Task<MachineRunCommandData> createRunCommand()
+        // {
+        //     HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
+        //     MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
 
-            MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("centraluseuap"))
-            {
-                Source = new MachineRunCommandScriptSource()
-                {
-                    Script = "Write-Host Hello World!",
-                },
-                Parameters =
-                {
-                    new RunCommandInputParameter("param1","value1"), new RunCommandInputParameter("param2","value2")
-                },
-                // AsyncExecution = false,
-                // RunAsUser = "user1",
-                // RunAsPassword = "<runAsPassword>",
-                // TimeoutInSeconds = 3600,
-                // OutputBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/myscriptoutputcontainer/MyScriptoutput.txt"),
-                // ErrorBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/mycontainer/MyScriptError.txt"),
-            };
-            ArmOperation<MachineRunCommandResource> lro = await runCommandCollection.CreateOrUpdateAsync(WaitUntil.Completed, runCommandName, data);
-            MachineRunCommandResource result = lro.Value;
+        //     MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("centraluseuap"))
+        //     {
+        //         Source = new MachineRunCommandScriptSource()
+        //         {
+        //             Script = "Write-Host Hello World!",
+        //         },
+        //         Parameters =
+        //         {
+        //             new RunCommandInputParameter("param1","value1"), new RunCommandInputParameter("param2","value2")
+        //         },
+        //         // AsyncExecution = false,
+        //         // RunAsUser = "user1",
+        //         // RunAsPassword = "<runAsPassword>",
+        //         // TimeoutInSeconds = 3600,
+        //         // OutputBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/myscriptoutputcontainer/MyScriptoutput.txt"),
+        //         // ErrorBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/mycontainer/MyScriptError.txt"),
+        //     };
+        //     ArmOperation<MachineRunCommandResource> lro = await runCommandCollection.CreateOrUpdateAsync(WaitUntil.Completed, runCommandName, data);
+        //     MachineRunCommandResource result = lro.Value;
 
-            return result.Data;
-        }
+        //     return result.Data;
+        // }
 
-        protected async Task<MachineRunCommandData> updateRunCommand()
-        {
-            ResourceIdentifier machineRunCommandResourceId = MachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, runCommandName);
-            MachineRunCommandResource machineRunCommand = ArmClient.GetMachineRunCommandResource(machineRunCommandResourceId);
+        // protected async Task<MachineRunCommandData> updateRunCommand()
+        // {
+        //     ResourceIdentifier machineRunCommandResourceId = MachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, runCommandName);
+        //     MachineRunCommandResource machineRunCommand = ArmClient.GetMachineRunCommandResource(machineRunCommandResourceId);
 
-            MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("centraluseuap"))
-            {
-                Source = new MachineRunCommandScriptSource()
-                {
-                    Script = "Write-Host Hello World!",
-                },
-                Parameters =
-                {
-                    new RunCommandInputParameter("param1","value1"), new RunCommandInputParameter("param2","value2")
-                },
-                // AsyncExecution = false,
-                // RunAsUser = "user1",
-                // RunAsPassword = "<runAsPassword>",
-                // TimeoutInSeconds = 3600,
-                // OutputBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/myscriptoutputcontainer/MyScriptoutput.txt"),
-                // ErrorBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/mycontainer/MyScriptError.txt"),
-                Tags =
-                {
-                    ["Tag1"] = "Value1",
-                    ["Tag2"] = "Value2",
-                },
-            };
-            ArmOperation<MachineRunCommandResource> lro = await machineRunCommand.UpdateAsync(WaitUntil.Completed, data);
-            MachineRunCommandResource result = lro.Value;
+        //     MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("centraluseuap"))
+        //     {
+        //         Source = new MachineRunCommandScriptSource()
+        //         {
+        //             Script = "Write-Host Hello World!",
+        //         },
+        //         Parameters =
+        //         {
+        //             new RunCommandInputParameter("param1","value1"), new RunCommandInputParameter("param2","value2")
+        //         },
+        //         // AsyncExecution = false,
+        //         // RunAsUser = "user1",
+        //         // RunAsPassword = "<runAsPassword>",
+        //         // TimeoutInSeconds = 3600,
+        //         // OutputBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/myscriptoutputcontainer/MyScriptoutput.txt"),
+        //         // ErrorBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/mycontainer/MyScriptError.txt"),
+        //         Tags =
+        //         {
+        //             ["Tag1"] = "Value1",
+        //             ["Tag2"] = "Value2",
+        //         },
+        //     };
+        //     ArmOperation<MachineRunCommandResource> lro = await machineRunCommand.UpdateAsync(WaitUntil.Completed, data);
+        //     MachineRunCommandResource result = lro.Value;
 
-            return result.Data;
-        }
+        //     return result.Data;
+        // }
 
-        protected async Task<MachineRunCommandData> getRunCommand()
-        {
-            HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
-            MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
+        // protected async Task<MachineRunCommandData> getRunCommand()
+        // {
+        //     HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
+        //     MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
 
-            MachineRunCommandResource result = await runCommandCollection.GetAsync(runCommandName);
+        //     MachineRunCommandResource result = await runCommandCollection.GetAsync(runCommandName);
 
-            return result.Data;
-        }
+        //     return result.Data;
+        // }
 
-        protected async Task<MachineRunCommandCollection> getRunCommandCollection()
-        {
-            HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
-            MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
+        // protected async Task<MachineRunCommandCollection> getRunCommandCollection()
+        // {
+        //     HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
+        //     MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
 
-            await foreach (MachineRunCommandResource item in runCommandCollection.GetAllAsync())
-            {
-                MachineRunCommandData resourceData = item.Data;
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+        //     await foreach (MachineRunCommandResource item in runCommandCollection.GetAllAsync())
+        //     {
+        //         MachineRunCommandData resourceData = item.Data;
+        //         Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        //     }
 
-            return runCommandCollection;
-        }
+        //     return runCommandCollection;
+        // }
 
         protected async Task<HybridComputeLicenseData> createEsuLicense()
        {
@@ -514,6 +514,18 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             return result.Data;
        }
 
+        protected async Task invokeNsp()
+       {
+            ResourceIdentifier networkSecurityPerimeterConfigurationResourceId = NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateLinkScopeNameNSP, perimeterName);
+            NetworkSecurityPerimeterConfigurationResource networkSecurityPerimeterConfiguration = ArmClient.GetNetworkSecurityPerimeterConfigurationResource(networkSecurityPerimeterConfigurationResourceId);
+
+            // invoke the operation
+            ArmOperation<NetworkSecurityPerimeterConfigurationReconcileResult> lro = await networkSecurityPerimeterConfiguration.ReconcileForPrivateLinkScopeAsync(WaitUntil.Completed);
+            NetworkSecurityPerimeterConfigurationReconcileResult result = lro.Value;
+
+            Console.WriteLine($"Invoke NSP Succeeded");
+       }
+
         protected async Task deleteEsuLicense()
         {
             ResourceIdentifier hybridComputeLicenseResourceId = HybridComputeLicenseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, esuLicenseName);
@@ -524,16 +536,16 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             Console.WriteLine($"Delete ESU License Succeeded");
         }
 
-        protected async Task deleteRunCommand()
-        {
-            HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
-            MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
+        // protected async Task deleteRunCommand()
+        // {
+        //     HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
+        //     MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
 
-            MachineRunCommandResource result = await runCommandCollection.GetAsync(runCommandName);
+        //     MachineRunCommandResource result = await runCommandCollection.GetAsync(runCommandName);
 
-            await result.DeleteAsync(WaitUntil.Completed);
-            Console.WriteLine($"Delete Machine Run Command Succeeded");
-        }
+        //     await result.DeleteAsync(WaitUntil.Completed);
+        //     Console.WriteLine($"Delete Machine Run Command Succeeded");
+        // }
 
         protected async Task deletePrivateLinkScope()
         {
