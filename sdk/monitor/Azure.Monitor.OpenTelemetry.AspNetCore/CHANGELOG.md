@@ -1,10 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.3.0-beta.2 (2024-10-11)
 
 ### Bugs Fixed
 
@@ -20,6 +16,9 @@
 
 * Fixed a bug in LiveMetrics that counted all manually created Dependencies as failures.
   ([#45103](https://github.com/Azure/azure-sdk-for-net/pull/45103))
+
+* Fixed a bug in LiveMetrics that caused incorrect counts for telemetry.
+  ([#46429](https://github.com/Azure/azure-sdk-for-net/pull/46429))
 
 ### Other Changes
 

@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                     },
                     ServerVersion = "5.0",
                     HighAvailabilityTargetMode = HighAvailabilityMode.SameZone,
-                    StorageSizeGb = 128,
+                    StorageSizeGb = 128L,
                     ShardingShardCount = 1,
                     ComputeTier = "M30",
                 },

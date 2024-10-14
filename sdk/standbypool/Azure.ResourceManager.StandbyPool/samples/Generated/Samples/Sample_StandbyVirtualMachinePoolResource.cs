@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.StandbyPool.Samples
 },
                 Properties = new StandbyVirtualMachinePoolUpdateProperties()
                 {
-                    ElasticityProfile = new StandbyVirtualMachinePoolElasticityProfile(304)
+                    ElasticityProfile = new StandbyVirtualMachinePoolElasticityProfile(304L)
                     {
-                        MinReadyCapacity = 300,
+                        MinReadyCapacity = 300L,
                     },
                     VirtualMachineState = StandbyVirtualMachineState.Running,
                     AttachedVirtualMachineScaleSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000009/resourceGroups/rgstandbypool/providers/Microsoft.Compute/virtualMachineScaleSets/myVmss"),
