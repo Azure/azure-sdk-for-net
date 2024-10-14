@@ -118,7 +118,7 @@
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.18.2" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.4.0" />
     <PackageReference Update="Azure.MixedReality.Authentication" version= "1.2.0" />
-    <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.4.0-beta.1" />
+    <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.4.0-beta.2" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
     <PackageReference Update="Azure.Identity" Version="1.12.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.6.0" />
@@ -243,7 +243,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20240913.1" />
+    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20241010.1" />
   </ItemGroup>
 
   <!--
