@@ -112,7 +112,7 @@ namespace Azure.Provisioning.CloudMachine.OpenAI
         public OpenAIFeature(string model, string modelVersion) { }
         public string Model { get { throw null; } }
         public string ModelVersion { get { throw null; } }
-        public override void AddTo(Azure.Provisioning.CloudMachine.CloudMachineInfrastructure infrastructure) { }
+        public override void AddTo(Azure.Provisioning.CloudMachine.CloudMachineInfrastructure cloudMachine) { }
     }
     public static partial class OpenAIFeatureExtensions
     {
