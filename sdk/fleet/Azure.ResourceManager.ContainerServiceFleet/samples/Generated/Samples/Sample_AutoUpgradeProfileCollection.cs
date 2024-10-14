@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             string autoUpgradeProfileName = "autoupgradeprofile1";
             AutoUpgradeProfileData data = new AutoUpgradeProfileData()
             {
-                Channel = UpgradeChannel.Stable,
+                Channel = ContainerServiceFleetUpgradeChannel.Stable,
             };
             ArmOperation<AutoUpgradeProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, data);
             AutoUpgradeProfileResource result = lro.Value;

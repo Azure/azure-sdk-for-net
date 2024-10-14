@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             // invoke the operation
             AutoUpgradeProfileData data = new AutoUpgradeProfileData()
             {
-                Channel = UpgradeChannel.Stable,
+                Channel = ContainerServiceFleetUpgradeChannel.Stable,
             };
             ArmOperation<AutoUpgradeProfileResource> lro = await autoUpgradeProfile.UpdateAsync(WaitUntil.Completed, data);
             AutoUpgradeProfileResource result = lro.Value;

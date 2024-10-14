@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    public partial class SkipTarget : IUtf8JsonSerializable, IJsonModel<SkipTarget>
+    public partial class ContainerServiceFleetSkipTarget : IUtf8JsonSerializable, IJsonModel<ContainerServiceFleetSkipTarget>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkipTarget>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceFleetSkipTarget>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SkipTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerServiceFleetSkipTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkipTarget>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetSkipTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkipTarget)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetSkipTarget)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("type"u8);
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
         }
 
-        SkipTarget IJsonModel<SkipTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerServiceFleetSkipTarget IJsonModel<ContainerServiceFleetSkipTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkipTarget>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetSkipTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkipTarget)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetSkipTarget)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSkipTarget(document.RootElement, options);
+            return DeserializeContainerServiceFleetSkipTarget(document.RootElement, options);
         }
 
-        internal static SkipTarget DeserializeSkipTarget(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerServiceFleetSkipTarget DeserializeContainerServiceFleetSkipTarget(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            TargetType type = default;
+            ContainerServiceFleetTargetType type = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new TargetType(property.Value.GetString());
+                    type = new ContainerServiceFleetTargetType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -97,38 +97,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SkipTarget(type, name, serializedAdditionalRawData);
+            return new ContainerServiceFleetSkipTarget(type, name, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SkipTarget>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerServiceFleetSkipTarget>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkipTarget>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetSkipTarget>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SkipTarget)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetSkipTarget)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SkipTarget IPersistableModel<SkipTarget>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerServiceFleetSkipTarget IPersistableModel<ContainerServiceFleetSkipTarget>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkipTarget>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetSkipTarget>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSkipTarget(document.RootElement, options);
+                        return DeserializeContainerServiceFleetSkipTarget(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkipTarget)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetSkipTarget)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SkipTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerServiceFleetSkipTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
