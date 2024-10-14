@@ -20,8 +20,8 @@
     <PackageId />
   </PropertyGroup>
   <ItemGroup>
-    <!--<PackageReference Include="Azure.Storage.Files.Shares" />-->
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\src\Azure.Storage.Files.Shares.csproj" />
+    <PackageReference Include="Azure.Storage.Files.Shares" />
+    <!--<ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\src\Azure.Storage.Files.Shares.csproj" />-->
     <PackageReference Include="System.Threading.Channels" />
   </ItemGroup>
   <ItemGroup>
