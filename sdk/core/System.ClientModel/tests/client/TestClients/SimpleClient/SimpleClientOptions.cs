@@ -4,18 +4,20 @@
 using System;
 using System.ClientModel.Primitives;
 
-namespace ClientModel.ReferenceClients.MapsClient;
+namespace ClientModel.ReferenceClients.SimpleClient;
 
-public class MapsClientOptions : ClientPipelineOptions
+public class SimpleClientOptions : ClientPipelineOptions
 {
     private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
-    public MapsClientOptions() : this(LatestVersion)
+    // TODO: Change to generated code pattern needed to support DI binding
+    // from IConfiguration settings.
+    public SimpleClientOptions() : this(LatestVersion)
     {
-        Logging.AllowedHeaderNames.Add("x-maps-client-allowed");
+        Logging.AllowedHeaderNames.Add("x-simple-client-allowed");
     }
 
-    public MapsClientOptions(ServiceVersion version = LatestVersion)
+    public SimpleClientOptions(ServiceVersion version)
     {
         Version = version switch
         {

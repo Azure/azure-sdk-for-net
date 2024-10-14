@@ -20,8 +20,22 @@ public class ClientPipelineOptions
     private bool _frozen;
 
     private PipelinePolicy? _retryPolicy;
+    private PipelinePolicy? _httpLoggingPolicy;
     private PipelineTransport? _transport;
     private TimeSpan? _timeout;
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    public ClientPipelineOptions()
+    {
+        Logging = new();
+    }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    public ClientLoggingOptions Logging { get; }
 
     #region Pipeline creation: Overrides of default pipeline policies
 
@@ -41,6 +55,20 @@ public class ClientPipelineOptions
             AssertNotFrozen();
 
             _retryPolicy = value;
+        }
+    }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    public PipelinePolicy? HttpLoggingPolicy
+    {
+        get => _httpLoggingPolicy;
+        set
+        {
+            AssertNotFrozen();
+
+            _httpLoggingPolicy = value;
         }
     }
 
@@ -161,7 +189,12 @@ public class ClientPipelineOptions
     /// instance or call methods that would change its state will throw
     /// <see cref="InvalidOperationException"/>.
     /// </summary>
-    public virtual void Freeze() => _frozen = true;
+    public virtual void Freeze()
+    {
+        Logging.Freeze();
+
+        _frozen = true;
+    }
 
     /// <summary>
     /// Assert that <see cref="Freeze"/> has not been called on this

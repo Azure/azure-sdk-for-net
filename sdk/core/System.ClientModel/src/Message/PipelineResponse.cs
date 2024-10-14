@@ -74,6 +74,13 @@ public abstract class PipelineResponse : IDisposable
     public abstract BinaryData Content { get; }
 
     /// <summary>
+    /// TBD.
+    /// </summary>
+    // TODO: validate that Azure.Core request can newslot it to always
+    // provide a value.
+    public virtual string? ClientRequestId { get; set; }
+
+    /// <summary>
     /// Transfer the contents of the response network stream from
     /// <see cref="ContentStream"/> to a buffered cache on this
     /// <see cref="PipelineResponse"/> instance.

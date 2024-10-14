@@ -83,6 +83,18 @@ namespace System.ClientModel.Primitives
         Default = 0,
         NoThrow = 1,
     }
+    public partial class ClientLoggingOptions
+    {
+        public ClientLoggingOptions() { }
+        public System.Collections.Generic.IList<string> AllowedHeaderNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> AllowedQueryParameters { get { throw null; } }
+        public bool? EnableHttpContentLogging { get { throw null; } set { } }
+        public bool? EnableLogging { get { throw null; } set { } }
+        public int? HttpContentSizeLimit { get { throw null; } set { } }
+        public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
+        protected void AssertNotFrozen() { }
+        public virtual void Freeze() { }
+    }
     public sealed partial class ClientPipeline
     {
         internal ClientPipeline() { }
@@ -95,6 +107,8 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
+        public System.ClientModel.Primitives.PipelinePolicy? HttpLoggingPolicy { get { throw null; } set { } }
+        public System.ClientModel.Primitives.ClientLoggingOptions Logging { get { throw null; } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
@@ -119,6 +133,16 @@ namespace System.ClientModel.Primitives
         protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    public static partial class ClientServiceCollectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddCommonOptions(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddCommonOptions(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, Microsoft.Extensions.Configuration.IConfiguration commonConfigurationSection) { throw null; }
+    }
+    public static partial class ClientServiceProviderExtensions
+    {
+        public static TOptions ConfigurePolicies<TOptions>(this TOptions options, System.IServiceProvider serviceProvider) where TOptions : System.ClientModel.Primitives.ClientPipelineOptions { throw null; }
+        public static System.Uri GetClientEndpoint(this System.IServiceProvider serviceProvider, Microsoft.Extensions.Configuration.IConfiguration clientConfigurationSection) { throw null; }
+    }
     public abstract partial class CollectionResult
     {
         protected CollectionResult() { }
@@ -137,6 +161,12 @@ namespace System.ClientModel.Primitives
         protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message, System.Net.Http.HttpRequestMessage httpRequest) { }
         protected sealed override void ProcessCore(System.ClientModel.Primitives.PipelineMessage message) { }
         protected sealed override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+    }
+    public partial class HttpLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public HttpLoggingPolicy(System.ClientModel.Primitives.ClientLoggingOptions options) { }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {
@@ -232,6 +262,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
+        public virtual string? ClientRequestId { get { throw null; } set { } }
         public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
         protected abstract System.ClientModel.BinaryContent? ContentCore { get; set; }
         public System.ClientModel.Primitives.PipelineRequestHeaders Headers { get { throw null; } }
@@ -256,6 +287,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
+        public virtual string? ClientRequestId { get { throw null; } set { } }
         public abstract System.BinaryData Content { get; }
         public abstract System.IO.Stream? ContentStream { get; set; }
         public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }
