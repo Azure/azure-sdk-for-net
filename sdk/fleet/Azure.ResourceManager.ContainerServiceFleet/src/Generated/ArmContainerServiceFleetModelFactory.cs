@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// By default, this is set to False.
         /// </param>
         /// <returns> A new <see cref="ContainerServiceFleet.AutoUpgradeProfileData"/> instance for mocking. </returns>
-        public static AutoUpgradeProfileData AutoUpgradeProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = null, AutoUpgradeProfileProvisioningState? provisioningState = null, ResourceIdentifier updateStrategyId = null, UpgradeChannel? channel = null, AutoUpgradeNodeImageSelectionType? selectionType = null, bool? disabled = null)
+        public static AutoUpgradeProfileData AutoUpgradeProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = null, AutoUpgradeProfileProvisioningState? provisioningState = null, ResourceIdentifier updateStrategyId = null, ContainerServiceFleetUpgradeChannel? channel = null, AutoUpgradeNodeImageSelectionType? selectionType = null, bool? disabled = null)
         {
             return new AutoUpgradeProfileData(
                 id,
