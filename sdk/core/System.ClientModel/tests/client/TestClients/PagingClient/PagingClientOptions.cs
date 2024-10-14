@@ -27,7 +27,7 @@ public class PagingClientOptions : ClientPipelineOptions
 
     internal string Version { get; }
 
-    public string? PagerNumber { get; }
+    public string? PagerNumber { get; set; }
 
     public enum ServiceVersion
     {

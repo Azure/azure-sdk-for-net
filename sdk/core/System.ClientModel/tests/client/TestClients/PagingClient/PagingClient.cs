@@ -28,9 +28,12 @@ public class PagingClient
         _credential = credential;
         _apiVersion = options.Version;
 
+        PagerPolicy pagerPolicy = new PagerPolicy(new PagerPolicyOptions() { PhoneNumber = options.PagerNumber });
+
         var authenticationPolicy = ApiKeyAuthenticationPolicy.CreateHeaderApiKeyPolicy(credential, "subscription-key");
+
         _pipeline = ClientPipeline.Create(options,
-            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perCallPolicies: new PipelinePolicy[] { pagerPolicy },
             perTryPolicies: new PipelinePolicy[] { authenticationPolicy },
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 
