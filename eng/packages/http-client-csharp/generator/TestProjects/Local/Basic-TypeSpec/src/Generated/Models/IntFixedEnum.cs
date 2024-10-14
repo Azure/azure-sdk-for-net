@@ -7,7 +7,7 @@
 
 namespace BasicTypeSpec.Models
 {
-    /// <summary></summary>
+    /// <summary> int fixed enum. </summary>
     public enum IntFixedEnum
     {
         /// <summary> One. </summary>

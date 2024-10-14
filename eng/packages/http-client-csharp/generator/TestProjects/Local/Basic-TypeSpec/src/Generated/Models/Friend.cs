@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace BasicTypeSpec.Models
 {
-    /// <summary> The Friend. </summary>
+    /// <summary> this is not a friendly model but with a friendly name. </summary>
     public partial class Friend
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -27,7 +27,7 @@ namespace BasicTypeSpec.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> name of the NotFriend. </summary>
         public string Name { get; set; }
     }
 }

@@ -10,16 +10,16 @@ using System.Collections.Generic;
 
 namespace BasicTypeSpec.Models
 {
-    /// <summary> The ModelWithRequiredNullableProperties. </summary>
+    /// <summary> A model with a few required nullable properties. </summary>
     public partial class ModelWithRequiredNullableProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ModelWithRequiredNullableProperties"/>. </summary>
-        /// <param name="requiredNullablePrimitive"></param>
-        /// <param name="requiredExtensibleEnum"></param>
-        /// <param name="requiredFixedEnum"></param>
+        /// <param name="requiredNullablePrimitive"> required nullable primitive type. </param>
+        /// <param name="requiredExtensibleEnum"> required nullable extensible enum type. </param>
+        /// <param name="requiredFixedEnum"> required nullable fixed enum type. </param>
         public ModelWithRequiredNullableProperties(int? requiredNullablePrimitive, StringExtensibleEnum? requiredExtensibleEnum, StringFixedEnum? requiredFixedEnum)
         {
             RequiredNullablePrimitive = requiredNullablePrimitive;
@@ -35,13 +35,13 @@ namespace BasicTypeSpec.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the RequiredNullablePrimitive. </summary>
+        /// <summary> required nullable primitive type. </summary>
         public int? RequiredNullablePrimitive { get; set; }
 
-        /// <summary> Gets or sets the RequiredExtensibleEnum. </summary>
+        /// <summary> required nullable extensible enum type. </summary>
         public StringExtensibleEnum? RequiredExtensibleEnum { get; set; }
 
-        /// <summary> Gets or sets the RequiredFixedEnum. </summary>
+        /// <summary> required nullable fixed enum type. </summary>
         public StringFixedEnum? RequiredFixedEnum { get; set; }
     }
 }

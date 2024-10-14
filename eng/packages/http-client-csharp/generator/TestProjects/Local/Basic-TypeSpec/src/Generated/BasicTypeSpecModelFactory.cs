@@ -15,20 +15,20 @@ namespace BasicTypeSpec.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class BasicTypeSpecModelFactory
     {
-        /// <summary> The Thing. </summary>
-        /// <param name="name"></param>
-        /// <param name="requiredUnion"></param>
-        /// <param name="requiredLiteralString"></param>
-        /// <param name="requiredLiteralInt"></param>
-        /// <param name="requiredLiteralFloat"></param>
-        /// <param name="requiredLiteralBool"></param>
-        /// <param name="optionalLiteralString"></param>
-        /// <param name="optionalLiteralInt"></param>
-        /// <param name="optionalLiteralFloat"></param>
-        /// <param name="optionalLiteralBool"></param>
-        /// <param name="requiredBadDescription"></param>
-        /// <param name="optionalNullableList"></param>
-        /// <param name="requiredNullableList"></param>
+        /// <summary> A model with a few properties of literal types. </summary>
+        /// <param name="name"> name of the Thing. </param>
+        /// <param name="requiredUnion"> required Union. </param>
+        /// <param name="requiredLiteralString"> required literal string. </param>
+        /// <param name="requiredLiteralInt"> required literal int. </param>
+        /// <param name="requiredLiteralFloat"> required literal float. </param>
+        /// <param name="requiredLiteralBool"> required literal bool. </param>
+        /// <param name="optionalLiteralString"> optional literal string. </param>
+        /// <param name="optionalLiteralInt"> optional literal int. </param>
+        /// <param name="optionalLiteralFloat"> optional literal float. </param>
+        /// <param name="optionalLiteralBool"> optional literal bool. </param>
+        /// <param name="requiredBadDescription"> description with xml &lt;|endoftext|&gt;. </param>
+        /// <param name="optionalNullableList"> optional nullable collection. </param>
+        /// <param name="requiredNullableList"> required nullable collection. </param>
         /// <returns> A new <see cref="Models.Thing"/> instance for mocking. </returns>
         public static Thing Thing(string name = default, BinaryData requiredUnion = default, ThingRequiredLiteralString requiredLiteralString = default, ThingRequiredLiteralInt requiredLiteralInt = default, ThingRequiredLiteralFloat requiredLiteralFloat = default, bool requiredLiteralBool = default, ThingOptionalLiteralString? optionalLiteralString = default, ThingOptionalLiteralInt? optionalLiteralInt = default, ThingOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, string requiredBadDescription = default, IEnumerable<int> optionalNullableList = default, IEnumerable<int> requiredNullableList = default)
         {
@@ -52,31 +52,31 @@ namespace BasicTypeSpec.Models
                 null);
         }
 
-        /// <summary> The RoundTripModel. </summary>
-        /// <param name="requiredString"></param>
-        /// <param name="requiredInt"></param>
-        /// <param name="requiredCollection"></param>
-        /// <param name="requiredDictionary"></param>
-        /// <param name="requiredModel"></param>
-        /// <param name="intExtensibleEnum"></param>
-        /// <param name="intExtensibleEnumCollection"></param>
-        /// <param name="floatExtensibleEnum"></param>
-        /// <param name="floatExtensibleEnumWithIntValue"></param>
-        /// <param name="floatExtensibleEnumCollection"></param>
-        /// <param name="floatFixedEnum"></param>
-        /// <param name="floatFixedEnumWithIntValue"></param>
-        /// <param name="floatFixedEnumCollection"></param>
-        /// <param name="intFixedEnum"></param>
-        /// <param name="intFixedEnumCollection"></param>
-        /// <param name="stringFixedEnum"></param>
-        /// <param name="requiredUnknown"></param>
-        /// <param name="optionalUnknown"></param>
-        /// <param name="requiredRecordUnknown"></param>
-        /// <param name="optionalRecordUnknown"></param>
-        /// <param name="readOnlyRequiredRecordUnknown"></param>
-        /// <param name="readOnlyOptionalRecordUnknown"></param>
-        /// <param name="modelWithRequiredNullable"></param>
-        /// <param name="requiredBytes"></param>
+        /// <summary> this is a roundtrip model. </summary>
+        /// <param name="requiredString"> Required string, illustrating a reference type property. </param>
+        /// <param name="requiredInt"> Required int, illustrating a value type property. </param>
+        /// <param name="requiredCollection"> Required collection of enums. </param>
+        /// <param name="requiredDictionary"> Required dictionary of enums. </param>
+        /// <param name="requiredModel"> Required model. </param>
+        /// <param name="intExtensibleEnum"> this is an int based extensible enum. </param>
+        /// <param name="intExtensibleEnumCollection"> this is a collection of int based extensible enum. </param>
+        /// <param name="floatExtensibleEnum"> this is a float based extensible enum. </param>
+        /// <param name="floatExtensibleEnumWithIntValue"> this is a float based extensible enum. </param>
+        /// <param name="floatExtensibleEnumCollection"> this is a collection of float based extensible enum. </param>
+        /// <param name="floatFixedEnum"> this is a float based fixed enum. </param>
+        /// <param name="floatFixedEnumWithIntValue"> this is a float based fixed enum. </param>
+        /// <param name="floatFixedEnumCollection"> this is a collection of float based fixed enum. </param>
+        /// <param name="intFixedEnum"> this is a int based fixed enum. </param>
+        /// <param name="intFixedEnumCollection"> this is a collection of int based fixed enum. </param>
+        /// <param name="stringFixedEnum"> this is a string based fixed enum. </param>
+        /// <param name="requiredUnknown"> required unknown. </param>
+        /// <param name="optionalUnknown"> optional unknown. </param>
+        /// <param name="requiredRecordUnknown"> required record of unknown. </param>
+        /// <param name="optionalRecordUnknown"> optional record of unknown. </param>
+        /// <param name="readOnlyRequiredRecordUnknown"> required readonly record of unknown. </param>
+        /// <param name="readOnlyOptionalRecordUnknown"> optional readonly record of unknown. </param>
+        /// <param name="modelWithRequiredNullable"> this is a model with required nullable properties. </param>
+        /// <param name="requiredBytes"> Required bytes. </param>
         /// <returns> A new <see cref="Models.RoundTripModel"/> instance for mocking. </returns>
         public static RoundTripModel RoundTripModel(string requiredString = default, int requiredInt = default, IEnumerable<StringFixedEnum> requiredCollection = default, IDictionary<string, StringExtensibleEnum> requiredDictionary = default, Thing requiredModel = default, IntExtensibleEnum? intExtensibleEnum = default, IEnumerable<IntExtensibleEnum> intExtensibleEnumCollection = default, FloatExtensibleEnum? floatExtensibleEnum = default, FloatExtensibleEnumWithIntValue? floatExtensibleEnumWithIntValue = default, IEnumerable<FloatExtensibleEnum> floatExtensibleEnumCollection = default, FloatFixedEnum? floatFixedEnum = default, FloatFixedEnumWithIntValue? floatFixedEnumWithIntValue = default, IEnumerable<FloatFixedEnum> floatFixedEnumCollection = default, IntFixedEnum? intFixedEnum = default, IEnumerable<IntFixedEnum> intFixedEnumCollection = default, StringFixedEnum? stringFixedEnum = default, BinaryData requiredUnknown = default, BinaryData optionalUnknown = default, IDictionary<string, BinaryData> requiredRecordUnknown = default, IDictionary<string, BinaryData> optionalRecordUnknown = default, IReadOnlyDictionary<string, BinaryData> readOnlyRequiredRecordUnknown = default, IReadOnlyDictionary<string, BinaryData> readOnlyOptionalRecordUnknown = default, ModelWithRequiredNullableProperties modelWithRequiredNullable = default, BinaryData requiredBytes = default)
         {
@@ -119,10 +119,10 @@ namespace BasicTypeSpec.Models
                 null);
         }
 
-        /// <summary> The ModelWithRequiredNullableProperties. </summary>
-        /// <param name="requiredNullablePrimitive"></param>
-        /// <param name="requiredExtensibleEnum"></param>
-        /// <param name="requiredFixedEnum"></param>
+        /// <summary> A model with a few required nullable properties. </summary>
+        /// <param name="requiredNullablePrimitive"> required nullable primitive type. </param>
+        /// <param name="requiredExtensibleEnum"> required nullable extensible enum type. </param>
+        /// <param name="requiredFixedEnum"> required nullable fixed enum type. </param>
         /// <returns> A new <see cref="Models.ModelWithRequiredNullableProperties"/> instance for mocking. </returns>
         public static ModelWithRequiredNullableProperties ModelWithRequiredNullableProperties(int? requiredNullablePrimitive = default, StringExtensibleEnum? requiredExtensibleEnum = default, StringFixedEnum? requiredFixedEnum = default)
         {
@@ -130,8 +130,8 @@ namespace BasicTypeSpec.Models
             return new ModelWithRequiredNullableProperties(requiredNullablePrimitive, requiredExtensibleEnum, requiredFixedEnum, null);
         }
 
-        /// <summary> The Friend. </summary>
-        /// <param name="name"></param>
+        /// <summary> this is not a friendly model but with a friendly name. </summary>
+        /// <param name="name"> name of the NotFriend. </param>
         /// <returns> A new <see cref="Models.Friend"/> instance for mocking. </returns>
         public static Friend Friend(string name = default)
         {
@@ -139,8 +139,8 @@ namespace BasicTypeSpec.Models
             return new Friend(name, null);
         }
 
-        /// <summary> The ProjectedModel. </summary>
-        /// <param name="name"></param>
+        /// <summary> this is a model with a projected name. </summary>
+        /// <param name="name"> name of the ModelWithProjectedName. </param>
         /// <returns> A new <see cref="Models.ProjectedModel"/> instance for mocking. </returns>
         public static ProjectedModel ProjectedModel(string name = default)
         {

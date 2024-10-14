@@ -13,17 +13,17 @@ using BasicTypeSpec;
 
 namespace BasicTypeSpec.Models
 {
-    /// <summary> The Thing. </summary>
+    /// <summary> A model with a few properties of literal types. </summary>
     public partial class Thing
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="Thing"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="requiredUnion"></param>
-        /// <param name="requiredBadDescription"></param>
-        /// <param name="requiredNullableList"></param>
+        /// <param name="name"> name of the Thing. </param>
+        /// <param name="requiredUnion"> required Union. </param>
+        /// <param name="requiredBadDescription"> description with xml &lt;|endoftext|&gt;. </param>
+        /// <param name="requiredNullableList"> required nullable collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
         public Thing(string name, BinaryData requiredUnion, string requiredBadDescription, IEnumerable<int> requiredNullableList)
         {
@@ -56,11 +56,11 @@ namespace BasicTypeSpec.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> name of the Thing. </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the RequiredUnion.
+        /// required Union
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -103,37 +103,37 @@ namespace BasicTypeSpec.Models
         /// </summary>
         public BinaryData RequiredUnion { get; set; }
 
-        /// <summary> Gets the RequiredLiteralString. </summary>
+        /// <summary> required literal string. </summary>
         public ThingRequiredLiteralString RequiredLiteralString { get; } = "accept";
 
-        /// <summary> Gets the RequiredLiteralInt. </summary>
+        /// <summary> required literal int. </summary>
         public ThingRequiredLiteralInt RequiredLiteralInt { get; } = 123;
 
-        /// <summary> Gets the RequiredLiteralFloat. </summary>
+        /// <summary> required literal float. </summary>
         public ThingRequiredLiteralFloat RequiredLiteralFloat { get; } = 1.23F;
 
-        /// <summary> Gets the RequiredLiteralBool. </summary>
+        /// <summary> required literal bool. </summary>
         public bool RequiredLiteralBool { get; } = false;
 
-        /// <summary> Gets or sets the OptionalLiteralString. </summary>
+        /// <summary> optional literal string. </summary>
         public ThingOptionalLiteralString? OptionalLiteralString { get; set; }
 
-        /// <summary> Gets or sets the OptionalLiteralInt. </summary>
+        /// <summary> optional literal int. </summary>
         public ThingOptionalLiteralInt? OptionalLiteralInt { get; set; }
 
-        /// <summary> Gets or sets the OptionalLiteralFloat. </summary>
+        /// <summary> optional literal float. </summary>
         public ThingOptionalLiteralFloat? OptionalLiteralFloat { get; set; }
 
-        /// <summary> Gets or sets the OptionalLiteralBool. </summary>
+        /// <summary> optional literal bool. </summary>
         public bool? OptionalLiteralBool { get; set; }
 
-        /// <summary> Gets or sets the RequiredBadDescription. </summary>
+        /// <summary> description with xml &lt;|endoftext|&gt;. </summary>
         public string RequiredBadDescription { get; set; }
 
-        /// <summary> Gets or sets the OptionalNullableList. </summary>
+        /// <summary> optional nullable collection. </summary>
         public IList<int> OptionalNullableList { get; set; }
 
-        /// <summary> Gets or sets the RequiredNullableList. </summary>
+        /// <summary> required nullable collection. </summary>
         public IList<int> RequiredNullableList { get; set; }
     }
 }
