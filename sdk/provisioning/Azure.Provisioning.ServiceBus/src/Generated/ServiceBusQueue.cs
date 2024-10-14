@@ -199,10 +199,15 @@ public partial class ServiceBusQueue : Resource
     /// <summary>
     /// Creates a new ServiceBusQueue.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusQueue.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ServiceBusQueue resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusQueue.</param>
-    public ServiceBusQueue(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/queues", resourceVersion ?? "2024-01-01")
+    public ServiceBusQueue(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.ServiceBus/namespaces/queues", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _autoDeleteOnIdle = BicepValue<TimeSpan>.DefineProperty(this, "AutoDeleteOnIdle", ["properties", "autoDeleteOnIdle"]);
@@ -257,11 +262,16 @@ public partial class ServiceBusQueue : Resource
     /// <summary>
     /// Creates a reference to an existing ServiceBusQueue.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusQueue.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ServiceBusQueue resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusQueue.</param>
     /// <returns>The existing ServiceBusQueue resource.</returns>
-    public static ServiceBusQueue FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusQueue FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ServiceBusQueue resource.

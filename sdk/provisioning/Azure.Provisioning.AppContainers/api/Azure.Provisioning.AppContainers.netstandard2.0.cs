@@ -30,7 +30,7 @@ namespace Azure.Provisioning.AppContainers
     }
     public partial class ContainerApp : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerApp(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerApp(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppConfiguration> Configuration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> CustomDomainVerificationId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> EnvironmentId { get { throw null; } set { } }
@@ -51,7 +51,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppTemplate> Template { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> WorkloadProfileName { get { throw null; } set { } }
-        public static Azure.Provisioning.AppContainers.ContainerApp FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppContainers.ContainerApp FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -94,7 +94,7 @@ namespace Azure.Provisioning.AppContainers
     }
     public partial class ContainerAppAuthConfig : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerAppAuthConfig(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerAppAuthConfig(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.EncryptionSettings> EncryptionSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppGlobalValidation> GlobalValidation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppHttpSettings> HttpSettings { get { throw null; } set { } }
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.AppContainers.ContainerApp? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppAuthPlatform> Platform { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.AppContainers.ContainerAppAuthConfig FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppContainers.ContainerAppAuthConfig FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2022_03_01;
@@ -209,7 +209,7 @@ namespace Azure.Provisioning.AppContainers
     }
     public partial class ContainerAppConnectedEnvironment : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerAppConnectedEnvironment(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerAppConnectedEnvironment(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppCustomDomainConfiguration> CustomDomainConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DaprAIConnectionString { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DefaultDomain { get { throw null; } }
@@ -222,7 +222,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<System.Net.IPAddress> StaticIP { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.AppContainers.ContainerAppConnectedEnvironment FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppContainers.ContainerAppConnectedEnvironment FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2022_10_01;
@@ -233,7 +233,7 @@ namespace Azure.Provisioning.AppContainers
     }
     public partial class ContainerAppConnectedEnvironmentCertificate : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerAppConnectedEnvironmentCertificate(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerAppConnectedEnvironmentCertificate(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -241,7 +241,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppCertificateProperties> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.AppContainers.ContainerAppConnectedEnvironmentCertificate FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppContainers.ContainerAppConnectedEnvironmentCertificate FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2022_10_01;
@@ -252,7 +252,7 @@ namespace Azure.Provisioning.AppContainers
     }
     public partial class ContainerAppConnectedEnvironmentDaprComponent : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerAppConnectedEnvironmentDaprComponent(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerAppConnectedEnvironmentDaprComponent(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ComponentType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IgnoreErrors { get { throw null; } set { } }
@@ -265,7 +265,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> SecretStoreComponent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
-        public static Azure.Provisioning.AppContainers.ContainerAppConnectedEnvironmentDaprComponent FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppContainers.ContainerAppConnectedEnvironmentDaprComponent FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2022_10_01;
@@ -287,13 +287,13 @@ namespace Azure.Provisioning.AppContainers
     }
     public partial class ContainerAppConnectedEnvironmentStorage : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerAppConnectedEnvironmentStorage(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerAppConnectedEnvironmentStorage(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppAzureFileProperties> ConnectedEnvironmentStorageAzureFile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerAppConnectedEnvironment? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.AppContainers.ContainerAppConnectedEnvironmentStorage FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppContainers.ContainerAppConnectedEnvironmentStorage FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2022_10_01;
@@ -613,7 +613,7 @@ namespace Azure.Provisioning.AppContainers
     }
     public partial class ContainerAppJob : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerAppJob(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerAppJob(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppJobConfiguration> Configuration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> EnvironmentId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> EventStreamEndpoint { get { throw null; } }
@@ -627,7 +627,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppJobTemplate> Template { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> WorkloadProfileName { get { throw null; } set { } }
-        public static Azure.Provisioning.AppContainers.ContainerAppJob FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppContainers.ContainerAppJob FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2023_05_01;
@@ -720,7 +720,7 @@ namespace Azure.Provisioning.AppContainers
     }
     public partial class ContainerAppManagedCertificate : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerAppManagedCertificate(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerAppManagedCertificate(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -728,7 +728,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ManagedCertificateProperties> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.AppContainers.ContainerAppManagedCertificate FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppContainers.ContainerAppManagedCertificate FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2023_05_01;
@@ -738,7 +738,7 @@ namespace Azure.Provisioning.AppContainers
     }
     public partial class ContainerAppManagedEnvironment : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerAppManagedEnvironment(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerAppManagedEnvironment(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppLogsConfiguration> AppLogsConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppCustomDomainConfiguration> CustomDomainConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DaprAIConnectionString { get { throw null; } set { } }
@@ -762,9 +762,9 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppVnetConfiguration> VnetConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppWorkloadProfile> WorkloadProfiles { get { throw null; } set { } }
-        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.AppContainers.AppContainersBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? resourceNameSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.AppContainers.AppContainersBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? identifierNameSuffix = null) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.AppContainers.AppContainersBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
-        public static Azure.Provisioning.AppContainers.ContainerAppManagedEnvironment FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppContainers.ContainerAppManagedEnvironment FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2022_03_01;
@@ -776,7 +776,7 @@ namespace Azure.Provisioning.AppContainers
     }
     public partial class ContainerAppManagedEnvironmentCertificate : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerAppManagedEnvironmentCertificate(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerAppManagedEnvironmentCertificate(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -784,7 +784,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppCertificateProperties> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.AppContainers.ContainerAppManagedEnvironmentCertificate FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppContainers.ContainerAppManagedEnvironmentCertificate FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2022_03_01;
@@ -796,7 +796,7 @@ namespace Azure.Provisioning.AppContainers
     }
     public partial class ContainerAppManagedEnvironmentDaprComponent : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerAppManagedEnvironmentDaprComponent(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerAppManagedEnvironmentDaprComponent(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ComponentType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IgnoreErrors { get { throw null; } set { } }
@@ -809,7 +809,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> SecretStoreComponent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
-        public static Azure.Provisioning.AppContainers.ContainerAppManagedEnvironmentDaprComponent FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppContainers.ContainerAppManagedEnvironmentDaprComponent FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2022_03_01;
@@ -826,13 +826,13 @@ namespace Azure.Provisioning.AppContainers
     }
     public partial class ContainerAppManagedEnvironmentStorage : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerAppManagedEnvironmentStorage(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerAppManagedEnvironmentStorage(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppAzureFileProperties> ManagedEnvironmentStorageAzureFile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerAppManagedEnvironment? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.AppContainers.ContainerAppManagedEnvironmentStorage FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppContainers.ContainerAppManagedEnvironmentStorage FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2022_03_01;
@@ -974,7 +974,7 @@ namespace Azure.Provisioning.AppContainers
     }
     public partial class ContainerAppSourceControl : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerAppSourceControl(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerAppSourceControl(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Branch { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppGitHubActionConfiguration> GitHubActionConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -983,7 +983,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.AppContainers.ContainerApp? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> RepoUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.AppContainers.ContainerAppSourceControl FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppContainers.ContainerAppSourceControl FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2022_03_01;

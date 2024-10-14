@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-07-01";
+            _apiVersion = apiVersion ?? "2023-07-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Creates or updates a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Creates or updates a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Updates a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="patch"> Parameters supplied to the Update operation. </param>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Updates a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="patch"> Parameters supplied to the Update operation. </param>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Deletes a DNS forwarding ruleset. WARNING: This operation cannot be undone. All forwarding rules within the ruleset will be deleted. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Deletes a DNS forwarding ruleset. WARNING: This operation cannot be undone. All forwarding rules within the ruleset will be deleted. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Gets a DNS forwarding ruleset properties. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Gets a DNS forwarding ruleset properties. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists DNS forwarding rulesets within a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists DNS forwarding rulesets within a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists DNS forwarding rulesets in all resource groups of a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists DNS forwarding rulesets in all resource groups of a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists DNS forwarding ruleset resource IDs attached to a virtual network. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists DNS forwarding ruleset resource IDs attached to a virtual network. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists DNS forwarding rulesets within a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists DNS forwarding rulesets within a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists DNS forwarding rulesets in all resource groups of a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists DNS forwarding rulesets in all resource groups of a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists DNS forwarding ruleset resource IDs attached to a virtual network. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists DNS forwarding ruleset resource IDs attached to a virtual network. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>

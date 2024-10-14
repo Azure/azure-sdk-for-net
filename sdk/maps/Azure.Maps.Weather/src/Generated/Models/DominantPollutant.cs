@@ -45,7 +45,7 @@ namespace Azure.Maps.Weather.Models
         public static bool operator ==(DominantPollutant left, DominantPollutant right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DominantPollutant"/> values are not the same. </summary>
         public static bool operator !=(DominantPollutant left, DominantPollutant right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DominantPollutant"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DominantPollutant"/>. </summary>
         public static implicit operator DominantPollutant(string value) => new DominantPollutant(value);
 
         /// <inheritdoc />

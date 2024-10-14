@@ -76,10 +76,15 @@ public partial class MongoDBDatabase : Resource
     /// <summary>
     /// Creates a new MongoDBDatabase.
     /// </summary>
-    /// <param name="resourceName">Name of the MongoDBDatabase.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the MongoDBDatabase resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the MongoDBDatabase.</param>
-    public MongoDBDatabase(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases", resourceVersion ?? "2024-08-15")
+    public MongoDBDatabase(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -231,9 +236,14 @@ public partial class MongoDBDatabase : Resource
     /// <summary>
     /// Creates a reference to an existing MongoDBDatabase.
     /// </summary>
-    /// <param name="resourceName">Name of the MongoDBDatabase.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the MongoDBDatabase resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the MongoDBDatabase.</param>
     /// <returns>The existing MongoDBDatabase resource.</returns>
-    public static MongoDBDatabase FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static MongoDBDatabase FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

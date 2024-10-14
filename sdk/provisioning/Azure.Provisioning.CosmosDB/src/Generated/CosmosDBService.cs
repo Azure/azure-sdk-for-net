@@ -79,10 +79,15 @@ public partial class CosmosDBService : Resource
     /// <summary>
     /// Creates a new CosmosDBService.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBService.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CosmosDBService resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBService.</param>
-    public CosmosDBService(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/services", resourceVersion ?? "2024-08-15")
+    public CosmosDBService(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/services", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _instanceCount = BicepValue<int>.DefineProperty(this, "InstanceCount", ["properties", "instanceCount"]);
@@ -233,9 +238,14 @@ public partial class CosmosDBService : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBService.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBService.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CosmosDBService resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBService.</param>
     /// <returns>The existing CosmosDBService resource.</returns>
-    public static CosmosDBService FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBService FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

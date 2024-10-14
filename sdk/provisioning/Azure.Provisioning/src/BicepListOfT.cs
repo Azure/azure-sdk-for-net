@@ -66,7 +66,7 @@ public class BicepList<T> : BicepValue, IList<BicepValue<T>>
     public static implicit operator BicepList<T>(ProvisioningVariable reference) =>
         new(
             new BicepValueReference(reference, "<value>"),
-            BicepSyntax.Var(reference.ResourceName))
+            BicepSyntax.Var(reference.IdentifierName))
         {
             IsSecure = reference is ProvisioningParameter p && p.IsSecure
         };

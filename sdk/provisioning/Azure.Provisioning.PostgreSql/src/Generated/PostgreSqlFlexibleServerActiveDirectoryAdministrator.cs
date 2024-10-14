@@ -69,10 +69,16 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Reso
     /// <summary>
     /// Creates a new PostgreSqlFlexibleServerActiveDirectoryAdministrator.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// PostgreSqlFlexibleServerActiveDirectoryAdministrator resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
-    public PostgreSqlFlexibleServerActiveDirectoryAdministrator(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/administrators", resourceVersion ?? "2024-08-01")
+    public PostgreSqlFlexibleServerActiveDirectoryAdministrator(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.DBforPostgreSQL/flexibleServers/administrators", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _objectId = BicepValue<string>.DefineProperty(this, "ObjectId", ["properties", "objectId"], isOutput: true);
@@ -110,9 +116,15 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Reso
     /// Creates a reference to an existing
     /// PostgreSqlFlexibleServerActiveDirectoryAdministrator.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// PostgreSqlFlexibleServerActiveDirectoryAdministrator resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
     /// <returns>The existing PostgreSqlFlexibleServerActiveDirectoryAdministrator resource.</returns>
-    public static PostgreSqlFlexibleServerActiveDirectoryAdministrator FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlFlexibleServerActiveDirectoryAdministrator FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

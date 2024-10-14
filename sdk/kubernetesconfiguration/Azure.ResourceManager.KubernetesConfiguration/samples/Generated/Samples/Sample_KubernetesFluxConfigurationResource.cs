@@ -90,12 +90,12 @@ Path = "./test/alt-path",
 DependsOn =
 {
 },
-SyncIntervalInSeconds = 300,
+SyncIntervalInSeconds = 300L,
 },
 ["srs-kustomization3"] = new KustomizationUpdateContent()
 {
 Path = "./test/another-path",
-SyncIntervalInSeconds = 300,
+SyncIntervalInSeconds = 300L,
 },
 },
             };

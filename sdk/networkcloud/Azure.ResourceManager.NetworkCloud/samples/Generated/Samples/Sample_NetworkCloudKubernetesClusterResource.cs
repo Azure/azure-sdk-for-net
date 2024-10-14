@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 ["key1"] = "myvalue1",
 ["key2"] = "myvalue2",
 },
-                ControlPlaneNodeCount = 3,
+                ControlPlaneNodeCount = 3L,
                 KubernetesVersion = "1.24.12",
             };
             ArmOperation<NetworkCloudKubernetesClusterResource> lro = await networkCloudKubernetesCluster.UpdateAsync(WaitUntil.Completed, patch);

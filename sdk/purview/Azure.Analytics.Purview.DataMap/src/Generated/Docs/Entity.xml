@@ -59,7 +59,7 @@ AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
         CreatedBy = "ExampleCreator",
         Status = EntityStatus.Active,
         UpdatedBy = "ExampleUpdator",
-        Version = 0,
+        Version = 0L,
         Contacts =
         {
             ["Expert"] = {new ContactInfo
@@ -107,7 +107,7 @@ AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
         },
         Status = EntityStatus.Active,
         UpdatedBy = "ExampleUpdator",
-        Version = 0,
+        Version = 0L,
     },
 };
 Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body);
@@ -137,7 +137,7 @@ AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
         CreatedBy = "ExampleCreator",
         Status = EntityStatus.Active,
         UpdatedBy = "ExampleUpdator",
-        Version = 0,
+        Version = 0L,
         Contacts =
         {
             ["Expert"] = {new ContactInfo
@@ -214,7 +214,7 @@ AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
         CreatedBy = "ExampleCreator",
         Status = EntityStatus.Active,
         UpdatedBy = "ExampleUpdator",
-        Version = 0,
+        Version = 0L,
         Contacts =
         {
             ["Expert"] = {new ContactInfo
@@ -262,7 +262,7 @@ AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
         },
         Status = EntityStatus.Active,
         UpdatedBy = "ExampleUpdator",
-        Version = 0,
+        Version = 0L,
     },
 };
 Response<EntityMutationResult> response = client.CreateOrUpdate(body);
@@ -292,7 +292,7 @@ AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
         CreatedBy = "ExampleCreator",
         Status = EntityStatus.Active,
         UpdatedBy = "ExampleUpdator",
-        Version = 0,
+        Version = 0L,
         Contacts =
         {
             ["Expert"] = {new ContactInfo
@@ -387,7 +387,7 @@ using RequestContent content = RequestContent.Create(new
         status = "ACTIVE",
         createdBy = "ExampleCreator",
         updatedBy = "ExampleUpdator",
-        version = 0,
+        version = 0L,
     },
 });
 Response response = await client.CreateOrUpdateAsync(content);
@@ -423,7 +423,7 @@ using RequestContent content = RequestContent.Create(new
         status = "ACTIVE",
         createdBy = "ExampleCreator",
         updatedBy = "ExampleUpdator",
-        version = 0,
+        version = 0L,
     },
 });
 Response response = await client.CreateOrUpdateAsync(content);
@@ -473,7 +473,7 @@ using RequestContent content = RequestContent.Create(new
         status = "ACTIVE",
         createdBy = "ExampleCreator",
         updatedBy = "ExampleUpdator",
-        version = 0,
+        version = 0L,
     },
 });
 Response response = await client.CreateOrUpdateAsync(content);
@@ -558,7 +558,7 @@ using RequestContent content = RequestContent.Create(new
         status = "ACTIVE",
         createdBy = "ExampleCreator",
         updatedBy = "ExampleUpdator",
-        version = 0,
+        version = 0L,
     },
 });
 Response response = client.CreateOrUpdate(content);
@@ -594,7 +594,7 @@ using RequestContent content = RequestContent.Create(new
         status = "ACTIVE",
         createdBy = "ExampleCreator",
         updatedBy = "ExampleUpdator",
-        version = 0,
+        version = 0L,
     },
 });
 Response response = client.CreateOrUpdate(content);
@@ -644,7 +644,7 @@ using RequestContent content = RequestContent.Create(new
         status = "ACTIVE",
         createdBy = "ExampleCreator",
         updatedBy = "ExampleUpdator",
-        version = 0,
+        version = 0L,
     },
 });
 Response response = client.CreateOrUpdate(content);
@@ -730,7 +730,7 @@ AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
         CreatedBy = "ExampleCreator",
         Status = EntityStatus.Active,
         UpdatedBy = "ExampleUpdator",
-        Version = 0,
+        Version = 0L,
         Contacts =
         {
             ["Expert"] = {new ContactInfo
@@ -760,7 +760,7 @@ AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
         CreatedBy = "ExampleCreator",
         Status = EntityStatus.Active,
         UpdatedBy = "ExampleUpdator",
-        Version = 0,
+        Version = 0L,
         Contacts =
         {
             ["Expert"] = {new ContactInfo
@@ -806,7 +806,7 @@ AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
         CreatedBy = "ExampleCreator",
         Status = EntityStatus.Active,
         UpdatedBy = "ExampleUpdator",
-        Version = 0,
+        Version = 0L,
         Contacts =
         {
             ["Expert"] = {new ContactInfo
@@ -836,7 +836,7 @@ AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
         CreatedBy = "ExampleCreator",
         Status = EntityStatus.Active,
         UpdatedBy = "ExampleUpdator",
-        Version = 0,
+        Version = 0L,
         Contacts =
         {
             ["Expert"] = {new ContactInfo
@@ -901,7 +901,7 @@ using RequestContent content = RequestContent.Create(new
             status = "ACTIVE",
             createdBy = "ExampleCreator",
             updatedBy = "ExampleUpdator",
-            version = 0,
+            version = 0L,
         },
         new
         {
@@ -937,7 +937,7 @@ using RequestContent content = RequestContent.Create(new
             status = "ACTIVE",
             createdBy = "ExampleCreator",
             updatedBy = "ExampleUpdator",
-            version = 0,
+            version = 0L,
         }
     },
 });
@@ -993,7 +993,7 @@ using RequestContent content = RequestContent.Create(new
             status = "ACTIVE",
             createdBy = "ExampleCreator",
             updatedBy = "ExampleUpdator",
-            version = 0,
+            version = 0L,
         },
         new
         {
@@ -1029,7 +1029,7 @@ using RequestContent content = RequestContent.Create(new
             status = "ACTIVE",
             createdBy = "ExampleCreator",
             updatedBy = "ExampleUpdator",
-            version = 0,
+            version = 0L,
         }
     },
 });
@@ -1731,7 +1731,7 @@ AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
         },
         TypeName = "azure_storage_account",
         LastModifiedTS = "1",
-        CreateTime = 1605766397985,
+        CreateTime = default,
         CreatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
         Guid = "dc507ccf-0c57-4165-9327-f37b0d13fda0",
         RelationshipAttributes =
@@ -1740,9 +1740,9 @@ AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
             ["meanings"] = BinaryData.FromObjectAsJson(Array.Empty<object>())
         },
         Status = EntityStatus.Active,
-        UpdateTime = 1605766397985,
+        UpdateTime = default,
         UpdatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
-        Version = 0,
+        Version = 0L,
     },
 };
 Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAsync("azure_storage_account", body);
@@ -1770,7 +1770,7 @@ AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
         },
         TypeName = "azure_storage_account",
         LastModifiedTS = "1",
-        CreateTime = 1605766397985,
+        CreateTime = default,
         CreatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
         Guid = "dc507ccf-0c57-4165-9327-f37b0d13fda0",
         RelationshipAttributes =
@@ -1779,9 +1779,9 @@ AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
             ["meanings"] = BinaryData.FromObjectAsJson(Array.Empty<object>())
         },
         Status = EntityStatus.Active,
-        UpdateTime = 1605766397985,
+        UpdateTime = default,
         UpdatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
-        Version = 0,
+        Version = 0L,
     },
 };
 Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("azure_storage_account", body);
@@ -1799,7 +1799,6 @@ using RequestContent content = RequestContent.Create(new
 {
     entity = new
     {
-        createTime = 1605766397985,
         createdBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
         guid = "dc507ccf-0c57-4165-9327-f37b0d13fda0",
         relationshipAttributes = new
@@ -1808,10 +1807,9 @@ using RequestContent content = RequestContent.Create(new
             meanings = Array.Empty<object>(),
         },
         status = "ACTIVE",
-        updateTime = 1605766397985,
         updatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
         lastModifiedTS = "1",
-        version = 0,
+        version = 0L,
         attributes = new
         {
             owner = "ExampleOwner",
@@ -1841,7 +1839,6 @@ using RequestContent content = RequestContent.Create(new
 {
     entity = new
     {
-        createTime = 1605766397985,
         createdBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
         guid = "dc507ccf-0c57-4165-9327-f37b0d13fda0",
         relationshipAttributes = new
@@ -1850,10 +1847,9 @@ using RequestContent content = RequestContent.Create(new
             meanings = Array.Empty<object>(),
         },
         status = "ACTIVE",
-        updateTime = 1605766397985,
         updatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
         lastModifiedTS = "1",
-        version = 0,
+        version = 0L,
         attributes = new
         {
             owner = "ExampleOwner",

@@ -428,6 +428,7 @@ namespace Azure.Search.Documents
             destination.QuerySpeller = source.QuerySpeller;
             destination.SemanticSearch = source.SemanticSearch;
             destination.VectorSearch = source.VectorSearch;
+            destination.HybridSearch  = source.HybridSearch;
         }
 
         /// <summary>

@@ -34,7 +34,10 @@ public class ProvisioningVariable : NamedProvisioningConstruct
     /// <summary>
     /// Creates a new ProvisioningVariable.
     /// </summary>
-    /// <param name="name">Name of the variable.</param>
+    /// <param name="name">
+    /// Name of the variable.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="type">Type of the variable.</param>
     /// <param name="value">Default value of the variable.</param>
     protected ProvisioningVariable(string name, Expression type, BicepValue<object>? value)
@@ -47,7 +50,10 @@ public class ProvisioningVariable : NamedProvisioningConstruct
     /// <summary>
     /// Creates a new ProvisioningVariable.
     /// </summary>
-    /// <param name="name">Name of the variable.</param>
+    /// <param name="name">
+    /// Name of the variable.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="type">Type of the variable.</param>
     public ProvisioningVariable(string name, Type type)
         : this(name, new TypeExpression(type), value: null) { }
@@ -56,7 +62,7 @@ public class ProvisioningVariable : NamedProvisioningConstruct
     protected internal override IEnumerable<Statement> Compile()
     {
         // TODO: add the rest of https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/parameters#use-decorators?
-        VariableStatement stmt = BicepSyntax.Declare.Var(ResourceName, Value.Compile());
+        VariableStatement stmt = BicepSyntax.Declare.Var(IdentifierName, Value.Compile());
         if (Description is not null) { stmt = stmt.Decorate("description", BicepSyntax.Value(Description)); }
         yield return stmt;
     }

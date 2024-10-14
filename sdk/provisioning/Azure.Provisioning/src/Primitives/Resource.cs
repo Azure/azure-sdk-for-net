@@ -72,7 +72,7 @@ public abstract class Resource(string resourceName, ResourceType resourceType, s
     /// </returns>
     public virtual ProvisioningPlan Build(ProvisioningContext? context = default) =>
         ParentInfrastructure?.Build(context ?? new()) ??
-            throw new InvalidOperationException($"Cannot build a provisioning plan for {GetType().Name} resource {ResourceName} before it has been added to {nameof(Infrastructure)}.");
+            throw new InvalidOperationException($"Cannot build a provisioning plan for {GetType().Name} resource {IdentifierName} before it has been added to {nameof(Infrastructure)}.");
 
     /// <inheritdoc />
     protected internal override void Validate(ProvisioningContext? context = null)
@@ -81,12 +81,12 @@ public abstract class Resource(string resourceName, ResourceType resourceType, s
 
         if (ResourceVersion is null)
         {
-            throw new InvalidOperationException($"{GetType().Name} resource {ResourceName} must have {nameof(ResourceVersion)} specified.");
+            throw new InvalidOperationException($"{GetType().Name} resource {IdentifierName} must have {nameof(ResourceVersion)} specified.");
         }
 
         if (DependsOn.Count > 0 && (IsExistingResource || ExpressionOverride is not null))
         {
-            throw new InvalidOperationException($"{GetType().Name} resource {ResourceName} cannot have dependencies if it's an existing resource or an expression override.");
+            throw new InvalidOperationException($"{GetType().Name} resource {IdentifierName} cannot have dependencies if it's an existing resource or an expression override.");
         }
 
         if (IsExistingResource)
@@ -122,17 +122,17 @@ public abstract class Resource(string resourceName, ResourceType resourceType, s
             // This should be caught by Validate above
             if (body is not ObjectExpression obj)
             {
-                throw new InvalidOperationException($"{GetType().Name} resource {ResourceName} cannot have dependencies if it's an existing resource or an expression override.");
+                throw new InvalidOperationException($"{GetType().Name} resource {IdentifierName} cannot have dependencies if it's an existing resource or an expression override.");
             }
 
             // Add the dependsOn property
-            ArrayExpression dependencies = new(DependsOn.Select(r => BicepSyntax.Var(r.ResourceName)).ToArray());
+            ArrayExpression dependencies = new(DependsOn.Select(r => BicepSyntax.Var(r.IdentifierName)).ToArray());
             body = new ObjectExpression([.. obj.Properties, new PropertyExpression("dependsOn", dependencies)]);
         }
 
         // Create a resource declaration
         ResourceStatement resource = BicepSyntax.Declare.Resource(
-            ResourceName,
+            IdentifierName,
             $"{ResourceType}@{ResourceVersion}",
             body);
         if (IsExistingResource)

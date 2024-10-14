@@ -86,10 +86,15 @@ public partial class WebSiteSlotHybridConnection : Resource
     /// <summary>
     /// Creates a new WebSiteSlotHybridConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSlotHybridConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the WebSiteSlotHybridConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotHybridConnection.</param>
-    public WebSiteSlotHybridConnection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/hybridconnection", resourceVersion ?? "2024-04-01")
+    public WebSiteSlotHybridConnection(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/sites/slots/hybridconnection", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _biztalkUri = BicepValue<Uri>.DefineProperty(this, "BiztalkUri", ["properties", "biztalkUri"]);
@@ -268,9 +273,14 @@ public partial class WebSiteSlotHybridConnection : Resource
     /// <summary>
     /// Creates a reference to an existing WebSiteSlotHybridConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSlotHybridConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the WebSiteSlotHybridConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotHybridConnection.</param>
     /// <returns>The existing WebSiteSlotHybridConnection resource.</returns>
-    public static WebSiteSlotHybridConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteSlotHybridConnection FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

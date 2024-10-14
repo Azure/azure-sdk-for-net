@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         void IJsonModel<ExecuteHibernateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ExecuteHibernateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExecuteHibernateContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("executionParameters"u8);
             writer.WriteObjectValue(ExecutionParameters, options);
             writer.WritePropertyName("resources"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ExecuteHibernateContent IJsonModel<ExecuteHibernateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

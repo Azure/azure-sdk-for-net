@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         void IJsonModel<SecurityInsightsIncidentAdditionalInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsIncidentAdditionalInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(AlertsCount))
             {
                 writer.WritePropertyName("alertsCount"u8);
@@ -93,7 +101,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SecurityInsightsIncidentAdditionalInfo IJsonModel<SecurityInsightsIncidentAdditionalInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

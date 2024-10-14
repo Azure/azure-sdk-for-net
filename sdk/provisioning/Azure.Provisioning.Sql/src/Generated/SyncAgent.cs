@@ -80,10 +80,15 @@ public partial class SyncAgent : Resource
     /// <summary>
     /// Creates a new SyncAgent.
     /// </summary>
-    /// <param name="resourceName">Name of the SyncAgent.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SyncAgent resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SyncAgent.</param>
-    public SyncAgent(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/syncAgents", resourceVersion ?? "2021-11-01")
+    public SyncAgent(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/syncAgents", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _syncDatabaseId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SyncDatabaseId", ["properties", "syncDatabaseId"]);
@@ -116,9 +121,14 @@ public partial class SyncAgent : Resource
     /// <summary>
     /// Creates a reference to an existing SyncAgent.
     /// </summary>
-    /// <param name="resourceName">Name of the SyncAgent.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SyncAgent resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SyncAgent.</param>
     /// <returns>The existing SyncAgent resource.</returns>
-    public static SyncAgent FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SyncAgent FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

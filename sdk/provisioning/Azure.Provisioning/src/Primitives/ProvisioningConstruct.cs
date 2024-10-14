@@ -12,14 +12,42 @@ namespace Azure.Provisioning.Primitives;
 /// <summary>
 /// A named Bicep entity, like a resource or parameter.
 /// </summary>
-public abstract class NamedProvisioningConstruct(string resourceName) : ProvisioningConstruct
+public abstract class NamedProvisioningConstruct : ProvisioningConstruct
 {
     /// <summary>
-    /// Gets or sets the the Bicep name of the resource.  This can be used to
-    /// refer to the resource in expressions, but isn't the Azure name of the
-    /// resource.  This value can contain letters, numbers, and underscores.
+    /// Gets or sets the the Bicep identifier name of the resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
     /// </summary>
-    public string ResourceName { get; set; } = resourceName;
+    public string IdentifierName
+    {
+        get => _identifierName;
+        set
+        {
+            Infrastructure.ValidateIdentifierName(value, nameof(value));
+            _identifierName = value;
+        }
+    }
+    private string _identifierName;
+    // TODO: Listen for customer feedback and discuss IdentifierName vs.
+    // ProvisioningName in the Arch Board
+
+    /// <summary>
+    /// Creates a named Bicep entity, like a resource or parameter.
+    /// </summary>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
+    protected NamedProvisioningConstruct(string identifierName)
+    {
+        // TODO: In the near future we'll make this optional and only validate
+        // if the value passed in isn't null.
+        Infrastructure.ValidateIdentifierName(identifierName, nameof(identifierName));
+        _identifierName = identifierName;
+    }
 }
 
 public abstract class ProvisioningConstruct : Provisionable

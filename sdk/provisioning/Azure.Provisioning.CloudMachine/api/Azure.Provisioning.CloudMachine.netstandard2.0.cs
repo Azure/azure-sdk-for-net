@@ -44,11 +44,45 @@ namespace Azure.CloudMachine
 }
 namespace Azure.Provisioning.CloudMachine
 {
-    public partial class CloudMachineInfrastructure : Azure.Provisioning.Infrastructure
+    public abstract partial class CloudMachineFeature
     {
-        public CloudMachineInfrastructure(string cloudMachineId) : base (default(string)) { }
+        protected CloudMachineFeature() { }
+        public abstract void AddTo(Azure.Provisioning.CloudMachine.CloudMachineInfrastructure cm);
+    }
+    public partial class CloudMachineInfrastructure
+    {
+        public CloudMachineInfrastructure(string cmId) { }
+        public string Id { get { throw null; } }
+        public Azure.Provisioning.Roles.UserAssignedIdentity Identity { get { throw null; } }
         public Azure.Provisioning.ProvisioningParameter PrincipalIdParameter { get { throw null; } }
-        public override Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
+        public void AddFeature(Azure.Provisioning.CloudMachine.CloudMachineFeature resource) { }
+        public void AddResource(Azure.Provisioning.Primitives.NamedProvisioningConstruct resource) { }
+        public Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
         public static bool Configure(string[] args, System.Action<Azure.Provisioning.CloudMachine.CloudMachineInfrastructure>? configure = null) { throw null; }
+    }
+}
+namespace Azure.Provisioning.CloudMachine.KeyVault
+{
+    public static partial class KeyVaultExtensions
+    {
+        public static Azure.Security.KeyVault.Secrets.SecretClient GetKeyVaultSecretClient(this Azure.CloudMachine.CloudMachineClient client) { throw null; }
+    }
+    public partial class KeyVaultFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
+    {
+        public KeyVaultFeature() { }
+        public Azure.Provisioning.KeyVault.KeyVaultSku Sku { get { throw null; } set { } }
+        public override void AddTo(Azure.Provisioning.CloudMachine.CloudMachineInfrastructure cm) { }
+    }
+}
+namespace Azure.Provisioning.CloudMachine.OpenAI
+{
+    public partial class OpenAIFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
+    {
+        public OpenAIFeature() { }
+        public override void AddTo(Azure.Provisioning.CloudMachine.CloudMachineInfrastructure cm) { }
+    }
+    public static partial class OpenAIFeatureExtensions
+    {
+        public static Azure.Security.KeyVault.Secrets.SecretClient GetOpenAIClient(this Azure.CloudMachine.CloudMachineClient client) { throw null; }
     }
 }
