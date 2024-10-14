@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.AppService" />
-    <ProjectReference Include="..\..\..\websites\Azure.ResourceManager.AppService\src\Azure.ResourceManager.AppService.csproj" />
     <ProjectReference Include="..\..\..\keyvault\Azure.ResourceManager.KeyVault\src\Azure.ResourceManager.KeyVault.csproj" />
     <ProjectReference Include="..\..\..\sqlmanagement\Azure.ResourceManager.Sql\src\Azure.ResourceManager.Sql.csproj" />
     <PackageReference Include="Azure.ResourceManager.WebPubSub" />
