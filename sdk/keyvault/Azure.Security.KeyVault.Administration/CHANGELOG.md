@@ -1,16 +1,10 @@
 # Release History
 
-## 4.5.0-beta.1 (Unreleased)
+## 4.5.0 (2024-10-14)
 
 ### Features Added
 
 - Support for Continuous Access Evaluation (CAE).
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 4.4.0 (2024-02-14)
 
