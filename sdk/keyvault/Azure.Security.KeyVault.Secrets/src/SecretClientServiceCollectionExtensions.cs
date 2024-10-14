@@ -44,7 +44,7 @@ public static class SecretClientServiceCollectionExtensions
             Uri endpoint = sp.GetClientEndpoint(clientConfiguration);
 
             // TODO: how to get this securely?
-            var credential = new ClientSecretCredential("<tenant_id>", "<client_id>", "<client_secret>");
+            var credential = new DefaultAzureCredential();
 
             // TODO: to roll a credential, this will need to be IOptionsMonitor
             // not IOptions -- come back to this.
@@ -82,7 +82,7 @@ public static class SecretClientServiceCollectionExtensions
         {
             Uri endpoint = sp.GetClientEndpoint(clientConfigurationSection);
             // TODO: how to get this securely?
-            var credential = new ClientSecretCredential("<tenant_id>", "<client_id>", "<client_secret>");
+            var credential = new DefaultAzureCredential();
 
             IOptions<SecretClientOptions> iOptions = sp.GetRequiredService<IOptions<SecretClientOptions>>();
             SecretClientOptions options = iOptions.Value;

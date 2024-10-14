@@ -97,6 +97,7 @@ namespace Azure.Security.KeyVault.Secrets
     {
         public SecretClientOptions(Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion version = Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion.V7_6_Preview_1) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
+        public Microsoft.Extensions.Logging.ILoggerFactory LoggerFactory { get { throw null; } set { } }
         public Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
@@ -108,6 +109,11 @@ namespace Azure.Security.KeyVault.Secrets
             V7_5 = 5,
             V7_6_Preview_1 = 6,
         }
+    }
+    public static partial class SecretClientServiceCollectionExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddSecretClient(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddSecretClient(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, Microsoft.Extensions.Configuration.IConfiguration commonConfigurationSection, Microsoft.Extensions.Configuration.IConfiguration clientConfigurationSection) { throw null; }
     }
     public static partial class SecretModelFactory
     {
