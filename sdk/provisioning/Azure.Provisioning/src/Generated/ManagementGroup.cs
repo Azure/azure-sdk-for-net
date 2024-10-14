@@ -67,10 +67,15 @@ public partial class ManagementGroup : Resource
     /// <summary>
     /// Creates a new ManagementGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagementGroup.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ManagementGroup resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagementGroup.</param>
-    public ManagementGroup(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Management/managementGroups", resourceVersion ?? "2023-04-01")
+    public ManagementGroup(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Management/managementGroups", resourceVersion ?? "2023-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"]);
         _details = BicepValue<CreateManagementGroupDetails>.DefineProperty(this, "Details", ["properties", "details"]);
@@ -125,11 +130,16 @@ public partial class ManagementGroup : Resource
     /// <summary>
     /// Creates a reference to an existing ManagementGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagementGroup.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ManagementGroup resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagementGroup.</param>
     /// <returns>The existing ManagementGroup resource.</returns>
-    public static ManagementGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagementGroup FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ManagementGroup resource.

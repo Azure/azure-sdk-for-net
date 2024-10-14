@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.AI.Inference.Telemetry;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
@@ -48,6 +49,7 @@ namespace Azure.AI.Inference.Tests
 
         public InferenceClientTest(bool isAsync) : base(isAsync)
         {
+            TestDiagnostics = false;
             JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
         }
 

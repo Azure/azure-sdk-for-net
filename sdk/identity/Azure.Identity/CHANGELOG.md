@@ -13,6 +13,8 @@
 
 ### Other Changes
 
+- Improved error logging for `AzurePipelinesCredential`.
+
 ## 1.13.0-beta.2 (2024-09-17)
 
 ### Features Added

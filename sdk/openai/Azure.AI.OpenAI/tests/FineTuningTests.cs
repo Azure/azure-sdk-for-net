@@ -211,7 +211,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         }
         catch (ClientResultException e)
         {
-            if(e.Message.Contains("ResourceNotFound"))
+            if (e.Message.Contains("ResourceNotFound"))
             {
                 // upload training data
                 uploadedFile = await UploadAndWaitForCompleteOrFail(fileClient, fineTuningFile.RelativePath);

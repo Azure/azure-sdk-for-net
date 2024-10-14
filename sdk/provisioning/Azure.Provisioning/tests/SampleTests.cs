@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -131,7 +133,7 @@ internal class SampleTests(bool async)
                     };
                 infra.Add(acr);
 
-                RoleAssignment pullAssignment = acr.AssignRole(ContainerRegistryBuiltInRole.AcrPull, mi);
+                RoleAssignment pullAssignment = acr.CreateRoleAssignment(ContainerRegistryBuiltInRole.AcrPull, mi);
                 infra.Add(pullAssignment);
 
                 OperationalInsightsWorkspace law =
@@ -167,7 +169,7 @@ internal class SampleTests(bool async)
                     };
                 infra.Add(cae);
 
-                RoleAssignment contribAssignment = cae.AssignRole(AppContainersBuiltInRole.Contributor, mi);
+                RoleAssignment contribAssignment = cae.CreateRoleAssignment(AppContainersBuiltInRole.Contributor, mi);
                 infra.Add(contribAssignment);
 
                 // Hack in the Aspire Dashboard as a literal since there's no
@@ -179,7 +181,7 @@ internal class SampleTests(bool async)
                             new StringLiteral("Microsoft.App/managedEnvironments/dotNetComponents@2024-02-02-preview"),
                             new ObjectExpression(
                                 new PropertyExpression("name", "aspire-dashboard"),
-                                new PropertyExpression("parent", new IdentifierExpression(cae.ResourceName)),
+                                new PropertyExpression("parent", new IdentifierExpression(cae.IdentifierName)),
                                 new PropertyExpression("properties",
                                     new ObjectExpression(
                                         new PropertyExpression("componentType", new StringLiteral("AspireDashboard")))))));
@@ -323,7 +325,7 @@ internal class SampleTests(bool async)
                 // the resource group
                 Infrastructure infra = new() { TargetScope = "subscription" };
 
-                ResourceGroup rg = new("rg-test", "2024-03-01");
+                ResourceGroup rg = new("rg_test", "2024-03-01");
                 infra.Add(rg);
 
                 return infra;
@@ -335,12 +337,44 @@ internal class SampleTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = deployment().location
 
-            resource rg-test 'Microsoft.Resources/resourceGroups@2024-03-01' = {
-              name: take('rg-test-${uniqueString(deployment().id)}', 90)
+            resource rg_test 'Microsoft.Resources/resourceGroups@2024-03-01' = {
+              name: take('rg_test-${uniqueString(deployment().id)}', 90)
               location: location
             }
             """)
         .Lint()
         .ValidateAndDeployAsync();
+    }
+
+    [Test]
+    public void ValidNames()
+    {
+        // Check null is invalid
+        Assert.IsFalse(Infrastructure.IsValidIdentifierName(null));
+        Assert.Throws<ArgumentNullException>(() => Infrastructure.ValidateIdentifierName(null));
+        Assert.Throws<ArgumentNullException>(() => new StorageAccount(null!));
+
+        // Check invalid names
+        List<string> invalid = ["", "my-storage", "my storage", "my:storage", "storage$", "1storage", "KforKelvin"];
+        foreach (string name in invalid)
+        {
+            Assert.IsFalse(Infrastructure.IsValidIdentifierName(name));
+            Assert.Throws<ArgumentException>(() => Infrastructure.ValidateIdentifierName(name));
+            if (!string.IsNullOrEmpty(name))
+            {
+                Assert.AreNotEqual(name, Infrastructure.NormalizeIdentifierName(name));
+            }
+            Assert.Throws<ArgumentException>(() => new StorageAccount(name));
+        }
+
+        // Check valid names
+        List<string> valid = ["foo", "FOO", "Foo", "f", "_foo", "_", "foo123", "ABCdef123_"];
+        foreach (string name in valid)
+        {
+            Assert.IsTrue(Infrastructure.IsValidIdentifierName(name));
+            Assert.DoesNotThrow(() => Infrastructure.ValidateIdentifierName(name));
+            Assert.AreEqual(name, Infrastructure.NormalizeIdentifierName(name));
+            Assert.DoesNotThrow(() => new StorageAccount(name));
+        }
     }
 }

@@ -80,10 +80,15 @@ public partial class PostgreSqlConfiguration : Resource
     /// <summary>
     /// Creates a new PostgreSqlConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlConfiguration.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the PostgreSqlConfiguration resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlConfiguration.</param>
-    public PostgreSqlConfiguration(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/configurations", resourceVersion ?? "2017-12-01")
+    public PostgreSqlConfiguration(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.DBforPostgreSQL/servers/configurations", resourceVersion ?? "2017-12-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _source = BicepValue<string>.DefineProperty(this, "Source", ["properties", "source"]);
@@ -116,9 +121,14 @@ public partial class PostgreSqlConfiguration : Resource
     /// <summary>
     /// Creates a reference to an existing PostgreSqlConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlConfiguration.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the PostgreSqlConfiguration resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlConfiguration.</param>
     /// <returns>The existing PostgreSqlConfiguration resource.</returns>
-    public static PostgreSqlConfiguration FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlConfiguration FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

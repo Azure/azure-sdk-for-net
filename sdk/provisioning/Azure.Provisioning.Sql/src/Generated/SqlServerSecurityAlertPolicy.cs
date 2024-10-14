@@ -99,10 +99,15 @@ public partial class SqlServerSecurityAlertPolicy : Resource
     /// <summary>
     /// Creates a new SqlServerSecurityAlertPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerSecurityAlertPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerSecurityAlertPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerSecurityAlertPolicy.</param>
-    public SqlServerSecurityAlertPolicy(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/securityAlertPolicies", resourceVersion ?? "2021-11-01")
+    public SqlServerSecurityAlertPolicy(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/securityAlertPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _disabledAlerts = BicepList<string>.DefineProperty(this, "DisabledAlerts", ["properties", "disabledAlerts"]);
@@ -137,9 +142,14 @@ public partial class SqlServerSecurityAlertPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerSecurityAlertPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerSecurityAlertPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SqlServerSecurityAlertPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerSecurityAlertPolicy.</param>
     /// <returns>The existing SqlServerSecurityAlertPolicy resource.</returns>
-    public static SqlServerSecurityAlertPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerSecurityAlertPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }
