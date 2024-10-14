@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.ServiceLinker.csproj" />
     <PackageReference Include="Azure.ResourceManager.AppService" />
     <ProjectReference Include="..\..\..\keyvault\Azure.ResourceManager.KeyVault\src\Azure.ResourceManager.KeyVault.csproj" />
     <ProjectReference Include="..\..\..\sqlmanagement\Azure.ResourceManager.Sql\src\Azure.ResourceManager.Sql.csproj" />
