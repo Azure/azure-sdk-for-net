@@ -101,7 +101,7 @@
     <PackageReference Update="System.Text.Json" Version="6.0.10" />
     <PackageReference Update="System.Text.Encodings.Web" Version="6.0.0" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
+    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Update="Microsoft.Extensions.Configuration" Version="8.0.0" />
 		<PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />

@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.Security.KeyVault.Secrets
 {
@@ -67,6 +68,11 @@ namespace Azure.Security.KeyVault.Secrets
         /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
         public ServiceVersion Version { get; }
+
+        /// <summary>
+        /// TODO - will get this from SCM?
+        /// </summary>
+        public ILoggerFactory LoggerFactory { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SecretClientOptions"/> class.
