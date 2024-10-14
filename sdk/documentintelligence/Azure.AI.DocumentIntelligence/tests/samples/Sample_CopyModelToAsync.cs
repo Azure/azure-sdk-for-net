@@ -16,10 +16,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             #region Snippet:DocumentIntelligenceSampleCreateCopySourceClient
 #if SNIPPET
             string sourceEndpoint = "<sourceEndpoint>";
+            var sourceResourceCredential = new DefaultAzureCredential();
 #else
             string sourceEndpoint = TestEnvironment.Endpoint;
+            var sourceResourceCredential = TestEnvironment.Credential;
 #endif
-            var sourceClient = new DocumentIntelligenceAdministrationClient(new Uri(sourceEndpoint), new DefaultAzureCredential());
+            var sourceClient = new DocumentIntelligenceAdministrationClient(new Uri(sourceEndpoint), sourceResourceCredential);
             #endregion
 
             // For the purpose of this sample, we are going to create a model to copy. Note that
@@ -37,10 +39,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             #region Snippet:DocumentIntelligenceSampleCreateCopyTargetClient
 #if SNIPPET
             string targetEndpoint = "<targetEndpoint>";
+            var targetResourceCredential = new DefaultAzureCredential();
 #else
             string targetEndpoint = TestEnvironment.Endpoint;
+            var targetResourceCredential = TestEnvironment.Credential;
 #endif
-            var targetClient = new DocumentIntelligenceAdministrationClient(new Uri(targetEndpoint), new DefaultAzureCredential());
+            var targetClient = new DocumentIntelligenceAdministrationClient(new Uri(targetEndpoint), targetResourceCredential);
             #endregion
 
             #region Snippet:DocumentIntelligenceSampleGetCopyAuthorization

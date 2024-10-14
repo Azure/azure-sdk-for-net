@@ -7,7 +7,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.DocumentIntelligence.Tests;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 
 namespace Azure.AI.DocumentIntelligence.Samples
 {
@@ -17,7 +16,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task AnalyzeWithPrebuiltModelWithBase64Async()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelWithBase64Async
 #if SNIPPET

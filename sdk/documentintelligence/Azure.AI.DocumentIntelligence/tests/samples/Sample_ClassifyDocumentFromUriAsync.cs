@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.DocumentIntelligence.Tests;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 
 namespace Azure.AI.DocumentIntelligence.Samples
 {
@@ -16,8 +15,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task ClassifyDocumentFromUriAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new DefaultAzureCredential());
-            var adminClient = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
+            var adminClient = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), TestEnvironment.Credential);
 
             string setupClassifierId = Guid.NewGuid().ToString();
             Uri blobContainerUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);

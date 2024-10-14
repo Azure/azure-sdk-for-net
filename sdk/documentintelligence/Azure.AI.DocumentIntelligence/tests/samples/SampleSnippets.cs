@@ -18,10 +18,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             #region Snippet:CreateDocumentIntelligenceClient
 #if SNIPPET
             string endpoint = "<endpoint>";
+            var credential = new DefaultAzureCredential();
 #else
             string endpoint = TestEnvironment.Endpoint;
+            var credential = TestEnvironment.Credential;
 #endif
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), credential);
             #endregion
         }
 
@@ -46,10 +48,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             #region Snippet:CreateDocumentIntelligenceAdministrationClient
 #if SNIPPET
             string endpoint = "<endpoint>";
+            var credential = new DefaultAzureCredential();
 #else
             string endpoint = TestEnvironment.Endpoint;
+            var credential = TestEnvironment.Credential;
 #endif
-            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), credential);
             #endregion
         }
 
@@ -59,10 +63,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             #region Snippet:Migration_CreateBothDocumentIntelligenceClients
 #if SNIPPET
             string endpoint = "<endpoint>";
+            var credential = new DefaultAzureCredential();
 #else
             string endpoint = TestEnvironment.Endpoint;
+            var credential = TestEnvironment.Credential;
 #endif
-            var credential = new DefaultAzureCredential();
 
             var documentIntelligenceClient = new DocumentIntelligenceClient(new Uri(endpoint), credential);
             var documentIntelligenceAdministrationClient = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), credential);
@@ -73,7 +78,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task BadRequestSnippet()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceBadRequest
             var content = new AnalyzeDocumentContent()
@@ -96,7 +101,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task GetWordsSnippet()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:Migration_DocumentIntelligenceGetWordsUsage
 #if SNIPPET

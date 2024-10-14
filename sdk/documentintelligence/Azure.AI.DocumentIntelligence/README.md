@@ -119,7 +119,8 @@ Set the values of the client ID, tenant ID, and client secret of the AAD applica
 
 ```C# Snippet:CreateDocumentIntelligenceClient
 string endpoint = "<endpoint>";
-var client = new DocumentIntelligenceClient(new Uri(endpoint), new DefaultAzureCredential());
+var credential = new DefaultAzureCredential();
+var client = new DocumentIntelligenceClient(new Uri(endpoint), credential);
 ```
 
 ## Key concepts

@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.AI.DocumentIntelligence.Tests;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 
 namespace Azure.AI.DocumentIntelligence.Samples
 {
@@ -16,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceExtractLayoutFromUriAsync
 #if SNIPPET

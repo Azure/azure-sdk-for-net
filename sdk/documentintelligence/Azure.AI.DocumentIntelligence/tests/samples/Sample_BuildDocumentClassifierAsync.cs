@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 
 namespace Azure.AI.DocumentIntelligence.Samples
 {
@@ -15,7 +14,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task BuildDocumentClassifierAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceSampleBuildClassifier
             // For this sample, you can use the training documents found in the `classifierTrainingFiles` folder.

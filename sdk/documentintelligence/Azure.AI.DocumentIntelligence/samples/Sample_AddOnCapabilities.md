@@ -14,7 +14,8 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 
 ```C# Snippet:CreateDocumentIntelligenceClient
 string endpoint = "<endpoint>";
-var client = new DocumentIntelligenceClient(new Uri(endpoint), new DefaultAzureCredential());
+var credential = new DefaultAzureCredential();
+var client = new DocumentIntelligenceClient(new Uri(endpoint), credential);
 ```
 
 ## High resolution extraction
