@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The definition of a single skip request. </summary>
-    public partial class SkipTarget
+    public partial class ContainerServiceFleetSkipTarget
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SkipTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetSkipTarget"/>. </summary>
         /// <param name="targetType"> The skip target type. </param>
         /// <param name="name">
         /// The skip target's name.
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// Tp skip an after stage wait, use the parent stage's name.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public SkipTarget(TargetType targetType, string name)
+        public ContainerServiceFleetSkipTarget(ContainerServiceFleetTargetType targetType, string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkipTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetSkipTarget"/>. </summary>
         /// <param name="targetType"> The skip target type. </param>
         /// <param name="name">
         /// The skip target's name.
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// Tp skip an after stage wait, use the parent stage's name.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SkipTarget(TargetType targetType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceFleetSkipTarget(ContainerServiceFleetTargetType targetType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetType = targetType;
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkipTarget"/> for deserialization. </summary>
-        internal SkipTarget()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetSkipTarget"/> for deserialization. </summary>
+        internal ContainerServiceFleetSkipTarget()
         {
         }
 
         /// <summary> The skip target type. </summary>
-        public TargetType TargetType { get; }
+        public ContainerServiceFleetTargetType TargetType { get; }
         /// <summary>
         /// The skip target's name.
         /// To skip a member/group/stage, use the member/group/stage's name;
