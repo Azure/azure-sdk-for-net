@@ -68,16 +68,12 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> The cluster size. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public int? ClusterSize { get; set; }
         /// <summary> The state of the cluster provisioning. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public AvsPrivateCloudClusterProvisioningState? ProvisioningState { get; private protected set; }
         /// <summary> The identity. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public int? ClusterId { get; private protected set; }
         /// <summary> The hosts. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public IList<string> Hosts { get; private protected set; }
     }
 }
