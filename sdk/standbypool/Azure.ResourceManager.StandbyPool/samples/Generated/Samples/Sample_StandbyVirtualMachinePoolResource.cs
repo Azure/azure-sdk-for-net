@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         public async Task Get_StandbyVirtualMachinePoolsGet()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachinePools_Get.json
-            // this example is just showing the usage of "StandbyVirtualMachinePools_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachinePoolResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         public async Task Delete_StandbyVirtualMachinePoolsDelete()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachinePools_Delete.json
-            // this example is just showing the usage of "StandbyVirtualMachinePools_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachinePoolResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         public async Task Update_StandbyVirtualMachinePoolsUpdate()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachinePools_Update.json
-            // this example is just showing the usage of "StandbyVirtualMachinePools_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachinePoolResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
