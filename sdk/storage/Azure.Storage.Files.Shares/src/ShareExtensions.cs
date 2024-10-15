@@ -1046,5 +1046,18 @@ namespace Azure.Storage.Files.Shares
                 },
                 response.GetRawResponse());
         }
+
+        internal static FileSymbolicLinkInfo ToFileSymbolicLinkInfo(this ResponseWithHeaders<FileGetSymbolicLinkHeaders> fileGetSymbolicLinkHeadersResponse)
+        {
+            if (fileGetSymbolicLinkHeadersResponse == null)
+            {
+                return null;
+            }
+
+            return new FileSymbolicLinkInfo
+            {
+                Path = fileGetSymbolicLinkHeadersResponse.Headers.LinkText
+            };
+        }
     }
 }

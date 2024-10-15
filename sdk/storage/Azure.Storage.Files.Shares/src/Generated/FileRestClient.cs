@@ -1913,5 +1913,250 @@ namespace Azure.Storage.Files.Shares
                     throw new RequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateCreateSymbolicLinkRequest(string linkText, int? timeout, IDictionary<string, string> metadata, string fileCreationTime, string fileLastWriteTime, long? owner, long? group, ShareFileRequestConditions shareFileRequestConditions)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "symboliclink", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", _version);
+            if (metadata != null)
+            {
+                request.Headers.Add("x-ms-meta-", metadata);
+            }
+            if (fileCreationTime != null)
+            {
+                request.Headers.Add("x-ms-file-creation-time", fileCreationTime);
+            }
+            if (fileLastWriteTime != null)
+            {
+                request.Headers.Add("x-ms-file-last-write-time", fileLastWriteTime);
+            }
+            if (shareFileRequestConditions?.LeaseId != null)
+            {
+                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
+            }
+            if (owner != null)
+            {
+                request.Headers.Add("x-ms-owner", owner.Value);
+            }
+            if (group != null)
+            {
+                request.Headers.Add("x-ms-group", group.Value);
+            }
+            request.Headers.Add("x-ms-link-text", linkText);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> Creates a symbolic link. </summary>
+        /// <param name="linkText"> NFS only. Required. The path to the original file, the symbolic link is pointing to. The path is of type string which is not resolved and is stored as is. The path can be absolute path or the relative path depending on the content stored in the symbolic link file. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
+        /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="shareFileRequestConditions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkText"/> is null. </exception>
+        public async Task<ResponseWithHeaders<FileCreateSymbolicLinkHeaders>> CreateSymbolicLinkAsync(string linkText, int? timeout = null, IDictionary<string, string> metadata = null, string fileCreationTime = null, string fileLastWriteTime = null, long? owner = null, long? group = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        {
+            if (linkText == null)
+            {
+                throw new ArgumentNullException(nameof(linkText));
+            }
+
+            using var message = CreateCreateSymbolicLinkRequest(linkText, timeout, metadata, fileCreationTime, fileLastWriteTime, owner, group, shareFileRequestConditions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new FileCreateSymbolicLinkHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates a symbolic link. </summary>
+        /// <param name="linkText"> NFS only. Required. The path to the original file, the symbolic link is pointing to. The path is of type string which is not resolved and is stored as is. The path can be absolute path or the relative path depending on the content stored in the symbolic link file. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
+        /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="shareFileRequestConditions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkText"/> is null. </exception>
+        public ResponseWithHeaders<FileCreateSymbolicLinkHeaders> CreateSymbolicLink(string linkText, int? timeout = null, IDictionary<string, string> metadata = null, string fileCreationTime = null, string fileLastWriteTime = null, long? owner = null, long? group = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        {
+            if (linkText == null)
+            {
+                throw new ArgumentNullException(nameof(linkText));
+            }
+
+            using var message = CreateCreateSymbolicLinkRequest(linkText, timeout, metadata, fileCreationTime, fileLastWriteTime, owner, group, shareFileRequestConditions);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new FileCreateSymbolicLinkHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetSymbolicLinkRequest(int? timeout, string sharesnapshot)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "symboliclink", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (sharesnapshot != null)
+            {
+                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", _version);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<FileGetSymbolicLinkHeaders>> GetSymbolicLinkAsync(int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetSymbolicLinkRequest(timeout, sharesnapshot);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new FileGetSymbolicLinkHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<FileGetSymbolicLinkHeaders> GetSymbolicLink(int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetSymbolicLinkRequest(timeout, sharesnapshot);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new FileGetSymbolicLinkHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCreateHardLinkRequest(string targetFile, int? timeout, ShareFileRequestConditions shareFileRequestConditions)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "hardlink", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", _version);
+            request.Headers.Add("x-ms-type", "file");
+            if (shareFileRequestConditions?.LeaseId != null)
+            {
+                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
+            }
+            request.Headers.Add("x-ms-file-target-file", targetFile);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> Creates a hard link. </summary>
+        /// <param name="targetFile"> NFS only. Required. Specifies the path of the target file to which the link will be created, up to 2 KiB in length. It should be full path of the target from the root.The target file must be in the same share and hence the same storage account. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="shareFileRequestConditions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetFile"/> is null. </exception>
+        public async Task<ResponseWithHeaders<FileCreateHardLinkHeaders>> CreateHardLinkAsync(string targetFile, int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        {
+            if (targetFile == null)
+            {
+                throw new ArgumentNullException(nameof(targetFile));
+            }
+
+            using var message = CreateCreateHardLinkRequest(targetFile, timeout, shareFileRequestConditions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new FileCreateHardLinkHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates a hard link. </summary>
+        /// <param name="targetFile"> NFS only. Required. Specifies the path of the target file to which the link will be created, up to 2 KiB in length. It should be full path of the target from the root.The target file must be in the same share and hence the same storage account. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="shareFileRequestConditions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetFile"/> is null. </exception>
+        public ResponseWithHeaders<FileCreateHardLinkHeaders> CreateHardLink(string targetFile, int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        {
+            if (targetFile == null)
+            {
+                throw new ArgumentNullException(nameof(targetFile));
+            }
+
+            using var message = CreateCreateHardLinkRequest(targetFile, timeout, shareFileRequestConditions);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new FileCreateHardLinkHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
     }
 }

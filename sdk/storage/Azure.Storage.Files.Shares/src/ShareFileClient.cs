@@ -6705,6 +6705,120 @@ namespace Azure.Storage.Files.Shares
         }
         #endregion Rename
 
+        #region CreateSymbolicLink
+        /// <summary>
+        /// Reads the value of the symbolic link.
+        /// Only applicable if this <see cref="ShareFileClient"/> is pointed at an NFS symbolic link.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSymbolicLinkInfo}"/> describing the symbolic link.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<FileSymbolicLinkInfo> GetSymbolicLink(
+            CancellationToken cancellationToken = default) =>
+            GetSymbolicLinkInternal(
+                async: false,
+                cancellationToken: cancellationToken)
+            .EnsureCompleted();
+
+        /// <summary>
+        /// Reads the value of the symbolic link.
+        /// Only applicable if this <see cref="ShareFileClient"/> is pointed at an NFS symbolic link.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSymbolicLinkInfo}"/> describing the symbolic link.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<FileSymbolicLinkInfo>> GetSymbolicLinkAsync(
+            CancellationToken cancellationToken = default) =>
+            await GetSymbolicLinkInternal(
+                async: true,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        /// Reads the value of the symbolic link.
+        /// Only applicable if this <see cref="ShareFileClient"/> is pointed at an NFS symbolic link.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSymbolicLinkInfo}"/> describing the symbolic link.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<FileSymbolicLinkInfo>> GetSymbolicLinkInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(nameof(ShareFileClient), message: string.Empty);
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(GetSymbolicLink)}");
+
+                ResponseWithHeaders<FileGetSymbolicLinkHeaders> response;
+
+                try
+                {
+                    scope.Start();
+
+                    if (async)
+                    {
+                        response = await FileRestClient.GetSymbolicLinkAsync()
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.GetSymbolicLink();
+                    }
+
+                    return Response.FromValue(
+                        response.ToFileSymbolicLinkInfo(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion
+
+        #region GetSymbolicLink
+        #endregion
+
+        #region CreateHardLink
+        #endregion
+
         #region OpenWrite
         /// <summary>
         /// Opens a stream for writing to the file.
