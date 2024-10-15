@@ -13,10 +13,11 @@
     <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
   </Target>
 
-  <Target Name="ValidateRunApiCompat" BeforeTargets="Build" Condition="'$(ValidateRunApiCompat)' == 'true'">
+  <!-- TEMPORARY while transitioning to require a .NET 8 target, once libraries with new targets have had a chance to release, this can be restored -->
+  <!-- <Target Name="ValidateRunApiCompat" BeforeTargets="Build" Condition="'$(ValidateRunApiCompat)' == 'true'">
     <Error Condition="'$(RunApiCompat)' == 'false' and '$(IncludeBuildOutput)' != 'false'"
            Text="Api Compat cannot be disabled."/>
-  </Target>
+  </Target> -->
 
   <!-- Set PackageProjectUrl and PackageReleaseNotes to the package README.md and CHANGELOG.md respectively for DataPlane Libraries -->
   <Target Name="SetPackageProjectUrlandReleaseNotes" BeforeTargets="GenerateNuspec" DependsOnTargets="InitializeSourceControlInformationFromSourceControlManager" Condition="'$(IsShippingLibrary)' == 'true' and '$(SourceRevisionId)' != ''">
@@ -96,6 +97,15 @@
 
     <PackageReference Condition="'$(EnableBannedApiAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="All" />
 
+  </ItemGroup>
+
+  <!-- Remove packages built into the .NET 6+ runtime -->
+  <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible($(TargetFramework), 'net6.0'))">
+    <PackageReference Remove="System.Buffers" />
+    <PackageReference Remove="System.Net.Http" />
+    <PackageReference Remove="System.Threading.Channels" />
+    <PackageReference Remove="System.Text.Encodings.Web" />
+    <PackageReference Remove="System.Text.Json" />
   </ItemGroup>
 
   <!-- Add Package Icon to DataPlane Packages -->
