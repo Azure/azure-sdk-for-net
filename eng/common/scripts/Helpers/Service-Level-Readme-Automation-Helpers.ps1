@@ -11,6 +11,13 @@ function create-service-readme(
   $readmePath = Join-Path $readmeFolder -ChildPath $readmeName
   $content = ""
   if (Test-Path (Join-Path $readmeFolder -ChildPath $indexTableLink)) {
+    # Escape the close parentheses in the URL. This is required by docs
+    # https://github.com/Azure/azure-sdk-tools/issues/5433
+    # This line looks incorrect but the left parameter is a regex and must
+    # escape the parentheses. The right is a literal string and, since this is
+    # PowerShell, the backslash does not itself need to be escaped.
+
+    # Example: "filename-with-(parens).md" -> "filename-with-(parens\).md"
     $escapedIndexTableLink = $indexTableLink -replace '\)', '\)'
 
     $content = "## Packages - $moniker`r`n"
