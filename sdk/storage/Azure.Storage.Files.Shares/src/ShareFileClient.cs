@@ -1807,7 +1807,7 @@ namespace Azure.Storage.Files.Shares
                             group: nfsProperties?.Group,
                             fileMode: nfsProperties?.FileMode?.ToOctalFileMode(),
                             fileModeCopyMode: nfsProperties?.FileMode != null ? ModeCopyMode.Override : null,
-                            fileOwnerCopyMode: nfsProperties?.Owner != null ? OwnerCopyMode.Override : null,
+                            fileOwnerCopyMode: (nfsProperties?.Owner != null || nfsProperties.Group != null) ? OwnerCopyMode.Override : null,
                             copyFileSmbInfo: copyFileSmbInfo,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -1825,7 +1825,7 @@ namespace Azure.Storage.Files.Shares
                             group: nfsProperties?.Group,
                             fileMode: nfsProperties?.FileMode?.ToOctalFileMode(),
                             fileModeCopyMode: nfsProperties?.FileMode != null ? ModeCopyMode.Override : null,
-                            fileOwnerCopyMode: nfsProperties?.Owner != null ? OwnerCopyMode.Override : null,
+                            fileOwnerCopyMode: (nfsProperties?.Owner != null || nfsProperties.Group != null) ? OwnerCopyMode.Override : null,
                             copyFileSmbInfo: copyFileSmbInfo,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
