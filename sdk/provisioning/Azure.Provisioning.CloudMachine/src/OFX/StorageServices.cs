@@ -61,10 +61,9 @@ public readonly struct StorageServices
         return result.Content;
     }
 
-    public void DeleteBlob(string name)
+    public void DeleteBlob(string path)
     {
-        BlobContainerClient container = GetDefaultContainer();
-        BlobClient blob = container.GetBlobClient(name);
+        BlobClient blob = GetBlobClientFromPath(path, null);
         blob.DeleteIfExists();
     }
 
