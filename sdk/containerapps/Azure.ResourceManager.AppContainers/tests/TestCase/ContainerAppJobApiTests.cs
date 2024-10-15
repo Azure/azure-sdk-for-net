@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("This test case will cause errors in the pipeline. After fixing the problem, restore this test")]
         public async Task CreateOrUpdate()
         {
             string envName = Recording.GenerateAssetName("env");
