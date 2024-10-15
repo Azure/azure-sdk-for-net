@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Azure.Core
 {
@@ -38,6 +40,7 @@ namespace Azure.Core
                 LoggedContentSizeLimit = diagnosticsOptions.LoggedContentSizeLimit;
                 IsDistributedTracingEnabled = diagnosticsOptions.IsDistributedTracingEnabled;
                 IsLoggingContentEnabled = diagnosticsOptions.IsLoggingContentEnabled;
+                LoggerFactory = diagnosticsOptions.LoggerFactory;
             }
             else
             {
@@ -72,6 +75,7 @@ namespace Azure.Core
                 LoggedQueryParameters = new List<string> { "api-version" };
                 IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
                 IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
+                LoggerFactory = new NullLoggerFactory();
             }
         }
 
@@ -111,6 +115,11 @@ namespace Azure.Core
         /// Gets a list of query parameter names that are not redacted during logging.
         /// </summary>
         public IList<string> LoggedQueryParameters { get; internal set; }
+
+        /// <summary>
+        /// Gets or sets the logger factory used to create loggers for logging.
+        /// </summary>
+        public ILoggerFactory LoggerFactory { get; set; }
 
         /// <summary>
         /// Gets or sets the value sent as the first part of "User-Agent" headers for all requests issues by this client. Defaults to <see cref="DefaultApplicationId"/>.
