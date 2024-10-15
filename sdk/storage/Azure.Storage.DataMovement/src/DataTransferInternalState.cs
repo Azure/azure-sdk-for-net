@@ -86,10 +86,10 @@ namespace Azure.Storage.DataMovement
         /// Sets the completion status
         /// </summary>
         /// <param name="state"></param>
-        /// <returns>Returns whether or not the status has been changed/set</returns>
-        public bool TrySetTransferState(DataTransferState state)
+        /// <returns>Returns whether or not the status has been changed</returns>
+        public bool SetTransferState(DataTransferState state)
         {
-            if (_status.TrySetTransferStateChange(state))
+            if (_status.SetTransferStateChange(state))
             {
                 if (DataTransferState.Completed == _status.State ||
                     DataTransferState.Paused == _status.State)
@@ -104,9 +104,9 @@ namespace Azure.Storage.DataMovement
             return false;
         }
 
-        public bool TrySetFailedItemsState() => _status.TrySetFailedItem();
+        public bool SetFailedItemsState() => _status.SetFailedItem();
 
-        public bool TrySetSkippedItemsState() => _status.TrySetSkippedItem();
+        public bool SetSkippedItemsState() => _status.SetSkippedItem();
 
         internal bool CanPause()
             => DataTransferState.InProgress == _status.State;
@@ -119,7 +119,7 @@ namespace Azure.Storage.DataMovement
             }
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             // Call the inner cancellation token to stop the transfer job
-            TrySetTransferState(DataTransferState.Pausing);
+            SetTransferState(DataTransferState.Pausing);
             if (TriggerCancellation())
             {
                 // Wait until full pause has completed.
