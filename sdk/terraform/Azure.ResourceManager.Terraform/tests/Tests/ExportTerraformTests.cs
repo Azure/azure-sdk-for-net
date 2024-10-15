@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Terraform.Tests.Tests
             string rgName = _resourceGroup.Data.Name;
             ArmOperation<OperationStatus> operationStatus = await DefaultSubscription.ExportTerraformAsync(WaitUntil.Started, new ExportResourceGroup(rgName));
 
-            ArmOperation<OperationStatus> armOperation = await DefaultSubscription.OperationStatusesAsync(WaitUntil.Completed, operationStatus.Id);
+            ArmOperation armOperation = await DefaultSubscription.OperationStatusesAsync(WaitUntil.Completed, operationStatus.Id);
 
             Assert.That(armOperation.HasCompleted, Is.True);
         }

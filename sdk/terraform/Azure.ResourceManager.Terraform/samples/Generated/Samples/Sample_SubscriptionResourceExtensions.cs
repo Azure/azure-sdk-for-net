@@ -64,10 +64,9 @@ namespace Azure.ResourceManager.Terraform.Samples
 
             // invoke the operation
             string operationId = "00000000-0000-0000-0000-000000000000";
-            ArmOperation<OperationStatus> lro = await subscriptionResource.OperationStatusesAsync(WaitUntil.Completed, operationId);
-            OperationStatus result = lro.Value;
+            await subscriptionResource.OperationStatusesAsync(WaitUntil.Completed, operationId);
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine($"Succeeded");
         }
     }
 }

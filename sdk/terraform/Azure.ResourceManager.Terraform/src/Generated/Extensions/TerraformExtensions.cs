@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Terraform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
-        public static async Task<ArmOperation<OperationStatus>> OperationStatusesAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation> OperationStatusesAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Terraform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
-        public static ArmOperation<OperationStatus> OperationStatuses(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        public static ArmOperation OperationStatuses(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

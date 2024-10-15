@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationStatus>> OperationStatusesAsync(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> OperationStatusesAsync(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.Terraform.Mocking
             scope.Start();
             try
             {
-                var response = await ExportTerraformRestClient.OperationStatusesAsync(operationId, Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                var operation = new TerraformArmOperation<OperationStatus>(new OperationStatusOperationSource(), ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateOperationStatusesRequest(operationId, Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
+                var response = await ExportTerraformRestClient.OperationStatusesAsync(Id.SubscriptionId, operationId, cancellationToken).ConfigureAwait(false);
+                var operation = new TerraformArmOperation(ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateOperationStatusesRequest(Id.SubscriptionId, operationId).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual ArmOperation<OperationStatus> OperationStatuses(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        public virtual ArmOperation OperationStatuses(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.Terraform.Mocking
             scope.Start();
             try
             {
-                var response = ExportTerraformRestClient.OperationStatuses(operationId, Id.SubscriptionId, cancellationToken);
-                var operation = new TerraformArmOperation<OperationStatus>(new OperationStatusOperationSource(), ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateOperationStatusesRequest(operationId, Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
+                var response = ExportTerraformRestClient.OperationStatuses(Id.SubscriptionId, operationId, cancellationToken);
+                var operation = new TerraformArmOperation(ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateOperationStatusesRequest(Id.SubscriptionId, operationId).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

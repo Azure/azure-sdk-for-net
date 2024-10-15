@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Terraform
             }
         }
 
-        internal RequestUriBuilder CreateOperationStatusesRequestUri(string operationId, string subscriptionId)
+        internal RequestUriBuilder CreateOperationStatusesRequestUri(string subscriptionId, string operationId)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Terraform
             return uri;
         }
 
-        internal HttpMessage CreateOperationStatusesRequest(string operationId, string subscriptionId)
+        internal HttpMessage CreateOperationStatusesRequest(string subscriptionId, string operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.Terraform
         }
 
         /// <summary> Get the status of a long running azure asynchronous operation. </summary>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> OperationStatusesAsync(string operationId, string subscriptionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> OperationStatusesAsync(string subscriptionId, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var message = CreateOperationStatusesRequest(operationId, subscriptionId);
+            using var message = CreateOperationStatusesRequest(subscriptionId, operationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -165,17 +165,17 @@ namespace Azure.ResourceManager.Terraform
         }
 
         /// <summary> Get the status of a long running azure asynchronous operation. </summary>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response OperationStatuses(string operationId, string subscriptionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response OperationStatuses(string subscriptionId, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var message = CreateOperationStatusesRequest(operationId, subscriptionId);
+            using var message = CreateOperationStatusesRequest(subscriptionId, operationId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
