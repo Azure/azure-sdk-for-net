@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<ContainerServiceFleetUpdateRunResource>> SkipAsync(WaitUntil waitUntil, SkipProperties body, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerServiceFleetUpdateRunResource>> SkipAsync(WaitUntil waitUntil, ContainerServiceFleetSkipProperties body, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<ContainerServiceFleetUpdateRunResource> Skip(WaitUntil waitUntil, SkipProperties body, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerServiceFleetUpdateRunResource> Skip(WaitUntil waitUntil, ContainerServiceFleetSkipProperties body, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 

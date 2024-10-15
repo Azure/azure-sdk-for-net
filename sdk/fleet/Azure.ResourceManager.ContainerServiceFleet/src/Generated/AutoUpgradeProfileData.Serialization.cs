@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             SystemData systemData = default;
             AutoUpgradeProfileProvisioningState? provisioningState = default;
             ResourceIdentifier updateStrategyId = default;
-            UpgradeChannel? channel = default;
+            ContainerServiceFleetUpgradeChannel? channel = default;
             AutoUpgradeNodeImageSelection nodeImageSelection = default;
             bool? disabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             {
                                 continue;
                             }
-                            channel = new UpgradeChannel(property0.Value.GetString());
+                            channel = new ContainerServiceFleetUpgradeChannel(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("nodeImageSelection"u8))

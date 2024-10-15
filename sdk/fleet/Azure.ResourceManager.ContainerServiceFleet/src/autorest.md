@@ -28,6 +28,10 @@ rename-mapping:
   FleetMember: ContainerServiceFleetMember
   FleetMemberListResult: ContainerServiceFleetMemberListResult
   MemberUpdateStatus.clusterResourceId: -|arm-id
+  SkipProperties: ContainerServiceFleetSkipProperties
+  SkipTarget: ContainerServiceFleetSkipTarget
+  TargetType: ContainerServiceFleetTargetType
+  UpgradeChannel: ContainerServiceFleetUpgradeChannel
 
 prepend-rp-prefix:
   - AgentProfile

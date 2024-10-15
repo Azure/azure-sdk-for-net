@@ -7,20 +7,14 @@ parameters:
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: formrecognizer
     TimeoutInMinutes: 180
     CloudConfig:
       Public:
-        ServiceConnection: azure-sdk-tests
-        SubscriptionConfigurationFilePaths:
-          - eng/common/TestResources/sub-config/AzurePublicMsft.json
         Location: '${{ parameters.Location }}'
-      Canary:
-        ServiceConnection: azure-sdk-tests
-        SubscriptionConfigurationFilePaths:
-          - eng/common/TestResources/sub-config/AzurePublicMsft.json
-        Location: 'centraluseuap'
-    Clouds: 'Public'
+      # Canary regions are currently not supported in TME so disabling for now
+      # Canary:
+      #   Location: 'centraluseuap'
     SupportedClouds: 'Public, Canary'
