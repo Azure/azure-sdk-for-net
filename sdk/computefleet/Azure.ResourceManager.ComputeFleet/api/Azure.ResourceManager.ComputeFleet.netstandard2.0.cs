@@ -92,6 +92,55 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AcceleratorManufacturer : System.IEquatable<Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AcceleratorManufacturer(string value) { throw null; }
+        public static Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer AMD { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer Nvidia { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer Xilinx { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer left, Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer left, Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AcceleratorType : System.IEquatable<Azure.ResourceManager.ComputeFleet.Models.AcceleratorType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AcceleratorType(string value) { throw null; }
+        public static Azure.ResourceManager.ComputeFleet.Models.AcceleratorType FPGA { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.AcceleratorType GPU { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ComputeFleet.Models.AcceleratorType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.AcceleratorType left, Azure.ResourceManager.ComputeFleet.Models.AcceleratorType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeFleet.Models.AcceleratorType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ComputeFleet.Models.AcceleratorType left, Azure.ResourceManager.ComputeFleet.Models.AcceleratorType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AdditionalCapabilities : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.AdditionalCapabilities>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.AdditionalCapabilities>
+    {
+        public AdditionalCapabilities() { }
+        public bool? HibernationEnabled { get { throw null; } set { } }
+        public bool? UltraSSDEnabled { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeFleet.Models.AdditionalCapabilities System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.AdditionalCapabilities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.AdditionalCapabilities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeFleet.Models.AdditionalCapabilities System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.AdditionalCapabilities>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.AdditionalCapabilities>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.AdditionalCapabilities>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AdditionalInformationSettingName : System.IEquatable<Azure.ResourceManager.ComputeFleet.Models.AdditionalInformationSettingName>
     {
         private readonly object _dummy;
@@ -109,6 +158,24 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator !=(Azure.ResourceManager.ComputeFleet.Models.AdditionalInformationSettingName left, Azure.ResourceManager.ComputeFleet.Models.AdditionalInformationSettingName right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ArchitectureType : System.IEquatable<Azure.ResourceManager.ComputeFleet.Models.ArchitectureType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ArchitectureType(string value) { throw null; }
+        public static Azure.ResourceManager.ComputeFleet.Models.ArchitectureType ARM64 { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.ArchitectureType X64 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ArchitectureType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.ArchitectureType left, Azure.ResourceManager.ComputeFleet.Models.ArchitectureType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeFleet.Models.ArchitectureType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ComputeFleet.Models.ArchitectureType left, Azure.ResourceManager.ComputeFleet.Models.ArchitectureType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public static partial class ArmComputeFleetModelFactory
     {
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetApiError ComputeFleetApiError(string code = null, string target = null, string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetApiErrorInfo> details = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetInnerError innererror = null) { throw null; }
@@ -116,7 +183,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static Azure.ResourceManager.ComputeFleet.ComputeFleetData ComputeFleetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties properties = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Models.ArmPlan plan = null) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetImageReference ComputeFleetImageReference(Azure.Core.ResourceIdentifier id = null, string publisher = null, string offer = null, string sku = null, string version = null, string exactVersion = null, string sharedGalleryImageId = null, string communityGalleryImageId = null) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetInnerError ComputeFleetInnerError(string exceptionType = null, string errorDetail = null) { throw null; }
-        public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties ComputeFleetProperties(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState?), Azure.ResourceManager.ComputeFleet.Models.SpotPriorityProfile spotPriorityProfile = null, Azure.ResourceManager.ComputeFleet.Models.RegularPriorityProfile regularPriorityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProfile> vmSizesProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetComputeProfile computeProfile = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string uniqueId = null) { throw null; }
+        public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties ComputeFleetProperties(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState?), Azure.ResourceManager.ComputeFleet.Models.SpotPriorityProfile spotPriorityProfile = null, Azure.ResourceManager.ComputeFleet.Models.RegularPriorityProfile regularPriorityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProfile> vmSizesProfile = null, Azure.ResourceManager.ComputeFleet.Models.VmAttributes vmAttributes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.LocationProfile> additionalLocationsLocationProfiles = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetComputeProfile computeProfile = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string uniqueId = null) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmProfile ComputeFleetVmProfile(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssOSProfile osProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssStorageProfile storageProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssNetworkProfile networkProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityProfile securityProfile = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetBootDiagnostics bootDiagnostics = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssExtensionProfile extensionProfile = null, string licenseType = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetScheduledEventsProfile scheduledEventsProfile = null, string userData = null, Azure.Core.ResourceIdentifier capacityReservationGroupId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmGalleryApplication> galleryApplications = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProperties hardwareVmSizeProperties = null, Azure.Core.ResourceIdentifier serviceArtifactReferenceId = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetSecurityPostureReference securityPostureReference = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmss ComputeFleetVmss(string id = null, string type = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState operationStatus = default(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState), Azure.ResourceManager.ComputeFleet.Models.ComputeFleetApiError error = null) { throw null; }
         public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssExtension ComputeFleetVmssExtension(Azure.Core.ResourceIdentifier id = null, string name = null, string extensionType = null, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmssExtensionProperties properties = null) { throw null; }
@@ -184,6 +251,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public partial class ComputeFleetComputeProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetComputeProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetComputeProfile>
     {
         public ComputeFleetComputeProfile(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmProfile baseVirtualMachineProfile) { }
+        public Azure.ResourceManager.ComputeFleet.Models.AdditionalCapabilities AdditionalVirtualMachineCapabilities { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmProfile BaseVirtualMachineProfile { get { throw null; } set { } }
         public string ComputeApiVersion { get { throw null; } set { } }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
@@ -597,12 +665,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public partial class ComputeFleetProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties>
     {
         public ComputeFleetProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProfile> vmSizesProfile, Azure.ResourceManager.ComputeFleet.Models.ComputeFleetComputeProfile computeProfile) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeFleet.Models.LocationProfile> AdditionalLocationsLocationProfiles { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeFleet.Models.ComputeFleetComputeProfile ComputeProfile { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ComputeFleet.Models.RegularPriorityProfile RegularPriorityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeFleet.Models.SpotPriorityProfile SpotPriorityProfile { get { throw null; } set { } }
         public string UniqueId { get { throw null; } }
+        public Azure.ResourceManager.ComputeFleet.Models.VmAttributes VmAttributes { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmSizeProfile> VmSizesProfile { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1359,6 +1429,56 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.ComputeFleetWinRMListener>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CpuManufacturer : System.IEquatable<Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CpuManufacturer(string value) { throw null; }
+        public static Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer AMD { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer Ampere { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer Intel { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer Microsoft { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer left, Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer left, Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LocalStorageDiskType : System.IEquatable<Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LocalStorageDiskType(string value) { throw null; }
+        public static Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType HDD { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType SSD { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType left, Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType left, Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LocationProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.LocationProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.LocationProfile>
+    {
+        public LocationProfile(string location) { }
+        public string Location { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeFleet.Models.ComputeFleetVmProfile VirtualMachineProfileOverride { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeFleet.Models.LocationProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.LocationProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.LocationProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeFleet.Models.LocationProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.LocationProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.LocationProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.LocationProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProxyAgentExecuteMode : System.IEquatable<Azure.ResourceManager.ComputeFleet.Models.ProxyAgentExecuteMode>
     {
         private readonly object _dummy;
@@ -1441,6 +1561,102 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         Azure.ResourceManager.ComputeFleet.Models.SpotPriorityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.SpotPriorityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.SpotPriorityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.SpotPriorityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VmAttributeMinMaxDouble : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxDouble>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxDouble>
+    {
+        public VmAttributeMinMaxDouble() { }
+        public double? Max { get { throw null; } set { } }
+        public double? Min { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxDouble System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxDouble>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxDouble>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxDouble System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxDouble>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxDouble>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxDouble>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VmAttributeMinMaxInteger : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxInteger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxInteger>
+    {
+        public VmAttributeMinMaxInteger() { }
+        public int? Max { get { throw null; } set { } }
+        public int? Min { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxInteger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxInteger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxInteger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxInteger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxInteger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxInteger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxInteger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VmAttributes : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributes>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributes>
+    {
+        public VmAttributes(Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxInteger vCpuCount, Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxDouble memoryInGiB) { }
+        public Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxInteger AcceleratorCount { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeFleet.Models.AcceleratorManufacturer> AcceleratorManufacturers { get { throw null; } }
+        public Azure.ResourceManager.ComputeFleet.Models.VmAttributeSupport? AcceleratorSupport { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeFleet.Models.AcceleratorType> AcceleratorTypes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeFleet.Models.ArchitectureType> ArchitectureTypes { get { throw null; } }
+        public Azure.ResourceManager.ComputeFleet.Models.VmAttributeSupport? BurstableSupport { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeFleet.Models.CpuManufacturer> CpuManufacturers { get { throw null; } }
+        public Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxInteger DataDiskCount { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ExcludedVmSizes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeFleet.Models.LocalStorageDiskType> LocalStorageDiskTypes { get { throw null; } }
+        public Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxDouble LocalStorageInGiB { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeFleet.Models.VmAttributeSupport? LocalStorageSupport { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxDouble MemoryInGiB { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxDouble MemoryInGiBPerVCpu { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxDouble NetworkBandwidthInMbps { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxInteger NetworkInterfaceCount { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxInteger RdmaNetworkInterfaceCount { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeFleet.Models.VmAttributeSupport? RdmaSupport { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeFleet.Models.VmAttributeMinMaxInteger VCpuCount { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeFleet.Models.VmCategory> VmCategories { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeFleet.Models.VmAttributes System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributes>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributes>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeFleet.Models.VmAttributes System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributes>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributes>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.VmAttributes>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VmAttributeSupport : System.IEquatable<Azure.ResourceManager.ComputeFleet.Models.VmAttributeSupport>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VmAttributeSupport(string value) { throw null; }
+        public static Azure.ResourceManager.ComputeFleet.Models.VmAttributeSupport Excluded { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.VmAttributeSupport Included { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.VmAttributeSupport Required { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ComputeFleet.Models.VmAttributeSupport other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.VmAttributeSupport left, Azure.ResourceManager.ComputeFleet.Models.VmAttributeSupport right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeFleet.Models.VmAttributeSupport (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ComputeFleet.Models.VmAttributeSupport left, Azure.ResourceManager.ComputeFleet.Models.VmAttributeSupport right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VmCategory : System.IEquatable<Azure.ResourceManager.ComputeFleet.Models.VmCategory>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VmCategory(string value) { throw null; }
+        public static Azure.ResourceManager.ComputeFleet.Models.VmCategory ComputeOptimized { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.VmCategory FpgaAccelerated { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.VmCategory GeneralPurpose { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.VmCategory GpuAccelerated { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.VmCategory HighPerformanceCompute { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.VmCategory MemoryOptimized { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.VmCategory StorageOptimized { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ComputeFleet.Models.VmCategory other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ComputeFleet.Models.VmCategory left, Azure.ResourceManager.ComputeFleet.Models.VmCategory right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeFleet.Models.VmCategory (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ComputeFleet.Models.VmCategory left, Azure.ResourceManager.ComputeFleet.Models.VmCategory right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class WindowsSetupAdditionalInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.WindowsSetupAdditionalInformation>
     {

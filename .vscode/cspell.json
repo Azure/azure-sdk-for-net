@@ -141,7 +141,6 @@
     "referer",
     "renormalize",
     "retriable",
-    "Rdma",
     "Servfail",
     "setsas",
     "signalr",
@@ -254,6 +253,12 @@
         "Adou",
         "Drtm",
         "Hvci"
+      ]
+    },
+	{
+      "filename": "**/sdk/computefleet/**/*.cs",
+      "words": [
+        "Rdma"
       ]
     },
     {
