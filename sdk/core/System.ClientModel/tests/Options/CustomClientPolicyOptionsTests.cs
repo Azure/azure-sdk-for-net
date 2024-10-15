@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.ReferenceClients.PagingPolicyClient;
+using ClientModel.ReferenceClients.PagerPolicyClient;
 using ClientModel.ReferenceClients.PagerClient;
 
 using NUnit.Framework;
@@ -15,10 +15,10 @@ public class CustomClientPolicyOptionsTests
     [Test]
     public void CanSetPublicPolicyBehaviorsFromClientOptions()
     {
-        PagingPolicyClientOptions clientOptions = new();
+        PagerPolicyClientOptions clientOptions = new();
         clientOptions.Pager.PhoneNumber = "555-555-1234";
 
-        PagingPolicyClient client = new PagingPolicyClient(
+        PagerPolicyClient client = new PagerPolicyClient(
             new Uri("https://example.com"),
             new ApiKeyCredential("fake key"),
             clientOptions);
@@ -30,10 +30,10 @@ public class CustomClientPolicyOptionsTests
         PagerPolicyOptions policyOptions = new();
         policyOptions.PhoneNumber = "555-555-1234";
 
-        PagingPolicyClientOptions clientOptions = new();
+        PagerPolicyClientOptions clientOptions = new();
         clientOptions.PagerPolicy = new PagerPolicy(policyOptions);
 
-        PagingPolicyClient client = new PagingPolicyClient(
+        PagerPolicyClient client = new PagerPolicyClient(
             new Uri("https://example.com"),
             new ApiKeyCredential("fake key"),
             clientOptions);

@@ -13,7 +13,9 @@ public class ClientRetryOptions
     // TODO: implement freezing
     private bool _frozen;
 
-    public int MaxRetries { get; set; }
+    public bool? EnableRetries { get; set; }
+
+    public int? MaxRetries { get; set; }
 
     public TimeSpan? MaxDelay { get; set; }
 
