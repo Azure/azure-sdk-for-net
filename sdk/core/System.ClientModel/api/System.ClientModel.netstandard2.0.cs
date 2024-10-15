@@ -83,9 +83,9 @@ namespace System.ClientModel.Primitives
         Default = 0,
         NoThrow = 1,
     }
-    public partial class ClientObservabilityOptions
+    public partial class ClientLoggingOptions
     {
-        public ClientObservabilityOptions() { }
+        public ClientLoggingOptions() { }
         public System.Collections.Generic.IList<string> AllowedHeaderNames { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedQueryParameters { get { throw null; } }
         public bool? EnableHttpContentLogging { get { throw null; } set { } }
@@ -108,8 +108,8 @@ namespace System.ClientModel.Primitives
     {
         public ClientPipelineOptions() { }
         public System.ClientModel.Primitives.PipelinePolicy? HttpLoggingPolicy { get { throw null; } set { } }
+        public System.ClientModel.Primitives.ClientLoggingOptions Logging { get { throw null; } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
-        public System.ClientModel.Primitives.ClientObservabilityOptions Observability { get { throw null; } }
         public System.ClientModel.Primitives.ClientRetryOptions Retries { get { throw null; } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
@@ -120,8 +120,9 @@ namespace System.ClientModel.Primitives
     public partial class ClientRetryOptions
     {
         public ClientRetryOptions() { }
+        public bool? EnableRetries { get { throw null; } set { } }
         public System.TimeSpan? MaxDelay { get { throw null; } set { } }
-        public int MaxRetries { get { throw null; } set { } }
+        public int? MaxRetries { get { throw null; } set { } }
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
     }
@@ -174,7 +175,7 @@ namespace System.ClientModel.Primitives
     }
     public partial class HttpLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public HttpLoggingPolicy(System.ClientModel.Primitives.ClientObservabilityOptions options) { }
+        public HttpLoggingPolicy(System.ClientModel.Primitives.ClientLoggingOptions options) { }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
@@ -319,6 +320,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelineTransport : System.ClientModel.Primitives.PipelinePolicy
     {
         protected PipelineTransport() { }
+        protected PipelineTransport(System.ClientModel.Primitives.PipelineTransportOptions options) { }
         public System.ClientModel.Primitives.PipelineMessage CreateMessage() { throw null; }
         protected abstract System.ClientModel.Primitives.PipelineMessage CreateMessageCore();
         public void Process(System.ClientModel.Primitives.PipelineMessage message) { }
@@ -327,6 +329,10 @@ namespace System.ClientModel.Primitives
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
         protected abstract void ProcessCore(System.ClientModel.Primitives.PipelineMessage message);
         protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message);
+    }
+    public partial class PipelineTransportOptions
+    {
+        public PipelineTransportOptions() { }
     }
     public partial class RequestOptions
     {

@@ -19,6 +19,13 @@ public abstract class PipelineTransport : PipelinePolicy
     /// <summary>
     /// TBD
     /// </summary>
+    protected PipelineTransport()
+    {
+    }
+
+    /// <summary>
+    /// TBD
+    /// </summary>
     /// <param name="options"></param>
     protected PipelineTransport(PipelineTransportOptions options)
     {
