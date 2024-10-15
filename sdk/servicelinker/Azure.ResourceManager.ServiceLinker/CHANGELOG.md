@@ -12,7 +12,7 @@
 ### Bugs Fixed
 
 ### Other Changes
-
+- Fixed the recording file while the project reference updated.
 ## 1.1.0 (2023-11-30)
 
 ### Features Added
