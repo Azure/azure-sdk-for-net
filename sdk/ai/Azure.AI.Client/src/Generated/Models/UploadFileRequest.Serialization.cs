@@ -127,18 +127,6 @@ namespace Azure.AI.Client.Models
             }
         }
 
-        internal virtual MultipartFormDataRequestContent ToMultipartRequestContent()
-        {
-            MultipartFormDataRequestContent content = new MultipartFormDataRequestContent();
-            content.Add(Data, "file", "file", "application/octet-stream");
-            content.Add(Purpose.ToString(), "purpose");
-            if (Optional.IsDefined(Filename))
-            {
-                content.Add(Filename, "filename");
-            }
-            return content;
-        }
-
         BinaryData IPersistableModel<UploadFileRequest>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UploadFileRequest>)this).GetFormatFromOptions(options) : options.Format;
@@ -178,6 +166,14 @@ namespace Azure.AI.Client.Models
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeUploadFileRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

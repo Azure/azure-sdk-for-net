@@ -17,17 +17,11 @@ internal partial class UploadFileRequest : IUtf8JsonSerializable
      *
      */
 
-    internal virtual RequestContent ToRequestContent()
+    internal virtual MultipartFormDataRequestContent ToMultipartRequestContent()
     {
-        MultipartFormDataContent content = new();
-
-        content.Add(MultipartContent.Create(Purpose.ToString()), "\"purpose\"", new Dictionary<string, string>());
-        content.Add(
-            MultipartContent.Create(Data),
-            name: "file",
-            fileName: string.IsNullOrEmpty(Filename) ? "file" : Filename,
-            headers: new Dictionary<string, string>());
-
+        MultipartFormDataRequestContent content = new MultipartFormDataRequestContent();
+        content.Add(Data, "file", Filename);
+        content.Add(Purpose.ToString(), "purpose");
         return content;
     }
 }

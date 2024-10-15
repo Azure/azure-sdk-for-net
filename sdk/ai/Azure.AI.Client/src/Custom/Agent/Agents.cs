@@ -9,7 +9,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Client.Models;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.Client
@@ -133,17 +132,92 @@ namespace Azure.AI.Client
         /// <summary>
         /// Uploads a file from a local file path accessible to <see cref="System.IO.File"/>.
         /// </summary>
-        /// <param name="localFilePath"> The local file path. </param>
+        /// <param name="filePath"> The local file path. </param>
         /// <param name="purpose"> The intended purpose of the uploaded file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<OpenAIFile>> UploadFileAsync(
-            string localFilePath,
+            string filePath,
             OpenAIFilePurpose purpose,
             CancellationToken cancellationToken = default)
         {
-            FileInfo localFileInfo = new(localFilePath);
-            using FileStream localFileStream = localFileInfo.OpenRead();
-            return await UploadFileAsync(localFileStream, purpose, null, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
+
+            using FileStream stream = File.OpenRead(filePath);
+            return await UploadFileAsync(stream, purpose, filePath, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Uploads a file that can be used across various operations. </summary>
+        /// <remarks> Individual files can be up to 512 MB, and the size of all files uploaded by one organization can be up to 100 GB. </remarks>
+        /// <param name="file"> The file bytes to upload. </param>
+        /// <param name="filename">
+        ///     The filename associated with the file bytes. The filename's extension (for example: .json) will be used to
+        ///     validate the file format. The request may fail if the filename's extension and the actual file format do
+        ///     not match.
+        /// </param>
+        /// <param name="purpose"> The intended purpose of the uploaded file. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="file"/> or <paramref name="filename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filename"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Task<Response<OpenAIFile>> UploadFileAsync(BinaryData file, string filename, OpenAIFilePurpose purpose)
+        {
+            Argument.AssertNotNull(file, nameof(file));
+            Argument.AssertNotNullOrEmpty(filename, nameof(filename));
+
+            return UploadFileAsync(file?.ToStream(), purpose, filename);
+        }
+
+        /// <summary> Uploads a file that can be used across various operations. </summary>
+        /// <remarks> Individual files can be up to 512 MB, and the size of all files uploaded by one organization can be up to 100 GB. </remarks>
+        /// <param name="file"> The file bytes to upload. </param>
+        /// <param name="filename">
+        ///     The filename associated with the file bytes. The filename's extension (for example: .json) will be used to
+        ///     validate the file format. The request may fail if the filename's extension and the actual file format do
+        ///     not match.
+        /// </param>
+        /// <param name="purpose"> The intended purpose of the uploaded file. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="file"/> or <paramref name="filename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filename"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<OpenAIFile> UploadFile(BinaryData file, string filename, OpenAIFilePurpose purpose)
+        {
+            Argument.AssertNotNull(file, nameof(file));
+            Argument.AssertNotNullOrEmpty(filename, nameof(filename));
+
+            return UploadFile(file?.ToStream(), purpose, filename);
+        }
+
+        /// <summary> Uploads a file for use by other operations. </summary>
+        /// <param name="data"> The file data, in bytes. </param>
+        /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
+        /// <param name="filename"> The name of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<OpenAIFile>> UploadFileAsync(Stream data, OpenAIFilePurpose purpose, string filename, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNullOrEmpty(filename, nameof(filename));
+
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
+            using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
+            return Response.FromValue(OpenAIFile.FromResponse(response), response);
+        }
+
+        /// <summary> Uploads a file for use by other operations. </summary>
+        /// <param name="data"> The file data, in bytes. </param>
+        /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
+        /// <param name="filename"> The name of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<OpenAIFile> UploadFile(Stream data, OpenAIFilePurpose purpose, string filename, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNullOrEmpty(filename, nameof(filename));
+
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
+            using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UploadFile(content, content.ContentType, context);
+            return Response.FromValue(OpenAIFile.FromResponse(response), response);
         }
 
         /*

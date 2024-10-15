@@ -3030,40 +3030,6 @@ namespace Azure.AI.Client
             }
         }
 
-        /// <summary> Uploads a file for use by other operations. </summary>
-        /// <param name="data"> The file data, in bytes. </param>
-        /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
-        /// <param name="filename"> The name of the file. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<OpenAIFile>> UploadFileAsync(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
-            using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
-            return Response.FromValue(OpenAIFile.FromResponse(response), response);
-        }
-
-        /// <summary> Uploads a file for use by other operations. </summary>
-        /// <param name="data"> The file data, in bytes. </param>
-        /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
-        /// <param name="filename"> The name of the file. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<OpenAIFile> UploadFile(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
-            using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UploadFile(content, content.ContentType, context);
-            return Response.FromValue(OpenAIFile.FromResponse(response), response);
-        }
-
         /// <summary>
         /// [Protocol Method] Uploads a file for use by other operations.
         /// <list type="bullet">
