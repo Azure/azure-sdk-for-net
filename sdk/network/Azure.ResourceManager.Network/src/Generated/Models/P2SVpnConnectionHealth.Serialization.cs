@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Network.Models
 
         void IJsonModel<P2SVpnConnectionHealth>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<P2SVpnConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(P2SVpnConnectionHealth)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.Network.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         P2SVpnConnectionHealth IJsonModel<P2SVpnConnectionHealth>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

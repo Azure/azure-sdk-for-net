@@ -1,28 +1,12 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2024-10-10)
 
 ### Features Added
 
 - Add AutoUpgrade and AutoUpgradeProfile support
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.0.0 (2023-12-13)
 

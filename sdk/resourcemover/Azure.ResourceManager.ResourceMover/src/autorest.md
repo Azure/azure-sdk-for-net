@@ -20,6 +20,7 @@ modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
+use-write-core: true
 
 rename-mapping:
   AffectedMoveResource.id: -|arm-id

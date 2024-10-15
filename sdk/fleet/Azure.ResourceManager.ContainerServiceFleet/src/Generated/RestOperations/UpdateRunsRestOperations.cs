@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
-        internal RequestUriBuilder CreateSkipRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, SkipProperties body, string ifMatch)
+        internal RequestUriBuilder CreateSkipRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, ContainerServiceFleetSkipProperties body, string ifMatch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             return uri;
         }
 
-        internal HttpMessage CreateSkipRequest(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, SkipProperties body, string ifMatch)
+        internal HttpMessage CreateSkipRequest(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, ContainerServiceFleetSkipProperties body, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="updateRunName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SkipAsync(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, SkipProperties body, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> SkipAsync(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, ContainerServiceFleetSkipProperties body, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="updateRunName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Skip(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, SkipProperties body, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response Skip(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, ContainerServiceFleetSkipProperties body, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
