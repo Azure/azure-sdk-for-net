@@ -11,7 +11,7 @@ namespace Azure.Core.TestFramework
     public abstract class RecordedTestBase<TEnvironment> : RecordedTestBase where TEnvironment : TestEnvironment, new()
 #pragma warning restore SA1649 // File name should match first type name
     {
-        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = RecordedTestMode.Playback) : base(isAsync, mode)
+        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
             TestEnvironment = new TEnvironment();
             TestEnvironment.Mode = Mode;
