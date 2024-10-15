@@ -17,6 +17,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -27,6 +28,10 @@ rename-mapping:
   FleetMember: ContainerServiceFleetMember
   FleetMemberListResult: ContainerServiceFleetMemberListResult
   MemberUpdateStatus.clusterResourceId: -|arm-id
+  SkipProperties: ContainerServiceFleetSkipProperties
+  SkipTarget: ContainerServiceFleetSkipTarget
+  TargetType: ContainerServiceFleetTargetType
+  UpgradeChannel: ContainerServiceFleetUpgradeChannel
 
 prepend-rp-prefix:
   - AgentProfile
