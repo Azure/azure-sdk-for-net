@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -31,6 +32,12 @@ namespace Azure.Storage.Files.Shares.Models
         public FileSmbProperties SmbProperties { get; set; }
 
         /// <summary>
+        /// The directory's NFS properties.
+        /// Only applicable to files in a NFS share.
+        /// </summary>
+        public FileNfsProperties NfsProperties { get; internal set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         internal ShareDirectoryInfo() { }
@@ -44,6 +51,23 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new StorageDirectoryInfo instance for mocking.
         /// </summary>
+        public static ShareDirectoryInfo StorageDirectoryInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            FileSmbProperties smbProperties = default,
+            FileNfsProperties nfsProperties = default)
+            => new ShareDirectoryInfo
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                SmbProperties = smbProperties,
+                NfsProperties = nfsProperties,
+            };
+
+        /// <summary>
+        /// Creates a new StorageDirectoryInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ShareDirectoryInfo StorageDirectoryInfo(
             ETag eTag,
             DateTimeOffset lastModified,

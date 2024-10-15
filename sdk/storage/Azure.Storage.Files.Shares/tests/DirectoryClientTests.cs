@@ -586,6 +586,44 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateAsync_NFS()
+        {
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
+            ShareClient share = test.Share;
+
+            // Arrange
+            var name = GetNewDirectoryName();
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(name));
+
+            uint owner = 345;
+            uint group = 123;
+            string fileMode = "7777";
+
+            ShareDirectoryCreateOptions options = new ShareDirectoryCreateOptions
+            {
+                NfsProperties = new FileNfsProperties
+                {
+                    Owner = owner,
+                    Group = group,
+                    FileMode = NfsFileMode.ParseOctalFileMode(fileMode)
+                }
+            };
+
+            // Act
+            Response<ShareDirectoryInfo> response = await directory.CreateAsync(options);
+
+            // Assert
+            Assert.AreEqual(NfsFileType.Directory, response.Value.NfsProperties.FileType);
+            Assert.AreEqual(owner, response.Value.NfsProperties.Owner);
+            Assert.AreEqual(group, response.Value.NfsProperties.Group);
+            Assert.AreEqual(fileMode, response.Value.NfsProperties.FileMode.ToOctalFileMode());
+
+            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
+        }
+
+        [RecordedTest]
         public async Task CreateIfNotExists_NotExists()
         {
             // Arrange
