@@ -44,7 +44,7 @@ namespace Azure.AI.Inference.Tests
             UsingFilePath
         }
 
-        public ChatCompletionsClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ChatCompletionsClientTest(bool isAsync) : base(isAsync)
         {
             TestDiagnostics = false;
             JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
