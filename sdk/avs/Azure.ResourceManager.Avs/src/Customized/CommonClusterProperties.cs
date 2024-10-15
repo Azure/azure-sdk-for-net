@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// </list>
         /// </para>
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CommonClusterProperties"/>. </summary>
@@ -71,12 +72,12 @@ namespace Azure.ResourceManager.Avs.Models
         public int? ClusterSize { get; set; }
         /// <summary> The state of the cluster provisioning. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public AvsPrivateCloudClusterProvisioningState? ProvisioningState { get; }
+        public AvsPrivateCloudClusterProvisioningState? ProvisioningState { get; private protected set; }
         /// <summary> The identity. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public int? ClusterId { get; }
+        public int? ClusterId { get; private protected set; }
         /// <summary> The hosts. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IList<string> Hosts { get; }
+        public IList<string> Hosts { get; private protected set; }
     }
 }
