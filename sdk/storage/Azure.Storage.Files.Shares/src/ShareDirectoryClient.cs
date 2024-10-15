@@ -1585,6 +1585,7 @@ namespace Azure.Storage.Files.Shares
                 options?.SmbProperties,
                 options?.FilePermission?.Permission,
                 options?.FilePermission?.PermissionFormat,
+                options?.NfsProperties,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1617,6 +1618,7 @@ namespace Azure.Storage.Files.Shares
                 options?.SmbProperties,
                 options?.FilePermission?.Permission,
                 options?.FilePermission?.PermissionFormat,
+                options?.NfsProperties,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1658,6 +1660,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
+                nfsProperties: default,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1697,6 +1700,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
+                nfsProperties: default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1718,6 +1722,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionFormat">
         /// Optional file permission format.
         /// </param>
+        /// <param name="nfsProperties">
+        /// Optional NFS properties.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1737,6 +1744,7 @@ namespace Azure.Storage.Files.Shares
             FileSmbProperties smbProperties,
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
+            FileNfsProperties nfsProperties,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1755,36 +1763,38 @@ namespace Azure.Storage.Files.Shares
                     FileSmbProperties smbProps = smbProperties ?? new FileSmbProperties();
 
                     ShareExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
-                    if (filePermission == null && smbProps.FilePermissionKey == null)
-                    {
-                        filePermission = Constants.File.Preserve;
-                    }
 
                     ResponseWithHeaders<DirectorySetPropertiesHeaders> response;
 
                     if (async)
                     {
                         response = await DirectoryRestClient.SetPropertiesAsync(
-                            fileAttributes: smbProps?.FileAttributes.ToAttributesString() ?? Constants.File.Preserve,
-                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
-                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileAttributes: smbProps?.FileAttributes.ToAttributesString(),
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
+                            owner: nfsProperties?.Owner,
+                            group: nfsProperties?.Group,
+                            fileMode: nfsProperties?.FileMode.ToOctalFileMode(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = DirectoryRestClient.SetProperties(
-                            fileAttributes: smbProps?.FileAttributes.ToAttributesString() ?? Constants.File.Preserve,
-                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
-                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileAttributes: smbProps?.FileAttributes.ToAttributesString(),
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
+                            owner: nfsProperties?.Owner,
+                            group: nfsProperties?.Group,
+                            fileMode: nfsProperties?.FileMode.ToOctalFileMode(),
                             cancellationToken: cancellationToken);
                     }
 

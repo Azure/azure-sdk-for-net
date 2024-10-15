@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Azure.Core;
 using Azure.Storage.Files.Shares.Models;
 
@@ -170,6 +171,12 @@ namespace Azure.Storage.Files.Shares
                     FileChangedOn = response.Headers.FileChangeTime,
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
+                },
+                NfsProperties = new FileNfsProperties
+                {
+                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
+                    Owner = Convert.ToUInt32(response.Headers.Owner),
+                    Group = Convert.ToUInt32(response.Headers.Group)
                 }
             };
         }
