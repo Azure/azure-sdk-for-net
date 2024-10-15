@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>
@@ -11,10 +11,6 @@
     <PackageTags>Microsoft Azure Communication Messages Service;Microsoft;Azure;Azure Communication Service;Azure Communication Messages Service;Messages;Communication</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
