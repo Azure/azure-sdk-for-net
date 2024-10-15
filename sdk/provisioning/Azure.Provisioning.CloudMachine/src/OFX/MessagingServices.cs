@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Messaging.ServiceBus;
 
 namespace Azure.CloudMachine;
@@ -13,7 +14,7 @@ public readonly struct MessagingServices
 
     public void SendMessage(object serializable)
     {
-        ServiceBusSender sender = GetSender();
+        ServiceBusSender sender = GetServiceBusSender();
 
         BinaryData serialized = BinaryData.FromObjectAsJson(serializable);
         ServiceBusMessage message = new(serialized);
@@ -22,30 +23,37 @@ public readonly struct MessagingServices
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
     }
 
-    private ServiceBusSender GetSender()
-    {
-        string senderClientId = typeof(ServiceBusSender).FullName;
-        CloudMachineClient cm = _cm;
-        ServiceBusSender sender = _cm.Subclients.Get(senderClientId, () =>
-        {
-            string serviceBusClientId = typeof(ServiceBusClient).FullName;
-            ServiceBusClient sb = cm.Subclients.Get(serviceBusClientId, () =>
-            {
-                string sbNamespace = cm.GetConfiguration(serviceBusClientId)!.Value.Endpoint;
-                ServiceBusClient sb = new(sbNamespace, cm.Credential);
-                return sb;
-            });
-
-            string ServiceBusSenderId = typeof(ServiceBusClient).FullName;
-            string defaultTopic = cm.GetConfiguration(ServiceBusSenderId)!.Value.Endpoint;
-            ServiceBusSender sender = sb.CreateSender(defaultTopic);
-            return sender;
-        });
-        return sender;
-    }
-
     public void WhenMessageReceived(Action<string> received)
     {
         throw new NotImplementedException();
+    }
+
+    private ServiceBusClient GetServiceBusClient()
+    {
+        MessagingServices messagingServices = this;
+        ServiceBusClient client = _cm.Subclients.Get(() => messagingServices.CreateClient());
+        return client;
+    }
+
+    private ServiceBusSender GetServiceBusSender()
+    {
+        MessagingServices messagingServices = this;
+        ServiceBusSender sender = _cm.Subclients.Get(() => messagingServices.CreateSender());
+        return sender;
+    }
+
+    private ServiceBusSender CreateSender()
+    {
+        ServiceBusClient client = GetServiceBusClient();
+
+        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusClient));
+        ServiceBusSender sender = client.CreateSender(connection.Id);
+        return sender;
+    }
+    private ServiceBusClient CreateClient()
+    {
+        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusClient));
+        ServiceBusClient client = new(connection.Id, connection.TokenCredential);
+        return client;
     }
 }
