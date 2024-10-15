@@ -3,10 +3,7 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
-using System.Diagnostics.Contracts;
 using Azure.AI.OpenAI;
-using Azure.CloudMachine;
 using Azure.Core;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CognitiveServices;
@@ -62,44 +59,36 @@ public class OpenAIFeature : CloudMachineFeature
     }
 }
 
-public static class OpenAIFeatureExtensions
+public static class AzureOpenAIExtensions
 {
-    public static ChatClient GetOpenAIChatClient(this WorkspaceClient workspace)
+    public static ChatClient GetOpenAIChatClient(this ClientWorkspace workspace)
     {
-        string chatClientId = typeof(ChatClient).FullName;
-
-        ChatClient client = workspace.Subclients.Get(chatClientId, () =>
+        ChatClient chatClient = workspace.Subclients.Get(() =>
         {
-            string azureOpenAIClientId = typeof(AzureOpenAIClient).FullName;
-
-            AzureOpenAIClient aoia = workspace.Subclients.Get(azureOpenAIClientId, () =>
-            {
-                ClientConfiguration? connectionMaybe = workspace.GetConfiguration(typeof(AzureOpenAIClient).FullName);
-                if (connectionMaybe == null) throw new Exception("Connection not found");
-
-                ClientConfiguration connection = connectionMaybe.Value;
-                Uri endpoint = new(connection.Endpoint);
-                var clientOptions = new AzureOpenAIClientOptions();
-                if (connection.CredentialType == CredentialType.EntraId)
-                {
-                    AzureOpenAIClient aoai = new(endpoint, workspace.Credential, clientOptions);
-                    return aoai;
-                }
-                else
-                {
-                    AzureOpenAIClient aoai = new(endpoint, new ApiKeyCredential(connection.ApiKey!), clientOptions);
-                    return aoai;
-                }
-            });
-
-            string azureOpenAIChatClientId = typeof(ChatClient).FullName;
-            ClientConfiguration? connectionMaybe = workspace.GetConfiguration(azureOpenAIChatClientId);
-            if (connectionMaybe == null) throw new Exception("Connection not found");
-            var connection = connectionMaybe.Value;
-            ChatClient chat = aoia.GetChatClient(connection.Endpoint);
-            return chat;
+            AzureOpenAIClient aoiaClient = workspace.Subclients.Get(() => CreateAzureOpenAIClient(workspace));
+            return workspace.CreateChatClient(aoiaClient);
         });
 
-        return client;
+        return chatClient;
+    }
+
+    private static AzureOpenAIClient CreateAzureOpenAIClient(this ClientWorkspace workspace)
+    {
+        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(AzureOpenAIClient));
+        if (connection.ConnectionKind == ClientConnectionKind.EntraId)
+        {
+            return new(connection.Endpoint, connection.TokenCredential);
+        }
+        else
+        {
+            return  new(connection.Endpoint, new ApiKeyCredential(connection.ApiKeyCredential!));
+        }
+    }
+
+    private static ChatClient CreateChatClient(this ClientWorkspace workspace, AzureOpenAIClient client)
+    {
+        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(ChatClient));
+        ChatClient chat = client.GetChatClient(connection.Id);
+        return chat;
     }
 }
