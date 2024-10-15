@@ -16,8 +16,10 @@ using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Microsoft.Identity.Client;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Storage.Files.Shares.Tests
 {
@@ -2538,6 +2540,61 @@ namespace Azure.Storage.Files.Shares.Tests
                     dest.StartCopyAsync(source.Uri),
                     e => Assert.AreEqual(e.ErrorCode, "ResourceNotFound"));
             }
+        }
+
+        [RecordedTest]
+        [TestCase(false)]
+        [TestCase(true)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task StartCopy_NFS(bool overwriteOwnerAndMode)
+        {
+            // Arrange
+            await using DisposingFile source = await SharesClientBuilder.GetTestFileAsync(nfs: true);
+            await using DisposingFile destination = await SharesClientBuilder.GetTestFileAsync(nfs: true);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await source.File.UploadRangeAsync(
+                range: new HttpRange(0, Constants.KB),
+                content: stream);
+
+            Response<ShareFileProperties> sourceProperties =  await source.File.GetPropertiesAsync();
+
+            uint? owner;
+            uint? group;
+            NfsFileMode fileMode;
+
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                NfsProperties = new FileNfsProperties()
+            };
+
+            if (overwriteOwnerAndMode)
+            {
+                owner = 54321;
+                group = 12345;
+                fileMode = NfsFileMode.ParseOctalFileMode("7777");
+                options.NfsProperties.Owner = owner;
+                options.NfsProperties.Group = group;
+                options.NfsProperties.FileMode = fileMode;
+                options.OwnerCopyMode = OwnerCopyMode.Override;
+                options.ModeCopyMode = ModeCopyMode.Override;
+            }
+            else
+            {
+                owner = sourceProperties.Value.NfsProperties.Owner;
+                fileMode = sourceProperties.Value.NfsProperties.FileMode;
+                group = sourceProperties.Value.NfsProperties.Group;
+            }
+
+            // Act
+            await destination.File.StartCopyAsync(source.File.Uri, options);
+            Response<ShareFileProperties> destinationProperties = await destination.File.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(owner, destinationProperties.Value.NfsProperties.Owner);
+            Assert.AreEqual(group, destinationProperties.Value.NfsProperties.Group);
+            Assert.AreEqual(fileMode.ToOctalFileMode(), destinationProperties.Value.NfsProperties.FileMode.ToOctalFileMode());
         }
 
         [RecordedTest]
