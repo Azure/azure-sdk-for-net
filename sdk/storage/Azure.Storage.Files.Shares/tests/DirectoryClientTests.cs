@@ -1021,6 +1021,27 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task GetPropertiesAsync_NFS()
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
+
+            // Act
+            Response<ShareDirectoryProperties> response = await test.Directory.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(NfsFileType.Directory, response.Value.NfsProperties.FileType);
+            Assert.AreEqual(0, response.Value.NfsProperties.Owner);
+            Assert.AreEqual(0, response.Value.NfsProperties.Group);
+            Assert.AreEqual("0755", response.Value.NfsProperties.FileMode.ToOctalFileMode());
+
+            Assert.IsNull(response.Value.NfsProperties.LinkCount);
+            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
+        }
+
+        [RecordedTest]
         public async Task SetHttpHeadersAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
