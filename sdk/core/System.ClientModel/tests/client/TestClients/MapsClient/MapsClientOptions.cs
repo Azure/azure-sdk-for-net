@@ -12,7 +12,7 @@ public class MapsClientOptions : ClientPipelineOptions
 
     public MapsClientOptions() : this(LatestVersion)
     {
-        Observability.AllowedHeaderNames.Add("x-maps-client-allowed");
+        Logging.AllowedHeaderNames.Add("x-maps-client-allowed");
     }
 
     public MapsClientOptions(ServiceVersion version = LatestVersion)

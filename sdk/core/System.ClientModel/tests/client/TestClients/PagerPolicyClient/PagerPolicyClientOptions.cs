@@ -31,6 +31,7 @@ public class PagerPolicyClientOptions : ClientPipelineOptions
 
     public PagerPolicyOptions Pager { get; }
 
+    // TODO: call AssertNotFrozen from setter
     public PipelinePolicy? PagerPolicy { get; set; }
 
     public enum ServiceVersion
@@ -38,5 +39,10 @@ public class PagerPolicyClientOptions : ClientPipelineOptions
         V1 = 1
     }
 
-    // TODO: do we need an "on freeze" ?
+    public override void Freeze()
+    {
+        Pager.Freeze();
+
+        base.Freeze();
+    }
 }

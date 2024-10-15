@@ -29,13 +29,13 @@ public class ClientPipelineOptions
     /// </summary>
     public ClientPipelineOptions()
     {
-        Observability = new();
+        Logging = new();
         Retries = new();
     }
     /// <summary>
     /// TBD.
     /// </summary>
-    public ClientObservabilityOptions Observability { get; }
+    public ClientLoggingOptions Logging { get; }
 
     /// <summary>
     /// TBD.
@@ -196,7 +196,8 @@ public class ClientPipelineOptions
     /// </summary>
     public virtual void Freeze()
     {
-        Observability.Freeze();
+        Logging.Freeze();
+        Retries.Freeze();
 
         _frozen = true;
     }

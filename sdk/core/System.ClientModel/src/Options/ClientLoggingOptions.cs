@@ -7,14 +7,14 @@ using Microsoft.Extensions.Logging;
 namespace System.ClientModel.Primitives;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class ClientObservabilityOptions
+public class ClientLoggingOptions
 {
     // TODO: implement freezing
     private bool _frozen;
 
     private bool? _enableLogging;
 
-    public ClientObservabilityOptions()
+    public ClientLoggingOptions()
     {
         AllowedHeaderNames = new List<string>()
         {

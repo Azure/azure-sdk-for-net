@@ -25,7 +25,7 @@ public class ClientRetryOptions
     {
         if (_frozen)
         {
-            throw new InvalidOperationException("Cannot change a ClientLoggingOptions instance after ClientPipeline has been created.");
+            throw new InvalidOperationException("Cannot change a ClientRetryOptions instance after ClientPipeline has been created.");
         }
     }
 }

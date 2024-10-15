@@ -27,12 +27,11 @@ public class PagerClientOptions : ClientPipelineOptions
 
     internal string Version { get; }
 
+    // TODO: call AssertNotFrozen from setter
     public string? PagerNumber { get; set; }
 
     public enum ServiceVersion
     {
         V1 = 1
     }
-
-    // TODO: do we need an "on freeze" ?
 }

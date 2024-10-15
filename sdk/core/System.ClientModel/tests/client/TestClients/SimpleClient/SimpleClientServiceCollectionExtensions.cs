@@ -24,7 +24,7 @@ public static class SimpleClientServiceCollectionExtensions
                 .Configure<IOptions<ClientPipelineOptions>>((clientOptions, commonOptions) =>
                     {
                         // TODO: devise strategy for copying common options to client options
-                        clientOptions.Observability.LoggerFactory = commonOptions.Value.Observability.LoggerFactory;
+                        clientOptions.Logging.LoggerFactory = commonOptions.Value.Logging.LoggerFactory;
                     });
 
         services.AddSingleton<SimpleClient>(sp =>
@@ -66,7 +66,7 @@ public static class SimpleClientServiceCollectionExtensions
                 .Configure<IOptions<ClientPipelineOptions>>((clientOptions, commonOptions) =>
                 {
                     // TODO: devise strategy for copying common options to client options
-                    clientOptions.Observability.LoggerFactory = commonOptions.Value.Observability.LoggerFactory;
+                    clientOptions.Logging.LoggerFactory = commonOptions.Value.Logging.LoggerFactory;
                 })
             .Bind(commonConfigurationSection)
 
@@ -115,7 +115,7 @@ public static class SimpleClientServiceCollectionExtensions
             .Configure<IOptions<ClientPipelineOptions>>((clientOptions, commonOptions) =>
             {
                 // TODO: devise strategy for copying common options to client options
-                clientOptions.Observability.LoggerFactory = commonOptions.Value.Observability.LoggerFactory;
+                clientOptions.Logging.LoggerFactory = commonOptions.Value.Logging.LoggerFactory;
             })
             .Bind(commonConfigurationSection)
             .Bind(clientConfigurationSection)
