@@ -11,7 +11,7 @@ function create-service-readme(
   $readmePath = Join-Path $readmeFolder -ChildPath $readmeName
   $content = ""
   if (Test-Path (Join-Path $readmeFolder -ChildPath $indexTableLink)) {
-    $escapedIndexTableLink = $indexTableLink -replace '\(', '\(' -replace '\)', '\)'
+    $escapedIndexTableLink = $indexTableLink -replace '\)', '\)'
 
     $content = "## Packages - $moniker`r`n"
     $content += "[!INCLUDE [packages]($escapedIndexTableLink)]"
