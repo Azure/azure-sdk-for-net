@@ -132,6 +132,30 @@ namespace MyCustomClaimsProvider
         }
     }
 }
-
-
 ```
+
+
+#### Response with valid request
+200
+``` json
+{
+    "data": {
+        "@odata.type": "microsoft.graph.onTokenIssuanceStartResponseData",
+        "actions": [
+            {
+                "@odata.type": "microsoft.graph.tokenIssuanceStart.provideClaimsForToken",
+                "claims": {
+                    "customClaimValue": "DefaultValue",
+                    "customRoles": [
+                        "Writer",
+                        "Editor"
+                    ]
+                }
+            }
+        ]
+    }
+}
+```
+
+#### Response with invalid request
+500

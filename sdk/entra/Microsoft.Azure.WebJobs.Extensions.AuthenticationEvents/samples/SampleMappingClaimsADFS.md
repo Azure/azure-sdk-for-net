@@ -71,13 +71,49 @@ namespace AuthEventsTrigger
         {
             try
             {
+                if (string.IsNullOrEmpty(tenantId) || string.IsNullOrEmpty(upn))
+                {
+                    throw new ArgumentNullException();
+                }
                 throw new NotImplementedException();
             }
-            catch (Exception)
+            catch (NotImplementedException)
             {
                 return "DefaultValue";
             }
         }
     }
+}
+```
+
+#### Response
+200
+``` json
+{
+    "data": {
+        "@odata.type": "microsoft.graph.onTokenIssuanceStartResponseData",
+        "actions": [
+            {
+                "@odata.type": "microsoft.graph.tokenIssuanceStart.provideClaimsForToken",
+                "claims": {
+                    "customClaimValue": "DefaultValue",
+                    "customRoles": [
+                        "Writer",
+                        "Editor"
+                    ]
+                }
+            }
+        ]
+    }
+}
+```
+
+#### Response with invalid request
+400
+``` json
+{
+    "errors": [
+        "WebJobsTokenIssuanceStartRequest: WebJobsTokenIssuanceStartData: WebJobsAuthenticationEventsContext: WebJobsAuthenticationEventsContextUser: The UserPrincipalName field is required."
+    ]
 }
 ```
