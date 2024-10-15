@@ -1070,10 +1070,10 @@
 # ServiceOwners:                                                   @sunkun99
 
 # PRLabel: %Compute - Fleet
-/sdk/computefleet/                                                 @sahilarora92 @dhruvil009
+/sdk/computefleet/Azure.ResourceManager.*/                         @sahilarora92 @dhruvil009 @rahuls-microsoft
 
-# ServiceLabel: %Compute - Fleet
-# ServiceOwners:                                                   @sahilarora92 @dhruvil009
+# ServiceLabel: %Compute - Fleet %Mgmt
+# ServiceOwners:                                                   @sahilarora92 @dhruvil009 @rahuls-microsoft
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp

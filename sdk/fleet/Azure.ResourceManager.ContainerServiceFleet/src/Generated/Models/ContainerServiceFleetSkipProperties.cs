@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The properties of a skip operation containing multiple skip requests. </summary>
-    public partial class SkipProperties
+    public partial class ContainerServiceFleetSkipProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +46,31 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SkipProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetSkipProperties"/>. </summary>
         /// <param name="targets"> The targets to skip. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/> is null. </exception>
-        public SkipProperties(IEnumerable<SkipTarget> targets)
+        public ContainerServiceFleetSkipProperties(IEnumerable<ContainerServiceFleetSkipTarget> targets)
         {
             Argument.AssertNotNull(targets, nameof(targets));
 
             Targets = targets.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkipProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetSkipProperties"/>. </summary>
         /// <param name="targets"> The targets to skip. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SkipProperties(IList<SkipTarget> targets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceFleetSkipProperties(IList<ContainerServiceFleetSkipTarget> targets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Targets = targets;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkipProperties"/> for deserialization. </summary>
-        internal SkipProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetSkipProperties"/> for deserialization. </summary>
+        internal ContainerServiceFleetSkipProperties()
         {
         }
 
         /// <summary> The targets to skip. </summary>
-        public IList<SkipTarget> Targets { get; }
+        public IList<ContainerServiceFleetSkipTarget> Targets { get; }
     }
 }
