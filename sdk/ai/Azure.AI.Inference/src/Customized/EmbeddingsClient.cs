@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.Inference
 {
@@ -16,6 +17,26 @@ namespace Azure.AI.Inference
     /// <summary> The Embeddings service client. </summary>
     public partial class EmbeddingsClient
     {
+        /// <summary> Initializes a new instance of EmbeddingsClient. </summary>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public EmbeddingsClient(Uri endpoint, AzureKeyCredential credential, AzureAIInferenceClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AzureAIInferenceClientOptions();
+            credential.Deconstruct(out var key);
+            options.AddPolicy(new AddApiKeyHeaderPolicy(key), HttpPipelinePosition.PerCall);
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _keyCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
         /// <summary>
         /// Return the embedding vectors for given text prompts.
         /// The method makes a REST API call to the `/embeddings` route on the given endpoint.
@@ -60,6 +81,32 @@ namespace Azure.AI.Inference
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Embed(content, extraParams?.ToString(), context);
             return Response.FromValue(EmbeddingsResult.FromResponse(response), response);
+        }
+
+        private class AddApiKeyHeaderPolicy : HttpPipelinePolicy
+        {
+            public string Token { get; }
+
+            public AddApiKeyHeaderPolicy(string token)
+            {
+                Token = token;
+            }
+
+            public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                // Add your desired header name and value
+                message.Request.Headers.Add("api-key", Token);
+
+                ProcessNext(message, pipeline);
+            }
+
+            public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                // Add your desired header name and value
+                message.Request.Headers.Add("api-key", Token);
+
+                return ProcessNextAsync(message, pipeline);
+            }
         }
     }
 }

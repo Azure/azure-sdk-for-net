@@ -20,3 +20,6 @@ description: Samples for the Azure.AI.Inference client library.
 | [Sample5_ChatCompletionsWithImageUrl](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Inference/samples/Sample5_ChatCompletionsWithImageUrl.md) | Chat completions providing an image url. |
 | [Sample6_ChatCompletionsWithAdditionalProperties](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Inference/samples/Sample6_ChatCompletionsWithAdditionalProperties.md) | Chat completions providing additional model specific properties. |
 | [Sample7_ChatCompletionsWithTools](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Inference/samples/Sample7_ChatCompletionsWithTools.md) | Chat completions using tools. |
+| [Sample8_ChatCompletionsWithOpenTelemetry](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Inference/samples/Sample8_ChatCompletionsWithOpenTelemetry.md) | Chat completions using Open Telemetry for tracing. |
+| [Sample9_Embeddings](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Inference/samples/Sample9_Embeddings.md) | Basic text embeddings. |
+| [Sample10_EmbeddingsWithAoai](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Inference/samples/Sample10_EmbeddingsWithAoai.md) | Text embeddings targetting Azure OpenAi. |
