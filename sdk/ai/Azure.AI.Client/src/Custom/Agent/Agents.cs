@@ -143,7 +143,7 @@ namespace Azure.AI.Client
         {
             FileInfo localFileInfo = new(localFilePath);
             using FileStream localFileStream = localFileInfo.OpenRead();
-            return await UploadFileAsync(localFileStream, purpose, localFileInfo.Name, cancellationToken).ConfigureAwait(false);
+            return await UploadFileAsync(localFileStream, purpose, null, cancellationToken).ConfigureAwait(false);
         }
 
         /*

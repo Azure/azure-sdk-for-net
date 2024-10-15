@@ -28,33 +28,52 @@ public partial class Sample_Agent_FileSearch
             credential: new DefaultAzureCredential()).GetAgentsClient();
 
         #region Snippet:UploadAgentFilesToUse
+        // # Upload a file and wait for it to be processed
         File.WriteAllText(
             path: "sample_file_for_upload.txt",
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
         Response<OpenAIFile> uploadAgentFileResponse = await client.UploadFileAsync(
             localFilePath: "sample_file_for_upload.txt",
             purpose: OpenAIFilePurpose.Agents);
+
         OpenAIFile uploadedAgentFile = uploadAgentFileResponse.Value;
+        Console.Write($"Uploaded file, file id {uploadedAgentFile.Id}");
+        #endregion
+
+        #region Snippet:CreateVectorStore
+        // Create a vector store with the file and wait for it to be processed.
+        // If you do not specify a vector store, create_message will create a vector store with a default expiration policy of seven days after they were last active 
+        VectorStore vectorStore = await client.CreateVectorStoreAsync(
+            fileIds:  new List<string> { uploadedAgentFile.Id },
+            name: "sample_file_for_upload");
+        Console.Write($"Created vector store, vector store ID: {vectorStore.Id}");
         #endregion
 
         #region Snippet:CreateAgentWithFiles
+        FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
+        fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
+
         Response<Agent> agentResponse = await client.CreateAgentAsync(
                 model: "gpt-4-1106-preview",
                 name: "SDK Test Agent - Retrieval",
                 instructions: "You are a helpful agent that can help fetch data from files you know about.",
-                tools: new List<ToolDefinition> { new FileSearchToolDefinition() });
-                //toolResources: new ToolResources() { FileSearch = new FileSearchToolResource() { VectorStoreIds.Add(uploadedAgentFile.Id) },
+                tools: new List<ToolDefinition> { new FileSearchToolDefinition() },
+                toolResources: new ToolResources() { FileSearch = fileSearchToolResource });
         Agent agent = agentResponse.Value;
         #endregion
 
+        #region Snippet:CreateMessageAttachment
         Response<AgentThread> threadResponse = await client.CreateThreadAsync();
         AgentThread thread = threadResponse.Value;
 
+        MessageAttachment attachment = new MessageAttachment(fileId: uploadedAgentFile.Id, tools: new List<BinaryData>() { BinaryData.FromString("\"file_search\"") });
         Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
-            "Can you give me the documented codes for 'banana' and 'orange'?");
+            "Can you give me the documented codes for 'banana' and 'orange'?",
+            new List<MessageAttachment>() { attachment });
         ThreadMessage message = messageResponse.Value;
+        #endregion
 
         Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, agent);
 
