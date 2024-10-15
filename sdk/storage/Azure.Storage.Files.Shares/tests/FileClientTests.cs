@@ -2577,8 +2577,6 @@ namespace Azure.Storage.Files.Shares.Tests
                 options.NfsProperties.Owner = owner;
                 options.NfsProperties.Group = group;
                 options.NfsProperties.FileMode = fileMode;
-                options.OwnerCopyMode = OwnerCopyMode.Override;
-                options.ModeCopyMode = ModeCopyMode.Override;
             }
             else
             {

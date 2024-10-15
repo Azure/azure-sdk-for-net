@@ -1322,8 +1322,6 @@ namespace Azure.Storage.Files.Shares
                 conditions: options?.Conditions,
                 copyableFileSmbProperties: options?.SmbPropertiesToCopy,
                 nfsProperties: options?.NfsProperties,
-                modeCopyMode: options?.ModeCopyMode,
-                ownerCopyMode: options?.OwnerCopyMode,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -1402,8 +1400,6 @@ namespace Azure.Storage.Files.Shares
                 conditions,
                 copyableFileSmbProperties: default,
                 nfsProperties: default,
-                modeCopyMode: default,
-                ownerCopyMode: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1452,8 +1448,6 @@ namespace Azure.Storage.Files.Shares
                 conditions: default,
                 copyableFileSmbProperties: default,
                 nfsProperties: default,
-                modeCopyMode: default,
-                ownerCopyMode: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1499,8 +1493,6 @@ namespace Azure.Storage.Files.Shares
                 conditions: options?.Conditions,
                 copyableFileSmbProperties: options?.SmbPropertiesToCopy,
                 nfsProperties: options?.NfsProperties,
-                modeCopyMode: options?.ModeCopyMode,
-                ownerCopyMode: options?.OwnerCopyMode,
                 async: true,
                 cancellationToken: cancellationToken).
                 ConfigureAwait(false);
@@ -1579,8 +1571,6 @@ namespace Azure.Storage.Files.Shares
                 conditions,
                 copyableFileSmbProperties: default,
                 nfsProperties: default,
-                modeCopyMode: default,
-                ownerCopyMode: default,
                 async: true,
                 cancellationToken).
                 ConfigureAwait(false);
@@ -1629,8 +1619,6 @@ namespace Azure.Storage.Files.Shares
                 conditions: default,
                 copyableFileSmbProperties: default,
                 nfsProperties: default,
-                modeCopyMode: default,
-                ownerCopyMode: default,
                 async: true,
                 cancellationToken).
                 ConfigureAwait(false);
@@ -1681,14 +1669,6 @@ namespace Azure.Storage.Files.Shares
         /// <param name="nfsProperties">
         /// NFS files only.  NFS properties to set on the destination file.
         /// </param>
-        /// <param name="modeCopyMode">
-        /// NFS files only.  If the mode should be copied from the source to destination,
-        /// or overwritten on the destination with a new value.
-        /// </param>
-        /// <param name="ownerCopyMode">
-        /// NFS files only.  If the owner should be copied from the source to the desintation,
-        /// or overwritten on the destination with a new value.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1716,8 +1696,6 @@ namespace Azure.Storage.Files.Shares
             ShareFileRequestConditions conditions,
             CopyableFileSmbProperties? copyableFileSmbProperties,
             FileNfsProperties nfsProperties,
-            ModeCopyMode? modeCopyMode,
-            OwnerCopyMode? ownerCopyMode,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1815,9 +1793,6 @@ namespace Azure.Storage.Files.Shares
                         SetArchiveAttribute = setArchiveAttribute
                     };
 
-                    modeCopyMode ??= ModeCopyMode.Source;
-                    ownerCopyMode ??= OwnerCopyMode.Source;
-
                     ShareUriBuilder uriBuilder = new ShareUriBuilder(sourceUri);
 
                     if (async)
@@ -1831,8 +1806,8 @@ namespace Azure.Storage.Files.Shares
                             owner: nfsProperties?.Owner,
                             group: nfsProperties?.Group,
                             fileMode: nfsProperties?.FileMode?.ToOctalFileMode(),
-                            fileModeCopyMode: modeCopyMode,
-                            fileOwnerCopyMode: ownerCopyMode,
+                            fileModeCopyMode: nfsProperties?.FileMode != null ? ModeCopyMode.Override : null,
+                            fileOwnerCopyMode: nfsProperties?.Owner != null ? OwnerCopyMode.Override : null,
                             copyFileSmbInfo: copyFileSmbInfo,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -1849,8 +1824,8 @@ namespace Azure.Storage.Files.Shares
                             owner: nfsProperties?.Owner,
                             group: nfsProperties?.Group,
                             fileMode: nfsProperties?.FileMode?.ToOctalFileMode(),
-                            fileModeCopyMode: modeCopyMode,
-                            fileOwnerCopyMode: ownerCopyMode,
+                            fileModeCopyMode: nfsProperties?.FileMode != null ? ModeCopyMode.Override : null,
+                            fileOwnerCopyMode: nfsProperties?.Owner != null ? OwnerCopyMode.Override : null,
                             copyFileSmbInfo: copyFileSmbInfo,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);

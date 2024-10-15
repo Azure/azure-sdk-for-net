@@ -69,17 +69,5 @@ namespace Azure.Storage.Files.Shares.Models
         /// Only applicable to NFS Files.  NFS properties to set on the destination file.
         /// </summary>
         public FileNfsProperties NfsProperties { get; set; }
-
-        /// <summary>
-        /// Only applicable to NFS Files.  Specifies if the the mode should be copied from the sourece
-        /// to destination file, or overwritten with a new value for the destination.
-        /// </summary>
-        public ModeCopyMode? ModeCopyMode { get; set; }
-
-        /// <summary>
-        /// Only applicable to NFS Files.  Specifies if the the owner should be copied from the sourece
-        /// to destination file, or overwritten with a new value for the destination.
-        /// </summary>
-        public OwnerCopyMode? OwnerCopyMode { get; set; }
     }
 }
