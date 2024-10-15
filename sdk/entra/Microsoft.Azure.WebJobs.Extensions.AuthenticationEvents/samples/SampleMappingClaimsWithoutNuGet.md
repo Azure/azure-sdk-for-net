@@ -74,9 +74,13 @@ namespace MyCustomClaimsProvider
         {
             try
             {
+                if (string.IsNullOrEmpty(tenantId) || string.IsNullOrEmpty(upn))
+                {
+                    throw new ArgumentNullException();
+                }
                 throw new NotImplementedException();
             }
-            catch (Exception)
+            catch (NotImplementedException)
             {
                 return "DefaultValue";
             }
@@ -136,7 +140,7 @@ namespace MyCustomClaimsProvider
 
 
 #### Response with valid request
-200
+`200`
 ``` json
 {
     "data": {
@@ -158,4 +162,4 @@ namespace MyCustomClaimsProvider
 ```
 
 #### Response with invalid request
-500
+`500`
