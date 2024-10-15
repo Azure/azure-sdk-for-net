@@ -40,8 +40,8 @@ parameters:
   type: object
   default: []
 
-# Whether to publish to the internal feed.
-- name: PublishInternal
+# Whether to publish to npmjs.org.
+- name: PublishPublic
   type: boolean
   default: true
 
@@ -50,7 +50,7 @@ parameters:
   type: boolean
   default: false
 
-# Whether to publish to the internal feed.
+# Whether to regenerate sdk clients using the new emitter.
 - name: ShouldRegenrate
   type: boolean
   default: false
@@ -84,15 +84,6 @@ stages:
   jobs:
   - job: Build
     steps:
-    # Validate parameters and fail early if invalid
-    - ${{ each package in parameters.Packages }}:
-      - ${{ if notIn(package.type, 'npm', 'nuget') }}:
-        - script: |
-            echo "Package ${{ package.name }} has unsupported type: ${{ package.type }}"
-            exit 1
-          displayName: 'Unsupported package type'
-          condition: always()
-
     - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
 
     - ${{ parameters.InitializationSteps }}
@@ -114,7 +105,7 @@ stages:
         arguments: >
           -BuildNumber "$(Build.BuildNumber)"
           -OutputDirectory "$(Build.ArtifactStagingDirectory)"
-          -PublishInternal:$${{ parameters.PublishInternal }}
+          -TargetNpmJsFeed:$${{ parameters.PublishPublic }}
           -Prerelease:$${{ parameters.BuildPrereleaseVersion }}
 
     - pwsh: |
@@ -163,36 +154,41 @@ stages:
         artifact: build_artifacts
         displayName: Download build artifacts
 
-      # Create authenticated .npmrc file for publishing
-      - ${{ if eq(parameters.PublishInternal, 'true') }}:
-        - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
-          parameters:
-            npmrcPath: $(buildArtifactsPath)/packages/.npmrc
-            registryUrl: https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/
-      - ${{ else }}:
-        - pwsh: |
-            "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" | Out-File '.npmrc'
-          displayName: Authenticate .npmrc for npmjs.org
-          workingDirectory: $(buildArtifactsPath)/packages
+      # Create authenticated .npmrc file for publishing to devops
+      - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+        parameters:
+          npmrcPath: $(buildArtifactsPath)/packages/.npmrc
+          registryUrl: https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/
 
-      # per package, publishing using appropriate tool
-      - ${{ each package in parameters.Packages }}:
-        - ${{ if eq(package.type, 'npm') }}:
-          - pwsh: |
-              $file = Resolve-Path "${{ package.file }}"
-              Write-Host "npm publish $file --verbose --access public --prefix $(buildArtifactsPath)/packages"
-              npm publish $file --verbose --access public --prefix $(buildArtifactsPath)/packages
-            displayName: Publish ${{ package.name }}
-            workingDirectory: $(buildArtifactsPath)/packages
-        - ${{ elseif eq(package.type, 'nuget') }}:
-          - task: NuGetCommand@2
-            displayName: Publish ${{ package.name }}
-            inputs:
-              command: 'push'
-              packagesToPush: $(buildArtifactsPath)/packages/${{ package.file }}
-              # Nuget packages are always published to the same internal feed https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
-              nuGetFeedType: 'internal'
-              publishVstsFeed: '29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f'
+      # publish to devops feed
+      - pwsh: |
+          $packageFiles = Get-ChildItem -Path . -Filter '*.tgz'
+          foreach ($file in $packageFiles.Name) {
+            Write-Host "npm publish $file --verbose --access public"
+            npm publish $file --verbose --access public
+          }
+        displayName: Publish npm to Azure DevOps feed
+        workingDirectory: $(buildArtifactsPath)/packages
+
+      - ${{ if parameters.PublishPublic }}:
+        # publish to npmjs.org using ESRP
+        - task: EsrpRelease@7
+          inputs:
+            displayName: 'Publish to npmjs.org'
+            ConnectedServiceName: 'Azure SDK Engineering System'
+            ClientId: '5f81938c-2544-4f1f-9251-dd9de5b8a81b'
+            KeyVaultName: 'AzureSDKEngKeyVault'
+            AuthCertName: 'azure-sdk-esrp-release-auth-certificate'
+            SignCertName: 'azure-sdk-esrp-release-sign-certificate'
+            Intent: 'PackageDistribution'
+            ContentType: 'npm'
+            FolderLocation: $(buildArtifactsPath)/packages
+            Owners: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+            Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+            ServiceEndpointUrl: 'https://api.esrp.microsoft.com'
+            MainPublisher: 'ESRPRELPACMANTEST'
+            DomainTenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47'
+            productstate: ${{parameters.Tag}}
 
         - task: PowerShell@2
           displayName: Create emitter-package.json
