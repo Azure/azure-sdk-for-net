@@ -6799,6 +6799,87 @@ namespace Azure.Storage.Files.Shares.Tests
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateSymbolicLinkAsync()
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
+            ShareDirectoryClient directory = test.Directory;
+
+            ShareFileClient source = InstrumentClient(await directory.CreateFileAsync(GetNewFileName(), maxSize: Constants.KB));
+            ShareFileClient symlink = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            IDictionary<string, string> metdata = BuildMetadata();
+            uint owner = 345;
+            uint group = 123;
+            DateTimeOffset fileCreatedOn = new DateTimeOffset(2024, 10, 15, 0, 0, 0, TimeSpan.Zero);
+            DateTimeOffset fileLastWrittenOn = new DateTimeOffset(2025, 5, 2, 0, 0, 0, TimeSpan.Zero);
+
+            ShareFileCreateSymbolicLinkOptions options = new ShareFileCreateSymbolicLinkOptions
+            {
+                Metadata = metdata,
+                FileCreatedOn = fileCreatedOn,
+                FileLastWrittenOn = fileLastWrittenOn,
+                Owner = owner,
+                Group = group
+            };
+
+            // Act
+            Response<ShareFileInfo> response = await symlink.CreateSymbolicLinkAsync(
+                path: source.Uri.ToString(),
+                options: options);
+
+            // Assert
+            Assert.AreEqual(NfsFileType.Symlink, response.Value.NfsProperties.FileType);
+            Assert.AreEqual(owner, response.Value.NfsProperties.Owner);
+            Assert.AreEqual(group, response.Value.NfsProperties.Group);
+            Assert.AreEqual(fileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
+            Assert.AreEqual(fileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
+
+            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
+
+            Assert.IsNotNull(response.Value.SmbProperties.FileId);
+            Assert.IsNotNull(response.Value.SmbProperties.ParentId);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateSymbolicLinkAsync_Error()
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync(nfs: true);
+            // Note that the parent directory was not created in this test case.
+            ShareDirectoryClient directory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+
+            ShareFileClient source = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+            ShareFileClient symlink = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                symlink.CreateSymbolicLinkAsync(path: source.Uri.ToString()),
+                e => Assert.AreEqual("ParentNotFound", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateSymbolicLinkAsync_OAuth()
+        {
+            // Arrange
+            ShareServiceClient oauthServiceClient = GetServiceClient_PremiumFileOAuth();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
+                service: oauthServiceClient,
+                nfs: true);
+            ShareDirectoryClient directory = test.Directory;
+
+            ShareFileClient source = InstrumentClient(await directory.CreateFileAsync(GetNewFileName(), maxSize: Constants.KB));
+            ShareFileClient symlink = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            // Act
+            await symlink.CreateSymbolicLinkAsync(path: source.Uri.ToString());
+        }
+
         #region GenerateSasTests
         [RecordedTest]
         public void CanGenerateSas_ClientConstructors()

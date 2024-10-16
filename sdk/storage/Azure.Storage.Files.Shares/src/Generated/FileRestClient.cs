@@ -1921,7 +1921,7 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "symboliclink", true);
+            uri.AppendQuery("restype", "symboliclink", true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -2028,7 +2028,7 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "symboliclink", true);
+            uri.AppendQuery("restype", "symboliclink", true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -2088,7 +2088,7 @@ namespace Azure.Storage.Files.Shares
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "hardlink", true);
+            uri.AppendQuery("restype", "hardlink", true);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);

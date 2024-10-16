@@ -59,6 +59,16 @@ namespace Azure.Storage.Files.Shares.Tests
         public static ShareServiceClient GetServiceClient_PremiumFile(this ShareClientBuilder clientBuilder) =>
             clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigPremiumFile);
 
+        public static ShareServiceClient GetServiceClient_PremiumFileOAuth(
+            this ShareClientBuilder clientBuilder,
+            TokenCredential tokenCredential,
+            ShareClientOptions options = default)
+        {
+            options ??= clientBuilder.GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            return clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigPremiumFile, tokenCredential, options);
+        }
+
         public static ShareServiceClient GetServiceClient_SoftDelete(this ShareClientBuilder clientBuilder) =>
             clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigSoftDelete);
 
