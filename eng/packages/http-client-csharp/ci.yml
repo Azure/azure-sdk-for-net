@@ -15,19 +15,25 @@ parameters:
     displayName: 'Build prerelease version'
     type: boolean
     default: true
-  - name: ShouldRegenrate
-    displayName: 'Should regenerate'
-    type: boolean
-    default: true
   - name: UseTypeSpecNext
     displayName: 'Use TypeSpec Next'
     type: boolean
     default: false
-  - name: PublishTo
-    displayName: 'Publish to'
-    type: string
-    default: 'devops'
-    values: ['none', 'devops', 'public']
+  - name: ShouldPublish
+    displayName: 'Publish packages'
+    type: boolean
+    default: true
+  - name: PublishPublic
+    displayName: 'Publish to npmjs.org'
+    type: boolean
+    default: false
+  - name: ShouldRegenrate
+    displayName: 'Regenerate clients'
+    type: boolean
+    default: true
+    
+variables:
+- template: /eng/pipelines/templates/variables/image.yml
 
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
@@ -35,9 +41,9 @@ extends:
     BuildPrereleaseVersion: ${{ parameters.BuildPrereleaseVersion }}
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-      ShouldPublish: ${{ ne(parameters.PublishTo, 'none') }}
-      PublishPublic: ${{ eq(parameters.PublishTo, 'public') }}
-      PublishDependsOnTest: ${{ eq(parameters.PublishTo, 'public') }}
+      ShouldPublish: ${{ parameters.ShouldPublish }}
+      PublishPublic: ${{ parameters.PublishPublic }}
+      PublishDependsOnTest: ${{ parameters.PublishPublic }}
       
       ShouldRegenrate: ${{ parameters.ShouldRegenrate }}
       RegenerationJobCount: 5

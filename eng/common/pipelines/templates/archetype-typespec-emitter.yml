@@ -62,9 +62,6 @@ parameters:
   type: boolean
   default: false
 
-variables:
-  - template: /eng/pipelines/templates/variables/image.yml
-
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
