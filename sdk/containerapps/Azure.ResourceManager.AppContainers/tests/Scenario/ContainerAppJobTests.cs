@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
         {
         }
 
-        [TestCase]
+        [TestCase] 
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
