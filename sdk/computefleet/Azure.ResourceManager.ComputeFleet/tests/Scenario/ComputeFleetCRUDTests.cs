@@ -16,8 +16,9 @@ namespace Azure.ResourceManager.ComputeFleet.Tests
         {
         }
 
+        // To enable record - 1. uncomment RecordedTest and 2. set AZURE_TEST_MODE=Record to record the test.
         [TestCase]
-        [RecordedTest]
+        //[RecordedTest]
         public async Task TestCreateComputeFleet()
         {
             var computeFleetCollection = await GetComputeFleetCollectionAsync();
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.ComputeFleet.Tests
         }
 
         [TestCase]
-        [RecordedTest]
+        //[RecordedTest]
         public async Task TestCreateMultipleComputeFleetsAndCheck()
         {
             Console.WriteLine("Stating Test TestCreateMultipleComputeFleetsAndCheck");
