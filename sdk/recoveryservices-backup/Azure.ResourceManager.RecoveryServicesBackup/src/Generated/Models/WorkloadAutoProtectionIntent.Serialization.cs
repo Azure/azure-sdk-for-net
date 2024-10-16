@@ -19,56 +19,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         void IJsonModel<WorkloadAutoProtectionIntent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadAutoProtectionIntent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadAutoProtectionIntent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("protectionIntentItemType"u8);
-            writer.WriteStringValue(ProtectionIntentItemType.ToString());
-            if (Optional.IsDefined(BackupManagementType))
-            {
-                writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
-            }
-            if (Optional.IsDefined(SourceResourceId))
-            {
-                writer.WritePropertyName("sourceResourceId"u8);
-                writer.WriteStringValue(SourceResourceId);
-            }
-            if (Optional.IsDefined(ItemId))
-            {
-                writer.WritePropertyName("itemId"u8);
-                writer.WriteStringValue(ItemId);
-            }
-            if (Optional.IsDefined(PolicyId))
-            {
-                writer.WritePropertyName("policyId"u8);
-                writer.WriteStringValue(PolicyId);
-            }
-            if (Optional.IsDefined(ProtectionState))
-            {
-                writer.WritePropertyName("protectionState"u8);
-                writer.WriteStringValue(ProtectionState.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         WorkloadAutoProtectionIntent IJsonModel<WorkloadAutoProtectionIntent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

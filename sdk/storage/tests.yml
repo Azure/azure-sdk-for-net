@@ -9,14 +9,10 @@ extends:
     TimeoutInMinutes: 180
     Location: canadacentral
     CloudConfig:
-      Preview:
-        ServiceConnection: azure-sdk-tests-preview
-        SubscriptionConfigurationFilePaths:
-          - eng/common/TestResources/sub-config/AzurePreviewMsft.json
+      Public:
       PrivatePreview:
         SubscriptionConfiguration: $(sub-config-storage-test-resources)
-    Clouds: Preview
-    SupportedClouds: Preview, PrivatePreview
+    SupportedClouds: Public, PrivatePreview
     MatrixReplace:
       # Use dedicated storage pool in canadacentral with higher memory capacity
       - Pool=.*LINUXPOOL.*/azsdk-pool-mms-ubuntu-2004-storage

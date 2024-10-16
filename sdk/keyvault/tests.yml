@@ -10,28 +10,20 @@ extends:
     SupportedClouds: 'Public,UsGov,Canary'
     CloudConfig:
       Public:
-        ServiceConnection: azure-sdk-tests
-        SubscriptionConfigurationFilePaths:
-          - eng/common/TestResources/sub-config/AzurePublicMsft.json
         ${{ if not(contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
           MatrixFilters:
             - ArmTemplateParameters=^(?!.*enableHsm.*true)
-      Canary:
-        ServiceConnection: azure-sdk-tests
-        SubscriptionConfigurationFilePaths:
-          - eng/common/TestResources/sub-config/AzurePublicMsft.json
-        Location: 'centraluseuap'
-        # Managed HSM test resources are expensive and provisioning has not been reliable.
-        # Given test coverage of non-canary regions we probably don't need to test in canary.
-        MatrixFilters:
-         - ArmTemplateParameters=^(?!.*enableHsm.*true)
-        # Some resource providers required for attestation are not supported in canary.
-        MatrixReplace:
-         - 'ArmTemplateParameters=(.*)enableAttestation.*?\$true(.*)/$1enableAttestation \= $false$2'
+      # Canary regions are currently not supported in TME so disabling for now
+      # Canary:
+      #   Location: 'centraluseuap'
+      #   # Managed HSM test resources are expensive and provisioning has not been reliable.
+      #   # Given test coverage of non-canary regions we probably don't need to test in canary.
+      #   MatrixFilters:
+      #    - ArmTemplateParameters=^(?!.*enableHsm.*true)
+      #   # Some resource providers required for attestation are not supported in canary.
+      #   MatrixReplace:
+      #    - 'ArmTemplateParameters=(.*)enableAttestation.*?\$true(.*)/$1enableAttestation \= $false$2'
       UsGov:
-        ServiceConnection: usgov_azure-sdk-tests
-        SubscriptionConfigurationFilePaths:
-          - eng/common/TestResources/sub-config/AzureUsGovMsft.json
         MatrixFilters:
          - ArmTemplateParameters=^(?!.*enableHsm.*true)
     MatrixConfigs:

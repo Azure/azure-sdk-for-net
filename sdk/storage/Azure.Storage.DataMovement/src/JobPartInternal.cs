@@ -275,7 +275,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="transferState"></param>
         internal async Task OnTransferStateChangedAsync(DataTransferState transferState)
         {
-            if (JobPartStatus.TrySetTransferStateChange(transferState))
+            if (JobPartStatus.SetTransferStateChange(transferState))
             {
                 // Progress tracking, do before invoking the event below
                 if (transferState == DataTransferState.InProgress)
@@ -355,7 +355,7 @@ namespace Azure.Storage.DataMovement
 
             // Update the JobPartStatus. If was already updated (e.g. there was a failed item before)
             // then don't raise the PartTransferStatusEventHandler
-            if (JobPartStatus.TrySetSkippedItem())
+            if (JobPartStatus.SetSkippedItem())
             {
                 await PartTransferStatusEventHandler.RaiseAsync(
                     new TransferStatusEventArgs(
@@ -409,7 +409,7 @@ namespace Azure.Storage.DataMovement
 
                 // Update the JobPartStatus. If was already updated (e.g. there was a failed item before)
                 // then don't raise the PartTransferStatusEventHandler
-                if (JobPartStatus.TrySetFailedItem())
+                if (JobPartStatus.SetFailedItem())
                 {
                     await PartTransferStatusEventHandler.RaiseAsync(
                         new TransferStatusEventArgs(
