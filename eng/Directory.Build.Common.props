@@ -135,7 +135,7 @@
     <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == ''">false</SupportsNetStandard20>
 
     <RequiredTargetFrameworks>net452;netstandard1.4;net461;netstandard2.0</RequiredTargetFrameworks>
-    <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">net8.0;netstandard2.0</RequiredTargetFrameworks>
     <RequiredTargetFrameworks Condition="'$(IsGeneratorLibrary)' == 'true'">net8.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
