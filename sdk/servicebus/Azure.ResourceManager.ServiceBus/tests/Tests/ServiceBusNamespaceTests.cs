@@ -543,7 +543,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("This test case will cause errors in the pipeline. After fixing the problem, restore this test")]
         public async Task UserAssignedEncryptionTests()
         {
             ServiceBusNamespaceResource resource = null;

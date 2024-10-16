@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
@@ -15,16 +16,16 @@ public readonly struct StorageServices
 
     private BlobContainerClient GetDefaultContainer()
     {
-        string blobContainerClientId = typeof(BlobContainerClient).FullName;
         CloudMachineClient cm = _cm;
-        BlobContainerClient container = cm.Subclients.Get(blobContainerClientId, () =>
+        BlobContainerClient container = _cm.Subclients.Get(() =>
         {
-            string endpoint = cm.GetConfiguration(blobContainerClientId)!.Value.Endpoint;
-            BlobContainerClient container = new(new Uri(endpoint), cm.Credential);
+            ClientConnectionOptions connection = cm.GetConnectionOptions(typeof(BlobContainerClient));
+            BlobContainerClient container = new(connection.Endpoint, connection.TokenCredential);
             return container;
         });
         return container;
     }
+
     public string UploadBlob(object json, string? name = default)
     {
         BlobContainerClient container = GetDefaultContainer();

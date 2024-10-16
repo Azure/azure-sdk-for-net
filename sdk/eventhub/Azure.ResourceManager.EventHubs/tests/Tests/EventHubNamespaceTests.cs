@@ -443,7 +443,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("This test case will cause errors in the pipeline. After fixing the problem, restore this test")]
         public async Task UserAssignedEncryptionTests()
         {
             EventHubsNamespaceResource resource = null;
