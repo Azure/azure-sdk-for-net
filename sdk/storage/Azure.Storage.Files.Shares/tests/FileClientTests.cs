@@ -6900,7 +6900,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient source = InstrumentClient(await directory.CreateFileAsync(GetNewFileName(), maxSize: Constants.KB));
-            ShareLeaseClient leaseClient = InstrumentClient(test.Share.GetShareLeaseClient(Guid.NewGuid().ToString()));
+            ShareLeaseClient leaseClient = InstrumentClient(test.Share.GetShareLeaseClient(Recording.Random.NewGuid().ToString()));
             ShareFileLease lease = await leaseClient.AcquireAsync();
             try
             {
