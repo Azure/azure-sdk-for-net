@@ -164,6 +164,7 @@ pingme.txt
 # TS/Node files
 dist/
 node_modules/
+eng/packages/**/*.tgz
 
 # MSBuild binary log files
 msbuild.binlog
