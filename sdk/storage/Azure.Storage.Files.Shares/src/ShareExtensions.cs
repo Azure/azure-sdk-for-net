@@ -22,6 +22,11 @@ namespace Azure.Storage.Files.Shares
             {
                 throw Errors.MustBeLessThanOrEqualTo(nameof(filePermission), Constants.File.MaxFilePermissionHeaderSize);
             }
+
+            if (filePermission != null && filePermissionKey != null)
+            {
+                throw new ArgumentException("filePermission and filePermissionKey cannot both be set");
+            }
         }
 
         internal static string ToFileDateTimeString(this DateTimeOffset? dateTimeOffset)
