@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 throw new FormatException($"The model {nameof(AdditionalCapabilities)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(UltraSSDEnabled))
+            if (Optional.IsDefined(IsUltraSSDEnabled))
             {
                 writer.WritePropertyName("ultraSSDEnabled"u8);
-                writer.WriteBooleanValue(UltraSSDEnabled.Value);
+                writer.WriteBooleanValue(IsUltraSSDEnabled.Value);
             }
-            if (Optional.IsDefined(HibernationEnabled))
+            if (Optional.IsDefined(IsHibernationEnabled))
             {
                 writer.WritePropertyName("hibernationEnabled"u8);
-                writer.WriteBooleanValue(HibernationEnabled.Value);
+                writer.WriteBooleanValue(IsHibernationEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

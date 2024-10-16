@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public partial class AdditionalCapabilities : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.AdditionalCapabilities>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeFleet.Models.AdditionalCapabilities>
     {
         public AdditionalCapabilities() { }
-        public bool? HibernationEnabled { get { throw null; } set { } }
-        public bool? UltraSSDEnabled { get { throw null; } set { } }
+        public bool? IsHibernationEnabled { get { throw null; } set { } }
+        public bool? IsUltraSSDEnabled { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeFleet.Models.AdditionalCapabilities System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.AdditionalCapabilities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeFleet.Models.AdditionalCapabilities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
