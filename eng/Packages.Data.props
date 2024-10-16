@@ -263,7 +263,7 @@
     <PackageReference Update="Azure.ResourceManager.Network" Version="1.5.0" />
     <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.PrivateDns" Version="1.0.1" />
-    <PackageReference Update="Azure.ResourceManager.RecoveryServices" Version="1.1.0" />
+    <PackageReference Update="Azure.ResourceManager.RecoveryServices" Version="1.2.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager.Resources" Version="1.6.0" />
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.1.1" />
     <PackageReference Update="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.3" />
