@@ -39,9 +39,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public async Task GlobalTeardown()
         {
-            if (_keyspaceAccountIdentifier != null)
+            if (Mode != RecordedTestMode.Playback)
             {
-                await ArmClient.GetCosmosDBAccountResource(_keyspaceAccountIdentifier).DeleteAsync(WaitUntil.Completed);
+                if (_keyspaceAccountIdentifier != null)
+                {
+                    await ArmClient.GetCosmosDBAccountResource(_keyspaceAccountIdentifier).DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
@@ -54,12 +57,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (await CassandraKeyspaceCollection.ExistsAsync(_keyspaceName))
+            if (Mode != RecordedTestMode.Playback)
             {
-                var id = CassandraKeyspaceCollection.Id;
-                id = CassandraKeyspaceResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _keyspaceName);
-                CassandraKeyspaceResource keyspace = this.ArmClient.GetCassandraKeyspaceResource(id);
-                await keyspace.DeleteAsync(WaitUntil.Completed);
+                if (await CassandraKeyspaceCollection.ExistsAsync(_keyspaceName))
+                {
+                    var id = CassandraKeyspaceCollection.Id;
+                    id = CassandraKeyspaceResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _keyspaceName);
+                    CassandraKeyspaceResource keyspace = this.ArmClient.GetCassandraKeyspaceResource(id);
+                    await keyspace.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
