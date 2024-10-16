@@ -15,7 +15,7 @@ if ($UseTypeSpecNext) {
     Write-Host "##vso[build.addbuildtag]typespec_next"
 }
 
-$packageRoot = Resolve-Path "$RepoRooot/eng/packages/http-client-csharp"
+$packageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp"
 Push-Location $packageRoot
 try {
     if (Test-Path "./node_modules") {
