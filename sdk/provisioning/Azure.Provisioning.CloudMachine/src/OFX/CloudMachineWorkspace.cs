@@ -11,16 +11,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.CloudMachine;
 
-public class CloudMachineWorkspace : WorkspaceClient
+public class CloudMachineWorkspace : ClientWorkspace
 {
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public string Id { get; }
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override TokenCredential Credential { get; } = new ChainedTokenCredential(
+    private TokenCredential Credential { get; } = new ChainedTokenCredential(
         new AzureCliCredential(),
         new AzureDeveloperCliCredential()
     );
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public string Id { get; }
 
     [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "<Pending>")]
     public CloudMachineWorkspace(TokenCredential? credential = default, IConfiguration? configuration = default)
@@ -46,29 +45,25 @@ public class CloudMachineWorkspace : WorkspaceClient
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override ClientConfiguration? GetConfiguration(string clientId, string? instanceId = default)
+    public override ClientConnectionOptions GetConnectionOptions(Type clientType, string? instanceId = default)
     {
+        string clientId = clientType.FullName;
         switch (clientId)
         {
             case "Azure.Security.KeyVault.Secrets.SecretClient":
-                return new ClientConfiguration($"https://{this.Id}.vault.azure.net/");
+                return new ClientConnectionOptions(new($"https://{this.Id}.vault.azure.net/"), Credential);
             case "Azure.Messaging.ServiceBus.ServiceBusClient":
-                return new ClientConfiguration($"https://{this.Id}.servicebus.windows.net");
+                return new ClientConnectionOptions(new($"https://{this.Id}.servicebus.windows.net"), Credential);
             case "Azure.Messaging.ServiceBus.ServiceBusSender":
                 if (instanceId == default) instanceId = CloudMachineInfrastructure.SB_PRIVATE_TOPIC;
-                return new ClientConfiguration(instanceId);
+                return new ClientConnectionOptions(instanceId);
             case "Azure.Storage.Blobs.BlobContainerClient":
                 if (instanceId == default) instanceId = "default";
-                return new ClientConfiguration($"https://{this.Id}.blob.core.windows.net/{instanceId}");
+                return new ClientConnectionOptions(new($"https://{this.Id}.blob.core.windows.net/{instanceId}"), Credential);
             case "Azure.AI.OpenAI.AzureOpenAIClient":
-                string endpoint = $"https://{this.Id}.openai.azure.com";
-                string? key = null; // Environment.GetEnvironmentVariable("openai_cm_key");
-                if (key != null)
-                    return new ClientConfiguration(endpoint, key);
-                else
-                    return new ClientConfiguration(endpoint);
+                return new ClientConnectionOptions(new($"https://{this.Id}.openai.azure.com"), Credential);
             case "OpenAI.Chat.ChatClient":
-                return new ClientConfiguration(this.Id);
+                return new ClientConnectionOptions(Id);
             default:
                 throw new Exception($"unknown client {clientId}");
         }

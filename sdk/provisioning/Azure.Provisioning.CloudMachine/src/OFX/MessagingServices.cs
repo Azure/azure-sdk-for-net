@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.ServiceBus;
 using Azure.Provisioning.CloudMachine;
 
@@ -15,7 +16,7 @@ public readonly struct MessagingServices
 
     public void SendMessage(object serializable)
     {
-        ServiceBusSender sender = GetSender();
+        ServiceBusSender sender = GetServiceBusSender();
 
         BinaryData serialized = BinaryData.FromObjectAsJson(serializable);
         ServiceBusMessage message = new(serialized);
@@ -24,57 +25,9 @@ public readonly struct MessagingServices
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
     }
 
-    private ServiceBusSender GetSender()
-    {
-        string senderClientId = typeof(ServiceBusSender).FullName;
-        CloudMachineClient cm = _cm;
-        ServiceBusSender sender = _cm.Subclients.Get(senderClientId, () =>
-        {
-            string serviceBusClientId = typeof(ServiceBusClient).FullName;
-            ServiceBusClient sb = cm.Subclients.Get(serviceBusClientId, () =>
-            {
-                string sbNamespace = cm.GetConfiguration(serviceBusClientId)!.Value.Endpoint;
-                ServiceBusClient sb = new(sbNamespace, cm.Credential);
-                return sb;
-            });
-
-            string ServiceBusSenderId = typeof(ServiceBusSender).FullName;
-            string defaultTopic = cm.GetConfiguration(ServiceBusSenderId)!.Value.Endpoint;
-            ServiceBusSender sender = sb.CreateSender(defaultTopic);
-            return sender;
-        });
-        return sender;
-    }
-
-    internal ServiceBusProcessor GetProcessor()
-    {
-        string processorClientId = typeof(ServiceBusProcessor).FullName;
-        CloudMachineClient cm = _cm;
-        ServiceBusProcessor processor = cm.Subclients.Get(processorClientId, () =>
-        {
-            string serviceBusClientId = typeof(ServiceBusClient).FullName;
-            ServiceBusClient sb = cm.Subclients.Get(serviceBusClientId, () =>
-            {
-                string sbNamespace = cm.GetConfiguration(serviceBusClientId)!.Value.Endpoint;
-                ServiceBusClient sb = new(sbNamespace, cm.Credential);
-                return sb;
-            });
-
-            string ServiceBusSenderId = typeof(ServiceBusSender).FullName;
-            string defaultTopic = cm.GetConfiguration(ServiceBusSenderId)!.Value.Endpoint;
-            ServiceBusProcessor processor = sb.CreateProcessor(
-                defaultTopic,
-                CloudMachineInfrastructure.SB_PRIVATE_SUB,
-                new() { ReceiveMode = ServiceBusReceiveMode.PeekLock, MaxConcurrentCalls = 5 });
-        processor.ProcessErrorAsync += (args) => throw new Exception("error processing event", args.Exception);
-            return processor;
-        });
-        return processor;
-    }
-
     public void WhenMessageReceived(Action<string> received)
     {
-        var processor = _cm.Messaging.GetProcessor();
+        var processor = _cm.Messaging.GetServiceBusProcessor();
         var cm = _cm;
 
         // TODO: How to unsubscribe?
@@ -88,5 +41,53 @@ public readonly struct MessagingServices
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
         processor.StartProcessingAsync().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+    }
+
+    private ServiceBusClient GetServiceBusClient()
+    {
+        MessagingServices messagingServices = this;
+        ServiceBusClient client = _cm.Subclients.Get(() => messagingServices.CreateClient());
+        return client;
+    }
+
+    private ServiceBusSender GetServiceBusSender()
+    {
+        MessagingServices messagingServices = this;
+        ServiceBusSender sender = _cm.Subclients.Get(() => messagingServices.CreateSender());
+        return sender;
+    }
+
+    internal ServiceBusProcessor GetServiceBusProcessor()
+    {
+        MessagingServices messagingServices = this;
+        ServiceBusProcessor sender = _cm.Subclients.Get(() => messagingServices.CreateProcessor());
+        return sender;
+    }
+
+    private ServiceBusSender CreateSender()
+    {
+        ServiceBusClient client = GetServiceBusClient();
+
+        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusClient));
+        ServiceBusSender sender = client.CreateSender(connection.Id);
+        return sender;
+    }
+    private ServiceBusClient CreateClient()
+    {
+        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusClient));
+        ServiceBusClient client = new(connection.Endpoint!.AbsoluteUri, connection.TokenCredential);
+        return client;
+    }
+    private ServiceBusProcessor CreateProcessor()
+    {
+        ServiceBusClient client = GetServiceBusClient();
+
+        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusSender));
+        ServiceBusProcessor processor = client.CreateProcessor(
+            connection.Id,
+            CloudMachineInfrastructure.SB_PRIVATE_SUB,
+            new() { ReceiveMode = ServiceBusReceiveMode.PeekLock, MaxConcurrentCalls = 5 });
+        processor.ProcessErrorAsync += (args) => throw new Exception("error processing event", args.Exception);
+        return processor;
     }
 }

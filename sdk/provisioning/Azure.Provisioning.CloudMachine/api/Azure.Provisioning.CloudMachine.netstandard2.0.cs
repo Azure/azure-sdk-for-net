@@ -6,17 +6,15 @@ namespace Azure.CloudMachine
         public Azure.CloudMachine.MessagingServices Messaging { get { throw null; } }
         public Azure.CloudMachine.StorageServices Storage { get { throw null; } }
     }
-    public partial class CloudMachineWorkspace : Azure.Core.WorkspaceClient
+    public partial class CloudMachineWorkspace : Azure.Core.ClientWorkspace
     {
         public CloudMachineWorkspace(Azure.Core.TokenCredential? credential = null, Microsoft.Extensions.Configuration.IConfiguration? configuration = null) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override Azure.Core.TokenCredential Credential { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Id { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override Azure.Core.ClientConfiguration? GetConfiguration(string clientId, string? instanceId = null) { throw null; }
+        public override Azure.Core.ClientConnectionOptions GetConnectionOptions(System.Type clientType, string? instanceId = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -64,30 +62,34 @@ namespace Azure.Core
     public partial class ClientCache
     {
         public ClientCache() { }
-        public T Get<T>(string id, System.Func<T> value) where T : class { throw null; }
+        public T Get<T>(System.Func<T> value, string? id = null) where T : class { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ClientConfiguration
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ClientConfiguration(string endpoint, string? apiKey = null) { throw null; }
-        public string? ApiKey { get { throw null; } }
-        public Azure.Core.CredentialType CredentialType { get { throw null; } }
-        public string Endpoint { get { throw null; } }
-    }
-    public enum CredentialType
+    public enum ClientConnectionKind
     {
         EntraId = 0,
         ApiKey = 1,
+        OutOfBand = 2,
     }
-    public abstract partial class WorkspaceClient
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClientConnectionOptions
     {
-        protected WorkspaceClient() { }
-        public abstract Azure.Core.TokenCredential Credential { get; }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClientConnectionOptions(string subclientId) { throw null; }
+        public ClientConnectionOptions(System.Uri endpoint, Azure.Core.TokenCredential credential) { throw null; }
+        public ClientConnectionOptions(System.Uri endpoint, string apiKey) { throw null; }
+        public string? ApiKeyCredential { get { throw null; } }
+        public Azure.Core.ClientConnectionKind ConnectionKind { get { throw null; } }
+        public System.Uri? Endpoint { get { throw null; } }
+        public string? Id { get { throw null; } }
+        public Azure.Core.TokenCredential? TokenCredential { get { throw null; } }
+    }
+    public abstract partial class ClientWorkspace
+    {
+        protected ClientWorkspace() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ClientCache Subclients { get { throw null; } }
-        public abstract Azure.Core.ClientConfiguration? GetConfiguration(string clientId, string? instanceId = null);
+        public abstract Azure.Core.ClientConnectionOptions GetConnectionOptions(System.Type clientType, string? instanceId = null);
     }
 }
 namespace Azure.Provisioning.CloudMachine
@@ -114,7 +116,7 @@ namespace Azure.Provisioning.CloudMachine.KeyVault
 {
     public static partial class KeyVaultExtensions
     {
-        public static Azure.Security.KeyVault.Secrets.SecretClient GetKeyVaultSecretsClient(this Azure.Core.WorkspaceClient workspace) { throw null; }
+        public static Azure.Security.KeyVault.Secrets.SecretClient GetKeyVaultSecretsClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
     }
     public partial class KeyVaultFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
     {
@@ -125,15 +127,15 @@ namespace Azure.Provisioning.CloudMachine.KeyVault
 }
 namespace Azure.Provisioning.CloudMachine.OpenAI
 {
+    public static partial class AzureOpenAIExtensions
+    {
+        public static OpenAI.Chat.ChatClient GetOpenAIChatClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
+    }
     public partial class OpenAIFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
     {
         public OpenAIFeature(string model, string modelVersion) { }
         public string Model { get { throw null; } }
         public string ModelVersion { get { throw null; } }
         public override void AddTo(Azure.Provisioning.CloudMachine.CloudMachineInfrastructure cloudMachine) { }
-    }
-    public static partial class OpenAIFeatureExtensions
-    {
-        public static OpenAI.Chat.ChatClient GetOpenAIChatClient(this Azure.Core.WorkspaceClient workspace) { throw null; }
     }
 }

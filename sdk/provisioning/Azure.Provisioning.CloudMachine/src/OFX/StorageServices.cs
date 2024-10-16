@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Messaging.EventGrid;
 using Azure.Messaging.EventGrid.SystemEvents;
+using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
@@ -18,12 +19,11 @@ public readonly struct StorageServices
 
     private BlobContainerClient GetDefaultContainer()
     {
-        string blobContainerClientId = typeof(BlobContainerClient).FullName;
         CloudMachineClient cm = _cm;
-        BlobContainerClient container = cm.Subclients.Get(blobContainerClientId, () =>
+        BlobContainerClient container = _cm.Subclients.Get(() =>
         {
-            string endpoint = cm.GetConfiguration(blobContainerClientId)!.Value.Endpoint;
-            BlobContainerClient container = new(new Uri(endpoint), cm.Credential);
+            ClientConnectionOptions connection = cm.GetConnectionOptions(typeof(BlobContainerClient));
+            BlobContainerClient container = new(connection.Endpoint, connection.TokenCredential);
             return container;
         });
         return container;
@@ -33,10 +33,10 @@ public readonly struct StorageServices
     {
         string blobContainerClientId = typeof(BlobContainerClient).FullName;
         CloudMachineClient cm = _cm;
-        BlobContainerClient container = cm.Subclients.Get(blobContainerClientId, () =>
+        BlobContainerClient container = cm.Subclients.Get(() =>
         {
-            string endpoint = cm.GetConfiguration(blobContainerClientId, containerName)!.Value.Endpoint;
-            BlobContainerClient container = new(new Uri(endpoint), cm.Credential);
+            ClientConnectionOptions connection = cm.GetConnectionOptions(typeof(BlobContainerClient), containerName);
+            BlobContainerClient container = new(connection.Endpoint, connection.TokenCredential);
             return container;
         });
         return container;
@@ -99,7 +99,7 @@ public readonly struct StorageServices
 
     public void WhenBlobUploaded(Action<StorageFile> function)
     {
-        var processor = _cm.Messaging.GetProcessor();
+        var processor = _cm.Messaging.GetServiceBusProcessor();
         var cm = _cm;
 
         // TODO: How to unsubscribe?
