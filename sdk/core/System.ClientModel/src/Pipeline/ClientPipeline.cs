@@ -5,7 +5,10 @@ using System.ClientModel.Internal;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Primitives;
 
@@ -111,6 +114,7 @@ public sealed partial class ClientPipeline
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
         pipelineLength++; // for retry policy
+        pipelineLength++; // for logging policy
         pipelineLength++; // for transport
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
@@ -132,6 +136,12 @@ public sealed partial class ClientPipeline
         // Add retry policy.
         policies[index++] = options.RetryPolicy ?? ClientRetryPolicy.Default;
 
+        if (policies[index] is ClientRetryPolicy retryPolicy)
+        {
+            ILogger logger = options.LoggingOptions.LoggerFactory.CreateLogger<ClientRetryPolicy>();
+            retryPolicy.LogHandler = new LoggingHandler(logger, new PipelineMessageSanitizer(options.LoggingOptions.AllowedQueryParameters.ToArray(), options.LoggingOptions.AllowedHeaderNames.ToArray()));
+        }
+
         // Per try policies come after the retry policy.
         perTryPolicies.CopyTo(policies.AsSpan(index));
         index += perTryPolicies.Length;
@@ -143,6 +153,10 @@ public sealed partial class ClientPipeline
         }
 
         int perTryIndex = index;
+
+        // Add logging policy just before the transport.
+
+        policies[index++] = options.LoggingPolicy ?? new ClientLoggingPolicy(options.LoggingOptions);
 
         // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));

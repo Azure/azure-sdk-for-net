@@ -20,8 +20,10 @@ public class ClientPipelineOptions
     private bool _frozen;
 
     private PipelinePolicy? _retryPolicy;
+    private PipelinePolicy? _loggingPolicy;
     private PipelineTransport? _transport;
     private TimeSpan? _timeout;
+    private LoggingOptions _loggingOptions = new();
 
     #region Pipeline creation: Overrides of default pipeline policies
 
@@ -41,6 +43,25 @@ public class ClientPipelineOptions
             AssertNotFrozen();
 
             _retryPolicy = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the <see cref="PipelinePolicy"/> to be used by the
+    /// <see cref="ClientPipeline"/> for logging.
+    /// </summary>
+    /// <remarks>
+    /// In most cases, this property will be set to an instance of
+    /// <see cref="ClientLoggingPolicy"/>.
+    /// </remarks>
+    public PipelinePolicy? LoggingPolicy
+    {
+        get => _loggingPolicy;
+        set
+        {
+            AssertNotFrozen();
+
+            _loggingPolicy = value;
         }
     }
 
@@ -78,6 +99,23 @@ public class ClientPipelineOptions
             AssertNotFrozen();
 
             _timeout = value;
+        }
+    }
+
+    /// <summary>
+    /// The options to be used to create a <see cref="ClientLoggingPolicy"/>
+    /// if a custom <see cref="LoggingPolicy"/> is not provided. If
+    /// <see cref="LoggingPolicy"/> is not <c>null</c>, this property will
+    /// not be used.
+    /// </summary>
+    public LoggingOptions LoggingOptions
+    {
+        get => _loggingOptions;
+        set
+        {
+            AssertNotFrozen();
+
+            _loggingOptions = value;
         }
     }
 
@@ -161,7 +199,11 @@ public class ClientPipelineOptions
     /// instance or call methods that would change its state will throw
     /// <see cref="InvalidOperationException"/>.
     /// </summary>
-    public virtual void Freeze() => _frozen = true;
+    public virtual void Freeze()
+    {
+        _frozen = true;
+        _loggingOptions.Freeze();
+    }
 
     /// <summary>
     /// Assert that <see cref="Freeze"/> has not been called on this
