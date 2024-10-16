@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Globalization;
 using System.Text;
 
@@ -107,16 +108,39 @@ namespace Azure.Storage.Files.Shares.Models
 
         public static RolePermissions ParseSymbolicRolePermissions(string s, out bool setSticky)
         {
+            if (s == null)
+            {
+                throw new ArgumentNullException("s");
+            }
+            if (s.Length != 3)
+            {
+                throw new FormatException($"s must be 3 characters long");
+            }
+
             RolePermissions rolePermissions = new RolePermissions();
             setSticky = false;
+
+            // Read character
             if (s[0] == 'r')
             {
                 rolePermissions |= RolePermissions.Read;
             }
+            else if (s[0] != '-')
+            {
+                throw new ArgumentException($"Invalid character in symbolic role permission: {s[0]}");
+            }
+
+            // Write character
             if (s[1] == 'w')
             {
                 rolePermissions |= RolePermissions.Write;
             }
+            else if (s[1] != '-')
+            {
+                throw new ArgumentException($"Invalid character in symbolic role permission: {s[1]}");
+            }
+
+            // Execute character
             if (s[2] == 'x' || s[2] == 's' || s[2] == 't')
             {
                 rolePermissions |= RolePermissions.Execute;
@@ -128,6 +152,11 @@ namespace Azure.Storage.Files.Shares.Models
             if (s[2] == 'S' || s[2] == 'T')
             {
                 setSticky = true;
+            }
+
+            if (s[2] != 'x' && s[2] != 's' && s[2] != 'S' && s[2] != 't' && s[2] != 'T' && s[2] != '-')
+            {
+                throw new ArgumentException($"Invalid character in symbolic role permission: {s[2]}");
             }
 
            return rolePermissions;

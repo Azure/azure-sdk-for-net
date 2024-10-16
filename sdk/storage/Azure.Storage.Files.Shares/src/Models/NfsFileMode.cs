@@ -179,7 +179,7 @@ namespace Azure.Storage.Files.Shares.Models
         public static NfsFileMode ParseSymbolicFileMode(string modeString)
         {
             // https://en.wikipedia.org/wiki/File-system_permissions#Symbolic_notation
-            if (modeString != null)
+            if (modeString == null)
             {
                 return null;
             }
@@ -197,7 +197,7 @@ namespace Azure.Storage.Files.Shares.Models
             nfsFileMode.Group = RolePermissionExtensions.ParseSymbolicRolePermissions(modeString.Substring(3, 3), out bool effectiveGroupIdentity);
             nfsFileMode.EffectiveGroupIdentity = effectiveGroupIdentity;
 
-            nfsFileMode.Other = RolePermissionExtensions.ParseSymbolicRolePermissions(modeString.Substring(6, 9), out bool stickyBit);
+            nfsFileMode.Other = RolePermissionExtensions.ParseSymbolicRolePermissions(modeString.Substring(6, 3), out bool stickyBit);
             nfsFileMode.StickyBit = stickyBit;
 
             return nfsFileMode;
