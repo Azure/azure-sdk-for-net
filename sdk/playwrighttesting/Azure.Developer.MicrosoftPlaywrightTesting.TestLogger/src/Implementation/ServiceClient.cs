@@ -9,6 +9,7 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using System.Text.Json;
 using Azure.Core.Diagnostics;
 using System.Diagnostics.Tracing;
+using System.Net;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
 {
@@ -17,13 +18,15 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
         private readonly ReportingTestResultsClient _reportingTestResultsClient;
         private readonly ReportingTestRunsClient _reportingTestRunsClient;
         private readonly CloudRunMetadata _cloudRunMetadata;
+        private readonly ICloudRunErrorParser _cloudRunErrorParser;
         private readonly ILogger _logger;
         private static string AccessToken { get => $"Bearer {Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken)}"; set { } }
         private static string CorrelationId { get => Guid.NewGuid().ToString(); set { } }
 
-        public ServiceClient(CloudRunMetadata cloudRunMetadata, ReportingTestResultsClient? reportingTestResultsClient = null, ReportingTestRunsClient? reportingTestRunsClient = null, ILogger? logger = null)
+        public ServiceClient(CloudRunMetadata cloudRunMetadata, ICloudRunErrorParser cloudRunErrorParser, ReportingTestResultsClient? reportingTestResultsClient = null, ReportingTestRunsClient? reportingTestRunsClient = null, ILogger? logger = null)
         {
             _cloudRunMetadata = cloudRunMetadata;
+            _cloudRunErrorParser = cloudRunErrorParser;
             _logger = logger ?? new Logger();
             AzureEventSourceListener listener = new(delegate (EventWrittenEventArgs eventData, string text)
             {
@@ -31,6 +34,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             }, EventLevel.Informational);
             var clientOptions = new TestReportingClientOptions();
             clientOptions.Diagnostics.IsLoggingEnabled = true;
+            clientOptions.Diagnostics.IsLoggingContentEnabled = false;
             clientOptions.Diagnostics.IsTelemetryEnabled = true;
             clientOptions.Retry.MaxRetries = ServiceClientConstants.s_mAX_RETRIES;
             clientOptions.Retry.MaxDelay = TimeSpan.FromSeconds(ServiceClientConstants.s_mAX_RETRY_DELAY_IN_SECONDS);
@@ -40,37 +44,108 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
 
         public TestRunDtoV2? PatchTestRunInfo(TestRunDtoV2 run)
         {
-            Response apiResponse = _reportingTestRunsClient.PatchTestRunInfo(_cloudRunMetadata.WorkspaceId!, _cloudRunMetadata.RunId!, RequestContent.Create(run), ReporterConstants.s_aPPLICATION_JSON, AccessToken, CorrelationId);
-            if (apiResponse.Content != null)
+            int statusCode;
+            try
             {
-                return apiResponse.Content!.ToObject<TestRunDtoV2>(new JsonObjectSerializer());
+                Response? apiResponse = _reportingTestRunsClient.PatchTestRunInfo(_cloudRunMetadata.WorkspaceId!, _cloudRunMetadata.RunId!, RequestContent.Create(run), ReporterConstants.s_aPPLICATION_JSON, AccessToken, CorrelationId);
+                if (apiResponse.Status == (int)HttpStatusCode.OK)
+                {
+                    return apiResponse.Content!.ToObject<TestRunDtoV2>(new JsonObjectSerializer());
+                }
+                statusCode = apiResponse.Status;
             }
+            catch (RequestFailedException ex)
+            {
+                if (ex.Status == (int)HttpStatusCode.Conflict)
+                {
+                    var errorMessage = ReporterConstants.s_cONFLICT_409_ERROR_MESSAGE.Replace("{runId}", _cloudRunMetadata.RunId!);
+                    _cloudRunErrorParser.PrintErrorToConsole(errorMessage);
+                    _cloudRunErrorParser.TryPushMessageAndKey(errorMessage, ReporterConstants.s_cONFLICT_409_ERROR_MESSAGE_KEY);
+                    throw new Exception(errorMessage);
+                }
+                else if (ex.Status == (int)HttpStatusCode.Forbidden)
+                {
+                    var errorMessage = ReporterConstants.s_fORBIDDEN_403_ERROR_MESSAGE.Replace("{workspaceId}", _cloudRunMetadata.WorkspaceId!);
+                    _cloudRunErrorParser.PrintErrorToConsole(errorMessage);
+                    _cloudRunErrorParser.TryPushMessageAndKey(errorMessage, ReporterConstants.s_fORBIDDEN_403_ERROR_MESSAGE_KEY);
+                    throw new Exception(errorMessage);
+                }
+                statusCode = ex.Status;
+            }
+            HandleAPIFailure(statusCode, "PatchTestRun");
             return null;
         }
 
         public TestRunShardDto? PatchTestRunShardInfo(int shardId, TestRunShardDto runShard)
         {
-            Response apiResponse = _reportingTestRunsClient.PatchTestRunShardInfo(_cloudRunMetadata.WorkspaceId!, _cloudRunMetadata.RunId!, shardId.ToString(), RequestContent.Create(runShard), ReporterConstants.s_aPPLICATION_JSON, AccessToken, CorrelationId);
-            if (apiResponse.Content != null)
+            int statusCode;
+            try
             {
-                return apiResponse.Content!.ToObject<TestRunShardDto>(new JsonObjectSerializer());
+                Response apiResponse = _reportingTestRunsClient.PatchTestRunShardInfo(_cloudRunMetadata.WorkspaceId!, _cloudRunMetadata.RunId!, shardId.ToString(), RequestContent.Create(runShard), ReporterConstants.s_aPPLICATION_JSON, AccessToken, CorrelationId);
+                if (apiResponse.Status == (int)HttpStatusCode.OK)
+                {
+                    return apiResponse.Content!.ToObject<TestRunShardDto>(new JsonObjectSerializer());
+                }
+                statusCode = apiResponse.Status;
             }
+            catch (RequestFailedException ex)
+            {
+                statusCode = ex.Status;
+            }
+            HandleAPIFailure(statusCode, "PatchTestRunShard");
             return null;
         }
 
         public void UploadBatchTestResults(UploadTestResultsRequest uploadTestResultsRequest)
         {
-            _reportingTestResultsClient.UploadBatchTestResults(_cloudRunMetadata.WorkspaceId!, RequestContent.Create(JsonSerializer.Serialize(uploadTestResultsRequest)), AccessToken, CorrelationId, null);
+            int statusCode;
+            try
+            {
+                Response apiResponse = _reportingTestResultsClient.UploadBatchTestResults(_cloudRunMetadata.WorkspaceId!, RequestContent.Create(JsonSerializer.Serialize(uploadTestResultsRequest)), AccessToken, CorrelationId, null);
+                if (apiResponse.Status == (int)HttpStatusCode.OK)
+                {
+                    return;
+                }
+                statusCode = apiResponse.Status;
+            }
+            catch (RequestFailedException ex)
+            {
+                statusCode = ex.Status;
+            }
+            HandleAPIFailure(statusCode, "PostTestResults");
         }
 
         public TestResultsUri? GetTestRunResultsUri()
         {
-            Response response = _reportingTestRunsClient.GetTestRunResultsUri(_cloudRunMetadata.WorkspaceId!, _cloudRunMetadata.RunId!, AccessToken, CorrelationId, null);
-            if (response.Content != null)
+            int statusCode;
+            try
             {
-                return response.Content!.ToObject<TestResultsUri>(new JsonObjectSerializer());
+                Response response = _reportingTestRunsClient.GetTestRunResultsUri(_cloudRunMetadata.WorkspaceId!, _cloudRunMetadata.RunId!, AccessToken, CorrelationId, null);
+                if (response.Status == (int)HttpStatusCode.OK)
+                {
+                    return response.Content!.ToObject<TestResultsUri>(new JsonObjectSerializer());
+                }
+                statusCode = response.Status;
             }
+            catch (RequestFailedException ex)
+            {
+                statusCode = ex.Status;
+            }
+            HandleAPIFailure(statusCode, "GetStorageUri");
             return null;
+        }
+
+        private void HandleAPIFailure(int? statusCode, string operationName)
+        {
+            if (statusCode == null)
+                return;
+            ApiErrorConstants.s_errorOperationPair.TryGetValue(operationName, out System.Collections.Generic.Dictionary<int, string>? errorObject);
+            if (errorObject == null)
+                return;
+            errorObject.TryGetValue((int)statusCode, out string? errorMessage);
+            if (errorMessage == null)
+                errorMessage = ReporterConstants.s_uNKNOWN_ERROR_MESSAGE;
+            _cloudRunErrorParser.TryPushMessageAndKey(errorMessage, operationName);
         }
     }
 }

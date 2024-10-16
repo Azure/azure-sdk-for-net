@@ -51,6 +51,11 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             }
         }
 
+        public void PrintErrorToConsole(string message)
+        {
+            _consoleWriter.WriteError(message);
+        }
+
         public void HandleScalableRunErrorMessage(string? message)
         {
             if (string.IsNullOrEmpty(message))

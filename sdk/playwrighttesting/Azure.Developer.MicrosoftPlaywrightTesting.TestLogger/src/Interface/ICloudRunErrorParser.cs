@@ -9,5 +9,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface
         bool TryPushMessageAndKey(string? message, string? key);
         void PushMessage(string message);
         void DisplayMessages();
+        void PrintErrorToConsole(string message);
     }
 }

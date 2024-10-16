@@ -230,6 +230,12 @@ internal class ReporterConstants
     internal static readonly string s_pLAYWRIGHT_SERVICE_REPORTING_URL = "PLAYWRIGHT_SERVICE_REPORTING_URL";
     internal static readonly string s_pLAYWRIGHT_SERVICE_WORKSPACE_ID = "PLAYWRIGHT_SERVICE_WORKSPACE_ID";
     internal static readonly string s_aPPLICATION_JSON = "application/json";
+    internal static readonly string s_cONFLICT_409_ERROR_MESSAGE = "Test run with id {runId} already exists. Provide a unique run id.";
+    internal static readonly string s_cONFLICT_409_ERROR_MESSAGE_KEY = "DuplicateRunId";
+
+    internal static readonly string s_fORBIDDEN_403_ERROR_MESSAGE = "Reporting is not enabled for your workspace {workspaceId}. Enable the Reporting feature under Feature management settings using the Playwright portal: https://playwright.microsoft.com/workspaces/{workspaceId}/settings/general";
+    internal static readonly string s_fORBIDDEN_403_ERROR_MESSAGE_KEY = "ReportingNotEnabled";
+    internal static readonly string s_uNKNOWN_ERROR_MESSAGE = "Unknown error occured.";
 }
 
 internal class CIConstants
@@ -343,5 +349,56 @@ internal static class TestResultErrorConstants
             Pattern = new Regex(@"Target page, context or browser has been closed", RegexOptions.IgnoreCase),
             Type = TestErrorType.Scalable
         }
+    };
+}
+
+internal static class ApiErrorConstants
+{
+    private static Dictionary<int, string> PatchTestRun { get; set; } = new Dictionary<int, string>() {
+        { 400, "The request made to the server is invalid. Please check the request parameters and try again." },
+        { 401, "The authentication token provided is invalid. Please check the token and try again." },
+        { 500, "An unexpected error occurred on our server. Our team is working to resolve the issue. Please try again later, or contact support if the problem continues." },
+        { 429, "You have exceeded the rate limit for the API. Please wait and try again later." },
+        { 504, "The request to the service timed out. Please try again later." },
+        { 503, "The service is currently unavailable. Please check the service status and try again." }
+    };
+
+    private static Dictionary<int, string> GetTestRun { get; set; } = new Dictionary<int, string>()
+    {
+        { 400, "The request made to the server is invalid. Please check the request parameters and try again." },
+        { 401, "The authentication token provided is invalid. Please check the token and try again." },
+        { 403, "You do not have the required permissions to run tests. Please contact your workspace administrator." },
+        { 500, "An unexpected error occurred on our server. Our team is working to resolve the issue. Please try again later, or contact support if the problem continues." },
+        { 429, "You have exceeded the rate limit for the API. Please wait and try again later." },
+        { 504, "The request to the service timed out. Please try again later." },
+        { 503, "The service is currently unavailable. Please check the service status and try again." }
+    };
+    private static Dictionary<int, string> PatchTestRunShard { get; set; } = new Dictionary<int, string>()
+    {
+        { 400, "The request made to the server is invalid. Please check the request parameters and try again." },
+        { 401, "The authentication token provided is invalid. Please check the token and try again." },
+        { 403, "You do not have the required permissions to run tests. Please contact your workspace administrator." },
+        { 500, "An unexpected error occurred on our server. Our team is working to resolve the issue. Please try again later, or contact support if the problem continues." },
+        { 429, "You have exceeded the rate limit for the API. Please wait and try again later." },
+        { 504, "The request to the service timed out. Please try again later." },
+        { 503, "The service is currently unavailable. Please check the service status and try again." }
+    };
+    private static Dictionary<int, string> GetStorageUri { get; set; } = new Dictionary<int, string>()
+    {
+        { 400, "The request made to the server is invalid. Please check the request parameters and try again." },
+        { 401, "The authentication token provided is invalid. Please check the token and try again." },
+        { 403, "You do not have the required permissions to run tests. Please contact your workspace administrator." },
+        { 500, "An unexpected error occurred on our server. Our team is working to resolve the issue. Please try again later, or contact support if the problem continues." },
+        { 429, "You have exceeded the rate limit for the API. Please wait and try again later." },
+        { 504, "The request to the service timed out. Please try again later." },
+        { 503, "The service is currently unavailable. Please check the service status and try again." }
+    };
+
+    internal static readonly Dictionary<string, Dictionary<int, string>> s_errorOperationPair = new()
+    {
+        { "PatchTestRun", PatchTestRun },
+        { "GetTestRun", GetTestRun },
+        { "PatchTestRunShard", PatchTestRunShard },
+        { "GetStorageUri", GetStorageUri }
     };
 }

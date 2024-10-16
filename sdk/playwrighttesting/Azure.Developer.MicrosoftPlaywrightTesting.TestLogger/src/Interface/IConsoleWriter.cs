@@ -6,5 +6,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface
     internal interface IConsoleWriter
     {
         void WriteLine(string? message = null);
+        void WriteError(string? message = null);
     }
 }

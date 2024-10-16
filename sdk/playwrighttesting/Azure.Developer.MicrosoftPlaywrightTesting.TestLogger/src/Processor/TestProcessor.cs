@@ -45,7 +45,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             _logger = logger ?? new Logger();
             _dataProcessor = dataProcessor ?? new DataProcessor(_cloudRunMetadata, _cIInfo, _logger);
             _cloudRunErrorParser = cloudRunErrorParser ?? new CloudRunErrorParser(_logger);
-            _serviceClient = serviceClient ?? new ServiceClient(_cloudRunMetadata);
+            _serviceClient = serviceClient ?? new ServiceClient(_cloudRunMetadata, _cloudRunErrorParser);
             _consoleWriter = consoleWriter ?? new ConsoleWriter();
         }
 
@@ -89,10 +89,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         {
             try
             {
-                if (FatalTestExecution)
-                {
-                    return;
-                }
                 TestResult testResultSource = e.Result;
                 TestResults? testResult = _dataProcessor.GetTestCaseResultData(testResultSource);
                 RawTestResult rawResult = DataProcessor.GetRawResultObject(testResultSource);

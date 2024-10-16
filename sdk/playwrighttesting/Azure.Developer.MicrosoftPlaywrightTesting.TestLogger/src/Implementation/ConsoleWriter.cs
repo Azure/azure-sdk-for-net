@@ -19,5 +19,17 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
                 Console.WriteLine(message);
             }
         }
+
+        public void WriteError(string? message = null)
+        {
+            if (message == null)
+            {
+                Console.Error.WriteLine();
+            }
+            else
+            {
+                Console.Error.WriteLine(message);
+            }
+        }
     }
 }
