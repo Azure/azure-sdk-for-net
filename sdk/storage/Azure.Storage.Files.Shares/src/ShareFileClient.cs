@@ -15,6 +15,7 @@ using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Azure.Storage.Common;
+using System.Net.Http.Headers;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -6705,7 +6706,7 @@ namespace Azure.Storage.Files.Shares
         }
         #endregion Rename
 
-        #region CreateSymbolicLink
+        #region GetSymbolicLink
         /// <summary>
         /// Reads the value of the symbolic link.
         /// Only applicable if this <see cref="ShareFileClient"/> is pointed at an NFS symbolic link.
@@ -6721,7 +6722,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<FileSymbolicLinkInfo> GetSymbolicLink(
+        public virtual Response<ShareFileSymbolicLinkInfo> GetSymbolicLink(
             CancellationToken cancellationToken = default) =>
             GetSymbolicLinkInternal(
                 async: false,
@@ -6743,7 +6744,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<FileSymbolicLinkInfo>> GetSymbolicLinkAsync(
+        public virtual async Task<Response<ShareFileSymbolicLinkInfo>> GetSymbolicLinkAsync(
             CancellationToken cancellationToken = default) =>
             await GetSymbolicLinkInternal(
                 async: true,
@@ -6768,7 +6769,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<FileSymbolicLinkInfo>> GetSymbolicLinkInternal(
+        private async Task<Response<ShareFileSymbolicLinkInfo>> GetSymbolicLinkInternal(
             bool async,
             CancellationToken cancellationToken)
         {
@@ -6786,12 +6787,14 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await FileRestClient.GetSymbolicLinkAsync()
+                        response = await FileRestClient.GetSymbolicLinkAsync(
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
-                        response = FileRestClient.GetSymbolicLink();
+                        response = FileRestClient.GetSymbolicLink(
+                            cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
@@ -6813,7 +6816,71 @@ namespace Azure.Storage.Files.Shares
         }
         #endregion
 
-        #region GetSymbolicLink
+        #region CreateSymbolicLink
+        private async Task<Response<ShareFileInfo>> CreateSymbolicLink(
+            string path,
+            ShareFileCreateSymbolicLinkOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareFileClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(CreateSymbolicLink)}");
+
+                ResponseWithHeaders<FileCreateSymbolicLinkHeaders> response;
+
+                try
+                {
+                    scope.Start();
+
+                    if (async)
+                    {
+                        response = await FileRestClient.CreateSymbolicLinkAsync(
+                            linkText: path,
+                            metadata: options?.Metadata,
+                            fileCreationTime: options?.FileCreatedOn.ToFileDateTimeString(),
+                            fileLastWriteTime: options?.FileLastWrittenOn.ToFileDateTimeString(),
+                            owner: options?.Owner,
+                            group: options?.Group,
+                            shareFileRequestConditions: options?.Conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.CreateSymbolicLink(
+                            linkText: path,
+                            metadata: options?.Metadata,
+                            fileCreationTime: options?.FileCreatedOn.ToFileDateTimeString(),
+                            fileLastWriteTime: options?.FileLastWrittenOn.ToFileDateTimeString(),
+                            owner: options?.Owner,
+                            group: options?.Group,
+                            shareFileRequestConditions: options?.Conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileInfo(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
+                }
+            }
+        }
         #endregion
 
         #region CreateHardLink

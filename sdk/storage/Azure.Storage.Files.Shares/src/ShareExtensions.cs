@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using Azure.Core;
@@ -1047,16 +1048,43 @@ namespace Azure.Storage.Files.Shares
                 response.GetRawResponse());
         }
 
-        internal static FileSymbolicLinkInfo ToFileSymbolicLinkInfo(this ResponseWithHeaders<FileGetSymbolicLinkHeaders> fileGetSymbolicLinkHeadersResponse)
+        internal static ShareFileSymbolicLinkInfo ToFileSymbolicLinkInfo(this ResponseWithHeaders<FileGetSymbolicLinkHeaders> response)
         {
-            if (fileGetSymbolicLinkHeadersResponse == null)
+            if (response == null)
             {
                 return null;
             }
 
-            return new FileSymbolicLinkInfo
+            return new ShareFileSymbolicLinkInfo
             {
-                Path = fileGetSymbolicLinkHeadersResponse.Headers.LinkText
+                Path = response.Headers.LinkText
+            };
+        }
+
+        internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileCreateSymbolicLinkHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareFileInfo
+            {
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                SmbProperties = new FileSmbProperties
+                {
+                    FileCreatedOn = response.Headers.FileCreationTime,
+                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
+                    FileChangedOn = response.Headers.FileChangeTime,
+                    FileId = response.Headers.FileId,
+                    ParentId = response.Headers.FileParentId
+                },
+                NfsProperties = new FileNfsProperties()
+                {
+                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
+                    Owner = Convert.ToUInt32(response.Headers.Owner),
+                    Group = Convert.ToUInt32(response.Headers.Group)
+                }
             };
         }
     }

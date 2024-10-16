@@ -9,7 +9,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// Infomation about a Symbolic Link.
     /// Only applicable to NFS files.
     /// </summary>
-    public class FileSymbolicLinkInfo
+    public class ShareFileSymbolicLinkInfo
     {
         /// <summary>
         /// Path to the file the symbolic link is pointed to.
@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new FileSymolicLinkInfo for mocking.
         /// </summary>
-        public static FileSymbolicLinkInfo FileSymbolicLinkInfo(string path)
-            => new FileSymbolicLinkInfo { Path = path };
+        public static ShareFileSymbolicLinkInfo FileSymbolicLinkInfo(string path)
+            => new ShareFileSymbolicLinkInfo { Path = path };
     }
 }
