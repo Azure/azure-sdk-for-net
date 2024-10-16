@@ -9,17 +9,16 @@ namespace Azure.Core;
 // TODO: this is a very demo implementation. We need to do better
 public class ClientCache
 {
-    private readonly Dictionary<string, object> _clients = new Dictionary<string, object>();
+    private readonly Dictionary<(Type, string?), object> _clients = new Dictionary<(Type, string?), object>();
 
-    // TODO: consider uisng ICLientCreator instead of Func
-    public T Get<T>(string id, Func<T> value) where T: class
+    public T Get<T>(Func<T> value, string? id = default) where T: class
     {
+        var client = (typeof(T), id);
         lock (_clients)
         {
-            if (_clients.TryGetValue(id, out object cached))
+            if (_clients.TryGetValue(client, out object cached))
             {
-                T client = (T)cached;
-                return client;
+                return (T)cached;
             }
 
             if (_clients.Count > 100)
@@ -27,7 +26,7 @@ public class ClientCache
                 GC();
             }
             T created = value();
-            _clients.Add(id, created);
+            _clients.Add(client, created);
             return created;
         }
 

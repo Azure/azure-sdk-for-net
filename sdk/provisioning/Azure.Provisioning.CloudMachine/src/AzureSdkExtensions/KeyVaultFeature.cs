@@ -64,19 +64,13 @@ public class KeyVaultFeature : CloudMachineFeature
 
 public static class KeyVaultExtensions
 {
-    public static SecretClient GetKeyVaultSecretsClient(this WorkspaceClient workspace)
+    public static SecretClient GetKeyVaultSecretsClient(this ClientWorkspace workspace)
     {
-        ClientConfiguration? connectionMaybe = workspace.GetConfiguration(typeof(SecretClient).FullName);
-        if (connectionMaybe == null)
+        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(SecretClient));
+        if (connection.ConnectionKind == ClientConnectionKind.EntraId)
         {
-            throw new Exception("Connection not found");
+            return new(connection.Endpoint, connection.TokenCredential);
         }
-
-        ClientConfiguration connection = connectionMaybe.Value;
-        if (connection.CredentialType == CredentialType.EntraId)
-        {
-            return new(new Uri(connection.Endpoint), workspace.Credential);
-        }
-        throw new Exception("ApiKey not supported");
+        throw new Exception("API key not supported");
     }
 }
