@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-- Use `BinaryData.Empty` for `PipelineResponse.Content` when HTTP message has no content.
+- Use `BinaryData.Empty` for `PipelineResponse.Content` when HTTP message has no content ([#46669](https://github.com/Azure/azure-sdk-for-net/pull/46669)).
 
 ## 1.2.1 (2024-10-09)
 
