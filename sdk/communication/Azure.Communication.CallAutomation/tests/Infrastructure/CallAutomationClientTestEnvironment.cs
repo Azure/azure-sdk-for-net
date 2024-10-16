@@ -31,6 +31,10 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         private string botAppId = "BOT_APP_ID";
 
+        private string transportUrl = "TRANSPORT_URL";
+
+        private string cognitiveServiceEndpoint = "COGNITIVE_SERVICE_ENDPOINT";
+
         /// <summary>
         /// The resource identifier associated with the Azure Communication Service.
         /// </summary>
@@ -75,6 +79,16 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         /// </summary>
         public string ServiceBusConnectionString => GetRecordedOptionalVariable(servicebusString,
             options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64).HasSecretConnectionStringParameter("SharedAccessKeyName"));
+
+        /// <summary>
+        /// websocket url for automated testing
+        /// </summary>
+        public string TransportUrl => GetRecordedOptionalVariable(transportUrl, options => options.IsSecret("https://sanitized.skype.com"));
+
+        /// <summary>
+        /// Cognitive service endpoint for automated testing
+        /// </summary>
+        public string CognitiveServiceEndpoint => GetRecordedOptionalVariable(cognitiveServiceEndpoint, options => options.IsSecret("https://sanitized.skype.com"));
 
         /// <summary>
         /// The callback url of the application where notification would be received.
