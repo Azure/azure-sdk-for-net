@@ -21,6 +21,7 @@ public class MapsClientOptions : ClientOptions
 
     public MapsClientOptions() : this(ServiceVersion.V1)
     {
+        Diagnostics.LoggedHeaderNames.Add("x-maps-client-allowed");
     }
 
     public MapsClientOptions(ServiceVersion version)

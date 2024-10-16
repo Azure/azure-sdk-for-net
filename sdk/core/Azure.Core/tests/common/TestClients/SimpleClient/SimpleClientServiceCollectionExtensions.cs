@@ -28,7 +28,6 @@ public static class SimpleClientServiceCollectionExtensions
         services.AddSingleton<SimpleClient>(sp =>
         {
             IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
-            IConfiguration commonConfiguration = configuration.GetSection("ClientCommon");
             IConfiguration clientConfiguration = configuration.GetSection("SimpleClient");
 
             Uri endpoint = sp.GetClientEndpoint(clientConfiguration);
@@ -47,19 +46,16 @@ public static class SimpleClientServiceCollectionExtensions
     }
 
     public static IServiceCollection AddSimpleClient(this IServiceCollection services,
-        IConfiguration commonConfigurationSection,
         IConfiguration clientConfigurationSection)
     {
-        services.AddCommonOptions(commonConfigurationSection);
         services.AddOptions<SimpleClientOptions>()
-                .Configure<IOptions<ClientOptions>>((clientOptions, commonOptions) =>
+                .Configure(clientOptions =>
                 {
-                    clientOptions.Diagnostics.LoggerFactory = commonOptions.Value.Diagnostics.LoggerFactory;
+                    clientOptions.Diagnostics.LoggerFactory = ClientOptions.Default.Diagnostics.LoggerFactory;
                 })
-            .Bind(commonConfigurationSection)
             .Bind(clientConfigurationSection);
 
-        services.AddSingleton<SimpleClient>(sp =>
+        services.AddSingleton(sp =>
         {
             Uri endpoint = sp.GetClientEndpoint(clientConfigurationSection);
 
@@ -77,22 +73,19 @@ public static class SimpleClientServiceCollectionExtensions
     }
 
     public static IServiceCollection AddSimpleClient(this IServiceCollection services,
-        IConfiguration commonConfigurationSection,
         IConfiguration clientConfigurationSection,
         Action<SimpleClientOptions> configureOptions,
         object key = default)
     {
-        services.AddCommonOptions(commonConfigurationSection);
         OptionsBuilder<SimpleClientOptions> optionsBuilder = key is null ?
             services.AddOptions<SimpleClientOptions>() :
             services.AddOptions<SimpleClientOptions>(key.ToString());
 
         optionsBuilder
-            .Configure<IOptions<ClientOptions>>((clientOptions, commonOptions) =>
+            .Configure(clientOptions =>
             {
-                clientOptions.Diagnostics.LoggerFactory = commonOptions.Value.Diagnostics.LoggerFactory;
+                clientOptions.Diagnostics.LoggerFactory = ClientOptions.Default.Diagnostics.LoggerFactory;
             })
-            .Bind(commonConfigurationSection)
             .Bind(clientConfigurationSection)
             .Configure(configureOptions);
 

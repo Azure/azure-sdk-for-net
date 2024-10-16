@@ -20,26 +20,20 @@ public static class MapsClientServiceCollectionExtensions
 
         // Add client options
         services.AddOptions<MapsClientOptions>()
-                .Configure<IOptions<ClientOptions>>((clientOptions, commonOptions) =>
+                .Configure(clientOptions =>
                 {
-                    // TODO: devise strategy for copying common options to client options
-                    clientOptions.Diagnostics.LoggerFactory = commonOptions.Value.Diagnostics.LoggerFactory;
+                    clientOptions.Diagnostics.LoggerFactory = ClientOptions.Default.Diagnostics.LoggerFactory;
                 });
 
         services.AddSingleton(sp =>
         {
-            // TODO: factor out configuration lookup cases per proposed schema
             IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
-            IConfiguration commonConfiguration = configuration.GetSection("ClientCommon");
-            IConfiguration clientConfiguration = configuration.GetSection("SimpleClient");
+            IConfiguration clientConfiguration = configuration.GetSection("MapsClient");
 
             Uri endpoint = sp.GetClientEndpoint(clientConfiguration);
 
-            // TODO: how to get this securely?
             var credential = new MockCredential();
 
-            // TODO: to roll a credential, this will need to be IOptionsMonitor
-            // not IOptions -- come back to this.
             IOptions<MapsClientOptions> iOptions = sp.GetRequiredService<IOptions<MapsClientOptions>>();
             MapsClientOptions options = iOptions.Value;
 
@@ -67,12 +61,8 @@ public static class MapsClientServiceCollectionExtensions
         services.AddSingleton(sp =>
         {
             Uri endpoint = sp.GetClientEndpoint(clientConfigurationSection);
-
-            // TODO: how to get this securely?
             var credential = new MockCredential();
 
-            // TODO: to roll a credential, this will need to be IOptionsMonitor
-            // not IOptions -- come back to this.
             IOptions<MapsClientOptions> iOptions = sp.GetRequiredService<IOptions<MapsClientOptions>>();
             MapsClientOptions options = iOptions.Value;
 

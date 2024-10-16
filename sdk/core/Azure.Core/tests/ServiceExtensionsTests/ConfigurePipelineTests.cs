@@ -72,17 +72,17 @@ public class ConfigurePipelineTests
         {
             // SimpleClient config block
             new("SimpleClient:ServiceUri", "https://www.simple-service.com/"),
-            new("SimpleClient:Logging:AllowedHeaderNames", null),
-            new("SimpleClient:Logging:AllowedHeaderNames:0", "x-simple-config-allowed"),
+            new("SimpleClient:Diagnostics:LoggedHeaderNames", null),
+            new("SimpleClient:Diagnostics:LoggedHeaderNames:0", "x-simple-config-allowed"),
 
             // MapsClient config block
             new("MapsClient:ServiceUri", "https://www.maps-service.com/"),
-            new("MapsClient:Logging:AllowedHeaderNames", null),
-            new("MapsClient:Logging:AllowedHeaderNames:0", "x-maps-config-allowed"),
+            new("MapsClient:Diagnostics:LoggedHeaderNames", null),
+            new("MapsClient:Diagnostics:LoggedHeaderNames:0", "x-maps-config-allowed"),
         });
 
         // Add the two clients
-        services.AddMapsClient(
+        services.AddSimpleClient(
             configuration.GetSection("SimpleClient"));
         services.AddMapsClient(
             configuration.GetSection("MapsClient"));
@@ -117,24 +117,19 @@ public class ConfigurePipelineTests
 
         configuration.AddInMemoryCollection(new List<KeyValuePair<string, string?>>()
         {
-            // Common config block
-            new("ClientCommon:Logging:AllowedHeaderNames", null),
-            new("ClientCommon:Logging:AllowedHeaderNames:0", "x-common-config-allowed"),
-
             // SimpleClient config block
             new("SimpleClient:ServiceUri", "https://www.simple-service.com/"),
-            new("SimpleClient:Logging:AllowedHeaderNames", null),
-            new("SimpleClient:Logging:AllowedHeaderNames:0", "x-simple-config-allowed"),
+            new("SimpleClient:Diagnostics:LoggedHeaderNames", null),
+            new("SimpleClient:Diagnostics:LoggedHeaderNames:0", "x-simple-config-allowed"),
 
             // MapsClient config block
             new("MapsClient:ServiceUri", "https://www.maps-service.com/"),
-            new("MapsClient:Logging:AllowedHeaderNames", null),
-            new("MapsClient:Logging:AllowedHeaderNames:0", "x-maps-config-allowed"),
+            new("MapsClient:Diagnostics:LoggedHeaderNames", null),
+            new("MapsClient:Diagnostics:LoggedHeaderNames:0", "x-maps-config-allowed"),
         });
 
         // Add the two clients
         services.AddSimpleClient(
-            configuration.GetSection("ClientCommon"),
             configuration.GetSection("SimpleClient"));
 
         services.AddMapsClient(
@@ -146,11 +141,9 @@ public class ConfigurePipelineTests
 
         // Validate that both clients have headers from the common config block
 
-        CollectionAssert.Contains(simpleClient.Options.Diagnostics.LoggedHeaderNames, "x-common-config-allowed");
         CollectionAssert.Contains(simpleClient.Options.Diagnostics.LoggedHeaderNames, "x-simple-config-allowed");
         CollectionAssert.DoesNotContain(simpleClient.Options.Diagnostics.LoggedHeaderNames, "x-maps-config-allowed");
 
-        CollectionAssert.Contains(mapsClient.Options.Diagnostics.LoggedHeaderNames, "x-common-config-allowed");
         CollectionAssert.Contains(mapsClient.Options.Diagnostics.LoggedHeaderNames, "x-maps-config-allowed");
         CollectionAssert.DoesNotContain(mapsClient.Options.Diagnostics.LoggedHeaderNames, "x-simple-config-allowed");
     }
@@ -314,30 +307,24 @@ public class ConfigurePipelineTests
 
         configuration.AddInMemoryCollection(new List<KeyValuePair<string, string?>>()
         {
-            // Common config block
-            new("ClientCommon:Logging:AllowedHeaderNames", null),
-            new("ClientCommon:Logging:AllowedHeaderNames:0", "x-common-config-allowed"),
-
             // PublicClient config block
             new("PublicClient:ServiceUri", publicUriString),
-            new("PublicClient:Logging:AllowedHeaderNames", null),
-            new("PublicClient:Logging:AllowedHeaderNames:0", "x-public-config-allowed"),
+            new("PublicClient:Diagnostics:LoggedHeaderNames", null),
+            new("PublicClient:Diagnostics:LoggedHeaderNames:0", "x-public-config-allowed"),
 
             // PrivateClient config block
             new("PrivateClient:ServiceUri", privateUriString),
-            new("PrivateClient:Logging:AllowedHeaderNames", null),
-            new("PrivateClient:Logging:AllowedHeaderNames:0", "x-private-config-allowed"),
+            new("PrivateClient:Diagnostics:LoggedHeaderNames", null),
+            new("PrivateClient:Diagnostics:LoggedHeaderNames:0", "x-private-config-allowed"),
         });
 
         // Add the two client instances
         services.AddSimpleClient(
-            configuration.GetSection("ClientCommon"),
             configuration.GetSection("PublicClient"),
             options => { },
             "PublicClient");
 
         services.AddSimpleClient(
-            configuration.GetSection("ClientCommon"),
             configuration.GetSection("PrivateClient"),
             options => { },
             "PrivateClient");
@@ -349,13 +336,11 @@ public class ConfigurePipelineTests
         // Validate that both clients have headers from appropriate common config blocks
 
         Assert.AreEqual(publicUriString, publicClient.Endpoint.ToString());
-        CollectionAssert.Contains(publicClient.Options.Diagnostics.LoggedHeaderNames, "x-common-config-allowed");
         CollectionAssert.Contains(publicClient.Options.Diagnostics.LoggedHeaderNames, "x-simple-client-allowed");
         CollectionAssert.Contains(publicClient.Options.Diagnostics.LoggedHeaderNames, "x-public-config-allowed");
         CollectionAssert.DoesNotContain(publicClient.Options.Diagnostics.LoggedHeaderNames, "x-private-config-allowed");
 
         Assert.AreEqual(privateUriString, privateClient.Endpoint.ToString());
-        CollectionAssert.Contains(privateClient.Options.Diagnostics.LoggedHeaderNames, "x-common-config-allowed");
         CollectionAssert.Contains(privateClient.Options.Diagnostics.LoggedHeaderNames, "x-simple-client-allowed");
         CollectionAssert.Contains(privateClient.Options.Diagnostics.LoggedHeaderNames, "x-private-config-allowed");
         CollectionAssert.DoesNotContain(privateClient.Options.Diagnostics.LoggedHeaderNames, "x-public-config-allowed");
