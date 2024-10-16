@@ -260,6 +260,12 @@ internal enum TestErrorType
     Scalable
 }
 
+internal class ServiceClientConstants
+{
+    internal static readonly int s_mAX_RETRIES = 3;
+    internal static readonly int s_mAX_RETRY_DELAY_IN_SECONDS = 2000;
+}
+
 internal static class TestResultErrorConstants
 {
     public static List<TestResultError> ErrorConstants = new()

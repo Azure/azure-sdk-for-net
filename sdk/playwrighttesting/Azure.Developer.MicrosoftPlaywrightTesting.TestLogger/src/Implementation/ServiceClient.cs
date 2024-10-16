@@ -7,6 +7,8 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Client;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using System.Text.Json;
+using Azure.Core.Diagnostics;
+using System.Diagnostics.Tracing;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
 {
@@ -15,14 +17,25 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
         private readonly ReportingTestResultsClient _reportingTestResultsClient;
         private readonly ReportingTestRunsClient _reportingTestRunsClient;
         private readonly CloudRunMetadata _cloudRunMetadata;
+        private readonly ILogger _logger;
         private static string AccessToken { get => $"Bearer {Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken)}"; set { } }
         private static string CorrelationId { get => Guid.NewGuid().ToString(); set { } }
 
-        public ServiceClient(CloudRunMetadata cloudRunMetadata, ReportingTestResultsClient? reportingTestResultsClient = null, ReportingTestRunsClient? reportingTestRunsClient = null)
+        public ServiceClient(CloudRunMetadata cloudRunMetadata, ReportingTestResultsClient? reportingTestResultsClient = null, ReportingTestRunsClient? reportingTestRunsClient = null, ILogger? logger = null)
         {
             _cloudRunMetadata = cloudRunMetadata;
-            _reportingTestResultsClient = reportingTestResultsClient ?? new ReportingTestResultsClient(_cloudRunMetadata.BaseUri);
-            _reportingTestRunsClient = reportingTestRunsClient ?? new ReportingTestRunsClient(_cloudRunMetadata.BaseUri);
+            _logger = logger ?? new Logger();
+            AzureEventSourceListener listener = new(delegate (EventWrittenEventArgs eventData, string text)
+            {
+                _logger.Info($"[{eventData.Level}] {eventData.EventSource.Name}: {text}");
+            }, EventLevel.Informational);
+            var clientOptions = new TestReportingClientOptions();
+            clientOptions.Diagnostics.IsLoggingEnabled = true;
+            clientOptions.Diagnostics.IsTelemetryEnabled = true;
+            clientOptions.Retry.MaxRetries = ServiceClientConstants.s_mAX_RETRIES;
+            clientOptions.Retry.MaxDelay = TimeSpan.FromSeconds(ServiceClientConstants.s_mAX_RETRY_DELAY_IN_SECONDS);
+            _reportingTestResultsClient = reportingTestResultsClient ?? new ReportingTestResultsClient(_cloudRunMetadata.BaseUri, clientOptions);
+            _reportingTestRunsClient = reportingTestRunsClient ?? new ReportingTestRunsClient(_cloudRunMetadata.BaseUri, clientOptions);
         }
 
         public TestRunDtoV2? PatchTestRunInfo(TestRunDtoV2 run)
