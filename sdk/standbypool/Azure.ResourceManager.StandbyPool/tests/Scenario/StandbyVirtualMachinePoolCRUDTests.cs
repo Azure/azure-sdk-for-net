@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("This test case will cause errors in the pipeline. After fixing the problem, restore this test")]
         public async Task StandbyVirtualMachinePoolCRUDTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("standbyPoolRG-");

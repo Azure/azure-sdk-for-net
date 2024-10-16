@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("This test case will cause errors in the pipeline. After fixing the problem, restore this test")]
         public async Task ListStandbyVirtualMachinePoolBySubscription()
         {
             string resourceGroupName = Recording.GenerateAssetName("standbyPoolRG-ru-");
@@ -42,7 +41,6 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("This test case will cause errors in the pipeline. After fixing the problem, restore this test")]
         public async Task ListStandbyVirtualMachinePoolByResourcGroup()
         {
             string resourceGroupName = Recording.GenerateAssetName("standbyPoolRG-");
