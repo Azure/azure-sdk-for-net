@@ -6891,6 +6891,28 @@ namespace Azure.Storage.Files.Shares.Tests
             await symlink.GetSymbolicLinkAsync();
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateHardLinkAsync()
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
+            ShareDirectoryClient directory = test.Directory;
+
+            ShareFileClient source = InstrumentClient(await directory.CreateFileAsync(GetNewFileName(), maxSize: Constants.KB));
+            //ShareLeaseClient leaseClient = test.Share.GetShareLeaseClient();
+            //ShareFileLease lease = await leaseClient.AcquireAsync();
+
+            ShareFileClient hardLink = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            // Act
+            Response<ShareFileInfo> response = await hardLink.CreateHardLinkAsync(
+                path: source.Uri.ToString());
+                //conditions: new ShareFileRequestConditions() { LeaseId = lease.LeaseId });
+
+            // Assert
+        }
+
         #region GenerateSasTests
         [RecordedTest]
         public void CanGenerateSas_ClientConstructors()
