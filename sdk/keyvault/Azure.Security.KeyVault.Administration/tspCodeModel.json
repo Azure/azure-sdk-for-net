@@ -1,0 +1,4753 @@
+{
+ "$id": "1",
+ "Name": "KeyVault",
+ "ApiVersions": [
+  "7.6-preview.1",
+  "7.6-preview.2"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "Kind": "enum",
+   "Name": "OperationStatus",
+   "CrossLanguageDefinitionId": "KeyVault.OperationStatus",
+   "ValueType": {
+    "$id": "3",
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
+   },
+   "Values": [
+    {
+     "$id": "4",
+     "Name": "InProgress",
+     "Value": "InProgress",
+     "Description": "The operation is in progress.",
+     "Decorators": []
+    },
+    {
+     "$id": "5",
+     "Name": "Succeeded",
+     "Value": "Succeeded",
+     "Description": "The operation successfully completed.",
+     "Decorators": []
+    },
+    {
+     "$id": "6",
+     "Name": "Canceled",
+     "Value": "Canceled",
+     "Description": "The operation was canceled.",
+     "Decorators": []
+    },
+    {
+     "$id": "7",
+     "Name": "Failed",
+     "Value": "Failed",
+     "Description": "The operation failed.",
+     "Decorators": []
+    }
+   ],
+   "Description": "The status of a long-running operation.",
+   "IsExtensible": true,
+   "Usage": "Output,Json",
+   "Decorators": []
+  },
+  {
+   "$id": "8",
+   "Kind": "enum",
+   "Name": "SettingTypeEnum",
+   "CrossLanguageDefinitionId": "KeyVault.SettingTypeEnum",
+   "ValueType": {
+    "$id": "9",
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
+   },
+   "Values": [
+    {
+     "$id": "10",
+     "Name": "boolean",
+     "Value": "boolean",
+     "Description": "A boolean setting value.",
+     "Decorators": []
+    }
+   ],
+   "Description": "The type specifier of the value.",
+   "IsExtensible": true,
+   "Usage": "Output,Json",
+   "Decorators": []
+  },
+  {
+   "$id": "11",
+   "Kind": "enum",
+   "Name": "RoleScope",
+   "CrossLanguageDefinitionId": "KeyVault.RoleScope",
+   "ValueType": {
+    "$id": "12",
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
+   },
+   "Values": [
+    {
+     "$id": "13",
+     "Name": "Global",
+     "Value": "/",
+     "Description": "Global scope",
+     "Decorators": []
+    },
+    {
+     "$id": "14",
+     "Name": "Keys",
+     "Value": "/keys",
+     "Description": "Keys scope",
+     "Decorators": []
+    }
+   ],
+   "Description": "The role scope.",
+   "IsExtensible": true,
+   "Usage": "Input,Output,Json",
+   "Decorators": []
+  },
+  {
+   "$id": "15",
+   "Kind": "enum",
+   "Name": "RoleDefinitionType",
+   "CrossLanguageDefinitionId": "KeyVault.RoleDefinitionType",
+   "ValueType": {
+    "$id": "16",
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
+   },
+   "Values": [
+    {
+     "$id": "17",
+     "Name": "Microsoft.Authorization/roleDefinitions",
+     "Value": "Microsoft.Authorization/roleDefinitions",
+     "Description": "Microsoft-defined role definitions.",
+     "Decorators": []
+    }
+   ],
+   "Description": "The role definition type.",
+   "IsExtensible": true,
+   "Usage": "Output,Json",
+   "Decorators": []
+  },
+  {
+   "$id": "18",
+   "Kind": "enum",
+   "Name": "RoleType",
+   "CrossLanguageDefinitionId": "KeyVault.RoleType",
+   "ValueType": {
+    "$id": "19",
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
+   },
+   "Values": [
+    {
+     "$id": "20",
+     "Name": "BuiltInRole",
+     "Value": "AKVBuiltInRole",
+     "Description": "Built in role.",
+     "Decorators": []
+    },
+    {
+     "$id": "21",
+     "Name": "CustomRole",
+     "Value": "CustomRole",
+     "Description": "Custom role.",
+     "Decorators": []
+    }
+   ],
+   "Description": "The role type.",
+   "IsExtensible": true,
+   "Usage": "Input,Output,Json",
+   "Decorators": []
+  },
+  {
+   "$id": "22",
+   "Kind": "enum",
+   "Name": "DataAction",
+   "CrossLanguageDefinitionId": "KeyVault.DataAction",
+   "ValueType": {
+    "$id": "23",
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
+   },
+   "Values": [
+    {
+     "$id": "24",
+     "Name": "ReadHsmKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/read/action",
+     "Description": "Read HSM key metadata.",
+     "Decorators": []
+    },
+    {
+     "$id": "25",
+     "Name": "WriteHsmKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/write/action",
+     "Description": "Update an HSM key.",
+     "Decorators": []
+    },
+    {
+     "$id": "26",
+     "Name": "ReadDeletedHsmKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/deletedKeys/read/action",
+     "Description": "Read deleted HSM key.",
+     "Decorators": []
+    },
+    {
+     "$id": "27",
+     "Name": "RecoverDeletedHsmKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/deletedKeys/recover/action",
+     "Description": "Recover deleted HSM key.",
+     "Decorators": []
+    },
+    {
+     "$id": "28",
+     "Name": "BackupHsmKeys",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/backup/action",
+     "Description": "Backup HSM keys.",
+     "Decorators": []
+    },
+    {
+     "$id": "29",
+     "Name": "RestoreHsmKeys",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/restore/action",
+     "Description": "Restore HSM keys.",
+     "Decorators": []
+    },
+    {
+     "$id": "30",
+     "Name": "DeleteRoleAssignment",
+     "Value": "Microsoft.KeyVault/managedHsm/roleAssignments/delete/action",
+     "Description": "Delete role assignment.",
+     "Decorators": []
+    },
+    {
+     "$id": "31",
+     "Name": "GetRoleAssignment",
+     "Value": "Microsoft.KeyVault/managedHsm/roleAssignments/read/action",
+     "Description": "Get role assignment.",
+     "Decorators": []
+    },
+    {
+     "$id": "32",
+     "Name": "WriteRoleAssignment",
+     "Value": "Microsoft.KeyVault/managedHsm/roleAssignments/write/action",
+     "Description": "Create or update role assignment.",
+     "Decorators": []
+    },
+    {
+     "$id": "33",
+     "Name": "ReadRoleDefinition",
+     "Value": "Microsoft.KeyVault/managedHsm/roleDefinitions/read/action",
+     "Description": "Get role definition.",
+     "Decorators": []
+    },
+    {
+     "$id": "34",
+     "Name": "WriteRoleDefinition",
+     "Value": "Microsoft.KeyVault/managedHsm/roleDefinitions/write/action",
+     "Description": "Create or update role definition.",
+     "Decorators": []
+    },
+    {
+     "$id": "35",
+     "Name": "DeleteRoleDefinition",
+     "Value": "Microsoft.KeyVault/managedHsm/roleDefinitions/delete/action",
+     "Description": "Delete role definition.",
+     "Decorators": []
+    },
+    {
+     "$id": "36",
+     "Name": "EncryptHsmKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/encrypt/action",
+     "Description": "Encrypt using an HSM key.",
+     "Decorators": []
+    },
+    {
+     "$id": "37",
+     "Name": "DecryptHsmKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/decrypt/action",
+     "Description": "Decrypt using an HSM key.",
+     "Decorators": []
+    },
+    {
+     "$id": "38",
+     "Name": "WrapHsmKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/wrap/action",
+     "Description": "Wrap using an HSM key.",
+     "Decorators": []
+    },
+    {
+     "$id": "39",
+     "Name": "UnwrapHsmKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/unwrap/action",
+     "Description": "Unwrap using an HSM key.",
+     "Decorators": []
+    },
+    {
+     "$id": "40",
+     "Name": "SignHsmKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/sign/action",
+     "Description": "Sign using an HSM key.",
+     "Decorators": []
+    },
+    {
+     "$id": "41",
+     "Name": "VerifyHsmKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/verify/action",
+     "Description": "Verify using an HSM key.",
+     "Decorators": []
+    },
+    {
+     "$id": "42",
+     "Name": "CreateHsmKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/create",
+     "Description": "Create an HSM key.",
+     "Decorators": []
+    },
+    {
+     "$id": "43",
+     "Name": "DeleteHsmKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/delete",
+     "Description": "Delete an HSM key.",
+     "Decorators": []
+    },
+    {
+     "$id": "44",
+     "Name": "ExportHsmKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/export/action",
+     "Description": "Export an HSM key.",
+     "Decorators": []
+    },
+    {
+     "$id": "45",
+     "Name": "ReleaseKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/release/action",
+     "Description": "Release an HSM key using Secure Key Release.",
+     "Decorators": []
+    },
+    {
+     "$id": "46",
+     "Name": "ImportHsmKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/import/action",
+     "Description": "Import an HSM key.",
+     "Decorators": []
+    },
+    {
+     "$id": "47",
+     "Name": "PurgeDeletedHsmKey",
+     "Value": "Microsoft.KeyVault/managedHsm/keys/deletedKeys/delete",
+     "Description": "Purge a deleted HSM key.",
+     "Decorators": []
+    },
+    {
+     "$id": "48",
+     "Name": "DownloadHsmSecurityDomain",
+     "Value": "Microsoft.KeyVault/managedHsm/securitydomain/download/action",
+     "Description": "Download an HSM security domain.",
+     "Decorators": []
+    },
+    {
+     "$id": "49",
+     "Name": "DownloadHsmSecurityDomainStatus",
+     "Value": "Microsoft.KeyVault/managedHsm/securitydomain/download/read",
+     "Description": "Check status of HSM security domain download.",
+     "Decorators": []
+    },
+    {
+     "$id": "50",
+     "Name": "UploadHsmSecurityDomain",
+     "Value": "Microsoft.KeyVault/managedHsm/securitydomain/upload/action",
+     "Description": "Upload an HSM security domain.",
+     "Decorators": []
+    },
+    {
+     "$id": "51",
+     "Name": "ReadHsmSecurityDomainStatus",
+     "Value": "Microsoft.KeyVault/managedHsm/securitydomain/upload/read",
+     "Description": "Check the status of the HSM security domain exchange file.",
+     "Decorators": []
+    },
+    {
+     "$id": "52",
+     "Name": "ReadHsmSecurityDomainTransferKey",
+     "Value": "Microsoft.KeyVault/managedHsm/securitydomain/transferkey/read",
+     "Description": "Download an HSM security domain transfer key.",
+     "Decorators": []
+    },
+    {
+     "$id": "53",
+     "Name": "StartHsmBackup",
+     "Value": "Microsoft.KeyVault/managedHsm/backup/start/action",
+     "Description": "Start an HSM backup.",
+     "Decorators": []
+    },
+    {
+     "$id": "54",
+     "Name": "StartHsmRestore",
+     "Value": "Microsoft.KeyVault/managedHsm/restore/start/action",
+     "Description": "Start an HSM restore.",
+     "Decorators": []
+    },
+    {
+     "$id": "55",
+     "Name": "ReadHsmBackupStatus",
+     "Value": "Microsoft.KeyVault/managedHsm/backup/status/action",
+     "Description": "Read an HSM backup status.",
+     "Decorators": []
+    },
+    {
+     "$id": "56",
+     "Name": "ReadHsmRestoreStatus",
+     "Value": "Microsoft.KeyVault/managedHsm/restore/status/action",
+     "Description": "Read an HSM restore status.",
+     "Decorators": []
+    },
+    {
+     "$id": "57",
+     "Name": "RandomNumbersGenerate",
+     "Value": "Microsoft.KeyVault/managedHsm/rng/action",
+     "Description": "Generate random numbers.",
+     "Decorators": []
+    }
+   ],
+   "Description": "Supported permissions for data actions.",
+   "IsExtensible": true,
+   "Usage": "Input,Output,Json",
+   "Decorators": []
+  },
+  {
+   "$id": "58",
+   "Kind": "enum",
+   "Name": "Versions",
+   "CrossLanguageDefinitionId": "KeyVault.Versions",
+   "ValueType": {
+    "$id": "59",
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string",
+    "Decorators": []
+   },
+   "Values": [
+    {
+     "$id": "60",
+     "Name": "v7.6_preview.1",
+     "Value": "7.6-preview.1",
+     "Description": "The 7.6-preview.1 API version.",
+     "Decorators": []
+    },
+    {
+     "$id": "61",
+     "Name": "v7.6_preview.2",
+     "Value": "7.6-preview.2",
+     "Description": "The 7.6-preview.2 API version.",
+     "Decorators": []
+    }
+   ],
+   "Description": "The available API versions.",
+   "IsExtensible": false,
+   "Usage": "ApiVersionEnum",
+   "Decorators": []
+  }
+ ],
+ "Models": [
+  {
+   "$id": "62",
+   "Kind": "model",
+   "Name": "FullBackupOperation",
+   "CrossLanguageDefinitionId": "KeyVault.FullBackupOperation",
+   "Usage": "Output,Json",
+   "Description": "Full backup operation",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "63",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "Status of the backup operation.",
+     "Type": {
+      "$ref": "2"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "64",
+     "Name": "statusDetails",
+     "SerializedName": "statusDetails",
+     "Description": "The status details of backup operation.",
+     "Type": {
+      "$id": "65",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "66",
+     "Name": "error",
+     "SerializedName": "error",
+     "Description": "Error encountered, if any, during the full backup operation.",
+     "Type": {
+      "$id": "67",
+      "Kind": "model",
+      "Name": "Error",
+      "CrossLanguageDefinitionId": "KeyVault.Error",
+      "Usage": "Output,Json",
+      "Description": "The key vault server error.",
+      "Decorators": [],
+      "Properties": [
+       {
+        "$id": "68",
+        "Name": "code",
+        "SerializedName": "code",
+        "Description": "The error code.",
+        "Type": {
+         "$id": "69",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "IsRequired": false,
+        "IsReadOnly": true,
+        "Decorators": []
+       },
+       {
+        "$id": "70",
+        "Name": "message",
+        "SerializedName": "message",
+        "Description": "The error message.",
+        "Type": {
+         "$id": "71",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "IsRequired": false,
+        "IsReadOnly": true,
+        "Decorators": []
+       },
+       {
+        "$id": "72",
+        "Name": "innerError",
+        "SerializedName": "innererror",
+        "Description": "The key vault server error.",
+        "Type": {
+         "$ref": "67"
+        },
+        "IsRequired": false,
+        "IsReadOnly": true,
+        "Decorators": []
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "73",
+     "Name": "startTime",
+     "SerializedName": "startTime",
+     "Description": "The start time of the backup operation in UTC",
+     "Type": {
+      "$id": "74",
+      "Kind": "utcDateTime",
+      "Name": "utcDateTime",
+      "Encode": "unixTimestamp",
+      "WireType": {
+       "$id": "75",
+       "Kind": "int32",
+       "Name": "int32",
+       "CrossLanguageDefinitionId": "TypeSpec.int32",
+       "Decorators": []
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "76",
+     "Name": "endTime",
+     "SerializedName": "endTime",
+     "Description": "The end time of the backup operation in UTC",
+     "Type": {
+      "$id": "77",
+      "Kind": "utcDateTime",
+      "Name": "utcDateTime",
+      "Encode": "unixTimestamp",
+      "WireType": {
+       "$id": "78",
+       "Kind": "int32",
+       "Name": "int32",
+       "CrossLanguageDefinitionId": "TypeSpec.int32",
+       "Decorators": []
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "79",
+     "Name": "jobId",
+     "SerializedName": "jobId",
+     "Description": "Identifier for the full backup operation.",
+     "Type": {
+      "$id": "80",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "81",
+     "Name": "azureStorageBlobContainerUri",
+     "SerializedName": "azureStorageBlobContainerUri",
+     "Description": "The Azure blob storage container Uri which contains the full backup",
+     "Type": {
+      "$id": "82",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$ref": "67"
+  },
+  {
+   "$id": "83",
+   "Kind": "model",
+   "Name": "SASTokenParameter",
+   "CrossLanguageDefinitionId": "KeyVault.SasTokenParameter",
+   "Usage": "Input,Json",
+   "Description": "An authentication method and location for the operation.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "84",
+     "Name": "storageResourceUri",
+     "SerializedName": "storageResourceUri",
+     "Description": "Azure Blob storage container Uri",
+     "Type": {
+      "$id": "85",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "86",
+     "Name": "token",
+     "SerializedName": "token",
+     "Description": "The SAS token pointing to an Azure Blob storage container",
+     "Type": {
+      "$id": "87",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "88",
+     "Name": "useManagedIdentity",
+     "SerializedName": "useManagedIdentity",
+     "Description": "Indicates which authentication method should be used. If set to true, Managed\nHSM will use the configured user-assigned managed identity to authenticate with\nAzure Storage. Otherwise, a SAS token has to be specified.",
+     "Type": {
+      "$id": "89",
+      "Kind": "boolean",
+      "Name": "boolean",
+      "CrossLanguageDefinitionId": "TypeSpec.boolean",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$id": "90",
+   "Kind": "model",
+   "Name": "PreBackupOperationParameters",
+   "CrossLanguageDefinitionId": "KeyVault.PreBackupOperationParameters",
+   "Usage": "Input,Json",
+   "Description": "The authentication method and location for the backup operation.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "91",
+     "Name": "storageResourceUri",
+     "SerializedName": "storageResourceUri",
+     "Description": "Azure Blob storage container Uri",
+     "Type": {
+      "$id": "92",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "93",
+     "Name": "token",
+     "SerializedName": "token",
+     "Description": "The SAS token pointing to an Azure Blob storage container",
+     "Type": {
+      "$id": "94",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "95",
+     "Name": "useManagedIdentity",
+     "SerializedName": "useManagedIdentity",
+     "Description": "Indicates which authentication method should be used. If set to true, Managed\nHSM will use the configured user-assigned managed identity to authenticate with\nAzure Storage. Otherwise, a SAS token has to be specified.",
+     "Type": {
+      "$id": "96",
+      "Kind": "boolean",
+      "Name": "boolean",
+      "CrossLanguageDefinitionId": "TypeSpec.boolean",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$id": "97",
+   "Kind": "model",
+   "Name": "RestoreOperation",
+   "CrossLanguageDefinitionId": "KeyVault.RestoreOperation",
+   "Usage": "Output,Json",
+   "Description": "Restore operation",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "98",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "Status of the restore operation.",
+     "Type": {
+      "$ref": "2"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "99",
+     "Name": "statusDetails",
+     "SerializedName": "statusDetails",
+     "Description": "The status details of restore operation.",
+     "Type": {
+      "$id": "100",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "101",
+     "Name": "error",
+     "SerializedName": "error",
+     "Description": "Error encountered, if any, during the restore operation.",
+     "Type": {
+      "$ref": "67"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "102",
+     "Name": "jobId",
+     "SerializedName": "jobId",
+     "Description": "Identifier for the restore operation.",
+     "Type": {
+      "$id": "103",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "104",
+     "Name": "startTime",
+     "SerializedName": "startTime",
+     "Description": "The start time of the restore operation",
+     "Type": {
+      "$id": "105",
+      "Kind": "utcDateTime",
+      "Name": "utcDateTime",
+      "Encode": "unixTimestamp",
+      "WireType": {
+       "$id": "106",
+       "Kind": "int32",
+       "Name": "int32",
+       "CrossLanguageDefinitionId": "TypeSpec.int32",
+       "Decorators": []
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "107",
+     "Name": "endTime",
+     "SerializedName": "endTime",
+     "Description": "The end time of the restore operation",
+     "Type": {
+      "$id": "108",
+      "Kind": "utcDateTime",
+      "Name": "utcDateTime",
+      "Encode": "unixTimestamp",
+      "WireType": {
+       "$id": "109",
+       "Kind": "int32",
+       "Name": "int32",
+       "CrossLanguageDefinitionId": "TypeSpec.int32",
+       "Decorators": []
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$id": "110",
+   "Kind": "model",
+   "Name": "PreRestoreOperationParameters",
+   "CrossLanguageDefinitionId": "KeyVault.PreRestoreOperationParameters",
+   "Usage": "Input,Json",
+   "Description": "The authentication method and location for the restore operation.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "111",
+     "Name": "sasTokenParameters",
+     "SerializedName": "sasTokenParameters",
+     "Description": "A user-provided SAS token to an Azure blob storage container.",
+     "Type": {
+      "$ref": "83"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "112",
+     "Name": "folderToRestore",
+     "SerializedName": "folderToRestore",
+     "Description": "The Folder name of the blob where the previous successful full backup was stored",
+     "Type": {
+      "$id": "113",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$id": "114",
+   "Kind": "model",
+   "Name": "RestoreOperationParameters",
+   "CrossLanguageDefinitionId": "KeyVault.RestoreOperationParameters",
+   "Usage": "Input,Json",
+   "Description": "The authentication method and location for the restore operation.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "115",
+     "Name": "sasTokenParameters",
+     "SerializedName": "sasTokenParameters",
+     "Description": "A user-provided SAS token to an Azure blob storage container.",
+     "Type": {
+      "$ref": "83"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "116",
+     "Name": "folderToRestore",
+     "SerializedName": "folderToRestore",
+     "Description": "The Folder name of the blob where the previous successful full backup was stored",
+     "Type": {
+      "$id": "117",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$id": "118",
+   "Kind": "model",
+   "Name": "SelectiveKeyRestoreOperationParameters",
+   "CrossLanguageDefinitionId": "KeyVault.SelectiveKeyRestoreOperationParameters",
+   "Usage": "Input,Json",
+   "Description": "The authentication method and location for the selective key restore operation.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "119",
+     "Name": "sasTokenParameters",
+     "SerializedName": "sasTokenParameters",
+     "Description": "A user-provided SAS token to an Azure blob storage container.",
+     "Type": {
+      "$ref": "83"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "120",
+     "Name": "folder",
+     "SerializedName": "folder",
+     "Description": "The Folder name of the blob where the previous successful full backup was stored",
+     "Type": {
+      "$id": "121",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$id": "122",
+   "Kind": "model",
+   "Name": "SelectiveKeyRestoreOperation",
+   "CrossLanguageDefinitionId": "KeyVault.SelectiveKeyRestoreOperation",
+   "Usage": "Output,Json",
+   "Description": "Selective Key Restore operation",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "123",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "Status of the restore operation.",
+     "Type": {
+      "$ref": "2"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "124",
+     "Name": "statusDetails",
+     "SerializedName": "statusDetails",
+     "Description": "The status details of restore operation.",
+     "Type": {
+      "$id": "125",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "126",
+     "Name": "error",
+     "SerializedName": "error",
+     "Description": "Error encountered, if any, during the selective key restore operation.",
+     "Type": {
+      "$ref": "67"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "127",
+     "Name": "jobId",
+     "SerializedName": "jobId",
+     "Description": "Identifier for the selective key restore operation.",
+     "Type": {
+      "$id": "128",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "129",
+     "Name": "startTime",
+     "SerializedName": "startTime",
+     "Description": "The start time of the restore operation",
+     "Type": {
+      "$id": "130",
+      "Kind": "utcDateTime",
+      "Name": "utcDateTime",
+      "Encode": "unixTimestamp",
+      "WireType": {
+       "$id": "131",
+       "Kind": "int32",
+       "Name": "int32",
+       "CrossLanguageDefinitionId": "TypeSpec.int32",
+       "Decorators": []
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "132",
+     "Name": "endTime",
+     "SerializedName": "endTime",
+     "Description": "The end time of the restore operation",
+     "Type": {
+      "$id": "133",
+      "Kind": "utcDateTime",
+      "Name": "utcDateTime",
+      "Encode": "unixTimestamp",
+      "WireType": {
+       "$id": "134",
+       "Kind": "int32",
+       "Name": "int32",
+       "CrossLanguageDefinitionId": "TypeSpec.int32",
+       "Decorators": []
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$id": "135",
+   "Kind": "model",
+   "Name": "UpdateSettingRequest",
+   "CrossLanguageDefinitionId": "KeyVault.UpdateSettingRequest",
+   "Usage": "Input,Json",
+   "Description": "The update settings request object.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "136",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The value of the pool setting.",
+     "Type": {
+      "$id": "137",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$id": "138",
+   "Kind": "model",
+   "Name": "Setting",
+   "CrossLanguageDefinitionId": "KeyVault.Setting",
+   "Usage": "Output,Json",
+   "Description": "A Key Vault account setting.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "139",
+     "Name": "name",
+     "SerializedName": "name",
+     "Description": "The account setting to be updated",
+     "Type": {
+      "$id": "140",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "141",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The value of the pool setting.",
+     "Type": {
+      "$id": "142",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "143",
+     "Name": "type",
+     "SerializedName": "type",
+     "Description": "The type specifier of the value.",
+     "Type": {
+      "$ref": "8"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$id": "144",
+   "Kind": "model",
+   "Name": "SettingsListResult",
+   "CrossLanguageDefinitionId": "KeyVault.SettingsListResult",
+   "Usage": "Output,Json",
+   "Description": "The settings list result.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "145",
+     "Name": "settings",
+     "SerializedName": "settings",
+     "Description": "A response message containing a list of account settings with their associated\nvalue.",
+     "Type": {
+      "$id": "146",
+      "Kind": "array",
+      "Name": "ArraySetting",
+      "ValueType": {
+       "$ref": "138"
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": true,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$id": "147",
+   "Kind": "model",
+   "Name": "RoleAssignment",
+   "CrossLanguageDefinitionId": "KeyVault.RoleAssignment",
+   "Usage": "Output,Json",
+   "Description": "Role Assignments",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "148",
+     "Name": "id",
+     "SerializedName": "id",
+     "Description": "The role assignment ID.",
+     "Type": {
+      "$id": "149",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": true,
+     "Decorators": []
+    },
+    {
+     "$id": "150",
+     "Name": "name",
+     "SerializedName": "name",
+     "Description": "The role assignment name.",
+     "Type": {
+      "$id": "151",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": true,
+     "Decorators": []
+    },
+    {
+     "$id": "152",
+     "Name": "type",
+     "SerializedName": "type",
+     "Description": "The role assignment type.",
+     "Type": {
+      "$id": "153",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": true,
+     "Decorators": []
+    },
+    {
+     "$id": "154",
+     "Name": "properties",
+     "SerializedName": "properties",
+     "Description": "Role assignment properties.",
+     "Type": {
+      "$id": "155",
+      "Kind": "model",
+      "Name": "RoleAssignmentPropertiesWithScope",
+      "CrossLanguageDefinitionId": "KeyVault.RoleAssignmentPropertiesWithScope",
+      "Usage": "Output,Json",
+      "Description": "Role assignment properties with scope.",
+      "Decorators": [],
+      "Properties": [
+       {
+        "$id": "156",
+        "Name": "scope",
+        "SerializedName": "scope",
+        "Description": "The role scope.",
+        "Type": {
+         "$ref": "11"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false,
+        "Decorators": []
+       },
+       {
+        "$id": "157",
+        "Name": "roleDefinitionId",
+        "SerializedName": "roleDefinitionId",
+        "Description": "The role definition ID.",
+        "Type": {
+         "$id": "158",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "IsRequired": false,
+        "IsReadOnly": false,
+        "Decorators": []
+       },
+       {
+        "$id": "159",
+        "Name": "principalId",
+        "SerializedName": "principalId",
+        "Description": "The principal ID.",
+        "Type": {
+         "$id": "160",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "IsRequired": false,
+        "IsReadOnly": false,
+        "Decorators": []
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$ref": "155"
+  },
+  {
+   "$id": "161",
+   "Kind": "model",
+   "Name": "RoleAssignmentCreateParameters",
+   "CrossLanguageDefinitionId": "KeyVault.RoleAssignmentCreateParameters",
+   "Usage": "Input,Json",
+   "Description": "Role assignment create parameters.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "162",
+     "Name": "properties",
+     "SerializedName": "properties",
+     "Description": "Role assignment properties.",
+     "Type": {
+      "$id": "163",
+      "Kind": "model",
+      "Name": "RoleAssignmentProperties",
+      "CrossLanguageDefinitionId": "KeyVault.RoleAssignmentProperties",
+      "Usage": "Input,Json",
+      "Description": "Role assignment properties.",
+      "Decorators": [],
+      "Properties": [
+       {
+        "$id": "164",
+        "Name": "roleDefinitionId",
+        "SerializedName": "roleDefinitionId",
+        "Description": "The role definition ID used in the role assignment.",
+        "Type": {
+         "$id": "165",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "Decorators": []
+       },
+       {
+        "$id": "166",
+        "Name": "principalId",
+        "SerializedName": "principalId",
+        "Description": "The principal ID assigned to the role. This maps to the ID inside the Active\nDirectory. It can point to a user, service principal, or security group.",
+        "Type": {
+         "$id": "167",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "Decorators": []
+       }
+      ]
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$ref": "163"
+  },
+  {
+   "$id": "168",
+   "Kind": "model",
+   "Name": "RoleAssignmentListResult",
+   "CrossLanguageDefinitionId": "KeyVault.RoleAssignmentListResult",
+   "Usage": "Output,Json",
+   "Description": "Role assignment list operation result.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "169",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The RoleAssignment items on this page",
+     "Type": {
+      "$id": "170",
+      "Kind": "array",
+      "Name": "ArrayRoleAssignment",
+      "ValueType": {
+       "$ref": "147"
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array",
+      "Decorators": []
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "171",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "172",
+      "Kind": "url",
+      "Name": "ResourceLocation",
+      "CrossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+      "BaseType": {
+       "$id": "173",
+       "Kind": "url",
+       "Name": "url",
+       "CrossLanguageDefinitionId": "TypeSpec.url",
+       "Decorators": []
+      },
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$id": "174",
+   "Kind": "model",
+   "Name": "RoleDefinition",
+   "CrossLanguageDefinitionId": "KeyVault.RoleDefinition",
+   "Usage": "Output,Json",
+   "Description": "Role definition.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "175",
+     "Name": "id",
+     "SerializedName": "id",
+     "Description": "The role definition ID.",
+     "Type": {
+      "$id": "176",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": true,
+     "Decorators": []
+    },
+    {
+     "$id": "177",
+     "Name": "name",
+     "SerializedName": "name",
+     "Description": "The role definition name.",
+     "Type": {
+      "$id": "178",
+      "Kind": "string",
+      "Name": "string",
+      "CrossLanguageDefinitionId": "TypeSpec.string",
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": true,
+     "Decorators": []
+    },
+    {
+     "$id": "179",
+     "Name": "type",
+     "SerializedName": "type",
+     "Description": "The role definition type.",
+     "Type": {
+      "$ref": "15"
+     },
+     "IsRequired": false,
+     "IsReadOnly": true,
+     "Decorators": []
+    },
+    {
+     "$id": "180",
+     "Name": "properties",
+     "SerializedName": "properties",
+     "Description": "Role definition properties.",
+     "Type": {
+      "$id": "181",
+      "Kind": "model",
+      "Name": "RoleDefinitionProperties",
+      "CrossLanguageDefinitionId": "KeyVault.RoleDefinitionProperties",
+      "Usage": "Input,Output,Json",
+      "Description": "Role definition properties.",
+      "Decorators": [],
+      "Properties": [
+       {
+        "$id": "182",
+        "Name": "roleName",
+        "SerializedName": "roleName",
+        "Description": "The role name.",
+        "Type": {
+         "$id": "183",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "IsRequired": false,
+        "IsReadOnly": false,
+        "Decorators": []
+       },
+       {
+        "$id": "184",
+        "Name": "description",
+        "SerializedName": "description",
+        "Description": "The role definition description.",
+        "Type": {
+         "$id": "185",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "IsRequired": false,
+        "IsReadOnly": false,
+        "Decorators": []
+       },
+       {
+        "$id": "186",
+        "Name": "roleType",
+        "SerializedName": "type",
+        "Description": "The role type.",
+        "Type": {
+         "$ref": "18"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false,
+        "Decorators": []
+       },
+       {
+        "$id": "187",
+        "Name": "permissions",
+        "SerializedName": "permissions",
+        "Description": "Role definition permissions.",
+        "Type": {
+         "$id": "188",
+         "Kind": "array",
+         "Name": "ArrayPermission",
+         "ValueType": {
+          "$id": "189",
+          "Kind": "model",
+          "Name": "Permission",
+          "CrossLanguageDefinitionId": "KeyVault.Permission",
+          "Usage": "Input,Output,Json",
+          "Description": "Role definition permissions.",
+          "Decorators": [],
+          "Properties": [
+           {
+            "$id": "190",
+            "Name": "actions",
+            "SerializedName": "actions",
+            "Description": "Action permissions that are granted.",
+            "Type": {
+             "$id": "191",
+             "Kind": "array",
+             "Name": "Array",
+             "ValueType": {
+              "$id": "192",
+              "Kind": "string",
+              "Name": "string",
+              "CrossLanguageDefinitionId": "TypeSpec.string",
+              "Decorators": []
+             },
+             "CrossLanguageDefinitionId": "TypeSpec.Array",
+             "Decorators": []
+            },
+            "IsRequired": false,
+            "IsReadOnly": false,
+            "Decorators": []
+           },
+           {
+            "$id": "193",
+            "Name": "notActions",
+            "SerializedName": "notActions",
+            "Description": "Action permissions that are excluded but not denied. They may be granted by\nother role definitions assigned to a principal.",
+            "Type": {
+             "$id": "194",
+             "Kind": "array",
+             "Name": "Array",
+             "ValueType": {
+              "$id": "195",
+              "Kind": "string",
+              "Name": "string",
+              "CrossLanguageDefinitionId": "TypeSpec.string",
+              "Decorators": []
+             },
+             "CrossLanguageDefinitionId": "TypeSpec.Array",
+             "Decorators": []
+            },
+            "IsRequired": false,
+            "IsReadOnly": false,
+            "Decorators": []
+           },
+           {
+            "$id": "196",
+            "Name": "dataActions",
+            "SerializedName": "dataActions",
+            "Description": "Data action permissions that are granted.",
+            "Type": {
+             "$id": "197",
+             "Kind": "array",
+             "Name": "ArrayDataAction",
+             "ValueType": {
+              "$ref": "22"
+             },
+             "CrossLanguageDefinitionId": "TypeSpec.Array",
+             "Decorators": []
+            },
+            "IsRequired": false,
+            "IsReadOnly": false,
+            "Decorators": []
+           },
+           {
+            "$id": "198",
+            "Name": "notDataActions",
+            "SerializedName": "notDataActions",
+            "Description": "Data action permissions that are excluded but not denied. They may be granted\nby other role definitions assigned to a principal.",
+            "Type": {
+             "$id": "199",
+             "Kind": "array",
+             "Name": "ArrayDataAction",
+             "ValueType": {
+              "$ref": "22"
+             },
+             "CrossLanguageDefinitionId": "TypeSpec.Array",
+             "Decorators": []
+            },
+            "IsRequired": false,
+            "IsReadOnly": false,
+            "Decorators": []
+           }
+          ]
+         },
+         "CrossLanguageDefinitionId": "TypeSpec.Array",
+         "Decorators": []
+        },
+        "IsRequired": false,
+        "IsReadOnly": false,
+        "Decorators": []
+       },
+       {
+        "$id": "200",
+        "Name": "assignableScopes",
+        "SerializedName": "assignableScopes",
+        "Description": "Role definition assignable scopes.",
+        "Type": {
+         "$id": "201",
+         "Kind": "array",
+         "Name": "ArrayRoleScope",
+         "ValueType": {
+          "$ref": "11"
+         },
+         "CrossLanguageDefinitionId": "TypeSpec.Array",
+         "Decorators": []
+        },
+        "IsRequired": false,
+        "IsReadOnly": false,
+        "Decorators": []
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$ref": "181"
+  },
+  {
+   "$ref": "189"
+  },
+  {
+   "$id": "202",
+   "Kind": "model",
+   "Name": "RoleDefinitionCreateParameters",
+   "CrossLanguageDefinitionId": "KeyVault.RoleDefinitionCreateParameters",
+   "Usage": "Input,Json",
+   "Description": "Role definition create parameters.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "203",
+     "Name": "properties",
+     "SerializedName": "properties",
+     "Description": "Role definition properties.",
+     "Type": {
+      "$ref": "181"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$id": "204",
+   "Kind": "model",
+   "Name": "RoleDefinitionListResult",
+   "CrossLanguageDefinitionId": "KeyVault.RoleDefinitionListResult",
+   "Usage": "Output,Json",
+   "Description": "Role definition list operation result.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "205",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The RoleDefinition items on this page",
+     "Type": {
+      "$id": "206",
+      "Kind": "array",
+      "Name": "ArrayRoleDefinition",
+      "ValueType": {
+       "$ref": "174"
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array",
+      "Decorators": []
+     },
+     "IsRequired": true,
+     "IsReadOnly": false,
+     "Decorators": []
+    },
+    {
+     "$id": "207",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "208",
+      "Kind": "url",
+      "Name": "ResourceLocation",
+      "CrossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+      "BaseType": {
+       "$id": "209",
+       "Kind": "url",
+       "Name": "url",
+       "CrossLanguageDefinitionId": "TypeSpec.url",
+       "Decorators": []
+      },
+      "Decorators": []
+     },
+     "IsRequired": false,
+     "IsReadOnly": false,
+     "Decorators": []
+    }
+   ]
+  },
+  {
+   "$id": "210",
+   "Kind": "model",
+   "Name": "KeyVaultError",
+   "CrossLanguageDefinitionId": "KeyVault.KeyVaultError",
+   "Usage": "Error",
+   "Description": "The key vault error exception.",
+   "Decorators": [],
+   "Properties": [
+    {
+     "$id": "211",
+     "Name": "error",
+     "SerializedName": "error",
+     "Description": "The key vault server error.",
+     "Type": {
+      "$ref": "67"
+     },
+     "IsRequired": false,
+     "IsReadOnly": true,
+     "Decorators": []
+    }
+   ]
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "212",
+   "Name": "KeyVaultClient",
+   "Description": "The key vault client performs cryptographic key operations and vault operations\nagainst the Key Vault service.",
+   "Operations": [
+    {
+     "$id": "213",
+     "Name": "fullBackupStatus",
+     "ResourceName": "KeyVault",
+     "Description": "Returns the status of full backup operation",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "214",
+       "Name": "vaultBaseUrl",
+       "NameInRequest": "vaultBaseUrl",
+       "Type": {
+        "$id": "215",
+        "Kind": "url",
+        "Name": "url",
+        "CrossLanguageDefinitionId": "TypeSpec.url"
+       },
+       "Location": "Uri",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "216",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "217",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "218",
+        "Type": {
+         "$id": "219",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "220",
+       "Name": "jobId",
+       "NameInRequest": "jobId",
+       "Description": "The id returned as part of the backup request",
+       "Type": {
+        "$id": "221",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "222",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "223",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "224",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "225",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "62"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/backup/{jobId}/pending",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.fullBackupStatus",
+     "Decorators": []
+    },
+    {
+     "$id": "226",
+     "Name": "fullBackup",
+     "ResourceName": "KeyVault",
+     "Description": "Creates a full backup using a user-provided SAS token to an Azure blob storage\ncontainer.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "214"
+      },
+      {
+       "$id": "227",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "228",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "229",
+        "Type": {
+         "$id": "230",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "231",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "232",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "233",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "234",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "235",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "236",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "237",
+       "Name": "azureStorageBlobContainerUri",
+       "NameInRequest": "azureStorageBlobContainerUri",
+       "Description": "Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be\nstored. This token needs to be valid for at least next 24 hours from the time of making this call.",
+       "Type": {
+        "$ref": "83"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "238",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "62"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "239",
+         "Name": "azureAsyncOperation",
+         "NameInResponse": "Azure-AsyncOperation",
+         "Description": "The URI to poll for completion status.",
+         "Type": {
+          "$id": "240",
+          "Kind": "string",
+          "Name": "string",
+          "CrossLanguageDefinitionId": "TypeSpec.string",
+          "Decorators": []
+         }
+        },
+        {
+         "$id": "241",
+         "Name": "retryAfter",
+         "NameInResponse": "Retry-After",
+         "Description": "The recommended number of seconds to wait before calling the URI specified in\nAzure-AsyncOperation.",
+         "Type": {
+          "$id": "242",
+          "Kind": "int32",
+          "Name": "int32",
+          "CrossLanguageDefinitionId": "TypeSpec.int32",
+          "Decorators": []
+         }
+        },
+        {
+         "$id": "243",
+         "Name": "operationLocation",
+         "NameInResponse": "Operation-Location",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "244",
+          "Kind": "url",
+          "Name": "ResourceLocation",
+          "CrossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+          "BaseType": {
+           "$id": "245",
+           "Kind": "url",
+           "Name": "url",
+           "CrossLanguageDefinitionId": "TypeSpec.url",
+           "Decorators": []
+          },
+          "Decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/backup",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "246",
+      "FinalStateVia": 0,
+      "FinalResponse": {
+       "$id": "247",
+       "StatusCodes": [
+        200
+       ],
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.fullBackup",
+     "Decorators": []
+    },
+    {
+     "$id": "248",
+     "Name": "preFullBackup",
+     "ResourceName": "KeyVault",
+     "Description": "Pre-backup operation for checking whether the customer can perform a full\nbackup operation.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "214"
+      },
+      {
+       "$id": "249",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "250",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "251",
+        "Type": {
+         "$id": "252",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "253",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "254",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "255",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "256",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "257",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "258",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "259",
+       "Name": "preBackupOperationParameters",
+       "NameInRequest": "preBackupOperationParameters",
+       "Description": "Optional parameters to validate prior to performing a full backup operation.",
+       "Type": {
+        "$ref": "90"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "260",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "62"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "261",
+         "Name": "azureAsyncOperation",
+         "NameInResponse": "Azure-AsyncOperation",
+         "Description": "The URI to poll for completion status.",
+         "Type": {
+          "$id": "262",
+          "Kind": "string",
+          "Name": "string",
+          "CrossLanguageDefinitionId": "TypeSpec.string",
+          "Decorators": []
+         }
+        },
+        {
+         "$id": "263",
+         "Name": "retryAfter",
+         "NameInResponse": "Retry-After",
+         "Description": "The recommended number of seconds to wait before calling the URI specified in\nAzure-AsyncOperation.",
+         "Type": {
+          "$id": "264",
+          "Kind": "int32",
+          "Name": "int32",
+          "CrossLanguageDefinitionId": "TypeSpec.int32",
+          "Decorators": []
+         }
+        },
+        {
+         "$id": "265",
+         "Name": "operationLocation",
+         "NameInResponse": "Operation-Location",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "266",
+          "Kind": "url",
+          "Name": "ResourceLocation",
+          "CrossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+          "BaseType": {
+           "$id": "267",
+           "Kind": "url",
+           "Name": "url",
+           "CrossLanguageDefinitionId": "TypeSpec.url",
+           "Decorators": []
+          },
+          "Decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/prebackup",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.preFullBackup",
+     "Decorators": []
+    },
+    {
+     "$id": "268",
+     "Name": "restoreStatus",
+     "ResourceName": "KeyVault",
+     "Description": "Returns the status of restore operation",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "214"
+      },
+      {
+       "$id": "269",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "270",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "271",
+        "Type": {
+         "$id": "272",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "273",
+       "Name": "jobId",
+       "NameInRequest": "jobId",
+       "Description": "The Job Id returned part of the restore operation",
+       "Type": {
+        "$id": "274",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "275",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "276",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "277",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "278",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "97"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/restore/{jobId}/pending",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.restoreStatus",
+     "Decorators": []
+    },
+    {
+     "$id": "279",
+     "Name": "preFullRestoreOperation",
+     "ResourceName": "KeyVault",
+     "Description": "Pre-restore operation for checking whether the customer can perform a full\nrestore operation.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "214"
+      },
+      {
+       "$id": "280",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "281",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "282",
+        "Type": {
+         "$id": "283",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "284",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "285",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "286",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "287",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "288",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "289",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "290",
+       "Name": "preRestoreOperationParameters",
+       "NameInRequest": "preRestoreOperationParameters",
+       "Description": "Optional pre restore parameters to validate prior to performing a full restore operation.",
+       "Type": {
+        "$ref": "110"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "291",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "97"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "292",
+         "Name": "azureAsyncOperation",
+         "NameInResponse": "Azure-AsyncOperation",
+         "Description": "The URI to poll for completion status.",
+         "Type": {
+          "$id": "293",
+          "Kind": "string",
+          "Name": "string",
+          "CrossLanguageDefinitionId": "TypeSpec.string",
+          "Decorators": []
+         }
+        },
+        {
+         "$id": "294",
+         "Name": "retryAfter",
+         "NameInResponse": "Retry-After",
+         "Description": "The recommended number of seconds to wait before calling the URI specified in\nAzure-AsyncOperation.",
+         "Type": {
+          "$id": "295",
+          "Kind": "int32",
+          "Name": "int32",
+          "CrossLanguageDefinitionId": "TypeSpec.int32",
+          "Decorators": []
+         }
+        },
+        {
+         "$id": "296",
+         "Name": "operationLocation",
+         "NameInResponse": "Operation-Location",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "297",
+          "Kind": "url",
+          "Name": "ResourceLocation",
+          "CrossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+          "BaseType": {
+           "$id": "298",
+           "Kind": "url",
+           "Name": "url",
+           "CrossLanguageDefinitionId": "TypeSpec.url",
+           "Decorators": []
+          },
+          "Decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "PUT",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/prerestore",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.preFullRestoreOperation",
+     "Decorators": []
+    },
+    {
+     "$id": "299",
+     "Name": "fullRestoreOperation",
+     "ResourceName": "KeyVault",
+     "Description": "Restores all key materials using the SAS token pointing to a previously stored\nAzure Blob storage backup folder",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "214"
+      },
+      {
+       "$id": "300",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "301",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "302",
+        "Type": {
+         "$id": "303",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "304",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "305",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "306",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "307",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "308",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "309",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "310",
+       "Name": "restoreBlobDetails",
+       "NameInRequest": "restoreBlobDetails",
+       "Description": "The Azure blob SAS token pointing to a folder where the previous successful full backup was stored.",
+       "Type": {
+        "$ref": "114"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "311",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "97"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "312",
+         "Name": "azureAsyncOperation",
+         "NameInResponse": "Azure-AsyncOperation",
+         "Description": "The URI to poll for completion status.",
+         "Type": {
+          "$id": "313",
+          "Kind": "string",
+          "Name": "string",
+          "CrossLanguageDefinitionId": "TypeSpec.string",
+          "Decorators": []
+         }
+        },
+        {
+         "$id": "314",
+         "Name": "retryAfter",
+         "NameInResponse": "Retry-After",
+         "Description": "The recommended number of seconds to wait before calling the URI specified in\nAzure-AsyncOperation.",
+         "Type": {
+          "$id": "315",
+          "Kind": "int32",
+          "Name": "int32",
+          "CrossLanguageDefinitionId": "TypeSpec.int32",
+          "Decorators": []
+         }
+        },
+        {
+         "$id": "316",
+         "Name": "operationLocation",
+         "NameInResponse": "Operation-Location",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "317",
+          "Kind": "url",
+          "Name": "ResourceLocation",
+          "CrossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+          "BaseType": {
+           "$id": "318",
+           "Kind": "url",
+           "Name": "url",
+           "CrossLanguageDefinitionId": "TypeSpec.url",
+           "Decorators": []
+          },
+          "Decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "PUT",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/restore",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "319",
+      "FinalStateVia": 2,
+      "FinalResponse": {
+       "$id": "320",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "97"
+       },
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.fullRestoreOperation",
+     "Decorators": []
+    },
+    {
+     "$id": "321",
+     "Name": "selectiveKeyRestoreOperation",
+     "ResourceName": "KeyVault",
+     "Description": "Restores all key versions of a given key using user supplied SAS token pointing\nto a previously stored Azure Blob storage backup folder",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "214"
+      },
+      {
+       "$id": "322",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "323",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "324",
+        "Type": {
+         "$id": "325",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "326",
+       "Name": "keyName",
+       "NameInRequest": "keyName",
+       "Description": "The name of the key to be restored from the user supplied backup",
+       "Type": {
+        "$id": "327",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "328",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "329",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "330",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "331",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "332",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "333",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "334",
+       "Name": "restoreBlobDetails",
+       "NameInRequest": "restoreBlobDetails",
+       "Description": "The Azure blob SAS token pointing to a folder where the previous successful\nfull backup was stored",
+       "Type": {
+        "$ref": "118"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "335",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "122"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "336",
+         "Name": "azureAsyncOperation",
+         "NameInResponse": "Azure-AsyncOperation",
+         "Description": "The URI to poll for completion status.",
+         "Type": {
+          "$id": "337",
+          "Kind": "string",
+          "Name": "string",
+          "CrossLanguageDefinitionId": "TypeSpec.string",
+          "Decorators": []
+         }
+        },
+        {
+         "$id": "338",
+         "Name": "retryAfter",
+         "NameInResponse": "Retry-After",
+         "Description": "The recommended number of seconds to wait before calling the URI specified in\nAzure-AsyncOperation.",
+         "Type": {
+          "$id": "339",
+          "Kind": "int32",
+          "Name": "int32",
+          "CrossLanguageDefinitionId": "TypeSpec.int32",
+          "Decorators": []
+         }
+        },
+        {
+         "$id": "340",
+         "Name": "operationLocation",
+         "NameInResponse": "Operation-Location",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "341",
+          "Kind": "url",
+          "Name": "ResourceLocation",
+          "CrossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+          "BaseType": {
+           "$id": "342",
+           "Kind": "url",
+           "Name": "url",
+           "CrossLanguageDefinitionId": "TypeSpec.url",
+           "Decorators": []
+          },
+          "Decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "PUT",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/keys/{keyName}/restore",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "343",
+      "FinalStateVia": 2,
+      "FinalResponse": {
+       "$id": "344",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "122"
+       },
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.selectiveKeyRestoreOperation",
+     "Decorators": []
+    },
+    {
+     "$id": "345",
+     "Name": "updateSetting",
+     "ResourceName": "KeyVault",
+     "Summary": "Updates key vault account setting, stores it, then returns the setting name and value to the client.",
+     "Description": "Description of the pool setting to be updated",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "214"
+      },
+      {
+       "$id": "346",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "347",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "348",
+        "Type": {
+         "$id": "349",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "350",
+       "Name": "settingName",
+       "NameInRequest": "settingName",
+       "Description": "The name of the account setting. Must be a valid settings option.",
+       "Type": {
+        "$id": "351",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "352",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "353",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "354",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "355",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "356",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "357",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "358",
+       "Name": "parameters",
+       "NameInRequest": "parameters",
+       "Description": "The parameters to update an account setting.",
+       "Type": {
+        "$ref": "135"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "359",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "138"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "PATCH",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/settings/{settingName}",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false,
+     "CrossLanguageDefinitionId": "KeyVault.updateSetting",
+     "Decorators": []
+    },
+    {
+     "$id": "360",
+     "Name": "getSetting",
+     "ResourceName": "KeyVault",
+     "Summary": "Get specified account setting object.",
+     "Description": "Retrieves the setting object of a specified setting name.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "214"
+      },
+      {
+       "$id": "361",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "362",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "363",
+        "Type": {
+         "$id": "364",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "365",
+       "Name": "settingName",
+       "NameInRequest": "settingName",
+       "Description": "The name of the account setting. Must be a valid settings option.",
+       "Type": {
+        "$id": "366",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "367",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "368",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "369",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "370",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "138"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/settings/{settingName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.getSetting",
+     "Decorators": []
+    },
+    {
+     "$id": "371",
+     "Name": "getSettings",
+     "ResourceName": "KeyVault",
+     "Summary": "List account settings.",
+     "Description": "Retrieves a list of all the available account settings that can be configured.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "214"
+      },
+      {
+       "$id": "372",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "373",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "374",
+        "Type": {
+         "$id": "375",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "376",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "377",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "378",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "379",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "144"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/settings",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.getSettings",
+     "Decorators": []
+    }
+   ],
+   "Protocol": {
+    "$id": "380"
+   },
+   "Parameters": [
+    {
+     "$ref": "214"
+    }
+   ],
+   "Decorators": []
+  },
+  {
+   "$id": "381",
+   "Name": "RoleDefinitions",
+   "Operations": [
+    {
+     "$id": "382",
+     "Name": "delete",
+     "ResourceName": "RoleDefinitions",
+     "Description": "Deletes a custom role definition.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "383",
+       "Name": "vaultBaseUrl",
+       "NameInRequest": "vaultBaseUrl",
+       "Type": {
+        "$id": "384",
+        "Kind": "url",
+        "Name": "url",
+        "CrossLanguageDefinitionId": "TypeSpec.url"
+       },
+       "Location": "Uri",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "385",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "386",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "387",
+        "Type": {
+         "$id": "388",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "389",
+       "Name": "scope",
+       "NameInRequest": "scope",
+       "Description": "The scope of the role definition to delete. Managed HSM only supports '/'.",
+       "Type": {
+        "$id": "390",
+        "Kind": "url",
+        "Name": "url",
+        "CrossLanguageDefinitionId": "TypeSpec.url",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "391",
+       "Name": "roleDefinitionName",
+       "NameInRequest": "roleDefinitionName",
+       "Description": "The name (GUID) of the role definition to delete.",
+       "Type": {
+        "$id": "392",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "393",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "394",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "395",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "396",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "174"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "DELETE",
+     "RequestBodyMediaType": "None",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.RoleDefinitions.delete",
+     "Decorators": []
+    },
+    {
+     "$id": "397",
+     "Name": "createOrUpdate",
+     "ResourceName": "RoleDefinitions",
+     "Description": "Creates or updates a custom role definition.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "383"
+      },
+      {
+       "$id": "398",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "399",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "400",
+        "Type": {
+         "$id": "401",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "402",
+       "Name": "scope",
+       "NameInRequest": "scope",
+       "Description": "The scope of the role definition to create or update. Managed HSM only supports\n'/'.",
+       "Type": {
+        "$id": "403",
+        "Kind": "url",
+        "Name": "url",
+        "CrossLanguageDefinitionId": "TypeSpec.url",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "404",
+       "Name": "roleDefinitionName",
+       "NameInRequest": "roleDefinitionName",
+       "Description": "The name of the role definition to create or update. It can be any valid GUID.",
+       "Type": {
+        "$id": "405",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "406",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "407",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "408",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "409",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "410",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "411",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "412",
+       "Name": "parameters",
+       "NameInRequest": "parameters",
+       "Description": "Parameters for the role definition.",
+       "Type": {
+        "$ref": "202"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "413",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "174"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "PUT",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionName}",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.RoleDefinitions.createOrUpdate",
+     "Decorators": []
+    },
+    {
+     "$id": "414",
+     "Name": "get",
+     "ResourceName": "RoleDefinitions",
+     "Description": "Get the specified role definition.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "383"
+      },
+      {
+       "$id": "415",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "416",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "417",
+        "Type": {
+         "$id": "418",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "419",
+       "Name": "scope",
+       "NameInRequest": "scope",
+       "Description": "The scope of the role definition to get. Managed HSM only supports '/'.",
+       "Type": {
+        "$id": "420",
+        "Kind": "url",
+        "Name": "url",
+        "CrossLanguageDefinitionId": "TypeSpec.url",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "421",
+       "Name": "roleDefinitionName",
+       "NameInRequest": "roleDefinitionName",
+       "Description": "The name of the role definition to get.",
+       "Type": {
+        "$id": "422",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "423",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "424",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "425",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "426",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "174"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.RoleDefinitions.get",
+     "Decorators": []
+    },
+    {
+     "$id": "427",
+     "Name": "list",
+     "ResourceName": "RoleDefinitions",
+     "Description": "Get all role definitions that are applicable at scope and above.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "383"
+      },
+      {
+       "$id": "428",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "429",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "430",
+        "Type": {
+         "$id": "431",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "432",
+       "Name": "scope",
+       "NameInRequest": "scope",
+       "Description": "The scope of the role definition.",
+       "Type": {
+        "$id": "433",
+        "Kind": "url",
+        "Name": "url",
+        "CrossLanguageDefinitionId": "TypeSpec.url",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "434",
+       "Name": "$filter",
+       "NameInRequest": "$filter",
+       "Description": "The filter to apply on the operation. Use atScopeAndBelow filter to search\nbelow the given scope as well.",
+       "Type": {
+        "$id": "435",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "436",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "437",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "438",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "439",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "204"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/{scope}/providers/Microsoft.Authorization/roleDefinitions",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "440",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.RoleDefinitions.list",
+     "Decorators": []
+    }
+   ],
+   "Protocol": {
+    "$id": "441"
+   },
+   "Parent": "KeyVaultClient",
+   "Parameters": [
+    {
+     "$ref": "383"
+    }
+   ],
+   "Decorators": []
+  },
+  {
+   "$id": "442",
+   "Name": "RoleAssignments",
+   "Operations": [
+    {
+     "$id": "443",
+     "Name": "delete",
+     "ResourceName": "RoleAssignments",
+     "Description": "Deletes a role assignment.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "444",
+       "Name": "vaultBaseUrl",
+       "NameInRequest": "vaultBaseUrl",
+       "Type": {
+        "$id": "445",
+        "Kind": "url",
+        "Name": "url",
+        "CrossLanguageDefinitionId": "TypeSpec.url"
+       },
+       "Location": "Uri",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "446",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "447",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "448",
+        "Type": {
+         "$id": "449",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "450",
+       "Name": "scope",
+       "NameInRequest": "scope",
+       "Description": "The scope of the role assignment to delete.",
+       "Type": {
+        "$id": "451",
+        "Kind": "url",
+        "Name": "url",
+        "CrossLanguageDefinitionId": "TypeSpec.url",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "452",
+       "Name": "roleAssignmentName",
+       "NameInRequest": "roleAssignmentName",
+       "Description": "The name of the role assignment to delete.",
+       "Type": {
+        "$id": "453",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "454",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "455",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "456",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "457",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "147"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "DELETE",
+     "RequestBodyMediaType": "None",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.RoleAssignments.delete",
+     "Decorators": []
+    },
+    {
+     "$id": "458",
+     "Name": "create",
+     "ResourceName": "RoleAssignments",
+     "Description": "Creates a role assignment.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "444"
+      },
+      {
+       "$id": "459",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "460",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "461",
+        "Type": {
+         "$id": "462",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "463",
+       "Name": "scope",
+       "NameInRequest": "scope",
+       "Description": "The scope of the role assignment to create.",
+       "Type": {
+        "$id": "464",
+        "Kind": "url",
+        "Name": "url",
+        "CrossLanguageDefinitionId": "TypeSpec.url",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "465",
+       "Name": "roleAssignmentName",
+       "NameInRequest": "roleAssignmentName",
+       "Description": "The name of the role assignment to create. It can be any valid GUID.",
+       "Type": {
+        "$id": "466",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "467",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "468",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "469",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "470",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "471",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "472",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      },
+      {
+       "$id": "473",
+       "Name": "parameters",
+       "NameInRequest": "parameters",
+       "Description": "Parameters for the role assignment.",
+       "Type": {
+        "$ref": "161"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "474",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "147"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "PUT",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.RoleAssignments.create",
+     "Decorators": []
+    },
+    {
+     "$id": "475",
+     "Name": "get",
+     "ResourceName": "RoleAssignments",
+     "Description": "Get the specified role assignment.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "444"
+      },
+      {
+       "$id": "476",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "477",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "478",
+        "Type": {
+         "$id": "479",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "480",
+       "Name": "scope",
+       "NameInRequest": "scope",
+       "Description": "The scope of the role assignment.",
+       "Type": {
+        "$id": "481",
+        "Kind": "url",
+        "Name": "url",
+        "CrossLanguageDefinitionId": "TypeSpec.url",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "482",
+       "Name": "roleAssignmentName",
+       "NameInRequest": "roleAssignmentName",
+       "Description": "The name of the role assignment to get.",
+       "Type": {
+        "$id": "483",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "484",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "485",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "486",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "487",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "147"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.RoleAssignments.get",
+     "Decorators": []
+    },
+    {
+     "$id": "488",
+     "Name": "listForScope",
+     "ResourceName": "RoleAssignments",
+     "Description": "Gets role assignments for a scope.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "444"
+      },
+      {
+       "$id": "489",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "490",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "491",
+        "Type": {
+         "$id": "492",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "7.6-preview.2"
+       },
+       "Decorators": []
+      },
+      {
+       "$id": "493",
+       "Name": "scope",
+       "NameInRequest": "scope",
+       "Description": "The scope of the role assignments.",
+       "Type": {
+        "$id": "494",
+        "Kind": "url",
+        "Name": "url",
+        "CrossLanguageDefinitionId": "TypeSpec.url",
+        "Decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "495",
+       "Name": "$filter",
+       "NameInRequest": "$filter",
+       "Description": "The filter to apply on the operation. Use $filter=atScope() to return all role\nassignments at or above the scope. Use $filter=principalId eq {id} to return\nall role assignments at, above or below the scope for the specified principal.",
+       "Type": {
+        "$id": "496",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string",
+        "Decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": []
+      },
+      {
+       "$id": "497",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "498",
+        "Kind": "constant",
+        "ValueType": {
+         "$id": "499",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string",
+         "Decorators": []
+        },
+        "Value": "application/json",
+        "Decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": []
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "500",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "168"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{vaultBaseUrl}",
+     "Path": "/{scope}/providers/Microsoft.Authorization/roleAssignments",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "501",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "KeyVault.RoleAssignments.listForScope",
+     "Decorators": []
+    }
+   ],
+   "Protocol": {
+    "$id": "502"
+   },
+   "Parent": "KeyVaultClient",
+   "Parameters": [
+    {
+     "$ref": "444"
+    }
+   ],
+   "Decorators": []
+  }
+ ],
+ "Auth": {
+  "$id": "503",
+  "OAuth2": {
+   "$id": "504",
+   "Scopes": [
+    "https://vault.azure.net/.default"
+   ]
+  }
+ }
+}
