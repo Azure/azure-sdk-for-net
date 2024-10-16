@@ -1,0 +1,18 @@
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - eng/packages/http-client-csharp
+
+extends:
+  template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
+  parameters:
+    TestMatrix:
+        All:
+          TestArguments: -UnitTests -GenerationChecks
