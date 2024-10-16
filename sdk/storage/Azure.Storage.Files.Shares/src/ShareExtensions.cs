@@ -1087,5 +1087,33 @@ namespace Azure.Storage.Files.Shares
                 }
             };
         }
+
+        internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileCreateHardLinkHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareFileInfo
+            {
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                SmbProperties = new FileSmbProperties
+                {
+                    FileCreatedOn = response.Headers.FileCreationTime,
+                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
+                    FileChangedOn = response.Headers.FileChangeTime,
+                    FileId = response.Headers.FileId,
+                    ParentId = response.Headers.FileParentId
+                },
+                NfsProperties = new FileNfsProperties()
+                {
+                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
+                    Owner = Convert.ToUInt32(response.Headers.Owner),
+                    Group = Convert.ToUInt32(response.Headers.Group),
+                    LinkCount = response.Headers.LinkCount
+                }
+            };
+        }
     }
 }

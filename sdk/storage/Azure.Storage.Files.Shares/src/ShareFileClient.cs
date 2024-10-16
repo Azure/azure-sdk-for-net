@@ -6972,6 +6972,152 @@ namespace Azure.Storage.Files.Shares
         #endregion
 
         #region CreateHardLink
+        /// <summary>
+        /// NFS only.  Creates a hard link to the file file specified by path.
+        /// </summary>
+        /// <param name="path">
+        /// Full path of the file to create the hard link to.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the hard link.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the hard link.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileInfo> CreateHardLink(
+            string path,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => CreateHardLinkInternal(
+                path: path,
+                conditions: conditions,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// NFS only.  Creates a hard link to the file file specified by path.
+        /// </summary>
+        /// <param name="path">
+        /// Full path of the file to create the hard link to.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the hard link.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the hard link.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public async virtual Task<Response<ShareFileInfo>> CreateHardLinkAsync(
+            string path,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => await CreateHardLinkInternal(
+                path: path,
+                conditions: conditions,
+                async: true,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        /// NFS only.  Creates a hard link to the file file specified by path.
+        /// </summary>
+        /// <param name="path">
+        /// Full path of the file to create the hard link to.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the hard link.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the hard link.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<ShareFileInfo>> CreateHardLinkInternal(
+            string path,
+            ShareFileRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareFileClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(path)}: {path}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(nameof(CreateHardLink));
+
+                try
+                {
+                    scope.Start();
+
+                    ResponseWithHeaders<FileCreateHardLinkHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.CreateHardLinkAsync(
+                            targetFile: path,
+                            shareFileRequestConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.CreateHardLink(
+                            targetFile: path,
+                            shareFileRequestConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileInfo(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
+                }
+            }
+        }
         #endregion
 
         #region OpenWrite
