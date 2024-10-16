@@ -3238,7 +3238,10 @@ namespace Azure.Storage.Files.Shares.Tests
                 content: stream);
 
             // Act
-            Response<ShareFileDownloadInfo> response = await file.DownloadAsync();
+            Response<ShareFileDownloadInfo> response = await file.DownloadAsync(new ShareFileDownloadOptions
+            {
+                Range = new HttpRange(0, Constants.KB)
+            });
 
             // Assert
             Assert.AreEqual(0, response.Value.Details.NfsProperties.Owner);
