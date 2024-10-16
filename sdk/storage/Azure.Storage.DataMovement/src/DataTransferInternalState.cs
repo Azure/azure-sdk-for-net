@@ -86,7 +86,7 @@ namespace Azure.Storage.DataMovement
         /// Sets the completion status
         /// </summary>
         /// <param name="state"></param>
-        /// <returns>Returns whether or not the status has been changed</returns>
+        /// <returns>Returns whether or not the status has been changed from its original state.</returns>
         public bool SetTransferState(DataTransferState state)
         {
             if (_status.SetTransferStateChange(state))
