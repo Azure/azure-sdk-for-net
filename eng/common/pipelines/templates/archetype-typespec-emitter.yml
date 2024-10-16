@@ -183,26 +183,26 @@ extends:
                 MainPublisher: ESRPRELPACMANTEST
                 DomainTenantId: 72f988bf-86f1-41af-91ab-2d7cd011db47
 
-            - task: PowerShell@2
-              displayName: Create emitter-package.json
-              inputs:
-                pwsh: true
-                filePath: ./eng/common/scripts/typespec/New-EmitterPackageJson.ps1
-                arguments: >
-                  -PackageJsonPath '$(buildArtifactsPath)/lock-files/package.json'
-                  -OverridesPath '$(buildArtifactsPath)/overrides.json'
-                  -OutputDirectory '$(Build.ArtifactStagingDirectory)'
-                workingDirectory: $(Build.SourcesDirectory)
+          - task: PowerShell@2
+            displayName: Create emitter-package.json
+            inputs:
+              pwsh: true
+              filePath: ./eng/common/scripts/typespec/New-EmitterPackageJson.ps1
+              arguments: >
+                -PackageJsonPath '$(buildArtifactsPath)/lock-files/package.json'
+                -OverridesPath '$(buildArtifactsPath)/overrides.json'
+                -OutputDirectory '$(Build.ArtifactStagingDirectory)'
+              workingDirectory: $(Build.SourcesDirectory)
 
-            - task: PowerShell@2
-              displayName: Create emitter-package-lock.json
-              inputs:
-                pwsh: true
-                filePath: ./eng/common/scripts/typespec/New-EmitterPackageLock.ps1
-                arguments: >
-                  -EmitterPackageJsonPath '$(Build.ArtifactStagingDirectory)/emitter-package.json'
-                  -OutputDirectory '$(Build.ArtifactStagingDirectory)'
-                workingDirectory: $(Build.SourcesDirectory)
+          - task: PowerShell@2
+            displayName: Create emitter-package-lock.json
+            inputs:
+              pwsh: true
+              filePath: ./eng/common/scripts/typespec/New-EmitterPackageLock.ps1
+              arguments: >
+                -EmitterPackageJsonPath '$(Build.ArtifactStagingDirectory)/emitter-package.json'
+                -OutputDirectory '$(Build.ArtifactStagingDirectory)'
+              workingDirectory: $(Build.SourcesDirectory)
 
           - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
             parameters:
