@@ -24,7 +24,7 @@ namespace BasicTypeSpec
 
         private static Classifier2xxAnd4xx PipelineMessageClassifier2xxAnd4xx => _pipelineMessageClassifier2xxAnd4xx ??= new Classifier2xxAnd4xx();
 
-        internal HttpMessage CreateSayHiRequest(string headParameter, string queryParameter, string optionalQuery, RequestContext options)
+        internal HttpMessage CreateSayHiRequest(string headParameter, string queryParameter, string optionalQuery, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -44,7 +44,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateHelloAgainRequest(string p2, string p1, RequestContent content, RequestContext options)
+        internal HttpMessage CreateHelloAgainRequest(string p2, string p1, RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -62,7 +62,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateNoContentTypeRequest(string p2, string p1, RequestContent content, RequestContext options)
+        internal HttpMessage CreateNoContentTypeRequest(string p2, string p1, RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -80,7 +80,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateHelloDemo2Request(RequestContext options)
+        internal HttpMessage CreateHelloDemo2Request(RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -94,7 +94,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateCreateLiteralRequest(RequestContent content, RequestContext options)
+        internal HttpMessage CreateCreateLiteralRequest(RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -110,7 +110,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateHelloLiteralRequest(RequestContext options)
+        internal HttpMessage CreateHelloLiteralRequest(RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -127,7 +127,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateTopActionRequest(DateTimeOffset action, RequestContext options)
+        internal HttpMessage CreateTopActionRequest(DateTimeOffset action, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -142,7 +142,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateTopAction2Request(RequestContext options)
+        internal HttpMessage CreateTopAction2Request(RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -156,7 +156,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreatePatchActionRequest(RequestContent content, RequestContext options)
+        internal HttpMessage CreatePatchActionRequest(RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -172,7 +172,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateAnonymousBodyRequest(RequestContent content, RequestContext options)
+        internal HttpMessage CreateAnonymousBodyRequest(RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -188,7 +188,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateFriendlyModelRequest(RequestContent content, RequestContext options)
+        internal HttpMessage CreateFriendlyModelRequest(RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -204,7 +204,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateAddTimeHeaderRequest(RequestContext options)
+        internal HttpMessage CreateAddTimeHeaderRequest(RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier204;
@@ -218,7 +218,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateProjectedNameModelRequest(RequestContent content, RequestContext options)
+        internal HttpMessage CreateProjectedNameModelRequest(RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -234,7 +234,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateReturnsAnonymousModelRequest(RequestContext options)
+        internal HttpMessage CreateReturnsAnonymousModelRequest(RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -248,7 +248,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateGetUnknownValueRequest(string accept, RequestContext options)
+        internal HttpMessage CreateGetUnknownValueRequest(string accept, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -262,7 +262,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateInternalProtocolRequest(RequestContent content, RequestContext options)
+        internal HttpMessage CreateInternalProtocolRequest(RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -278,7 +278,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateStillConvenientRequest(RequestContext options)
+        internal HttpMessage CreateStillConvenientRequest(RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier204;
@@ -291,7 +291,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateHeadAsBooleanRequest(string id, RequestContext options)
+        internal HttpMessage CreateHeadAsBooleanRequest(string id, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier2xxAnd4xx;

@@ -69,17 +69,17 @@ namespace BasicTypeSpec
         /// <param name="headParameter"></param>
         /// <param name="queryParameter"></param>
         /// <param name="optionalQuery"></param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SayHi(string headParameter, string queryParameter, string optionalQuery, RequestContext options)
+        public virtual Response SayHi(string headParameter, string queryParameter, string optionalQuery, RequestContext context)
         {
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
 
-            using HttpMessage message = CreateSayHiRequest(headParameter, queryParameter, optionalQuery, options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateSayHiRequest(headParameter, queryParameter, optionalQuery, context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -93,17 +93,17 @@ namespace BasicTypeSpec
         /// <param name="headParameter"></param>
         /// <param name="queryParameter"></param>
         /// <param name="optionalQuery"></param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SayHiAsync(string headParameter, string queryParameter, string optionalQuery, RequestContext options)
+        public virtual async Task<Response> SayHiAsync(string headParameter, string queryParameter, string optionalQuery, RequestContext context)
         {
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
 
-            using HttpMessage message = CreateSayHiRequest(headParameter, queryParameter, optionalQuery, options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateSayHiRequest(headParameter, queryParameter, optionalQuery, context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary> Return hi. </summary>
@@ -147,18 +147,18 @@ namespace BasicTypeSpec
         /// <param name="p2"></param>
         /// <param name="p1"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response HelloAgain(string p2, string p1, RequestContent content, RequestContext options)
+        public virtual Response HelloAgain(string p2, string p1, RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(p2, nameof(p2));
             Argument.AssertNotNull(p1, nameof(p1));
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateHelloAgainRequest(p2, p1, content, options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateHelloAgainRequest(p2, p1, content, context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -172,18 +172,18 @@ namespace BasicTypeSpec
         /// <param name="p2"></param>
         /// <param name="p1"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> HelloAgainAsync(string p2, string p1, RequestContent content, RequestContext options)
+        public virtual async Task<Response> HelloAgainAsync(string p2, string p1, RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(p2, nameof(p2));
             Argument.AssertNotNull(p1, nameof(p1));
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateHelloAgainRequest(p2, p1, content, options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateHelloAgainRequest(p2, p1, content, context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary> Return hi again. </summary>
@@ -229,18 +229,18 @@ namespace BasicTypeSpec
         /// <param name="p2"></param>
         /// <param name="p1"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response NoContentType(string p2, string p1, RequestContent content, RequestContext options)
+        public virtual Response NoContentType(string p2, string p1, RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(p2, nameof(p2));
             Argument.AssertNotNull(p1, nameof(p1));
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateNoContentTypeRequest(p2, p1, content, options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateNoContentTypeRequest(p2, p1, content, context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -254,18 +254,18 @@ namespace BasicTypeSpec
         /// <param name="p2"></param>
         /// <param name="p1"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> NoContentTypeAsync(string p2, string p1, RequestContent content, RequestContext options)
+        public virtual async Task<Response> NoContentTypeAsync(string p2, string p1, RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(p2, nameof(p2));
             Argument.AssertNotNull(p1, nameof(p1));
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateNoContentTypeRequest(p2, p1, content, options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateNoContentTypeRequest(p2, p1, content, context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -276,13 +276,13 @@ namespace BasicTypeSpec
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response HelloDemo2(RequestContext options)
+        public virtual Response HelloDemo2(RequestContext context)
         {
-            using HttpMessage message = CreateHelloDemo2Request(options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateHelloDemo2Request(context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -293,13 +293,13 @@ namespace BasicTypeSpec
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> HelloDemo2Async(RequestContext options)
+        public virtual async Task<Response> HelloDemo2Async(RequestContext context)
         {
-            using HttpMessage message = CreateHelloDemo2Request(options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateHelloDemo2Request(context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary> Return hi in demo2. </summary>
@@ -327,16 +327,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateLiteral(RequestContent content, RequestContext options)
+        public virtual Response CreateLiteral(RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateCreateLiteralRequest(content, options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateCreateLiteralRequest(content, context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -348,16 +348,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateLiteralAsync(RequestContent content, RequestContext options)
+        public virtual async Task<Response> CreateLiteralAsync(RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateCreateLiteralRequest(content, options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateCreateLiteralRequest(content, context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary> Create with literal value. </summary>
@@ -392,13 +392,13 @@ namespace BasicTypeSpec
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response HelloLiteral(RequestContext options)
+        public virtual Response HelloLiteral(RequestContext context)
         {
-            using HttpMessage message = CreateHelloLiteralRequest(options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateHelloLiteralRequest(context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -409,13 +409,13 @@ namespace BasicTypeSpec
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> HelloLiteralAsync(RequestContext options)
+        public virtual async Task<Response> HelloLiteralAsync(RequestContext context)
         {
-            using HttpMessage message = CreateHelloLiteralRequest(options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateHelloLiteralRequest(context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary> Send literal parameters. </summary>
@@ -443,13 +443,13 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="action"></param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response TopAction(DateTimeOffset action, RequestContext options)
+        public virtual Response TopAction(DateTimeOffset action, RequestContext context)
         {
-            using HttpMessage message = CreateTopActionRequest(action, options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateTopActionRequest(action, context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -461,13 +461,13 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="action"></param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> TopActionAsync(DateTimeOffset action, RequestContext options)
+        public virtual async Task<Response> TopActionAsync(DateTimeOffset action, RequestContext context)
         {
-            using HttpMessage message = CreateTopActionRequest(action, options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateTopActionRequest(action, context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary> top level method. </summary>
@@ -496,13 +496,13 @@ namespace BasicTypeSpec
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response TopAction2(RequestContext options)
+        public virtual Response TopAction2(RequestContext context)
         {
-            using HttpMessage message = CreateTopAction2Request(options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateTopAction2Request(context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -513,13 +513,13 @@ namespace BasicTypeSpec
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> TopAction2Async(RequestContext options)
+        public virtual async Task<Response> TopAction2Async(RequestContext context)
         {
-            using HttpMessage message = CreateTopAction2Request(options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateTopAction2Request(context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -531,16 +531,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response PatchAction(RequestContent content, RequestContext options)
+        public virtual Response PatchAction(RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreatePatchActionRequest(content, options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreatePatchActionRequest(content, context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -552,16 +552,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> PatchActionAsync(RequestContent content, RequestContext options)
+        public virtual async Task<Response> PatchActionAsync(RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreatePatchActionRequest(content, options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreatePatchActionRequest(content, context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -573,16 +573,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response AnonymousBody(RequestContent content, RequestContext options)
+        public virtual Response AnonymousBody(RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateAnonymousBodyRequest(content, options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateAnonymousBodyRequest(content, context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -594,16 +594,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AnonymousBodyAsync(RequestContent content, RequestContext options)
+        public virtual async Task<Response> AnonymousBodyAsync(RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateAnonymousBodyRequest(content, options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateAnonymousBodyRequest(content, context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary> body parameter without body decorator. </summary>
@@ -697,16 +697,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response FriendlyModel(RequestContent content, RequestContext options)
+        public virtual Response FriendlyModel(RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateFriendlyModelRequest(content, options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateFriendlyModelRequest(content, context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -718,16 +718,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> FriendlyModelAsync(RequestContent content, RequestContext options)
+        public virtual async Task<Response> FriendlyModelAsync(RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateFriendlyModelRequest(content, options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateFriendlyModelRequest(content, context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary> Model can have its friendly name. </summary>
@@ -764,13 +764,13 @@ namespace BasicTypeSpec
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response AddTimeHeader(RequestContext options)
+        public virtual Response AddTimeHeader(RequestContext context)
         {
-            using HttpMessage message = CreateAddTimeHeaderRequest(options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateAddTimeHeaderRequest(context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -781,13 +781,13 @@ namespace BasicTypeSpec
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddTimeHeaderAsync(RequestContext options)
+        public virtual async Task<Response> AddTimeHeaderAsync(RequestContext context)
         {
-            using HttpMessage message = CreateAddTimeHeaderRequest(options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateAddTimeHeaderRequest(context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary> addTimeHeader. </summary>
@@ -813,16 +813,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response ProjectedNameModel(RequestContent content, RequestContext options)
+        public virtual Response ProjectedNameModel(RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateProjectedNameModelRequest(content, options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateProjectedNameModelRequest(content, context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -834,16 +834,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ProjectedNameModelAsync(RequestContent content, RequestContext options)
+        public virtual async Task<Response> ProjectedNameModelAsync(RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateProjectedNameModelRequest(content, options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateProjectedNameModelRequest(content, context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary> Model can have its projected name. </summary>
@@ -880,13 +880,13 @@ namespace BasicTypeSpec
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response ReturnsAnonymousModel(RequestContext options)
+        public virtual Response ReturnsAnonymousModel(RequestContext context)
         {
-            using HttpMessage message = CreateReturnsAnonymousModelRequest(options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateReturnsAnonymousModelRequest(context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -897,13 +897,13 @@ namespace BasicTypeSpec
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ReturnsAnonymousModelAsync(RequestContext options)
+        public virtual async Task<Response> ReturnsAnonymousModelAsync(RequestContext context)
         {
-            using HttpMessage message = CreateReturnsAnonymousModelRequest(options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateReturnsAnonymousModelRequest(context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary> return anonymous model. </summary>
@@ -931,16 +931,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="accept"></param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetUnknownValue(string accept, RequestContext options)
+        public virtual Response GetUnknownValue(string accept, RequestContext context)
         {
             Argument.AssertNotNull(accept, nameof(accept));
 
-            using HttpMessage message = CreateGetUnknownValueRequest(accept, options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateGetUnknownValueRequest(accept, context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -952,16 +952,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="accept"></param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetUnknownValueAsync(string accept, RequestContext options)
+        public virtual async Task<Response> GetUnknownValueAsync(string accept, RequestContext context)
         {
             Argument.AssertNotNull(accept, nameof(accept));
 
-            using HttpMessage message = CreateGetUnknownValueRequest(accept, options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateGetUnknownValueRequest(accept, context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary> get extensible enum. </summary>
@@ -997,16 +997,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response InternalProtocol(RequestContent content, RequestContext options)
+        public virtual Response InternalProtocol(RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateInternalProtocolRequest(content, options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateInternalProtocolRequest(content, context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -1018,16 +1018,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> InternalProtocolAsync(RequestContent content, RequestContext options)
+        public virtual async Task<Response> InternalProtocolAsync(RequestContent content, RequestContext context)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using HttpMessage message = CreateInternalProtocolRequest(content, options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateInternalProtocolRequest(content, context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary> When set protocol false and convenient true, then the protocol method should be internal. </summary>
@@ -1062,13 +1062,13 @@ namespace BasicTypeSpec
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response StillConvenient(RequestContext options)
+        public virtual Response StillConvenient(RequestContext context)
         {
-            using HttpMessage message = CreateStillConvenientRequest(options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateStillConvenientRequest(context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -1079,13 +1079,13 @@ namespace BasicTypeSpec
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> StillConvenientAsync(RequestContext options)
+        public virtual async Task<Response> StillConvenientAsync(RequestContext context)
         {
-            using HttpMessage message = CreateStillConvenientRequest(options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateStillConvenientRequest(context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary> When set protocol false and convenient true, the convenient method should be generated even it has the same signature as protocol one. </summary>
@@ -1111,16 +1111,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response HeadAsBoolean(string id, RequestContext options)
+        public virtual Response HeadAsBoolean(string id, RequestContext context)
         {
             Argument.AssertNotNull(id, nameof(id));
 
-            using HttpMessage message = CreateHeadAsBooleanRequest(id, options);
-            return Pipeline.ProcessMessage(message, options);
+            using HttpMessage message = CreateHeadAsBooleanRequest(id, context);
+            return Pipeline.ProcessMessage(message, context);
         }
 
         /// <summary>
@@ -1132,16 +1132,16 @@ namespace BasicTypeSpec
         /// </list>
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> HeadAsBooleanAsync(string id, RequestContext options)
+        public virtual async Task<Response> HeadAsBooleanAsync(string id, RequestContext context)
         {
             Argument.AssertNotNull(id, nameof(id));
 
-            using HttpMessage message = CreateHeadAsBooleanRequest(id, options);
-            return await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            using HttpMessage message = CreateHeadAsBooleanRequest(id, context);
+            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
 
         /// <summary> head as boolean. </summary>

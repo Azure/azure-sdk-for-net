@@ -22,6 +22,8 @@ namespace Azure.Generator.Providers.Abstraction
 
         public override CSharpType HttpRequestOptionsType => typeof(RequestContext);
 
+        public override string ParameterName => "context";
+
         public override ValueExpression ErrorOptions()
             => Original.NullConditional().Property(nameof(RequestContext.ErrorOptions));
 
