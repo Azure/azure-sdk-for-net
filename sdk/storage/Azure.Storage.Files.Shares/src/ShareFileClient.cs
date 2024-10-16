@@ -6817,7 +6817,95 @@ namespace Azure.Storage.Files.Shares
         #endregion
 
         #region CreateSymbolicLink
-        private async Task<Response<ShareFileInfo>> CreateSymbolicLink(
+        /// <summary>
+        /// NFS only.  Creates a symoblic link to the file specified by path.
+        /// </summary>
+        /// <param name="path">
+        /// The absolution or relative path to the file to be linked to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileInfo> CreateSymbolicLink(
+            string path,
+            ShareFileCreateSymbolicLinkOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            CreateSymbolicLinkInternal(
+                path: path,
+                options: options,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// NFS only.  Creates a symoblic link to the file specified by path.
+        /// </summary>
+        /// <param name="path">
+        /// The absolution or relative path to the file to be linked to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileInfo>> CreateSymbolicLinkAsync(
+            string path,
+            ShareFileCreateSymbolicLinkOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await CreateSymbolicLinkInternal(
+                path: path,
+                options: options,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// NFS only.  Creates a symoblic link to the file specified by path.
+        /// </summary>
+        /// <param name="path">
+        /// The absolution or relative path to the file to be linked to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<ShareFileInfo>> CreateSymbolicLinkInternal(
             string path,
             ShareFileCreateSymbolicLinkOptions options,
             bool async,
