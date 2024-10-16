@@ -6900,17 +6900,74 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareDirectoryClient directory = test.Directory;
 
             ShareFileClient source = InstrumentClient(await directory.CreateFileAsync(GetNewFileName(), maxSize: Constants.KB));
-            //ShareLeaseClient leaseClient = test.Share.GetShareLeaseClient();
-            //ShareFileLease lease = await leaseClient.AcquireAsync();
+            ShareLeaseClient leaseClient = test.Share.GetShareLeaseClient(Guid.NewGuid().ToString());
+            ShareFileLease lease = await leaseClient.AcquireAsync();
+            try
+            {
+                ShareFileClient hardLink = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
+                // Act
+                Response<ShareFileInfo> response = await hardLink.CreateHardLinkAsync(
+                    path: $"{directory.Name}/{source.Name}",
+                    conditions: new ShareFileRequestConditions() { LeaseId = lease.LeaseId });
+
+                // Assert
+                Assert.AreEqual(NfsFileType.Regular, response.Value.NfsProperties.FileType);
+                Assert.AreEqual(0, response.Value.NfsProperties.Owner);
+                Assert.AreEqual(0, response.Value.NfsProperties.Group);
+                Assert.AreEqual("0664", response.Value.NfsProperties.FileMode.ToOctalFileMode());
+                Assert.AreEqual(2, response.Value.NfsProperties.LinkCount);
+
+                Assert.IsNotNull(response.Value.SmbProperties.FileCreatedOn);
+                Assert.IsNotNull(response.Value.SmbProperties.FileLastWrittenOn);
+                Assert.IsNotNull(response.Value.SmbProperties.FileChangedOn);
+                Assert.IsNotNull(response.Value.SmbProperties.FileId);
+                Assert.IsNotNull(response.Value.SmbProperties.ParentId);
+
+                Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+                Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
+            }
+            finally
+            {
+                await leaseClient.ReleaseAsync();
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateHardLinkAsync_OAuth()
+        {
+            // Arrange
+            ShareServiceClient oauthServiceClient = GetServiceClient_PremiumFileOAuth();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(
+                service: oauthServiceClient,
+                nfs: true);
+            ShareDirectoryClient directory = test.Directory;
+
+            ShareFileClient source = InstrumentClient(await directory.CreateFileAsync(GetNewFileName(), maxSize: Constants.KB));
             ShareFileClient hardLink = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
             // Act
             Response<ShareFileInfo> response = await hardLink.CreateHardLinkAsync(
-                path: source.Uri.ToString());
-                //conditions: new ShareFileRequestConditions() { LeaseId = lease.LeaseId });
+                path: $"{directory.Name}/{source.Name}");
+        }
 
-            // Assert
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateGetHardLinkAsync_Error()
+        {
+            // Arrange
+            await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync(nfs: true);
+            // Note that the parent directory was not created in this test case.
+            ShareDirectoryClient directory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+
+            ShareFileClient source = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+            ShareFileClient hardLink = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                hardLink.CreateSymbolicLinkAsync(path: source.Uri.ToString()),
+                e => Assert.AreEqual("ParentNotFound", e.ErrorCode));
         }
 
         #region GenerateSasTests

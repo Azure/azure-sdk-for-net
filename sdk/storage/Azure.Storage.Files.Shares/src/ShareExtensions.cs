@@ -1112,7 +1112,8 @@ namespace Azure.Storage.Files.Shares
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
                     Owner = Convert.ToUInt32(response.Headers.Owner),
                     Group = Convert.ToUInt32(response.Headers.Group),
-                    LinkCount = response.Headers.LinkCount
+                    LinkCount = response.Headers.LinkCount,
+                    FileType = response.Headers.NfsFileType
                 }
             };
         }

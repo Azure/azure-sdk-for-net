@@ -7077,7 +7077,7 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(path)}: {path}");
 
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(nameof(CreateHardLink));
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(CreateHardLink)}");
 
                 try
                 {
