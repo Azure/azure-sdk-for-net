@@ -356,7 +356,7 @@ namespace Azure.Storage.Blobs
             finally
             {
 #pragma warning disable AZC0110
-                if (runningTasks?.Count > 0)
+                if (runningTasks != null)
                 {
                     async Task DisposeStreamAsync(Task<Response<BlobDownloadStreamingResult>> task)
                     {
