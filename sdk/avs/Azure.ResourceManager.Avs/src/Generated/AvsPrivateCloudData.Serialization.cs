@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Avs
             ExpressRouteCircuit secondaryCircuit = default;
             NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default;
             ResourceIdentifier virtualNetworkId = default;
-            DnsZoneType? dnsZoneType = default;
+            AvsDnsZoneType? dnsZoneType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            dnsZoneType = new DnsZoneType(property0.Value.GetString());
+                            dnsZoneType = new AvsDnsZoneType(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Avs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            VirtualMachineProvisioningState? provisioningState = default;
+            AvsVirtualMachineProvisioningState? provisioningState = default;
             string displayName = default;
             string moRefId = default;
             string folderPath = default;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            provisioningState = new VirtualMachineProvisioningState(property0.Value.GetString());
+                            provisioningState = new AvsVirtualMachineProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))

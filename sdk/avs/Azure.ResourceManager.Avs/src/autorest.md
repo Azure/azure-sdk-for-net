@@ -117,6 +117,9 @@ rename-mapping:
   NsxPublicIPQuotaRaisedEnum: NsxPublicIPQuotaRaisedStatus
   AffinityStrength: VmHostPlacementPolicyAffinityStrength
   ClusterZone: AvsClusterZone
+  CloudLinkProvisioningState: AvsCloudLinkProvisioningState
+  DnsZoneType : AvsDnsZoneType
+  VirtualMachineProvisioningState : AvsVirtualMachineProvisioningState 
 
 prepend-rp-prefix:
 - CloudLink

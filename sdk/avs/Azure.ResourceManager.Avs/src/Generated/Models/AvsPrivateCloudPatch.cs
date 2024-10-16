@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// </param>
         /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudPatch(IDictionary<string, string> tags, AvsSku sku, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, DnsZoneType? dnsZoneType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvsPrivateCloudPatch(IDictionary<string, string> tags, AvsSku sku, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, AvsDnsZoneType? dnsZoneType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Sku = sku;
@@ -110,6 +110,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// </summary>
         public IList<string> ExtendedNetworkBlocks { get; }
         /// <summary> The type of DNS zone to use. </summary>
-        public DnsZoneType? DnsZoneType { get; set; }
+        public AvsDnsZoneType? DnsZoneType { get; set; }
     }
 }

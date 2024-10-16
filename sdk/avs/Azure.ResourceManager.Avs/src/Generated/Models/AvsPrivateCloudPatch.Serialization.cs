@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Avs.Models
             PrivateCloudAvailabilityProperties availability = default;
             CustomerManagedEncryption encryption = default;
             IList<string> extendedNetworkBlocks = default;
-            DnsZoneType? dnsZoneType = default;
+            AvsDnsZoneType? dnsZoneType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            dnsZoneType = new DnsZoneType(property0.Value.GetString());
+                            dnsZoneType = new AvsDnsZoneType(property0.Value.GetString());
                             continue;
                         }
                     }
