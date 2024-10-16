@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Use `BinaryData.Empty` for `PipelineResponse.Content` when HTTP message has no content.
+
 ## 1.2.1 (2024-10-09)
 
 ### Bugs Fixed
