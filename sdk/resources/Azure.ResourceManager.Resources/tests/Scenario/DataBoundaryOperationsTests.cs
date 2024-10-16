@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources.Tests
                 throw new Exception();
             } catch (Exception e)
             {
-                e.ToString().Contains("does not have authorization to perform action");
+                Assert.IsTrue(e.ToString().Contains("does not have authorization to perform action"));
             }
         }
     }
