@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 {
     public class ApiManagementManagementTestBase : ManagementRecordedTestBase<ApiManagementManagementTestEnvironment>
     {
-        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
+        protected AzureLocation DefaultLocation => AzureLocation.WestUS2;
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 

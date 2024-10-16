@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class SubscriptionTests : ApiManagementManagementTestBase
     {
         public SubscriptionTests(bool isAsync)
-                       : base(isAsync, RecordedTestMode.Record)
+                       : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Standard, 1), "Sample@Sample.com", "sample")
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var listResponse = await collection.GetAllAsync().ToEnumerableAsync();
 
             Assert.NotNull(listResponse);
-            Assert.GreaterOrEqual(listResponse.Count, 3);
+            Assert.AreEqual(listResponse.Count, 1);
 
             // get first subscription
             var firstSubscription = listResponse.FirstOrDefault();

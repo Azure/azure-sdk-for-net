@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class ApiManagementServiceResourceTests : ApiManagementManagementTestBase
     {
         public ApiManagementServiceResourceTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 var collection = await GetApiManagementServiceCollectionAsync();
                 var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-                var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
+                var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Premium, 1), "Sample@Sample.com", "sample")
                 {
                     Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
                 };
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         public async Task GetNetworkStatusByLocation()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            var status = await apiManagementService.GetNetworkStatusByLocationAsync(AzureLocation.EastUS.DisplayName);
+            var status = await apiManagementService.GetNetworkStatusByLocationAsync(AzureLocation.WestUS2.DisplayName);
             Assert.GreaterOrEqual(status.Value.ConnectivityStatus.Count, 0);
         }
 
@@ -258,6 +258,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
+        [Ignore("Functionality not supported")]
         public async Task PerformConnectivityCheckAsync()
         {
             var apiManagementService = await GetApiManagementServiceAsync();

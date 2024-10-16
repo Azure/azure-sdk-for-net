@@ -15,31 +15,40 @@ using NUnit.Framework;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
 using Azure.Core.TestFramework.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Azure.ResourceManager.ApiManagement.Tests
 {
-    public class LoggerTests : ApiManagementManagementTestBase
+    public class GatewayConfigConnectionTests : ApiManagementManagementTestBase
     {
-        public LoggerTests(bool isAsync)
+        public GatewayConfigConnectionTests(bool isAsync)
                     : base(isAsync) //, RecordedTestMode.Record)
         {
-            IgnoreApiVersionInEventHubOperations();
         }
 
         private ResourceGroupResource ResourceGroup { get; set; }
 
-        private ApiManagementServiceResource ApiServiceResource { get; set; }
+        private GatewayResource GatewayResource { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private GatewayResourceCollection GatewayResources { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            GatewayResources = ResourceGroup.GetGatewayResources();
         }
 
+        private async Task CreateGatewayResourceAsync()
+        {
+            var apiName = Recording.GenerateAssetName("sdktestapimv2-");
+            var data = new ApiManagementGatewayResourceData(AzureLocation.WestUS2, new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium));
+            GatewayResource = (await GatewayResources.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
+        }
+
+        /*
         private async Task CreateApiServiceAsync()
         {
+            await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
             var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
             {
@@ -48,65 +57,35 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
-        private void IgnoreApiVersionInEventHubOperations()
-        {
-            // Ignore the api-version of EventHub operations
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/providers/Microsoft.EventHub/namespaces/([\S]+)?pi-version=(?<group>[a-z0-9-]+)")
-            {
-                GroupForReplace = "group",
-                Value = "**"
-            });
-        }
 
         [Test]
         public async Task CRUD()
         {
             await SetCollectionsAsync();
 
-            string newloggerId = Recording.GenerateAssetName("newlogger");
-            string eventHubNameSpaceName = Recording.GenerateAssetName("eventHubNamespace");
-            string eventHubName = Recording.GenerateAssetName("eventhubname");
+            var gatewConfigCollections = GatewayResource.GetGatewayConfigConnectionResources();
 
-            // first create the event hub namespace
-            var eventCollection = ResourceGroup.GetEventHubsNamespaces();
-            var eventHubNamespace = (await eventCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubNameSpaceName, new EventHubsNamespaceData(AzureLocation.WestUS2))).Value;
-            Assert.NotNull(eventHubNamespace.Data.Name);
+            string configName = Recording.GenerateAssetName("cfg");
 
-            // then create eventhub
-            var hubCollection = eventHubNamespace.GetEventHubs();
-            var eventHub = (await hubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName, new EventHubData())).Value;
-            Assert.NotNull(eventHub.Data.Name);
-
-            // create send policy auth rule
-            string sendPolicy = Recording.GenerateAssetName("sendPolicy");
-            var authCollection = eventHub.GetEventHubAuthorizationRules();
-            var eventHubAuthRule = (await authCollection.CreateOrUpdateAsync(
-                WaitUntil.Completed,
-                sendPolicy,
-                new EventHubsAuthorizationRuleData()
-                {
-                    Rights = { EventHubsAccessRight.Send }
-                })).Value;
-
-            // get the keys
-            var eventHubKeys = (await eventHubAuthRule.GetKeysAsync()).Value;
-
-            // now create logger using the eventhub
-            await CreateApiServiceAsync();
-            var logCollection = ApiServiceResource.GetApiManagementLoggers();
-            var loggerCreateParameters = new ApiManagementLoggerData()
+            var collection = await GetApiManagementServiceCollectionAsync();
+            var apiName = Recording.GenerateAssetName("sdktestapimv2-");
+            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
             {
-                LoggerType = LoggerType.AzureEventHub,
-                Credentials = { { "name", eventHubName }, { "connectionString", eventHubKeys.PrimaryConnectionString } }
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
+            var apiManagementService = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
+            Assert.AreEqual(apiManagementService.Data.Name, apiName);
+
             // create new group with default parameters
             string loggerDescription = Recording.GenerateAssetName("newloggerDescription");
-            loggerCreateParameters.Description = loggerDescription;
+            var configCreateParameters = new ApiManagementGatewayConfigConnectionResourceData()
+            {
+                SourceId = ""
+            };
 
-            var loggerContract = (await logCollection.CreateOrUpdateAsync(WaitUntil.Completed, newloggerId, loggerCreateParameters)).Value;
+            var configConnectionContract = (await gatewConfigCollections.CreateOrUpdateAsync(WaitUntil.Completed, configName, configCreateParameters)).Value;
 
-            Assert.NotNull(loggerContract);
+            Assert.NotNull(configConnectionContract);
             Assert.AreEqual(newloggerId, loggerContract.Data.Name);
             Assert.IsTrue(loggerContract.Data.IsBuffered);
             Assert.AreEqual(LoggerType.AzureEventHub, loggerContract.Data.LoggerType);
@@ -134,5 +113,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var falseResult = await logCollection.ExistsAsync(newloggerId);
             Assert.IsFalse(falseResult);
         }
+        */
     }
 }
