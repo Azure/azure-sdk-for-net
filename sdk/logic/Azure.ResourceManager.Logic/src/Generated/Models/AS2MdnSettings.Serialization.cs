@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Logic.Models
 
         void IJsonModel<AS2MdnSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AS2MdnSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AS2MdnSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("needMDN"u8);
             writer.WriteBooleanValue(NeedMdn);
             writer.WritePropertyName("signMDN"u8);
@@ -68,7 +76,6 @@ namespace Azure.ResourceManager.Logic.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AS2MdnSettings IJsonModel<AS2MdnSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
