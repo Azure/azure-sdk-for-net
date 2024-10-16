@@ -817,22 +817,22 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ChaosFaultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ChaosFaultResource.CreateResourceIdentifier" /> to create a <see cref="ChaosFaultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBChaosFaultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBChaosFaultResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBChaosFaultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetChaosFaultResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBChaosFaultResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ChaosFaultResource"/> object. </returns>
-        public static ChaosFaultResource GetChaosFaultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBChaosFaultResource"/> object. </returns>
+        public static CosmosDBChaosFaultResource GetCosmosDBChaosFaultResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCosmosDBArmClient(client).GetChaosFaultResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBChaosFaultResource(id);
         }
 
         /// <summary>

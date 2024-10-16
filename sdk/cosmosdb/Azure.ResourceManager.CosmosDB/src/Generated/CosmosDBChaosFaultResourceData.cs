@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing the ChaosFaultResource data model.
+    /// A class representing the CosmosDBChaosFaultResource data model.
     /// A request object to enable/disable the chaos fault
     /// </summary>
-    public partial class ChaosFaultResourceData : ResourceData
+    public partial class CosmosDBChaosFaultResourceData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ChaosFaultResourceData"/>. </summary>
-        public ChaosFaultResourceData()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBChaosFaultResourceData"/>. </summary>
+        public CosmosDBChaosFaultResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosFaultResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBChaosFaultResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="containerName"> Container name. </param>
         /// <param name="provisioningState"> A provisioning state of the Chaos Fault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosFaultResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SupportedAction? action, string region, string databaseName, string containerName, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CosmosDBChaosFaultResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SupportedAction? action, string region, string databaseName, string containerName, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Action = action;
             Region = region;

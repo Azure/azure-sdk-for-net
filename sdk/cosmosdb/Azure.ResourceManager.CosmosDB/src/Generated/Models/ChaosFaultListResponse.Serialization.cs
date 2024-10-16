@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<ChaosFaultResourceData> value = default;
+            IReadOnlyList<CosmosDBChaosFaultResourceData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<ChaosFaultResourceData> array = new List<ChaosFaultResourceData>();
+                    List<CosmosDBChaosFaultResourceData> array = new List<CosmosDBChaosFaultResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosFaultResourceData.DeserializeChaosFaultResourceData(item, options));
+                        array.Add(CosmosDBChaosFaultResourceData.DeserializeCosmosDBChaosFaultResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ChaosFaultListResponse(value ?? new ChangeTrackingList<ChaosFaultResourceData>(), nextLink, serializedAdditionalRawData);
+            return new ChaosFaultListResponse(value ?? new ChangeTrackingList<CosmosDBChaosFaultResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

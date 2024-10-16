@@ -16,16 +16,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class ChaosFaultResourceData : IUtf8JsonSerializable, IJsonModel<ChaosFaultResourceData>
+    public partial class CosmosDBChaosFaultResourceData : IUtf8JsonSerializable, IJsonModel<CosmosDBChaosFaultResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosFaultResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBChaosFaultResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ChaosFaultResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosDBChaosFaultResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosFaultResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBChaosFaultResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosFaultResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBChaosFaultResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,19 +95,19 @@ namespace Azure.ResourceManager.CosmosDB
             writer.WriteEndObject();
         }
 
-        ChaosFaultResourceData IJsonModel<ChaosFaultResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CosmosDBChaosFaultResourceData IJsonModel<CosmosDBChaosFaultResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosFaultResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBChaosFaultResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosFaultResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBChaosFaultResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChaosFaultResourceData(document.RootElement, options);
+            return DeserializeCosmosDBChaosFaultResourceData(document.RootElement, options);
         }
 
-        internal static ChaosFaultResourceData DeserializeChaosFaultResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CosmosDBChaosFaultResourceData DeserializeCosmosDBChaosFaultResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ChaosFaultResourceData(
+            return new CosmosDBChaosFaultResourceData(
                 id,
                 name,
                 type,
@@ -390,9 +390,9 @@ namespace Azure.ResourceManager.CosmosDB
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ChaosFaultResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CosmosDBChaosFaultResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosFaultResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBChaosFaultResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -401,26 +401,26 @@ namespace Azure.ResourceManager.CosmosDB
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosFaultResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBChaosFaultResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ChaosFaultResourceData IPersistableModel<ChaosFaultResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CosmosDBChaosFaultResourceData IPersistableModel<CosmosDBChaosFaultResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosFaultResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBChaosFaultResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeChaosFaultResourceData(document.RootElement, options);
+                        return DeserializeCosmosDBChaosFaultResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosFaultResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBChaosFaultResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ChaosFaultResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosDBChaosFaultResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -357,6 +357,8 @@ prepend-rp-prefix:
 - ProvisioningState
 - Type
 - ConnectionString
+- ChaosFaultResource
+- SupportedAction
 
 models-to-treat-empty-string-as-null:
   - CosmosDBAccountData

@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal RequestUriBuilder CreateEnableDisableRequestUri(string subscriptionId, string resourceGroupName, string accountName, string chaosFault, ChaosFaultResourceData data)
+        internal RequestUriBuilder CreateEnableDisableRequestUri(string subscriptionId, string resourceGroupName, string accountName, string chaosFault, CosmosDBChaosFaultResourceData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB
             return uri;
         }
 
-        internal HttpMessage CreateEnableDisableRequest(string subscriptionId, string resourceGroupName, string accountName, string chaosFault, ChaosFaultResourceData data)
+        internal HttpMessage CreateEnableDisableRequest(string subscriptionId, string resourceGroupName, string accountName, string chaosFault, CosmosDBChaosFaultResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="chaosFault"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="chaosFault"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> EnableDisableAsync(string subscriptionId, string resourceGroupName, string accountName, string chaosFault, ChaosFaultResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> EnableDisableAsync(string subscriptionId, string resourceGroupName, string accountName, string chaosFault, CosmosDBChaosFaultResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="chaosFault"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="chaosFault"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response EnableDisable(string subscriptionId, string resourceGroupName, string accountName, string chaosFault, ChaosFaultResourceData data, CancellationToken cancellationToken = default)
+        public Response EnableDisable(string subscriptionId, string resourceGroupName, string accountName, string chaosFault, CosmosDBChaosFaultResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="chaosFault"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="chaosFault"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ChaosFaultResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string chaosFault, CancellationToken cancellationToken = default)
+        public async Task<Response<CosmosDBChaosFaultResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string chaosFault, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -289,13 +289,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        ChaosFaultResourceData value = default;
+                        CosmosDBChaosFaultResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ChaosFaultResourceData.DeserializeChaosFaultResourceData(document.RootElement);
+                        value = CosmosDBChaosFaultResourceData.DeserializeCosmosDBChaosFaultResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ChaosFaultResourceData)null, message.Response);
+                    return Response.FromValue((CosmosDBChaosFaultResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="chaosFault"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="chaosFault"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ChaosFaultResourceData> Get(string subscriptionId, string resourceGroupName, string accountName, string chaosFault, CancellationToken cancellationToken = default)
+        public Response<CosmosDBChaosFaultResourceData> Get(string subscriptionId, string resourceGroupName, string accountName, string chaosFault, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -322,13 +322,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        ChaosFaultResourceData value = default;
+                        CosmosDBChaosFaultResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ChaosFaultResourceData.DeserializeChaosFaultResourceData(document.RootElement);
+                        value = CosmosDBChaosFaultResourceData.DeserializeCosmosDBChaosFaultResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ChaosFaultResourceData)null, message.Response);
+                    return Response.FromValue((CosmosDBChaosFaultResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

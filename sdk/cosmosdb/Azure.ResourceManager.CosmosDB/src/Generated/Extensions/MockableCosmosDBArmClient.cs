@@ -527,15 +527,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ChaosFaultResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ChaosFaultResource.CreateResourceIdentifier" /> to create a <see cref="ChaosFaultResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CosmosDBChaosFaultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBChaosFaultResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBChaosFaultResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChaosFaultResource"/> object. </returns>
-        public virtual ChaosFaultResource GetChaosFaultResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBChaosFaultResource"/> object. </returns>
+        public virtual CosmosDBChaosFaultResource GetCosmosDBChaosFaultResource(ResourceIdentifier id)
         {
-            ChaosFaultResource.ValidateResourceId(id);
-            return new ChaosFaultResource(Client, id);
+            CosmosDBChaosFaultResource.ValidateResourceId(id);
+            return new CosmosDBChaosFaultResource(Client, id);
         }
     }
 }

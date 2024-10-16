@@ -13,7 +13,7 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
-    public partial class Sample_ChaosFaultResource
+    public partial class Sample_CosmosDBChaosFaultResource
     {
         // ChaosFaultEnableDisable
         [NUnit.Framework.Test]
@@ -28,29 +28,29 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ChaosFaultResource created on azure
-            // for more information of creating ChaosFaultResource, please refer to the document of ChaosFaultResource
+            // this example assumes you already have this CosmosDBChaosFaultResource created on azure
+            // for more information of creating CosmosDBChaosFaultResource, please refer to the document of CosmosDBChaosFaultResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string chaosFault = "ServiceUnavailability";
-            ResourceIdentifier chaosFaultResourceId = ChaosFaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, chaosFault);
-            ChaosFaultResource chaosFaultResource = client.GetChaosFaultResource(chaosFaultResourceId);
+            ResourceIdentifier cosmosDBChaosFaultResourceId = CosmosDBChaosFaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, chaosFault);
+            CosmosDBChaosFaultResource cosmosDBChaosFaultResource = client.GetCosmosDBChaosFaultResource(cosmosDBChaosFaultResourceId);
 
             // invoke the operation
-            ChaosFaultResourceData data = new ChaosFaultResourceData()
+            CosmosDBChaosFaultResourceData data = new CosmosDBChaosFaultResourceData()
             {
                 Action = SupportedAction.Enable,
                 Region = "EastUS",
                 DatabaseName = "testDatabase",
                 ContainerName = "testCollection",
             };
-            ArmOperation<ChaosFaultResource> lro = await chaosFaultResource.UpdateAsync(WaitUntil.Completed, data);
-            ChaosFaultResource result = lro.Value;
+            ArmOperation<CosmosDBChaosFaultResource> lro = await cosmosDBChaosFaultResource.UpdateAsync(WaitUntil.Completed, data);
+            CosmosDBChaosFaultResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ChaosFaultResourceData resourceData = result.Data;
+            CosmosDBChaosFaultResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -68,21 +68,21 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ChaosFaultResource created on azure
-            // for more information of creating ChaosFaultResource, please refer to the document of ChaosFaultResource
+            // this example assumes you already have this CosmosDBChaosFaultResource created on azure
+            // for more information of creating CosmosDBChaosFaultResource, please refer to the document of CosmosDBChaosFaultResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string chaosFault = "ServiceUnavailability";
-            ResourceIdentifier chaosFaultResourceId = ChaosFaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, chaosFault);
-            ChaosFaultResource chaosFaultResource = client.GetChaosFaultResource(chaosFaultResourceId);
+            ResourceIdentifier cosmosDBChaosFaultResourceId = CosmosDBChaosFaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, chaosFault);
+            CosmosDBChaosFaultResource cosmosDBChaosFaultResource = client.GetCosmosDBChaosFaultResource(cosmosDBChaosFaultResourceId);
 
             // invoke the operation
-            ChaosFaultResource result = await chaosFaultResource.GetAsync();
+            CosmosDBChaosFaultResource result = await cosmosDBChaosFaultResource.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ChaosFaultResourceData resourceData = result.Data;
+            CosmosDBChaosFaultResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

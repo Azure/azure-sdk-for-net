@@ -1170,11 +1170,11 @@ namespace Azure.ResourceManager.CosmosDB
             return GetCosmosDBServices().Get(serviceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ChaosFaultResources in the CosmosDBAccount. </summary>
-        /// <returns> An object representing collection of ChaosFaultResources and their operations over a ChaosFaultResource. </returns>
-        public virtual ChaosFaultResourceCollection GetChaosFaultResources()
+        /// <summary> Gets a collection of CosmosDBChaosFaultResources in the CosmosDBAccount. </summary>
+        /// <returns> An object representing collection of CosmosDBChaosFaultResources and their operations over a CosmosDBChaosFaultResource. </returns>
+        public virtual CosmosDBChaosFaultResourceCollection GetCosmosDBChaosFaultResources()
         {
-            return GetCachedClient(client => new ChaosFaultResourceCollection(client, Id));
+            return GetCachedClient(client => new CosmosDBChaosFaultResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -1194,7 +1194,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosFaultResource"/></description>
+        /// <description><see cref="CosmosDBChaosFaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1203,9 +1203,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="chaosFault"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="chaosFault"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ChaosFaultResource>> GetChaosFaultResourceAsync(string chaosFault, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBChaosFaultResource>> GetCosmosDBChaosFaultResourceAsync(string chaosFault, CancellationToken cancellationToken = default)
         {
-            return await GetChaosFaultResources().GetAsync(chaosFault, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBChaosFaultResources().GetAsync(chaosFault, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1225,7 +1225,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosFaultResource"/></description>
+        /// <description><see cref="CosmosDBChaosFaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1234,9 +1234,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="chaosFault"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="chaosFault"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ChaosFaultResource> GetChaosFaultResource(string chaosFault, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBChaosFaultResource> GetCosmosDBChaosFaultResource(string chaosFault, CancellationToken cancellationToken = default)
         {
-            return GetChaosFaultResources().Get(chaosFault, cancellationToken);
+            return GetCosmosDBChaosFaultResources().Get(chaosFault, cancellationToken);
         }
 
         /// <summary>

@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ChaosFaultListResponse"/>. </summary>
         internal ChaosFaultListResponse()
         {
-            Value = new ChangeTrackingList<ChaosFaultResourceData>();
+            Value = new ChangeTrackingList<CosmosDBChaosFaultResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosFaultListResponse"/>. </summary>
         /// <param name="value"> List of Chaos Faults. </param>
         /// <param name="nextLink"> The link used to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosFaultListResponse(IReadOnlyList<ChaosFaultResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChaosFaultListResponse(IReadOnlyList<CosmosDBChaosFaultResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of Chaos Faults. </summary>
-        public IReadOnlyList<ChaosFaultResourceData> Value { get; }
+        public IReadOnlyList<CosmosDBChaosFaultResourceData> Value { get; }
         /// <summary> The link used to get the next page of results. </summary>
         public string NextLink { get; }
     }
