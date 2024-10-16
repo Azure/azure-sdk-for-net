@@ -1113,7 +1113,6 @@ namespace Azure.Identity.Tests
             // params
             // az thrown Exception message, expected message, expected  exception
             yield return new object[] { AzureAuthorityHosts.AzureChina };
-            yield return new object[] { AzureAuthorityHosts.AzureGermany };
             yield return new object[] { AzureAuthorityHosts.AzureGovernment };
             yield return new object[] { AzureAuthorityHosts.AzurePublicCloud };
         }
