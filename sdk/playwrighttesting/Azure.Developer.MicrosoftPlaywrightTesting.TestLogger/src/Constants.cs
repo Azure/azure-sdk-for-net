@@ -266,7 +266,7 @@ internal static class TestResultErrorConstants
     {
         new TestResultError
         {
-            Key = "Unauthorized_Scalable",
+            Key = "401",
             Message = "The authentication token provided is invalid. Please check the token and try again.",
             Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*401 Unauthorized)", RegexOptions.IgnoreCase),
             Type = TestErrorType.Scalable
@@ -286,6 +286,20 @@ internal static class TestResultErrorConstants
             Key = "InvalidWorkspace_Scalable",
             Message = "The specified workspace does not exist. Please verify your workspace settings.",
             Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*403 Forbidden)(?=.*InvalidAccountOrSubscriptionState)", RegexOptions.IgnoreCase),
+            Type = TestErrorType.Scalable
+        },
+        new TestResultError
+        {
+            Key = "InvalidAccessToken",
+            Message = "The provided access token does not match the specified workspace URL. Please verify that both values are correct.",
+            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*403 Forbidden)(?=.*InvalidAccessToken)", RegexOptions.IgnoreCase),
+            Type = TestErrorType.Scalable
+        },
+        new TestResultError
+        {
+            Key = "AccessTokenOrUserOrWorkspaceNotFound_Scalable",
+            Message = "The data for the user, workspace or access token was not found. Please check the request or create new token and try again.",
+            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*404 Not Found)(?=.*NotFound)", RegexOptions.IgnoreCase),
             Type = TestErrorType.Scalable
         },
         new TestResultError
