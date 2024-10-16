@@ -101,7 +101,7 @@ jobs:
       - name: Close Addressed Issues Scheduled Event
         if: github.event.schedule == '30 4,10,16,22 * * *'
         run: |
-          github-event-processor ${{ github.event_name }} ${{ github.event_path }}
+          github-event-processor ${{ github.event_name }} ${{ github.event_path }} CloseAddressedIssues
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
