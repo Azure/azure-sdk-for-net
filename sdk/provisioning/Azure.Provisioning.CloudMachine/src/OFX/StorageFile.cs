@@ -62,7 +62,4 @@ public class StorageFile
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override string ToString() => $"{Path}";
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public new Type GetType => base.GetType();
 }

@@ -32,8 +32,6 @@ namespace Azure.CloudMachine
     {
         internal StorageFile() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public System.Type GetType { get { throw null; } }
         public string Path { get { throw null; } }
         public string RequestId { get { throw null; } }
         public void Delete() { }
