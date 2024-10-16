@@ -158,10 +158,12 @@ namespace Azure.Storage.DataMovement.Tests
                 source: mockSource.Object,
                 destination: mockDestination.Object);
 
-            StreamToUriTransferJob job = new(
+            TransferJobInternal job = new(
                 new DataTransfer(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
+                StreamToUriJobPart.CreateJobPartAsync,
+                StreamToUriJobPart.CreateJobPartAsync,
                 new DataTransferOptions(),
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
@@ -169,7 +171,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new ClientDiagnostics(ClientOptions.Default));
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
                 job,
-                1);
+                1) as StreamToUriJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
             // Act
@@ -261,10 +263,12 @@ namespace Azure.Storage.DataMovement.Tests
 
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = MockQueueInternalTasks.GetPartQueueChunkTask();
 
-            StreamToUriTransferJob job = new(
+            TransferJobInternal job = new(
                 new DataTransfer(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
+                StreamToUriJobPart.CreateJobPartAsync,
+                StreamToUriJobPart.CreateJobPartAsync,
                 new DataTransferOptions(),
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
@@ -272,7 +276,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new ClientDiagnostics(ClientOptions.Default));
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
                 job,
-                1);
+                1) as StreamToUriJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
             // Act
