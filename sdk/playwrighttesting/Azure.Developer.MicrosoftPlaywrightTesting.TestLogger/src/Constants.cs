@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
 /// <summary>
@@ -183,6 +187,7 @@ internal class Constants
     // Default constants
     internal static readonly string s_default_os = ServiceOs.Linux;
     internal static readonly string s_default_expose_network = "<loopback>";
+    internal static readonly string s_pLAYWRIGHT_SERVICE_DEBUG = "PLAYWRIGHT_SERVICE_DEBUG";
 
     // Entra id access token constants
     internal static readonly int s_entra_access_token_lifetime_left_threshold_in_minutes_for_rotation = 15;
@@ -203,4 +208,120 @@ internal class Constants
     internal static readonly string s_playwright_service_disable_scalable_execution_environment_variable = "PLAYWRIGHT_SERVICE_DISABLE_SCALABLE_EXECUTION";
     internal static readonly string s_playwright_service_reporting_url_environment_variable = "PLAYWRIGHT_SERVICE_REPORTING_URL";
     internal static readonly string s_playwright_service_workspace_id_environment_variable = "PLAYWRIGHT_SERVICE_WORKSPACE_ID";
+}
+
+internal class OSConstants
+{
+    internal static readonly string s_lINUX = "Linux";
+    internal static readonly string s_wINDOWS = "Windows";
+    internal static readonly string s_mACOS = "MacOS";
+}
+
+internal class ReporterConstants
+{
+    internal static readonly string s_executionIdPropertyIdentifier = "ExecutionId";
+    internal static readonly string s_parentExecutionIdPropertyIdentifier = "ParentExecId";
+    internal static readonly string s_testTypePropertyIdentifier = "TestType";
+    internal static readonly string s_sASUriSeparator = "?";
+    internal static readonly string s_portalBaseUrl = "https://playwright.microsoft.com/workspaces/";
+    internal static readonly string s_reportingRoute = "/runs/";
+    internal static readonly string s_reportingAPIVersion_2024_04_30_preview = "2024-04-30-preview";
+    internal static readonly string s_reportingAPIVersion_2024_05_20_preview = "2024-05-20-preview";
+    internal static readonly string s_pLAYWRIGHT_SERVICE_REPORTING_URL = "PLAYWRIGHT_SERVICE_REPORTING_URL";
+    internal static readonly string s_pLAYWRIGHT_SERVICE_WORKSPACE_ID = "PLAYWRIGHT_SERVICE_WORKSPACE_ID";
+    internal static readonly string s_aPPLICATION_JSON = "application/json";
+}
+
+internal class CIConstants
+{
+    internal static readonly string s_gITHUB_ACTIONS = "GitHub Actions";
+    internal static readonly string s_aZURE_DEVOPS = "Azure DevOps";
+    internal static readonly string s_dEFAULT = "Default";
+}
+
+internal class TestCaseResultStatus
+{
+    internal static readonly string s_pASSED = "passed";
+    internal static readonly string s_fAILED = "failed";
+    internal static readonly string s_sKIPPED = "skipped";
+    internal static readonly string s_iNCONCLUSIVE = "inconclusive";
+}
+
+internal class TestResultError
+{
+    internal string? Key { get; set; } = string.Empty;
+    internal string? Message { get; set; } = string.Empty;
+    internal Regex Pattern { get; set; } = new Regex(string.Empty);
+    internal TestErrorType Type { get; set; }
+}
+
+internal enum TestErrorType
+{
+    Scalable
+}
+
+internal static class TestResultErrorConstants
+{
+    public static List<TestResultError> ErrorConstants = new()
+    {
+        new TestResultError
+        {
+            Key = "Unauthorized_Scalable",
+            Message = "The authentication token provided is invalid. Please check the token and try again.",
+            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*401 Unauthorized)", RegexOptions.IgnoreCase),
+            Type = TestErrorType.Scalable
+        },
+        new TestResultError
+        {
+            Key = "NoPermissionOnWorkspace_Scalable",
+            Message = @"You do not have the required permissions to run tests. This could be because:
+
+    a. You do not have the required roles on the workspace. Only Owner and Contributor roles can run tests. Contact the service administrator.
+    b. The workspace you are trying to run the tests on is in a different Azure tenant than what you are signed into. Check the tenant id from Azure portal and login using the command 'az login --tenant <TENANT_ID>'.",
+            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*403 Forbidden)(?=[\s\S]*CheckAccess API call with non successful response)", RegexOptions.IgnoreCase),
+            Type = TestErrorType.Scalable
+        },
+        new TestResultError
+        {
+            Key = "InvalidWorkspace_Scalable",
+            Message = "The specified workspace does not exist. Please verify your workspace settings.",
+            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*403 Forbidden)(?=.*InvalidAccountOrSubscriptionState)", RegexOptions.IgnoreCase),
+            Type = TestErrorType.Scalable
+        },
+        new TestResultError
+        {
+            Key = "AccessKeyBasedAuthNotSupported_Scalable",
+            Message = "Authentication through service access token is disabled for this workspace. Please use Entra ID to authenticate.",
+            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*403 Forbidden)(?=.*AccessKeyBasedAuthNotSupported)", RegexOptions.IgnoreCase),
+            Type = TestErrorType.Scalable
+        },
+        new TestResultError
+        {
+            Key = "ServiceUnavailable_Scalable",
+            Message = "The service is currently unavailable. Please check the service status and try again.",
+            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*503 Service Unavailable)", RegexOptions.IgnoreCase),
+            Type = TestErrorType.Scalable
+        },
+        new TestResultError
+        {
+            Key = "GatewayTimeout_Scalable",
+            Message = "The request to the service timed out. Please try again later.",
+            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*504 Gateway Timeout)", RegexOptions.IgnoreCase),
+            Type = TestErrorType.Scalable
+        },
+        new TestResultError
+        {
+            Key = "QuotaLimitError_Scalable",
+            Message = "It is possible that the maximum number of concurrent sessions allowed for your workspace has been exceeded.",
+            Pattern = new Regex(@"(Timeout .* exceeded)(?=[\s\S]*ws connecting)", RegexOptions.IgnoreCase),
+            Type = TestErrorType.Scalable
+        },
+        new TestResultError
+        {
+            Key = "BrowserConnectionError_Scalable",
+            Message = "The service is currently unavailable. Please try again after some time.",
+            Pattern = new Regex(@"Target page, context or browser has been closed", RegexOptions.IgnoreCase),
+            Type = TestErrorType.Scalable
+        }
+    };
 }
