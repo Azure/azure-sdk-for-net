@@ -200,7 +200,7 @@ namespace Azure.AI.Vision.Face.Tests
         {
             var client = CreateSessionClient(nonRecordingClient: nonRecordingClient);
 
-            var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
+            var createContent = new CreateLivenessWithVerifySessionContent(LivenessOperationMode.Passive)
             {
                 DeviceCorrelationId = DeviceCorrelationId,
             };

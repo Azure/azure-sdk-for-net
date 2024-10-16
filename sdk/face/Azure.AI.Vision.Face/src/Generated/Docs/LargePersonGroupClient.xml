@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateAsync(string,string,FaceRecognitionModel?,CancellationToken)">
+      <example>
+This sample shows how to call CreateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = await client.CreateAsync("your_large_person_group_name");
+]]></code></example>
+    </member>
+    <member name="Create(string,string,FaceRecognitionModel?,CancellationToken)">
+      <example>
+This sample shows how to call Create.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = client.Create("your_large_person_group_name");
+]]></code></example>
+    </member>
+    <member name="CreateAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "your_large_person_group_name",
+    userData = "your_user_data",
+    recognitionModel = "recognition_01",
+});
+Response response = await client.CreateAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="Create(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Create.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "your_large_person_group_name",
+    userData = "your_user_data",
+    recognitionModel = "recognition_01",
+});
+Response response = client.Create(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteAsync(RequestContext)">
+      <example>
+This sample shows how to call DeleteAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = await client.DeleteAsync();
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="Delete(RequestContext)">
+      <example>
+This sample shows how to call Delete.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = client.Delete();
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetLargePersonGroupAsync(bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetLargePersonGroupAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response<LargePersonGroup> response = await client.GetLargePersonGroupAsync();
+]]></code></example>
+    </member>
+    <member name="GetLargePersonGroup(bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetLargePersonGroup.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response<LargePersonGroup> response = client.GetLargePersonGroup();
+]]></code></example>
+    </member>
+    <member name="GetLargePersonGroupAsync(bool?,RequestContext)">
+      <example>
+This sample shows how to call GetLargePersonGroupAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = await client.GetLargePersonGroupAsync(true, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("largePersonGroupId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetLargePersonGroup(bool?,RequestContext)">
+      <example>
+This sample shows how to call GetLargePersonGroup and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = client.GetLargePersonGroup(true, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("largePersonGroupId").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "your_large_person_group_name",
+    userData = "your_user_data",
+});
+Response response = await client.UpdateAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="Update(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Update.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "your_large_person_group_name",
+    userData = "your_user_data",
+});
+Response response = client.Update(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetLargePersonGroupsAsync(string,int?,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetLargePersonGroupsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient(null);
+
+Response<IReadOnlyList<LargePersonGroup>> response = await client.GetLargePersonGroupsAsync();
+]]></code></example>
+    </member>
+    <member name="GetLargePersonGroups(string,int?,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetLargePersonGroups.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient(null);
+
+Response<IReadOnlyList<LargePersonGroup>> response = client.GetLargePersonGroups();
+]]></code></example>
+    </member>
+    <member name="GetLargePersonGroupsAsync(string,int?,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetLargePersonGroupsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient(null);
+
+Response response = await client.GetLargePersonGroupsAsync("00000000-0000-0000-0000-000000000000", 20, true, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("name").ToString());
+Console.WriteLine(result[0].GetProperty("largePersonGroupId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetLargePersonGroups(string,int?,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetLargePersonGroups and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient(null);
+
+Response response = client.GetLargePersonGroups("00000000-0000-0000-0000-000000000000", 20, true, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("name").ToString());
+Console.WriteLine(result[0].GetProperty("largePersonGroupId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetTrainingStatusAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetTrainingStatusAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response<FaceTrainingResult> response = await client.GetTrainingStatusAsync();
+]]></code></example>
+    </member>
+    <member name="GetTrainingStatus(CancellationToken)">
+      <example>
+This sample shows how to call GetTrainingStatus.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response<FaceTrainingResult> response = client.GetTrainingStatus();
+]]></code></example>
+    </member>
+    <member name="GetTrainingStatusAsync(RequestContext)">
+      <example>
+This sample shows how to call GetTrainingStatusAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = await client.GetTrainingStatusAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastSuccessfulTrainingDateTime").ToString());
+]]></code></example>
+    </member>
+    <member name="GetTrainingStatus(RequestContext)">
+      <example>
+This sample shows how to call GetTrainingStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = client.GetTrainingStatus(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastSuccessfulTrainingDateTime").ToString());
+]]></code></example>
+    </member>
+    <member name="CreatePersonAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call CreatePersonAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response<CreatePersonResult> response = await client.CreatePersonAsync("your_large_person_group_person_name");
+]]></code></example>
+    </member>
+    <member name="CreatePerson(string,string,CancellationToken)">
+      <example>
+This sample shows how to call CreatePerson.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response<CreatePersonResult> response = client.CreatePerson("your_large_person_group_person_name");
+]]></code></example>
+    </member>
+    <member name="CreatePersonAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreatePersonAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "your_large_person_group_person_name",
+    userData = "your_user_data",
+});
+Response response = await client.CreatePersonAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("personId").ToString());
+]]></code></example>
+    </member>
+    <member name="CreatePerson(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreatePerson and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "your_large_person_group_person_name",
+    userData = "your_user_data",
+});
+Response response = client.CreatePerson(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("personId").ToString());
+]]></code></example>
+    </member>
+    <member name="DeletePersonAsync(Guid,RequestContext)">
+      <example>
+This sample shows how to call DeletePersonAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = await client.DeletePersonAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"));
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeletePerson(Guid,RequestContext)">
+      <example>
+This sample shows how to call DeletePerson.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = client.DeletePerson(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"));
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetPersonAsync(Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetPersonAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response<LargePersonGroupPerson> response = await client.GetPersonAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"));
+]]></code></example>
+    </member>
+    <member name="GetPerson(Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetPerson.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response<LargePersonGroupPerson> response = client.GetPerson(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"));
+]]></code></example>
+    </member>
+    <member name="GetPersonAsync(Guid,RequestContext)">
+      <example>
+This sample shows how to call GetPersonAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = await client.GetPersonAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("personId").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="GetPerson(Guid,RequestContext)">
+      <example>
+This sample shows how to call GetPerson and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = client.GetPerson(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("personId").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdatePersonAsync(Guid,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdatePersonAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "your_large_person_group_person_name",
+    userData = "your_user_data",
+});
+Response response = await client.UpdatePersonAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="UpdatePerson(Guid,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdatePerson.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "your_large_person_group_person_name",
+    userData = "your_user_data",
+});
+Response response = client.UpdatePerson(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetPersonsAsync(string,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetPersonsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response<IReadOnlyList<LargePersonGroupPerson>> response = await client.GetPersonsAsync();
+]]></code></example>
+    </member>
+    <member name="GetPersons(string,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetPersons.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response<IReadOnlyList<LargePersonGroupPerson>> response = client.GetPersons();
+]]></code></example>
+    </member>
+    <member name="GetPersonsAsync(string,int?,RequestContext)">
+      <example>
+This sample shows how to call GetPersonsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = await client.GetPersonsAsync("00000000-0000-0000-0000-000000000000", 20, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("personId").ToString());
+Console.WriteLine(result[0].GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="GetPersons(string,int?,RequestContext)">
+      <example>
+This sample shows how to call GetPersons and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = client.GetPersons("00000000-0000-0000-0000-000000000000", 20, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("personId").ToString());
+Console.WriteLine(result[0].GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteFaceAsync(Guid,Guid,RequestContext)">
+      <example>
+This sample shows how to call DeleteFaceAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = await client.DeleteFaceAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"));
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteFace(Guid,Guid,RequestContext)">
+      <example>
+This sample shows how to call DeleteFace.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = client.DeleteFace(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"));
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetFaceAsync(Guid,Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetFaceAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response<LargePersonGroupPersonFace> response = await client.GetFaceAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"));
+]]></code></example>
+    </member>
+    <member name="GetFace(Guid,Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetFace.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response<LargePersonGroupPersonFace> response = client.GetFace(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"));
+]]></code></example>
+    </member>
+    <member name="GetFaceAsync(Guid,Guid,RequestContext)">
+      <example>
+This sample shows how to call GetFaceAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = await client.GetFaceAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetFace(Guid,Guid,RequestContext)">
+      <example>
+This sample shows how to call GetFace and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Response response = client.GetFace(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("persistedFaceId").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateFaceAsync(Guid,Guid,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateFaceAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+using RequestContent content = RequestContent.Create(new
+{
+    userData = "your_user_data",
+});
+Response response = await client.UpdateFaceAsync(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"), content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="UpdateFace(Guid,Guid,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateFace.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+using RequestContent content = RequestContent.Create(new
+{
+    userData = "your_user_data",
+});
+Response response = client.UpdateFace(Guid.Parse("25985303-c537-4467-b41d-bdb45cd95ca1"), Guid.Parse("43897a75-8d6f-42cf-885e-74832febb055"), content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="TrainAsync(WaitUntil,RequestContext)">
+      <example>
+This sample shows how to call TrainAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Operation operation = await client.TrainAsync(WaitUntil.Completed);
+]]></code></example>
+    </member>
+    <member name="Train(WaitUntil,RequestContext)">
+      <example>
+This sample shows how to call Train.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
+
+Operation operation = client.Train(WaitUntil.Completed);
+]]></code></example>
+    </member>
+  </members>
+</doc>

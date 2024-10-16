@@ -19,7 +19,7 @@ namespace Azure.AI.Vision.Face.Samples
             var sessionClient = CreateSessionClient();
 
             #region Snippet:CreateLivenessWithVerifySessionAsync
-            var parameters = new CreateLivenessSessionContent(LivenessOperationMode.Passive) {
+            var parameters = new CreateLivenessWithVerifySessionContent(LivenessOperationMode.Passive) {
                 SendResultsToClient = true,
                 DeviceCorrelationId = Guid.NewGuid().ToString(),
             };

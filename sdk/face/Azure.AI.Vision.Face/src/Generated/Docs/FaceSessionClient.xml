@@ -499,5 +499,119 @@ Console.WriteLine(result[0].GetProperty("response").GetProperty("latencyInMillis
 Console.WriteLine(result[0].GetProperty("digest").ToString());
 ]]></code></example>
     </member>
+    <member name="DetectFromSessionImageAsync(string,FaceDetectionModel?,FaceRecognitionModel?,bool?,IEnumerable{FaceAttributeType},bool?,bool?,int?,CancellationToken)">
+      <example>
+This sample shows how to call DetectFromSessionImageAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+Response<IReadOnlyList<FaceDetectionResult>> response = await client.DetectFromSessionImageAsync("aa93ce80-9a9b-48bd-ae1a-1c7543841e92");
+]]></code></example>
+    </member>
+    <member name="DetectFromSessionImage(string,FaceDetectionModel?,FaceRecognitionModel?,bool?,IEnumerable{FaceAttributeType},bool?,bool?,int?,CancellationToken)">
+      <example>
+This sample shows how to call DetectFromSessionImage.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+Response<IReadOnlyList<FaceDetectionResult>> response = client.DetectFromSessionImage("aa93ce80-9a9b-48bd-ae1a-1c7543841e92");
+]]></code></example>
+    </member>
+    <member name="DetectFromSessionImageAsync(RequestContent,string,string,bool?,IEnumerable{FaceAttributeType},bool?,bool?,int?,RequestContext)">
+      <example>
+This sample shows how to call DetectFromSessionImageAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    sessionImageId = "aa93ce80-9a9b-48bd-ae1a-1c7543841e92",
+});
+Response response = await client.DetectFromSessionImageAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("height").ToString());
+]]></code></example>
+    </member>
+    <member name="DetectFromSessionImage(RequestContent,string,string,bool?,IEnumerable{FaceAttributeType},bool?,bool?,int?,RequestContext)">
+      <example>
+This sample shows how to call DetectFromSessionImage and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    sessionImageId = "aa93ce80-9a9b-48bd-ae1a-1c7543841e92",
+});
+Response response = client.DetectFromSessionImage(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("top").ToString());
+Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("left").ToString());
+Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("width").ToString());
+Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("height").ToString());
+]]></code></example>
+    </member>
+    <member name="GetSessionImageAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetSessionImageAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+Response<BinaryData> response = await client.GetSessionImageAsync("3d035d35-2e01-4ed4-8935-577afde9caaa");
+]]></code></example>
+    </member>
+    <member name="GetSessionImage(string,CancellationToken)">
+      <example>
+This sample shows how to call GetSessionImage.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+Response<BinaryData> response = client.GetSessionImage("3d035d35-2e01-4ed4-8935-577afde9caaa");
+]]></code></example>
+    </member>
+    <member name="GetSessionImageAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetSessionImageAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+Response response = await client.GetSessionImageAsync("3d035d35-2e01-4ed4-8935-577afde9caaa", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetSessionImage(string,RequestContext)">
+      <example>
+This sample shows how to call GetSessionImage and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+Response response = client.GetSessionImage("3d035d35-2e01-4ed4-8935-577afde9caaa", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
   </members>
 </doc>
