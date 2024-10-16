@@ -1796,6 +1796,18 @@ namespace Azure.Storage.Files.Shares
 
                     ShareUriBuilder uriBuilder = new ShareUriBuilder(sourceUri);
 
+                    ModeCopyMode? modeCopyMode = null;
+                    if (nfsProperties?.FileMode != null)
+                    {
+                        modeCopyMode = ModeCopyMode.Override;
+                    }
+
+                    OwnerCopyMode? ownerCopyMode = null;
+                    if (nfsProperties?.Owner != null || nfsProperties?.Group != null)
+                    {
+                        ownerCopyMode = OwnerCopyMode.Override;
+                    }
+
                     if (async)
                     {
                         response = await FileRestClient.StartCopyAsync(
@@ -1807,8 +1819,8 @@ namespace Azure.Storage.Files.Shares
                             owner: nfsProperties?.Owner,
                             group: nfsProperties?.Group,
                             fileMode: nfsProperties?.FileMode?.ToOctalFileMode(),
-                            fileModeCopyMode: nfsProperties?.FileMode != null ? ModeCopyMode.Override : null,
-                            fileOwnerCopyMode: (nfsProperties?.Owner != null || nfsProperties.Group != null) ? OwnerCopyMode.Override : null,
+                            fileModeCopyMode: modeCopyMode,
+                            fileOwnerCopyMode: ownerCopyMode,
                             copyFileSmbInfo: copyFileSmbInfo,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -1825,8 +1837,8 @@ namespace Azure.Storage.Files.Shares
                             owner: nfsProperties?.Owner,
                             group: nfsProperties?.Group,
                             fileMode: nfsProperties?.FileMode?.ToOctalFileMode(),
-                            fileModeCopyMode: nfsProperties?.FileMode != null ? ModeCopyMode.Override : null,
-                            fileOwnerCopyMode: (nfsProperties?.Owner != null || nfsProperties.Group != null) ? OwnerCopyMode.Override : null,
+                            fileModeCopyMode: modeCopyMode,
+                            fileOwnerCopyMode: ownerCopyMode,
                             copyFileSmbInfo: copyFileSmbInfo,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
