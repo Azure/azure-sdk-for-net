@@ -12,7 +12,7 @@ Set-StrictMode -Version 3.0
 . "$PSScriptRoot/../../common/scripts/common.ps1"
 Set-ConsoleEncoding
 
-$packageRoot = Resolve-Path "$RepoRooot/eng/packages/http-client-csharp"
+$packageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp"
 $testResultsPath = $OutputDirectory ? $OutputDirectory : (Join-Path $packageRoot "artifacts" "test")
 $errors = @()
 Push-Location $packageRoot

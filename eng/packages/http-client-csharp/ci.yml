@@ -22,15 +22,15 @@ parameters:
   - name: ShouldPublish
     displayName: 'Publish packages'
     type: boolean
-    default: true
+    default: false
   - name: PublishPublic
     displayName: 'Publish to npmjs.org'
     type: boolean
     default: false
-  - name: ShouldRegenrate
+  - name: ShouldRegenerate
     displayName: 'Regenerate clients'
     type: boolean
-    default: true
+    default: false
     
 variables:
 - template: /eng/pipelines/templates/variables/image.yml
@@ -45,7 +45,7 @@ extends:
       PublishPublic: ${{ parameters.PublishPublic }}
       PublishDependsOnTest: ${{ parameters.PublishPublic }}
       
-      ShouldRegenrate: ${{ parameters.ShouldRegenrate }}
+      ShouldRegenerate: ${{ parameters.ShouldRegenerate }}
       RegenerationJobCount: 5
       MinimumPerJob: 10
       OnlyGenerateTypespec: true
