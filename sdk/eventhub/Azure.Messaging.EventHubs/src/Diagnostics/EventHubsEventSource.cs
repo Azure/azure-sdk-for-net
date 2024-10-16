@@ -30,9 +30,6 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <summary>The name to use for the event source.</summary>
         private const string EventSourceName = "Azure-Messaging-EventHubs";
 
-        private const string EventSourceRequiresUnreferencedCodeMessage = "EventSource will serialize the whole object graph. Trimmer will not safely handle this case because properties may be trimmed. This can be suppressed if the object is a primitive type";
-        private const string EventSourceSuppressMessage = "Parameters to this method are primitive and are trimmer safe.";
-
         /// <summary>
         ///   Provides a singleton instance of the event source for callers to
         ///   use for logging.
