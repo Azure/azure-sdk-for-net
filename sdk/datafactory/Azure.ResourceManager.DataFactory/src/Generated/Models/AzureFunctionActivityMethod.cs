@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(AzureFunctionActivityMethod left, AzureFunctionActivityMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureFunctionActivityMethod"/> values are not the same. </summary>
         public static bool operator !=(AzureFunctionActivityMethod left, AzureFunctionActivityMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AzureFunctionActivityMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureFunctionActivityMethod"/>. </summary>
         public static implicit operator AzureFunctionActivityMethod(string value) => new AzureFunctionActivityMethod(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(HealthProbeEnabled left, HealthProbeEnabled right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthProbeEnabled"/> values are not the same. </summary>
         public static bool operator !=(HealthProbeEnabled left, HealthProbeEnabled right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HealthProbeEnabled"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HealthProbeEnabled"/>. </summary>
         public static implicit operator HealthProbeEnabled(string value) => new HealthProbeEnabled(value);
 
         /// <inheritdoc />

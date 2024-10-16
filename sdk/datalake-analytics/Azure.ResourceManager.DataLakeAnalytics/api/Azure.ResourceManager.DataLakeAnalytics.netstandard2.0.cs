@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         public int? SystemMaxJobCount { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -114,6 +115,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         public int? MinPriorityPerJob { get { throw null; } }
         public System.Guid? ObjectId { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType? ObjectType { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -181,6 +183,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         internal DataLakeAnalyticsFirewallRuleData() { }
         public System.Net.IPAddress EndIPAddress { get { throw null; } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -229,6 +232,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     {
         internal DataLakeAnalyticsStorageAccountInformationData() { }
         public string Suffix { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -276,6 +280,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     {
         internal DataLakeAnalyticsStorageContainerData() { }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -322,6 +327,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     {
         internal DataLakeStoreAccountInformationData() { }
         public string Suffix { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -434,6 +440,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public string Name { get { throw null; } }
         public System.Guid ObjectId { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType ObjectType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -448,6 +455,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public string Name { get { throw null; } }
         public System.Guid? ObjectId { get { throw null; } set { } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType? ObjectType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -465,6 +473,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountStatus? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountState? State { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -499,6 +508,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public int? QueryStoreRetention { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> StorageAccounts { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -510,6 +520,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public DataLakeAnalyticsAccountNameAvailabilityContent(string name, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsResourceType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsResourceType ResourceType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -522,6 +533,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -544,6 +556,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public int? QueryStoreRetention { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountUpdateContent> StorageAccounts { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -577,6 +590,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public int? MaxAccountCount { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSubscriptionState? State { get { throw null; } }
         public System.Guid? SubscriptionId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsCapabilityInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsCapabilityInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsCapabilityInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsCapabilityInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsCapabilityInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -602,6 +616,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public int? MinPriorityPerJob { get { throw null; } set { } }
         public System.Guid ObjectId { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType ObjectType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsComputePolicyCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsComputePolicyCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsComputePolicyCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsComputePolicyCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsComputePolicyCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -615,6 +630,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public int? MinPriorityPerJob { get { throw null; } set { } }
         public System.Guid? ObjectId { get { throw null; } set { } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType? ObjectType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsComputePolicyPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsComputePolicyPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsComputePolicyPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsComputePolicyPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsComputePolicyPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -631,6 +647,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public DataLakeAnalyticsFirewallRuleCreateOrUpdateContent(System.Net.IPAddress startIPAddress, System.Net.IPAddress endIPAddress) { }
         public System.Net.IPAddress EndIPAddress { get { throw null; } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallRuleCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallRuleCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallRuleCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallRuleCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallRuleCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -642,6 +659,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public DataLakeAnalyticsFirewallRulePatch() { }
         public System.Net.IPAddress EndIPAddress { get { throw null; } set { } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallRulePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallRulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallRulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallRulePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallRulePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -662,6 +680,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public string RuntimeVersion { get { throw null; } }
         public System.Uri ServerUri { get { throw null; } }
         public string UserName { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsHiveMetastore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsHiveMetastore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsHiveMetastore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsHiveMetastore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsHiveMetastore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -689,6 +708,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     {
         internal DataLakeAnalyticsSasTokenInformation() { }
         public string AccessToken { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSasTokenInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSasTokenInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSasTokenInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSasTokenInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSasTokenInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -710,6 +730,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent(string accessKey) { }
         public string AccessKey { get { throw null; } }
         public string Suffix { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -721,6 +742,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public DataLakeAnalyticsStorageAccountInformationPatch() { }
         public string AccessKey { get { throw null; } set { } }
         public string Suffix { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -753,6 +775,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         internal DataLakeAnalyticsVirtualNetworkRule() { }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsVirtualNetworkRuleState? VirtualNetworkRuleState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsVirtualNetworkRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsVirtualNetworkRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsVirtualNetworkRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsVirtualNetworkRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsVirtualNetworkRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -779,6 +802,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     {
         public DataLakeStoreAccountInformationCreateOrUpdateContent() { }
         public string Suffix { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreAccountInformationCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreAccountInformationCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreAccountInformationCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreAccountInformationCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreAccountInformationCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -790,6 +814,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent(string name) { }
         public string Name { get { throw null; } }
         public string Suffix { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -801,6 +826,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public DataLakeStoreForDataLakeAnalyticsAccountUpdateContent(string name) { }
         public string Name { get { throw null; } }
         public string Suffix { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -819,6 +845,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public System.Net.IPAddress EndIPAddress { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -831,6 +858,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public System.Net.IPAddress EndIPAddress { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.FirewallRuleForDataLakeAnalyticsAccountUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.FirewallRuleForDataLakeAnalyticsAccountUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.FirewallRuleForDataLakeAnalyticsAccountUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.FirewallRuleForDataLakeAnalyticsAccountUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.FirewallRuleForDataLakeAnalyticsAccountUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -849,6 +877,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public string AccessKey { get { throw null; } }
         public string Name { get { throw null; } }
         public string Suffix { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -861,6 +890,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public string AccessKey { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public string Suffix { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

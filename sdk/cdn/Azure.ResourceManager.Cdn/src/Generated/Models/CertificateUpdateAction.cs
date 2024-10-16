@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(CertificateUpdateAction left, CertificateUpdateAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CertificateUpdateAction"/> values are not the same. </summary>
         public static bool operator !=(CertificateUpdateAction left, CertificateUpdateAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CertificateUpdateAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CertificateUpdateAction"/>. </summary>
         public static implicit operator CertificateUpdateAction(string value) => new CertificateUpdateAction(value);
 
         /// <inheritdoc />

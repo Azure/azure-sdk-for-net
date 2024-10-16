@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static bool operator ==(DevTestLabPremiumDataDisk left, DevTestLabPremiumDataDisk right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabPremiumDataDisk"/> values are not the same. </summary>
         public static bool operator !=(DevTestLabPremiumDataDisk left, DevTestLabPremiumDataDisk right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevTestLabPremiumDataDisk"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabPremiumDataDisk"/>. </summary>
         public static implicit operator DevTestLabPremiumDataDisk(string value) => new DevTestLabPremiumDataDisk(value);
 
         /// <inheritdoc />

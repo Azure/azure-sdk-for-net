@@ -66,7 +66,7 @@ Name = "gwipconfig1",
                 },
                 BgpSettings = new BgpSettings()
                 {
-                    Asn = 65514,
+                    Asn = 65514L,
                     BgpPeeringAddress = "10.0.1.30",
                     PeerWeight = 0,
                 },

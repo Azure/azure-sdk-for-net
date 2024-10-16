@@ -293,7 +293,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         };
     }
 
-    #endregion
+#endregion
 
     /// <summary>
     /// Polls until a condition has been met with a maximum wait time. The function will always return the last value even
@@ -397,8 +397,8 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             case nameof(EmbeddingClient):
                 clientObject = topLevelClient.GetEmbeddingClient(getDeployment());
                 break;
-            case nameof(FileClient):
-                clientObject = topLevelClient.GetFileClient();
+            case nameof(OpenAIFileClient):
+                clientObject = topLevelClient.GetOpenAIFileClient();
                 break;
             case nameof(FineTuningClient):
                 clientObject = topLevelClient.GetFineTuningClient();
@@ -566,7 +566,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             case nameof(AssistantThread):
                 _threadIdsToDelete.Add(id);
                 break;
-            case nameof(OpenAIFileInfo):
+            case nameof(OpenAIFile):
                 _fileIdsToDelete.Add(id);
                 break;
             case nameof(ThreadRun):
@@ -619,7 +619,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             {
                 Assistant assistant => assistant.Id,
                 AssistantThread thread => thread.Id,
-                OpenAIFileInfo file => file.Id,
+                OpenAIFile file => file.Id,
                 ThreadRun run => run.Id,
                 VectorStore store => store.Id,
                 _ => throw new NotImplementedException(),
@@ -635,10 +635,18 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             ShouldOutputRequests = false,
             ShouldOutputResponses = false,
         });
+        RequestOptions requestOptions = new() { ErrorOptions = ClientErrorBehaviors.NoThrow, };
+
+#if !AZURE_OPENAI_GA
+        OpenAIFileClient fileClient = topLevelCleanupClient.GetOpenAIFileClient();
+        foreach (string fileId in _fileIdsToDelete)
+        {
+            Console.WriteLine($"Cleanup: {fileId} -> {fileClient.DeleteFile(fileId, requestOptions)?.GetRawResponse().Status}");
+        }
+        _fileIdsToDelete.Clear();
+
         AssistantClient client = topLevelCleanupClient.GetAssistantClient();
         VectorStoreClient vectorStoreClient = topLevelCleanupClient.GetVectorStoreClient();
-        FileClient fileClient = topLevelCleanupClient.GetFileClient();
-        RequestOptions requestOptions = new() { ErrorOptions = ClientErrorBehaviors.NoThrow, };
         foreach ((string threadId, string messageId) in _threadIdsWithMessageIdsToDelete)
         {
             Console.WriteLine($"Cleanup: {messageId} -> {client.DeleteMessage(threadId, messageId, requestOptions)?.GetRawResponse().Status}");
@@ -659,16 +667,12 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         {
             Console.WriteLine($"Cleanup: {vectorStoreId} => {vectorStoreClient.DeleteVectorStore(vectorStoreId, requestOptions)?.GetRawResponse().Status}");
         }
-        foreach (string fileId in _fileIdsToDelete)
-        {
-            Console.WriteLine($"Cleanup: {fileId} -> {fileClient.DeleteFile(fileId, requestOptions)?.GetRawResponse().Status}");
-        }
         _threadIdsWithMessageIdsToDelete.Clear();
         _assistantIdsToDelete.Clear();
         _threadIdsToDelete.Clear();
         _vectorStoreFileAssociationsToRemove.Clear();
         _vectorStoreIdsToDelete.Clear();
-        _fileIdsToDelete.Clear();
+#endif
 
         // If we are in recording mode, update the recorded playback configuration as well
         if (Mode == RecordedTestMode.Record

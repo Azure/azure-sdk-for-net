@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 7.18.2 (2024-10-08)
+
+### Other Changes
+
+- Enhanced the logs emitted when acquiring a session with `ServiceBusClient` times out or is canceled.  As these are known and expected exception conditions, they are now correctly logged as verbose information rather than an error.  Previously, these scenarios were special-cased for processors, but receivers were treated as standard errors.  Going forward, the processor and client/receiver scenarios are handled consistently.
+
 ## 7.18.1 (2024-07-31)
 
 ### Other Changes

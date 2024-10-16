@@ -56,11 +56,15 @@ public partial class PostgreSqlFlexibleServerDatabase : Resource
     /// <summary>
     /// Creates a new PostgreSqlFlexibleServerDatabase.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlFlexibleServerDatabase.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the PostgreSqlFlexibleServerDatabase
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerDatabase.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlFlexibleServerDatabase(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/databases", resourceVersion, context)
+    public PostgreSqlFlexibleServerDatabase(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.DBforPostgreSQL/flexibleServers/databases", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _charset = BicepValue<string>.DefineProperty(this, "Charset", ["properties", "charset"]);
@@ -71,11 +75,37 @@ public partial class PostgreSqlFlexibleServerDatabase : Resource
     }
 
     /// <summary>
+    /// Supported PostgreSqlFlexibleServerDatabase resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-08-01.
+        /// </summary>
+        public static readonly string V2024_08_01 = "2024-08-01";
+
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+
+        /// <summary>
+        /// 2021-06-01.
+        /// </summary>
+        public static readonly string V2021_06_01 = "2021-06-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing PostgreSqlFlexibleServerDatabase.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlFlexibleServerDatabase.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the PostgreSqlFlexibleServerDatabase
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerDatabase.</param>
     /// <returns>The existing PostgreSqlFlexibleServerDatabase resource.</returns>
-    public static PostgreSqlFlexibleServerDatabase FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlFlexibleServerDatabase FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

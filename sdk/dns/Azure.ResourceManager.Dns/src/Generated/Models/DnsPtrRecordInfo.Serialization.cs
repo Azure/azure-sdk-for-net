@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Dns.Models
 
         void IJsonModel<DnsPtrRecordInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DnsPtrRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DnsPtrRecordInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(DnsPtrDomainName))
             {
                 writer.WritePropertyName("ptrdname"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.Dns.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DnsPtrRecordInfo IJsonModel<DnsPtrRecordInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

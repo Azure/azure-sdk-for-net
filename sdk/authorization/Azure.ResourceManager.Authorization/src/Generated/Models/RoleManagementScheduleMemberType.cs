@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Authorization.Models
         public static bool operator ==(RoleManagementScheduleMemberType left, RoleManagementScheduleMemberType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementScheduleMemberType"/> values are not the same. </summary>
         public static bool operator !=(RoleManagementScheduleMemberType left, RoleManagementScheduleMemberType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RoleManagementScheduleMemberType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleManagementScheduleMemberType"/>. </summary>
         public static implicit operator RoleManagementScheduleMemberType(string value) => new RoleManagementScheduleMemberType(value);
 
         /// <inheritdoc />

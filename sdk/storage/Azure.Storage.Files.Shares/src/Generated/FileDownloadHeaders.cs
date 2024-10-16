@@ -79,5 +79,9 @@ namespace Azure.Storage.Files.Shares
         public ShareLeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToShareLeaseState() : null;
         /// <summary> The current lease status of the file. </summary>
         public ShareLeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToShareLeaseStatus() : null;
+        /// <summary> Indicates the response body contains a structured message and specifies the message schema version and properties. </summary>
+        public string StructuredBodyType => _response.Headers.TryGetValue("x-ms-structured-body", out string value) ? value : null;
+        /// <summary> The length of the blob/file content inside the message body when the response body is returned as a structured message. Will always be smaller than Content-Length. </summary>
+        public long? StructuredContentLength => _response.Headers.TryGetValue("x-ms-structured-content-length", out long? value) ? value : null;
     }
 }

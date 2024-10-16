@@ -168,7 +168,7 @@ IPAddress = "50.50.50.56",
 Fqdn = "link1.vpnsite1.contoso.com",
 BgpProperties = new VpnLinkBgpSettings()
 {
-Asn = 1234,
+Asn = 1234L,
 BgpPeeringAddress = "192.168.0.0",
 },
 Name = "vpnSiteLink1",

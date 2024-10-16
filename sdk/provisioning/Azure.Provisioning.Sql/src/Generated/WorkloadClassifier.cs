@@ -80,11 +80,15 @@ public partial class WorkloadClassifier : Resource
     /// <summary>
     /// Creates a new WorkloadClassifier.
     /// </summary>
-    /// <param name="resourceName">Name of the WorkloadClassifier.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the WorkloadClassifier resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WorkloadClassifier.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WorkloadClassifier(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/workloadGroups/workloadClassifiers", resourceVersion, context)
+    public WorkloadClassifier(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/databases/workloadGroups/workloadClassifiers", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _context = BicepValue<string>.DefineProperty(this, "Context", ["properties", "context"]);
@@ -99,11 +103,32 @@ public partial class WorkloadClassifier : Resource
     }
 
     /// <summary>
+    /// Supported WorkloadClassifier resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing WorkloadClassifier.
     /// </summary>
-    /// <param name="resourceName">Name of the WorkloadClassifier.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the WorkloadClassifier resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WorkloadClassifier.</param>
     /// <returns>The existing WorkloadClassifier resource.</returns>
-    public static WorkloadClassifier FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WorkloadClassifier FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

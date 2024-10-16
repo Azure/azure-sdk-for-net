@@ -77,9 +77,9 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
                 ContentFieldNames = { "hello" },
                 TitleFieldName = "hi",
             },
-            AllowPartialResult = true,
+            AllowPartialResults = true,
             QueryType = DataSourceQueryType.Simple,
-            OutputContextFlags = DataSourceOutputContexts.AllRetrievedDocuments | DataSourceOutputContexts.Citations,
+            OutputContexts = DataSourceOutputContexts.AllRetrievedDocuments | DataSourceOutputContexts.Citations,
             VectorizationSource = DataSourceVectorizer.FromEndpoint(
                 new Uri("https://my-embedding.com"),
                 DataSourceAuthentication.FromApiKey("embedding-api-key")),
@@ -98,6 +98,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(serialized?.parameters?.embedding_dependency?.type?.ToString(), Is.EqualTo("endpoint"));
 
         ChatCompletionOptions options = new();
+#if !AZURE_OPENAI_GA
         options.AddDataSource(new ElasticsearchChatDataSource()
         {
             Authentication = DataSourceAuthentication.FromAccessToken("foo-token"),
@@ -106,12 +107,25 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             InScope = true,
         });
 
-        IReadOnlyList<AzureChatDataSource> sourcesFromOptions = options.GetDataSources();
+        IReadOnlyList<ChatDataSource> sourcesFromOptions = options.GetDataSources();
         Assert.That(sourcesFromOptions, Has.Count.EqualTo(1));
         Assert.That(sourcesFromOptions[0], Is.InstanceOf<ElasticsearchChatDataSource>());
         Assert.That(((ElasticsearchChatDataSource)sourcesFromOptions[0]).IndexName, Is.EqualTo("my-index-name"));
+#else
+        options.AddDataSource(new AzureSearchChatDataSource()
+        {
+            Endpoint = new("https://test-endpoint.test"),
+            Authentication = DataSourceAuthentication.FromApiKey("foo-api-key"),
+            IndexName = "my-index-name",
+        });
 
-        options.AddDataSource(new AzureCosmosDBChatDataSource()
+        IReadOnlyList<ChatDataSource> sourcesFromOptions = options.GetDataSources();
+        Assert.That(sourcesFromOptions, Has.Count.EqualTo(1));
+        Assert.That(sourcesFromOptions[0], Is.InstanceOf<AzureSearchChatDataSource>());
+        Assert.That(((AzureSearchChatDataSource)sourcesFromOptions[0]).IndexName, Is.EqualTo("my-index-name"));
+#endif
+
+        options.AddDataSource(new CosmosChatDataSource()
         {
             Authentication = DataSourceAuthentication.FromApiKey("api-key"),
             ContainerName = "my-container-name",
@@ -125,7 +139,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         });
         sourcesFromOptions = options.GetDataSources();
         Assert.That(sourcesFromOptions, Has.Count.EqualTo(2));
-        Assert.That(sourcesFromOptions[1], Is.InstanceOf<AzureCosmosDBChatDataSource>());
+        Assert.That(sourcesFromOptions[1], Is.InstanceOf<CosmosChatDataSource>());
     }
 
     [RecordedTest]
@@ -249,7 +263,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(observed429Delay!.Value.TotalMilliseconds, Is.LessThan(3 * expectedDelayMilliseconds + 2 * observed200Delay!.Value.TotalMilliseconds));
     }
 
-    #endregion
+#endregion
 
     #region Regular chat completions tests
 
@@ -363,7 +377,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             Endpoint = searchConfig.Endpoint,
             Authentication = DataSourceAuthentication.FromApiKey(searchConfig.Key),
             IndexName = searchIndex,
-            AllowPartialResult = true,
+            AllowPartialResults = true,
             QueryType = DataSourceQueryType.Simple,
         };
         ChatCompletionOptions options = new();
@@ -385,11 +399,11 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(content.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
         Assert.That(content.Text, Is.Not.Null.Or.Empty);
 
-        AzureChatMessageContext context = chatCompletion.GetAzureMessageContext();
+        ChatMessageContext context = chatCompletion.GetMessageContext();
         Assert.IsNotNull(context);
         Assert.That(context.Intent, Is.Not.Null.Or.Empty);
         Assert.That(context.Citations, Has.Count.GreaterThan(0));
-        Assert.That(context.Citations[0].Filepath, Is.Not.Null.Or.Empty);
+        Assert.That(context.Citations[0].FilePath, Is.Not.Null.Or.Empty);
         Assert.That(context.Citations[0].Content, Is.Not.Null.Or.Empty);
         Assert.That(context.Citations[0].ChunkId, Is.Not.Null.Or.Empty);
         Assert.That(context.Citations[0].Title, Is.Not.Null.Or.Empty);
@@ -514,7 +528,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         StringBuilder builder = new();
         bool foundPromptFilter = false;
         bool foundResponseFilter = false;
-        List<AzureChatMessageContext> contexts = new();
+        List<ChatMessageContext> contexts = new();
 
         var searchConfig = TestConfig.GetConfig("search")!;
         Assert.That(searchConfig, Is.Not.Null);
@@ -525,7 +539,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             Endpoint = searchConfig.Endpoint,
             Authentication = DataSourceAuthentication.FromApiKey(searchConfig.Key),
             IndexName = searchIndex,
-            AllowPartialResult = true,
+            AllowPartialResults = true,
             QueryType = DataSourceQueryType.Simple,
         };
 
@@ -543,7 +557,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         {
             ValidateUpdate(update, builder, ref foundPromptFilter, ref foundResponseFilter);
 
-            AzureChatMessageContext context = update.GetAzureMessageContext();
+            ChatMessageContext context = update.GetMessageContext();
             if (context != null)
             {
                 contexts.Add(context);
@@ -561,7 +575,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(contexts[0].Intent, Is.Not.Null.Or.Empty);
         Assert.That(contexts[0].Citations, Has.Count.GreaterThan(0));
         Assert.That(contexts[0].Citations[0].Content, Is.Not.Null.Or.Empty);
-        Assert.That(contexts[0].Citations[0].Filepath, Is.Not.Null.Or.Empty);
+        Assert.That(contexts[0].Citations[0].FilePath, Is.Not.Null.Or.Empty);
         Assert.That(contexts[0].Citations[0].ChunkId, Is.Not.Null.Or.Empty);
         Assert.That(contexts[0].Citations[0].Title, Is.Not.Null.Or.Empty);
     }
@@ -637,7 +651,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         }
         else
         {
-            Assert.That(update.Id, Is.Not.Null.Or.Empty);
+            Assert.That(update.CompletionId, Is.Not.Null.Or.Empty);
             Assert.That(update.CreatedAt, Is.GreaterThan(new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero)));
             Assert.That(update.FinishReason, Is.Null.Or.EqualTo(ChatFinishReason.Stop));
             if (update.Usage != null)

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static bool operator ==(PersistenceSettingAofFrequency left, PersistenceSettingAofFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PersistenceSettingAofFrequency"/> values are not the same. </summary>
         public static bool operator !=(PersistenceSettingAofFrequency left, PersistenceSettingAofFrequency right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PersistenceSettingAofFrequency"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PersistenceSettingAofFrequency"/>. </summary>
         public static implicit operator PersistenceSettingAofFrequency(string value) => new PersistenceSettingAofFrequency(value);
 
         /// <inheritdoc />

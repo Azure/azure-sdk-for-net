@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         void IJsonModel<DataBoxEdgeMetricCounter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeMetricCounter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeMetricCounter)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Instance))
@@ -68,7 +76,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataBoxEdgeMetricCounter IJsonModel<DataBoxEdgeMetricCounter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

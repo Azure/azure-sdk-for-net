@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         public static bool operator ==(ManagementGroupExpandType left, ManagementGroupExpandType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagementGroupExpandType"/> values are not the same. </summary>
         public static bool operator !=(ManagementGroupExpandType left, ManagementGroupExpandType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagementGroupExpandType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagementGroupExpandType"/>. </summary>
         public static implicit operator ManagementGroupExpandType(string value) => new ManagementGroupExpandType(value);
 
         /// <inheritdoc />
