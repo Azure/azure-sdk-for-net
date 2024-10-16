@@ -60,7 +60,7 @@ namespace Azure.Communication
         /// <param name="cancellationToken">The cancellation token for the task.</param>
         /// <returns> Contains the access token.</returns>
         public AccessToken GetToken(CancellationToken cancellationToken = default)
-            => _accessTokenCache.GetValue(cancellationToken);
+            => _accessTokenCache.GetValue(cancellationToken, () => true);
 
         /// <summary>
         /// Gets an <see cref="AccessToken"/>.
@@ -70,7 +70,7 @@ namespace Azure.Communication
         /// A task that represents the asynchronous get token operation. The value of its <see cref="ValueTask{AccessToken}.Result"/> property contains the access token.
         /// </returns>
         public ValueTask<AccessToken> GetTokenAsync(CancellationToken cancellationToken = default)
-            => _accessTokenCache.GetValueAsync(cancellationToken);
+            => _accessTokenCache.GetValueAsync(cancellationToken, () => true);
 
         private AccessToken ExchangeEntraToken(CancellationToken cancellationToken)
         {

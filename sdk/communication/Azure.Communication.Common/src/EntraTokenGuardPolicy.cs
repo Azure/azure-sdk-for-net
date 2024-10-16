@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -25,11 +26,10 @@ namespace Azure.Communication
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            var currentEntraToken = string.Empty;
-            message.Request.Headers.TryGetValue("Authorization", out currentEntraToken);
-            if (string.IsNullOrEmpty(_entraTokenCache) || currentEntraToken != _entraTokenCache)
+            var (entraTokenCacheOutdated, token) = IsEntraTokenCacheOutdated(message);
+            if (entraTokenCacheOutdated || IsAcsTokenCacheOutdated())
             {
-                _entraTokenCache = currentEntraToken;
+                _entraTokenCache = token;
                 if (async)
                 {
                     await ProcessNextAsync(message, pipeline).ConfigureAwait(continueOnCapturedContext: false);
@@ -44,6 +44,35 @@ namespace Azure.Communication
             {
                 message.Response = _responseCache;
                 return;
+            }
+        }
+
+        private (bool CacheOutdated, string EntraToken) IsEntraTokenCacheOutdated(HttpMessage message)
+        {
+            var currentEntraToken = string.Empty;
+            message.Request.Headers.TryGetValue("Authorization", out currentEntraToken);
+            return (string.IsNullOrEmpty(_entraTokenCache) || currentEntraToken != _entraTokenCache, currentEntraToken);
+        }
+        private bool IsAcsTokenCacheOutdated()
+        {
+            return _responseCache == null || _responseCache.Status != 200 || !IsAccessTokenValid();
+        }
+
+        private bool IsAccessTokenValid()
+        {
+            try
+            {
+                var json = JsonDocument.Parse(_responseCache.Content);
+                var expiresOnString = json.RootElement
+                                          .GetProperty("accessToken")
+                                          .GetProperty("expiresOn")
+                                          .GetString();
+                var expiresOn = DateTimeOffset.Parse(expiresOnString);
+                return DateTimeOffset.UtcNow < expiresOn;
+            }
+            catch
+            {
+                return false;
             }
         }
     }

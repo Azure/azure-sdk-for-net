@@ -18,9 +18,10 @@ namespace Azure.Communication.Identity
         private const string SampleToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjMyNTAzNjgwMDAwfQ.9i7FNNHHJT8cOzo-yrAUJyBSfJ-tPPk2emcHavOEpWc";
         private const string SampleTokenExpiry = "2034-10-04T10:21:29.4729393+00:00";
         private const string ExpiredToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEwMH0.1h_scYkNp-G98-O4cW6KvfJZwiz54uJMyeDACE4nypg";
-        protected const string TokenResponse = "{\"identity\":{\"id\":\"8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa\"},\n" +
-            "\"accessToken\":{\"token\":\""+ SampleToken +"\",\n" +
-            "\"expiresOn\":\"" + SampleTokenExpiry + "\"}}";
+        protected const string TokenResponseTemplate = "{{\"identity\":{{\"id\":\"8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa\"}},\n" +
+                        "\"accessToken\":{{\"token\":\"{0}\",\n" +
+                        "\"expiresOn\":\"{1}\"}}}}";
+        protected string TokenResponse = string.Format(TokenResponseTemplate, SampleToken, SampleTokenExpiry);
 
         private Mock<TokenCredential> _mockTokenCredential = null!;
         private string[] _scopes = new string[] { "https://communication.azure.com/clients/VoIP" };
@@ -32,8 +33,8 @@ namespace Azure.Communication.Identity
             _mockTokenCredential = new Mock<TokenCredential>();
             var expiryTime = DateTimeOffset.Parse(SampleTokenExpiry, null, System.Globalization.DateTimeStyles.RoundtripKind);
             _mockTokenCredential
-                .Setup(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new AccessToken(SampleToken, expiryTime));
+              .Setup(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+              .ReturnsAsync(new AccessToken(SampleToken, expiryTime));
         }
 
         [Test]
@@ -103,6 +104,30 @@ namespace Azure.Communication.Identity
             Assert.AreEqual(SampleToken, token.Token);
             Assert.AreEqual(token.ExpiresOn, expiryTime);
             _mockTokenCredential.Verify(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Test]
+        public async Task EntraTokenCredential_GetToken_InternalEntraTokenChangeInvalidatesCachedToken()
+        {
+            // Arrange
+            var expiryTime = DateTimeOffset.Parse(SampleTokenExpiry, null, System.Globalization.DateTimeStyles.RoundtripKind);
+            var newToken = "newToken";
+            var refreshOn = DateTimeOffset.Now;
+            _mockTokenCredential
+                .SetupSequence(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new AccessToken("Entra token for call from constructor", refreshOn))
+                .ReturnsAsync(new AccessToken("Entra token for the first getToken call token", expiryTime));
+
+            var options = CreateEntraTokenCredentialOptions();
+            var latestTokenResponse = string.Format(TokenResponseTemplate, newToken, SampleTokenExpiry);
+            var mockTransport = CreateMockTransport(new[] { CreateMockResponse(200, TokenResponse), CreateMockResponse(200, latestTokenResponse) });
+            var entraTokenCredential = new EntraTokenCredential(options, mockTransport);
+            // Act
+            var token = await entraTokenCredential.GetTokenAsync(CancellationToken.None);
+
+            // Assert for cached tokens are updated
+            Assert.AreEqual(newToken, token.Token);
+            _mockTokenCredential.Verify(tc => tc.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
         }
 
         [Test]
@@ -186,11 +211,6 @@ namespace Azure.Communication.Identity
             // Act & Assert
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await entraTokenCredential.GetTokenAsync(CancellationToken.None));
             Assert.AreEqual(lastRetryErrorMessage, lastRetryErrorMessage);
-        }
-        private static HttpPipeline CreateHttpPipeline(ClientOptions options, TokenCredential tokenCredential)
-        {
-            var authenticationPolicy = new BearerTokenAuthenticationPolicy(tokenCredential, "");
-            return HttpPipelineBuilder.Build(options, authenticationPolicy);
         }
 
         private EntraCommunicationTokenCredentialOptions CreateEntraTokenCredentialOptions()
