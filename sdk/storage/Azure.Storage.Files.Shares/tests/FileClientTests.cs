@@ -6801,7 +6801,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
-        public async Task CreateSymbolicLinkAsync()
+        public async Task CreateGetSymbolicLinkAsync()
         {
             // Arrange
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
@@ -6842,11 +6842,17 @@ namespace Azure.Storage.Files.Shares.Tests
 
             Assert.IsNotNull(response.Value.SmbProperties.FileId);
             Assert.IsNotNull(response.Value.SmbProperties.ParentId);
+
+            // Act
+            Response<ShareFileSymbolicLinkInfo> getSymLinkResponse = await symlink.GetSymbolicLinkAsync();
+
+            // Assert
+            Assert.AreEqual(source.Uri.ToString(), getSymLinkResponse.Value.Path);
         }
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
-        public async Task CreateSymbolicLinkAsync_Error()
+        public async Task CreateGetSymbolicLinkAsync_Error()
         {
             // Arrange
             await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync(nfs: true);
@@ -6860,11 +6866,15 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 symlink.CreateSymbolicLinkAsync(path: source.Uri.ToString()),
                 e => Assert.AreEqual("ParentNotFound", e.ErrorCode));
+
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                symlink.GetSymbolicLinkAsync(),
+                e => Assert.AreEqual("ParentNotFound", e.ErrorCode));
         }
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
-        public async Task CreateSymbolicLinkAsync_OAuth()
+        public async Task CreateGetSymbolicLinkAsync_OAuth()
         {
             // Arrange
             ShareServiceClient oauthServiceClient = GetServiceClient_PremiumFileOAuth();
@@ -6878,6 +6888,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             await symlink.CreateSymbolicLinkAsync(path: source.Uri.ToString());
+            await symlink.GetSymbolicLinkAsync();
         }
 
         #region GenerateSasTests
