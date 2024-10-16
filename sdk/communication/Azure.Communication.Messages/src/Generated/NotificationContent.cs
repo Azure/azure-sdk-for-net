@@ -14,7 +14,7 @@ namespace Azure.Communication.Messages
     /// <summary>
     /// Details of the message to send.
     /// Please note <see cref="NotificationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MediaNotificationContent"/>, <see cref="TemplateNotificationContent"/> and <see cref="TextNotificationContent"/>.
+    /// The available derived classes include <see cref="AudioNotificationContent"/>, <see cref="DocumentNotificationContent"/>, <see cref="ImageNotificationContent"/>, <see cref="MediaNotificationContent"/>, <see cref="TemplateNotificationContent"/>, <see cref="TextNotificationContent"/> and <see cref="VideoNotificationContent"/>.
     /// </summary>
     public abstract partial class NotificationContent
     {
