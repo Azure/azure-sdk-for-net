@@ -44,7 +44,7 @@ public static class ClientServiceCollectionExtensions
                     options.Diagnostics.LoggerFactory = loggerFactory;
                 });
 
-        services.AddSingleton<DiagnosticsOptions>(sp =>
+        services.AddSingleton(sp =>
         {
             IOptions<ClientOptions> options = sp.GetRequiredService<IOptions<ClientOptions>>();
             return options.Value.Diagnostics;
