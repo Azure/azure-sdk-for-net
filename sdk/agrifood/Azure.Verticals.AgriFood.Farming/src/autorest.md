@@ -11,6 +11,7 @@ namespace: Azure.Verticals.AgriFood.Farming
 security: AADToken
 security-scopes: https://farmbeats.azure.net/.default
 single-top-level-client: true
+use-write-core: true
 ```
 
 # Model endpoint parameter as a url, not a string.
