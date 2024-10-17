@@ -297,6 +297,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     default,
                     default,
                     default,
+                    default,
                     s_conditions,
                     _async,
                     s_cancellationToken
