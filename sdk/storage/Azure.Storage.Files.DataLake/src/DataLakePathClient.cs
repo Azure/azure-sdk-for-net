@@ -815,8 +815,8 @@ namespace Azure.Storage.Files.DataLake
                 leaseDuration: options?.LeaseDuration,
                 timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                 expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
-                encryptionContext: options?.EncryptionContext,
-                clientTransactionId: options?.ClientTransactionId,
+                tuple: (EncryptionContext: options?.EncryptionContext,
+                        ClientTransactionId: options?.ClientTransactionId),
                 conditions: options?.Conditions,
                 async: false,
                 cancellationToken)
@@ -866,8 +866,8 @@ namespace Azure.Storage.Files.DataLake
                 leaseDuration: options?.LeaseDuration,
                 timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                 expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
-                encryptionContext: options?.EncryptionContext,
-                clientTransactionId: options?.ClientTransactionId,
+                tuple: (EncryptionContext: options?.EncryptionContext,
+                        ClientTransactionId: options?.ClientTransactionId),
                 conditions: options?.Conditions,
                 async: true,
                 cancellationToken)
@@ -948,8 +948,8 @@ namespace Azure.Storage.Files.DataLake
                 leaseDuration: null,
                 timeToExpire: null,
                 expiresOn: null,
-                encryptionContext: null,
-                clientTransactionId: null,
+                tuple: (EncryptionContext: null,
+                        ClientTransactionId: null),
                 conditions: conditions,
                 async: false,
                 cancellationToken)
@@ -1030,8 +1030,8 @@ namespace Azure.Storage.Files.DataLake
                 leaseDuration: null,
                 timeToExpire: null,
                 expiresOn: null,
-                encryptionContext: null,
-                clientTransactionId: null,
+                tuple: (EncryptionContext: null,
+                        ClientTransactionId: null),
                 conditions: conditions,
                 async: true,
                 cancellationToken)
@@ -1096,11 +1096,8 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the creation of this file or directory..
         /// </param>
-        /// <param name="encryptionContext">
-        /// Encryption context.
-        /// </param>
-        /// <param name="clientTransactionId">
-        /// Optional transaction ID, provides idempotency on retries.
+        /// <param name="tuple">
+        /// Tuple containing encryption context and client transaction ID.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1130,8 +1127,9 @@ namespace Azure.Storage.Files.DataLake
             TimeSpan? leaseDuration,
             TimeSpan? timeToExpire,
             DateTimeOffset? expiresOn,
-            string encryptionContext,
-            Guid? clientTransactionId,
+            // This is a tuple because the DataLakePartitionedUploaderTests tests cannot support more than 17 parameters.
+            (string EncryptionContext,
+            Guid? ClientTransactionId) tuple,
             DataLakeRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1231,8 +1229,8 @@ namespace Azure.Storage.Files.DataLake
                             leaseDuration: serviceLeaseDuration,
                             expiryOptions: pathExpiryOptions,
                             expiresOn: expiresOnString,
-                            encryptionContext: encryptionContext,
-                            clientTransactionId: clientTransactionId?.ToString(),
+                            encryptionContext: tuple.EncryptionContext,
+                            clientTransactionId: tuple.ClientTransactionId?.ToString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1263,8 +1261,8 @@ namespace Azure.Storage.Files.DataLake
                             leaseDuration: serviceLeaseDuration,
                             expiryOptions: pathExpiryOptions,
                             expiresOn: expiresOnString,
-                            encryptionContext: encryptionContext,
-                            clientTransactionId: clientTransactionId?.ToString(),
+                            encryptionContext: tuple.EncryptionContext,
+                            clientTransactionId: tuple.ClientTransactionId?.ToString(),
                             cancellationToken: cancellationToken);
                     }
 
@@ -1636,8 +1634,8 @@ namespace Azure.Storage.Files.DataLake
                     leaseDuration: leaseDuration,
                     timeToExpire: timeToExpire,
                     expiresOn: expiresOn,
-                    encryptionContext: encryptionContext,
-                    clientTransactionId: clientTransactionId,
+                    tuple: (EncryptionContext: encryptionContext,
+                            ClientTransactionId: clientTransactionId),
                     conditions: conditions,
                     async: async,
                     cancellationToken: cancellationToken)
