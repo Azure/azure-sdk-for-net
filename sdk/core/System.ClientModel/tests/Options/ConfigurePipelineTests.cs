@@ -185,7 +185,7 @@ public class ConfigurePipelineTests
         });
 
         // Add single custom policy to the service collection
-        services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
+        services.AddSingleton<MessageLoggingPolicy, CustomHttpLoggingPolicy>();
 
         // Add the two clients
         services.AddSimpleClient(
@@ -241,14 +241,14 @@ public class ConfigurePipelineTests
         });
 
         // Add a custom policy to the service collection configured for each client
-        services.AddKeyedSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>(typeof(SimpleClientOptions),
+        services.AddKeyedSingleton<MessageLoggingPolicy, CustomHttpLoggingPolicy>(typeof(SimpleClientOptions),
             (sp, sco) =>
             {
                 SimpleClientOptions options = sp.GetRequiredService<IOptions<SimpleClientOptions>>().Value;
                 return new CustomHttpLoggingPolicy(options.Logging);
             });
 
-        services.AddKeyedSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>(typeof(MapsClientOptions),
+        services.AddKeyedSingleton<MessageLoggingPolicy, CustomHttpLoggingPolicy>(typeof(MapsClientOptions),
             (sp, mco) =>
             {
                 MapsClientOptions options = sp.GetRequiredService<IOptions<MapsClientOptions>>().Value;

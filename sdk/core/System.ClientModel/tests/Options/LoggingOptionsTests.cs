@@ -95,7 +95,7 @@ public class LoggingOptionsTests
         services.AddSingleton<IConfiguration>(sp => configuration);
 
         // Add custom logging policy to service collection
-        services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
+        services.AddSingleton<MessageLoggingPolicy, CustomHttpLoggingPolicy>();
 
         // Client will have custom logging policy injected at creation time
         services.AddSimpleClient();
@@ -128,7 +128,7 @@ public class LoggingOptionsTests
         });
 
         // Add custom policy to the service collection
-        services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>();
+        services.AddSingleton<MessageLoggingPolicy, CustomHttpLoggingPolicy>();
 
         // Client will have custom logging policy injected at creation time
         // Note this is the parameterless overload
@@ -185,7 +185,7 @@ public class LoggingOptionsTests
         services.AddSingleton<IConfiguration>(sp => configuration);
 
         // Add custom logging policy to service collection
-        services.AddSingleton<HttpLoggingPolicy, CustomHttpLoggingPolicy>(sp =>
+        services.AddSingleton<MessageLoggingPolicy, CustomHttpLoggingPolicy>(sp =>
         {
             ClientLoggingOptions options = new();
             options.AllowedHeaderNames.Add("x-custom-allowed");
@@ -219,7 +219,7 @@ public class LoggingOptionsTests
     }
 
     #region Helpers
-    public class CustomHttpLoggingPolicy : HttpLoggingPolicy
+    public class CustomHttpLoggingPolicy : MessageLoggingPolicy
     {
         private readonly ClientLoggingOptions _options;
 

@@ -88,10 +88,11 @@ namespace System.ClientModel.Primitives
         public ClientLoggingOptions() { }
         public System.Collections.Generic.IList<string> AllowedHeaderNames { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedQueryParameters { get { throw null; } }
-        public bool? EnableHttpContentLogging { get { throw null; } set { } }
         public bool? EnableLogging { get { throw null; } set { } }
-        public int? HttpContentSizeLimit { get { throw null; } set { } }
+        public bool? EnableMessageContentLogging { get { throw null; } set { } }
+        public bool? EnableMessageLogging { get { throw null; } set { } }
         public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
+        public int? MessageContentSizeLimit { get { throw null; } set { } }
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
     }
@@ -173,12 +174,6 @@ namespace System.ClientModel.Primitives
         protected sealed override void ProcessCore(System.ClientModel.Primitives.PipelineMessage message) { }
         protected sealed override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
-    public partial class HttpLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
-    {
-        public HttpLoggingPolicy(System.ClientModel.Primitives.ClientLoggingOptions options) { }
-        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
-    }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {
         T Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options);
@@ -198,6 +193,12 @@ namespace System.ClientModel.Primitives
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
         public override System.ClientModel.Primitives.IJsonModel<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
+    }
+    public partial class MessageLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public MessageLoggingPolicy(System.ClientModel.Primitives.ClientLoggingOptions options) { }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
     public static partial class ModelReaderWriter
     {

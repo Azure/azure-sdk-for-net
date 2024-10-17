@@ -44,14 +44,13 @@ public class ClientLoggingOptions
         }
     }
 
-    // Http request/response logging only
-    // TODO: We can add it later.
-    //public bool? EnableHttpLogging { get; set; }
+    // Message request/response logging only
+    public bool? EnableMessageLogging { get; set; }
 
     // Request and response content
-    public bool? EnableHttpContentLogging { get; set; }
+    public bool? EnableMessageContentLogging { get; set; }
 
-    public int? HttpContentSizeLimit { get; set; }
+    public int? MessageContentSizeLimit { get; set; }
 
     public ILoggerFactory? LoggerFactory { get; set; }
 

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace System.ClientModel.Primitives;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class HttpLoggingPolicy : PipelinePolicy
+public class MessageLoggingPolicy : PipelinePolicy
 {
     private readonly ClientLoggingOptions _options;
 
-    public HttpLoggingPolicy(ClientLoggingOptions options)
+    public MessageLoggingPolicy(ClientLoggingOptions options)
     {
         _options = options;
     }
