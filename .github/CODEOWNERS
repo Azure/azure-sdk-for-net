@@ -771,7 +771,7 @@
 # ServiceOwners:                                                   @sunilagarwal @lfittl-msft @sr-msft @niklarin
 
 # PRLabel: %Provisioning
-/sdk/provisioning/                                                 @JoshLove-msft @tg-msft
+/sdk/provisioning/                                                 @JoshLove-msft @tg-msft @christothes @KrzysztofCwalina
 
 # ServiceLabel: %Provisioning
 # AzureSdkOwners:                                                  @JoshLove-msft
