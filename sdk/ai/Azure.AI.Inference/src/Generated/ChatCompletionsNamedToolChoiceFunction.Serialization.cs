@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Inference
 {
-    public partial class ChatCompletionsFunctionToolSelection : IUtf8JsonSerializable, IJsonModel<ChatCompletionsFunctionToolSelection>
+    public partial class ChatCompletionsNamedToolChoiceFunction : IUtf8JsonSerializable, IJsonModel<ChatCompletionsNamedToolChoiceFunction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletionsFunctionToolSelection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletionsNamedToolChoiceFunction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ChatCompletionsFunctionToolSelection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ChatCompletionsNamedToolChoiceFunction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsFunctionToolSelection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatCompletionsFunctionToolSelection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatCompletionsNamedToolChoiceFunction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,19 +46,19 @@ namespace Azure.AI.Inference
             writer.WriteEndObject();
         }
 
-        ChatCompletionsFunctionToolSelection IJsonModel<ChatCompletionsFunctionToolSelection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ChatCompletionsNamedToolChoiceFunction IJsonModel<ChatCompletionsNamedToolChoiceFunction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsFunctionToolSelection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatCompletionsFunctionToolSelection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatCompletionsNamedToolChoiceFunction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChatCompletionsFunctionToolSelection(document.RootElement, options);
+            return DeserializeChatCompletionsNamedToolChoiceFunction(document.RootElement, options);
         }
 
-        internal static ChatCompletionsFunctionToolSelection DeserializeChatCompletionsFunctionToolSelection(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ChatCompletionsNamedToolChoiceFunction DeserializeChatCompletionsNamedToolChoiceFunction(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,46 +82,46 @@ namespace Azure.AI.Inference
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ChatCompletionsFunctionToolSelection(name, serializedAdditionalRawData);
+            return new ChatCompletionsNamedToolChoiceFunction(name, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ChatCompletionsFunctionToolSelection>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ChatCompletionsNamedToolChoiceFunction>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsFunctionToolSelection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChatCompletionsFunctionToolSelection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatCompletionsNamedToolChoiceFunction)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ChatCompletionsFunctionToolSelection IPersistableModel<ChatCompletionsFunctionToolSelection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ChatCompletionsNamedToolChoiceFunction IPersistableModel<ChatCompletionsNamedToolChoiceFunction>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsFunctionToolSelection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeChatCompletionsFunctionToolSelection(document.RootElement, options);
+                        return DeserializeChatCompletionsNamedToolChoiceFunction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChatCompletionsFunctionToolSelection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatCompletionsNamedToolChoiceFunction)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ChatCompletionsFunctionToolSelection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ChatCompletionsNamedToolChoiceFunction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ChatCompletionsFunctionToolSelection FromResponse(Response response)
+        internal static ChatCompletionsNamedToolChoiceFunction FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeChatCompletionsFunctionToolSelection(document.RootElement);
+            return DeserializeChatCompletionsNamedToolChoiceFunction(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

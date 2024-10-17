@@ -21,7 +21,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-            var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+            var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
             ChatMessageImageContentItem imageContentItem =
                 new ChatMessageImageContentItem(
@@ -33,7 +33,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var credential = new AzureKeyCredential("foo");
             var key = TestEnvironment.AoaiKey;
 
-            ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
             clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(key), HttpPipelinePosition.PerCall);
 
             var client = new ChatCompletionsClient(endpoint, credential, clientOptions);
@@ -57,20 +57,17 @@ namespace Azure.AI.Inference.Tests.Samples
             };
 
             Response<ChatCompletions> response = client.Complete(requestOptions);
-            System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+            System.Console.WriteLine(response.Value.Content);
             #endregion
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
-            ChatChoice choice = response.Value.Choices[0];
-            Assert.That(choice.Index, Is.EqualTo(0));
-            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
+            ChatCompletions result = response.Value;
+            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Not.Null.Or.Empty);
         }
 
         [Test]
@@ -82,7 +79,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-            var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+            var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
             ChatMessageImageContentItem imageContentItem =
                 new ChatMessageImageContentItem(
@@ -94,7 +91,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var credential = new AzureKeyCredential("foo");
             var key = TestEnvironment.AoaiKey;
 
-            ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
             clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(key), HttpPipelinePosition.PerCall);
 
             var client = new ChatCompletionsClient(endpoint, credential, clientOptions);
@@ -118,20 +115,17 @@ namespace Azure.AI.Inference.Tests.Samples
             };
 
             Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
-            System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+            System.Console.WriteLine(response.Value.Content);
             #endregion
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
-            ChatChoice choice = response.Value.Choices[0];
-            Assert.That(choice.Index, Is.EqualTo(0));
-            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
+            ChatCompletions result = response.Value;
+            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Not.Null.Or.Empty);
         }
 
         private class AddAoaiAuthHeaderPolicy : HttpPipelinePolicy

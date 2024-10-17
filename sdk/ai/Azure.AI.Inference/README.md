@@ -53,7 +53,7 @@ The package includes `ChatCompletionsClient` <!-- and `EmbeddingsClient`and `Ima
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 ```
 
 <!--
@@ -90,7 +90,7 @@ All clients provide a `get_model_info` method to retrive AI model information. T
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 Response<ModelInfo> modelInfo = client.GetModelInfo();
 
 Console.WriteLine($"Model name: {modelInfo.Value.ModelName}");
@@ -165,7 +165,7 @@ This example demonstrates how to generate a single chat completions, with key au
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
 var requestOptions = new ChatCompletionsOptions()
 {
@@ -177,7 +177,7 @@ var requestOptions = new ChatCompletionsOptions()
 };
 
 Response<ChatCompletions> response = client.Complete(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 ```
 
 The following types or messages are supported: `SystemMessage`,`UserMessage`, `AssistantMessage`, `ToolMessage`. See also samples:
@@ -191,7 +191,7 @@ Alternatively, you can read a `BinaryData` object based on a JSON string instead
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
 var requestOptions = new ChatCompletionsOptions()
 {
@@ -207,7 +207,7 @@ BinaryData messages = BinaryData.FromString(jsonMessages);
 requestOptions = ModelReaderWriter.Read<ChatCompletionsOptions>(messages);
 
 Response<ChatCompletions> response = client.Complete(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 ```
 
 To generate completions for additional messages, simply call `client.Complete` multiple times using the same `client`.
@@ -220,7 +220,7 @@ This example demonstrates how to generate a single chat completions with streami
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
 var requestOptions = new ChatCompletionsOptions()
 {
@@ -263,7 +263,7 @@ Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenario
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
 var requestOptions = new ChatCompletionsOptions()
 {

@@ -44,7 +44,7 @@ namespace Azure.AI.Inference
                 writer.WriteStartArray();
                 foreach (var item in ToolCalls)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ChatCompletionsToolCall>(item, options);
                 }
                 writer.WriteEndArray();
             }

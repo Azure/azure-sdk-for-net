@@ -16,7 +16,7 @@ Set these two environment variables before running the sample:
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
 ChatMessageImageContentItem imageContentItem =
     new ChatMessageImageContentItem(
@@ -36,7 +36,7 @@ var requestOptions = new ChatCompletionsOptions()
 };
 
 Response<ChatCompletions> response = client.Complete(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 ```
 
 An `async` option is also available.
@@ -45,7 +45,7 @@ An `async` option is also available.
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
 ChatMessageImageContentItem imageContentItem =
     new ChatMessageImageContentItem(
@@ -65,5 +65,5 @@ var requestOptions = new ChatCompletionsOptions()
 };
 
 Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 ```
