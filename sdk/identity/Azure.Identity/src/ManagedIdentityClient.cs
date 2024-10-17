@@ -39,7 +39,7 @@ namespace Azure.Identity
 
         public ManagedIdentityClient(ManagedIdentityClientOptions options)
         {
-            _options = options;
+            _options = options.Clone();
             ManagedIdentityId = options.ManagedIdentityId;
             Pipeline = options.Pipeline;
             _isChainedCredential = options.Options?.IsChainedCredential ?? false;

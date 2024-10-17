@@ -21,5 +21,35 @@ namespace Azure.Identity
         public bool ExcludeTokenExchangeManagedIdentitySource { get; set; }
 
         public bool IsForceRefreshEnabled { get; set; }
+
+        public ManagedIdentityClientOptions Clone()
+        {
+            var cloned = new ManagedIdentityClientOptions
+            {
+                ManagedIdentityId = ManagedIdentityId,
+                PreserveTransport = PreserveTransport,
+                InitialImdsConnectionTimeout = InitialImdsConnectionTimeout,
+                Pipeline = Pipeline,
+                ExcludeTokenExchangeManagedIdentitySource = ExcludeTokenExchangeManagedIdentitySource,
+                IsForceRefreshEnabled = IsForceRefreshEnabled,
+            };
+
+            if (Options != null)
+            {
+                if (Options is DefaultAzureCredentialOptions dac)
+                {
+                    cloned.Options = dac.Clone<DefaultAzureCredentialOptions>();
+                }
+                else if (Options is ManagedIdentityCredentialOptions mic)
+                {
+                    cloned.Options = mic.Clone<ManagedIdentityCredentialOptions>();
+                }
+                else
+                {
+                    cloned.Options = Options.Clone<TokenCredentialOptions>();
+                }
+            }
+            return cloned;
+        }
     }
 }
