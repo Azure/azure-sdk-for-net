@@ -2,5 +2,5 @@
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup",
-  "Tag": "net/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup_0828b34035"
+  "Tag": "net/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup_b9b65fea04"
 }

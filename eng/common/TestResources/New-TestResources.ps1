@@ -350,6 +350,10 @@ try {
         # to determine whether resources should be removed.
         Write-Host "Setting variable 'CI_HAS_DEPLOYED_RESOURCES': 'true'"
         LogVsoCommand "##vso[task.setvariable variable=CI_HAS_DEPLOYED_RESOURCES;]true"
+        # Set resource group env variable early in cases where deployment fails as we
+        # still want to clean up the group. The Remove-TestResources.ps1 script consumes this var.
+        $envVarName = (BuildServiceDirectoryPrefix $serviceName) + "RESOURCE_GROUP"
+        LogVsoCommand "##vso[task.setvariable variable=$envVarName;]$ResourceGroupName"
     }
 
     Log "Creating resource group '$ResourceGroupName' in location '$Location'"
