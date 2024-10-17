@@ -858,6 +858,56 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [TestCase(false)]
+        [TestCase(true)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateRenameAsync_ClientTransactionId(bool createIfNotExists)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            Guid? createClientTransactionId = Recording.Random.NewGuid();
+
+            DataLakePathCreateOptions createOptions = new DataLakePathCreateOptions
+            {
+                ClientTransactionId = createClientTransactionId
+            };
+
+            // Act
+            if (createIfNotExists)
+            {
+                await file.CreateIfNotExistsAsync(createOptions);
+            }
+            else
+            {
+                await file.CreateAsync(createOptions);
+            }
+
+            // Assert
+            ResponseWithHeaders<PathGetPropertiesHeaders> response = await file.PathRestClient.GetPropertiesAsync();
+            Assert.AreEqual(createClientTransactionId.ToString(), response.Headers.ClientTransactionId);
+
+            // Arrange
+            Guid? renameClientTransactionId = Recording.Random.NewGuid();
+            DataLakePathRenameOptions renameOptions = new DataLakePathRenameOptions
+            {
+                ClientTransactionId = renameClientTransactionId
+            };
+
+            string destFileName = GetNewFileName();
+
+            // Act
+            DataLakeFileClient destinationFile = await file.RenameAsync(destFileName, renameOptions);
+
+            // Assert
+            response = await destinationFile.PathRestClient.GetPropertiesAsync();
+            Assert.AreEqual(renameClientTransactionId.ToString(), response.Headers.ClientTransactionId);
+        }
+
+        [RecordedTest]
         public async Task CreateIfNotExistsAsync_NotExists()
         {
             // Arrange
