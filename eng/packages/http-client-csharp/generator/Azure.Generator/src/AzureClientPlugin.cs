@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.CodeAnalysis;
 using Microsoft.Generator.CSharp;
 using Microsoft.Generator.CSharp.ClientModel;
 using System;
+using System.ClientModel;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 
 namespace Azure.Generator;
@@ -38,6 +41,7 @@ public class AzureClientPlugin : ClientModelPlugin
     public override void Configure()
     {
         base.Configure();
+        AddMetadataReference(MetadataReference.CreateFromFile(typeof(Response).Assembly.Location));
     }
 
     /// <summary>

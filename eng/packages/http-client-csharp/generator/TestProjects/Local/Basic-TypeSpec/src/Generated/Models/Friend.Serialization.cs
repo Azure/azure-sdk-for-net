@@ -6,10 +6,11 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Core;
 using BasicTypeSpec;
 
 namespace BasicTypeSpec.Models
@@ -130,16 +131,18 @@ namespace BasicTypeSpec.Models
 
         string IPersistableModel<Friend>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="friend"> The <see cref="Friend"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(Friend friend)
+        /// <param name="friend"> The <see cref="Friend"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(Friend friend)
         {
-            return BinaryContent.Create(friend, ModelSerializationExtensions.WireOptions);
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(friend, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="Friend"/> from. </param>
-        public static explicit operator Friend(ClientResult result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="Friend"/> from. </param>
+        public static explicit operator Friend(Response result)
         {
-            using PipelineResponse response = result.GetRawResponse();
+            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeFriend(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
