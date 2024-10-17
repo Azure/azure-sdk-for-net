@@ -5,6 +5,8 @@
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
+- Upgraded api-version to 'package-netapp-2024-07-01'.
+- Added support for external migration replication volumes with operations `PeerExternalClusterAsync`, `AuthorizeExternalReplicationAsync`, `PerformReplicationTransferAsync`, `FinalizeExternalReplicationAsync`
 
 ### Breaking Changes
 
