@@ -239,6 +239,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("resourceDeletionPolicy"u8);
                 writer.WriteStringValue(ResourceDeletionPolicy.Value.ToString());
             }
+            if (Optional.IsDefined(AsyncTimeoutRules))
+            {
+                writer.WritePropertyName("asyncTimeoutRules"u8);
+                writer.WriteObjectValue(AsyncTimeoutRules, options);
+            }
+
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -307,6 +313,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ResourceDeletionPolicy? resourceDeletionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            AsyncTimeoutRules asyncTimeoutRules = default;
+
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routingType"u8))
@@ -626,6 +634,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceDeletionPolicy = new ResourceDeletionPolicy(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("asyncTimeoutRules"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    asyncTimeoutRules = AsyncTimeoutRules.DeserializeAsyncTimeoutRules(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -662,7 +679,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(),
                 resourceMovePolicy,
                 resourceDeletionPolicy,
-                serializedAdditionalRawData);
+                serializedAdditionalRawData,
+                asyncTimeoutRules);
         }
 
         BinaryData IPersistableModel<ResourceTypeRegistrationProperties>.Write(ModelReaderWriterOptions options)
