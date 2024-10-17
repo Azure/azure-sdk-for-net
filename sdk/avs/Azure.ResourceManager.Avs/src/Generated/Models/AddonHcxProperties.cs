@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AddonHcxProperties"/>. </summary>
-        /// <param name="addonType"> The type of private cloud addon. </param>
+        /// <param name="addonType"> Addon type. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="offer"> The HCX offer, example VMware MaaS Cloud Provider (Enterprise). </param>

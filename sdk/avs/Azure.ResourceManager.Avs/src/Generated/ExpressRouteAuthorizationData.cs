@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The state of the  ExpressRoute Circuit Authorization provisioning. </param>
+        /// <param name="provisioningState"> The state of the ExpressRoute Circuit Authorization provisioning. </param>
         /// <param name="expressRouteAuthorizationId"> The ID of the ExpressRoute Circuit Authorization. </param>
         /// <param name="expressRouteAuthorizationKey"> The key of the ExpressRoute Circuit Authorization. </param>
         /// <param name="expressRouteId"> The ID of the ExpressRoute Circuit. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Avs
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The state of the  ExpressRoute Circuit Authorization provisioning. </summary>
+        /// <summary> The state of the ExpressRoute Circuit Authorization provisioning. </summary>
         public ExpressRouteAuthorizationProvisioningState? ProvisioningState { get; }
         /// <summary> The ID of the ExpressRoute Circuit Authorization. </summary>
         public ResourceIdentifier ExpressRouteAuthorizationId { get; }

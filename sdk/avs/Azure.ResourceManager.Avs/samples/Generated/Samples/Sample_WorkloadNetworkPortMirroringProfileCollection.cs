@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_WorkloadNetworksListPortMirroring()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_ListPortMirroringProfiles.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_ListPortMirroring.json
             // this example is just showing the usage of "WorkloadNetworks_ListPortMirroring" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkPortMirroringProfileResource
-            WorkloadNetworkPortMirroringProfileCollection collection = avsPrivateCloud.GetWorkloadNetworkPortMirroringProfiles();
+            WorkloadNetworkPortMirroringProfileCollection collection = workloadNetwork.GetWorkloadNetworkPortMirroringProfiles();
 
             // invoke the operation and iterate over the result
             await foreach (WorkloadNetworkPortMirroringProfileResource item in collection.GetAllAsync())
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_WorkloadNetworksGetPortMirroring()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_GetPortMirroringProfiles.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetPortMirroring.json
             // this example is just showing the usage of "WorkloadNetworks_GetPortMirroring" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,16 +65,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkPortMirroringProfileResource
-            WorkloadNetworkPortMirroringProfileCollection collection = avsPrivateCloud.GetWorkloadNetworkPortMirroringProfiles();
+            WorkloadNetworkPortMirroringProfileCollection collection = workloadNetwork.GetWorkloadNetworkPortMirroringProfiles();
 
             // invoke the operation
             string portMirroringId = "portMirroring1";
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_WorkloadNetworksGetPortMirroring()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_GetPortMirroringProfiles.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetPortMirroring.json
             // this example is just showing the usage of "WorkloadNetworks_GetPortMirroring" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,16 +100,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkPortMirroringProfileResource
-            WorkloadNetworkPortMirroringProfileCollection collection = avsPrivateCloud.GetWorkloadNetworkPortMirroringProfiles();
+            WorkloadNetworkPortMirroringProfileCollection collection = workloadNetwork.GetWorkloadNetworkPortMirroringProfiles();
 
             // invoke the operation
             string portMirroringId = "portMirroring1";
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_WorkloadNetworksGetPortMirroring()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_GetPortMirroringProfiles.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetPortMirroring.json
             // this example is just showing the usage of "WorkloadNetworks_GetPortMirroring" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,16 +131,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkPortMirroringProfileResource
-            WorkloadNetworkPortMirroringProfileCollection collection = avsPrivateCloud.GetWorkloadNetworkPortMirroringProfiles();
+            WorkloadNetworkPortMirroringProfileCollection collection = workloadNetwork.GetWorkloadNetworkPortMirroringProfiles();
 
             // invoke the operation
             string portMirroringId = "portMirroring1";
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_WorkloadNetworksCreatePortMirroring()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_CreatePortMirroringProfiles.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_CreatePortMirroring.json
             // this example is just showing the usage of "WorkloadNetworks_CreatePortMirroring" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -174,16 +174,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkPortMirroringProfileResource
-            WorkloadNetworkPortMirroringProfileCollection collection = avsPrivateCloud.GetWorkloadNetworkPortMirroringProfiles();
+            WorkloadNetworkPortMirroringProfileCollection collection = workloadNetwork.GetWorkloadNetworkPortMirroringProfiles();
 
             // invoke the operation
             string portMirroringId = "portMirroring1";

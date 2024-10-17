@@ -24,19 +24,6 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsManagementCluster>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AvsManagementCluster)} does not support writing '{format}' format.");
-            }
-
-            base.JsonModelWriteCore(writer, options);
-        }
-
         AvsManagementCluster IJsonModel<AvsManagementCluster>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AvsManagementCluster>)this).GetFormatFromOptions(options) : options.Format;
@@ -61,6 +48,7 @@ namespace Azure.ResourceManager.Avs.Models
             AvsPrivateCloudClusterProvisioningState? provisioningState = default;
             int? clusterId = default;
             IList<string> hosts = default;
+            string vsanDatastoreName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,13 +94,24 @@ namespace Azure.ResourceManager.Avs.Models
                     hosts = array;
                     continue;
                 }
+                if (property.NameEquals("vsanDatastoreName"u8))
+                {
+                    vsanDatastoreName = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AvsManagementCluster(clusterSize, provisioningState, clusterId, hosts ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AvsManagementCluster(
+                clusterSize,
+                provisioningState,
+                clusterId,
+                hosts ?? new ChangeTrackingList<string>(),
+                vsanDatastoreName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsManagementCluster>.Write(ModelReaderWriterOptions options)

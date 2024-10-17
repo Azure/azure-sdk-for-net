@@ -51,10 +51,16 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScriptParameter"/>. </summary>
-        /// <param name="parameterType"> The type of parameter the script is expecting. psCredential is a PSCredentialObject. </param>
+        /// <param name="parameterType">
+        /// The type of parameter the script is expecting. psCredential is a
+        /// PSCredentialObject
+        /// </param>
         /// <param name="name"> The parameter name that the script will expect a parameter value for. </param>
         /// <param name="description"> User friendly description of the parameter. </param>
-        /// <param name="visibility"> Should this parameter be visible to arm and passed in the parameters argument when executing. </param>
+        /// <param name="visibility">
+        /// Should this parameter be visible to arm and passed in the parameters argument
+        /// when executing
+        /// </param>
         /// <param name="optional"> Is this parameter required or optional. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ScriptParameter(ScriptParameterType? parameterType, string name, string description, ParameterVisibilityStatus? visibility, ParameterOptionalityStatus? optional, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -67,13 +73,19 @@ namespace Azure.ResourceManager.Avs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of parameter the script is expecting. psCredential is a PSCredentialObject. </summary>
+        /// <summary>
+        /// The type of parameter the script is expecting. psCredential is a
+        /// PSCredentialObject
+        /// </summary>
         public ScriptParameterType? ParameterType { get; }
         /// <summary> The parameter name that the script will expect a parameter value for. </summary>
         public string Name { get; }
         /// <summary> User friendly description of the parameter. </summary>
         public string Description { get; }
-        /// <summary> Should this parameter be visible to arm and passed in the parameters argument when executing. </summary>
+        /// <summary>
+        /// Should this parameter be visible to arm and passed in the parameters argument
+        /// when executing
+        /// </summary>
         public ParameterVisibilityStatus? Visibility { get; }
         /// <summary> Is this parameter required or optional. </summary>
         public ParameterOptionalityStatus? Optional { get; }

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The common properties of a cluster. </summary>
-    public partial class CommonClusterProperties
+    /// <summary> The response of a IscsiPath list operation. </summary>
+    internal partial class IscsiPathListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,36 +44,37 @@ namespace Azure.ResourceManager.Avs.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CommonClusterProperties"/>. </summary>
-        public CommonClusterProperties()
+        /// <summary> Initializes a new instance of <see cref="IscsiPathListResult"/>. </summary>
+        /// <param name="value"> The IscsiPath items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal IscsiPathListResult(IEnumerable<IscsiPathData> value)
         {
-            Hosts = new ChangeTrackingList<string>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommonClusterProperties"/>. </summary>
-        /// <param name="clusterSize"> The cluster size. </param>
-        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
-        /// <param name="clusterId"> The identity. </param>
-        /// <param name="hosts"> The hosts. </param>
+        /// <summary> Initializes a new instance of <see cref="IscsiPathListResult"/>. </summary>
+        /// <param name="value"> The IscsiPath items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommonClusterProperties(int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IscsiPathListResult(IReadOnlyList<IscsiPathData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ClusterSize = clusterSize;
-            ProvisioningState = provisioningState;
-            ClusterId = clusterId;
-            Hosts = hosts;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The cluster size. </summary>
-        public int? ClusterSize { get; set; }
-        /// <summary> The state of the cluster provisioning. </summary>
-        public AvsPrivateCloudClusterProvisioningState? ProvisioningState { get; }
-        /// <summary> The identity. </summary>
-        public int? ClusterId { get; }
-        /// <summary> The hosts. </summary>
-        public IList<string> Hosts { get; }
+        /// <summary> Initializes a new instance of <see cref="IscsiPathListResult"/> for deserialization. </summary>
+        internal IscsiPathListResult()
+        {
+        }
+
+        /// <summary> The IscsiPath items on this page. </summary>
+        public IReadOnlyList<IscsiPathData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
