@@ -285,23 +285,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             clientMock.Setup(
                 c => c.CreateInternal(
                     IsAny<PathResourceType>(),
-                    s_pathHttpHeaders,
-                    default,
-                    s_permissions,
-                    s_umask,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    s_conditions,
+                    IsAny<DataLakePathCreateOptions>(),
                     _async,
                     s_cancellationToken
-                )).Returns<PathResourceType, PathHttpHeaders, IDictionary<string, string>, string, string, string, string, IList<PathAccessControlItem>, string, TimeSpan?, TimeSpan?, DateTimeOffset?, string, DataLakeRequestConditions, bool, CancellationToken>(sink.CreateInternal);
+                )).Returns<PathResourceType, DataLakePathCreateOptions, bool, CancellationToken>(sink.CreateInternal);
 
             clientMock.Setup(
                 c => c.AppendInternal(
@@ -356,19 +343,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             public async Task<Response<PathInfo>> CreateInternal(
                 PathResourceType type,
-                PathHttpHeaders httpHeaders,
-                IDictionary<string, string> metadata,
-                string permissions,
-                string umask,
-                string owner,
-                string group,
-                IList<PathAccessControlItem> accessControlList,
-                string leaseId,
-                TimeSpan? leaseDuration,
-                TimeSpan? timeToExpire,
-                DateTimeOffset? expiresOn,
-                string encryptionContext,
-                DataLakeRequestConditions conditions,
+                DataLakePathCreateOptions options,
                 bool async,
                 CancellationToken cancellationToken)
             {

@@ -5905,20 +5905,10 @@ namespace Azure.Storage.Files.DataLake
                 {
                     Response<PathInfo> createResponse = await CreateInternal(
                         resourceType: PathResourceType.File,
-                        httpHeaders: default,
-                        metadata: default,
-                        permissions: default,
-                        umask: default,
-                        owner: default,
-                        group: default,
-                        accessControlList: default,
-                        leaseId: default,
-                        leaseDuration: default,
-                        timeToExpire: default,
-                        expiresOn: default,
-                        encryptionContext: default,
-                        clientTransactionId: default,
-                        conditions: options?.OpenConditions,
+                        options: new DataLakePathCreateOptions
+                        {
+                            Conditions = options?.OpenConditions
+                        },
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -5953,20 +5943,10 @@ namespace Azure.Storage.Files.DataLake
                     {
                         Response<PathInfo> createResponse = await CreateInternal(
                             resourceType: PathResourceType.File,
-                            httpHeaders: default,
-                            metadata: default,
-                            permissions: default,
-                            umask: default,
-                            owner: default,
-                            group: default,
-                            accessControlList: default,
-                            leaseId: default,
-                            leaseDuration: default,
-                            timeToExpire: default,
-                            expiresOn: default,
-                            encryptionContext: default,
-                            clientTransactionId: default,
-                            conditions: options?.OpenConditions,
+                            options: new DataLakePathCreateOptions
+                            {
+                                Conditions = options?.OpenConditions
+                            },
                             async: async,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -6023,20 +6003,18 @@ namespace Azure.Storage.Files.DataLake
                 InitializeDestination = async (args, async, cancellationToken)
                     => await client.CreateInternal(
                         resourceType: PathResourceType.File,
-                        httpHeaders: args.HttpHeaders,
-                        metadata: args.Metadata,
-                        permissions: args.Permissions,
-                        umask: args.Umask,
-                        owner: default,
-                        group: default,
-                        accessControlList: default,
-                        leaseId: default,
-                        leaseDuration: default,
-                        timeToExpire: default,
-                        expiresOn: default,
-                        encryptionContext: args.EncryptionContext,
-                        clientTransactionId: default,
-                        conditions: args.Conditions,
+                        options: new DataLakePathCreateOptions
+                        {
+                            HttpHeaders = args.HttpHeaders,
+                            Metadata = args.Metadata,
+                            AccessOptions = new DataLakeAccessOptions
+                            {
+                                Permissions = args.Permissions,
+                                Umask = args.Umask,
+                            },
+                            EncryptionContext = args.EncryptionContext,
+                            Conditions = args.Conditions,
+                        },
                         async: async,
                         cancellationToken: cancellationToken).ConfigureAwait(false),
                 SingleUploadStreaming = async (stream, args, progressHandler, validationOptions, operationName, async, cancellationToken) =>

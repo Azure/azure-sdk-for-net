@@ -804,20 +804,7 @@ namespace Azure.Storage.Files.DataLake
         {
             return CreateInternal(
                 resourceType: resourceType,
-                httpHeaders: options?.HttpHeaders,
-                metadata: options?.Metadata,
-                permissions: options?.AccessOptions?.Permissions,
-                umask: options?.AccessOptions?.Umask,
-                owner: options?.AccessOptions?.Owner,
-                group: options?.AccessOptions?.Group,
-                accessControlList: options?.AccessOptions?.AccessControlList,
-                leaseId: options?.LeaseId,
-                leaseDuration: options?.LeaseDuration,
-                timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
-                expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
-                encryptionContext: options?.EncryptionContext,
-                clientTransactionId: options?.ClientTransactionId,
-                conditions: options?.Conditions,
+                options: options,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -855,20 +842,7 @@ namespace Azure.Storage.Files.DataLake
         {
             return await CreateInternal(
                 resourceType: resourceType,
-                httpHeaders: options?.HttpHeaders,
-                metadata: options?.Metadata,
-                permissions: options?.AccessOptions?.Permissions,
-                umask: options?.AccessOptions?.Umask,
-                owner: options?.AccessOptions?.Owner,
-                group: options?.AccessOptions?.Group,
-                accessControlList: options?.AccessOptions?.AccessControlList,
-                leaseId: options?.LeaseId,
-                leaseDuration: options?.LeaseDuration,
-                timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
-                expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
-                encryptionContext: options?.EncryptionContext,
-                clientTransactionId: options?.ClientTransactionId,
-                conditions: options?.Conditions,
+                options: options,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -937,20 +911,17 @@ namespace Azure.Storage.Files.DataLake
         {
             return CreateInternal(
                 resourceType: resourceType,
-                httpHeaders: httpHeaders,
-                metadata: metadata,
-                permissions: permissions,
-                umask: umask,
-                owner: null,
-                group: null,
-                accessControlList: null,
-                leaseId: null,
-                leaseDuration: null,
-                timeToExpire: null,
-                expiresOn: null,
-                encryptionContext: null,
-                clientTransactionId: null,
-                conditions: conditions,
+                options: new DataLakePathCreateOptions
+                {
+                    HttpHeaders = httpHeaders,
+                    Metadata = metadata,
+                    AccessOptions = new DataLakeAccessOptions
+                    {
+                        Permissions = permissions,
+                        Umask = umask,
+                    },
+                    Conditions = conditions
+                },
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1019,20 +990,17 @@ namespace Azure.Storage.Files.DataLake
         {
             return await CreateInternal(
                 resourceType: resourceType,
-                httpHeaders: httpHeaders,
-                metadata: metadata,
-                permissions: permissions,
-                umask: umask,
-                owner: null,
-                group: null,
-                accessControlList: null,
-                leaseId: null,
-                leaseDuration: null,
-                timeToExpire: null,
-                expiresOn: null,
-                encryptionContext: null,
-                clientTransactionId: null,
-                conditions: conditions,
+                options: new DataLakePathCreateOptions
+                {
+                    HttpHeaders = httpHeaders,
+                    Metadata = metadata,
+                    AccessOptions = new DataLakeAccessOptions
+                    {
+                        Permissions = permissions,
+                        Umask = umask,
+                    },
+                    Conditions = conditions
+                },
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1047,60 +1015,8 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="resourceType">
         /// Resource type of this path - file or directory.
         /// </param>
-        /// <param name="httpHeaders">
-        /// Optional standard HTTP header properties that can be set for the
-        /// new file or directory.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory.
-        /// </param>
-        /// <param name="permissions">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
-        /// permissions for the file owner, the file owning group, and others. Each class may be granted read,
-        /// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit
-        /// octal notation (e.g. 0766) are supported.
-        /// </param>
-        /// <param name="umask">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account.
-        /// When creating a file or directory and the parent folder does not have a default ACL,
-        /// the umask restricts the permissions of the file or directory to be created. The resulting
-        /// permission is given by p bitwise-and ^u, where p is the permission and u is the umask. For example,
-        /// if p is 0777 and u is 0057, then the resulting permission is 0720. The default permission is
-        /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
-        /// in 4-digit octal notation (e.g. 0766).
-        /// </param>
-        /// <param name="owner">
-        /// The owner of the file or directory.
-        /// </param>
-        /// <param name="group">
-        /// Optional.  The owning group of the file or directory.
-        /// </param>
-        /// <param name="accessControlList">
-        /// The POSIX access control list for the file or directory.
-        /// </param>
-        /// <param name="leaseId">
-        /// Proposed LeaseId.
-        /// </param>
-        /// <param name="leaseDuration">
-        ///  Specifies the duration of the lease.
-        /// </param>
-        /// <param name="timeToExpire">
-        /// Duration before file should be deleted.
-        /// </param>
-        /// <param name="expiresOn">
-        /// The <see cref="DateTimeOffset"/> to set for when
-        /// the file will be deleted.  If null, the existing
-        /// ExpiresOn time on the file will be removed, if it exists.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory..
-        /// </param>
-        /// <param name="encryptionContext">
-        /// Encryption context.
-        /// </param>
-        /// <param name="clientTransactionId">
-        /// Optional transaction ID, provides idempotency on retries.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1119,20 +1035,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         internal virtual async Task<Response<PathInfo>> CreateInternal(
             PathResourceType resourceType,
-            PathHttpHeaders httpHeaders,
-            Metadata metadata,
-            string permissions,
-            string umask,
-            string owner,
-            string group,
-            IList<PathAccessControlItem> accessControlList,
-            string leaseId,
-            TimeSpan? leaseDuration,
-            TimeSpan? timeToExpire,
-            DateTimeOffset? expiresOn,
-            string encryptionContext,
-            Guid? clientTransactionId,
-            DataLakeRequestConditions conditions,
+            DataLakePathCreateOptions options,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1141,38 +1044,34 @@ namespace Azure.Storage.Files.DataLake
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(DataLakePathClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(httpHeaders)}: {httpHeaders}\n" +
-                    $"{nameof(metadata)}: {metadata}\n" +
-                    $"{nameof(permissions)}: {permissions}\n" +
-                    $"{nameof(umask)}: {umask}\n");
+                    $"{nameof(Uri)}: {Uri}\n");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Create)}");
 
                 if (resourceType == PathResourceType.Directory)
                 {
-                    if (leaseId != null)
+                    if (options?.Conditions?.LeaseId != null)
                     {
                         throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.LeaseId)} does not apply to directories.");
                     }
 
-                    if (leaseDuration.HasValue)
+                    if (options?.LeaseDuration != null)
                     {
                         throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.LeaseDuration)} does not apply to directories.");
                     }
 
-                    if (timeToExpire.HasValue)
+                    if (options?.ScheduleDeletionOptions?.TimeToExpire != null)
                     {
                         throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.TimeToExpire)} does not apply to directories.");
                     }
 
-                    if (expiresOn.HasValue)
+                    if (options?.ScheduleDeletionOptions?.ExpiresOn != null)
                     {
                         throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.ExpiresOn)} does not apply to directories.");
                     }
                 }
 
-                if (expiresOn.HasValue && timeToExpire.HasValue)
+                if (options?.ScheduleDeletionOptions?.ExpiresOn != null && options?.ScheduleDeletionOptions?.TimeToExpire != null)
                 {
                     throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.ExpiresOn)} and {nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.TimeToExpire)} cannot both be set.");
                 }
@@ -1183,56 +1082,56 @@ namespace Azure.Storage.Files.DataLake
                     ResponseWithHeaders<PathCreateHeaders> response;
 
                     long? serviceLeaseDuration = null;
-                    if (leaseDuration.HasValue)
+                    if (options?.LeaseDuration != null)
                     {
-                        serviceLeaseDuration = leaseDuration < TimeSpan.Zero ? Constants.Blob.Lease.InfiniteLeaseDuration : Convert.ToInt64(leaseDuration.Value.TotalSeconds);
+                        serviceLeaseDuration = options?.LeaseDuration.Value < TimeSpan.Zero ? Constants.Blob.Lease.InfiniteLeaseDuration : Convert.ToInt64(options.LeaseDuration.Value.TotalSeconds);
                     }
 
                     PathExpiryOptions? pathExpiryOptions = null;
                     string expiresOnString = null;
 
                     // Relative
-                    if (timeToExpire.HasValue)
+                    if (options?.ScheduleDeletionOptions?.TimeToExpire != null)
                     {
                         pathExpiryOptions = PathExpiryOptions.RelativeToNow;
-                        expiresOnString = timeToExpire.Value.TotalMilliseconds.ToString(CultureInfo.InvariantCulture);
+                        expiresOnString = options.ScheduleDeletionOptions.TimeToExpire.Value.TotalMilliseconds.ToString(CultureInfo.InvariantCulture);
                     }
                     // Absolute
-                    else if (expiresOn.HasValue)
+                    else if (options?.ScheduleDeletionOptions?.ExpiresOn != null)
                     {
                         pathExpiryOptions = PathExpiryOptions.Absolute;
-                        expiresOnString = expiresOn?.ToString("R", CultureInfo.InvariantCulture);
+                        expiresOnString = options.ScheduleDeletionOptions.ExpiresOn.Value.ToString("R", CultureInfo.InvariantCulture);
                     }
 
                     if (async)
                     {
                         response = await PathRestClient.CreateAsync(
                             resource: resourceType,
-                            cacheControl: httpHeaders?.CacheControl,
-                            contentEncoding: httpHeaders?.ContentEncoding,
-                            contentLanguage: httpHeaders?.ContentLanguage,
-                            contentDisposition: httpHeaders?.ContentDisposition,
-                            contentType: httpHeaders?.ContentType,
-                            leaseId: conditions?.LeaseId,
-                            properties: BuildMetadataString(metadata),
-                            permissions: permissions,
-                            umask: umask,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            cacheControl: options?.HttpHeaders?.CacheControl,
+                            contentEncoding: options?.HttpHeaders?.ContentEncoding,
+                            contentLanguage: options?.HttpHeaders?.ContentLanguage,
+                            contentDisposition: options?.HttpHeaders?.ContentDisposition,
+                            contentType: options?.HttpHeaders?.ContentType,
+                            leaseId: options?.Conditions?.LeaseId,
+                            properties: BuildMetadataString(options?.Metadata),
+                            permissions: options?.AccessOptions?.Permissions,
+                            umask: options?.AccessOptions?.Umask,
+                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
+                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            owner: owner,
-                            group: group,
-                            acl: PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                            proposedLeaseId: leaseId,
+                            owner: options?.AccessOptions?.Owner,
+                            group: options?.AccessOptions?.Group,
+                            acl: PathAccessControlExtensions.ToAccessControlListString(options?.AccessOptions?.AccessControlList),
+                            proposedLeaseId: options?.Conditions?.LeaseId,
                             leaseDuration: serviceLeaseDuration,
                             expiryOptions: pathExpiryOptions,
                             expiresOn: expiresOnString,
-                            encryptionContext: encryptionContext,
-                            clientTransactionId: clientTransactionId?.ToString(),
+                            encryptionContext: options?.EncryptionContext,
+                            clientTransactionId: options?.ClientTransactionId?.ToString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1240,31 +1139,31 @@ namespace Azure.Storage.Files.DataLake
                     {
                         response = PathRestClient.Create(
                             resource: resourceType,
-                            cacheControl: httpHeaders?.CacheControl,
-                            contentEncoding: httpHeaders?.ContentEncoding,
-                            contentLanguage: httpHeaders?.ContentLanguage,
-                            contentDisposition: httpHeaders?.ContentDisposition,
-                            contentType: httpHeaders?.ContentType,
-                            leaseId: conditions?.LeaseId,
-                            properties: BuildMetadataString(metadata),
-                            permissions: permissions,
-                            umask: umask,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            cacheControl: options?.HttpHeaders?.CacheControl,
+                            contentEncoding: options?.HttpHeaders?.ContentEncoding,
+                            contentLanguage: options?.HttpHeaders?.ContentLanguage,
+                            contentDisposition: options?.HttpHeaders?.ContentDisposition,
+                            contentType: options?.HttpHeaders?.ContentType,
+                            leaseId: options?.Conditions?.LeaseId,
+                            properties: BuildMetadataString(options?.Metadata),
+                            permissions: options?.AccessOptions?.Permissions,
+                            umask: options?.AccessOptions?.Umask,
+                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
+                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            owner: owner,
-                            group: group,
-                            acl: PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                            proposedLeaseId: leaseId,
+                            owner: options?.AccessOptions?.Owner,
+                            group: options?.AccessOptions?.Group,
+                            acl: PathAccessControlExtensions.ToAccessControlListString(options?.AccessOptions?.AccessControlList),
+                            proposedLeaseId: options?.Conditions?.LeaseId,
                             leaseDuration: serviceLeaseDuration,
                             expiryOptions: pathExpiryOptions,
                             expiresOn: expiresOnString,
-                            encryptionContext: encryptionContext,
-                            clientTransactionId: clientTransactionId?.ToString(),
+                            encryptionContext: options?.EncryptionContext,
+                            clientTransactionId: options?.ClientTransactionId?.ToString(),
                             cancellationToken: cancellationToken);
                     }
 
@@ -1318,19 +1217,7 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
             => CreateIfNotExistsInternal(
                     resourceType: resourceType,
-                    httpHeaders: options?.HttpHeaders,
-                    metadata: options?.Metadata,
-                    permissions: options?.AccessOptions?.Permissions,
-                    umask: options?.AccessOptions?.Umask,
-                    owner: options?.AccessOptions?.Owner,
-                    group: options?.AccessOptions?.Group,
-                    accessControlList: options?.AccessOptions?.AccessControlList,
-                    leaseId: options?.LeaseId,
-                    leaseDuration: options?.LeaseDuration,
-                    timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
-                    expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
-                    encryptionContext: options?.EncryptionContext,
-                    clientTransactionId: options?.ClientTransactionId,
+                    options: options,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -1365,19 +1252,7 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
             => await CreateIfNotExistsInternal(
                 resourceType: resourceType,
-                httpHeaders: options?.HttpHeaders,
-                metadata: options?.Metadata,
-                permissions: options?.AccessOptions?.Permissions,
-                umask: options?.AccessOptions?.Umask,
-                owner: options?.AccessOptions?.Owner,
-                group: options?.AccessOptions?.Group,
-                accessControlList: options?.AccessOptions?.AccessControlList,
-                leaseId: options?.LeaseId,
-                leaseDuration: options?.LeaseDuration,
-                timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
-                expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
-                encryptionContext: options?.EncryptionContext,
-                clientTransactionId: options?.ClientTransactionId,
+                options: options,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -1437,19 +1312,16 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken)
             => CreateIfNotExistsInternal(
                     resourceType: resourceType,
-                    httpHeaders: httpHeaders,
-                    metadata: metadata,
-                    permissions: permissions,
-                    umask: umask,
-                    owner: null,
-                    group: null,
-                    accessControlList: null,
-                    leaseId: null,
-                    leaseDuration: null,
-                    timeToExpire: null,
-                    expiresOn: null,
-                    encryptionContext: null,
-                    clientTransactionId: null,
+                    options: new DataLakePathCreateOptions
+                    {
+                        HttpHeaders = httpHeaders,
+                        Metadata = metadata,
+                        AccessOptions = new DataLakeAccessOptions
+                        {
+                            Permissions = permissions,
+                            Umask = umask
+                        }
+                    },
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -1509,19 +1381,16 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken)
             => await CreateIfNotExistsInternal(
                 resourceType: resourceType,
-                httpHeaders: httpHeaders,
-                metadata: metadata,
-                permissions: permissions,
-                umask: umask,
-                owner: null,
-                group: null,
-                accessControlList: null,
-                leaseId: null,
-                leaseDuration: null,
-                timeToExpire: null,
-                expiresOn: null,
-                encryptionContext: null,
-                clientTransactionId: null,
+                options: new DataLakePathCreateOptions
+                {
+                    HttpHeaders = httpHeaders,
+                    Metadata = metadata,
+                    AccessOptions = new DataLakeAccessOptions
+                    {
+                        Permissions = permissions,
+                        Umask = umask,
+                    }
+                },
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -1535,56 +1404,8 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="resourceType">
         /// Resource type of this path - file or directory.
         /// </param>
-        /// <param name="httpHeaders">
-        /// Optional standard HTTP header properties that can be set for the
-        /// new file or directory.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory.
-        /// </param>
-        /// <param name="permissions">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
-        /// permissions for the file owner, the file owning group, and others. Each class may be granted read,
-        /// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit
-        /// octal notation (e.g. 0766) are supported.
-        /// </param>
-        /// <param name="umask">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account.
-        /// When creating a file or directory and the parent folder does not have a default ACL,
-        /// the umask restricts the permissions of the file or directory to be created. The resulting
-        /// permission is given by p bitwise-and ^u, where p is the permission and u is the umask. For example,
-        /// if p is 0777 and u is 0057, then the resulting permission is 0720. The default permission is
-        /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
-        /// in 4-digit octal notation (e.g. 0766).
-        /// </param>
-        /// <param name="owner">
-        /// The owner of the file or directory.
-        /// </param>
-        /// <param name="group">
-        /// Optional.  The owning group of the file or directory.
-        /// </param>
-        /// <param name="accessControlList">
-        /// The POSIX access control list for the file or directory.
-        /// </param>
-        /// <param name="leaseId">
-        /// Proposed LeaseId.
-        /// </param>
-        /// <param name="leaseDuration">
-        ///  Specifies the duration of the lease.
-        /// </param>
-        /// <param name="timeToExpire">
-        /// Duration before file should be deleted.
-        /// </param>
-        /// <param name="expiresOn">
-        /// The <see cref="DateTimeOffset"/> to set for when
-        /// the file will be deleted.  If null, the existing
-        /// ExpiresOn time on the file will be removed, if it exists.
-        /// </param>
-        /// <param name="encryptionContext">
-        /// Encryption context.
-        /// </param>
-        /// <param name="clientTransactionId">
-        /// Optional transaction ID, provides idempotency on retries.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1603,42 +1424,18 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         private async Task<Response<PathInfo>> CreateIfNotExistsInternal(
             PathResourceType resourceType,
-            PathHttpHeaders httpHeaders,
-            Metadata metadata,
-            string permissions,
-            string umask,
-            string owner,
-            string group,
-            IList<PathAccessControlItem> accessControlList,
-            string leaseId,
-            TimeSpan? leaseDuration,
-            TimeSpan? timeToExpire,
-            DateTimeOffset? expiresOn,
-            string encryptionContext,
-            Guid? clientTransactionId,
+            DataLakePathCreateOptions options,
             bool async,
             CancellationToken cancellationToken)
         {
             Response<PathInfo> response;
             try
             {
-                DataLakeRequestConditions conditions = new DataLakeRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
+                options ??= new DataLakePathCreateOptions();
+                options.Conditions = new DataLakeRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
                 response = await CreateInternal(
                     resourceType: resourceType,
-                    httpHeaders: httpHeaders,
-                    metadata: metadata,
-                    permissions: permissions,
-                    umask: umask,
-                    owner: owner,
-                    group: group,
-                    accessControlList: accessControlList,
-                    leaseId: leaseId,
-                    leaseDuration: leaseDuration,
-                    timeToExpire: timeToExpire,
-                    expiresOn: expiresOn,
-                    encryptionContext: encryptionContext,
-                    clientTransactionId: clientTransactionId,
-                    conditions: conditions,
+                    options: options,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
