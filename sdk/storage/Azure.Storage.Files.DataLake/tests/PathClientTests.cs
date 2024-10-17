@@ -811,10 +811,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakePathClient pathClient = sourceTest.FileSystem.GetPathClient(sourceFile.Name);
             string destFileName = GetNewDirectoryName();
 
+            DataLakePathRenameOptions options = new DataLakePathRenameOptions()
+            {
+                DestinationFileSystem = destTest.FileSystem.Name
+            };
+
             // Act
             DataLakePathClient destFile = await pathClient.RenameAsync(
                 destinationPath: destFileName,
-                destinationFileSystem: destTest.FileSystem.Name);
+                options: options);
 
             // Assert
             Response<PathProperties> response = await destFile.GetPropertiesAsync();

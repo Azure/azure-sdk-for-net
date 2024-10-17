@@ -858,6 +858,56 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [TestCase(false)]
+        [TestCase(true)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateRenameAsync_ClientTransactionId(bool createIfNotExists)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            Guid? createClientTransactionId = Recording.Random.NewGuid();
+
+            DataLakePathCreateOptions createOptions = new DataLakePathCreateOptions
+            {
+                ClientTransactionId = createClientTransactionId
+            };
+
+            // Act
+            if (createIfNotExists)
+            {
+                await file.CreateIfNotExistsAsync(createOptions);
+            }
+            else
+            {
+                await file.CreateAsync(createOptions);
+            }
+
+            // Assert
+            ResponseWithHeaders<PathGetPropertiesHeaders> response = await file.PathRestClient.GetPropertiesAsync();
+            Assert.AreEqual(createClientTransactionId.ToString(), response.Headers.ClientTransactionId);
+
+            // Arrange
+            Guid? renameClientTransactionId = Recording.Random.NewGuid();
+            DataLakePathRenameOptions renameOptions = new DataLakePathRenameOptions
+            {
+                ClientTransactionId = renameClientTransactionId
+            };
+
+            string destFileName = GetNewFileName();
+
+            // Act
+            DataLakeFileClient destinationFile = await file.RenameAsync(destFileName, renameOptions);
+
+            // Assert
+            response = await destinationFile.PathRestClient.GetPropertiesAsync();
+            Assert.AreEqual(renameClientTransactionId.ToString(), response.Headers.ClientTransactionId);
+        }
+
+        [RecordedTest]
         public async Task CreateIfNotExistsAsync_NotExists()
         {
             // Arrange
@@ -1203,10 +1253,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient sourceFile = await sourceTest.FileSystem.CreateFileAsync(GetNewFileName());
             string destFileName = GetNewDirectoryName();
 
+            DataLakePathRenameOptions options = new DataLakePathRenameOptions
+            {
+                DestinationFileSystem = destTest.FileSystem.Name
+            };
+
             // Act
             DataLakeFileClient destFile = await sourceFile.RenameAsync(
                 destinationPath: destFileName,
-                destinationFileSystem: destTest.FileSystem.Name);
+                options: options);
 
             // Assert
             Response<PathProperties> response = await destFile.GetPropertiesAsync();
@@ -1246,10 +1301,15 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathRenameOptions options = new DataLakePathRenameOptions
+                {
+                    DestinationConditions = conditions
+                };
+
                 // Act
                 destFile = await sourceFile.RenameAsync(
                     destinationPath: destFile.Name,
-                    destinationConditions: conditions);
+                    options: options);
 
                 // Assert
                 Response<PathProperties> response = await destFile.GetPropertiesAsync();
@@ -1273,11 +1333,16 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathRenameOptions options = new DataLakePathRenameOptions
+                {
+                    DestinationConditions = conditions
+                };
+
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     sourceFile.RenameAsync(
                         destinationPath: destFile.Name,
-                        destinationConditions: conditions),
+                        options: options),
                     e => { });
             }
         }
@@ -1301,10 +1366,15 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathRenameOptions options = new DataLakePathRenameOptions
+                {
+                    SourceConditions = conditions
+                };
+
                 // Act
                 destFile = await sourceFile.RenameAsync(
                     destinationPath: destFile.Name,
-                    sourceConditions: conditions);
+                    options: options);
 
                 // Assert
                 Response<PathProperties> response = await destFile.GetPropertiesAsync();
@@ -1328,11 +1398,16 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathRenameOptions options = new DataLakePathRenameOptions
+                {
+                    SourceConditions = conditions
+                };
+
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     sourceFile.RenameAsync(
                         destinationPath: destFile.Name,
-                        sourceConditions: conditions),
+                        options: options),
                     e => { });
             }
         }
