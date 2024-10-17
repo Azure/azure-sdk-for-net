@@ -10,26 +10,12 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
     {
         public void WriteLine(string? message = null)
         {
-            if (message == null)
-            {
-                Console.WriteLine();
-            }
-            else
-            {
-                Console.WriteLine(message);
-            }
+            Console.WriteLine(message);
         }
 
         public void WriteError(string? message = null)
         {
-            if (message == null)
-            {
-                Console.Error.WriteLine();
-            }
-            else
-            {
-                Console.Error.WriteLine(message);
-            }
+            Console.Error.WriteLine(message);
         }
     }
 }
