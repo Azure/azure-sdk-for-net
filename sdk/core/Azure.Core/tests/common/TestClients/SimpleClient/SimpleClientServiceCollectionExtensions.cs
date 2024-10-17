@@ -20,12 +20,12 @@ public static class SimpleClientServiceCollectionExtensions
 
         // Add client options
         services.AddOptions<SimpleClientOptions>()
-                .Configure<IOptions<ClientOptions>>((clientOptions, commonOptions) =>
+                .Configure(clientOptions =>
                 {
-                    clientOptions.Diagnostics.LoggerFactory = commonOptions.Value.Diagnostics.LoggerFactory;
+                    clientOptions.Diagnostics.LoggerFactory = ClientOptions.Default.Diagnostics.LoggerFactory;
                 });
 
-        services.AddSingleton<SimpleClient>(sp =>
+        services.AddSingleton(sp =>
         {
             IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
             IConfiguration clientConfiguration = configuration.GetSection("SimpleClient");
