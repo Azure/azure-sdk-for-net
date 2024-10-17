@@ -59,6 +59,18 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="LicenseProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LicenseProfileResource.CreateResourceIdentifier" /> to create a <see cref="LicenseProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LicenseProfileResource"/> object. </returns>
+        public virtual LicenseProfileResource GetLicenseProfileResource(ResourceIdentifier id)
+        {
+            LicenseProfileResource.ValidateResourceId(id);
+            return new LicenseProfileResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="HybridComputeMachineExtensionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HybridComputeMachineExtensionResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeMachineExtensionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -80,30 +92,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         {
             HybridComputeExtensionValueResource.ValidateResourceId(id);
             return new HybridComputeExtensionValueResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MachineRunCommandResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineRunCommandResource.CreateResourceIdentifier" /> to create a <see cref="MachineRunCommandResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineRunCommandResource"/> object. </returns>
-        public virtual MachineRunCommandResource GetMachineRunCommandResource(ResourceIdentifier id)
-        {
-            MachineRunCommandResource.ValidateResourceId(id);
-            return new MachineRunCommandResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="HybridComputeGatewayResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridComputeGatewayResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridComputeGatewayResource"/> object. </returns>
-        public virtual HybridComputeGatewayResource GetHybridComputeGatewayResource(ResourceIdentifier id)
-        {
-            HybridComputeGatewayResource.ValidateResourceId(id);
-            return new HybridComputeGatewayResource(Client, id);
         }
 
         /// <summary>

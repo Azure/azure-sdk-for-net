@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridCompute
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeExtensionValueData"/>. </summary>
-        public HybridComputeExtensionValueData()
+        internal HybridComputeExtensionValueData()
         {
         }
 

@@ -41,5 +41,12 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
             NetworkSecurityPerimeterConfigurationCollection resourceCollection = await getNspCollection();
             Assert.IsNotNull(resourceCollection);
         }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task CanInvokeNsp()
+        {
+            await invokeNsp();
+        }
     }
 }
