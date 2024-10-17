@@ -16,6 +16,12 @@ parameters:
     default: eng/common/scripts
 
 steps:
+  # There will be transitory period for every language repo where the <language> - pullrequest build definition will run
+  # alongside the <language> - <service> - ci definitions. These pullrequest build definitions will have the ServiceDirectory parameter
+  # set to 'auto', which will allow the expanding and contracting based on PR Diff.
+
+  # The other public CI builds will pass a real service directory, which will not activate the PR diff logic and as such will operate
+  # as before this change.
   - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
       - task: Powershell@2
         displayName: Generate PR Diff
