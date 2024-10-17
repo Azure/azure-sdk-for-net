@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.ContentSafety.Tests.Samples
 {
-    public partial class ContentSafetySamples: SamplesBase<ContentSafetyClientTestEnvironment>
+    public partial class ContentSafetySamples : SamplesBase<ContentSafetyClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
@@ -18,8 +18,8 @@ namespace Azure.AI.ContentSafety.Tests.Samples
         {
             #region Snippet:Azure_AI_ContentSafety_CreateClient
 
-            string endpoint = "https://aacs-bowgong-frc-test.cognitiveservices.azure.com/";
-            string key = "66af262259a34ec5b79cdff3d0f9ac75";
+            string endpoint = TestEnvironment.Endpoint;
+            string key = TestEnvironment.Key;
 
             ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
 
