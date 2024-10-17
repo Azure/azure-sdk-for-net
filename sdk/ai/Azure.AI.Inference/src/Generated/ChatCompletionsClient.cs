@@ -39,7 +39,7 @@ namespace Azure.AI.Inference
         }
 
         /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="endpoint"> Service host. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ChatCompletionsClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ChatCompletionsClientOptions())
@@ -47,7 +47,7 @@ namespace Azure.AI.Inference
         }
 
         /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="endpoint"> Service host. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ChatCompletionsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ChatCompletionsClientOptions())
@@ -55,7 +55,7 @@ namespace Azure.AI.Inference
         }
 
         /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="endpoint"> Service host. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
@@ -73,7 +73,7 @@ namespace Azure.AI.Inference
         }
 
         /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="endpoint"> Service host. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
