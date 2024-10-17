@@ -79,14 +79,14 @@ VpnClientProtocol.OpenVpn
 {
 new RadiusServer("10.2.0.0")
 {
-RadiusServerScore = 20,
+RadiusServerScore = 20L,
 RadiusServerSecret = "radiusServerSecret",
 }
 },
                 },
                 BgpSettings = new BgpSettings()
                 {
-                    Asn = 65515,
+                    Asn = 65515L,
                     BgpPeeringAddress = "10.0.1.30",
                     PeerWeight = 0,
                 },

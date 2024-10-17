@@ -163,10 +163,15 @@ public partial class RoleEligibilityScheduleRequest : Resource
     /// <summary>
     /// Creates a new RoleEligibilityScheduleRequest.
     /// </summary>
-    /// <param name="resourceName">Name of the RoleEligibilityScheduleRequest.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the RoleEligibilityScheduleRequest
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RoleEligibilityScheduleRequest.</param>
-    public RoleEligibilityScheduleRequest(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Authorization/roleEligibilityScheduleRequests", resourceVersion ?? "2020-10-01")
+    public RoleEligibilityScheduleRequest(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Authorization/roleEligibilityScheduleRequests", resourceVersion ?? "2020-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _condition = BicepValue<string>.DefineProperty(this, "Condition", ["properties", "condition"]);
@@ -212,9 +217,14 @@ public partial class RoleEligibilityScheduleRequest : Resource
     /// <summary>
     /// Creates a reference to an existing RoleEligibilityScheduleRequest.
     /// </summary>
-    /// <param name="resourceName">Name of the RoleEligibilityScheduleRequest.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the RoleEligibilityScheduleRequest
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RoleEligibilityScheduleRequest.</param>
     /// <returns>The existing RoleEligibilityScheduleRequest resource.</returns>
-    public static RoleEligibilityScheduleRequest FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static RoleEligibilityScheduleRequest FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

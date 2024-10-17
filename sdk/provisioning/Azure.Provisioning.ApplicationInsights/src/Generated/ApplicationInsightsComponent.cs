@@ -240,10 +240,15 @@ public partial class ApplicationInsightsComponent : Resource
     /// <summary>
     /// Creates a new ApplicationInsightsComponent.
     /// </summary>
-    /// <param name="resourceName">Name of the ApplicationInsightsComponent.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ApplicationInsightsComponent
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsComponent.</param>
-    public ApplicationInsightsComponent(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Insights/components", resourceVersion ?? "2020-02-02")
+    public ApplicationInsightsComponent(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Insights/components", resourceVersion ?? "2020-02-02")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isRequired: true);
@@ -313,11 +318,16 @@ public partial class ApplicationInsightsComponent : Resource
     /// <summary>
     /// Creates a reference to an existing ApplicationInsightsComponent.
     /// </summary>
-    /// <param name="resourceName">Name of the ApplicationInsightsComponent.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ApplicationInsightsComponent
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsComponent.</param>
     /// <returns>The existing ApplicationInsightsComponent resource.</returns>
-    public static ApplicationInsightsComponent FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ApplicationInsightsComponent FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ApplicationInsightsComponent
@@ -329,35 +339,36 @@ public partial class ApplicationInsightsComponent : Resource
         new(minLength: 1, maxLength: 260, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period | ResourceNameCharacters.Parentheses);
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// ApplicationInsightsComponent.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this ApplicationInsightsComponent.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(ApplicationInsightsBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{ResourceName}_{identity.ResourceName}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(ApplicationInsightsBuiltInRole role, UserAssignedIdentity identity) =>
+        new($"{IdentifierName}_{identity.IdentifierName}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(IdentifierName),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
         };
 
     /// <summary>
-    /// Assign a role to a principal that grants access to this
+    /// Creates a role assignment for a principal that grants access to this
     /// ApplicationInsightsComponent.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="identifierNameSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(ApplicationInsightsBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{ResourceName}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(ApplicationInsightsBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? identifierNameSuffix = default) =>
+        new($"{IdentifierName}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}{(identifierNameSuffix is null ? "" : "_")}{identifierNameSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(IdentifierName),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

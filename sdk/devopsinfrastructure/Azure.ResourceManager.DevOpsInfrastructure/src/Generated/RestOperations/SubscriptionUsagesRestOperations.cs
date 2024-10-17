@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-04-preview";
+            _apiVersion = apiVersion ?? "2024-10-19";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

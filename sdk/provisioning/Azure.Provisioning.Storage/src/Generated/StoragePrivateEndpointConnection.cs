@@ -64,10 +64,15 @@ public partial class StoragePrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new StoragePrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the StoragePrivateEndpointConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StoragePrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StoragePrivateEndpointConnection.</param>
-    public StoragePrivateEndpointConnection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/privateEndpointConnections", resourceVersion ?? "2024-01-01")
+    public StoragePrivateEndpointConnection(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Storage/storageAccounts/privateEndpointConnections", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<StoragePrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -207,9 +212,14 @@ public partial class StoragePrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing StoragePrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the StoragePrivateEndpointConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StoragePrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StoragePrivateEndpointConnection.</param>
     /// <returns>The existing StoragePrivateEndpointConnection resource.</returns>
-    public static StoragePrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StoragePrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

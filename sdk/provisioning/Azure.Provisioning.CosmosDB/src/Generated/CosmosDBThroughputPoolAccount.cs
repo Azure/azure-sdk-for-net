@@ -69,10 +69,15 @@ public partial class CosmosDBThroughputPoolAccount : Resource
     /// <summary>
     /// Creates a new CosmosDBThroughputPoolAccount.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBThroughputPoolAccount.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CosmosDBThroughputPoolAccount
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBThroughputPoolAccount.</param>
-    public CosmosDBThroughputPoolAccount(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/throughputPools/throughputPoolAccounts", resourceVersion ?? "2024-02-15-preview")
+    public CosmosDBThroughputPoolAccount(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.DocumentDB/throughputPools/throughputPoolAccounts", resourceVersion ?? "2024-02-15-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _accountLocation = BicepValue<AzureLocation>.DefineProperty(this, "AccountLocation", ["properties", "accountLocation"]);
@@ -98,9 +103,14 @@ public partial class CosmosDBThroughputPoolAccount : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBThroughputPoolAccount.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBThroughputPoolAccount.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the CosmosDBThroughputPoolAccount
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBThroughputPoolAccount.</param>
     /// <returns>The existing CosmosDBThroughputPoolAccount resource.</returns>
-    public static CosmosDBThroughputPoolAccount FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBThroughputPoolAccount FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

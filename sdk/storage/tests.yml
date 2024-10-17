@@ -9,13 +9,10 @@ extends:
     TimeoutInMinutes: 180
     Location: canadacentral
     CloudConfig:
-      Preview:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
-        ServiceConnection: azure-sdk-tests-preview
+      Public:
       PrivatePreview:
         SubscriptionConfiguration: $(sub-config-storage-test-resources)
-    Clouds: Preview
-    SupportedClouds: Preview, PrivatePreview
+    SupportedClouds: Public, PrivatePreview
     MatrixReplace:
       # Use dedicated storage pool in canadacentral with higher memory capacity
       - Pool=.*LINUXPOOL.*/azsdk-pool-mms-ubuntu-2004-storage
@@ -30,7 +27,6 @@ extends:
       DYLD_LIBRARY_PATH: /usr/local/opt/openssl@3/lib
       ${{ if not(contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
         AZURE_ONLY_TEST_LATEST_SERVICE_VERSION: true
-    UseFederatedAuth: true
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
     - bash: brew install openssl@3

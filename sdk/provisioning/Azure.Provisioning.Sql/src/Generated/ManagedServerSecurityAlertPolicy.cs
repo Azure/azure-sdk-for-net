@@ -99,10 +99,15 @@ public partial class ManagedServerSecurityAlertPolicy : Resource
     /// <summary>
     /// Creates a new ManagedServerSecurityAlertPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedServerSecurityAlertPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ManagedServerSecurityAlertPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedServerSecurityAlertPolicy.</param>
-    public ManagedServerSecurityAlertPolicy(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/securityAlertPolicies", resourceVersion ?? "2021-11-01")
+    public ManagedServerSecurityAlertPolicy(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/managedInstances/securityAlertPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _disabledAlerts = BicepList<string>.DefineProperty(this, "DisabledAlerts", ["properties", "disabledAlerts"]);
@@ -137,9 +142,14 @@ public partial class ManagedServerSecurityAlertPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing ManagedServerSecurityAlertPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedServerSecurityAlertPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ManagedServerSecurityAlertPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedServerSecurityAlertPolicy.</param>
     /// <returns>The existing ManagedServerSecurityAlertPolicy resource.</returns>
-    public static ManagedServerSecurityAlertPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedServerSecurityAlertPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

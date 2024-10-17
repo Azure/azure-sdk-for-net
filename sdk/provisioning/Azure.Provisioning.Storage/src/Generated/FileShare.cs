@@ -173,10 +173,15 @@ public partial class FileShare : Resource
     /// <summary>
     /// Creates a new FileShare.
     /// </summary>
-    /// <param name="resourceName">Name of the FileShare.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the FileShare resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the FileShare.</param>
-    public FileShare(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/fileServices/shares", resourceVersion ?? "2024-01-01")
+    public FileShare(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Storage/storageAccounts/fileServices/shares", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _accessTier = BicepValue<FileShareAccessTier>.DefineProperty(this, "AccessTier", ["properties", "accessTier"]);
@@ -322,11 +327,16 @@ public partial class FileShare : Resource
     /// <summary>
     /// Creates a reference to an existing FileShare.
     /// </summary>
-    /// <param name="resourceName">Name of the FileShare.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the FileShare resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the FileShare.</param>
     /// <returns>The existing FileShare resource.</returns>
-    public static FileShare FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static FileShare FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this FileShare resource.

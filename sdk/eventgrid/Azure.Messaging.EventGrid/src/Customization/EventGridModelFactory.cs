@@ -694,6 +694,29 @@ namespace Azure.Messaging.EventGrid
             return new AcsRouterJobReceivedEventData(jobId, channelReference, channelId, queueId, labels, tags, status, classificationPolicyId, priority, requestedWorkerSelectors?.ToList(), scheduledOn, unavailableForMatching);
         }
 
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsIncomingCallEventData"/>. </summary>
+        /// <param name="toCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="fromCommunicationIdentifier"> The communication identifier of the user who initiated the call. </param>
+        /// <param name="serverCallId"> The Id of the server call. </param>
+        /// <param name="callerDisplayName"> Display name of caller. </param>
+        /// <param name="customContext"> Custom Context of Incoming Call. </param>
+        /// <param name="incomingCallContext"> Signed incoming call context. </param>
+        /// <param name="correlationId"> CorrelationId (CallId). </param>
+        /// <returns> A new <see cref="SystemEvents.AcsIncomingCallEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsIncomingCallEventData AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, string correlationId)
+        {
+            return new AcsIncomingCallEventData(
+                toCommunicationIdentifier,
+                fromCommunicationIdentifier,
+                serverCallId,
+                callerDisplayName,
+                customContext,
+                incomingCallContext,
+                default,
+                correlationId);
+        }
+
         /// <summary> Initializes a new instance of ResourceNotificationsResourceUpdatedDetails. </summary>
         /// <param name="id"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>

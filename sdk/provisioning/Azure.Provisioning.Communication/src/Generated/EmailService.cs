@@ -63,10 +63,15 @@ public partial class EmailService : Resource
     /// <summary>
     /// Creates a new EmailService.
     /// </summary>
-    /// <param name="resourceName">Name of the EmailService.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the EmailService resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EmailService.</param>
-    public EmailService(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Communication/emailServices", resourceVersion ?? "2023-04-01")
+    public EmailService(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Communication/emailServices", resourceVersion ?? "2023-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -101,9 +106,14 @@ public partial class EmailService : Resource
     /// <summary>
     /// Creates a reference to an existing EmailService.
     /// </summary>
-    /// <param name="resourceName">Name of the EmailService.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the EmailService resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EmailService.</param>
     /// <returns>The existing EmailService resource.</returns>
-    public static EmailService FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EmailService FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

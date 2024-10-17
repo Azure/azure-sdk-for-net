@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CloudMac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CloudMachine.Tests", "tests\Azure.Provisioning.CloudMachine.Tests.csproj", "{46DCEF27-4157-4FB6-A283-B8484EC45665}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{67BF7830-BE03-4F13-B062-5D747A553542}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{46DCEF27-4157-4FB6-A283-B8484EC45665}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46DCEF27-4157-4FB6-A283-B8484EC45665}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46DCEF27-4157-4FB6-A283-B8484EC45665}.Release|Any CPU.Build.0 = Release|Any CPU
-		{67BF7830-BE03-4F13-B062-5D747A553542}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{67BF7830-BE03-4F13-B062-5D747A553542}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{67BF7830-BE03-4F13-B062-5D747A553542}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{67BF7830-BE03-4F13-B062-5D747A553542}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

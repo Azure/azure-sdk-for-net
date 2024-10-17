@@ -105,7 +105,7 @@ namespace Azure.Storage.DataMovement
                 {
                     if (!part.JobPartStatus.HasCompletedSuccessfully)
                     {
-                        part.JobPartStatus.TrySetTransferStateChange(DataTransferState.Queued);
+                        part.JobPartStatus.SetTransferStateChange(DataTransferState.Queued);
                         yield return part;
                     }
                 }
