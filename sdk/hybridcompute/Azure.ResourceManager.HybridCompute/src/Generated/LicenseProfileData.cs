@@ -156,6 +156,6 @@ namespace Azure.ResourceManager.HybridCompute
         public string AssignedLicense { get; set; }
         /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
         [WirePath("properties.softwareAssuranceCustomer")]
-        public bool? SoftwareAssuranceCustomer { get; set; }
+        public bool? IsSoftwareAssuranceCustomer { get; set; }
     }
 }
