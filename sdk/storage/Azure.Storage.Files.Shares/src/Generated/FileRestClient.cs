@@ -52,7 +52,7 @@ namespace Azure.Storage.Files.Shares
             _allowSourceTrailingDot = allowSourceTrailingDot;
         }
 
-        internal HttpMessage CreateCreateRequest(long fileContentLength, int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, long? owner, long? group, string fileMode, NfsFileType? nfsFileType, FileHttpHeaders fileHttpHeaders, ShareFileRequestConditions shareFileRequestConditions)
+        internal HttpMessage CreateCreateRequest(long fileContentLength, int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string owner, string group, string fileMode, NfsFileType? nfsFileType, FileHttpHeaders fileHttpHeaders, ShareFileRequestConditions shareFileRequestConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -137,11 +137,11 @@ namespace Azure.Storage.Files.Shares
             }
             if (owner != null)
             {
-                request.Headers.Add("x-ms-owner", owner.Value);
+                request.Headers.Add("x-ms-owner", owner);
             }
             if (group != null)
             {
-                request.Headers.Add("x-ms-group", group.Value);
+                request.Headers.Add("x-ms-group", group);
             }
             if (fileMode != null)
             {
@@ -173,7 +173,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FileCreateHeaders>> CreateAsync(long fileContentLength, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, long? owner = null, long? group = null, string fileMode = null, NfsFileType? nfsFileType = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileCreateHeaders>> CreateAsync(long fileContentLength, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, NfsFileType? nfsFileType = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(fileContentLength, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, nfsFileType, fileHttpHeaders, shareFileRequestConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -205,7 +205,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FileCreateHeaders> Create(long fileContentLength, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, long? owner = null, long? group = null, string fileMode = null, NfsFileType? nfsFileType = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileCreateHeaders> Create(long fileContentLength, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, NfsFileType? nfsFileType = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(fileContentLength, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, nfsFileType, fileHttpHeaders, shareFileRequestConditions);
             _pipeline.Send(message, cancellationToken);
@@ -447,7 +447,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateSetHttpHeadersRequest(int? timeout, long? fileContentLength, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, long? owner, long? group, string fileMode, FileHttpHeaders fileHttpHeaders, ShareFileRequestConditions shareFileRequestConditions)
+        internal HttpMessage CreateSetHttpHeadersRequest(int? timeout, long? fileContentLength, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string owner, string group, string fileMode, FileHttpHeaders fileHttpHeaders, ShareFileRequestConditions shareFileRequestConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -531,11 +531,11 @@ namespace Azure.Storage.Files.Shares
             }
             if (owner != null)
             {
-                request.Headers.Add("x-ms-owner", owner.Value);
+                request.Headers.Add("x-ms-owner", owner);
             }
             if (group != null)
             {
-                request.Headers.Add("x-ms-group", group.Value);
+                request.Headers.Add("x-ms-group", group);
             }
             if (fileMode != null)
             {
@@ -561,7 +561,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FileSetHttpHeadersHeaders>> SetHttpHeadersAsync(int? timeout = null, long? fileContentLength = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, long? owner = null, long? group = null, string fileMode = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileSetHttpHeadersHeaders>> SetHttpHeadersAsync(int? timeout = null, long? fileContentLength = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetHttpHeadersRequest(timeout, fileContentLength, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, fileHttpHeaders, shareFileRequestConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -591,7 +591,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FileSetHttpHeadersHeaders> SetHttpHeaders(int? timeout = null, long? fileContentLength = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, long? owner = null, long? group = null, string fileMode = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileSetHttpHeadersHeaders> SetHttpHeaders(int? timeout = null, long? fileContentLength = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetHttpHeadersRequest(timeout, fileContentLength, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, fileHttpHeaders, shareFileRequestConditions);
             _pipeline.Send(message, cancellationToken);
@@ -1332,7 +1332,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateStartCopyRequest(string copySource, int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, long? owner, long? group, string fileMode, ModeCopyMode? fileModeCopyMode, OwnerCopyMode? fileOwnerCopyMode, CopyFileSmbInfo copyFileSmbInfo, ShareFileRequestConditions shareFileRequestConditions)
+        internal HttpMessage CreateStartCopyRequest(string copySource, int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string owner, string group, string fileMode, ModeCopyMode? fileModeCopyMode, OwnerCopyMode? fileOwnerCopyMode, CopyFileSmbInfo copyFileSmbInfo, ShareFileRequestConditions shareFileRequestConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1408,11 +1408,11 @@ namespace Azure.Storage.Files.Shares
             }
             if (owner != null)
             {
-                request.Headers.Add("x-ms-owner", owner.Value);
+                request.Headers.Add("x-ms-owner", owner);
             }
             if (group != null)
             {
-                request.Headers.Add("x-ms-group", group.Value);
+                request.Headers.Add("x-ms-group", group);
             }
             if (fileMode != null)
             {
@@ -1446,7 +1446,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileStartCopyHeaders>> StartCopyAsync(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, long? owner = null, long? group = null, string fileMode = null, ModeCopyMode? fileModeCopyMode = null, OwnerCopyMode? fileOwnerCopyMode = null, CopyFileSmbInfo copyFileSmbInfo = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileStartCopyHeaders>> StartCopyAsync(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string owner = null, string group = null, string fileMode = null, ModeCopyMode? fileModeCopyMode = null, OwnerCopyMode? fileOwnerCopyMode = null, CopyFileSmbInfo copyFileSmbInfo = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
@@ -1481,7 +1481,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<FileStartCopyHeaders> StartCopy(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, long? owner = null, long? group = null, string fileMode = null, ModeCopyMode? fileModeCopyMode = null, OwnerCopyMode? fileOwnerCopyMode = null, CopyFileSmbInfo copyFileSmbInfo = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileStartCopyHeaders> StartCopy(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string owner = null, string group = null, string fileMode = null, ModeCopyMode? fileModeCopyMode = null, OwnerCopyMode? fileOwnerCopyMode = null, CopyFileSmbInfo copyFileSmbInfo = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
@@ -1914,7 +1914,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateCreateSymbolicLinkRequest(string linkText, int? timeout, IDictionary<string, string> metadata, string fileCreationTime, string fileLastWriteTime, long? owner, long? group, ShareFileRequestConditions shareFileRequestConditions)
+        internal HttpMessage CreateCreateSymbolicLinkRequest(string linkText, int? timeout, IDictionary<string, string> metadata, string fileCreationTime, string fileLastWriteTime, string owner, string group, ShareFileRequestConditions shareFileRequestConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1946,11 +1946,11 @@ namespace Azure.Storage.Files.Shares
             }
             if (owner != null)
             {
-                request.Headers.Add("x-ms-owner", owner.Value);
+                request.Headers.Add("x-ms-owner", owner);
             }
             if (group != null)
             {
-                request.Headers.Add("x-ms-group", group.Value);
+                request.Headers.Add("x-ms-group", group);
             }
             request.Headers.Add("x-ms-link-text", linkText);
             if (_fileRequestIntent != null)
@@ -1972,7 +1972,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkText"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileCreateSymbolicLinkHeaders>> CreateSymbolicLinkAsync(string linkText, int? timeout = null, IDictionary<string, string> metadata = null, string fileCreationTime = null, string fileLastWriteTime = null, long? owner = null, long? group = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileCreateSymbolicLinkHeaders>> CreateSymbolicLinkAsync(string linkText, int? timeout = null, IDictionary<string, string> metadata = null, string fileCreationTime = null, string fileLastWriteTime = null, string owner = null, string group = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
             if (linkText == null)
             {
@@ -2002,7 +2002,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkText"/> is null. </exception>
-        public ResponseWithHeaders<FileCreateSymbolicLinkHeaders> CreateSymbolicLink(string linkText, int? timeout = null, IDictionary<string, string> metadata = null, string fileCreationTime = null, string fileLastWriteTime = null, long? owner = null, long? group = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileCreateSymbolicLinkHeaders> CreateSymbolicLink(string linkText, int? timeout = null, IDictionary<string, string> metadata = null, string fileCreationTime = null, string fileLastWriteTime = null, string owner = null, string group = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
             if (linkText == null)
             {

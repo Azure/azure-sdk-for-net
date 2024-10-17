@@ -29,12 +29,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Optional. The owner user identifier (UID) to be set on the symbolic link. The default value is 0 (root).
         /// </summary>
-        public uint? Owner { get; set; }
+        public string Owner { get; set; }
 
         /// <summary>
         /// Optional. The owner group identifier (GID) to be set on the symbolic link. The default value is 0 (root group).
         /// </summary>
-        public uint? Group { get; set; }
+        public string Group { get; set; }
 
         /// <summary>
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions

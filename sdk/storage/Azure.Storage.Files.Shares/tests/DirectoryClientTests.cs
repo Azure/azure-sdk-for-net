@@ -596,8 +596,8 @@ namespace Azure.Storage.Files.Shares.Tests
             var name = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(name));
 
-            uint owner = 345;
-            uint group = 123;
+            string owner = "345";
+            string group = "123";
             string fileMode = "7777";
 
             ShareDirectoryCreateOptions options = new ShareDirectoryCreateOptions
@@ -1287,8 +1287,8 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
 
-            uint owner = 345;
-            uint group = 123;
+            string owner = "345";
+            string group = "123";
             string fileMode = "7777";
 
             ShareDirectorySetHttpHeadersOptions options = new ShareDirectorySetHttpHeadersOptions

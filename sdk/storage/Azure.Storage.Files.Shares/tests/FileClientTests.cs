@@ -738,8 +738,8 @@ namespace Azure.Storage.Files.Shares.Tests
             string name = GetNewFileName();
             ShareFileClient file = InstrumentClient(directory.GetFileClient(name));
 
-            uint owner = 345;
-            uint group = 123;
+            string owner = "345";
+            string group = "123";
             string fileMode = "7777";
 
             ShareFileCreateOptions options = new ShareFileCreateOptions
@@ -1781,8 +1781,8 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(nfs: true);
 
-            uint owner = 345;
-            uint group = 123;
+            string owner = "345";
+            string group = "123";
             string fileMode = "7777";
 
             ShareFileSetHttpHeadersOptions options = new ShareFileSetHttpHeadersOptions
@@ -2560,8 +2560,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             Response<ShareFileProperties> sourceProperties =  await source.File.GetPropertiesAsync();
 
-            uint? owner;
-            uint? group;
+            string owner;
+            string group;
             NfsFileMode fileMode;
 
             ShareFileCopyOptions options = new ShareFileCopyOptions
@@ -2571,8 +2571,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             if (overwriteOwnerAndMode)
             {
-                owner = 54321;
-                group = 12345;
+                owner = "54321";
+                group = "12345";
                 fileMode = NfsFileMode.ParseOctalFileMode("7777");
                 options.NfsProperties.Owner = owner;
                 options.NfsProperties.Group = group;
@@ -6814,8 +6814,8 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient symlink = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
             IDictionary<string, string> metdata = BuildMetadata();
-            uint owner = 345;
-            uint group = 123;
+            string owner = "345";
+            string group = "123";
             DateTimeOffset fileCreatedOn = new DateTimeOffset(2024, 10, 15, 0, 0, 0, TimeSpan.Zero);
             DateTimeOffset fileLastWrittenOn = new DateTimeOffset(2025, 5, 2, 0, 0, 0, TimeSpan.Zero);
 

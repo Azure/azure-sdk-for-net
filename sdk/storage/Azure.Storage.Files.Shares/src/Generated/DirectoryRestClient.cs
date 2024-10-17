@@ -49,7 +49,7 @@ namespace Azure.Storage.Files.Shares
             _allowSourceTrailingDot = allowSourceTrailingDot;
         }
 
-        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, long? owner, long? group, string fileMode)
+        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string owner, string group, string fileMode)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -105,11 +105,11 @@ namespace Azure.Storage.Files.Shares
             }
             if (owner != null)
             {
-                request.Headers.Add("x-ms-owner", owner.Value);
+                request.Headers.Add("x-ms-owner", owner);
             }
             if (group != null)
             {
-                request.Headers.Add("x-ms-group", group.Value);
+                request.Headers.Add("x-ms-group", group);
             }
             if (fileMode != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<DirectoryCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, long? owner = null, long? group = null, string fileMode = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectoryCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -161,7 +161,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<DirectoryCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, long? owner = null, long? group = null, string fileMode = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectoryCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode);
             _pipeline.Send(message, cancellationToken);
@@ -301,7 +301,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(int? timeout, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, long? owner, long? group, string fileMode)
+        internal HttpMessage CreateSetPropertiesRequest(int? timeout, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string owner, string group, string fileMode)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -354,11 +354,11 @@ namespace Azure.Storage.Files.Shares
             }
             if (owner != null)
             {
-                request.Headers.Add("x-ms-owner", owner.Value);
+                request.Headers.Add("x-ms-owner", owner);
             }
             if (group != null)
             {
-                request.Headers.Add("x-ms-group", group.Value);
+                request.Headers.Add("x-ms-group", group);
             }
             if (fileMode != null)
             {
@@ -381,7 +381,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<DirectorySetPropertiesHeaders>> SetPropertiesAsync(int? timeout = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, long? owner = null, long? group = null, string fileMode = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectorySetPropertiesHeaders>> SetPropertiesAsync(int? timeout = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetPropertiesRequest(timeout, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -408,7 +408,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<DirectorySetPropertiesHeaders> SetProperties(int? timeout = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, long? owner = null, long? group = null, string fileMode = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectorySetPropertiesHeaders> SetProperties(int? timeout = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetPropertiesRequest(timeout, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode);
             _pipeline.Send(message, cancellationToken);

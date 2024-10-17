@@ -68,8 +68,8 @@ namespace Azure.Storage.Files.Shares.Models
             string fileId = default,
             string fileParentId = default,
             NfsFileMode nfsFileMode = default,
-            uint owner = default,
-            uint group = default,
+            string owner = default,
+            string group = default,
             NfsFileType nfsFileType = default)
             => new ShareFileInfo
             {

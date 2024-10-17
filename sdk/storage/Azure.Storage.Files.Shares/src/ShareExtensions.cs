@@ -119,8 +119,8 @@ namespace Azure.Storage.Files.Shares
                 NfsProperties = new FileNfsProperties
                 {
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = Convert.ToUInt32(response.Headers.Owner),
-                    Group = Convert.ToUInt32(response.Headers.Group),
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group,
                     FileType = response.Headers.NfsFileType,
                 }
             };
@@ -151,8 +151,8 @@ namespace Azure.Storage.Files.Shares
                 NfsProperties = new FileNfsProperties()
                 {
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = Convert.ToUInt32(response.Headers.Owner),
-                    Group = Convert.ToUInt32(response.Headers.Group),
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group,
                     FileType = response.Headers.NfsFileType,
                 }
             };
@@ -181,8 +181,8 @@ namespace Azure.Storage.Files.Shares
                 NfsProperties = new FileNfsProperties
                 {
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = Convert.ToUInt32(response.Headers.Owner),
-                    Group = Convert.ToUInt32(response.Headers.Group)
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group
                 }
             };
         }
@@ -319,8 +319,8 @@ namespace Azure.Storage.Files.Shares
                 NfsProperties = new FileNfsProperties()
                 {
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = Convert.ToUInt32(response.Headers.Owner),
-                    Group = Convert.ToUInt32(response.Headers.Group),
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group,
                     FileType = response.Headers.NfsFileType,
                 }
             };
@@ -382,8 +382,8 @@ namespace Azure.Storage.Files.Shares
                 NfsProperties = new FileNfsProperties()
                 {
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = Convert.ToUInt32(response.Headers.Owner),
-                    Group = Convert.ToUInt32(response.Headers.Group),
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group,
                     FileType = response.Headers.NfsFileType,
                     LinkCount = response.Headers.LinkCount
                 }
@@ -426,8 +426,8 @@ namespace Azure.Storage.Files.Shares
                 NfsProperties = new FileNfsProperties()
                 {
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = Convert.ToUInt32(response.Headers.Owner),
-                    Group = Convert.ToUInt32(response.Headers.Group),
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group,
                     LinkCount = response.Headers.LinkCount
                 }
             };
@@ -933,8 +933,8 @@ namespace Azure.Storage.Files.Shares
                     NfsProperties = new FileNfsProperties
                     {
                         FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                        Owner = Convert.ToUInt32(response.Headers.Owner),
-                        Group = Convert.ToUInt32(response.Headers.Group),
+                        Owner = response.Headers.Owner,
+                        Group = response.Headers.Group,
                         LinkCount = response.Headers.LinkCount,
                     }
                 }
@@ -1088,8 +1088,8 @@ namespace Azure.Storage.Files.Shares
                 {
                     FileType = response.Headers.NfsFileType,
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = Convert.ToUInt32(response.Headers.Owner),
-                    Group = Convert.ToUInt32(response.Headers.Group)
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group
                 }
             };
         }
@@ -1115,8 +1115,8 @@ namespace Azure.Storage.Files.Shares
                 NfsProperties = new FileNfsProperties()
                 {
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = Convert.ToUInt32(response.Headers.Owner),
-                    Group = Convert.ToUInt32(response.Headers.Group),
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group,
                     LinkCount = response.Headers.LinkCount,
                     FileType = response.Headers.NfsFileType
                 }
