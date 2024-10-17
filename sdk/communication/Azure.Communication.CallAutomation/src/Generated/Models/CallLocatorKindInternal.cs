@@ -22,13 +22,19 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string UnknownValue = "unknown";
         private const string GroupCallLocatorValue = "groupCallLocator";
         private const string ServerCallLocatorValue = "serverCallLocator";
+        private const string RoomCallLocatorValue = "roomCallLocator";
 
+        /// <summary> unknown. </summary>
+        public static CallLocatorKindInternal Unknown { get; } = new CallLocatorKindInternal(UnknownValue);
         /// <summary> groupCallLocator. </summary>
         public static CallLocatorKindInternal GroupCallLocator { get; } = new CallLocatorKindInternal(GroupCallLocatorValue);
         /// <summary> serverCallLocator. </summary>
         public static CallLocatorKindInternal ServerCallLocator { get; } = new CallLocatorKindInternal(ServerCallLocatorValue);
+        /// <summary> roomCallLocator. </summary>
+        public static CallLocatorKindInternal RoomCallLocator { get; } = new CallLocatorKindInternal(RoomCallLocatorValue);
         /// <summary> Determines if two <see cref="CallLocatorKindInternal"/> values are the same. </summary>
         public static bool operator ==(CallLocatorKindInternal left, CallLocatorKindInternal right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CallLocatorKindInternal"/> values are not the same. </summary>

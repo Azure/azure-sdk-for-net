@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The latest version of the CallAutomation service.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_10_03_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2024_06_15_Preview;
 
         internal string ApiVersion { get; }
 
@@ -33,9 +33,9 @@ namespace Azure.Communication.CallAutomation
             ApiVersion = version switch
             {
                 ServiceVersion.V2023_03_06 => "2023-03-06",
-                ServiceVersion.V2023_06_15_Preview => "2023-06-15-preview",
                 ServiceVersion.V2023_10_15 => "2023-10-15",
-                ServiceVersion.V2023_10_03_Preview => "2023-10-03-preview",
+                ServiceVersion.V2024_04_15 => "2024-04-15",
+                ServiceVersion.V2024_06_15_Preview => "2024-06-15-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -52,19 +52,19 @@ namespace Azure.Communication.CallAutomation
             V2023_03_06 = 1,
 
             /// <summary>
-            /// The BETA2 (1.1.0-beta) of the CallAutomation service.
-            /// </summary>
-            V2023_06_15_Preview = 2,
-
-            /// <summary>
             /// The GA2 (1.1.0) of the CallAutomation service.
             /// </summary>
-            V2023_10_15 = 3,
+            V2023_10_15 = 2,
 
             /// <summary>
-            /// Latest ALPHA3 (1.2.0-alpha) preview of the CallAutomation service.
+            /// Latest GA3 (1.2.0) of the CallAutomation service.
             /// </summary>
-            V2023_10_03_Preview = 4
+            V2024_04_15 = 3,
+
+            /// <summary>
+            /// Latest BETA4 (1.3.0-beta) preview of the CallAutomation service.
+            /// </summary>
+            V2024_06_15_Preview = 4
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

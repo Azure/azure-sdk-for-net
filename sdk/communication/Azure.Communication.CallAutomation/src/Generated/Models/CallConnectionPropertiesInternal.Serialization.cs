@@ -23,8 +23,6 @@ namespace Azure.Communication.CallAutomation
             IReadOnlyList<CommunicationIdentifierModel> targets = default;
             CallConnectionState? callConnectionState = default;
             string callbackUri = default;
-            string mediaSubscriptionId = default;
-            string dataSubscriptionId = default;
             PhoneNumberIdentifierModel sourceCallerIdNumber = default;
             string sourceDisplayName = default;
             CommunicationIdentifierModel source = default;
@@ -69,16 +67,6 @@ namespace Azure.Communication.CallAutomation
                 if (property.NameEquals("callbackUri"u8))
                 {
                     callbackUri = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("mediaSubscriptionId"u8))
-                {
-                    mediaSubscriptionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dataSubscriptionId"u8))
-                {
-                    dataSubscriptionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceCallerIdNumber"u8))
@@ -134,8 +122,6 @@ namespace Azure.Communication.CallAutomation
                 targets ?? new ChangeTrackingList<CommunicationIdentifierModel>(),
                 callConnectionState,
                 callbackUri,
-                mediaSubscriptionId,
-                dataSubscriptionId,
                 sourceCallerIdNumber,
                 sourceDisplayName,
                 source,
