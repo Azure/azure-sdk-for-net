@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacities_Get</description>
+        /// <description>FabricCapacity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacities_Get</description>
+        /// <description>FabricCapacity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

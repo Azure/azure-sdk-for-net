@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         public async Task Get_GetACapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_Get.json
-            // this example is just showing the usage of "FabricCapacities_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FabricCapacity_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         public async Task Update_UpdateCapacityProperties()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_Update.json
-            // this example is just showing the usage of "FabricCapacities_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FabricCapacity_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         public async Task Delete_DeleteACapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_Delete.json
-            // this example is just showing the usage of "FabricCapacities_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FabricCapacity_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
