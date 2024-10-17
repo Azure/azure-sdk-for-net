@@ -9,7 +9,6 @@
 
 ### Breaking Changes
 - WorkloadNetworkResource is now a singleton resource
-- CommonClusterProperties type has been removed
 
 ## 1.3.0 (2024-01-22)
 
