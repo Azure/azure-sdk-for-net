@@ -13,10 +13,7 @@ namespace Azure.Generator.Providers
     internal record HttpMessageProvider : HttpMessageApi
     {
         private static HttpMessageApi? _instance;
-        internal static HttpMessageApi Instance => _instance ??= new HttpMessageProvider();
-        private HttpMessageProvider() : base(typeof(HttpMessage), Empty)
-        {
-        }
+        internal static HttpMessageApi Instance => _instance ??= new HttpMessageProvider(Empty);
 
         public HttpMessageProvider(ValueExpression original) : base(typeof(HttpMessage), original)
         {

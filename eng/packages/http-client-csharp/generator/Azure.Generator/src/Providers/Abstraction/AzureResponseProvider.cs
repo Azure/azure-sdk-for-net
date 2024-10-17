@@ -13,10 +13,7 @@ namespace Azure.Generator.Providers
     internal record AzureResponseProvider : HttpResponseApi
     {
         private static HttpResponseApi? _instance;
-        internal static HttpResponseApi Instance => _instance ??= new AzureResponseProvider();
-        private AzureResponseProvider() : base(typeof(Response), Empty)
-        {
-        }
+        internal static HttpResponseApi Instance => _instance ??= new AzureResponseProvider(Empty);
 
         public AzureResponseProvider(ValueExpression original) : base(typeof(Response), original)
         {
