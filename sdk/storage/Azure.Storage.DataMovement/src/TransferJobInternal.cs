@@ -150,7 +150,7 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
 
             _dataTransfer = dataTransfer ?? throw Errors.ArgumentNull(nameof(dataTransfer));
-            _dataTransfer.TransferStatus.TrySetTransferStateChange(DataTransferState.Queued);
+            _dataTransfer.TransferStatus.SetTransferStateChange(DataTransferState.Queued);
             _checkpointer = checkPointer;
             _arrayPool = arrayPool;
             _jobParts = new List<JobPartInternal>();
@@ -344,7 +344,7 @@ namespace Azure.Storage.DataMovement
             }
             else if (jobPartStatus.HasFailedItems)
             {
-                if (_dataTransfer._state.TrySetFailedItemsState())
+                if (_dataTransfer._state.SetFailedItemsState())
                 {
                     await SetCheckpointerStatus().ConfigureAwait(false);
                     await OnJobPartStatusChangedAsync().ConfigureAwait(false);
@@ -352,7 +352,7 @@ namespace Azure.Storage.DataMovement
             }
             else if (jobPartStatus.HasSkippedItems)
             {
-                if (_dataTransfer._state.TrySetSkippedItemsState())
+                if (_dataTransfer._state.SetSkippedItemsState())
                 {
                     await SetCheckpointerStatus().ConfigureAwait(false);
                     await OnJobPartStatusChangedAsync().ConfigureAwait(false);
@@ -387,7 +387,7 @@ namespace Azure.Storage.DataMovement
 
         public async Task OnJobStateChangedAsync(DataTransferState state)
         {
-            if (_dataTransfer._state.TrySetTransferState(state))
+            if (_dataTransfer._state.SetTransferState(state))
             {
                 // If we are in a final state, dispose the JobPartEvent handlers
                 if (state == DataTransferState.Completed ||
