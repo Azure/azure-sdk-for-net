@@ -16,15 +16,16 @@ internal enum LogLevel
 
 internal class Logger : ILogger
 {
-    internal static bool EnableDebug { get { return !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(Constants.s_pLAYWRIGHT_SERVICE_DEBUG)); } set { } }
+    internal static string SdkLogLevel => Environment.GetEnvironmentVariable(Constants.s_pLAYWRIGHT_SERVICE_DEBUG);
 
 #pragma warning disable CA1822 // Mark members as static
     private void Log(LogLevel level, string message)
 #pragma warning restore CA1822 // Mark members as static
     {
-        if (EnableDebug)
+        if (Enum.TryParse(SdkLogLevel, out LogLevel configuredLevel) && level >= configuredLevel)
         {
-            Console.WriteLine($"{DateTime.Now} [{level}]: {message}");
+            System.IO.TextWriter writer = level == LogLevel.Error || level == LogLevel.Warning ? Console.Error : Console.Out;
+            writer.WriteLine($"{DateTime.Now} [{level}]: {message}");
         }
     }
 

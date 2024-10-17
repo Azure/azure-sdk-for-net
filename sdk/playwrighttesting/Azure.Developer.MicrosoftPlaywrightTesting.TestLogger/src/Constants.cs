@@ -187,7 +187,7 @@ internal class Constants
     // Default constants
     internal static readonly string s_default_os = ServiceOs.Linux;
     internal static readonly string s_default_expose_network = "<loopback>";
-    internal static readonly string s_pLAYWRIGHT_SERVICE_DEBUG = "PLAYWRIGHT_SERVICE_DEBUG";
+    internal static readonly string s_pLAYWRIGHT_SERVICE_DEBUG = "Logging__LogLevel__MicrosoftPlaywrightTesting";
 
     // Entra id access token constants
     internal static readonly int s_entra_access_token_lifetime_left_threshold_in_minutes_for_rotation = 15;
