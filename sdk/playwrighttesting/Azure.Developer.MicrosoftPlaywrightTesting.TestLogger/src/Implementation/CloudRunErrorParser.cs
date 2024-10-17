@@ -8,7 +8,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
 {
     internal class CloudRunErrorParser : ICloudRunErrorParser
     {
-        private List<string> InformationalMessages { get; set; } = new();
+        internal List<string> InformationalMessages { get; private set; } = new();
         private List<string> ProcessedErrorMessageKeys { get; set; } = new();
         private readonly ILogger _logger;
         private readonly IConsoleWriter _consoleWriter;

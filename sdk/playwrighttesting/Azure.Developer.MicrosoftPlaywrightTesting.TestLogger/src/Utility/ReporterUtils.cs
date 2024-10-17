@@ -115,7 +115,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
                 return OSConstants.s_wINDOWS;
         }
 
-        public TokenDetails ParseWorkspaceIdFromAccessToken(JsonWebTokenHandler? jsonWebTokenHandler, string? accessToken)
+        internal TokenDetails ParseWorkspaceIdFromAccessToken(JsonWebTokenHandler? jsonWebTokenHandler, string? accessToken)
         {
             if (jsonWebTokenHandler == null)
             {
@@ -156,7 +156,8 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
                 throw;
             }
         }
-        public  bool IsTimeGreaterThanCurrentPlus10Minutes(string sasUri)
+
+        internal bool IsTimeGreaterThanCurrentPlus10Minutes(string sasUri)
         {
             try
             {

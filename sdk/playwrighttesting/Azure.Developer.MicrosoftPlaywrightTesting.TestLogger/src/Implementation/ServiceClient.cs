@@ -145,7 +145,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             errorObject.TryGetValue((int)statusCode, out string? errorMessage);
             if (errorMessage == null)
                 errorMessage = ReporterConstants.s_uNKNOWN_ERROR_MESSAGE;
-            _cloudRunErrorParser.TryPushMessageAndKey(errorMessage, operationName);
+            _cloudRunErrorParser.TryPushMessageAndKey(errorMessage, statusCode.ToString());
         }
     }
 }

@@ -297,28 +297,28 @@ internal static class TestResultErrorConstants
         {
             Key = "InvalidWorkspace_Scalable",
             Message = "The specified workspace does not exist. Please verify your workspace settings.",
-            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*403 Forbidden)(?=.*InvalidAccountOrSubscriptionState)", RegexOptions.IgnoreCase),
+            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*403 Forbidden)(?=[\s\S]*InvalidAccountOrSubscriptionState)", RegexOptions.IgnoreCase),
             Type = TestErrorType.Scalable
         },
         new TestResultError
         {
             Key = "InvalidAccessToken",
             Message = "The provided access token does not match the specified workspace URL. Please verify that both values are correct.",
-            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*403 Forbidden)(?=.*InvalidAccessToken)", RegexOptions.IgnoreCase),
+            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*403 Forbidden)(?=[\s\S]*InvalidAccessToken)", RegexOptions.IgnoreCase),
             Type = TestErrorType.Scalable
         },
         new TestResultError
         {
             Key = "AccessTokenOrUserOrWorkspaceNotFound_Scalable",
             Message = "The data for the user, workspace or access token was not found. Please check the request or create new token and try again.",
-            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*404 Not Found)(?=.*NotFound)", RegexOptions.IgnoreCase),
+            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*404 Not Found)(?=[\s\S]*NotFound)", RegexOptions.IgnoreCase),
             Type = TestErrorType.Scalable
         },
         new TestResultError
         {
             Key = "AccessKeyBasedAuthNotSupported_Scalable",
             Message = "Authentication through service access token is disabled for this workspace. Please use Entra ID to authenticate.",
-            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*403 Forbidden)(?=.*AccessKeyBasedAuthNotSupported)", RegexOptions.IgnoreCase),
+            Pattern = new Regex(@"(?=.*Microsoft\.Playwright\.PlaywrightException)(?=.*403 Forbidden)(?=[\s\S]*AccessKeyBasedAuthNotSupported)", RegexOptions.IgnoreCase),
             Type = TestErrorType.Scalable
         },
         new TestResultError
