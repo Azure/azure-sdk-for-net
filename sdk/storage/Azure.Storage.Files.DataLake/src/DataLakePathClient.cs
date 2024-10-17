@@ -816,6 +816,7 @@ namespace Azure.Storage.Files.DataLake
                 timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                 expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                 encryptionContext: options?.EncryptionContext,
+                clientTransactionId: options?.ClientTransactionId,
                 conditions: options?.Conditions,
                 async: false,
                 cancellationToken)
@@ -866,6 +867,7 @@ namespace Azure.Storage.Files.DataLake
                 timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                 expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                 encryptionContext: options?.EncryptionContext,
+                clientTransactionId: options?.ClientTransactionId,
                 conditions: options?.Conditions,
                 async: true,
                 cancellationToken)
@@ -947,6 +949,7 @@ namespace Azure.Storage.Files.DataLake
                 timeToExpire: null,
                 expiresOn: null,
                 encryptionContext: null,
+                clientTransactionId: null,
                 conditions: conditions,
                 async: false,
                 cancellationToken)
@@ -1028,6 +1031,7 @@ namespace Azure.Storage.Files.DataLake
                 timeToExpire: null,
                 expiresOn: null,
                 encryptionContext: null,
+                clientTransactionId: null,
                 conditions: conditions,
                 async: true,
                 cancellationToken)
@@ -1035,7 +1039,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="CreateInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DateTimeOffset?, string, DataLakeRequestConditions, bool, CancellationToken)"/>
+        /// The <see cref="CreateInternal"/>
         /// operation creates a file or directory.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
@@ -1095,6 +1099,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionContext">
         /// Encryption context.
         /// </param>
+        /// <param name="clientTransactionId">
+        /// Optional transaction ID, provides idempotency on retries.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1124,6 +1131,7 @@ namespace Azure.Storage.Files.DataLake
             TimeSpan? timeToExpire,
             DateTimeOffset? expiresOn,
             string encryptionContext,
+            Guid? clientTransactionId,
             DataLakeRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1224,6 +1232,7 @@ namespace Azure.Storage.Files.DataLake
                             expiryOptions: pathExpiryOptions,
                             expiresOn: expiresOnString,
                             encryptionContext: encryptionContext,
+                            clientTransactionId: clientTransactionId?.ToString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1255,6 +1264,7 @@ namespace Azure.Storage.Files.DataLake
                             expiryOptions: pathExpiryOptions,
                             expiresOn: expiresOnString,
                             encryptionContext: encryptionContext,
+                            clientTransactionId: clientTransactionId?.ToString(),
                             cancellationToken: cancellationToken);
                     }
 
@@ -1320,6 +1330,7 @@ namespace Azure.Storage.Files.DataLake
                     timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                     expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                     encryptionContext: options?.EncryptionContext,
+                    clientTransactionId: options?.ClientTransactionId,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -1366,6 +1377,7 @@ namespace Azure.Storage.Files.DataLake
                 timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                 expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                 encryptionContext: options?.EncryptionContext,
+                clientTransactionId: options?.ClientTransactionId,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -1437,6 +1449,7 @@ namespace Azure.Storage.Files.DataLake
                     timeToExpire: null,
                     expiresOn: null,
                     encryptionContext: null,
+                    clientTransactionId: null,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -1508,12 +1521,13 @@ namespace Azure.Storage.Files.DataLake
                 timeToExpire: null,
                 expiresOn: null,
                 encryptionContext: null,
+                clientTransactionId: null,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DateTimeOffset?, string, bool, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExistsInternal"/>
         /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
@@ -1569,6 +1583,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionContext">
         /// Encryption context.
         /// </param>
+        /// <param name="clientTransactionId">
+        /// Optional transaction ID, provides idempotency on retries.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1598,6 +1615,7 @@ namespace Azure.Storage.Files.DataLake
             TimeSpan? timeToExpire,
             DateTimeOffset? expiresOn,
             string encryptionContext,
+            Guid? clientTransactionId,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1619,6 +1637,7 @@ namespace Azure.Storage.Files.DataLake
                     timeToExpire: timeToExpire,
                     expiresOn: expiresOn,
                     encryptionContext: encryptionContext,
+                    clientTransactionId: clientTransactionId,
                     conditions: conditions,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -2072,24 +2091,16 @@ namespace Azure.Storage.Files.DataLake
 
         #region Rename
         /// <summary>
-        /// The <see cref="Rename"/> operation renames a file or directory.
+        /// The <see cref="RenameAsync(string, string, DataLakeRequestConditions, DataLakeRequestConditions, CancellationToken)"/>
+        /// operation renames a file or directory.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
         /// <param name="destinationPath">
         /// The destination path to rename the path to.
         /// </param>
-        /// <param name="destinationFileSystem">
-        /// Optional destination file system.  If null, path will be renamed within the
-        /// current file system.
-        /// </param>
-        /// <param name="sourceConditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the source on the creation of this file or directory.
-        /// </param>
-        /// <param name="destinationConditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2105,23 +2116,63 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual Response<DataLakePathClient> Rename(
             string destinationPath,
-            string destinationFileSystem = default,
-            DataLakeRequestConditions sourceConditions = default,
-            DataLakeRequestConditions destinationConditions = default,
+            DataLakePathRenameOptions options = default,
             CancellationToken cancellationToken = default)
         {
             return RenameInternal(
                 destinationPath: destinationPath,
-                destinationFileSystem: destinationFileSystem,
-                sourceConditions: sourceConditions,
-                destinationConditions: destinationConditions,
+                destinationFileSystem: options?.DestinationFileSystem,
+                sourceConditions: options?.SourceConditions,
+                destinationConditions: options?.DestinationConditions,
+                clientTransactionId: options?.ClientTransactionId,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
         }
 
         /// <summary>
-        /// The <see cref="RenameAsync"/> operation renames a file or directory.
+        /// The <see cref="RenameAsync(string, DataLakePathRenameOptions, CancellationToken)"/>
+        /// operation renames a file or directory.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the path to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakePathClient>> RenameAsync(
+            string destinationPath,
+            DataLakePathRenameOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await RenameInternal(
+                destinationPath: destinationPath,
+                destinationFileSystem: options?.DestinationFileSystem,
+                sourceConditions: options?.SourceConditions,
+                destinationConditions: options?.DestinationConditions,
+                clientTransactionId: options?.ClientTransactionId,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="RenameAsync(string, string, DataLakeRequestConditions, DataLakeRequestConditions, CancellationToken)"/>
+        /// operation renames a file or directory.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -2152,18 +2203,77 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<DataLakePathClient>> RenameAsync(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<DataLakePathClient> Rename(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+
             string destinationPath,
-            string destinationFileSystem = default,
-            DataLakeRequestConditions sourceConditions = default,
-            DataLakeRequestConditions destinationConditions = default,
-            CancellationToken cancellationToken = default)
+            string destinationFileSystem,
+            DataLakeRequestConditions sourceConditions,
+            DataLakeRequestConditions destinationConditions,
+            CancellationToken cancellationToken)
+        {
+            return RenameInternal(
+                destinationPath: destinationPath,
+                destinationFileSystem: destinationFileSystem,
+                sourceConditions: sourceConditions,
+                destinationConditions: destinationConditions,
+                clientTransactionId: default,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="RenameAsync(string, string, DataLakeRequestConditions, DataLakeRequestConditions, CancellationToken)"/>
+        /// operation renames a file or directory.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the path to.
+        /// </param>
+        /// <param name="destinationFileSystem">
+        /// Optional destination file system.  If null, path will be renamed within the
+        /// current file system.
+        /// </param>
+        /// <param name="sourceConditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on the source on the creation of this file or directory.
+        /// </param>
+        /// <param name="destinationConditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on the creation of this file or directory.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<DataLakePathClient>> RenameAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string destinationPath,
+            string destinationFileSystem,
+            DataLakeRequestConditions sourceConditions,
+            DataLakeRequestConditions destinationConditions,
+            CancellationToken cancellationToken)
         {
             return await RenameInternal(
                 destinationPath: destinationPath,
                 destinationFileSystem: destinationFileSystem,
                 sourceConditions: sourceConditions,
                 destinationConditions: destinationConditions,
+                clientTransactionId: default,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2189,6 +2299,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the creation of this file or directory.
         /// </param>
+        /// <param name="clientTransactionId">
+        /// Optional transaction ID, provides idempotency on retries.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2209,6 +2322,7 @@ namespace Azure.Storage.Files.DataLake
             string destinationFileSystem,
             DataLakeRequestConditions sourceConditions,
             DataLakeRequestConditions destinationConditions,
+            Guid? clientTransactionId,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2306,6 +2420,7 @@ namespace Azure.Storage.Files.DataLake
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                            clientTransactionId: clientTransactionId?.ToString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2324,6 +2439,7 @@ namespace Azure.Storage.Files.DataLake
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                            clientTransactionId: clientTransactionId?.ToString(),
                             cancellationToken: cancellationToken);
                     }
 

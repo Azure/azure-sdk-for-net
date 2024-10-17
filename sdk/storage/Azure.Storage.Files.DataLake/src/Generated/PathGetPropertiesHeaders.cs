@@ -57,5 +57,7 @@ namespace Azure.Storage.Files.DataLake
         public string LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value : null;
         /// <summary> The lease status of the resource. </summary>
         public string LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value : null;
+        /// <summary> Transaction ID client sent when creating or renaming the path. </summary>
+        public string ClientTransactionId => _response.Headers.TryGetValue("x-ms-client-transaction-id", out string value) ? value : null;
     }
 }

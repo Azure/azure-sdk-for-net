@@ -1203,10 +1203,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient sourceFile = await sourceTest.FileSystem.CreateFileAsync(GetNewFileName());
             string destFileName = GetNewDirectoryName();
 
+            DataLakePathRenameOptions options = new DataLakePathRenameOptions
+            {
+                DestinationFileSystem = destTest.FileSystem.Name
+            };
+
             // Act
             DataLakeFileClient destFile = await sourceFile.RenameAsync(
                 destinationPath: destFileName,
-                destinationFileSystem: destTest.FileSystem.Name);
+                options: options);
 
             // Assert
             Response<PathProperties> response = await destFile.GetPropertiesAsync();
@@ -1246,10 +1251,15 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathRenameOptions options = new DataLakePathRenameOptions
+                {
+                    DestinationConditions = conditions
+                };
+
                 // Act
                 destFile = await sourceFile.RenameAsync(
                     destinationPath: destFile.Name,
-                    destinationConditions: conditions);
+                    options: options);
 
                 // Assert
                 Response<PathProperties> response = await destFile.GetPropertiesAsync();
@@ -1273,11 +1283,16 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathRenameOptions options = new DataLakePathRenameOptions
+                {
+                    DestinationConditions = conditions
+                };
+
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     sourceFile.RenameAsync(
                         destinationPath: destFile.Name,
-                        destinationConditions: conditions),
+                        options: options),
                     e => { });
             }
         }
@@ -1301,10 +1316,15 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathRenameOptions options = new DataLakePathRenameOptions
+                {
+                    SourceConditions = conditions
+                };
+
                 // Act
                 destFile = await sourceFile.RenameAsync(
                     destinationPath: destFile.Name,
-                    sourceConditions: conditions);
+                    options: options);
 
                 // Assert
                 Response<PathProperties> response = await destFile.GetPropertiesAsync();
@@ -1328,11 +1348,16 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathRenameOptions options = new DataLakePathRenameOptions
+                {
+                    SourceConditions = conditions
+                };
+
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     sourceFile.RenameAsync(
                         destinationPath: destFile.Name,
-                        sourceConditions: conditions),
+                        options: options),
                     e => { });
             }
         }

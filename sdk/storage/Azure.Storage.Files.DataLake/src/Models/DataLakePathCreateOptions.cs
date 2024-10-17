@@ -63,5 +63,10 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Not applicable for directories.
         /// </summary>
         public string EncryptionContext { get; set; }
+
+        /// <summary>
+        /// Optional transaction ID, provides idempotency on retries.
+        /// </summary>
+        public Guid? ClientTransactionId { get; set; }
     }
 }

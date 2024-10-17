@@ -1152,7 +1152,119 @@ namespace Azure.Storage.Files.DataLake
 
         #region Rename
         /// <summary>
-        /// The <see cref="Rename"/> operation renames a Directory.
+        /// The <see cref="Rename(string, DataLakePathRenameOptions, CancellationToken)"/>
+        /// operation renames a Directory.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the path to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeDirectoryClient}"/> for the
+        /// newly created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public new virtual Response<DataLakeDirectoryClient> Rename(
+            string destinationPath,
+            DataLakePathRenameOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(Rename)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<DataLakePathClient> response = base.Rename(
+                    destinationPath: destinationPath,
+                    options: options,
+                    cancellationToken: cancellationToken);
+
+                return Response.FromValue(
+                    new DataLakeDirectoryClient(response.Value.DfsUri, response.Value.ClientConfiguration),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="RenameAsync(string, DataLakePathRenameOptions, CancellationToken)"/>
+        /// operation renames a Directory.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the path to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeDirectoryClient}"/> for
+        /// the newly created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public new virtual async Task<Response<DataLakeDirectoryClient>> RenameAsync(
+            string destinationPath,
+            DataLakePathRenameOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(Rename)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<DataLakePathClient> response = await base.RenameAsync(
+                    destinationPath: destinationPath,
+                    options: options,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    new DataLakeDirectoryClient(response.Value.DfsUri, response.Value.ClientConfiguration),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="Rename(string, string, DataLakeRequestConditions, DataLakeRequestConditions, CancellationToken)"/>
+        /// operation renames a Directory.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -1183,12 +1295,16 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public new virtual Response<DataLakeDirectoryClient> Rename(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+
             string destinationPath,
-            string destinationFileSystem = default,
-            DataLakeRequestConditions sourceConditions = default,
-            DataLakeRequestConditions destinationConditions = default,
-            CancellationToken cancellationToken = default)
+            string destinationFileSystem,
+            DataLakeRequestConditions sourceConditions,
+            DataLakeRequestConditions destinationConditions,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(Rename)}");
 
@@ -1219,7 +1335,8 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="RenameAsync"/> operation renames a file or directory.
+        /// The <see cref="RenameAsync(string, string, DataLakeRequestConditions, DataLakeRequestConditions, CancellationToken)"/>
+        /// operation renames a file or directory.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -1250,12 +1367,15 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public new virtual async Task<Response<DataLakeDirectoryClient>> RenameAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string destinationPath,
-            string destinationFileSystem = default,
-            DataLakeRequestConditions sourceConditions = default,
-            DataLakeRequestConditions destinationConditions = default,
-            CancellationToken cancellationToken = default)
+            string destinationFileSystem,
+            DataLakeRequestConditions sourceConditions,
+            DataLakeRequestConditions destinationConditions,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(Rename)}");
 
