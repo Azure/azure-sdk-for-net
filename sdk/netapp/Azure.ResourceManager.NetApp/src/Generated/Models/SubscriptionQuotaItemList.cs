@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of Subscription Quota Items. </summary>
+    /// <summary>
+    /// List of Subscription Quota Items
+    /// Serialized Name: SubscriptionQuotaItemList
+    /// </summary>
     internal partial class SubscriptionQuotaItemList
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
-        /// <param name="value"> A list of SubscriptionQuotaItems. </param>
+        /// <param name="value">
+        /// A list of SubscriptionQuotaItems
+        /// Serialized Name: SubscriptionQuotaItemList.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SubscriptionQuotaItemList(IReadOnlyList<NetAppSubscriptionQuotaItem> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of SubscriptionQuotaItems. </summary>
+        /// <summary>
+        /// A list of SubscriptionQuotaItems
+        /// Serialized Name: SubscriptionQuotaItemList.value
+        /// </summary>
         public IReadOnlyList<NetAppSubscriptionQuotaItem> Value { get; }
     }
 }
