@@ -7,7 +7,7 @@ parameters:
   ServiceConnection: not-specified
   ResourceType: test
   EnvVars: {}
-  UseFederatedAuth: false
+  UseFederatedAuth: true
 
 # SubscriptionConfiguration will be splat into the parameters of the test
 # resources script. It should be JSON in the form:
