@@ -1,7 +1,9 @@
 # Release History
 
 ## 1.0.0 (2024-10-18)
-General availability release.
+
+### Other Changes
+Stable release.
 
 ## 1.0.0-beta.3 (2024-06-15)
 
