@@ -9,12 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.Client.Models
+namespace Azure.AI.Client
 {
     /// <summary> Model factory for models. </summary>
     public static partial class AIClientModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.Evaluation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.Evaluation"/>. </summary>
         /// <param name="id"> Identifier of the evaluation. </param>
         /// <param name="data">
         /// Data for evaluation.
@@ -28,7 +28,7 @@ namespace Azure.AI.Client.Models
         /// <param name="tags"> Evaluation's tags. Unlike properties, tags are fully mutable. </param>
         /// <param name="properties"> Evaluation's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
         /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
-        /// <returns> A new <see cref="Models.Evaluation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.Evaluation"/> instance for mocking. </returns>
         public static Evaluation Evaluation(string id = null, InputData data = null, string displayName = null, string description = null, SystemData systemData = null, string status = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, IDictionary<string, EvaluatorConfiguration> evaluators = null)
         {
             tags ??= new Dictionary<string, string>();
@@ -48,18 +48,18 @@ namespace Azure.AI.Client.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SystemData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.SystemData"/>. </summary>
         /// <param name="createdAt"> The timestamp the resource was created at. </param>
         /// <param name="createdBy"> The identity that created the resource. </param>
         /// <param name="createdByType"> The identity type that created the resource. </param>
         /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
-        /// <returns> A new <see cref="Models.SystemData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.SystemData"/> instance for mocking. </returns>
         public static SystemData SystemData(DateTimeOffset? createdAt = null, string createdBy = null, string createdByType = null, DateTimeOffset? lastModifiedAt = null)
         {
             return new SystemData(createdAt, createdBy, createdByType, lastModifiedAt, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EvaluationSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.EvaluationSchedule"/>. </summary>
         /// <param name="id"> Identifier of the evaluation. </param>
         /// <param name="data">
         /// Data for evaluation.
@@ -69,15 +69,18 @@ namespace Azure.AI.Client.Models
         /// <param name="displayName"> Display Name for evaluation. It helps to find evaluation easily in AI Studio. It does not need to be unique. </param>
         /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
         /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="status"> Status of the evaluation. It is set by service and is read-only. </param>
+        /// <param name="provisioningStatus"> Status of the evaluation. It is set by service and is read-only. </param>
         /// <param name="tags"> Evaluation's tags. Unlike properties, tags are fully mutable. </param>
         /// <param name="properties"> Evaluation's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
         /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
-        /// <param name="recurrence"> Recurrence pattern for the evaluation. </param>
-        /// <param name="cronExpression"> Cron expression for the evaluation. </param>
+        /// <param name="trigger">
+        /// Trigger for the evaluation.
+        /// Please note <see cref="Trigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CronTrigger"/> and <see cref="RecurrenceTrigger"/>.
+        /// </param>
         /// <param name="samplingStrategy"> Sampling strategy for the evaluation. </param>
-        /// <returns> A new <see cref="Models.EvaluationSchedule"/> instance for mocking. </returns>
-        public static EvaluationSchedule EvaluationSchedule(string id = null, InputData data = null, string displayName = null, string description = null, SystemData systemData = null, string status = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, IDictionary<string, EvaluatorConfiguration> evaluators = null, Recurrence recurrence = null, string cronExpression = null, SamplingStrategy samplingStrategy = null)
+        /// <returns> A new <see cref="Client.EvaluationSchedule"/> instance for mocking. </returns>
+        public static EvaluationSchedule EvaluationSchedule(string id = null, InputData data = null, string displayName = null, string description = null, SystemData systemData = null, string provisioningStatus = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, IDictionary<string, EvaluatorConfiguration> evaluators = null, Trigger trigger = null, SamplingStrategy samplingStrategy = null)
         {
             tags ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
@@ -89,17 +92,16 @@ namespace Azure.AI.Client.Models
                 displayName,
                 description,
                 systemData,
-                status,
+                provisioningStatus,
                 tags,
                 properties,
                 evaluators,
-                recurrence,
-                cronExpression,
+                trigger,
                 samplingStrategy,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ThreadMessageOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.ThreadMessageOptions"/>. </summary>
         /// <param name="role">
         /// The role of the entity that is creating the message. Allowed values include:
         /// - `user`: Indicates the message is sent by an actual user and should be used in most cases to represent user-generated messages.
@@ -112,7 +114,7 @@ namespace Azure.AI.Client.Models
         /// </param>
         /// <param name="attachments"> A list of files attached to the message, and the tools they should be added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <returns> A new <see cref="Models.ThreadMessageOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.ThreadMessageOptions"/> instance for mocking. </returns>
         public static ThreadMessageOptions ThreadMessageOptions(MessageRole role = default, string content = null, IEnumerable<MessageAttachment> attachments = null, IDictionary<string, string> metadata = null)
         {
             attachments ??= new List<MessageAttachment>();
@@ -121,57 +123,57 @@ namespace Azure.AI.Client.Models
             return new ThreadMessageOptions(role, content, attachments?.ToList(), metadata, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RequiredToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RequiredToolCall"/>. </summary>
         /// <param name="type"> The object type for the required tool call. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
-        /// <returns> A new <see cref="Models.RequiredToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RequiredToolCall"/> instance for mocking. </returns>
         public static RequiredToolCall RequiredToolCall(string type = null, string id = null)
         {
             return new UnknownRequiredToolCall(type, id, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunError"/>. </summary>
         /// <param name="code"> The status for the error. </param>
         /// <param name="message"> The human-readable text associated with the error. </param>
-        /// <returns> A new <see cref="Models.RunError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunError"/> instance for mocking. </returns>
         public static RunError RunError(string code = null, string message = null)
         {
             return new RunError(code, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunCompletionUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunCompletionUsage"/>. </summary>
         /// <param name="completionTokens"> Number of completion tokens used over the course of the run. </param>
         /// <param name="promptTokens"> Number of prompt tokens used over the course of the run. </param>
         /// <param name="totalTokens"> Total number of tokens used (prompt + completion). </param>
-        /// <returns> A new <see cref="Models.RunCompletionUsage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunCompletionUsage"/> instance for mocking. </returns>
         public static RunCompletionUsage RunCompletionUsage(long completionTokens = default, long promptTokens = default, long totalTokens = default)
         {
             return new RunCompletionUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepMessageCreationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepMessageCreationDetails"/>. </summary>
         /// <param name="messageCreation"> Information about the message creation associated with this run step. </param>
-        /// <returns> A new <see cref="Models.RunStepMessageCreationDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepMessageCreationDetails"/> instance for mocking. </returns>
         public static RunStepMessageCreationDetails RunStepMessageCreationDetails(RunStepMessageCreationReference messageCreation = null)
         {
             return new RunStepMessageCreationDetails(RunStepType.MessageCreation, serializedAdditionalRawData: null, messageCreation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepMessageCreationReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepMessageCreationReference"/>. </summary>
         /// <param name="messageId"> The ID of the message created by this run step. </param>
-        /// <returns> A new <see cref="Models.RunStepMessageCreationReference"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepMessageCreationReference"/> instance for mocking. </returns>
         public static RunStepMessageCreationReference RunStepMessageCreationReference(string messageId = null)
         {
             return new RunStepMessageCreationReference(messageId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepToolCallDetails"/>. </summary>
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
-        /// Please note <see cref="Models.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="Models.RunStepFileSearchToolCall"/> and <see cref="RunStepFunctionToolCall"/>.
+        /// Please note <see cref="Client.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Client.RunStepAzureAISearchToolCall"/>, <see cref="Client.RunStepBingSearchToolCall"/>, <see cref="Client.RunStepCodeInterpreterToolCall"/>, <see cref="Client.RunStepFileSearchToolCall"/>, <see cref="Client.RunStepFunctionToolCall"/>, <see cref="Client.RunStepMicrosoftFabricToolCall"/> and <see cref="Client.RunStepSharepointToolCall"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.RunStepToolCallDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
         {
             toolCalls ??= new List<RunStepToolCall>();
@@ -179,43 +181,43 @@ namespace Azure.AI.Client.Models
             return new RunStepToolCallDetails(RunStepType.ToolCalls, serializedAdditionalRawData: null, toolCalls?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <returns> A new <see cref="Models.RunStepToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepToolCall"/> instance for mocking. </returns>
         public static RunStepToolCall RunStepToolCall(string type = null, string id = null)
         {
             return new UnknownRunStepToolCall(type, id, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepCodeInterpreterLogOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepCodeInterpreterLogOutput"/>. </summary>
         /// <param name="logs"> The serialized log output emitted by the code interpreter. </param>
-        /// <returns> A new <see cref="Models.RunStepCodeInterpreterLogOutput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepCodeInterpreterLogOutput"/> instance for mocking. </returns>
         public static RunStepCodeInterpreterLogOutput RunStepCodeInterpreterLogOutput(string logs = null)
         {
             return new RunStepCodeInterpreterLogOutput("logs", serializedAdditionalRawData: null, logs);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepCodeInterpreterImageOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepCodeInterpreterImageOutput"/>. </summary>
         /// <param name="image"> Referential information for the image associated with this output. </param>
-        /// <returns> A new <see cref="Models.RunStepCodeInterpreterImageOutput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepCodeInterpreterImageOutput"/> instance for mocking. </returns>
         public static RunStepCodeInterpreterImageOutput RunStepCodeInterpreterImageOutput(RunStepCodeInterpreterImageReference image = null)
         {
             return new RunStepCodeInterpreterImageOutput("image", serializedAdditionalRawData: null, image);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepCodeInterpreterImageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepCodeInterpreterImageReference"/>. </summary>
         /// <param name="fileId"> The ID of the file associated with this image. </param>
-        /// <returns> A new <see cref="Models.RunStepCodeInterpreterImageReference"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepCodeInterpreterImageReference"/> instance for mocking. </returns>
         public static RunStepCodeInterpreterImageReference RunStepCodeInterpreterImageReference(string fileId = null)
         {
             return new RunStepCodeInterpreterImageReference(fileId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepFileSearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepFileSearchToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="fileSearch"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Models.RunStepFileSearchToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepFileSearchToolCall"/> instance for mocking. </returns>
         public static RunStepFileSearchToolCall RunStepFileSearchToolCall(string id = null, IReadOnlyDictionary<string, string> fileSearch = null)
         {
             fileSearch ??= new Dictionary<string, string>();
@@ -223,40 +225,84 @@ namespace Azure.AI.Client.Models
             return new RunStepFileSearchToolCall("file_search", id, serializedAdditionalRawData: null, fileSearch);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepBingSearchToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="bingSearch"> Reserved for future use. </param>
+        /// <returns> A new <see cref="Client.RunStepBingSearchToolCall"/> instance for mocking. </returns>
+        public static RunStepBingSearchToolCall RunStepBingSearchToolCall(string id = null, IReadOnlyDictionary<string, string> bingSearch = null)
+        {
+            bingSearch ??= new Dictionary<string, string>();
+
+            return new RunStepBingSearchToolCall("bing_search", id, serializedAdditionalRawData: null, bingSearch);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepAzureAISearchToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="azureAISearch"> Reserved for future use. </param>
+        /// <returns> A new <see cref="Client.RunStepAzureAISearchToolCall"/> instance for mocking. </returns>
+        public static RunStepAzureAISearchToolCall RunStepAzureAISearchToolCall(string id = null, IReadOnlyDictionary<string, string> azureAISearch = null)
+        {
+            azureAISearch ??= new Dictionary<string, string>();
+
+            return new RunStepAzureAISearchToolCall("azure_ai_search", id, serializedAdditionalRawData: null, azureAISearch);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepSharepointToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="sharePoint"> Reserved for future use. </param>
+        /// <returns> A new <see cref="Client.RunStepSharepointToolCall"/> instance for mocking. </returns>
+        public static RunStepSharepointToolCall RunStepSharepointToolCall(string id = null, IReadOnlyDictionary<string, string> sharePoint = null)
+        {
+            sharePoint ??= new Dictionary<string, string>();
+
+            return new RunStepSharepointToolCall("sharepoint", id, serializedAdditionalRawData: null, sharePoint);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepMicrosoftFabricToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="microsoftFabric"> Reserved for future use. </param>
+        /// <returns> A new <see cref="Client.RunStepMicrosoftFabricToolCall"/> instance for mocking. </returns>
+        public static RunStepMicrosoftFabricToolCall RunStepMicrosoftFabricToolCall(string id = null, IReadOnlyDictionary<string, string> microsoftFabric = null)
+        {
+            microsoftFabric ??= new Dictionary<string, string>();
+
+            return new RunStepMicrosoftFabricToolCall("microsoft_fabric", id, serializedAdditionalRawData: null, microsoftFabric);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepError"/>. </summary>
         /// <param name="code"> The error code for this error. </param>
         /// <param name="message"> The human-readable text associated with this error. </param>
-        /// <returns> A new <see cref="Models.RunStepError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepError"/> instance for mocking. </returns>
         public static RunStepError RunStepError(RunStepErrorCode code = default, string message = null)
         {
             return new RunStepError(code, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepCompletionUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepCompletionUsage"/>. </summary>
         /// <param name="completionTokens"> Number of completion tokens used over the course of the run step. </param>
         /// <param name="promptTokens"> Number of prompt tokens used over the course of the run step. </param>
         /// <param name="totalTokens"> Total number of tokens used (prompt + completion). </param>
-        /// <returns> A new <see cref="Models.RunStepCompletionUsage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepCompletionUsage"/> instance for mocking. </returns>
         public static RunStepCompletionUsage RunStepCompletionUsage(long completionTokens = default, long promptTokens = default, long totalTokens = default)
         {
             return new RunStepCompletionUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FileContentResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.FileContentResponse"/>. </summary>
         /// <param name="content"> The content of the file, in bytes. </param>
-        /// <returns> A new <see cref="Models.FileContentResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.FileContentResponse"/> instance for mocking. </returns>
         public static FileContentResponse FileContentResponse(BinaryData content = null)
         {
             return new FileContentResponse(content, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OpenAIPageableListOfVectorStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.OpenAIPageableListOfVectorStore"/>. </summary>
         /// <param name="object"> The object type, which is always list. </param>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="firstId"> The first ID represented in this list. </param>
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        /// <returns> A new <see cref="Models.OpenAIPageableListOfVectorStore"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.OpenAIPageableListOfVectorStore"/> instance for mocking. </returns>
         public static OpenAIPageableListOfVectorStore OpenAIPageableListOfVectorStore(OpenAIPageableListOfVectorStoreObject @object = default, IEnumerable<VectorStore> data = null, string firstId = null, string lastId = null, bool hasMore = default)
         {
             data ??= new List<VectorStore>();
@@ -270,7 +316,7 @@ namespace Azure.AI.Client.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VectorStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.VectorStore"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always `vector_store`. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the vector store was created. </param>
@@ -282,7 +328,7 @@ namespace Azure.AI.Client.Models
         /// <param name="expiresAt"> The Unix timestamp (in seconds) for when the vector store will expire. </param>
         /// <param name="lastActiveAt"> The Unix timestamp (in seconds) for when the vector store was last active. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <returns> A new <see cref="Models.VectorStore"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.VectorStore"/> instance for mocking. </returns>
         public static VectorStore VectorStore(string id = null, VectorStoreObject @object = default, DateTimeOffset createdAt = default, string name = null, int usageBytes = default, VectorStoreFileCount fileCounts = null, VectorStoreStatus status = default, VectorStoreExpirationPolicy expiresAfter = null, DateTimeOffset? expiresAt = null, DateTimeOffset? lastActiveAt = null, IReadOnlyDictionary<string, string> metadata = null)
         {
             metadata ??= new Dictionary<string, string>();
@@ -302,13 +348,13 @@ namespace Azure.AI.Client.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VectorStoreFileCount"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.VectorStoreFileCount"/>. </summary>
         /// <param name="inProgress"> The number of files that are currently being processed. </param>
         /// <param name="completed"> The number of files that have been successfully processed. </param>
         /// <param name="failed"> The number of files that have failed to process. </param>
         /// <param name="cancelled"> The number of files that were cancelled. </param>
         /// <param name="total"> The total number of files. </param>
-        /// <returns> A new <see cref="Models.VectorStoreFileCount"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.VectorStoreFileCount"/> instance for mocking. </returns>
         public static VectorStoreFileCount VectorStoreFileCount(int inProgress = default, int completed = default, int failed = default, int cancelled = default, int total = default)
         {
             return new VectorStoreFileCount(
@@ -320,31 +366,31 @@ namespace Azure.AI.Client.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VectorStoreStaticChunkingStrategyRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.VectorStoreStaticChunkingStrategyRequest"/>. </summary>
         /// <param name="static"> The options for the static chunking strategy. </param>
-        /// <returns> A new <see cref="Models.VectorStoreStaticChunkingStrategyRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.VectorStoreStaticChunkingStrategyRequest"/> instance for mocking. </returns>
         public static VectorStoreStaticChunkingStrategyRequest VectorStoreStaticChunkingStrategyRequest(VectorStoreStaticChunkingStrategyOptions @static = null)
         {
             return new VectorStoreStaticChunkingStrategyRequest(VectorStoreChunkingStrategyRequestType.Static, serializedAdditionalRawData: null, @static);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VectorStoreDeletionStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.VectorStoreDeletionStatus"/>. </summary>
         /// <param name="id"> The ID of the resource specified for deletion. </param>
         /// <param name="deleted"> A value indicating whether deletion was successful. </param>
         /// <param name="object"> The object type, which is always 'vector_store.deleted'. </param>
-        /// <returns> A new <see cref="Models.VectorStoreDeletionStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.VectorStoreDeletionStatus"/> instance for mocking. </returns>
         public static VectorStoreDeletionStatus VectorStoreDeletionStatus(string id = null, bool deleted = default, VectorStoreDeletionStatusObject @object = default)
         {
             return new VectorStoreDeletionStatus(id, deleted, @object, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OpenAIPageableListOfVectorStoreFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.OpenAIPageableListOfVectorStoreFile"/>. </summary>
         /// <param name="object"> The object type, which is always list. </param>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="firstId"> The first ID represented in this list. </param>
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        /// <returns> A new <see cref="Models.OpenAIPageableListOfVectorStoreFile"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.OpenAIPageableListOfVectorStoreFile"/> instance for mocking. </returns>
         public static OpenAIPageableListOfVectorStoreFile OpenAIPageableListOfVectorStoreFile(OpenAIPageableListOfVectorStoreFileObject @object = default, IEnumerable<VectorStoreFile> data = null, string firstId = null, string lastId = null, bool hasMore = default)
         {
             data ??= new List<VectorStoreFile>();
@@ -358,7 +404,7 @@ namespace Azure.AI.Client.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VectorStoreFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.VectorStoreFile"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always `vector_store.file`. </param>
         /// <param name="usageBytes">
@@ -372,9 +418,9 @@ namespace Azure.AI.Client.Models
         /// <param name="chunkingStrategy">
         /// The strategy used to chunk the file.
         /// Please note <see cref="VectorStoreChunkingStrategyResponse"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VectorStoreAutoChunkingStrategyResponse"/> and <see cref="Models.VectorStoreStaticChunkingStrategyResponse"/>.
+        /// The available derived classes include <see cref="VectorStoreAutoChunkingStrategyResponse"/> and <see cref="Client.VectorStoreStaticChunkingStrategyResponse"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.VectorStoreFile"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.VectorStoreFile"/> instance for mocking. </returns>
         public static VectorStoreFile VectorStoreFile(string id = null, VectorStoreFileObject @object = default, int usageBytes = default, DateTimeOffset createdAt = default, string vectorStoreId = null, VectorStoreFileStatus status = default, VectorStoreFileError lastError = null, VectorStoreChunkingStrategyResponse chunkingStrategy = null)
         {
             return new VectorStoreFile(
@@ -389,41 +435,41 @@ namespace Azure.AI.Client.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VectorStoreFileError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.VectorStoreFileError"/>. </summary>
         /// <param name="code"> One of `server_error` or `rate_limit_exceeded`. </param>
         /// <param name="message"> A human-readable description of the error. </param>
-        /// <returns> A new <see cref="Models.VectorStoreFileError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.VectorStoreFileError"/> instance for mocking. </returns>
         public static VectorStoreFileError VectorStoreFileError(VectorStoreFileErrorCode code = default, string message = null)
         {
             return new VectorStoreFileError(code, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VectorStoreStaticChunkingStrategyResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.VectorStoreStaticChunkingStrategyResponse"/>. </summary>
         /// <param name="static"> The options for the static chunking strategy. </param>
-        /// <returns> A new <see cref="Models.VectorStoreStaticChunkingStrategyResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.VectorStoreStaticChunkingStrategyResponse"/> instance for mocking. </returns>
         public static VectorStoreStaticChunkingStrategyResponse VectorStoreStaticChunkingStrategyResponse(VectorStoreStaticChunkingStrategyOptions @static = null)
         {
             return new VectorStoreStaticChunkingStrategyResponse(VectorStoreChunkingStrategyResponseType.Static, serializedAdditionalRawData: null, @static);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VectorStoreFileDeletionStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.VectorStoreFileDeletionStatus"/>. </summary>
         /// <param name="id"> The ID of the resource specified for deletion. </param>
         /// <param name="deleted"> A value indicating whether deletion was successful. </param>
         /// <param name="object"> The object type, which is always 'vector_store.deleted'. </param>
-        /// <returns> A new <see cref="Models.VectorStoreFileDeletionStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.VectorStoreFileDeletionStatus"/> instance for mocking. </returns>
         public static VectorStoreFileDeletionStatus VectorStoreFileDeletionStatus(string id = null, bool deleted = default, VectorStoreFileDeletionStatusObject @object = default)
         {
             return new VectorStoreFileDeletionStatus(id, deleted, @object, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VectorStoreFileBatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.VectorStoreFileBatch"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always `vector_store.file_batch`. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the vector store files batch was created. </param>
         /// <param name="vectorStoreId"> The ID of the vector store that the file is attached to. </param>
         /// <param name="status"> The status of the vector store files batch, which can be either `in_progress`, `completed`, `cancelled` or `failed`. </param>
         /// <param name="fileCounts"> Files count grouped by status processed or being processed by this vector store. </param>
-        /// <returns> A new <see cref="Models.VectorStoreFileBatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.VectorStoreFileBatch"/> instance for mocking. </returns>
         public static VectorStoreFileBatch VectorStoreFileBatch(string id = null, VectorStoreFileBatchObject @object = default, DateTimeOffset createdAt = default, string vectorStoreId = null, VectorStoreFileBatchStatus status = default, VectorStoreFileCount fileCounts = null)
         {
             return new VectorStoreFileBatch(
@@ -436,24 +482,24 @@ namespace Azure.AI.Client.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MessageDeltaChunk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.MessageDeltaChunk"/>. </summary>
         /// <param name="id"> The identifier of the message, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always `thread.message.delta`. </param>
         /// <param name="delta"> The delta containing the fields that have changed on the Message. </param>
-        /// <returns> A new <see cref="Models.MessageDeltaChunk"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.MessageDeltaChunk"/> instance for mocking. </returns>
         public static MessageDeltaChunk MessageDeltaChunk(string id = null, MessageDeltaChunkObject @object = default, MessageDelta delta = null)
         {
             return new MessageDeltaChunk(id, @object, delta, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MessageDelta"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.MessageDelta"/>. </summary>
         /// <param name="role"> The entity that produced the message. </param>
         /// <param name="content">
         /// The content of the message as an array of text and/or images.
-        /// Please note <see cref="Models.MessageDeltaContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MessageDeltaImageFileContent"/> and <see cref="Models.MessageDeltaTextContent"/>.
+        /// Please note <see cref="Client.MessageDeltaContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Client.MessageDeltaImageFileContent"/> and <see cref="Client.MessageDeltaTextContent"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.MessageDelta"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.MessageDelta"/> instance for mocking. </returns>
         public static MessageDelta MessageDelta(MessageRole role = default, IEnumerable<MessageDeltaContent> content = null)
         {
             content ??= new List<MessageDeltaContent>();
@@ -461,49 +507,49 @@ namespace Azure.AI.Client.Models
             return new MessageDelta(role, content?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MessageDeltaContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.MessageDeltaContent"/>. </summary>
         /// <param name="index"> The index of the content part of the message. </param>
         /// <param name="type"> The type of content for this content part. </param>
-        /// <returns> A new <see cref="Models.MessageDeltaContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.MessageDeltaContent"/> instance for mocking. </returns>
         public static MessageDeltaContent MessageDeltaContent(int index = default, string type = null)
         {
             return new UnknownMessageDeltaContent(index, type, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MessageDeltaImageFileContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.MessageDeltaImageFileContent"/>. </summary>
         /// <param name="index"> The index of the content part of the message. </param>
         /// <param name="imageFile"> The image_file data. </param>
-        /// <returns> A new <see cref="Models.MessageDeltaImageFileContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.MessageDeltaImageFileContent"/> instance for mocking. </returns>
         public static MessageDeltaImageFileContent MessageDeltaImageFileContent(int index = default, MessageDeltaImageFileContentObject imageFile = null)
         {
             return new MessageDeltaImageFileContent(index, "image_file", serializedAdditionalRawData: null, imageFile);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MessageDeltaImageFileContentObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.MessageDeltaImageFileContentObject"/>. </summary>
         /// <param name="fileId"> The file ID of the image in the message content. </param>
-        /// <returns> A new <see cref="Models.MessageDeltaImageFileContentObject"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.MessageDeltaImageFileContentObject"/> instance for mocking. </returns>
         public static MessageDeltaImageFileContentObject MessageDeltaImageFileContentObject(string fileId = null)
         {
             return new MessageDeltaImageFileContentObject(fileId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MessageDeltaTextContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.MessageDeltaTextContent"/>. </summary>
         /// <param name="index"> The index of the content part of the message. </param>
         /// <param name="text"> The text content details. </param>
-        /// <returns> A new <see cref="Models.MessageDeltaTextContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.MessageDeltaTextContent"/> instance for mocking. </returns>
         public static MessageDeltaTextContent MessageDeltaTextContent(int index = default, MessageDeltaTextContentObject text = null)
         {
             return new MessageDeltaTextContent(index, "text", serializedAdditionalRawData: null, text);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MessageDeltaTextContentObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.MessageDeltaTextContentObject"/>. </summary>
         /// <param name="value"> The data that makes up the text. </param>
         /// <param name="annotations">
         /// Annotations for the text.
-        /// Please note <see cref="Models.MessageDeltaTextAnnotation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MessageDeltaTextFileCitationAnnotation"/> and <see cref="Models.MessageDeltaTextFilePathAnnotation"/>.
+        /// Please note <see cref="Client.MessageDeltaTextAnnotation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Client.MessageDeltaTextFileCitationAnnotation"/> and <see cref="Client.MessageDeltaTextFilePathAnnotation"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.MessageDeltaTextContentObject"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.MessageDeltaTextContentObject"/> instance for mocking. </returns>
         public static MessageDeltaTextContentObject MessageDeltaTextContentObject(string value = null, IEnumerable<MessageDeltaTextAnnotation> annotations = null)
         {
             annotations ??= new List<MessageDeltaTextAnnotation>();
@@ -511,22 +557,22 @@ namespace Azure.AI.Client.Models
             return new MessageDeltaTextContentObject(value, annotations?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MessageDeltaTextAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.MessageDeltaTextAnnotation"/>. </summary>
         /// <param name="index"> The index of the annotation within a text content part. </param>
         /// <param name="type"> The type of the text content annotation. </param>
-        /// <returns> A new <see cref="Models.MessageDeltaTextAnnotation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.MessageDeltaTextAnnotation"/> instance for mocking. </returns>
         public static MessageDeltaTextAnnotation MessageDeltaTextAnnotation(int index = default, string type = null)
         {
             return new UnknownMessageDeltaTextAnnotation(index, type, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MessageDeltaTextFileCitationAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.MessageDeltaTextFileCitationAnnotation"/>. </summary>
         /// <param name="index"> The index of the annotation within a text content part. </param>
         /// <param name="fileCitation"> The file citation information. </param>
         /// <param name="text"> The text in the message content that needs to be replaced. </param>
         /// <param name="startIndex"> The start index of this annotation in the content text. </param>
         /// <param name="endIndex"> The end index of this annotation in the content text. </param>
-        /// <returns> A new <see cref="Models.MessageDeltaTextFileCitationAnnotation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.MessageDeltaTextFileCitationAnnotation"/> instance for mocking. </returns>
         public static MessageDeltaTextFileCitationAnnotation MessageDeltaTextFileCitationAnnotation(int index = default, MessageDeltaTextFileCitationAnnotationObject fileCitation = null, string text = null, int? startIndex = null, int? endIndex = null)
         {
             return new MessageDeltaTextFileCitationAnnotation(
@@ -539,22 +585,22 @@ namespace Azure.AI.Client.Models
                 endIndex);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MessageDeltaTextFileCitationAnnotationObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.MessageDeltaTextFileCitationAnnotationObject"/>. </summary>
         /// <param name="fileId"> The ID of the specific file the citation is from. </param>
         /// <param name="quote"> The specific quote in the cited file. </param>
-        /// <returns> A new <see cref="Models.MessageDeltaTextFileCitationAnnotationObject"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.MessageDeltaTextFileCitationAnnotationObject"/> instance for mocking. </returns>
         public static MessageDeltaTextFileCitationAnnotationObject MessageDeltaTextFileCitationAnnotationObject(string fileId = null, string quote = null)
         {
             return new MessageDeltaTextFileCitationAnnotationObject(fileId, quote, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MessageDeltaTextFilePathAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.MessageDeltaTextFilePathAnnotation"/>. </summary>
         /// <param name="index"> The index of the annotation within a text content part. </param>
         /// <param name="filePath"> The file path information. </param>
         /// <param name="startIndex"> The start index of this annotation in the content text. </param>
         /// <param name="endIndex"> The end index of this annotation in the content text. </param>
         /// <param name="text"> The text in the message content that needs to be replaced. </param>
-        /// <returns> A new <see cref="Models.MessageDeltaTextFilePathAnnotation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.MessageDeltaTextFilePathAnnotation"/> instance for mocking. </returns>
         public static MessageDeltaTextFilePathAnnotation MessageDeltaTextFilePathAnnotation(int index = default, MessageDeltaTextFilePathAnnotationObject filePath = null, int? startIndex = null, int? endIndex = null, string text = null)
         {
             return new MessageDeltaTextFilePathAnnotation(
@@ -567,59 +613,59 @@ namespace Azure.AI.Client.Models
                 text);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MessageDeltaTextFilePathAnnotationObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.MessageDeltaTextFilePathAnnotationObject"/>. </summary>
         /// <param name="fileId"> The file ID for the annotation. </param>
-        /// <returns> A new <see cref="Models.MessageDeltaTextFilePathAnnotationObject"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.MessageDeltaTextFilePathAnnotationObject"/> instance for mocking. </returns>
         public static MessageDeltaTextFilePathAnnotationObject MessageDeltaTextFilePathAnnotationObject(string fileId = null)
         {
             return new MessageDeltaTextFilePathAnnotationObject(fileId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepDeltaChunk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepDeltaChunk"/>. </summary>
         /// <param name="id"> The identifier of the run step, which can be referenced in API endpoints. </param>
         /// <param name="object"> The object type, which is always `thread.run.step.delta`. </param>
         /// <param name="delta"> The delta containing the fields that have changed on the run step. </param>
-        /// <returns> A new <see cref="Models.RunStepDeltaChunk"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepDeltaChunk"/> instance for mocking. </returns>
         public static RunStepDeltaChunk RunStepDeltaChunk(string id = null, RunStepDeltaChunkObject @object = default, RunStepDelta delta = null)
         {
             return new RunStepDeltaChunk(id, @object, delta, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepDelta"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepDelta"/>. </summary>
         /// <param name="stepDetails">
         /// The details of the run step.
         /// Please note <see cref="RunStepDeltaDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.RunStepDeltaMessageCreation"/> and <see cref="Models.RunStepDeltaToolCallObject"/>.
+        /// The available derived classes include <see cref="Client.RunStepDeltaMessageCreation"/> and <see cref="Client.RunStepDeltaToolCallObject"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.RunStepDelta"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepDelta"/> instance for mocking. </returns>
         public static RunStepDelta RunStepDelta(RunStepDeltaDetail stepDetails = null)
         {
             return new RunStepDelta(stepDetails, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepDeltaMessageCreation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepDeltaMessageCreation"/>. </summary>
         /// <param name="messageCreation"> The message creation data. </param>
-        /// <returns> A new <see cref="Models.RunStepDeltaMessageCreation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepDeltaMessageCreation"/> instance for mocking. </returns>
         public static RunStepDeltaMessageCreation RunStepDeltaMessageCreation(RunStepDeltaMessageCreationObject messageCreation = null)
         {
             return new RunStepDeltaMessageCreation("message_creation", serializedAdditionalRawData: null, messageCreation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepDeltaMessageCreationObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepDeltaMessageCreationObject"/>. </summary>
         /// <param name="messageId"> The ID of the newly-created message. </param>
-        /// <returns> A new <see cref="Models.RunStepDeltaMessageCreationObject"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepDeltaMessageCreationObject"/> instance for mocking. </returns>
         public static RunStepDeltaMessageCreationObject RunStepDeltaMessageCreationObject(string messageId = null)
         {
             return new RunStepDeltaMessageCreationObject(messageId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepDeltaToolCallObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepDeltaToolCallObject"/>. </summary>
         /// <param name="toolCalls">
         /// The collection of tool calls for the tool call detail item.
-        /// Please note <see cref="Models.RunStepDeltaToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Models.RunStepDeltaFileSearchToolCall"/> and <see cref="Models.RunStepDeltaFunctionToolCall"/>.
+        /// Please note <see cref="Client.RunStepDeltaToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Client.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Client.RunStepDeltaFileSearchToolCall"/> and <see cref="Client.RunStepDeltaFunctionToolCall"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.RunStepDeltaToolCallObject"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepDeltaToolCallObject"/> instance for mocking. </returns>
         public static RunStepDeltaToolCallObject RunStepDeltaToolCallObject(IEnumerable<RunStepDeltaToolCall> toolCalls = null)
         {
             toolCalls ??= new List<RunStepDeltaToolCall>();
@@ -627,41 +673,41 @@ namespace Azure.AI.Client.Models
             return new RunStepDeltaToolCallObject("tool_calls", serializedAdditionalRawData: null, toolCalls?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepDeltaToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepDeltaToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="type"> The type of the tool call detail item in a streaming run step's details. </param>
-        /// <returns> A new <see cref="Models.RunStepDeltaToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepDeltaToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaToolCall RunStepDeltaToolCall(int index = default, string id = null, string type = null)
         {
             return new UnknownRunStepDeltaToolCall(index, id, type, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepDeltaFunctionToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepDeltaFunctionToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="function"> The function data for the tool call. </param>
-        /// <returns> A new <see cref="Models.RunStepDeltaFunctionToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepDeltaFunctionToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaFunctionToolCall RunStepDeltaFunctionToolCall(int index = default, string id = null, RunStepDeltaFunction function = null)
         {
             return new RunStepDeltaFunctionToolCall(index, id, "function", serializedAdditionalRawData: null, function);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepDeltaFunction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepDeltaFunction"/>. </summary>
         /// <param name="name"> The name of the function. </param>
         /// <param name="arguments"> The arguments passed to the function as input. </param>
         /// <param name="output"> The output of the function, null if outputs have not yet been submitted. </param>
-        /// <returns> A new <see cref="Models.RunStepDeltaFunction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepDeltaFunction"/> instance for mocking. </returns>
         public static RunStepDeltaFunction RunStepDeltaFunction(string name = null, string arguments = null, string output = null)
         {
             return new RunStepDeltaFunction(name, arguments, output, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepDeltaFileSearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepDeltaFileSearchToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="fileSearch"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Models.RunStepDeltaFileSearchToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepDeltaFileSearchToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = default, string id = null, IReadOnlyDictionary<string, string> fileSearch = null)
         {
             fileSearch ??= new Dictionary<string, string>();
@@ -669,26 +715,26 @@ namespace Azure.AI.Client.Models
             return new RunStepDeltaFileSearchToolCall(index, id, "file_search", serializedAdditionalRawData: null, fileSearch);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepDeltaCodeInterpreterToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepDeltaCodeInterpreterToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
         /// <param name="codeInterpreter"> The Code Interpreter data for the tool call. </param>
-        /// <returns> A new <see cref="Models.RunStepDeltaCodeInterpreterToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepDeltaCodeInterpreterToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaCodeInterpreterToolCall RunStepDeltaCodeInterpreterToolCall(int index = default, string id = null, RunStepDeltaCodeInterpreterDetailItemObject codeInterpreter = null)
         {
             return new RunStepDeltaCodeInterpreterToolCall(index, id, "code_interpreter", serializedAdditionalRawData: null, codeInterpreter);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepDeltaCodeInterpreterDetailItemObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepDeltaCodeInterpreterDetailItemObject"/>. </summary>
         /// <param name="input"> The input into the Code Interpreter tool call. </param>
         /// <param name="outputs">
         /// The outputs from the Code Interpreter tool call. Code Interpreter can output one or more
         /// items, including text (`logs`) or images (`image`). Each of these are represented by a
         /// different object type.
-        /// Please note <see cref="Models.RunStepDeltaCodeInterpreterOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.RunStepDeltaCodeInterpreterImageOutput"/> and <see cref="Models.RunStepDeltaCodeInterpreterLogOutput"/>.
+        /// Please note <see cref="Client.RunStepDeltaCodeInterpreterOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Client.RunStepDeltaCodeInterpreterImageOutput"/> and <see cref="Client.RunStepDeltaCodeInterpreterLogOutput"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.RunStepDeltaCodeInterpreterDetailItemObject"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepDeltaCodeInterpreterDetailItemObject"/> instance for mocking. </returns>
         public static RunStepDeltaCodeInterpreterDetailItemObject RunStepDeltaCodeInterpreterDetailItemObject(string input = null, IEnumerable<RunStepDeltaCodeInterpreterOutput> outputs = null)
         {
             outputs ??= new List<RunStepDeltaCodeInterpreterOutput>();
@@ -696,36 +742,36 @@ namespace Azure.AI.Client.Models
             return new RunStepDeltaCodeInterpreterDetailItemObject(input, outputs?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepDeltaCodeInterpreterOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepDeltaCodeInterpreterOutput"/>. </summary>
         /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
         /// <param name="type"> The type of the streaming run step tool call's Code Interpreter output. </param>
-        /// <returns> A new <see cref="Models.RunStepDeltaCodeInterpreterOutput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepDeltaCodeInterpreterOutput"/> instance for mocking. </returns>
         public static RunStepDeltaCodeInterpreterOutput RunStepDeltaCodeInterpreterOutput(int index = default, string type = null)
         {
             return new UnknownRunStepDeltaCodeInterpreterOutput(index, type, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepDeltaCodeInterpreterLogOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepDeltaCodeInterpreterLogOutput"/>. </summary>
         /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
         /// <param name="logs"> The text output from the Code Interpreter tool call. </param>
-        /// <returns> A new <see cref="Models.RunStepDeltaCodeInterpreterLogOutput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepDeltaCodeInterpreterLogOutput"/> instance for mocking. </returns>
         public static RunStepDeltaCodeInterpreterLogOutput RunStepDeltaCodeInterpreterLogOutput(int index = default, string logs = null)
         {
             return new RunStepDeltaCodeInterpreterLogOutput(index, "logs", serializedAdditionalRawData: null, logs);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepDeltaCodeInterpreterImageOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepDeltaCodeInterpreterImageOutput"/>. </summary>
         /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
         /// <param name="image"> The image data for the Code Interpreter tool call output. </param>
-        /// <returns> A new <see cref="Models.RunStepDeltaCodeInterpreterImageOutput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepDeltaCodeInterpreterImageOutput"/> instance for mocking. </returns>
         public static RunStepDeltaCodeInterpreterImageOutput RunStepDeltaCodeInterpreterImageOutput(int index = default, RunStepDeltaCodeInterpreterImageOutputObject image = null)
         {
             return new RunStepDeltaCodeInterpreterImageOutput(index, "image", serializedAdditionalRawData: null, image);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RunStepDeltaCodeInterpreterImageOutputObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepDeltaCodeInterpreterImageOutputObject"/>. </summary>
         /// <param name="fileId"> The file ID for the image. </param>
-        /// <returns> A new <see cref="Models.RunStepDeltaCodeInterpreterImageOutputObject"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Client.RunStepDeltaCodeInterpreterImageOutputObject"/> instance for mocking. </returns>
         public static RunStepDeltaCodeInterpreterImageOutputObject RunStepDeltaCodeInterpreterImageOutputObject(string fileId = null)
         {
             return new RunStepDeltaCodeInterpreterImageOutputObject(fileId, serializedAdditionalRawData: null);

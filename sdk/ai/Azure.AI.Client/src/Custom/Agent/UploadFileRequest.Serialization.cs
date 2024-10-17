@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Client.Models;
+namespace Azure.AI.Client;
 
 internal partial class UploadFileRequest : IUtf8JsonSerializable
 {

@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Client.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 

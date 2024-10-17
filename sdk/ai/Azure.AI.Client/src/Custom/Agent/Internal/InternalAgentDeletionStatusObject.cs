@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.AI.Client.Models;
+namespace Azure.AI.Client;
 
 /*
  * CUSTOM CODE DESCRIPTION:

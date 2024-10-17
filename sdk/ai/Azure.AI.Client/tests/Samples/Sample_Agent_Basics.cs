@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.Client.Models;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;

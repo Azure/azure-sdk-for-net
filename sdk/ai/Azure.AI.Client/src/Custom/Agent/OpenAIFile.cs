@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Client.Models;
+namespace Azure.AI.Client;
 
 /*
  * CUSTOM CODE DESCRIPTION:

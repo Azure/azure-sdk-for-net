@@ -9,7 +9,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure.AI.Client.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -60,183 +59,7 @@ namespace Azure.AI.Client
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Creates an evaluation. </summary>
-        /// <param name="evaluation"> Properties of Evaluation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
-        public virtual async Task<Response<Evaluation>> CreateAsync(Evaluation evaluation, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(evaluation, nameof(evaluation));
-
-            using RequestContent content = evaluation.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(Evaluation.FromResponse(response), response);
-        }
-
-        /// <summary> Creates an evaluation. </summary>
-        /// <param name="evaluation"> Properties of Evaluation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
-        public virtual Response<Evaluation> Create(Evaluation evaluation, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(evaluation, nameof(evaluation));
-
-            using RequestContent content = evaluation.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Create(content, context);
-            return Response.FromValue(Evaluation.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates an evaluation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateAsync(Evaluation,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.Create");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates an evaluation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="Create(Evaluation,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Create(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.Create");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update an evaluation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateAsync(string id, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.Update");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateUpdateRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update an evaluation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Update(string id, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.Update");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateUpdateRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get an evaluation. </summary>
+        /// <summary> Resource read operation template. </summary>
         /// <param name="id"> Identifier of the evaluation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -250,7 +73,7 @@ namespace Azure.AI.Client
             return Response.FromValue(Evaluation.FromResponse(response), response);
         }
 
-        /// <summary> Get an evaluation. </summary>
+        /// <summary> Resource read operation template. </summary>
         /// <param name="id"> Identifier of the evaluation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -265,7 +88,7 @@ namespace Azure.AI.Client
         }
 
         /// <summary>
-        /// [Protocol Method] Get an evaluation.
+        /// [Protocol Method] Resource read operation template.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -304,7 +127,7 @@ namespace Azure.AI.Client
         }
 
         /// <summary>
-        /// [Protocol Method] Get an evaluation.
+        /// [Protocol Method] Resource read operation template.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -342,36 +165,36 @@ namespace Azure.AI.Client
             }
         }
 
-        /// <summary> Creates an evaluation schedule. </summary>
-        /// <param name="body"> Properties of Evaluation Schedule. </param>
+        /// <summary> Run the evaluation. </summary>
+        /// <param name="evaluation"> Evaluation to run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<EvaluationSchedule>> CreateScheduleAsync(EvaluationSchedule body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
+        public virtual async Task<Response<Evaluation>> CreateAsync(Evaluation evaluation, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(evaluation, nameof(evaluation));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = evaluation.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateScheduleAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(EvaluationSchedule.FromResponse(response), response);
+            Response response = await CreateAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(Evaluation.FromResponse(response), response);
         }
 
-        /// <summary> Creates an evaluation schedule. </summary>
-        /// <param name="body"> Properties of Evaluation Schedule. </param>
+        /// <summary> Run the evaluation. </summary>
+        /// <param name="evaluation"> Evaluation to run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<EvaluationSchedule> CreateSchedule(EvaluationSchedule body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
+        public virtual Response<Evaluation> Create(Evaluation evaluation, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(evaluation, nameof(evaluation));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = evaluation.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateSchedule(content, context);
-            return Response.FromValue(EvaluationSchedule.FromResponse(response), response);
+            Response response = Create(content, context);
+            return Response.FromValue(Evaluation.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Creates an evaluation schedule.
+        /// [Protocol Method] Run the evaluation.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -380,7 +203,7 @@ namespace Azure.AI.Client
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateScheduleAsync(EvaluationSchedule,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateAsync(Evaluation,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -390,15 +213,15 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateScheduleAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.CreateSchedule");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateScheduleRequest(content, context);
+                using HttpMessage message = CreateCreateRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -409,7 +232,7 @@ namespace Azure.AI.Client
         }
 
         /// <summary>
-        /// [Protocol Method] Creates an evaluation schedule.
+        /// [Protocol Method] Run the evaluation.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -418,7 +241,7 @@ namespace Azure.AI.Client
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateSchedule(EvaluationSchedule,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Create(Evaluation,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -428,15 +251,15 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateSchedule(RequestContent content, RequestContext context = null)
+        public virtual Response Create(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.CreateSchedule");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateScheduleRequest(content, context);
+                using HttpMessage message = CreateCreateRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -446,8 +269,80 @@ namespace Azure.AI.Client
             }
         }
 
-        /// <summary> Get an evaluation schedule along with runs. </summary>
-        /// <param name="id"> Identifier of the evaluation schedule. </param>
+        /// <summary>
+        /// [Protocol Method] Resource update operation template.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpdateAsync(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.Update");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Resource update operation template.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Update(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.Update");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resource read operation template. </summary>
+        /// <param name="id"> Identifier of the evaluation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -460,8 +355,8 @@ namespace Azure.AI.Client
             return Response.FromValue(EvaluationSchedule.FromResponse(response), response);
         }
 
-        /// <summary> Get an evaluation schedule along with runs. </summary>
-        /// <param name="id"> Identifier of the evaluation schedule. </param>
+        /// <summary> Resource read operation template. </summary>
+        /// <param name="id"> Identifier of the evaluation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -475,7 +370,7 @@ namespace Azure.AI.Client
         }
 
         /// <summary>
-        /// [Protocol Method] Get an evaluation schedule along with runs.
+        /// [Protocol Method] Resource read operation template.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -489,7 +384,7 @@ namespace Azure.AI.Client
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Identifier of the evaluation schedule. </param>
+        /// <param name="id"> Identifier of the evaluation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -514,7 +409,7 @@ namespace Azure.AI.Client
         }
 
         /// <summary>
-        /// [Protocol Method] Get an evaluation schedule along with runs.
+        /// [Protocol Method] Resource read operation template.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -528,7 +423,7 @@ namespace Azure.AI.Client
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Identifier of the evaluation schedule. </param>
+        /// <param name="id"> Identifier of the evaluation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -552,9 +447,125 @@ namespace Azure.AI.Client
             }
         }
 
+        /// <summary> Create or replace operation template. </summary>
+        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="resource"> The resource instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<EvaluationSchedule>> CreateOrReplaceScheduleAsync(string id, EvaluationSchedule resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using RequestContent content = resource.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateOrReplaceScheduleAsync(id, content, context).ConfigureAwait(false);
+            return Response.FromValue(EvaluationSchedule.FromResponse(response), response);
+        }
+
+        /// <summary> Create or replace operation template. </summary>
+        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="resource"> The resource instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<EvaluationSchedule> CreateOrReplaceSchedule(string id, EvaluationSchedule resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using RequestContent content = resource.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateOrReplaceSchedule(id, content, context);
+            return Response.FromValue(EvaluationSchedule.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create or replace operation template.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrReplaceScheduleAsync(string,EvaluationSchedule,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateOrReplaceScheduleAsync(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.CreateOrReplaceSchedule");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrReplaceScheduleRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create or replace operation template.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrReplaceSchedule(string,EvaluationSchedule,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateOrReplaceSchedule(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.CreateOrReplaceSchedule");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrReplaceScheduleRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete an evaluation schedule.
+        /// [Protocol Method] Resource delete operation template.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -563,7 +574,7 @@ namespace Azure.AI.Client
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Identifier of the evaluation schedule. </param>
+        /// <param name="id"> Identifier of the evaluation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -589,7 +600,7 @@ namespace Azure.AI.Client
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete an evaluation schedule.
+        /// [Protocol Method] Resource delete operation template.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -598,7 +609,7 @@ namespace Azure.AI.Client
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Identifier of the evaluation schedule. </param>
+        /// <param name="id"> Identifier of the evaluation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -622,7 +633,7 @@ namespace Azure.AI.Client
             }
         }
 
-        /// <summary> List evaluations. </summary>
+        /// <summary> Resource list operation template. </summary>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
@@ -635,7 +646,7 @@ namespace Azure.AI.Client
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Evaluation.DeserializeEvaluation(e), ClientDiagnostics, _pipeline, "EvaluationClient.GetEvaluations", "value", "nextLink", context);
         }
 
-        /// <summary> List evaluations. </summary>
+        /// <summary> Resource list operation template. </summary>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
@@ -649,7 +660,7 @@ namespace Azure.AI.Client
         }
 
         /// <summary>
-        /// [Protocol Method] List evaluations
+        /// [Protocol Method] Resource list operation template.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -677,7 +688,7 @@ namespace Azure.AI.Client
         }
 
         /// <summary>
-        /// [Protocol Method] List evaluations
+        /// [Protocol Method] Resource list operation template.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -704,7 +715,7 @@ namespace Azure.AI.Client
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationClient.GetEvaluations", "value", "nextLink", context);
         }
 
-        /// <summary> List evaluation schedules. </summary>
+        /// <summary> Resource list operation template. </summary>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
@@ -717,7 +728,7 @@ namespace Azure.AI.Client
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EvaluationSchedule.DeserializeEvaluationSchedule(e), ClientDiagnostics, _pipeline, "EvaluationClient.GetSchedules", "value", "nextLink", context);
         }
 
-        /// <summary> List evaluation schedules. </summary>
+        /// <summary> Resource list operation template. </summary>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
@@ -731,7 +742,7 @@ namespace Azure.AI.Client
         }
 
         /// <summary>
-        /// [Protocol Method] List evaluation schedules
+        /// [Protocol Method] Resource list operation template.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -759,7 +770,7 @@ namespace Azure.AI.Client
         }
 
         /// <summary>
-        /// [Protocol Method] List evaluation schedules
+        /// [Protocol Method] Resource list operation template.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -786,106 +797,25 @@ namespace Azure.AI.Client
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationClient.GetSchedules", "value", "nextLink", context);
         }
 
-        /// <summary> List evaluations under a schedule. </summary>
-        /// <param name="id"> Identifier of the evaluation schedule. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual AsyncPageable<Evaluation> GetScheduleEvaluationsAsync(string id, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetEvaluationRequest(string id, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScheduleEvaluationsRequest(id, maxCount, skip, maxpagesize, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScheduleEvaluationsNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Evaluation.DeserializeEvaluation(e), ClientDiagnostics, _pipeline, "EvaluationClient.GetScheduleEvaluations", "value", "nextLink", context);
-        }
-
-        /// <summary> List evaluations under a schedule. </summary>
-        /// <param name="id"> Identifier of the evaluation schedule. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Pageable<Evaluation> GetScheduleEvaluations(string id, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScheduleEvaluationsRequest(id, maxCount, skip, maxpagesize, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScheduleEvaluationsNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Evaluation.DeserializeEvaluation(e), ClientDiagnostics, _pipeline, "EvaluationClient.GetScheduleEvaluations", "value", "nextLink", context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] List evaluations under a schedule
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetScheduleEvaluationsAsync(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"> Identifier of the evaluation schedule. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual AsyncPageable<BinaryData> GetScheduleEvaluationsAsync(string id, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScheduleEvaluationsRequest(id, maxCount, skip, maxpagesize, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScheduleEvaluationsNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationClient.GetScheduleEvaluations", "value", "nextLink", context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] List evaluations under a schedule
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetScheduleEvaluations(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"> Identifier of the evaluation schedule. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual Pageable<BinaryData> GetScheduleEvaluations(string id, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScheduleEvaluationsRequest(id, maxCount, skip, maxpagesize, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScheduleEvaluationsNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationClient.GetScheduleEvaluations", "value", "nextLink", context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
+            uri.AppendPath("/evaluations/runs/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
         }
 
         internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
@@ -901,8 +831,8 @@ namespace Azure.AI.Client
             uri.AppendRaw(_resourceGroupName, true);
             uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendRaw(_projectName, true);
-            uri.AppendPath("/evaluations/create", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/evaluations/runs:run", false);
+            uri.AppendQuery("apiVersion", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -923,7 +853,7 @@ namespace Azure.AI.Client
             uri.AppendRaw(_resourceGroupName, true);
             uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendRaw(_projectName, true);
-            uri.AppendPath("/evaluations", false);
+            uri.AppendPath("/evaluations/runs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxCount != null)
             {
@@ -955,55 +885,12 @@ namespace Azure.AI.Client
             uri.AppendRaw(_resourceGroupName, true);
             uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendRaw(_projectName, true);
-            uri.AppendPath("/evaluations/", false);
+            uri.AppendPath("/evaluations/runs/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetEvaluationRequest(string id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
-            uri.AppendPath("/evaluations/", false);
-            uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateScheduleRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier201);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
-            uri.AppendPath("/evaluations/schedules/create", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
             request.Content = content;
             return message;
         }
@@ -1029,6 +916,29 @@ namespace Azure.AI.Client
             return message;
         }
 
+        internal HttpMessage CreateCreateOrReplaceScheduleRequest(string id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
+            uri.AppendPath("/evaluations/schedules/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateGetSchedulesRequest(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1043,40 +953,6 @@ namespace Azure.AI.Client
             uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendRaw(_projectName, true);
             uri.AppendPath("/evaluations/schedules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetScheduleEvaluationsRequest(string id, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
-            uri.AppendPath("/evaluations/schedules/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/runs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxCount != null)
             {
@@ -1154,25 +1030,6 @@ namespace Azure.AI.Client
             return message;
         }
 
-        internal HttpMessage CreateGetScheduleEvaluationsNextPageRequest(string nextLink, string id, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         private static RequestContext DefaultRequestContext = new RequestContext();
         internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
         {
@@ -1184,10 +1041,12 @@ namespace Azure.AI.Client
             return new RequestContext() { CancellationToken = cancellationToken };
         }
 
-        private static ResponseClassifier _responseClassifier201;
-        private static ResponseClassifier ResponseClassifier201 => _responseClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier201;
+        private static ResponseClassifier ResponseClassifier201 => _responseClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
+        private static ResponseClassifier _responseClassifier200201;
+        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }

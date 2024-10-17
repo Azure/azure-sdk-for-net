@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Client.Models;
 
 namespace Azure.AI.Client;
 
@@ -19,7 +18,7 @@ namespace Azure.AI.Client;
 
 public static partial class AIClientModelFactory
 {
-    /// <summary> Initializes a new instance of <see cref="Models.Agent"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="Azure.AI.Client.Agent"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
     /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
     /// <param name="name"> The name of the agent. </param>
@@ -69,7 +68,7 @@ public static partial class AIClientModelFactory
             serializedAdditionalRawData: null);
     }
 
-    /// <summary> Initializes a new instance of <see cref="Models.AgentThread"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="AgentThread"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
     /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
     /// <param name="toolResources">
@@ -78,7 +77,7 @@ public static partial class AIClientModelFactory
     /// of vector store IDs.
     /// </param>
     /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-    /// <returns> A new <see cref="Models.AgentThread"/> instance for mocking. </returns>
+    /// <returns> A new <see cref="Azure.AI.Client.AgentThread"/> instance for mocking. </returns>
     public static AgentThread AgentThread(string id = null, DateTimeOffset createdAt = default, ToolResources toolResources = null, IReadOnlyDictionary<string, string> metadata = null)
     {
         metadata ??= new Dictionary<string, string>();
@@ -92,14 +91,14 @@ public static partial class AIClientModelFactory
             serializedAdditionalRawData: null);
     }
 
-    /// <summary> Initializes a new instance of <see cref="Models.ThreadRun"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="Azure.AI.Client.ThreadRun"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
     /// <param name="threadId"> The ID of the thread associated with this run. </param>
     /// <param name="agentId"> The ID of the agent associated with the thread this run was performed against. </param>
     /// <param name="status"> The status of the agent thread run. </param>
     /// <param name="requiredAction">
     /// The details of the action required for the agent thread run to continue.
-    /// Please note <see cref="Models.RequiredAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="Azure.AI.Client.RequiredAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SubmitToolOutputsAction"/>.
     /// </param>
     /// <param name="lastError"> The last error, if any, encountered by this agent thread run. </param>
@@ -128,7 +127,7 @@ public static partial class AIClientModelFactory
     /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
     /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
     /// <param name="parallelToolCalls"> Determines if tools can be executed in parallel within the run. </param>
-    /// <returns> A new <see cref="Models.ThreadRun"/> instance for mocking. </returns>
+    /// <returns> A new <see cref="Azure.AI.Client.ThreadRun"/> instance for mocking. </returns>
     public static ThreadRun ThreadRun(string id = null, string threadId = null, string agentId = null, RunStatus status = default, RequiredAction requiredAction = null, RunError lastError = null, string model = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, DateTimeOffset createdAt = default, DateTimeOffset? expiresAt = null, DateTimeOffset? startedAt = null, DateTimeOffset? completedAt = null, DateTimeOffset? cancelledAt = null, DateTimeOffset? failedAt = null, IncompleteRunDetails? incompleteDetails = null, RunCompletionUsage usage = default, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, UpdateToolResourcesOptions toolResources = null, bool? parallelToolCalls = null)
     {
         tools ??= new List<ToolDefinition>();
@@ -137,19 +136,19 @@ public static partial class AIClientModelFactory
         return new ThreadRun(id, @object: null, threadId, agentId, status, requiredAction, lastError, model, instructions, tools.ToList(), createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, incompleteDetails, usage, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, metadata, toolResources, parallelToolCalls, serializedAdditionalRawData: null);
     }
 
-    /// <summary> Initializes a new instance of <see cref="Models.OpenAIFile"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="Azure.AI.Client.OpenAIFile"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
     /// <param name="size"> The size of the file, in bytes. </param>
     /// <param name="filename"> The name of the file. </param>
     /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
     /// <param name="purpose"> The intended purpose of a file. </param>
-    /// <returns> A new <see cref="Models.OpenAIFile"/> instance for mocking. </returns>
+    /// <returns> A new <see cref="Azure.AI.Client.OpenAIFile"/> instance for mocking. </returns>
     public static OpenAIFile OpenAIFile(string id = null, int size = default, string filename = null, DateTimeOffset createdAt = default, OpenAIFilePurpose purpose = default)
     {
         return new OpenAIFile(id, size, filename, createdAt, purpose);
     }
 
-    /// <summary> Initializes a new instance of <see cref="Models.RunStep"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="Azure.AI.Client.RunStep"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
     /// <param name="type"> The type of run step, which can be either message_creation or tool_calls. </param>
     /// <param name="agentId"> The ID of the agent associated with the run step. </param>
@@ -165,7 +164,7 @@ public static partial class AIClientModelFactory
     /// <param name="failedAt"> The Unix timestamp, in seconds, representing when this failed. </param>
     /// <param name="usage"> Usage statistics related to the run step. </param>
     /// <param name="metadata"> A set of key/value pairs that can be attached to an object, used for storing additional information. </param>
-    /// <returns> A new <see cref="Models.RunStep"/> instance for mocking. </returns>
+    /// <returns> A new <see cref="Azure.AI.Client.RunStep"/> instance for mocking. </returns>
     public static RunStep RunStep(string id = null, RunStepType type = default, string agentId = null, string threadId = null, string runId = null, RunStepStatus status = default, RunStepDetails stepDetails = null, RunStepError lastError = null, DateTimeOffset createdAt = default, DateTimeOffset? expiredAt = null, DateTimeOffset? completedAt = null, DateTimeOffset? cancelledAt = null, DateTimeOffset? failedAt = null, RunStepCompletionUsage usage = null, IReadOnlyDictionary<string, string> metadata = null)
     {
         metadata ??= new Dictionary<string, string>();
@@ -173,7 +172,7 @@ public static partial class AIClientModelFactory
         return new RunStep(id, @object: null, type, agentId, threadId, runId, status, stepDetails, lastError, createdAt, expiredAt, completedAt, cancelledAt, failedAt, usage, metadata, serializedAdditionalRawData: null);
     }
 
-    /// <summary> Initializes a new instance of <see cref="Models.ThreadMessage"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="Azure.AI.Client.ThreadMessage"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
     /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
     /// <param name="threadId"> The ID of the thread that this message belongs to. </param>
@@ -187,7 +186,7 @@ public static partial class AIClientModelFactory
     /// <param name="runId"> If applicable, the ID of the run associated with the authoring of this message. </param>
     /// <param name="attachments"> A list of files attached to the message, and the tools they were added to. </param>
     /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. </param>
-    /// <returns> A new <see cref="Models.ThreadMessage"/> instance for mocking. </returns>
+    /// <returns> A new <see cref="Azure.AI.Client.ThreadMessage"/> instance for mocking. </returns>
     public static ThreadMessage ThreadMessage(string id = null, DateTimeOffset createdAt = default, string threadId = null, MessageStatus status = default, MessageIncompleteDetails incompleteDetails = null, DateTimeOffset? completedAt = null, DateTimeOffset? incompleteAt = null, MessageRole role = default, IEnumerable<MessageContent> contentItems = null, string agentId = null, string runId = null, IEnumerable<MessageAttachment> attachments = null, IDictionary<string, string> metadata = null)
     {
         contentItems ??= new List<MessageContent>();
@@ -213,7 +212,7 @@ public static partial class AIClientModelFactory
     }
 
     /// <summary>
-    /// Instantiates a new instance of <see cref="Models.SubmitToolOutputsAction"/>.
+    /// Instantiates a new instance of <see cref="Azure.AI.Client.SubmitToolOutputsAction"/>.
     /// </summary>
     /// <param name="toolCalls"> The tool calls to include in the mocked action. </param>
     /// <returns> A new instance of SubmitToolOutputsAction. </returns>

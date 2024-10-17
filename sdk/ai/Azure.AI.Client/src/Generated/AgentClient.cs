@@ -11,7 +11,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Client.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 

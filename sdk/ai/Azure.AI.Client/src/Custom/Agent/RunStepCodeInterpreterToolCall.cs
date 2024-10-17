@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.AI.Client.Models;
+namespace Azure.AI.Client;
 
 /*
  * CUSTOM CODE DESCRIPTION:

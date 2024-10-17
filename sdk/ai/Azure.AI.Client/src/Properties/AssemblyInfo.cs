@@ -4,9 +4,9 @@
 using Azure.Core;
 
 [assembly: AzureResourceProviderNamespace("Microsoft.CognitiveServices")]
-[assembly: CodeGenSuppressType("Azure.AI.Client.Models.AgentObject")]
-[assembly: CodeGenSuppressType("Azure.AI.Client.Models.AgentThreadObject")]
-[assembly: CodeGenSuppressType("Azure.AI.Client.Models.OpenAIFileObject")]
-[assembly: CodeGenSuppressType("Azure.AI.Client.Models.RunStepObject")]
-[assembly: CodeGenSuppressType("Azure.AI.Client.Models.ThreadMessageObject")]
-[assembly: CodeGenSuppressType("Azure.AI.Client.Models.ThreadRunObject")]
+[assembly: CodeGenSuppressType("Azure.AI.Client.AgentObject")]
+[assembly: CodeGenSuppressType("Azure.AI.Client.AgentThreadObject")]
+[assembly: CodeGenSuppressType("Azure.AI.Client.OpenAIFileObject")]
+[assembly: CodeGenSuppressType("Azure.AI.Client.RunStepObject")]
+[assembly: CodeGenSuppressType("Azure.AI.Client.ThreadMessageObject")]
+[assembly: CodeGenSuppressType("Azure.AI.Client.ThreadRunObject")]
