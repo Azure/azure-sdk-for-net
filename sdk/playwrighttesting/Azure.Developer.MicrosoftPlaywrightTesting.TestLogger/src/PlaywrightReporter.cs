@@ -15,7 +15,7 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
-[FriendlyName("ms-playwright-service")]
+[FriendlyName("microsoft-playwright-testing")]
 [ExtensionUri("logger://Microsoft/Playwright/ServiceLogger/v1")]
 internal class PlaywrightReporter : ITestLoggerWithParameters
 {
