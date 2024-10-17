@@ -11,7 +11,7 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonPoint
+    internal partial class GeoJsonPoint
     {
         internal static GeoJsonPoint DeserializeGeoJsonPoint(JsonElement element)
         {
@@ -21,7 +21,7 @@ namespace Azure.Maps.Search.Models
             }
             IReadOnlyList<double> coordinates = default;
             GeoJsonObjectType type = default;
-            IReadOnlyList<double> boundingBox = default;
+            IReadOnlyList<double> bbox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coordinates"u8))
@@ -39,7 +39,7 @@ namespace Azure.Maps.Search.Models
                     type = new GeoJsonObjectType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("boundingBox"u8))
+                if (property.NameEquals("bbox"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,11 +50,11 @@ namespace Azure.Maps.Search.Models
                     {
                         array.Add(item.GetDouble());
                     }
-                    boundingBox = array;
+                    bbox = array;
                     continue;
                 }
             }
-            return new GeoJsonPoint(type, boundingBox ?? new ChangeTrackingList<double>(), coordinates);
+            return new GeoJsonPoint(type, bbox ?? new ChangeTrackingList<double>(), coordinates);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

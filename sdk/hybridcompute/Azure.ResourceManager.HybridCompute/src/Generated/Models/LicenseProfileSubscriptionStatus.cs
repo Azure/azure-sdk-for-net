@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(LicenseProfileSubscriptionStatus left, LicenseProfileSubscriptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LicenseProfileSubscriptionStatus"/> values are not the same. </summary>
         public static bool operator !=(LicenseProfileSubscriptionStatus left, LicenseProfileSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LicenseProfileSubscriptionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LicenseProfileSubscriptionStatus"/>. </summary>
         public static implicit operator LicenseProfileSubscriptionStatus(string value) => new LicenseProfileSubscriptionStatus(value);
 
         /// <inheritdoc />

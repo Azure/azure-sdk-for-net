@@ -34,6 +34,7 @@
     "*.user",
     ".vscode/cspell.json",
     "assets.json",
+    "eng/Packages.Data.props",
     "sdk/confidentialledger/Azure.Security.CodeTransparency/tests/TestFiles/*",
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
@@ -48,6 +49,7 @@
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/Azure.ResourceManager.Monitor/api/*.cs",
     "sdk/objectanchors/*/api/*.cs",
+    "sdk/openai/Azure.AI.OpenAI/tests/Assets/playback_test_config.json",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
     "sdk/videoanalyzer/*/api/*.cs",
@@ -57,38 +59,61 @@
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
   "words": [
+    "AADDS",
+    "AADKERB",
     "apos",
     "azsdk",
     "blazor",
+    "Byok",
     "centralus",
+    "Colls",
     "contoso",
     "cpus",
     "cref",
+    "Dapr",
     "deduplication",
+    "deletesas",
     "deserializable",
     "deserializes",
     "diagnoser",
     "dicom",
+    "Diffie",
     "distro",
+    "Dmarc",
     "dont",
     "dotnetcli",
     "dtmf",
     "eastus",
     "entra",
     "epsg",
+    "Exfiltration",
     "expando",
     "fhir",
     "finalizer",
     "finalizers",
+    "Fips",
     "flac",
+    "getsas",
+    "Gmsa",
+    "GZRS",
     "hnsw",
     "ienumerable",
     "illumos",
     "imds",
+    "Inotify",
     "interventional",
     "ints",
+    "Intvl",
+    "Istio",
+    "Itsm",
+    "Keda",
+    "Kubelet",
+    "Kubenet",
     "kubernetes",
     "kusto",
+    "Kustomization",
+    "Kustomizations",
+    "listsas",
     "lucene",
     "mgmt",
     "miscs",
@@ -106,17 +131,25 @@
     "personalizer",
     "petabit",
     "picometer",
+    "Pids",
     "pkcs",
     "pstn",
+    "Puid",
     "pwsh",
+    "RAGRS",
+    "RAGZRS",
     "referer",
     "renormalize",
     "retriable",
+    "Servfail",
+    "setsas",
     "signalr",
     "signup",
     "skus",
+    "Somaxconn",
     "southcentralus",
     "structs",
+    "Sysctls",
     "Uefi",
     "uints",
     "unbilled",
@@ -124,6 +157,8 @@
     "unformattable",
     "unhold",
     "uninstrumented",
+    "Unparked",
+    "Unprovisioning",
     "vcpus",
     "Vectorizable",
     "Vectorize",
@@ -134,8 +169,11 @@
     "vmss",
     "vmuuid",
     "vnet",
+    "VSTSRM",
+    "Wasi",
     "westcentralus",
     "westus",
+    "Wmem",
     "xunit"
   ],
   "overrides": [
@@ -226,6 +264,14 @@
         "Reimaging",
         "reimaging",
         "SSDLRS"
+      ]
+    },
+    {
+      "filename": "**/sdk/billing/**/*.cs",
+      "words": [
+        "puid",
+        "resellee",
+        "cnpj"
       ]
     },
     {
@@ -864,6 +910,14 @@
       ]
     },
     {
+      "filename": "**/sdk/maps/Azure.Maps.Weather/**/*.cs",
+      "words": [
+        "Actuals",
+        "Bangla",
+        "Hecto"
+      ]
+    },
+    {
       "filename": "**/sdk/mediaservices/**/*.cs",
       "words": [
         "cabac",
@@ -930,6 +984,25 @@
       "filename": "**/sdk/networkfunction/**/*.cs",
       "words": [
         "ipfix"
+      ]
+    },
+    {
+      "filename": "**/sdk/openai/**/*",
+      "words": [
+        "AOAI",
+        "Arrr",
+        "Dall",
+        "Dalle",
+        "Dall-E",
+        "devcert",
+        "Filip",
+        "Filip's",
+        "granularities",
+        "haikus",
+        "msdocs",
+        "OpenAI",
+        "Pavleski",
+        "Tekakwitha"
       ]
     },
     {
@@ -1207,7 +1280,8 @@
         "Puid",
         "Stix",
         "Whois",
-        "Nlstext"
+        "Nlstext",
+        "Criterias"
       ]
     },
     {

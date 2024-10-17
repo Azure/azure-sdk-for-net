@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator ==(ServiceAlertMetadataIdentifier left, ServiceAlertMetadataIdentifier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAlertMetadataIdentifier"/> values are not the same. </summary>
         public static bool operator !=(ServiceAlertMetadataIdentifier left, ServiceAlertMetadataIdentifier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceAlertMetadataIdentifier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceAlertMetadataIdentifier"/>. </summary>
         public static implicit operator ServiceAlertMetadataIdentifier(string value) => new ServiceAlertMetadataIdentifier(value);
 
         /// <inheritdoc />

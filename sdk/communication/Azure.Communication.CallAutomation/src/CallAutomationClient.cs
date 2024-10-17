@@ -214,6 +214,9 @@ namespace Azure.Communication.CallAutomation
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
+            request.CustomCallingContext = new CustomCallingContextInternal(
+                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>());
 
             return request;
         }

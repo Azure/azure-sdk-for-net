@@ -1,5 +1,21 @@
 # Release History
 
+## 1.0.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.1 (2024-10-04)
+
+### Features Added
+
+- Preview of the new Azure.Provisioning experience.
+
 ## 0.3.0 (2024-05-14)
 
 ### Features Added

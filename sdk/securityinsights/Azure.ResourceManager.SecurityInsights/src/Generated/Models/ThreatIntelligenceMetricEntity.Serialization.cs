@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         void IJsonModel<ThreatIntelligenceMetricEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceMetricEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreatIntelligenceMetricEntity)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(MetricName))
             {
                 writer.WritePropertyName("metricName"u8);
@@ -51,7 +60,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ThreatIntelligenceMetricEntity IJsonModel<ThreatIntelligenceMetricEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -103,6 +111,59 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new ThreatIntelligenceMetricEntity(metricName, metricValue, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  metricName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MetricName))
+                {
+                    builder.Append("  metricName: ");
+                    if (MetricName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MetricName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MetricName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  metricValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MetricValue))
+                {
+                    builder.Append("  metricValue: ");
+                    builder.AppendLine($"{MetricValue.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ThreatIntelligenceMetricEntity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceMetricEntity>)this).GetFormatFromOptions(options) : options.Format;
@@ -111,6 +172,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ThreatIntelligenceMetricEntity)} does not support writing '{options.Format}' format.");
             }

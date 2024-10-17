@@ -19,6 +19,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+enable-bicep-serialization: true
+use-write-core: true
 
 #mgmt-debug: 
 #  show-serialized-names: true

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML Environment images (custom and curated). </summary>
+    /// <summary> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML images. </summary>
     public readonly partial struct ImageType : IEquatable<ImageType>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(ImageType left, ImageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageType"/> values are not the same. </summary>
         public static bool operator !=(ImageType left, ImageType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ImageType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ImageType"/>. </summary>
         public static implicit operator ImageType(string value) => new ImageType(value);
 
         /// <inheritdoc />

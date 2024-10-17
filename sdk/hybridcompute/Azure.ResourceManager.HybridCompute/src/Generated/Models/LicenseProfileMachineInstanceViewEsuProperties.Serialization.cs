@@ -21,13 +21,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         void IJsonModel<LicenseProfileMachineInstanceViewEsuProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(AssignedLicense))
             {
                 writer.WritePropertyName("assignedLicense"u8);
@@ -38,52 +47,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("licenseAssignmentState"u8);
                 writer.WriteStringValue(LicenseAssignmentState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerType))
-            {
-                writer.WritePropertyName("serverType"u8);
-                writer.WriteStringValue(ServerType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(EsuEligibility))
-            {
-                writer.WritePropertyName("esuEligibility"u8);
-                writer.WriteStringValue(EsuEligibility.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(EsuKeyState))
-            {
-                writer.WritePropertyName("esuKeyState"u8);
-                writer.WriteStringValue(EsuKeyState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(AssignedLicenseImmutableId))
-            {
-                writer.WritePropertyName("assignedLicenseImmutableId"u8);
-                writer.WriteStringValue(AssignedLicenseImmutableId.Value);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EsuKeys))
-            {
-                writer.WritePropertyName("esuKeys"u8);
-                writer.WriteStartArray();
-                foreach (var item in EsuKeys)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         LicenseProfileMachineInstanceViewEsuProperties IJsonModel<LicenseProfileMachineInstanceViewEsuProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

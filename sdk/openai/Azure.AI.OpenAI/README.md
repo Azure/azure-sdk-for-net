@@ -53,7 +53,7 @@ AzureOpenAIClient azureClient = new(
 ChatClient chatClient = azureClient.GetChatClient("my-gpt-4o-mini-deployment");
 ```
 
-##### Configure client for Azure sovereign cloud**
+##### Configure client for Azure sovereign cloud
 
 If your Microsoft Entra credentials are issued by an entity other than Azure Public Cloud, you can set the `Audience` property on `OpenAIClientOptions` to modify the token authorization scope used for requests.
 
@@ -81,14 +81,14 @@ AzureOpenAIClientOptions optionsWithCustomAudience = new()
 
 #### Create client with an API key
 
-While not as secure as Microsoft Entra-based authentication, it's possible to authenticate using a client subscription key:
+While not as secure as [Microsoft Entra-based authentication](#create-client-with-a-microsoft-entra-credential), it's possible to authenticate using a client subscription key:
 
 ```C# Snippet:ConfigureClient:WithAOAITopLevelClient
 string keyFromEnvironment = Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY");
 
 AzureOpenAIClient azureClient = new(
     new Uri("https://your-azure-openai-resource.com"),
-    new AzureKeyCredential(keyFromEnvironment));
+    new ApiKeyCredential(keyFromEnvironment));
 ChatClient chatClient = azureClient.GetChatClient("my-gpt-35-turbo-deployment");
 ```
 
@@ -157,7 +157,7 @@ ChatCompletion completion = chatClient.CompleteChat(
     [
         // System messages represent instructions or other guidance about how the assistant should behave
         new SystemChatMessage("You are a helpful assistant that talks like a pirate."),
-        // User messages represent user input, whether historical or the most recen tinput
+        // User messages represent user input, whether historical or the most recent input
         new UserChatMessage("Hi, can you help me?"),
         // Assistant messages in a request represent conversation history for responses
         new AssistantChatMessage("Arrr! Of course, me hearty! What can I do for ye?"),
@@ -319,10 +319,8 @@ tool call messages for assistant message history. Note that the model will ignor
 and that all streamed responses should map to a single, common choice index in the range of `[0..(ChoiceCount - 1)]`.
 
 ```C# Snippet:ChatTools:StreamingChatTools
-Dictionary<int, string> toolCallIdsByIndex = [];
-Dictionary<int, string> functionNamesByIndex = [];
-Dictionary<int, StringBuilder> functionArgumentBuildersByIndex = [];
 StringBuilder contentBuilder = new();
+StreamingChatToolCallsBuilder toolCallsBuilder = new();
 
 foreach (StreamingChatCompletionUpdate streamingChatUpdate
     in chatClient.CompleteChatStreaming(conversationMessages, options))
@@ -331,38 +329,22 @@ foreach (StreamingChatCompletionUpdate streamingChatUpdate
     {
         contentBuilder.Append(contentPart.Text);
     }
+
     foreach (StreamingChatToolCallUpdate toolCallUpdate in streamingChatUpdate.ToolCallUpdates)
     {
-        if (!string.IsNullOrEmpty(toolCallUpdate.Id))
-        {
-            toolCallIdsByIndex[toolCallUpdate.Index] = toolCallUpdate.Id;
-        }
-        if (!string.IsNullOrEmpty(toolCallUpdate.FunctionName))
-        {
-            functionNamesByIndex[toolCallUpdate.Index] = toolCallUpdate.FunctionName;
-        }
-        if (!string.IsNullOrEmpty(toolCallUpdate.FunctionArgumentsUpdate))
-        {
-            StringBuilder argumentsBuilder
-                = functionArgumentBuildersByIndex.TryGetValue(toolCallUpdate.Index, out StringBuilder existingBuilder)
-                    ? existingBuilder
-                    : new();
-            argumentsBuilder.Append(toolCallUpdate.FunctionArgumentsUpdate);
-            functionArgumentBuildersByIndex[toolCallUpdate.Index] = argumentsBuilder;
-        }
+        toolCallsBuilder.Append(toolCallUpdate);
     }
 }
 
-List<ChatToolCall> toolCalls = [];
-foreach (KeyValuePair<int, string> indexToIdPair in toolCallIdsByIndex)
+IReadOnlyList<ChatToolCall> toolCalls = toolCallsBuilder.Build();
+
+AssistantChatMessage assistantMessage = new AssistantChatMessage(toolCalls);
+if (contentBuilder.Length > 0)
 {
-    toolCalls.Add(ChatToolCall.CreateFunctionToolCall(
-        indexToIdPair.Value,
-        functionNamesByIndex[indexToIdPair.Key],
-        functionArgumentBuildersByIndex[indexToIdPair.Key].ToString()));
+    assistantMessage.Content.Add(ChatMessageContentPart.CreateTextPart(contentBuilder.ToString()));
 }
 
-conversationMessages.Add(new AssistantChatMessage(toolCalls, contentBuilder.ToString()));
+conversationMessages.Add(assistantMessage);
 
 // Placeholder: each tool call must be resolved, like in the non-streaming case
 string GetToolCallOutput(ChatToolCall toolCall) => null;
@@ -402,13 +384,13 @@ ChatCompletion completion = chatClient.CompleteChat(
     ],
     options);
 
-AzureChatMessageContext onYourDataContext = completion.GetAzureMessageContext();
+ChatMessageContext onYourDataContext = completion.GetMessageContext();
 
 if (onYourDataContext?.Intent is not null)
 {
     Console.WriteLine($"Intent: {onYourDataContext.Intent}");
 }
-foreach (AzureChatCitation citation in onYourDataContext?.Citations ?? [])
+foreach (ChatCitation citation in onYourDataContext?.Citations ?? [])
 {
     Console.WriteLine($"Citation: {citation.Content}");
 }
@@ -468,7 +450,7 @@ RunCreationOptions runOptions = new()
     AdditionalInstructions = "When possible, talk like a pirate."
 };
 await foreach (StreamingUpdate streamingUpdate
-    in assistantClient.CreateRunStreamingAsync(thread, assistant, runOptions))
+    in assistantClient.CreateRunStreamingAsync(thread.Id, assistant.Id, runOptions))
 {
     if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
     {
@@ -490,8 +472,8 @@ reuse them later or, as demonstrated below, delete them when no longer desired.
 
 ```C# Snippet:Assistants:Cleanup
 // Optionally, delete persistent resources that are no longer needed.
-_ = await assistantClient.DeleteAssistantAsync(assistant);
-_ = await assistantClient.DeleteThreadAsync(thread);
+_ = await assistantClient.DeleteAssistantAsync(assistant.Id);
+_ = await assistantClient.DeleteThreadAsync(thread.Id);
 ```
 
 ## Next steps
@@ -526,7 +508,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_openai_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/src/Custom/AzureOpenAIClient.cs
 [openai_rest]: https://learn.microsoft.com/azure/cognitive-services/openai/reference
 [azure_openai_completions_docs]: https://learn.microsoft.com/azure/cognitive-services/openai/how-to/completions
-[azure_openai_embeddgings_docs]: https://learn.microsoft.com/azure/cognitive-services/openai/concepts/understand-embeddings
+[azure_openai_embeddings_docs]: https://learn.microsoft.com/azure/cognitive-services/openai/concepts/understand-embeddings
 [openai_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/

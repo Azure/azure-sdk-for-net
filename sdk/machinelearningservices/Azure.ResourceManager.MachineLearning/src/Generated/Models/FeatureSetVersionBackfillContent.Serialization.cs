@@ -19,32 +19,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<FeatureSetVersionBackfillContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FeatureSetVersionBackfillContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FeatureSetVersionBackfillContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DataAvailabilityStatus))
+            if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("dataAvailabilityStatus"u8);
-                writer.WriteStartArray();
-                foreach (var item in DataAvailabilityStatus)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(FeatureWindow))
             {
@@ -58,16 +56,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featureWindow");
                 }
             }
+            if (Optional.IsCollectionDefined(DataAvailabilityStatus))
+            {
+                writer.WritePropertyName("dataAvailabilityStatus"u8);
+                writer.WriteStartArray();
+                foreach (var item in DataAvailabilityStatus)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("properties"u8);
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
-                foreach (var item in Properties)
+                foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);
@@ -90,11 +98,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("tags"u8);
+                writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
-                foreach (var item in Tags)
+                foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);
@@ -116,7 +124,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FeatureSetVersionBackfillContent IJsonModel<FeatureSetVersionBackfillContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -139,19 +146,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<DataAvailabilityStatus> dataAvailabilityStatus = default;
-            string description = default;
             string displayName = default;
+            string description = default;
             FeatureWindow featureWindow = default;
+            IList<DataAvailabilityStatus> dataAvailabilityStatus = default;
             string jobId = default;
-            IDictionary<string, string> properties = default;
+            IDictionary<string, string> tags = default;
             MaterializationComputeResource resource = default;
             IDictionary<string, string> sparkConfiguration = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("featureWindow"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        featureWindow = null;
+                        continue;
+                    }
+                    featureWindow = FeatureWindow.DeserializeFeatureWindow(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("dataAvailabilityStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -166,32 +193,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     dataAvailabilityStatus = array;
                     continue;
                 }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("displayName"u8))
-                {
-                    displayName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("featureWindow"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        featureWindow = null;
-                        continue;
-                    }
-                    featureWindow = FeatureWindow.DeserializeFeatureWindow(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -202,7 +209,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
-                    properties = dictionary;
+                    tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("resource"u8))
@@ -228,7 +235,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     sparkConfiguration = dictionary;
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -239,7 +246,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
-                    tags = dictionary;
+                    properties = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -249,15 +256,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new FeatureSetVersionBackfillContent(
-                dataAvailabilityStatus ?? new ChangeTrackingList<DataAvailabilityStatus>(),
-                description,
                 displayName,
+                description,
                 featureWindow,
+                dataAvailabilityStatus ?? new ChangeTrackingList<DataAvailabilityStatus>(),
                 jobId,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 resource,
                 sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

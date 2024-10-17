@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,15 +20,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<CustomMetricThreshold>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CustomMetricThreshold>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomMetricThreshold)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("metric"u8);
-            writer.WriteStringValue(Metric);
             if (Optional.IsDefined(Threshold))
             {
                 if (Threshold != null)
@@ -40,6 +47,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("threshold");
                 }
             }
+            writer.WritePropertyName("metric"u8);
+            writer.WriteStringValue(Metric);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -55,7 +64,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CustomMetricThreshold IJsonModel<CustomMetricThreshold>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -78,17 +86,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string metric = default;
             MonitoringThreshold threshold = default;
+            string metric = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metric"u8))
-                {
-                    metric = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("threshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -99,13 +102,74 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("metric"u8))
+                {
+                    metric = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CustomMetricThreshold(metric, threshold, serializedAdditionalRawData);
+            return new CustomMetricThreshold(threshold, metric, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ThresholdValue", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  threshold: ");
+                builder.AppendLine("{");
+                builder.Append("    value: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Threshold))
+                {
+                    builder.Append("  threshold: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Threshold, options, 2, false, "  threshold: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metric), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  metric: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Metric))
+                {
+                    builder.Append("  metric: ");
+                    if (Metric.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Metric}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Metric}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CustomMetricThreshold>.Write(ModelReaderWriterOptions options)
@@ -116,6 +180,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CustomMetricThreshold)} does not support writing '{options.Format}' format.");
             }

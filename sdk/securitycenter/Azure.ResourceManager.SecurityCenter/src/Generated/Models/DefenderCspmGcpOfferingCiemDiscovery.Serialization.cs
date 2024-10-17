@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         void IJsonModel<DefenderCspmGcpOfferingCiemDiscovery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmGcpOfferingCiemDiscovery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(WorkloadIdentityProviderId))
             {
                 writer.WritePropertyName("workloadIdentityProviderId"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DefenderCspmGcpOfferingCiemDiscovery IJsonModel<DefenderCspmGcpOfferingCiemDiscovery>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

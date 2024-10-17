@@ -17,7 +17,7 @@ namespace Azure.Storage.DataMovement
 {
     internal abstract class JobPartInternal
     {
-        public delegate Task QueueChunkDelegate(Func<Task> item);
+        public delegate ValueTask QueueChunkDelegate(Func<Task> item, CancellationToken cancellationToken);
         public QueueChunkDelegate QueueChunk { get; internal set; }
 
         /// <summary>
@@ -229,7 +229,8 @@ namespace Azure.Storage.DataMovement
                     }
                     Interlocked.Increment(ref _completedChunkCount);
                     await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
-                }).ConfigureAwait(false);
+                },
+                default).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -274,7 +275,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="transferState"></param>
         internal async Task OnTransferStateChangedAsync(DataTransferState transferState)
         {
-            if (JobPartStatus.TrySetTransferStateChange(transferState))
+            if (JobPartStatus.SetTransferStateChange(transferState))
             {
                 // Progress tracking, do before invoking the event below
                 if (transferState == DataTransferState.InProgress)
@@ -354,7 +355,7 @@ namespace Azure.Storage.DataMovement
 
             // Update the JobPartStatus. If was already updated (e.g. there was a failed item before)
             // then don't raise the PartTransferStatusEventHandler
-            if (JobPartStatus.TrySetSkippedItem())
+            if (JobPartStatus.SetSkippedItem())
             {
                 await PartTransferStatusEventHandler.RaiseAsync(
                     new TransferStatusEventArgs(
@@ -378,6 +379,7 @@ namespace Azure.Storage.DataMovement
         {
             if (ex is not OperationCanceledException &&
                 ex is not TaskCanceledException &&
+                ex.InnerException is not TaskCanceledException &&
                 !ex.Message.Contains("The request was canceled."))
             {
                 if (ex is RequestFailedException requestFailedException)
@@ -407,7 +409,7 @@ namespace Azure.Storage.DataMovement
 
                 // Update the JobPartStatus. If was already updated (e.g. there was a failed item before)
                 // then don't raise the PartTransferStatusEventHandler
-                if (JobPartStatus.TrySetFailedItem())
+                if (JobPartStatus.SetFailedItem())
                 {
                     await PartTransferStatusEventHandler.RaiseAsync(
                         new TransferStatusEventArgs(

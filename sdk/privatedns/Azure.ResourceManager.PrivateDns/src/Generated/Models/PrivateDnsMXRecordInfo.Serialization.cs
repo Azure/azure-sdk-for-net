@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         void IJsonModel<PrivateDnsMXRecordInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsMXRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PrivateDnsMXRecordInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Preference))
             {
                 writer.WritePropertyName("preference"u8);
@@ -51,7 +60,6 @@ namespace Azure.ResourceManager.PrivateDns.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PrivateDnsMXRecordInfo IJsonModel<PrivateDnsMXRecordInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -103,6 +111,59 @@ namespace Azure.ResourceManager.PrivateDns.Models
             return new PrivateDnsMXRecordInfo(preference, exchange, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Preference), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  preference: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Preference))
+                {
+                    builder.Append("  preference: ");
+                    builder.AppendLine($"{Preference.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Exchange), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  exchange: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Exchange))
+                {
+                    builder.Append("  exchange: ");
+                    if (Exchange.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Exchange}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Exchange}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PrivateDnsMXRecordInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsMXRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -111,6 +172,8 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PrivateDnsMXRecordInfo)} does not support writing '{options.Format}' format.");
             }

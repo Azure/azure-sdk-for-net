@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string SoapValue = "soap";
         private const string WebSocketValue = "websocket";
         private const string GraphQLValue = "graphql";
+        private const string OdataValue = "odata";
 
         /// <summary> http. </summary>
         public static ApiType Http { get; } = new ApiType(HttpValue);
@@ -35,11 +36,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiType WebSocket { get; } = new ApiType(WebSocketValue);
         /// <summary> graphql. </summary>
         public static ApiType GraphQL { get; } = new ApiType(GraphQLValue);
+        /// <summary> odata. </summary>
+        public static ApiType Odata { get; } = new ApiType(OdataValue);
         /// <summary> Determines if two <see cref="ApiType"/> values are the same. </summary>
         public static bool operator ==(ApiType left, ApiType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiType"/> values are not the same. </summary>
         public static bool operator !=(ApiType left, ApiType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApiType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiType"/>. </summary>
         public static implicit operator ApiType(string value) => new ApiType(value);
 
         /// <inheritdoc />

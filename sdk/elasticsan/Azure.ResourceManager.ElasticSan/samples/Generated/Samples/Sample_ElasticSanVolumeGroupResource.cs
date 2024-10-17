@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_VolumeGroupsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("key7482")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("key1006")] = new UserAssignedIdentity(),
 },
                 },
                 ProtocolType = ElasticSanStorageTargetType.Iscsi,
@@ -54,19 +54,20 @@ namespace Azure.ResourceManager.ElasticSan.Samples
                 {
                     KeyVaultProperties = new ElasticSanKeyVaultProperties()
                     {
-                        KeyName = "sftaiernmrzypnrkpakrrawxcbsqzc",
-                        KeyVersion = "c",
-                        KeyVaultUri = new Uri("https://microsoft.com/axmblwp"),
+                        KeyName = "lunpapamzeimppgobraxjt",
+                        KeyVersion = "oemygbnfmqhijmonkqfqmy",
+                        KeyVaultUri = new Uri("https://microsoft.com/a"),
                     },
-                    EncryptionUserAssignedIdentity = new ResourceIdentifier("im"),
+                    EncryptionUserAssignedIdentity = new ResourceIdentifier("gfhkfbozahmmwluqndfgxunssafa"),
                 },
                 VirtualNetworkRules =
 {
-new ElasticSanVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}"))
+new ElasticSanVirtualNetworkRule(new ResourceIdentifier("bkhwaiqvvaguymsmnzzbzz"))
 {
 Action = ElasticSanVirtualNetworkRuleAction.Allow,
 }
 },
+                EnforceDataIntegrityCheckForIscsi = true,
             };
             ArmOperation<ElasticSanVolumeGroupResource> lro = await elasticSanVolumeGroup.UpdateAsync(WaitUntil.Completed, patch);
             ElasticSanVolumeGroupResource result = lro.Value;
@@ -83,7 +84,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_VolumeGroupsUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_Update_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Update_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,7 +118,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_VolumeGroupsDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -145,7 +146,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_VolumeGroupsDeleteMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_Delete_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -173,7 +174,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VolumeGroupsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -205,7 +206,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VolumeGroupsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

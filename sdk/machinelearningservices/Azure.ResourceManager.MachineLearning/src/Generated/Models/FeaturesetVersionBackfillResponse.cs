@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> List of jobs submitted as part of the backfill request. </summary>
+        [WirePath("jobIds")]
         public IReadOnlyList<string> JobIds { get; }
     }
 }

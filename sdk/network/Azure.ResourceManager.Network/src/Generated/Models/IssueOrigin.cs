@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(IssueOrigin left, IssueOrigin right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IssueOrigin"/> values are not the same. </summary>
         public static bool operator !=(IssueOrigin left, IssueOrigin right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IssueOrigin"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IssueOrigin"/>. </summary>
         public static implicit operator IssueOrigin(string value) => new IssueOrigin(value);
 
         /// <inheritdoc />

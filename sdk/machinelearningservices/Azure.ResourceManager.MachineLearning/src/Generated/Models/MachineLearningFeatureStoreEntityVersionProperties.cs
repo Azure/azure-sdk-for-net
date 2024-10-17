@@ -21,26 +21,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureStoreEntityVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="indexColumns"> Specifies index columns. </param>
-        /// <param name="provisioningState"> Provisioning state for the featurestore entity version. </param>
         /// <param name="stage"> Specifies the asset stage. </param>
-        internal MachineLearningFeatureStoreEntityVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isAnonymous, bool? isArchived, IList<IndexColumn> indexColumns, RegistryAssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, serializedAdditionalRawData, isAnonymous, isArchived)
+        /// <param name="provisioningState"> Provisioning state for the featurestore entity version. </param>
+        internal MachineLearningFeatureStoreEntityVersionProperties(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isArchived, bool? isAnonymous, IList<IndexColumn> indexColumns, string stage, RegistryAssetProvisioningState? provisioningState) : base(description, tags, properties, serializedAdditionalRawData, isArchived, isAnonymous)
         {
             IndexColumns = indexColumns;
-            ProvisioningState = provisioningState;
             Stage = stage;
+            ProvisioningState = provisioningState;
         }
 
         /// <summary> Specifies index columns. </summary>
+        [WirePath("indexColumns")]
         public IList<IndexColumn> IndexColumns { get; set; }
-        /// <summary> Provisioning state for the featurestore entity version. </summary>
-        public RegistryAssetProvisioningState? ProvisioningState { get; }
         /// <summary> Specifies the asset stage. </summary>
+        [WirePath("stage")]
         public string Stage { get; set; }
+        /// <summary> Provisioning state for the featurestore entity version. </summary>
+        [WirePath("provisioningState")]
+        public RegistryAssetProvisioningState? ProvisioningState { get; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static bool operator ==(DevOpsLogonType left, DevOpsLogonType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevOpsLogonType"/> values are not the same. </summary>
         public static bool operator !=(DevOpsLogonType left, DevOpsLogonType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevOpsLogonType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevOpsLogonType"/>. </summary>
         public static implicit operator DevOpsLogonType(string value) => new DevOpsLogonType(value);
 
         /// <inheritdoc />

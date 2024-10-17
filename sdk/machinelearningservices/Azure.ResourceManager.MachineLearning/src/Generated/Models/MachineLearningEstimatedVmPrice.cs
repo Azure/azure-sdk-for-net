@@ -75,10 +75,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The price charged for using the VM. </summary>
+        [WirePath("retailPrice")]
         public double RetailPrice { get; }
         /// <summary> Operating system type used by the VM. </summary>
+        [WirePath("osType")]
         public MachineLearningVmPriceOSType OSType { get; }
         /// <summary> The type of the VM. </summary>
+        [WirePath("vmTier")]
         public MachineLearningVmTier VmTier { get; }
     }
 }

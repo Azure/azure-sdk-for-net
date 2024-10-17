@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +21,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<CustomService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CustomService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomService)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -79,11 +89,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Kernel))
-            {
-                writer.WritePropertyName("kernel"u8);
-                writer.WriteObjectValue(Kernel, options);
-            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -96,7 +101,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         CustomService IJsonModel<CustomService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -125,7 +129,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DockerSetting docker = default;
             IList<ContainerEndpoint> endpoints = default;
             IList<VolumeDefinition> volumes = default;
-            JupyterKernelConfig kernel = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,15 +199,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     volumes = array;
                     continue;
                 }
-                if (property.NameEquals("kernel"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    kernel = JupyterKernelConfig.DeserializeJupyterKernelConfig(property.Value, options);
-                    continue;
-                }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
@@ -215,8 +209,145 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 docker,
                 endpoints ?? new ChangeTrackingList<ContainerEndpoint>(),
                 volumes ?? new ChangeTrackingList<VolumeDefinition>(),
-                kernel,
                 additionalProperties);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Image), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  image: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Image))
+                {
+                    builder.Append("  image: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Image, options, 2, false, "  image: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnvironmentVariables), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  environmentVariables: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EnvironmentVariables))
+                {
+                    if (EnvironmentVariables.Any())
+                    {
+                        builder.Append("  environmentVariables: ");
+                        builder.AppendLine("{");
+                        foreach (var item in EnvironmentVariables)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  environmentVariables: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Docker), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  docker: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Docker))
+                {
+                    builder.Append("  docker: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Docker, options, 2, false, "  docker: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Endpoints), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endpoints: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Endpoints))
+                {
+                    if (Endpoints.Any())
+                    {
+                        builder.Append("  endpoints: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Endpoints)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  endpoints: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Volumes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  volumes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Volumes))
+                {
+                    if (Volumes.Any())
+                    {
+                        builder.Append("  volumes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Volumes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  volumes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CustomService>.Write(ModelReaderWriterOptions options)
@@ -227,6 +358,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CustomService)} does not support writing '{options.Format}' format.");
             }

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Synapse.Models
 
         void IJsonModel<SynapseReplicationLinkListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseReplicationLinkListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SynapseReplicationLinkListResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.Synapse.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SynapseReplicationLinkListResult IJsonModel<SynapseReplicationLinkListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

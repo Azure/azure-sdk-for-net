@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +21,21 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         void IJsonModel<CustomJwtAuthenticationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CustomJwtAuthenticationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomJwtAuthenticationSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(TokenIssuer))
             {
                 writer.WritePropertyName("tokenIssuer"u8);
@@ -56,7 +66,6 @@ namespace Azure.ResourceManager.EventGrid.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CustomJwtAuthenticationSettings IJsonModel<CustomJwtAuthenticationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -113,6 +122,67 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new CustomJwtAuthenticationSettings(tokenIssuer, issuerCertificates ?? new ChangeTrackingList<IssuerCertificateInfo>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenIssuer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tokenIssuer: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TokenIssuer))
+                {
+                    builder.Append("  tokenIssuer: ");
+                    if (TokenIssuer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TokenIssuer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TokenIssuer}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IssuerCertificates), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  issuerCertificates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IssuerCertificates))
+                {
+                    if (IssuerCertificates.Any())
+                    {
+                        builder.Append("  issuerCertificates: ");
+                        builder.AppendLine("[");
+                        foreach (var item in IssuerCertificates)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  issuerCertificates: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CustomJwtAuthenticationSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomJwtAuthenticationSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -121,6 +191,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CustomJwtAuthenticationSettings)} does not support writing '{options.Format}' format.");
             }

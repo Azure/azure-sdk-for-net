@@ -76,16 +76,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The registry key entity id. </summary>
+        [WirePath("properties.keyEntityId")]
         public string KeyEntityId { get; }
         /// <summary> String formatted representation of the value data. </summary>
+        [WirePath("properties.valueData")]
         public string ValueData { get; }
         /// <summary> The registry value name. </summary>
+        [WirePath("properties.valueName")]
         public string ValueName { get; }
         /// <summary> Specifies the data types to use when storing values in the registry, or identifies the data type of a value in the registry. </summary>
+        [WirePath("properties.valueType")]
         public SecurityInsightsRegistryValueKind? ValueType { get; }
     }
 }

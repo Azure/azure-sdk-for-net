@@ -1,6 +1,6 @@
 # Release History
 
-## 0.2.0-beta.1 (Unreleased)
+## 1.0.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -10,14 +10,8 @@
 
 ### Other Changes
 
-## 0.1.0 (2024-04-30)
+## 1.0.0-beta.1 (2024-10-04)
 
 ### Features Added
 
-- Initial non-beta release.
-
-## 0.1.0-beta.1 (2024-04-04)
-
-### Features Added
-
-- Initial beta release of Azure.Provisioning.ApplicationInsights.
+- Preview of the new Azure.Provisioning experience.

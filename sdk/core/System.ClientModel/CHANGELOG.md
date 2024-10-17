@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.8 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,7 +10,27 @@
 
 ### Other Changes
 
-- Removed implicit cast from `string` to `ApiKeyCredential`.
+- Use `BinaryData.Empty` for `PipelineResponse.Content` when HTTP message has no content ([#46669](https://github.com/Azure/azure-sdk-for-net/pull/46669)).
+
+## 1.2.1 (2024-10-09)
+
+### Bugs Fixed
+
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix ([#46134](https://github.com/Azure/azure-sdk-for-net/pull/46508)).
+
+## 1.2.0 (2024-10-03)
+
+### Other Changes
+
+- Upgraded `System.Memory.Data` package dependency to 6.0.0 ([#46134](https://github.com/Azure/azure-sdk-for-net/pull/46134)).
+
+## 1.1.0 (2024-09-17)
+
+### Other Changes
+
+- Removed implicit cast from `string` to `ApiKeyCredential` ([#45554](https://github.com/Azure/azure-sdk-for-net/pull/45554)).
+- Upgraded `System.Text.Json` package dependency to 6.0.9 ([#45416](https://github.com/Azure/azure-sdk-for-net/pull/45416)).
+- Removed `PageCollection<T>` and related types in favor of using `CollectionResult<T>` and related types as the return values from paginated service endpoints ([#45961](https://github.com/Azure/azure-sdk-for-net/pull/45961)).
 
 ## 1.1.0-beta.7 (2024-08-14)
 

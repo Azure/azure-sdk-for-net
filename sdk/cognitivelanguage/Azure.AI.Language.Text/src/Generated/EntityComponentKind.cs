@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(EntityComponentKind left, EntityComponentKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EntityComponentKind"/> values are not the same. </summary>
         public static bool operator !=(EntityComponentKind left, EntityComponentKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EntityComponentKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EntityComponentKind"/>. </summary>
         public static implicit operator EntityComponentKind(string value) => new EntityComponentKind(value);
 
         /// <inheritdoc />

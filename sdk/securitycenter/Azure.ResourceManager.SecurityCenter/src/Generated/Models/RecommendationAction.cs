@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(RecommendationAction left, RecommendationAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecommendationAction"/> values are not the same. </summary>
         public static bool operator !=(RecommendationAction left, RecommendationAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RecommendationAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecommendationAction"/>. </summary>
         public static implicit operator RecommendationAction(string value) => new RecommendationAction(value);
 
         /// <inheritdoc />

@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace OpenAI.TestFramework.Utils;
 
@@ -301,23 +302,6 @@ public static class CollectionExtensions
         }
         return list;
     }
-
-    /// <summary>
-    /// Converts an async enumerable of pages to a <see cref="List{T}"/> asynchronously.
-    /// </summary>
-    /// <typeparam name="T">The type of the elements in the enumerable.</typeparam>
-    /// <param name="pageAsyncEnumerable">The <see cref="IAsyncEnumerable{T}"/> to convert.</param>
-    /// <param name="token">The cancellation token.</param>
-    /// <returns>Asynchronous task to do the conversion.</returns>
-    public static async Task<List<T>> ToListAsync<T>(this IAsyncEnumerable<PageResult<T>> pageAsyncEnumerable, CancellationToken token = default)
-    {
-        List<T> list = new List<T>();
-        await foreach(PageResult<T> page in pageAsyncEnumerable.WithCancellation(token))
-        {
-            list.AddRange(page.Values);
-        }
-        return list;
-    }
 }
 
 /// <summary>
@@ -410,5 +394,32 @@ public static class TypeExtensions
         }
 
         return openGeneric.IsAssignableFrom(type.GetGenericTypeDefinition());
+    }
+}
+
+/// <summary>
+/// Extensions for JSON serialization/deserialization.
+/// </summary>
+public static class JsonExtensions
+{
+    /// <summary>
+    /// Creates a clone of the specified JSON serializer options.
+    /// </summary>
+    /// <param name="options">The JSON serializer options to clone.</param>
+    /// <param name="converterFilter">(Optional) Filter to apply for selecting specific converters to include in the cloned options.</param>
+    /// <returns>A clone of the JSON serializer options.</returns>
+    public static JsonSerializerOptions Clone(this JsonSerializerOptions options, Predicate<JsonConverter>? converterFilter = null)
+    {
+        JsonSerializerOptions cloned = new JsonSerializerOptions(options);
+        if (converterFilter != null)
+        {
+            cloned.Converters.Clear();
+            foreach (var converter in options.Converters.Where(c => converterFilter(c)))
+            {
+                cloned.Converters.Add(converter);
+            }
+        }
+
+        return cloned;
     }
 }

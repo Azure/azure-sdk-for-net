@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string SweepValue = "Sweep";
         private const string PipelineValue = "Pipeline";
         private const string SparkValue = "Spark";
-        private const string FineTuningValue = "FineTuning";
 
         /// <summary> AutoML. </summary>
         public static JobType AutoML { get; } = new JobType(AutoMLValue);
@@ -39,13 +38,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static JobType Pipeline { get; } = new JobType(PipelineValue);
         /// <summary> Spark. </summary>
         public static JobType Spark { get; } = new JobType(SparkValue);
-        /// <summary> FineTuning. </summary>
-        public static JobType FineTuning { get; } = new JobType(FineTuningValue);
         /// <summary> Determines if two <see cref="JobType"/> values are the same. </summary>
         public static bool operator ==(JobType left, JobType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobType"/> values are not the same. </summary>
         public static bool operator !=(JobType left, JobType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobType"/>. </summary>
         public static implicit operator JobType(string value) => new JobType(value);
 
         /// <inheritdoc />

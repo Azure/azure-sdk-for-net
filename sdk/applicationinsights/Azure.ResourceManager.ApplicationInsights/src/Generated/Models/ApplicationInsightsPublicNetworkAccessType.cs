@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator ==(ApplicationInsightsPublicNetworkAccessType left, ApplicationInsightsPublicNetworkAccessType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationInsightsPublicNetworkAccessType"/> values are not the same. </summary>
         public static bool operator !=(ApplicationInsightsPublicNetworkAccessType left, ApplicationInsightsPublicNetworkAccessType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationInsightsPublicNetworkAccessType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationInsightsPublicNetworkAccessType"/>. </summary>
         public static implicit operator ApplicationInsightsPublicNetworkAccessType(string value) => new ApplicationInsightsPublicNetworkAccessType(value);
 
         /// <inheritdoc />

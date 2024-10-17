@@ -1,6 +1,6 @@
 # Release History
 
-## 0.1.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -10,8 +10,8 @@
 
 ### Other Changes
 
-## 0.1.0-beta.1 (2024-05-10)
+## 1.0.0-beta.1 (2024-10-04)
 
 ### Features Added
 
-- Initial beta release of Azure.Provisioning.WebPubSub.
+- Preview of the new Azure.Provisioning experience.

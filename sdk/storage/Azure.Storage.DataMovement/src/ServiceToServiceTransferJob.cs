@@ -21,7 +21,6 @@ namespace Azure.Storage.DataMovement
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
             DataTransferOptions transferOptions,
-            QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer CheckPointFolderPath,
             DataTransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
@@ -30,7 +29,6 @@ namespace Azure.Storage.DataMovement
                   sourceResource,
                   destinationResource,
                   transferOptions,
-                  queueChunkTask,
                   CheckPointFolderPath,
                   errorHandling,
                   arrayPool,
@@ -46,7 +44,6 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource,
             DataTransferOptions transferOptions,
-            QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
             DataTransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
@@ -55,7 +52,6 @@ namespace Azure.Storage.DataMovement
                   sourceResource,
                   destinationResource,
                   transferOptions,
-                  queueChunkTask,
                   checkpointer,
                   errorHandling,
                   arrayPool,
@@ -109,7 +105,7 @@ namespace Azure.Storage.DataMovement
                 {
                     if (!part.JobPartStatus.HasCompletedSuccessfully)
                     {
-                        part.JobPartStatus.TrySetTransferStateChange(DataTransferState.Queued);
+                        part.JobPartStatus.SetTransferStateChange(DataTransferState.Queued);
                         yield return part;
                     }
                 }

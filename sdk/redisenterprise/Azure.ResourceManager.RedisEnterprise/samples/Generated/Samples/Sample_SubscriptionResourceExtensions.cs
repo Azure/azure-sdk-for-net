@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetRedisEnterpriseOperationsStatus_OperationsStatusGet()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/stable/2024-02-01/examples/OperationsStatusGet.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/OperationsStatusGet.json
             // this example is just showing the usage of "OperationsStatus_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.HDInsight
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightApplicationProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.HDInsightApplicationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightApplicationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightApplicationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.HDInsightApplicationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightApplicationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -80,6 +81,7 @@ namespace Azure.ResourceManager.HDInsight
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.HDInsightClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.HDInsightClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -103,10 +105,14 @@ namespace Azure.ResourceManager.HDInsight
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteExtensionAsync(Azure.WaitUntil waitUntil, string extensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteScriptAction(string scriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteScriptActionAsync(string scriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation DisableAzureMonitorAgentExtension(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DisableAzureMonitorAgentExtensionAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation DisableAzureMonitorExtension(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DisableAzureMonitorExtensionAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation DisableClusterMonitoringExtension(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DisableClusterMonitoringExtensionAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation EnableAzureMonitorAgentExtension(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionEnableContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> EnableAzureMonitorAgentExtensionAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionEnableContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation EnableAzureMonitorExtension(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionEnableContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> EnableAzureMonitorExtensionAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionEnableContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation EnableClusterMonitoringExtension(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightClusterEnableClusterMonitoringContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -117,6 +123,8 @@ namespace Azure.ResourceManager.HDInsight
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightClusterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationResult> GetAsyncOperationStatus(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationResult>> GetAsyncOperationStatusAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionStatus> GetAzureMonitorAgentStatusExtension(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionStatus>> GetAzureMonitorAgentStatusExtensionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionStatus> GetAzureMonitorExtensionStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionStatus>> GetAzureMonitorExtensionStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightClusterExtensionStatus> GetClusterMonitoringExtensionStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -226,6 +234,7 @@ namespace Azure.ResourceManager.HDInsight
         public string LinkIdentifier { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -287,6 +296,7 @@ namespace Azure.ResourceManager.HDInsight
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -392,6 +402,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public ClientGroupInfo() { }
         public string GroupId { get { throw null; } set { } }
         public string GroupName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.ClientGroupInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ClientGroupInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ClientGroupInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.ClientGroupInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ClientGroupInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -406,6 +417,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public int? Port { get { throw null; } set { } }
         public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public string Protocol { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.ConnectivityEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ConnectivityEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ConnectivityEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.ConnectivityEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ConnectivityEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -417,6 +429,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public ExcludedServicesConfig() { }
         public string ExcludedServicesConfigId { get { throw null; } set { } }
         public string ExcludedServicesList { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -428,6 +441,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public ExecuteScriptActionContent(bool persistOnSuccess) { }
         public bool PersistOnSuccess { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction> ScriptActions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -441,6 +455,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string EndpointLocation { get { throw null; } set { } }
         public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public int? PublicPort { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightApplicationEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightApplicationEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -457,6 +472,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public int? PublicPort { get { throw null; } }
         public string SubDomainSuffix { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightApplicationHttpsEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationHttpsEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationHttpsEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightApplicationHttpsEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationHttpsEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -478,6 +494,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationEndpoint> SshEndpoints { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction> UninstallScriptActions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightApplicationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightApplicationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -489,6 +506,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightAsyncOperationResult() { }
         public Azure.ResponseError Error { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationState? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -519,6 +537,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightAutoScaleCapacity() { }
         public int? MaxInstanceCount { get { throw null; } set { } }
         public int? MinInstanceCount { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -530,6 +549,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightAutoScaleConfiguration() { }
         public Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleCapacity Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleRecurrence Recurrence { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -540,6 +560,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         public HDInsightAutoScaleConfigurationUpdateContent() { }
         public Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfiguration AutoScale { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfigurationUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfigurationUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfigurationUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfigurationUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfigurationUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -551,6 +572,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightAutoScaleRecurrence() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleSchedule> Schedule { get { throw null; } }
         public string TimeZone { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleRecurrence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleRecurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleRecurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleRecurrence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleRecurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -562,6 +584,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightAutoScaleSchedule() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek> Days { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleTimeAndCapacity TimeAndCapacity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -574,6 +597,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public int? MaxInstanceCount { get { throw null; } set { } }
         public int? MinInstanceCount { get { throw null; } set { } }
         public string Time { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleTimeAndCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleTimeAndCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleTimeAndCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleTimeAndCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleTimeAndCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -586,6 +610,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string PrimaryKey { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorSelectedConfigurations SelectedConfigurations { get { throw null; } set { } }
         public string WorkspaceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionEnableContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionEnableContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionEnableContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionEnableContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionEnableContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -598,6 +623,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public bool? IsClusterMonitoringEnabled { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorSelectedConfigurations SelectedConfigurations { get { throw null; } }
         public string WorkspaceId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -610,6 +636,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string ConfigurationVersion { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> GlobalConfigurations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorTableConfiguration> TableList { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorSelectedConfigurations System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorSelectedConfigurations>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorSelectedConfigurations>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorSelectedConfigurations System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorSelectedConfigurations>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -620,6 +647,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         public HDInsightAzureMonitorTableConfiguration() { }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorTableConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorTableConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorTableConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorTableConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorTableConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -632,6 +660,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Meter { get { throw null; } }
         public string MeterParameter { get { throw null; } }
         public string Unit { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightBillingMeters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightBillingMeters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightBillingMeters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightBillingMeters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightBillingMeters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -644,6 +673,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightBillingMeters> BillingMeters { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightDiskBillingMeters> DiskBillingMeters { get { throw null; } }
         public Azure.Core.AzureLocation? Region { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightBillingResources System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightBillingResources>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightBillingResources>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightBillingResources System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightBillingResources>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -658,6 +688,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeProperty> VmSizeProperties { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> VmSizes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> VmSizesWithEncryptionAtHost { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightBillingSpecsListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightBillingSpecsListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightBillingSpecsListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightBillingSpecsListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightBillingSpecsListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -671,6 +702,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public Azure.ResourceManager.HDInsight.Models.QuotaCapability Quota { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Models.RegionsCapability> Regions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Models.HDInsightVersionsCapability> Versions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightCapabilitiesResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightCapabilitiesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightCapabilitiesResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightCapabilitiesResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightCapabilitiesResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -687,6 +719,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterAaddsDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterAaddsDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterAaddsDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterAaddsDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterAaddsDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -697,6 +730,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal HDInsightClusterConfigurations() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IDictionary<string, string>> Configurations { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterConfigurations System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterConfigurations>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterConfigurations>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterConfigurations System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterConfigurations>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -708,6 +742,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightClusterCreateExtensionContent() { }
         public string PrimaryKey { get { throw null; } set { } }
         public string WorkspaceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -722,6 +757,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -745,6 +781,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile SecurityProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo> StorageAccounts { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightTier? Tier { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -758,6 +795,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public bool? FetchAaddsResource { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -771,6 +809,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public System.TimeSpan? EstimatedCreationDuration { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightClusterValidationErrorInfo> ValidationErrors { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightClusterValidationErrorInfo> ValidationWarnings { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -783,6 +822,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public int? DiskSizeInGB { get { throw null; } }
         public int? DisksPerNode { get { throw null; } set { } }
         public string StorageAccountType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterDataDiskGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterDataDiskGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterDataDiskGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterDataDiskGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterDataDiskGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -796,6 +836,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public System.Collections.Generic.IDictionary<string, string> ComponentVersion { get { throw null; } }
         public System.BinaryData Configurations { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -808,6 +849,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string KeyName { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
         public System.Uri VaultUri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterDiskEncryptionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterDiskEncryptionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterDiskEncryptionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterDiskEncryptionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterDiskEncryptionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -819,6 +861,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightClusterEnableClusterMonitoringContent() { }
         public string PrimaryKey { get { throw null; } set { } }
         public string WorkspaceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterEnableClusterMonitoringContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterEnableClusterMonitoringContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterEnableClusterMonitoringContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterEnableClusterMonitoringContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterEnableClusterMonitoringContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -830,6 +873,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightClusterExtensionStatus() { }
         public bool? IsClusterMonitoringEnabled { get { throw null; } }
         public string WorkspaceId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterExtensionStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterExtensionStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterExtensionStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterExtensionStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterExtensionStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -854,17 +898,33 @@ namespace Azure.ResourceManager.HDInsight.Models
         public System.Uri EffectiveDiskEncryptionKeyUri { get { throw null; } }
         public string Fqdn { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterHostInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterHostInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterHostInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterHostInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterHostInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterHostInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterHostInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class HDInsightClusterIPTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterIPTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterIPTag>
+    {
+        public HDInsightClusterIPTag(string ipTagType, string tag) { }
+        public string IPTagType { get { throw null; } set { } }
+        public string Tag { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Models.HDInsightClusterIPTag System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterIPTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterIPTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Models.HDInsightClusterIPTag System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterIPTag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterIPTag>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterIPTag>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class HDInsightClusterNetworkProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterNetworkProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterNetworkProperties>
     {
         public HDInsightClusterNetworkProperties() { }
+        public Azure.ResourceManager.HDInsight.Models.OutboundDependenciesManagedType? OutboundDependenciesManagedType { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkState? PrivateLink { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightClusterIPTag PublicIPTag { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightResourceProviderConnection? ResourceProviderConnection { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterNetworkProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterNetworkProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterNetworkProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterNetworkProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterNetworkProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -874,7 +934,9 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightClusterPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterPatch>
     {
         public HDInsightClusterPatch() { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -908,6 +970,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile SecurityProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo> StorageAccounts { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightTier? Tier { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -939,6 +1002,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         public HDInsightClusterResizeContent() { }
         public int? TargetInstanceCount { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterResizeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterResizeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterResizeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterResizeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterResizeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -959,6 +1023,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public int? TargetInstanceCount { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightVirtualNetworkProfile VirtualNetworkProfile { get { throw null; } set { } }
         public string VmGroupName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -971,6 +1036,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public bool? IsCredentialEnabled { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public string UserName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateGatewaySettingsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateGatewaySettingsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateGatewaySettingsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateGatewaySettingsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateGatewaySettingsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -983,6 +1049,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string ApplicationId { get { throw null; } set { } }
         public string Certificate { get { throw null; } set { } }
         public string CertificatePassword { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateIdentityCertificateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateIdentityCertificateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateIdentityCertificateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateIdentityCertificateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateIdentityCertificateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -996,6 +1063,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string ErrorResource { get { throw null; } }
         public string Message { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> MessageArguments { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterValidationErrorInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterValidationErrorInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterValidationErrorInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterValidationErrorInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterValidationErrorInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1007,6 +1075,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightComputeIsolationProperties() { }
         public bool? EnableComputeIsolation { get { throw null; } set { } }
         public string HostSku { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightComputeIsolationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightComputeIsolationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightComputeIsolationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightComputeIsolationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightComputeIsolationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1042,6 +1111,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string DiskRpMeter { get { throw null; } }
         public string Sku { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightTier? Tier { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightDiskBillingMeters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightDiskBillingMeters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightDiskBillingMeters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightDiskBillingMeters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightDiskBillingMeters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1057,6 +1127,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string KeyVersion { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MsiResourceId { get { throw null; } set { } }
         public System.Uri VaultUri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightDiskEncryptionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightDiskEncryptionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightDiskEncryptionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightDiskEncryptionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightDiskEncryptionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1094,6 +1165,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1106,6 +1178,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Password { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightSshPublicKey> SshPublicKeys { get { throw null; } }
         public string Username { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightLinuxOSProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightLinuxOSProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightLinuxOSProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightLinuxOSProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightLinuxOSProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1117,6 +1190,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightLocalizedName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightLocalizedName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightLocalizedName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightLocalizedName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightLocalizedName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightLocalizedName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1128,6 +1202,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1140,6 +1215,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1213,6 +1289,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1246,6 +1323,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkServiceConnectionStatus Status { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1337,6 +1415,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public System.Collections.Generic.IList<System.Uri> LdapUris { get { throw null; } }
         public Azure.Core.ResourceIdentifier MsiResourceId { get { throw null; } set { } }
         public string OrganizationalUnitDN { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1347,6 +1426,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         public HDInsightSshPublicKey() { }
         public string CertificateData { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightSshPublicKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightSshPublicKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightSshPublicKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightSshPublicKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightSshPublicKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1366,6 +1446,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public string SasKey { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1397,6 +1478,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public long? Limit { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightLocalizedName Name { get { throw null; } }
         public string Unit { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightUsage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightUsage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1407,6 +1489,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal HDInsightVersionsCapability() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightVersionSpec> Available { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightVersionsCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightVersionsCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightVersionsCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightVersionsCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightVersionsCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1420,6 +1503,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string DisplayName { get { throw null; } }
         public string FriendlyName { get { throw null; } }
         public bool? IsDefault { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightVersionSpec System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightVersionSpec>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightVersionSpec>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightVersionSpec System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightVersionSpec>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1431,6 +1515,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightVirtualNetworkProfile() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Subnet { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightVirtualNetworkProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightVirtualNetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightVirtualNetworkProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightVirtualNetworkProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightVirtualNetworkProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1449,6 +1534,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightOSType> OSType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Regions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> VmSizes { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeCompatibilityFilterV2 System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeCompatibilityFilterV2>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeCompatibilityFilterV2>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeCompatibilityFilterV2 System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeCompatibilityFilterV2>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1468,6 +1554,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Name { get { throw null; } }
         public long? VirtualMachineResourceDiskSizeInMB { get { throw null; } }
         public long? WebWorkerResourceDiskSizeInMB { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1498,11 +1585,30 @@ namespace Azure.ResourceManager.HDInsight.Models
         public KafkaRestProperties() { }
         public Azure.ResourceManager.HDInsight.Models.ClientGroupInfo ClientGroupInfo { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> ConfigurationOverride { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.KafkaRestProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.KafkaRestProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.KafkaRestProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.KafkaRestProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.KafkaRestProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.KafkaRestProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.KafkaRestProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OutboundDependenciesManagedType : System.IEquatable<Azure.ResourceManager.HDInsight.Models.OutboundDependenciesManagedType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OutboundDependenciesManagedType(string value) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.OutboundDependenciesManagedType External { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Models.OutboundDependenciesManagedType Managed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HDInsight.Models.OutboundDependenciesManagedType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HDInsight.Models.OutboundDependenciesManagedType left, Azure.ResourceManager.HDInsight.Models.OutboundDependenciesManagedType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HDInsight.Models.OutboundDependenciesManagedType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HDInsight.Models.OutboundDependenciesManagedType left, Azure.ResourceManager.HDInsight.Models.OutboundDependenciesManagedType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class QuotaCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.QuotaCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.QuotaCapability>
     {
@@ -1510,6 +1616,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public long? CoresUsed { get { throw null; } }
         public long? MaxCoresAllowed { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.RegionalQuotaCapability> RegionalQuotas { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.QuotaCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.QuotaCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.QuotaCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.QuotaCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.QuotaCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1522,6 +1629,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public long? CoresAvailable { get { throw null; } }
         public long? CoresUsed { get { throw null; } }
         public Azure.Core.AzureLocation? Region { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.RegionalQuotaCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.RegionalQuotaCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.RegionalQuotaCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.RegionalQuotaCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.RegionalQuotaCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1532,6 +1640,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal RegionsCapability() { }
         public System.Collections.Generic.IReadOnlyList<string> Available { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.RegionsCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.RegionsCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.RegionsCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.RegionsCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.RegionsCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1546,6 +1655,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Parameters { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Roles { get { throw null; } }
         public System.Uri Uri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1562,6 +1672,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public long? ScriptExecutionId { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1574,6 +1685,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Name { get { throw null; } set { } }
         public string Parameters { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.ScriptAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ScriptAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ScriptAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.ScriptAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ScriptAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1585,6 +1697,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal ScriptActionExecutionSummary() { }
         public int? InstanceCount { get { throw null; } }
         public string Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.ScriptActionExecutionSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ScriptActionExecutionSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ScriptActionExecutionSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HDInsight.Models.ScriptActionExecutionSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ScriptActionExecutionSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

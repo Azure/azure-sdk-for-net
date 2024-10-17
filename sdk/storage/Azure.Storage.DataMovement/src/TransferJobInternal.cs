@@ -14,11 +14,6 @@ namespace Azure.Storage.DataMovement
 {
     internal abstract class TransferJobInternal : IDisposable
     {
-        #region Delegates
-        public delegate Task QueueChunkTaskInternal(Func<Task> uploadTask);
-        #endregion
-        public QueueChunkTaskInternal QueueChunkTask { get; internal set; }
-
         /// <summary>
         /// DataTransfer communicate when the transfer has finished and the progress
         /// </summary>
@@ -140,7 +135,6 @@ namespace Azure.Storage.DataMovement
 
         private TransferJobInternal(
             DataTransfer dataTransfer,
-            QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkPointer,
             DataTransferErrorMode errorHandling,
             long? initialTransferSize,
@@ -156,9 +150,8 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
 
             _dataTransfer = dataTransfer ?? throw Errors.ArgumentNull(nameof(dataTransfer));
-            _dataTransfer.TransferStatus.TrySetTransferStateChange(DataTransferState.Queued);
+            _dataTransfer.TransferStatus.SetTransferStateChange(DataTransferState.Queued);
             _checkpointer = checkPointer;
-            QueueChunkTask = queueChunkTask;
             _arrayPool = arrayPool;
             _jobParts = new List<JobPartInternal>();
             _enumerationComplete = false;
@@ -189,13 +182,11 @@ namespace Azure.Storage.DataMovement
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
             DataTransferOptions transferOptions,
-            QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
             DataTransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
             ClientDiagnostics clientDiagnostics)
             : this(dataTransfer,
-                  queueChunkTask,
                   checkpointer,
                   errorHandling,
                   transferOptions.InitialTransferSize,
@@ -222,13 +213,11 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource,
             DataTransferOptions transferOptions,
-            QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
             DataTransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
             ClientDiagnostics clientDiagnostics)
             : this(dataTransfer,
-                  queueChunkTask,
                   checkpointer,
                   errorHandling,
                   transferOptions.InitialTransferSize,
@@ -355,7 +344,7 @@ namespace Azure.Storage.DataMovement
             }
             else if (jobPartStatus.HasFailedItems)
             {
-                if (_dataTransfer._state.TrySetFailedItemsState())
+                if (_dataTransfer._state.SetFailedItemsState())
                 {
                     await SetCheckpointerStatus().ConfigureAwait(false);
                     await OnJobPartStatusChangedAsync().ConfigureAwait(false);
@@ -363,7 +352,7 @@ namespace Azure.Storage.DataMovement
             }
             else if (jobPartStatus.HasSkippedItems)
             {
-                if (_dataTransfer._state.TrySetSkippedItemsState())
+                if (_dataTransfer._state.SetSkippedItemsState())
                 {
                     await SetCheckpointerStatus().ConfigureAwait(false);
                     await OnJobPartStatusChangedAsync().ConfigureAwait(false);
@@ -398,7 +387,7 @@ namespace Azure.Storage.DataMovement
 
         public async Task OnJobStateChangedAsync(DataTransferState state)
         {
-            if (_dataTransfer._state.TrySetTransferState(state))
+            if (_dataTransfer._state.SetTransferState(state))
             {
                 // If we are in a final state, dispose the JobPartEvent handlers
                 if (state == DataTransferState.Completed ||
@@ -517,7 +506,7 @@ namespace Azure.Storage.DataMovement
             return new HashSet<Uri>(_jobParts.Select(x => x._sourceResource.Uri));
         }
 
-        internal void QueueJobPart()
+        internal void IncrementJobParts()
         {
             _progressTracker.IncrementQueuedFiles();
         }

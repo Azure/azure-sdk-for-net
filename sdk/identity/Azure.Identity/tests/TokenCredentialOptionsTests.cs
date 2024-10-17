@@ -57,7 +57,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void CustomAuthorityHost()
         {
-            string envHostValue = AzureAuthorityHosts.AzureGermany.ToString();
+            string envHostValue = AzureAuthorityHosts.AzureGovernment.ToString();
 
             using (new TestEnvVar("AZURE_AUTHORITY_HOST", envHostValue))
             {
@@ -312,7 +312,7 @@ namespace Azure.Identity.Tests
             CollectionAssert.IsSubsetOf(iSupportsInterfaces, s_KnownISupportsInterfaces);
 
             // create source instance and set values for all the supported intefaces
-            var source = Activator.CreateInstance(sourceType);
+            var source = Activator.CreateInstance(sourceType, true);
 
             if (source is ISupportsAdditionallyAllowedTenants aat)
             {

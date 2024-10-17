@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string StartValue = "Start";
         private const string StopValue = "Stop";
         private const string RestartValue = "Restart";
-        private const string ResizeValue = "Resize";
         private const string ReimageValue = "Reimage";
         private const string DeleteValue = "Delete";
 
@@ -38,8 +37,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningOperationName Stop { get; } = new MachineLearningOperationName(StopValue);
         /// <summary> Restart. </summary>
         public static MachineLearningOperationName Restart { get; } = new MachineLearningOperationName(RestartValue);
-        /// <summary> Resize. </summary>
-        public static MachineLearningOperationName Resize { get; } = new MachineLearningOperationName(ResizeValue);
         /// <summary> Reimage. </summary>
         public static MachineLearningOperationName Reimage { get; } = new MachineLearningOperationName(ReimageValue);
         /// <summary> Delete. </summary>
@@ -48,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningOperationName left, MachineLearningOperationName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningOperationName"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningOperationName left, MachineLearningOperationName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningOperationName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningOperationName"/>. </summary>
         public static implicit operator MachineLearningOperationName(string value) => new MachineLearningOperationName(value);
 
         /// <inheritdoc />

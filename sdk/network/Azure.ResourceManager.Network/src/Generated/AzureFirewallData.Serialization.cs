@@ -21,13 +21,22 @@ namespace Azure.ResourceManager.Network
 
         void IJsonModel<AzureFirewallData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureFirewallData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -42,37 +51,6 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType.Value);
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -172,21 +150,10 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(AutoscaleConfiguration))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("autoscaleConfiguration"u8);
+                writer.WriteObjectValue(AutoscaleConfiguration, options);
             }
             writer.WriteEndObject();
         }
@@ -231,6 +198,7 @@ namespace Azure.ResourceManager.Network
             IReadOnlyList<AzureFirewallIPGroups> ipGroups = default;
             AzureFirewallSku sku = default;
             IDictionary<string, string> additionalProperties = default;
+            AzureFirewallAutoscaleConfiguration autoscaleConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -460,6 +428,15 @@ namespace Azure.ResourceManager.Network
                             additionalProperties = dictionary;
                             continue;
                         }
+                        if (property0.NameEquals("autoscaleConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            autoscaleConfiguration = AzureFirewallAutoscaleConfiguration.DeserializeAzureFirewallAutoscaleConfiguration(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -490,7 +467,8 @@ namespace Azure.ResourceManager.Network
                 hubIPAddresses,
                 ipGroups ?? new ChangeTrackingList<AzureFirewallIPGroups>(),
                 sku,
-                additionalProperties ?? new ChangeTrackingDictionary<string, string>());
+                additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
+                autoscaleConfiguration);
         }
 
         BinaryData IPersistableModel<AzureFirewallData>.Write(ModelReaderWriterOptions options)

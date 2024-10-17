@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator ==(MySqlFlexibleServerAdministratorName left, MySqlFlexibleServerAdministratorName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerAdministratorName"/> values are not the same. </summary>
         public static bool operator !=(MySqlFlexibleServerAdministratorName left, MySqlFlexibleServerAdministratorName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerAdministratorName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerAdministratorName"/>. </summary>
         public static implicit operator MySqlFlexibleServerAdministratorName(string value) => new MySqlFlexibleServerAdministratorName(value);
 
         /// <inheritdoc />

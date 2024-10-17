@@ -52,18 +52,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
-            Headers = new ChangeTrackingDictionary<string, string>();
             Uri = uri;
+            Headers = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerlessInferenceEndpoint"/>. </summary>
-        /// <param name="headers"> Specifies any required headers to target this serverless endpoint. </param>
         /// <param name="uri"> [Required] The inference uri to target when making requests against the Serverless Endpoint. </param>
+        /// <param name="headers"> Specifies any required headers to target this serverless endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerlessInferenceEndpoint(IReadOnlyDictionary<string, string> headers, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerlessInferenceEndpoint(Uri uri, IReadOnlyDictionary<string, string> headers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Headers = headers;
             Uri = uri;
+            Headers = headers;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,9 +72,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary> Specifies any required headers to target this serverless endpoint. </summary>
-        public IReadOnlyDictionary<string, string> Headers { get; }
         /// <summary> [Required] The inference uri to target when making requests against the Serverless Endpoint. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; }
+        /// <summary> Specifies any required headers to target this serverless endpoint. </summary>
+        [WirePath("headers")]
+        public IReadOnlyDictionary<string, string> Headers { get; }
     }
 }

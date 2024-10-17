@@ -81,8 +81,8 @@ public class MockPipelineResponse : PipelineResponse
                 ? await BinaryData.FromStreamAsync(ContentStream, token).ConfigureAwait(false)
                 : BinaryData.FromStream(ContentStream);
 
-        ContentStream?.Dispose();
-        ContentStream = _buffered.ToStream();
+        _contentStream?.Dispose();
+        _contentStream = _buffered.ToStream();
         return _buffered;
     }
 }

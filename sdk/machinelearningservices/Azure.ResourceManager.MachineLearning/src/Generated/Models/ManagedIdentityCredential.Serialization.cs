@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<ManagedIdentityCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedIdentityCredential)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ManagedIdentityType))
             {
                 if (ManagedIdentityType != null)
@@ -36,6 +46,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("managedIdentityType");
+                }
+            }
+            if (Optional.IsDefined(UserManagedIdentityResourceId))
+            {
+                if (UserManagedIdentityResourceId != null)
+                {
+                    writer.WritePropertyName("userManagedIdentityResourceId"u8);
+                    writer.WriteStringValue(UserManagedIdentityResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("userManagedIdentityResourceId");
                 }
             }
             if (Optional.IsDefined(UserManagedIdentityClientId))
@@ -62,18 +84,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("userManagedIdentityPrincipalId");
                 }
             }
-            if (Optional.IsDefined(UserManagedIdentityResourceId))
-            {
-                if (UserManagedIdentityResourceId != null)
-                {
-                    writer.WritePropertyName("userManagedIdentityResourceId"u8);
-                    writer.WriteStringValue(UserManagedIdentityResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("userManagedIdentityResourceId");
-                }
-            }
             if (Optional.IsDefined(UserManagedIdentityTenantId))
             {
                 if (UserManagedIdentityTenantId != null)
@@ -86,24 +96,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("userManagedIdentityTenantId");
                 }
             }
-            writer.WritePropertyName("credentialType"u8);
-            writer.WriteStringValue(CredentialType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         ManagedIdentityCredential IJsonModel<ManagedIdentityCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -127,9 +119,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string managedIdentityType = default;
+            string userManagedIdentityResourceId = default;
             string userManagedIdentityClientId = default;
             string userManagedIdentityPrincipalId = default;
-            string userManagedIdentityResourceId = default;
             string userManagedIdentityTenantId = default;
             DataReferenceCredentialType credentialType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -144,6 +136,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     managedIdentityType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("userManagedIdentityResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        userManagedIdentityResourceId = null;
+                        continue;
+                    }
+                    userManagedIdentityResourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("userManagedIdentityClientId"u8))
@@ -164,16 +166,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     userManagedIdentityPrincipalId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("userManagedIdentityResourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        userManagedIdentityResourceId = null;
-                        continue;
-                    }
-                    userManagedIdentityResourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("userManagedIdentityTenantId"u8))
@@ -201,10 +193,152 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 credentialType,
                 serializedAdditionalRawData,
                 managedIdentityType,
+                userManagedIdentityResourceId,
                 userManagedIdentityClientId,
                 userManagedIdentityPrincipalId,
-                userManagedIdentityResourceId,
                 userManagedIdentityTenantId);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedIdentityType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  managedIdentityType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedIdentityType))
+                {
+                    builder.Append("  managedIdentityType: ");
+                    if (ManagedIdentityType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ManagedIdentityType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ManagedIdentityType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserManagedIdentityResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userManagedIdentityResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserManagedIdentityResourceId))
+                {
+                    builder.Append("  userManagedIdentityResourceId: ");
+                    if (UserManagedIdentityResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserManagedIdentityResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserManagedIdentityResourceId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserManagedIdentityClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userManagedIdentityClientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserManagedIdentityClientId))
+                {
+                    builder.Append("  userManagedIdentityClientId: ");
+                    if (UserManagedIdentityClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserManagedIdentityClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserManagedIdentityClientId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserManagedIdentityPrincipalId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userManagedIdentityPrincipalId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserManagedIdentityPrincipalId))
+                {
+                    builder.Append("  userManagedIdentityPrincipalId: ");
+                    if (UserManagedIdentityPrincipalId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserManagedIdentityPrincipalId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserManagedIdentityPrincipalId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserManagedIdentityTenantId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userManagedIdentityTenantId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserManagedIdentityTenantId))
+                {
+                    builder.Append("  userManagedIdentityTenantId: ");
+                    if (UserManagedIdentityTenantId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserManagedIdentityTenantId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserManagedIdentityTenantId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CredentialType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  credentialType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  credentialType: ");
+                builder.AppendLine($"'{CredentialType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ManagedIdentityCredential>.Write(ModelReaderWriterOptions options)
@@ -215,6 +349,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedIdentityCredential)} does not support writing '{options.Format}' format.");
             }
