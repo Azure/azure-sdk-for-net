@@ -66,10 +66,16 @@ public partial class ContainerServiceTrustedAccessRoleBinding : Resource
     /// <summary>
     /// Creates a new ContainerServiceTrustedAccessRoleBinding.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerServiceTrustedAccessRoleBinding.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ContainerServiceTrustedAccessRoleBinding resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceTrustedAccessRoleBinding.</param>
-    public ContainerServiceTrustedAccessRoleBinding(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings", resourceVersion ?? "2024-08-01")
+    public ContainerServiceTrustedAccessRoleBinding(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _roles = BicepList<string>.DefineProperty(this, "Roles", ["properties", "roles"], isRequired: true);
@@ -345,9 +351,15 @@ public partial class ContainerServiceTrustedAccessRoleBinding : Resource
     /// Creates a reference to an existing
     /// ContainerServiceTrustedAccessRoleBinding.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerServiceTrustedAccessRoleBinding.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ContainerServiceTrustedAccessRoleBinding resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceTrustedAccessRoleBinding.</param>
     /// <returns>The existing ContainerServiceTrustedAccessRoleBinding resource.</returns>
-    public static ContainerServiceTrustedAccessRoleBinding FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerServiceTrustedAccessRoleBinding FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

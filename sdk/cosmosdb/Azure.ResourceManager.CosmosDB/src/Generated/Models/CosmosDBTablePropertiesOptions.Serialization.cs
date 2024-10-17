@@ -20,39 +20,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<CosmosDBTablePropertiesOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBTablePropertiesOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBTablePropertiesOptions)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Throughput))
-            {
-                writer.WritePropertyName("throughput"u8);
-                writer.WriteNumberValue(Throughput.Value);
-            }
-            if (Optional.IsDefined(AutoscaleSettings))
-            {
-                writer.WritePropertyName("autoscaleSettings"u8);
-                writer.WriteObjectValue(AutoscaleSettings, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         CosmosDBTablePropertiesOptions IJsonModel<CosmosDBTablePropertiesOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

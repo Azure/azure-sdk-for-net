@@ -8,6 +8,7 @@ parameters:
   ServiceConnection: not-specified
   ResourceType: test
   UseFederatedAuth: false
+  PersistOidcToken: false
 
 # SubscriptionConfiguration will be splatted into the parameters of the test
 # resources script. It should be JSON in the form:
@@ -41,12 +42,27 @@ steps:
 
   - template: /eng/common/TestResources/setup-environments.yml
 
+  - ${{ if eq(parameters.PersistOidcToken, true) }}:
+    - task: AzureCLI@2
+      displayName: Set OIDC token
+      env:
+        ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
+      inputs:
+        azureSubscription: ${{ parameters.ServiceConnection }}
+        addSpnToEnvironment: true
+        scriptLocation: inlineScript
+        scriptType: pscore
+        inlineScript: |
+          Write-Host "##vso[task.setvariable variable=ARM_OIDC_TOKEN;issecret=true]$($env:idToken)"
+
   - ${{ if eq('true', parameters.UseFederatedAuth) }}:
     - task: AzurePowerShell@5
       displayName: 🚀 Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
         PoolSubnet: $(PoolSubnet)
+        ${{ if eq(parameters.PersistOidcToken, true) }}:
+          ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
         ${{ insert }}: ${{ parameters.EnvVars }}
       inputs:
         azureSubscription: ${{ parameters.ServiceConnection }}
@@ -58,6 +74,21 @@ steps:
           $subscriptionConfiguration = @'
             ${{ parameters.SubscriptionConfiguration }}
           '@ | ConvertFrom-Json -AsHashtable;
+
+          $context = Get-AzContext
+          $subscriptionConfiguration["Environment"] = $context.Environment.Name
+          $subscriptionConfiguration["SubscriptionId"] = $context.Subscription.Id
+          $subscriptionConfiguration["TenantId"] = $context.Subscription.TenantId
+          $subscriptionConfiguration["TestApplicationId"] = $context.Account.Id
+          $subscriptionConfiguration["ProvisionerApplicationId"] = $context.Account.Id
+
+          $principal = Get-AzADServicePrincipal -ApplicationId $context.Account.Id
+          $subscriptionConfiguration["TestApplicationOid"] = $principal.Id
+          $subscriptionConfiguration["ProvisionerApplicationOid"] = $principal.Id
+
+          Write-Host ($subscriptionConfiguration | ConvertTo-Json)
+          # Write the new SubscriptionConfiguration to be used by the remove test resources
+          Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$($subscriptionConfiguration | ConvertTo-Json -Compress)"
 
           # The subscriptionConfiguration may have ArmTemplateParameters defined, so
           # pass those in via the ArmTemplateParameters flag, and handle any

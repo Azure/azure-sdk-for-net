@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            writer.WriteEndObject();
         }
     }
 }

@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.RecoveryServices
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.RecoveryServicesPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.RecoveryServicesPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -81,6 +82,7 @@ namespace Azure.ResourceManager.RecoveryServices
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSku Sku { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -95,6 +97,7 @@ namespace Azure.ResourceManager.RecoveryServices
         public string EncryptionKeyThumbprint { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public string IntegrityKey { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultExtendedInfoData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultExtendedInfoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultExtendedInfoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultExtendedInfoData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultExtendedInfoData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -235,6 +238,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         public CapabilitiesResult(Azure.Core.ResourceType resourceCapabilitiesBaseType) : base (default(Azure.Core.ResourceType)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult> CapabilitiesResultDnsZones { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -246,6 +250,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public CmkKekIdentity() { }
         public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
         public bool? UseSystemAssignedIdentity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.CmkKekIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.CmkKekIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.CmkKekIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.CmkKekIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.CmkKekIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -293,6 +298,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         public DnsZone() { }
         public Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType? SubResource { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.DnsZone System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DnsZone>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DnsZone>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.DnsZone System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DnsZone>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -303,6 +309,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         public DnsZoneResult() { }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -370,6 +377,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public RawCertificateData() { }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAuthType? AuthType { get { throw null; } set { } }
         public byte[] Certificate { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RawCertificateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RawCertificateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RawCertificateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RawCertificateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.RawCertificateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -419,6 +427,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         public RecoveryServicesCertificateContent() { }
         public Azure.ResourceManager.RecoveryServices.Models.RawCertificateData Properties { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesCertificateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesCertificateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesCertificateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesCertificateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesCertificateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -430,6 +439,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public RecoveryServicesNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -442,6 +452,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -455,6 +466,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -506,6 +518,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         internal RecoveryServicesPrivateEndpointConnectionVaultProperties() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnection Properties { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -518,6 +531,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public string ActionsRequired { get { throw null; } }
         public string Description { get { throw null; } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -530,6 +544,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public Azure.ResourceManager.RecoveryServices.Models.ImmutabilityState? ImmutabilityState { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.MultiUserAuthorization? MultiUserAuthorization { get { throw null; } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSoftDeleteSettings SoftDeleteSettings { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSecuritySettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSecuritySettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSecuritySettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSecuritySettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSecuritySettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -544,6 +559,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSkuName Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -573,6 +589,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public RecoveryServicesSoftDeleteSettings() { }
         public int? SoftDeleteRetentionPeriodInDays { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSoftDeleteState? SoftDeleteState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSoftDeleteSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSoftDeleteSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSoftDeleteSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSoftDeleteSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSoftDeleteSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -606,6 +623,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSku Sku { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -632,6 +650,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public Azure.ResourceManager.RecoveryServices.Models.SecureScoreLevel? SecureScore { get { throw null; } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSecuritySettings SecuritySettings { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeDetails UpgradeDetails { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -644,6 +663,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public int? FailedJobs { get { throw null; } }
         public int? InProgressJobs { get { throw null; } }
         public int? SuspendedJobs { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.ReplicationJobSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ReplicationJobSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ReplicationJobSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.ReplicationJobSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ReplicationJobSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -659,6 +679,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public int? RecoveryPlanCount { get { throw null; } }
         public int? RecoveryServicesProviderAuthType { get { throw null; } }
         public int? RegisteredServersCount { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.ReplicationUsage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ReplicationUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ReplicationUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.ReplicationUsage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ReplicationUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -669,6 +690,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         public ResourceCapabilities(Azure.Core.ResourceType resourceCapabilitiesBaseType) : base (default(Azure.Core.ResourceType)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServices.Models.DnsZone> CapabilitiesDnsZones { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -679,6 +701,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         public ResourceCapabilitiesBase(Azure.Core.ResourceType resourceCapabilitiesBaseType) { }
         public Azure.Core.ResourceType ResourceCapabilitiesBaseType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilitiesBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilitiesBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilitiesBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilitiesBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilitiesBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -695,6 +718,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public string ServicePrincipalClientId { get { throw null; } }
         public string ServicePrincipalObjectId { get { throw null; } }
         public Azure.Core.ResourceIdentifier ServiceResourceId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateAndAadDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateAndAadDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateAndAadDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateAndAadDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateAndAadDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -707,6 +731,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public string GlobalAcsHostName { get { throw null; } }
         public string GlobalAcsNamespace { get { throw null; } }
         public string GlobalAcsRPRealm { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateAndAcsDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateAndAcsDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateAndAcsDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateAndAcsDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateAndAcsDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -724,6 +749,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public System.BinaryData Thumbprint { get { throw null; } }
         public System.DateTimeOffset? ValidEndOn { get { throw null; } }
         public System.DateTimeOffset? ValidStartOn { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -799,6 +825,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal VaultCertificateResult() { }
         public Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateDetails Properties { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultCertificateResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultCertificateResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultCertificateResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultCertificateResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.VaultCertificateResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -810,6 +837,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public VaultMonitoringSettings() { }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAlertsState? AzureMonitorAlertAlertsForAllJobFailures { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesAlertsState? ClassicAlertAlertsForCriticalOperations { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -825,6 +853,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public int? UnHealthyProviderCount { get { throw null; } }
         public int? UnHealthyVmCount { get { throw null; } }
         public int? UnsupportedProviderCount { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -855,6 +884,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public Azure.ResourceManager.RecoveryServices.Models.InfrastructureEncryptionState? InfrastructureEncryption { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.CmkKekIdentity KekIdentity { get { throw null; } set { } }
         public System.Uri KeyUri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesEncryption System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesEncryption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesEncryption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesEncryption System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesEncryption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -869,6 +899,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesMoveDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesMoveDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesMoveDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesMoveDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesMoveDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -880,6 +911,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public VaultPropertiesRedundancySettings() { }
         public Azure.ResourceManager.RecoveryServices.Models.CrossRegionRestore? CrossRegionRestore { get { throw null; } }
         public Azure.ResourceManager.RecoveryServices.Models.StandardTierStorageRedundancy? StandardTierStorageRedundancy { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesRedundancySettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesRedundancySettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesRedundancySettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesRedundancySettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesRedundancySettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -935,6 +967,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeState? Status { get { throw null; } }
         public Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeTriggerType? TriggerType { get { throw null; } }
         public Azure.Core.ResourceIdentifier UpgradedResourceId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -988,6 +1021,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public System.DateTimeOffset? NextResetOn { get { throw null; } }
         public string QuotaPeriod { get { throw null; } }
         public Azure.ResourceManager.RecoveryServices.Models.VaultUsageUnit? Unit { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultUsage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultUsage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.VaultUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -999,6 +1033,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         internal VaultUsageNameInfo() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultUsageNameInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultUsageNameInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.VaultUsageNameInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.VaultUsageNameInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.VaultUsageNameInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<StatusCodesRangeBasedTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StatusCodesRangeBasedTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StatusCodesRangeBasedTrigger)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(StatusCodes))
             {
                 writer.WritePropertyName("statusCodes"u8);
@@ -62,7 +70,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StatusCodesRangeBasedTrigger IJsonModel<StatusCodesRangeBasedTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -88,10 +88,15 @@ public partial class ContainerAppAuthConfig : Resource
     /// <summary>
     /// Creates a new ContainerAppAuthConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppAuthConfig.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerAppAuthConfig resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppAuthConfig.</param>
-    public ContainerAppAuthConfig(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.App/containerApps/authConfigs", resourceVersion ?? "2024-03-01")
+    public ContainerAppAuthConfig(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.App/containerApps/authConfigs", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _encryptionSettings = BicepValue<EncryptionSettings>.DefineProperty(this, "EncryptionSettings", ["properties", "encryptionSettings"]);
@@ -139,9 +144,14 @@ public partial class ContainerAppAuthConfig : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerAppAuthConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppAuthConfig.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the ContainerAppAuthConfig resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppAuthConfig.</param>
     /// <returns>The existing ContainerAppAuthConfig resource.</returns>
-    public static ContainerAppAuthConfig FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppAuthConfig FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

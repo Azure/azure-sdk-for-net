@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.IotHub.Models
 
         void IJsonModel<SharedAccessSignatureAuthorizationRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SharedAccessSignatureAuthorizationRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
             if (Optional.IsDefined(PrimaryKey))
@@ -55,7 +63,6 @@ namespace Azure.ResourceManager.IotHub.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SharedAccessSignatureAuthorizationRule IJsonModel<SharedAccessSignatureAuthorizationRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

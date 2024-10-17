@@ -142,6 +142,7 @@
     "referer",
     "renormalize",
     "retriable",
+    "Servfail",
     "setsas",
     "signalr",
     "signup",

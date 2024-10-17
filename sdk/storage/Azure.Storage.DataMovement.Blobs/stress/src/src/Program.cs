@@ -67,7 +67,7 @@ public class Program
             metrics.Client.Context.GlobalProperties["TestName"] = opts.Test;
             string guid = Guid.NewGuid().ToString();
 
-            metrics.Client.TrackEvent("Starting a test run.");
+            metrics.Client.TrackEvent($"Starting a test {testScenarioName} run.");
 
             TestScenarioBase testScenario = null;
             TransferManagerOptions transferManagerOptions = new TransferManagerOptions()
@@ -81,8 +81,8 @@ public class Program
             };
             switch (testScenarioName)
             {
-                case TestScenarioName.UploadSingleBlockBlobTest:
-                    testScenario = new BlobSingleUploadScenario(
+                case TestScenarioName.UploadSingleBlockBlob:
+                    testScenario = new UploadBlockBlobSingleScenario(
                         new Uri(blobEndpoint),
                         opts.Size,
                         transferManagerOptions,
@@ -91,8 +91,8 @@ public class Program
                         metrics,
                         guid);
                     break;
-                case TestScenarioName.UploadDirectoryBlockBlobTest:
-                    testScenario = new BlobDirectoryUploadScenario(
+                case TestScenarioName.UploadDirectoryBlockBlob:
+                    testScenario = new UploadBlockBlobDirectoryScenario(
                         destinationBlobUri: new Uri(blobEndpoint),
                         blobSize: opts.Size,
                         blobCount: opts.Count,
@@ -102,12 +102,182 @@ public class Program
                         metrics: metrics,
                         testRunId: guid);
                     break;
-                case TestScenarioName.DownloadSingleBlockBlobTest:
-                    testScenario = new BlobSingleDownloadScenario(
+                case TestScenarioName.DownloadSingleBlockBlob:
+                    testScenario = new DownloadBlockBlobSingleScenario(
                         new Uri(blobEndpoint),
                         opts.Size,
                         transferManagerOptions,
                         transferOptions,
+                        tokenCredential,
+                        metrics,
+                        guid);
+                    break;
+                case TestScenarioName.DownloadDirectoryBlockBlob:
+                    testScenario = new DownloadBlockBlobDirectoryScenario(
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        opts.Count,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        metrics,
+                        guid);
+                    break;
+                case TestScenarioName.CopySingleBlockBlob:
+                    testScenario = new CopyBlockBlobSingleScenario(
+                        new Uri(blobEndpoint),
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        tokenCredential,
+                        metrics,
+                        guid);
+                    break;
+                case TestScenarioName.CopyDirectoryBlockBlob:
+                    testScenario = new CopyBlockBlobDirectoryScenario(
+                        new Uri(blobEndpoint),
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        opts.Count,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        tokenCredential,
+                        metrics,
+                        guid);
+                    break;
+                case TestScenarioName.UploadSingleAppendBlob:
+                    testScenario = new UploadAppendBlobSingleScenario(
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        metrics,
+                        guid);
+                    break;
+                case TestScenarioName.UploadDirectoryAppendBlob:
+                    testScenario = new UploadAppendBlobDirectoryScenario(
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        opts.Count,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        metrics,
+                        guid);
+                    break;
+                case TestScenarioName.DownloadSingleAppendBlob:
+                    testScenario = new DownloadAppendBlobSingleScenario(
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        metrics,
+                        guid);
+                    break;
+                case TestScenarioName.DownloadDirectoryAppendBlob:
+                    testScenario = new DownloadAppendBlobDirectoryScenario(
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        opts.Count,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        metrics,
+                        guid);
+                    break;
+                case TestScenarioName.CopySingleAppendBlob:
+                    testScenario = new CopyAppendBlobSingleScenario(
+                        new Uri(blobEndpoint),
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        tokenCredential,
+                        metrics,
+                        guid);
+                    break;
+                case TestScenarioName.CopyDirectoryAppendBlob:
+                    testScenario = new CopyAppendBlobDirectoryScenario(
+                        new Uri(blobEndpoint),
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        opts.Count,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        tokenCredential,
+                        metrics,
+                        guid);
+                    break;
+                case TestScenarioName.UploadSinglePageBlob:
+                    testScenario = new UploadPageBlobSingleScenario(
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        metrics,
+                        guid);
+                    break;
+                case TestScenarioName.UploadDirectoryPageBlob:
+                    testScenario = new UploadPageBlobDirectoryScenario(
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        opts.Count,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        metrics,
+                        guid);
+                    break;
+                case TestScenarioName.DownloadSinglePageBlob:
+                    testScenario = new DownloadPageBlobSingleScenario(
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        metrics,
+                        guid);
+                    break;
+                case TestScenarioName.DownloadDirectoryPageBlob:
+                    testScenario = new DownloadPageBlobDirectoryScenario(
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        opts.Count,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        metrics,
+                        guid);
+                    break;
+                case TestScenarioName.CopySinglePageBlob:
+                    testScenario = new CopyPageBlobSingleScenario(
+                        new Uri(blobEndpoint),
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        tokenCredential,
+                        metrics,
+                        guid);
+                    break;
+                case TestScenarioName.CopyDirectoryPageBlob:
+                    testScenario = new CopyPageBlobDirectoryScenario(
+                        new Uri(blobEndpoint),
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        opts.Count,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
                         tokenCredential,
                         metrics,
                         guid);
@@ -161,9 +331,24 @@ public class Program
     ///
     public static TestScenarioName StringToTestScenario(string testScenario) => testScenario switch
     {
-        DataMovementBlobStressConstants.TestScenarioNameStr.UploadSingleBlockBlob => TestScenarioName.UploadSingleBlockBlobTest,
-        DataMovementBlobStressConstants.TestScenarioNameStr.UploadDirectoryBlockBlob => TestScenarioName.UploadDirectoryBlockBlobTest,
-        DataMovementBlobStressConstants.TestScenarioNameStr.DownloadSingleBlockBlob => TestScenarioName.DownloadSingleBlockBlobTest,
+        DataMovementBlobStressConstants.TestScenarioNameStr.UploadSingleBlockBlob => TestScenarioName.UploadSingleBlockBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.UploadDirectoryBlockBlob => TestScenarioName.UploadDirectoryBlockBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.DownloadSingleBlockBlob => TestScenarioName.DownloadSingleBlockBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.DownloadDirectoryBlockBlob => TestScenarioName.DownloadDirectoryBlockBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.CopySingleBlockBlob => TestScenarioName.CopySingleBlockBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.CopyDirectoryBlockBlob => TestScenarioName.CopyDirectoryBlockBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.UploadSingleAppendBlob => TestScenarioName.UploadSingleAppendBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.UploadDirectoryAppendBlob => TestScenarioName.UploadDirectoryAppendBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.DownloadSingleAppendBlob => TestScenarioName.DownloadSingleAppendBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.DownloadDirectoryAppendBlob => TestScenarioName.DownloadDirectoryAppendBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.CopySingleAppendBlob => TestScenarioName.CopySingleAppendBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.CopyDirectoryAppendBlob => TestScenarioName.CopyDirectoryAppendBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.UploadSinglePageBlob => TestScenarioName.UploadSinglePageBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.UploadDirectoryPageBlob => TestScenarioName.UploadDirectoryPageBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.DownloadSinglePageBlob => TestScenarioName.DownloadSinglePageBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.DownloadDirectoryPageBlob => TestScenarioName.DownloadDirectoryPageBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.CopySinglePageBlob => TestScenarioName.CopySinglePageBlob,
+        DataMovementBlobStressConstants.TestScenarioNameStr.CopyDirectoryPageBlob => TestScenarioName.CopyDirectoryPageBlob,
         _ => throw new ArgumentNullException(),
     };
 

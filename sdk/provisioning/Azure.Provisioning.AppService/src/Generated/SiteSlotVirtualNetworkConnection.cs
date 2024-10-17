@@ -96,10 +96,15 @@ public partial class SiteSlotVirtualNetworkConnection : Resource
     /// <summary>
     /// Creates a new SiteSlotVirtualNetworkConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotVirtualNetworkConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SiteSlotVirtualNetworkConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotVirtualNetworkConnection.</param>
-    public SiteSlotVirtualNetworkConnection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/virtualNetworkConnections", resourceVersion ?? "2024-04-01")
+    public SiteSlotVirtualNetworkConnection(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/sites/slots/virtualNetworkConnections", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _certBlob = BicepValue<string>.DefineProperty(this, "CertBlob", ["properties", "certBlob"]);
@@ -279,9 +284,14 @@ public partial class SiteSlotVirtualNetworkConnection : Resource
     /// <summary>
     /// Creates a reference to an existing SiteSlotVirtualNetworkConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotVirtualNetworkConnection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the SiteSlotVirtualNetworkConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotVirtualNetworkConnection.</param>
     /// <returns>The existing SiteSlotVirtualNetworkConnection resource.</returns>
-    public static SiteSlotVirtualNetworkConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SiteSlotVirtualNetworkConnection FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

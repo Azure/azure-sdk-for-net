@@ -79,10 +79,15 @@ public partial class Subscription : Resource
     /// <summary>
     /// Creates a new Subscription.
     /// </summary>
-    /// <param name="resourceName">Name of the Subscription.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the Subscription resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the Subscription.</param>
-    public Subscription(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Resources/subscriptions", resourceVersion ?? "2019-10-01")
+    public Subscription(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Resources/subscriptions", resourceVersion ?? "2019-10-01")
     {
         _authorizationSource = BicepValue<string>.DefineProperty(this, "AuthorizationSource", ["authorizationSource"], isOutput: true);
         _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["displayName"], isOutput: true);
@@ -227,7 +232,7 @@ public partial class Subscription : Resource
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static Subscription FromExpression(Expression expression)
     {
-        Subscription resource = new(expression.ToString());
+        Subscription resource = new(nameof(Subscription));
         resource.OverrideWithExpression(expression);
         return resource;
     }

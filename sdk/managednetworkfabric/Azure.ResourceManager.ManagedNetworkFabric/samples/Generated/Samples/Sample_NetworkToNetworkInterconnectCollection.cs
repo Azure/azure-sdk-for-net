@@ -55,7 +55,7 @@ new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/reso
                 },
                 OptionBLayer3Configuration = new NetworkToNetworkInterconnectOptionBLayer3Configuration()
                 {
-                    PeerAsn = 61234,
+                    PeerAsn = 61234L,
                     VlanId = 1234,
                     PrimaryIPv4Prefix = "10.0.0.12/30",
                     PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",

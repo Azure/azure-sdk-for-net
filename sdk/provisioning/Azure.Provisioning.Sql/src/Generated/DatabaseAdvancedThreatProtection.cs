@@ -58,10 +58,15 @@ public partial class DatabaseAdvancedThreatProtection : Resource
     /// <summary>
     /// Creates a new DatabaseAdvancedThreatProtection.
     /// </summary>
-    /// <param name="resourceName">Name of the DatabaseAdvancedThreatProtection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the DatabaseAdvancedThreatProtection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the DatabaseAdvancedThreatProtection.</param>
-    public DatabaseAdvancedThreatProtection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/advancedThreatProtectionSettings", resourceVersion ?? "2021-11-01")
+    public DatabaseAdvancedThreatProtection(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/servers/databases/advancedThreatProtectionSettings", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<AdvancedThreatProtectionState>.DefineProperty(this, "State", ["properties", "state"]);
@@ -90,9 +95,14 @@ public partial class DatabaseAdvancedThreatProtection : Resource
     /// <summary>
     /// Creates a reference to an existing DatabaseAdvancedThreatProtection.
     /// </summary>
-    /// <param name="resourceName">Name of the DatabaseAdvancedThreatProtection.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the DatabaseAdvancedThreatProtection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the DatabaseAdvancedThreatProtection.</param>
     /// <returns>The existing DatabaseAdvancedThreatProtection resource.</returns>
-    public static DatabaseAdvancedThreatProtection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static DatabaseAdvancedThreatProtection FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

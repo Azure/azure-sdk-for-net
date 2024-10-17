@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         void IJsonModel<BackupResourceVaultConfigProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceVaultConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupResourceVaultConfigProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(StorageModelType))
             {
                 writer.WritePropertyName("storageModelType"u8);
@@ -86,7 +94,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BackupResourceVaultConfigProperties IJsonModel<BackupResourceVaultConfigProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

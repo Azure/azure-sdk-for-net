@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.StandbyPool.Samples
 },
                 Properties = new StandbyContainerGroupPoolUpdateProperties()
                 {
-                    ElasticityProfile = new StandbyContainerGroupPoolElasticityProfile(1743)
+                    ElasticityProfile = new StandbyContainerGroupPoolElasticityProfile(1743L)
                     {
                         RefillPolicy = StandbyRefillPolicy.Always,
                     },
                     ContainerGroupProperties = new StandbyContainerGroupProperties(new StandbyContainerGroupProfile(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000009/resourceGroups/rgstandbypool/providers/Microsoft.ContainerInstance/containerGroupProfiles/cgProfile"))
                     {
-                        Revision = 2,
+                        Revision = 2L,
                     })
                     {
                         SubnetIds =

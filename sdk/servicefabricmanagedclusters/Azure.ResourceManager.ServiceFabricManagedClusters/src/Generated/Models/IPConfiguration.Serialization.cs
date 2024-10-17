@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
                 writer.WriteObjectValue(PublicIPAddressConfiguration);
             }
-            writer.WriteEndObject();
         }
 
         internal static IPConfiguration DeserializeIPConfiguration(JsonElement element)
