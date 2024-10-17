@@ -1,0 +1,13 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.AI.Client",
+  "library-name": "Azure.AI.Client",
+  "model-namespace": false,
+  "use-model-reader-writer": true,
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "flavor": "azure",
+  "examples-dir": "TempTypeSpecFiles\\Azure.AI.Client\\examples"
+}
