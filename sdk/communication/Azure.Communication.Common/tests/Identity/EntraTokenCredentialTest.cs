@@ -67,7 +67,7 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
-        public void EntraTokenCredential_InitWhtScopes_InitWithDefaultScope()
+        public void EntraTokenCredential_InitWithoutScopes_InitsWithDefaultScope()
         {
             var credential = new EntraCommunicationTokenCredentialOptions(
                 _resourceEndpoint,

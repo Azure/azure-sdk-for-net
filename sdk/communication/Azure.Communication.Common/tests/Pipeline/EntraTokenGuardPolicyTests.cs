@@ -63,7 +63,6 @@ namespace Azure.Communication.Pipeline
         {
             // Arrange
             var policy = new EntraTokenGuardPolicy();
-            var pipeline = new Mock<HttpPipelinePolicy>();
             var pipelines = new ReadOnlyMemory<HttpPipelinePolicy>(new HttpPipelinePolicy[] { _httpPipelinePolicyMock.Object });
             _httpPipelinePolicyMock.Setup(m => m.ProcessAsync(It.IsAny<HttpMessage>(), It.IsAny<ReadOnlyMemory<HttpPipelinePolicy>>())).Returns(new ValueTask(Task.CompletedTask));
             _httpPipelinePolicyMock.Setup(m => m.Process(It.IsAny<HttpMessage>(), It.IsAny<ReadOnlyMemory<HttpPipelinePolicy>>())).Verifiable();
@@ -92,7 +91,6 @@ namespace Azure.Communication.Pipeline
         {
             // Arrange
             var policy = new EntraTokenGuardPolicy();
-            var pipeline = new Mock<HttpPipelinePolicy>();
             var pipelines = new ReadOnlyMemory<HttpPipelinePolicy>(new HttpPipelinePolicy[] { _httpPipelinePolicyMock.Object });
             _httpPipelinePolicyMock.Setup(m => m.ProcessAsync(It.IsAny<HttpMessage>(), It.IsAny<ReadOnlyMemory<HttpPipelinePolicy>>())).Returns(new ValueTask(Task.CompletedTask));
             _httpPipelinePolicyMock.Setup(m => m.Process(It.IsAny<HttpMessage>(), It.IsAny<ReadOnlyMemory<HttpPipelinePolicy>>())).Verifiable();
@@ -119,7 +117,6 @@ namespace Azure.Communication.Pipeline
         {
             // Arrange
             var policy = new EntraTokenGuardPolicy();
-            var pipeline = new Mock<HttpPipelinePolicy>();
             var pipelines = new ReadOnlyMemory<HttpPipelinePolicy>(new HttpPipelinePolicy[] { _httpPipelinePolicyMock.Object });
             _httpPipelinePolicyMock.Setup(m => m.ProcessAsync(It.IsAny<HttpMessage>(), It.IsAny<ReadOnlyMemory<HttpPipelinePolicy>>())).Returns(new ValueTask(Task.CompletedTask));
             _httpPipelinePolicyMock.Setup(m => m.Process(It.IsAny<HttpMessage>(), It.IsAny<ReadOnlyMemory<HttpPipelinePolicy>>())).Verifiable();
@@ -146,7 +143,6 @@ namespace Azure.Communication.Pipeline
         {
             // Arrange
             var policy = new EntraTokenGuardPolicy();
-            var pipeline = new Mock<HttpPipelinePolicy>();
             var pipelines = new ReadOnlyMemory<HttpPipelinePolicy>(new HttpPipelinePolicy[] { _httpPipelinePolicyMock.Object });
             var successfullResponse = new MockResponse(200).SetContent(TokenResponse);
             _httpMessage.Response = successfullResponse;

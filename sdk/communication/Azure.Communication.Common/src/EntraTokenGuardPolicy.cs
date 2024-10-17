@@ -26,8 +26,13 @@ namespace Azure.Communication
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            var (entraTokenCacheOutdated, token) = IsEntraTokenCacheOutdated(message);
-            if (entraTokenCacheOutdated || IsAcsTokenCacheOutdated())
+            var (entraTokenCacheValid, token) = IsEntraTokenCacheValid(message);
+            if (entraTokenCacheValid && IsAcsTokenCacheValid())
+            {
+                message.Response = _responseCache;
+                return;
+            }
+            else
             {
                 _entraTokenCache = token;
                 if (async)
@@ -40,22 +45,18 @@ namespace Azure.Communication
                 }
                 _responseCache = message.Response;
             }
-            else
-            {
-                message.Response = _responseCache;
-                return;
-            }
         }
 
-        private (bool CacheOutdated, string EntraToken) IsEntraTokenCacheOutdated(HttpMessage message)
+        private (bool CacheValid, string EntraToken) IsEntraTokenCacheValid(HttpMessage message)
         {
             var currentEntraToken = string.Empty;
             message.Request.Headers.TryGetValue("Authorization", out currentEntraToken);
-            return (string.IsNullOrEmpty(_entraTokenCache) || currentEntraToken != _entraTokenCache, currentEntraToken);
+            return (!string.IsNullOrEmpty(_entraTokenCache) && currentEntraToken == _entraTokenCache, currentEntraToken);
         }
-        private bool IsAcsTokenCacheOutdated()
+
+        private bool IsAcsTokenCacheValid()
         {
-            return _responseCache == null || _responseCache.Status != 200 || !IsAccessTokenValid();
+            return _responseCache != null && _responseCache.Status == 200 && IsAccessTokenValid();
         }
 
         private bool IsAccessTokenValid()
