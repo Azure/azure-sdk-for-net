@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_Get</description>
+        /// <description>InformaticaServerlessRuntimeResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_Get</description>
+        /// <description>InformaticaServerlessRuntimeResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_Delete</description>
+        /// <description>InformaticaServerlessRuntimeResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_Delete</description>
+        /// <description>InformaticaServerlessRuntimeResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_Update</description>
+        /// <description>InformaticaServerlessRuntimeResource_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_Update</description>
+        /// <description>InformaticaServerlessRuntimeResource_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_Get</description>
+        /// <description>InformaticaOrganizationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_Get</description>
+        /// <description>InformaticaOrganizationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
