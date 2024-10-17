@@ -150,8 +150,7 @@ namespace Azure.Generator.Tests.Common
                 type,
                 isRequired,
                 isReadOnly,
-                isDiscriminator,
-                null);
+                isDiscriminator);
         }
 
         public static InputModelType Model(

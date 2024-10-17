@@ -37,6 +37,7 @@ public class AzureClientPlugin : ClientModelPlugin
     /// </summary>
     public override void Configure()
     {
+        base.Configure();
     }
 
     /// <summary>

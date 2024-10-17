@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         public async Task Get_StandbyVirtualMachinesGet()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachines_Get.json
-            // this example is just showing the usage of "StandbyVirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachineResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         public async Task Exists_StandbyVirtualMachinesGet()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachines_Get.json
-            // this example is just showing the usage of "StandbyVirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachineResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         public async Task GetIfExists_StandbyVirtualMachinesGet()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachines_Get.json
-            // this example is just showing the usage of "StandbyVirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachineResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
