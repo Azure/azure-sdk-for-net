@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ApiManagementGetAuthorizationProvider()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetAuthorizationProvider.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetAuthorizationProvider.json
             // this example is just showing the usage of "AuthorizationProvider_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ApiManagementCreateAuthorizationProviderAADAuthCode()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateAuthorizationProviderAADAuthCode.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateAuthorizationProviderAADAuthCode.json
             // this example is just showing the usage of "AuthorizationProvider_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                     {
                         AuthorizationCode =
 {
-["clientId"] = "59790825-fdd3-4b10-bc7a-4c3aaf25801d",
-["clientSecret"] = "xxxxxxxxxxxxxxxxxxxxxxxx",
+["clientId"] = "clientsecretid",
+["clientSecret"] = "clientsecretvalue",
 ["resourceUri"] = "https://graph.microsoft.com",
 ["scopes"] = "User.Read.All Group.Read.All",
 },
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ApiManagementCreateAuthorizationProviderAADClientCred()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateAuthorizationProviderAADClientCred.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateAuthorizationProviderAADClientCred.json
             // this example is just showing the usage of "AuthorizationProvider_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ApiManagementCreateAuthorizationProviderGenericOAuth2()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateAuthorizationProviderGenericOAuth2.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateAuthorizationProviderGenericOAuth2.json
             // this example is just showing the usage of "AuthorizationProvider_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -184,8 +184,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                         AuthorizationCode =
 {
 ["authorizationUrl"] = "https://www.eventbrite.com/oauth/authorize",
-["clientId"] = "genericClientId",
-["clientSecret"] = "xxxxxxxxxxxxxxxxxxxxxxxx",
+["clientId"] = "clientid",
+["clientSecret"] = "clientsecretvalue",
 ["refreshUrl"] = "https://www.eventbrite.com/oauth/token",
 ["scopes"] = null,
 ["tokenUrl"] = "https://www.eventbrite.com/oauth/token",
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ApiManagementCreateAuthorizationProviderOOBGoogle()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateAuthorizationProviderOOBGoogle.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateAuthorizationProviderOOBGoogle.json
             // this example is just showing the usage of "AuthorizationProvider_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -237,8 +237,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                     {
                         AuthorizationCode =
 {
-["clientId"] = "99999999-xxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
-["clientSecret"] = "XXXXXXXXXXXXXXXXXXXX",
+["clientId"] = "99999999-xxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
+["clientSecret"] = "clientsecretvalue",
 ["scopes"] = "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
 },
                     },
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_ApiManagementDeleteAuthorizationProvider()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteAuthorizationProvider.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementDeleteAuthorizationProvider.json
             // this example is just showing the usage of "AuthorizationProvider_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
