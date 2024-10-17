@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -66,6 +67,11 @@ namespace Azure.AI.ContentSafety.Tests
             request.Categories.Add(TextCategory.Hate);
             request.Categories.Add(TextCategory.SelfHarm);
             var response = await client.AnalyzeTextAsync(request);
+
+            string jsonString = JsonSerializer.Serialize(response.Value.CategoriesAnalysis);
+            Console.WriteLine(jsonString);
+
+            var obj = JsonSerializer.Deserialize<List<TextCategoriesAnalysis>>(jsonString);
 
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Value.CategoriesAnalysis);

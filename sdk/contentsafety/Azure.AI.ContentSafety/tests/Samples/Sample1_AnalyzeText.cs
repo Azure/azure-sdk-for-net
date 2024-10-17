@@ -18,8 +18,8 @@ namespace Azure.AI.ContentSafety.Tests.Samples
         {
             #region Snippet:Azure_AI_ContentSafety_CreateClient
 
-            string endpoint = TestEnvironment.Endpoint;
-            string key = TestEnvironment.Key;
+            string endpoint = "https://aacs-bowgong-frc-test.cognitiveservices.azure.com/";
+            string key = "66af262259a34ec5b79cdff3d0f9ac75";
 
             ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
 

@@ -56,7 +56,7 @@ namespace Azure.AI.ContentSafety
         /// <param name="category"> The text analysis category. </param>
         /// <param name="severity"> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’ or ‘EightSeverity Levels’, and the output value can be 0, 2, 4, 6 or 0, 1, 2, 3, 4, 5, 6, or 7. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TextCategoriesAnalysis(TextCategory category, int? severity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        public TextCategoriesAnalysis(TextCategory category, int? severity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Severity = severity;
@@ -64,13 +64,13 @@ namespace Azure.AI.ContentSafety
         }
 
         /// <summary> Initializes a new instance of <see cref="TextCategoriesAnalysis"/> for deserialization. </summary>
-        internal TextCategoriesAnalysis()
+        public TextCategoriesAnalysis()
         {
         }
 
         /// <summary> The text analysis category. </summary>
-        public TextCategory Category { get; }
+        public TextCategory Category { get; set; }
         /// <summary> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’ or ‘EightSeverity Levels’, and the output value can be 0, 2, 4, 6 or 0, 1, 2, 3, 4, 5, 6, or 7. </summary>
-        public int? Severity { get; }
+        public int? Severity { get; set; }
     }
 }

@@ -7,10 +7,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace Azure.AI.ContentSafety
 {
     /// <summary> Text analyze category. </summary>
+    [JsonConverter(typeof(TextCategoryJsonConverter))]
     public readonly partial struct TextCategory : IEquatable<TextCategory>
     {
         private readonly string _value;
@@ -53,5 +56,23 @@ namespace Azure.AI.ContentSafety
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
+
+        // Add XML comment for TextCategoryJsonConverter to fix CS1591
+        /// <summary>
+        /// JSON converter for <see cref="TextCategory"/>.
+        /// </summary>
+        private class TextCategoryJsonConverter : JsonConverter<TextCategory>
+        {
+            public override TextCategory Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                string value = reader.GetString();
+                return new TextCategory(value);
+            }
+
+            public override void Write(Utf8JsonWriter writer, TextCategory value, JsonSerializerOptions options)
+            {
+                writer.WriteStringValue(value._value);
+            }
+        }
     }
 }
