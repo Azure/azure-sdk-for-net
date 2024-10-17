@@ -26,16 +26,14 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="sourceCallerIdNumber">
         /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
-        /// Required only when calling a PSTN callee.
+        /// Only populated in outbound PSTN calls.
         /// </param>
         /// <param name="sourceDisplayName"> Display name of the call if dialing out to a pstn number. </param>
         /// <param name="source"> Source identity. </param>
         /// <param name="correlationId"> The correlation ID. </param>
-        /// <param name="answeredBy"> Identity of the answering entity. Only populated when identity is provided in the request. </param>
-        /// <param name="mediaStreamingSubscription"> The state of media streaming subscription for the call. </param>
-        /// <param name="transcriptionSubscription"> Transcription Subscription. </param>
-        /// <param name="answeredFor"> Identity of the original Pstn target of an incoming Call. Only populated when the original target is a Pstn number. </param>
-        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel source, string correlationId, CommunicationUserIdentifierModel answeredBy, MediaStreamingSubscriptionInternal mediaStreamingSubscription, TranscriptionSubscriptionInternal transcriptionSubscription, PhoneNumberIdentifierModel answeredFor)
+        /// <param name="answeredBy"> Identity of the answering entity. Only populated when identity is provided in the request and an inbound call. </param>
+        /// <param name="answeredFor"> Identity of the original PSTN target of an incoming Call. Only populated when the original target is a PSTN number and an inbound call. </param>
+        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel source, string correlationId, CommunicationUserIdentifierModel answeredBy, PhoneNumberIdentifierModel answeredFor)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -47,8 +45,6 @@ namespace Azure.Communication.CallAutomation
             Source = source;
             CorrelationId = correlationId;
             AnsweredBy = answeredBy;
-            MediaStreamingSubscription = mediaStreamingSubscription;
-            TranscriptionSubscription = transcriptionSubscription;
             AnsweredFor = answeredFor;
         }
 
@@ -64,7 +60,7 @@ namespace Azure.Communication.CallAutomation
         public string CallbackUri { get; }
         /// <summary>
         /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
-        /// Required only when calling a PSTN callee.
+        /// Only populated in outbound PSTN calls.
         /// </summary>
         public PhoneNumberIdentifierModel SourceCallerIdNumber { get; }
         /// <summary> Display name of the call if dialing out to a pstn number. </summary>
@@ -73,13 +69,9 @@ namespace Azure.Communication.CallAutomation
         public CommunicationIdentifierModel Source { get; }
         /// <summary> The correlation ID. </summary>
         public string CorrelationId { get; }
-        /// <summary> Identity of the answering entity. Only populated when identity is provided in the request. </summary>
+        /// <summary> Identity of the answering entity. Only populated when identity is provided in the request and an inbound call. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; }
-        /// <summary> The state of media streaming subscription for the call. </summary>
-        public MediaStreamingSubscriptionInternal MediaStreamingSubscription { get; }
-        /// <summary> Transcription Subscription. </summary>
-        public TranscriptionSubscriptionInternal TranscriptionSubscription { get; }
-        /// <summary> Identity of the original Pstn target of an incoming Call. Only populated when the original target is a Pstn number. </summary>
+        /// <summary> Identity of the original PSTN target of an incoming Call. Only populated when the original target is a PSTN number and an inbound call. </summary>
         public PhoneNumberIdentifierModel AnsweredFor { get; }
     }
 }

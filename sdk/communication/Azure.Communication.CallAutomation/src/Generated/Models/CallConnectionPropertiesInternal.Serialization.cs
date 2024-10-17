@@ -28,8 +28,6 @@ namespace Azure.Communication.CallAutomation
             CommunicationIdentifierModel source = default;
             string correlationId = default;
             CommunicationUserIdentifierModel answeredBy = default;
-            MediaStreamingSubscriptionInternal mediaStreamingSubscription = default;
-            TranscriptionSubscriptionInternal transcriptionSubscription = default;
             PhoneNumberIdentifierModel answeredFor = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -108,24 +106,6 @@ namespace Azure.Communication.CallAutomation
                     answeredBy = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("mediaStreamingSubscription"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mediaStreamingSubscription = MediaStreamingSubscriptionInternal.DeserializeMediaStreamingSubscriptionInternal(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("transcriptionSubscription"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    transcriptionSubscription = TranscriptionSubscriptionInternal.DeserializeTranscriptionSubscriptionInternal(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("answeredFor"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -147,8 +127,6 @@ namespace Azure.Communication.CallAutomation
                 source,
                 correlationId,
                 answeredBy,
-                mediaStreamingSubscription,
-                transcriptionSubscription,
                 answeredFor);
         }
 

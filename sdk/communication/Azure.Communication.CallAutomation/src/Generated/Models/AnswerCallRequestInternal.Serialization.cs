@@ -19,11 +19,6 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStringValue(IncomingCallContext);
             writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
-            if (Optional.IsDefined(CustomCallingContext))
-            {
-                writer.WritePropertyName("customCallingContext"u8);
-                writer.WriteObjectValue(CustomCallingContext);
-            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
@@ -38,16 +33,6 @@ namespace Azure.Communication.CallAutomation
             {
                 writer.WritePropertyName("answeredBy"u8);
                 writer.WriteObjectValue(AnsweredBy);
-            }
-            if (Optional.IsDefined(MediaStreamingOptions))
-            {
-                writer.WritePropertyName("mediaStreamingOptions"u8);
-                writer.WriteObjectValue(MediaStreamingOptions);
-            }
-            if (Optional.IsDefined(TranscriptionOptions))
-            {
-                writer.WritePropertyName("transcriptionOptions"u8);
-                writer.WriteObjectValue(TranscriptionOptions);
             }
             writer.WriteEndObject();
         }

@@ -20,12 +20,14 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        internal RecognizeCanceled(string callConnectionId, string serverCallId, string correlationId, string operationContext)
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        internal RecognizeCanceled(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             OperationContext = operationContext;
+            ResultInformation = resultInformation;
         }
     }
 }

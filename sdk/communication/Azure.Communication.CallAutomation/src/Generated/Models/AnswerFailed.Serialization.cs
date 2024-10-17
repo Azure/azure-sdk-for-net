@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class MediaStreamingStarted
+    public partial class AnswerFailed
     {
-        internal static MediaStreamingStarted DeserializeMediaStreamingStarted(JsonElement element)
+        internal static AnswerFailed DeserializeAnswerFailed(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -22,7 +22,6 @@ namespace Azure.Communication.CallAutomation
             string correlationId = default;
             string operationContext = default;
             ResultInformation resultInformation = default;
-            MediaStreamingUpdate mediaStreamingUpdate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -54,31 +53,16 @@ namespace Azure.Communication.CallAutomation
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("mediaStreamingUpdate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mediaStreamingUpdate = MediaStreamingUpdate.DeserializeMediaStreamingUpdate(property.Value);
-                    continue;
-                }
             }
-            return new MediaStreamingStarted(
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                operationContext,
-                resultInformation,
-                mediaStreamingUpdate);
+            return new AnswerFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MediaStreamingStarted FromResponse(Response response)
+        internal static AnswerFailed FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMediaStreamingStarted(document.RootElement);
+            return DeserializeAnswerFailed(document.RootElement);
         }
     }
 }

@@ -31,17 +31,13 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
         /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
-        /// <param name="mediaStreamingOptions"> Media Streaming Options. </param>
-        /// <param name="transcriptionOptions"> Transcription Options. </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions)
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
             OperationContext = operationContext;
             CallIntelligenceOptions = callIntelligenceOptions;
             AnsweredBy = answeredBy;
-            MediaStreamingOptions = mediaStreamingOptions;
-            TranscriptionOptions = transcriptionOptions;
         }
 
         /// <summary> The context associated with the call. </summary>
@@ -54,9 +50,5 @@ namespace Azure.Communication.CallAutomation
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
         /// <summary> The identifier of the call automation entity which answers the call. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; set; }
-        /// <summary> Media Streaming Options. </summary>
-        public MediaStreamingOptionsInternal MediaStreamingOptions { get; set; }
-        /// <summary> Transcription Options. </summary>
-        public TranscriptionOptionsInternal TranscriptionOptions { get; set; }
     }
 }
