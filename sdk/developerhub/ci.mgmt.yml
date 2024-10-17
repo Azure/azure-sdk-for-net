@@ -1,0 +1,23 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/devhub/ci.mgmt.yml
+    - sdk/devhub/Azure.ResourceManager.DeveloperHub/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: devhub
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.DeveloperHub
+      safeName: AzureResourceManagerDeveloperHub
