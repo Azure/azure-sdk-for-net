@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task Get_GetsAFirewallRuleOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleGet.json
-            // this example is just showing the usage of "FirewallRules_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FirewallRule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task Exists_GetsAFirewallRuleOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleGet.json
-            // this example is just showing the usage of "FirewallRules_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FirewallRule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task GetIfExists_GetsAFirewallRuleOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleGet.json
-            // this example is just showing the usage of "FirewallRules_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FirewallRule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task CreateOrUpdate_CreatesAFirewallRuleOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleCreate.json
-            // this example is just showing the usage of "FirewallRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FirewallRule_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

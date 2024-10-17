@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task Get_StorageClassGet0()
         {
             // Generated from example definition: 2024-03-01/StorageClass_Get.json
-            // this example is just showing the usage of "StorageClass_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StorageClassResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task Update_StorageClassUpdate0()
         {
             // Generated from example definition: 2024-03-01/StorageClass_Update.json
-            // this example is just showing the usage of "StorageClass_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StorageClassResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task Delete_StorageClassDelete0()
         {
             // Generated from example definition: 2024-03-01/StorageClass_Delete.json
-            // this example is just showing the usage of "StorageClass_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StorageClassResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

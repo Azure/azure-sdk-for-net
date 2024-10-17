@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         public async Task Get_StandbyContainerGroupPoolsGet()
         {
             // Generated from example definition: 2024-03-01/StandbyContainerGroupPools_Get.json
-            // this example is just showing the usage of "StandbyContainerGroupPools_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyContainerGroupPoolResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         public async Task Delete_StandbyContainerGroupPoolsDelete()
         {
             // Generated from example definition: 2024-03-01/StandbyContainerGroupPools_Delete.json
-            // this example is just showing the usage of "StandbyContainerGroupPools_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyContainerGroupPoolResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         public async Task Update_StandbyContainerGroupPoolsUpdate()
         {
             // Generated from example definition: 2024-03-01/StandbyContainerGroupPools_Update.json
-            // this example is just showing the usage of "StandbyContainerGroupPools_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyContainerGroupPoolResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
