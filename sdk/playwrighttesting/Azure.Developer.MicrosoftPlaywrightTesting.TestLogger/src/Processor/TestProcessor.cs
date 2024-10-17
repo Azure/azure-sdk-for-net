@@ -160,6 +160,11 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                                     sasUri = _serviceClient.GetTestRunResultsUri(); // Create new SAS URI
                                     _logger.Info($"Fetched SAS URI with validity: {sasUri?.ExpiresAt} and access: {sasUri?.AccessLevel}.");
                                 }
+                                if (sasUri == null)
+                                {
+                                    _logger.Warning("SAS URI is empty");
+                                    continue; // allow recovery from temporary reporter API failures. In the future, we might consider shortciruiting the upload process.
+                                }
 
                                 // Upload rawResult to blob storage using sasUri
                                 var rawTestResultJson = JsonSerializer.Serialize(rawResult);
@@ -186,7 +191,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             EndTestRun(e);
         }
 
-  #region Test Processor Helper Methods
+        #region Test Processor Helper Methods
         private void EndTestRun(TestRunCompleteEventArgs e)
         {
             if (_cloudRunMetadata.EnableResultPublish && !FatalTestExecution)
