@@ -256,21 +256,21 @@
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
     <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.11.3" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.18.2" />
-    <PackageReference Update="Azure.ResourceManager.Compute" Version="1.2.0" />
+    <PackageReference Update="Azure.ResourceManager.Compute" Version="1.7.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.3.0" />
     <PackageReference Update="Azure.ResourceManager.KeyVault" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.ManagedServiceIdentities" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.Network" Version="1.5.0" />
-    <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.1.0" />
+    <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.3.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager.PrivateDns" Version="1.0.1" />
-    <PackageReference Update="Azure.ResourceManager.RecoveryServices" Version="1.1.0" />
+    <PackageReference Update="Azure.ResourceManager.RecoveryServices" Version="1.2.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager.Resources" Version="1.6.0" />
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.1.1" />
     <PackageReference Update="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.3" />
     <PackageReference Update="Azure.ResourceManager.KubernetesConfiguration" Version="1.2.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager.ExtendedLocations" Version="1.1.0-beta.1" />
-    <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.0.0" />
-    <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.1.0" />
+    <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.2.0-beta.1" />
+    <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.3.0-beta.1" />
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.6.0" />

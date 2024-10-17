@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_PoolsGet()
         {
-            // Generated from example definition: 2024-04-04-preview/GetPool.json
+            // Generated from example definition: 2024-10-19/GetPool.json
             // this example is just showing the usage of "Pools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_PoolsGet()
         {
-            // Generated from example definition: 2024-04-04-preview/GetPool.json
+            // Generated from example definition: 2024-10-19/GetPool.json
             // this example is just showing the usage of "Pools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_PoolsGet()
         {
-            // Generated from example definition: 2024-04-04-preview/GetPool.json
+            // Generated from example definition: 2024-10-19/GetPool.json
             // this example is just showing the usage of "Pools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_PoolsCreateOrUpdate()
         {
-            // Generated from example definition: 2024-04-04-preview/CreateOrUpdatePool.json
+            // Generated from example definition: 2024-10-19/CreateOrUpdatePool.json
             // this example is just showing the usage of "Pools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,7 +178,7 @@ ResourceId = "/MicrosoftWindowsServer/WindowsServer/2019-Datacenter/latest",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_PoolsListByResourceGroup()
         {
-            // Generated from example definition: 2024-04-04-preview/ListPoolsBySubscriptionAndResourceGroup.json
+            // Generated from example definition: 2024-10-19/ListPoolsBySubscriptionAndResourceGroup.json
             // this example is just showing the usage of "Pool_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
