@@ -8,7 +8,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Maps;
+using ClientModel.ReferenceClients.MapsClient;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Samples;
