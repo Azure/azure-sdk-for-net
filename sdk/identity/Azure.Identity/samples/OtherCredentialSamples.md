@@ -5,7 +5,7 @@
 To set up a federated identity credential (FIC) in Azure Pipelines, you can set up the Azure Resource Manager service connection as an [automatic recommended approach](https://learn.microsoft.com/azure/devops/pipelines/library/connect-to-azure?view=azure-devops#create-an-azure-resource-manager-service-connection-that-uses-workload-identity-federation).
 You can also create it manually either using a [user-assigned managed identity to accept the ADO-issued token as a FIC](https://learn.microsoft.com/azure/devops/pipelines/release/configure-workload-identity?view=azure-devops#set-a-workload-identity-service-connection-to-use-managed-identity-authentication) or using an [App Registration to accept the Azure DevOps-issued token as a FIC](https://learn.microsoft.com/azure/devops/pipelines/release/configure-workload-identity?view=azure-devops#set-a-workload-identity-service-connection-to-use-service-principal-authentication).
 
-Make sure you use one of the [recommended Azure Pipelines tasks](https://learn.microsoft.com/azure/devops/pipelines/release/troubleshoot-workload-identity?view=azure-devops#review-pipeline-tasks) so that FIC is available in Azure Pipelines.
+Make sure you use one of the [recommended Azure Pipelines tasks][az_pipelines_tasks] so that FIC is available in Azure Pipelines.
 
 To use `AzurePipelinesCredential`, configure the following values in the constructor:
 
@@ -17,7 +17,7 @@ To use `AzurePipelinesCredential`, configure the following values in the constru
 
 ## Example of using an Azure Pipelines task
 
-The following task YAML is an example of configuring the [AzureCLI@2](https://learn.microsoft.com/azure/devops/pipelines/tasks/reference/azure-cli-v2?view=azure-pipelines) task for using service connections federated identity with @azure/identity. See the list of [recommended Azure Pipelines tasks](https://learn.microsoft.com/azure/devops/pipelines/release/troubleshoot-workload-identity?view=azure-devops#review-pipeline-tasks).
+The following task YAML is an example of configuring the [AzureCLI@2](https://learn.microsoft.com/azure/devops/pipelines/tasks/reference/azure-cli-v2?view=azure-pipelines) task for using service connections federated identity with the Azure Identity library. See the list of [recommended Azure Pipelines tasks][az_pipelines_tasks].
 
 ```yml
 trigger:
@@ -93,3 +93,6 @@ var credential = new OnBehalfOfCredential(tenantId, clientId, getManagedIdentity
 // Use the credential to authenticate with the Key Vault client.
 var client = new SecretClient(new Uri("https://keyvault-name.vault.azure.net/"), credential);
 ```
+
+<!-- LINKS -->
+[az_pipelines_tasks]: https://aka.ms/azdo-rm-workload-identity-tasks

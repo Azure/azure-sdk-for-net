@@ -7,14 +7,9 @@ extends:
     Project: Azure.Communication.Sms
     CloudConfig:
       Public:
-        ServiceConnection: azure-sdk-tests
-        SubscriptionConfigurationFilePaths:
-          - eng/common/TestResources/sub-config/AzurePublicMsft.json 
         SubscriptionConfigurations:
-          - $(sub-config-azure-cloud-test-resources)
           - $(sub-config-communication-services-cloud-test-resources-common)
           - $(sub-config-communication-services-cloud-test-resources-net)
           - $(sub-config-communication-services-sms-cloud-test-resources)
-    Clouds: Public
     TestResourceDirectories:
       - communication/
