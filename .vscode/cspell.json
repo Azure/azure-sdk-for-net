@@ -255,7 +255,7 @@
         "Hvci"
       ]
     },
-	  {
+    {
       "filename": "**/sdk/computefleet/**/*.cs",
       "words": [
         "Rdma"
