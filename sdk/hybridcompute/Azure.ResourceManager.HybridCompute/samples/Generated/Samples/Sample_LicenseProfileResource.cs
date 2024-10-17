@@ -90,7 +90,7 @@ SubscriptionStatus = LicenseProfileSubscriptionStatus.Enabled,
                 ProductType = LicenseProfileProductType.WindowsServer,
                 ProductFeatures =
 {
-new ProductFeatureUpdate()
+new HybridComputeProductFeatureUpdate()
 {
 Name = "Hotpatch",
 SubscriptionStatus = LicenseProfileSubscriptionStatusUpdate.Enable,

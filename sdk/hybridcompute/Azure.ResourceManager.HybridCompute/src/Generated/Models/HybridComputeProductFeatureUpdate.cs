@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Product Feature. </summary>
-    public partial class ProductFeatureUpdate
+    public partial class HybridComputeProductFeatureUpdate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProductFeatureUpdate"/>. </summary>
-        public ProductFeatureUpdate()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeProductFeatureUpdate"/>. </summary>
+        public HybridComputeProductFeatureUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProductFeatureUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeProductFeatureUpdate"/>. </summary>
         /// <param name="name"> Product feature name. </param>
         /// <param name="subscriptionStatus"> Indicates the new status of the product feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductFeatureUpdate(string name, LicenseProfileSubscriptionStatusUpdate? subscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridComputeProductFeatureUpdate(string name, LicenseProfileSubscriptionStatusUpdate? subscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             SubscriptionStatus = subscriptionStatus;

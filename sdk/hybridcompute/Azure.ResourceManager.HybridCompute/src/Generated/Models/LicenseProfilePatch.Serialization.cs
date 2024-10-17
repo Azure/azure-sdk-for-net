@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             IDictionary<string, string> tags = default;
             LicenseProfileSubscriptionStatusUpdate? subscriptionStatus = default;
             LicenseProfileProductType? productType = default;
-            IList<ProductFeatureUpdate> productFeatures = default;
+            IList<HybridComputeProductFeatureUpdate> productFeatures = default;
             string assignedLicense = default;
             bool? softwareAssuranceCustomer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                                     {
                                         continue;
                                     }
-                                    List<ProductFeatureUpdate> array = new List<ProductFeatureUpdate>();
+                                    List<HybridComputeProductFeatureUpdate> array = new List<HybridComputeProductFeatureUpdate>();
                                     foreach (var item in property1.Value.EnumerateArray())
                                     {
-                                        array.Add(ProductFeatureUpdate.DeserializeProductFeatureUpdate(item, options));
+                                        array.Add(HybridComputeProductFeatureUpdate.DeserializeHybridComputeProductFeatureUpdate(item, options));
                                     }
                                     productFeatures = array;
                                     continue;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 serializedAdditionalRawData,
                 subscriptionStatus,
                 productType,
-                productFeatures ?? new ChangeTrackingList<ProductFeatureUpdate>(),
+                productFeatures ?? new ChangeTrackingList<HybridComputeProductFeatureUpdate>(),
                 assignedLicense,
                 softwareAssuranceCustomer);
         }

@@ -1270,6 +1270,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeature>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class HybridComputeProductFeatureUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate>
+    {
+        public HybridComputeProductFeatureUpdate() { }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate? SubscriptionStatus { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HybridComputeProgramYear : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.HybridComputeProgramYear>
     {
@@ -1605,7 +1617,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         public LicenseProfilePatch() { }
         public string AssignedLicense { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.ProductFeatureUpdate> ProductFeatures { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.HybridComputeProductFeatureUpdate> ProductFeatures { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.LicenseProfileProductType? ProductType { get { throw null; } set { } }
         public bool? SoftwareAssuranceCustomer { get { throw null; } set { } }
         public Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate? SubscriptionStatus { get { throw null; } set { } }
@@ -1948,18 +1960,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
         Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ProductFeatureUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ProductFeatureUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ProductFeatureUpdate>
-    {
-        public ProductFeatureUpdate() { }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridCompute.Models.LicenseProfileSubscriptionStatusUpdate? SubscriptionStatus { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridCompute.Models.ProductFeatureUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ProductFeatureUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ProductFeatureUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridCompute.Models.ProductFeatureUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ProductFeatureUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ProductFeatureUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ProductFeatureUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VmGuestPatchClassificationLinux : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux>

@@ -68,6 +68,7 @@ prepend-rp-prefix:
   - Gateway
   - GatewayUpdate
   - GatewayType
+  - ProductFeatureUpdate
 
 list-exception: 
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{baseProvider}/{baseResourceType}/{baseResourceName}/providers/Microsoft.HybridCompute/settings/{settingsResourceName}
@@ -108,6 +109,8 @@ rename-mapping:
   PatchSettingsStatus: HybridComputePatchSettingsStatus
   Settings: HybridComputeTargetResourceSettings
   OSProfileLinuxConfiguration.patchSettings.enableHotpatching: IsHotpatchingEnabled
+  LicenseProfileData: HybridComputeLicenseProfileData
+  LicenseProfilePatch: HybridComputeLicenseProfilePatch
 
 override-operation-name:
   Settings_Update: UpdateTargetResourceSetting

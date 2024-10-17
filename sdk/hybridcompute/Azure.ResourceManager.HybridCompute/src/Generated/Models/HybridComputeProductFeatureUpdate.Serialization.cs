@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class ProductFeatureUpdate : IUtf8JsonSerializable, IJsonModel<ProductFeatureUpdate>
+    public partial class HybridComputeProductFeatureUpdate : IUtf8JsonSerializable, IJsonModel<HybridComputeProductFeatureUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductFeatureUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeProductFeatureUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ProductFeatureUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeProductFeatureUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductFeatureUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProductFeatureUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductFeatureUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeProductFeatureUpdate)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Name))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
         }
 
-        ProductFeatureUpdate IJsonModel<ProductFeatureUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HybridComputeProductFeatureUpdate IJsonModel<HybridComputeProductFeatureUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductFeatureUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProductFeatureUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductFeatureUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeProductFeatureUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProductFeatureUpdate(document.RootElement, options);
+            return DeserializeHybridComputeProductFeatureUpdate(document.RootElement, options);
         }
 
-        internal static ProductFeatureUpdate DeserializeProductFeatureUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HybridComputeProductFeatureUpdate DeserializeHybridComputeProductFeatureUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProductFeatureUpdate(name, subscriptionStatus, serializedAdditionalRawData);
+            return new HybridComputeProductFeatureUpdate(name, subscriptionStatus, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ProductFeatureUpdate>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HybridComputeProductFeatureUpdate>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductFeatureUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProductFeatureUpdate>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProductFeatureUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeProductFeatureUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ProductFeatureUpdate IPersistableModel<ProductFeatureUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HybridComputeProductFeatureUpdate IPersistableModel<HybridComputeProductFeatureUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductFeatureUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeProductFeatureUpdate>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProductFeatureUpdate(document.RootElement, options);
+                        return DeserializeHybridComputeProductFeatureUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProductFeatureUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeProductFeatureUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ProductFeatureUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeProductFeatureUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
