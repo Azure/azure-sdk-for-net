@@ -58,7 +58,6 @@ public partial class Sample_Agent_Basics
         Assert.That(messagesListResponse.Value.Data[0].Id == message.Id);
 
         // Step 4: Run the agent
-
         #region Snippet:OverviewCreateRun
         Response<ThreadRun> runResponse = await client.CreateRunAsync(
             thread.Id,

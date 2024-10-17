@@ -21,7 +21,7 @@ public partial class Sample_Agent_FileSearch
         AgentClient client = new AgentClient(connectionString, new DefaultAzureCredential());
 
         #region Snippet:UploadAgentFilesToUse
-        // # Upload a file and wait for it to be processed
+        // Upload a file and wait for it to be processed
         File.WriteAllText(
             path: "sample_file_for_upload.txt",
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
@@ -44,6 +44,7 @@ public partial class Sample_Agent_FileSearch
         FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
         fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
+        // Create an agent with toolResources and process assistant run
         Response<Agent> agentResponse = await client.CreateAgentAsync(
                 model: "gpt-4-1106-preview",
                 name: "SDK Test Agent - Retrieval",
@@ -53,15 +54,18 @@ public partial class Sample_Agent_FileSearch
         Agent agent = agentResponse.Value;
         #endregion
 
+        // Create thread for communication
         Response<AgentThread> threadResponse = await client.CreateThreadAsync();
         AgentThread thread = threadResponse.Value;
 
+        // Create message to thread
         Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
             "Can you give me the documented codes for 'banana' and 'orange'?");
         ThreadMessage message = messageResponse.Value;
 
+        // Run the agent
         Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, agent);
 
         do

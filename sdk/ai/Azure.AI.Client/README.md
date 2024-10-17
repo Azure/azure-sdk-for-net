@@ -131,7 +131,7 @@ Example output from this sequence:
 Files can be uploaded and then referenced by assistants or messages. First, use the generalized upload API with a
 purpose of 'assistants' to make a file ID available:
 ```C# Snippet:UploadAgentFilesToUse
-// # Upload a file and wait for it to be processed
+// Upload a file and wait for it to be processed
 File.WriteAllText(
     path: "sample_file_for_upload.txt",
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
@@ -156,6 +156,7 @@ The vectorStore ID can then be provided to an agent upon creation. Note that fil
 FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
 fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
+// Create an agent with toolResources and process assistant run
 Response<Agent> agentResponse = await client.CreateAgentAsync(
         model: "gpt-4-1106-preview",
         name: "SDK Test Agent - Retrieval",
