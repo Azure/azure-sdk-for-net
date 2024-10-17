@@ -122,7 +122,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         }
         if (string.IsNullOrEmpty(accessToken))
         {
-            Console.WriteLine(Constants.s_no_auth_error);
+            Console.Error.WriteLine(Constants.s_no_auth_error);
             Environment.Exit(1);
         }
 
