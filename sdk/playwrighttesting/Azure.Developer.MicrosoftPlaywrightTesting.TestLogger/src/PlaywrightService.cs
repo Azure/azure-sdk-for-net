@@ -108,7 +108,7 @@ public class PlaywrightService
         // fetch Entra id access token if required
         // 1. Entra id access token has been fetched once via global functions
         // 2. Not close to expiry
-        if (!string.IsNullOrEmpty(_entraLifecycle!._entraIdAccessToken) && _entraLifecycle!.DoesEntraIdAccessTokenRequireRotation() && ServiceAuth == ServiceAuthType.EntraId)
+        if (!string.IsNullOrEmpty(_entraLifecycle!._entraIdAccessToken) && _entraLifecycle!.DoesEntraIdAccessTokenRequireRotation())
         {
             await _entraLifecycle.FetchEntraIdAccessTokenAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -243,8 +243,6 @@ public class PlaywrightService
 
     private void ValidateMptPAT()
     {
-        try
-        {
             string authToken = GetAuthToken()!;
             if (string.IsNullOrEmpty(authToken))
                 throw new Exception(Constants.s_no_auth_error);
@@ -253,17 +251,12 @@ public class PlaywrightService
             Match match = Regex.Match(ServiceEndpoint, @"wss://(?<region>[\w-]+)\.api\.(?<domain>playwright(?:-test|-int)?\.io|playwright\.microsoft\.com)/accounts/(?<workspaceId>[\w-]+)/");
             if (!match.Success)
                 throw new Exception(Constants.s_invalid_service_endpoint_error_message);
-            var serviceEndpointworkspaceId = match.Groups["workspaceId"].Value;
-            if (tokenaWorkspaceId != serviceEndpointworkspaceId)
+            var serviceEndpointWorkspaceId = match.Groups["workspaceId"].Value;
+            if (tokenaWorkspaceId != serviceEndpointWorkspaceId)
                 throw new Exception(Constants.s_workspace_mismatch_error);
             var expiry = (long)(jsonWebToken.ValidTo - new DateTime(1970, 1, 1)).TotalSeconds;
             if (expiry <= DateTimeOffset.UtcNow.ToUnixTimeSeconds())
                 throw new Exception(Constants.s_expired_mpt_pat_error);
-        }
-        catch (Exception)
-        {
-            throw;
-        }
     }
 
     private string? getServiceCompatibleOs(OSPlatform? oSPlatform)
