@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         }
 
         [TestCase]
-        [Ignore("This test case will cause errors in the pipeline. After fixing the problem, restore this test")]
         public async Task SOStateResourceApiTests()
         {
             //1.Get

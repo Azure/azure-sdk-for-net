@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         public string Issuer { get { throw null; } set { } }
         public System.Uri IssuerUri { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         public System.Uri ClientSecretUri { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -132,6 +134,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         public System.Guid? ClientId { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -224,6 +227,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         public System.Guid? ClientId { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
