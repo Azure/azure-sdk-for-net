@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageClass_Get</description>
+        /// <description>StorageClassResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageClass_Get</description>
+        /// <description>StorageClassResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancers_Get</description>
+        /// <description>LoadBalancer_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancers_Get</description>
+        /// <description>LoadBalancer_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BgpPeers_Get</description>
+        /// <description>BgpPeer_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BgpPeers_Get</description>
+        /// <description>BgpPeer_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <description>ServiceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <description>ServiceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
