@@ -156,5 +156,46 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
                 throw;
             }
         }
+        public  bool IsTimeGreaterThanCurrentPlus10Minutes(string sasUri)
+        {
+            try
+            {
+                // Parse the SAS URI
+                Uri url = new Uri(sasUri);
+                string query = url.Query;
+                var queryParams = System.Web.HttpUtility.ParseQueryString(query);
+                string expiryTime = queryParams["se"]; // 'se' is the query parameter for the expiry time
+
+                if (!string.IsNullOrEmpty(expiryTime))
+                {
+                    // Convert expiry time to a timestamp
+                    DateTime expiryDateTime = DateTime.Parse(expiryTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
+                    long timestampFromIsoString = ((DateTimeOffset)expiryDateTime).ToUnixTimeMilliseconds();
+
+                    // Get current time + 10 minutes in milliseconds
+                    long currentTimestampPlus10Minutes = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + (10 * 60 * 1000);
+
+                    bool isSasValidityGreaterThanCurrentTimePlus10Minutes = timestampFromIsoString > currentTimestampPlus10Minutes;
+
+                    if (!isSasValidityGreaterThanCurrentTimePlus10Minutes)
+                    {
+                        // Log if SAS is close to expiry
+                        _logger.Info(
+                            $"Sas rotation required because close to expiry, SasUriValidTillTime: {timestampFromIsoString}, CurrentTime: {currentTimestampPlus10Minutes}"
+                        );
+                    }
+
+                    return isSasValidityGreaterThanCurrentTimePlus10Minutes;
+                }
+
+                _logger.Info("Sas rotation required because expiry param not found.");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _logger.Info($"Sas rotation required because of {ex.Message}.");
+                return false;
+            }
+        }
     }
 }
