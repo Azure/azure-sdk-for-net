@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Fixed issue https://github.com/Azure/azure-sdk-for-net/issues/45772, handle the deserialization for `SncMode` in the `SapTableLinkedService` model.
+
 ### Other Changes
 
 ## 1.4.0 (2024-09-10)
