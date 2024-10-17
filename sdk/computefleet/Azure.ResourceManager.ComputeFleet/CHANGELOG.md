@@ -1,14 +1,18 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2024-11-01)
+
+-  GA version
 
 ### Features Added
 
-### Breaking Changes
+This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
-### Bugs Fixed
-
-### Other Changes
+    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
+    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
+    - HTTP pipeline with custom policies.
+    - Better error-handling.
+    - Support uniform telemetry across all languages.
 
 ## 1.0.0-beta.1 (2024-08-28)
 

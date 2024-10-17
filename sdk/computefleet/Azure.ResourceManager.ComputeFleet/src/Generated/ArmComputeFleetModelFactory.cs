@@ -52,19 +52,24 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="spotPriorityProfile"> Configuration Options for Spot instances in Compute Fleet. </param>
         /// <param name="regularPriorityProfile"> Configuration Options for Regular instances in Compute Fleet. </param>
         /// <param name="vmSizesProfile"> List of VM sizes supported for Compute Fleet. </param>
+        /// <param name="vmAttributes"> Attribute based Fleet. </param>
+        /// <param name="additionalLocationsLocationProfiles"> Represents the configuration for additional locations where Fleet resources may be deployed. </param>
         /// <param name="computeProfile"> Compute Profile to use for running user's workloads. </param>
         /// <param name="createdOn"> Specifies the time at which the Compute Fleet is created. </param>
         /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Compute Fleet. </param>
         /// <returns> A new <see cref="Models.ComputeFleetProperties"/> instance for mocking. </returns>
-        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = null, SpotPriorityProfile spotPriorityProfile = null, RegularPriorityProfile regularPriorityProfile = null, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = null, ComputeFleetComputeProfile computeProfile = null, DateTimeOffset? createdOn = null, string uniqueId = null)
+        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = null, SpotPriorityProfile spotPriorityProfile = null, RegularPriorityProfile regularPriorityProfile = null, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = null, VmAttributes vmAttributes = null, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = null, ComputeFleetComputeProfile computeProfile = null, DateTimeOffset? createdOn = null, string uniqueId = null)
         {
             vmSizesProfile ??= new List<ComputeFleetVmSizeProfile>();
+            additionalLocationsLocationProfiles ??= new List<LocationProfile>();
 
             return new ComputeFleetProperties(
                 provisioningState,
                 spotPriorityProfile,
                 regularPriorityProfile,
                 vmSizesProfile?.ToList(),
+                vmAttributes,
+                additionalLocationsLocationProfiles != null ? new AdditionalLocationsProfile(additionalLocationsLocationProfiles?.ToList(), serializedAdditionalRawData: null) : null,
                 computeProfile,
                 createdOn,
                 uniqueId,
