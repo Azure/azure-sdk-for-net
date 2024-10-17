@@ -16,8 +16,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Client
 {
     // Data plane generated sub-client.
-    /// <summary> The Endpoints sub-client. </summary>
-    public partial class Endpoints
+    /// <summary> The Endpoint sub-client. </summary>
+    public partial class EndpointClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://management.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -34,12 +34,12 @@ namespace Azure.AI.Client
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of Endpoints for mocking. </summary>
-        protected Endpoints()
+        /// <summary> Initializes a new instance of EndpointClient for mocking. </summary>
+        protected EndpointClient()
         {
         }
 
-        /// <summary> Initializes a new instance of Endpoints. </summary>
+        /// <summary> Initializes a new instance of EndpointClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
@@ -48,7 +48,7 @@ namespace Azure.AI.Client
         /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
         /// <param name="projectName"> The Azure AI Studio project name. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Endpoints(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, string apiVersion)
+        internal EndpointClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -98,7 +98,7 @@ namespace Azure.AI.Client
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetEndpointsAsync(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Endpoints.GetEndpoints");
+            using var scope = ClientDiagnostics.CreateScope("EndpointClient.GetEndpoints");
             scope.Start();
             try
             {
@@ -132,7 +132,7 @@ namespace Azure.AI.Client
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetEndpoints(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Endpoints.GetEndpoints");
+            using var scope = ClientDiagnostics.CreateScope("EndpointClient.GetEndpoints");
             scope.Start();
             try
             {
@@ -235,7 +235,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(connectionNameInUrl, nameof(connectionNameInUrl));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Endpoints.GetSecrets");
+            using var scope = ClientDiagnostics.CreateScope("EndpointClient.GetSecrets");
             scope.Start();
             try
             {
@@ -276,7 +276,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(connectionNameInUrl, nameof(connectionNameInUrl));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Endpoints.GetSecrets");
+            using var scope = ClientDiagnostics.CreateScope("EndpointClient.GetSecrets");
             scope.Start();
             try
             {

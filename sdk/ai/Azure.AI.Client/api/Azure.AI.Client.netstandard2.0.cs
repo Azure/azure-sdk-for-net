@@ -1,8 +1,12 @@
 namespace Azure.AI.Client
 {
-    public partial class Agents
+    public partial class AgentClient
     {
-        protected Agents() { }
+        protected AgentClient() { }
+        public AgentClient(string connectionString, Azure.Core.TokenCredential credential) { }
+        public AgentClient(string connectionString, Azure.Core.TokenCredential credential, Azure.AI.Client.AzureAIClientOptions options) { }
+        public AgentClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) { }
+        public AgentClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Client.AzureAIClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CancelRun(string threadId, string runId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Client.Models.ThreadRun> CancelRun(string threadId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -151,11 +155,9 @@ namespace Azure.AI.Client
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Client.Models.AgentThread>> UpdateThreadAsync(string threadId, Azure.AI.Client.Models.ToolResources toolResources = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateThreadAsync(string threadId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UploadFile(Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.Client.Models.OpenAIFile> UploadFile(System.BinaryData file, string filename, Azure.AI.Client.Models.OpenAIFilePurpose purpose) { throw null; }
         public virtual Azure.Response<Azure.AI.Client.Models.OpenAIFile> UploadFile(System.IO.Stream data, Azure.AI.Client.Models.OpenAIFilePurpose purpose, string filename, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Client.Models.OpenAIFile> UploadFile(string localFilePath, Azure.AI.Client.Models.OpenAIFilePurpose purpose, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Client.Models.OpenAIFile> UploadFile(string filePath, Azure.AI.Client.Models.OpenAIFilePurpose purpose, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UploadFileAsync(Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Client.Models.OpenAIFile>> UploadFileAsync(System.BinaryData file, string filename, Azure.AI.Client.Models.OpenAIFilePurpose purpose) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Client.Models.OpenAIFile>> UploadFileAsync(System.IO.Stream data, Azure.AI.Client.Models.OpenAIFilePurpose purpose, string filename, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Client.Models.OpenAIFile>> UploadFileAsync(string filePath, Azure.AI.Client.Models.OpenAIFilePurpose purpose, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -180,12 +182,14 @@ namespace Azure.AI.Client
     public partial class AzureAIClient
     {
         protected AzureAIClient() { }
+        public AzureAIClient(string connectionString, Azure.Core.TokenCredential credential) { }
+        public AzureAIClient(string connectionString, Azure.Core.TokenCredential credential, Azure.AI.Client.AzureAIClientOptions options) { }
         public AzureAIClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) { }
         public AzureAIClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Client.AzureAIClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.AI.Client.Agents GetAgentsClient(string apiVersion = "2024-07-01-preview") { throw null; }
-        public virtual Azure.AI.Client.Endpoints GetEndpointsClient(string apiVersion = "2024-07-01-preview") { throw null; }
-        public virtual Azure.AI.Client.Evaluations GetEvaluationsClient(string apiVersion = "2024-07-01-preview") { throw null; }
+        public virtual Azure.AI.Client.AgentClient GetAgentClient(string apiVersion = "2024-07-01-preview") { throw null; }
+        public virtual Azure.AI.Client.EndpointClient GetEndpointClient(string apiVersion = "2024-07-01-preview") { throw null; }
+        public virtual Azure.AI.Client.EvaluationClient GetEvaluationClient(string apiVersion = "2024-07-01-preview") { throw null; }
     }
     public partial class AzureAIClientOptions : Azure.Core.ClientOptions
     {
@@ -195,14 +199,22 @@ namespace Azure.AI.Client
             V2024_07_01_Preview = 1,
         }
     }
-    public partial class Endpoints
+    public partial class EndpointClient
     {
-        protected Endpoints() { }
+        protected EndpointClient() { }
+        public EndpointClient(string connectionString, Azure.Core.TokenCredential credential) { }
+        public EndpointClient(string connectionString, Azure.Core.TokenCredential credential, Azure.AI.Client.AzureAIClientOptions options) { }
+        public EndpointClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) { }
+        public EndpointClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Client.AzureAIClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
     }
-    public partial class Evaluations
+    public partial class EvaluationClient
     {
-        protected Evaluations() { }
+        protected EvaluationClient() { }
+        public EvaluationClient(string connectionString, Azure.Core.TokenCredential credential) { }
+        public EvaluationClient(string connectionString, Azure.Core.TokenCredential credential, Azure.AI.Client.AzureAIClientOptions options) { }
+        public EvaluationClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) { }
+        public EvaluationClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Client.AzureAIClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.Client.Models.Evaluation> Create(Azure.AI.Client.Models.Evaluation evaluation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Create(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }

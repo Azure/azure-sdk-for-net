@@ -18,8 +18,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Client
 {
     // Data plane generated sub-client.
-    /// <summary> The Agents sub-client. </summary>
-    public partial class Agents
+    /// <summary> The Agent sub-client. </summary>
+    public partial class AgentClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://management.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -36,12 +36,12 @@ namespace Azure.AI.Client
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of Agents for mocking. </summary>
-        protected Agents()
+        /// <summary> Initializes a new instance of AgentClient for mocking. </summary>
+        protected AgentClient()
         {
         }
 
-        /// <summary> Initializes a new instance of Agents. </summary>
+        /// <summary> Initializes a new instance of AgentClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
@@ -50,7 +50,7 @@ namespace Azure.AI.Client
         /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
         /// <param name="projectName"> The Azure AI Studio project name. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Agents(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, string apiVersion)
+        internal AgentClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -176,7 +176,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateAgent");
             scope.Start();
             try
             {
@@ -214,7 +214,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateAgent");
             scope.Start();
             try
             {
@@ -278,7 +278,7 @@ namespace Azure.AI.Client
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalGetAgentsAsync(int? limit, string order, string after, string before, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalGetAgents");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalGetAgents");
             scope.Start();
             try
             {
@@ -316,7 +316,7 @@ namespace Azure.AI.Client
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalGetAgents(int? limit, string order, string after, string before, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalGetAgents");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalGetAgents");
             scope.Start();
             try
             {
@@ -383,7 +383,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetAgent");
             scope.Start();
             try
             {
@@ -422,7 +422,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetAgent");
             scope.Start();
             try
             {
@@ -557,7 +557,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.UpdateAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.UpdateAgent");
             scope.Start();
             try
             {
@@ -598,7 +598,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.UpdateAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.UpdateAgent");
             scope.Start();
             try
             {
@@ -665,7 +665,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalDeleteAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalDeleteAgent");
             scope.Start();
             try
             {
@@ -704,7 +704,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalDeleteAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalDeleteAgent");
             scope.Start();
             try
             {
@@ -776,7 +776,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateThread");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateThread");
             scope.Start();
             try
             {
@@ -814,7 +814,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateThread");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateThread");
             scope.Start();
             try
             {
@@ -881,7 +881,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetThread");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetThread");
             scope.Start();
             try
             {
@@ -920,7 +920,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetThread");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetThread");
             scope.Start();
             try
             {
@@ -1003,7 +1003,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.UpdateThread");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.UpdateThread");
             scope.Start();
             try
             {
@@ -1044,7 +1044,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.UpdateThread");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.UpdateThread");
             scope.Start();
             try
             {
@@ -1111,7 +1111,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalDeleteThread");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalDeleteThread");
             scope.Start();
             try
             {
@@ -1150,7 +1150,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalDeleteThread");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalDeleteThread");
             scope.Start();
             try
             {
@@ -1247,7 +1247,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateMessage");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateMessage");
             scope.Start();
             try
             {
@@ -1288,7 +1288,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateMessage");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateMessage");
             scope.Start();
             try
             {
@@ -1370,7 +1370,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalGetMessages");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalGetMessages");
             scope.Start();
             try
             {
@@ -1414,7 +1414,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalGetMessages");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalGetMessages");
             scope.Start();
             try
             {
@@ -1487,7 +1487,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetMessage");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetMessage");
             scope.Start();
             try
             {
@@ -1528,7 +1528,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetMessage");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetMessage");
             scope.Start();
             try
             {
@@ -1607,7 +1607,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.UpdateMessage");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.UpdateMessage");
             scope.Start();
             try
             {
@@ -1650,7 +1650,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.UpdateMessage");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.UpdateMessage");
             scope.Start();
             try
             {
@@ -1831,7 +1831,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateRun");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateRun");
             scope.Start();
             try
             {
@@ -1872,7 +1872,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateRun");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateRun");
             scope.Start();
             try
             {
@@ -1951,7 +1951,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalGetRuns");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalGetRuns");
             scope.Start();
             try
             {
@@ -1994,7 +1994,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalGetRuns");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalGetRuns");
             scope.Start();
             try
             {
@@ -2067,7 +2067,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetRun");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetRun");
             scope.Start();
             try
             {
@@ -2108,7 +2108,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetRun");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetRun");
             scope.Start();
             try
             {
@@ -2187,7 +2187,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.UpdateRun");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.UpdateRun");
             scope.Start();
             try
             {
@@ -2230,7 +2230,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.UpdateRun");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.UpdateRun");
             scope.Start();
             try
             {
@@ -2313,7 +2313,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.SubmitToolOutputsToRun");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.SubmitToolOutputsToRun");
             scope.Start();
             try
             {
@@ -2356,7 +2356,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.SubmitToolOutputsToRun");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.SubmitToolOutputsToRun");
             scope.Start();
             try
             {
@@ -2429,7 +2429,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CancelRun");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CancelRun");
             scope.Start();
             try
             {
@@ -2470,7 +2470,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CancelRun");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CancelRun");
             scope.Start();
             try
             {
@@ -2636,7 +2636,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateThreadAndRun");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateThreadAndRun");
             scope.Start();
             try
             {
@@ -2674,7 +2674,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateThreadAndRun");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateThreadAndRun");
             scope.Start();
             try
             {
@@ -2753,7 +2753,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetRunStep");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetRunStep");
             scope.Start();
             try
             {
@@ -2796,7 +2796,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetRunStep");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetRunStep");
             scope.Start();
             try
             {
@@ -2881,7 +2881,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalGetRunSteps");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalGetRunSteps");
             scope.Start();
             try
             {
@@ -2926,7 +2926,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalGetRunSteps");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalGetRunSteps");
             scope.Start();
             try
             {
@@ -2981,7 +2981,7 @@ namespace Azure.AI.Client
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalListFilesAsync(string purpose, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalListFiles");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalListFiles");
             scope.Start();
             try
             {
@@ -3016,7 +3016,7 @@ namespace Azure.AI.Client
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalListFiles(string purpose, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalListFiles");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalListFiles");
             scope.Start();
             try
             {
@@ -3055,7 +3055,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.UploadFile");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.UploadFile");
             scope.Start();
             try
             {
@@ -3094,7 +3094,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.UploadFile");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.UploadFile");
             scope.Start();
             try
             {
@@ -3161,7 +3161,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalDeleteFile");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalDeleteFile");
             scope.Start();
             try
             {
@@ -3200,7 +3200,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.InternalDeleteFile");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.InternalDeleteFile");
             scope.Start();
             try
             {
@@ -3267,7 +3267,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetFile");
             scope.Start();
             try
             {
@@ -3306,7 +3306,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetFile");
             scope.Start();
             try
             {
@@ -3373,7 +3373,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetFileContent");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetFileContent");
             scope.Start();
             try
             {
@@ -3412,7 +3412,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetFileContent");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetFileContent");
             scope.Start();
             try
             {
@@ -3476,7 +3476,7 @@ namespace Azure.AI.Client
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetVectorStoresAsync(int? limit, string order, string after, string before, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetVectorStores");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetVectorStores");
             scope.Start();
             try
             {
@@ -3514,7 +3514,7 @@ namespace Azure.AI.Client
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetVectorStores(int? limit, string order, string after, string before, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetVectorStores");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetVectorStores");
             scope.Start();
             try
             {
@@ -3594,7 +3594,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateVectorStore");
             scope.Start();
             try
             {
@@ -3632,7 +3632,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateVectorStore");
             scope.Start();
             try
             {
@@ -3699,7 +3699,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetVectorStore");
             scope.Start();
             try
             {
@@ -3738,7 +3738,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetVectorStore");
             scope.Start();
             try
             {
@@ -3815,7 +3815,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.ModifyVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.ModifyVectorStore");
             scope.Start();
             try
             {
@@ -3856,7 +3856,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.ModifyVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.ModifyVectorStore");
             scope.Start();
             try
             {
@@ -3923,7 +3923,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.DeleteVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.DeleteVectorStore");
             scope.Start();
             try
             {
@@ -3962,7 +3962,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.DeleteVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.DeleteVectorStore");
             scope.Start();
             try
             {
@@ -4044,7 +4044,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetVectorStoreFiles");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetVectorStoreFiles");
             scope.Start();
             try
             {
@@ -4088,7 +4088,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetVectorStoreFiles");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetVectorStoreFiles");
             scope.Start();
             try
             {
@@ -4165,7 +4165,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateVectorStoreFile");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateVectorStoreFile");
             scope.Start();
             try
             {
@@ -4206,7 +4206,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateVectorStoreFile");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateVectorStoreFile");
             scope.Start();
             try
             {
@@ -4279,7 +4279,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetVectorStoreFile");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetVectorStoreFile");
             scope.Start();
             try
             {
@@ -4320,7 +4320,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetVectorStoreFile");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetVectorStoreFile");
             scope.Start();
             try
             {
@@ -4400,7 +4400,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.DeleteVectorStoreFile");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.DeleteVectorStoreFile");
             scope.Start();
             try
             {
@@ -4442,7 +4442,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.DeleteVectorStoreFile");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.DeleteVectorStoreFile");
             scope.Start();
             try
             {
@@ -4519,7 +4519,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateVectorStoreFileBatch");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateVectorStoreFileBatch");
             scope.Start();
             try
             {
@@ -4560,7 +4560,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CreateVectorStoreFileBatch");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CreateVectorStoreFileBatch");
             scope.Start();
             try
             {
@@ -4633,7 +4633,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetVectorStoreFileBatch");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetVectorStoreFileBatch");
             scope.Start();
             try
             {
@@ -4674,7 +4674,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetVectorStoreFileBatch");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetVectorStoreFileBatch");
             scope.Start();
             try
             {
@@ -4747,7 +4747,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CancelVectorStoreFileBatch");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CancelVectorStoreFileBatch");
             scope.Start();
             try
             {
@@ -4788,7 +4788,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.CancelVectorStoreFileBatch");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.CancelVectorStoreFileBatch");
             scope.Start();
             try
             {
@@ -4876,7 +4876,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetVectorStoreFileBatchFiles");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetVectorStoreFileBatchFiles");
             scope.Start();
             try
             {
@@ -4922,7 +4922,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
-            using var scope = ClientDiagnostics.CreateScope("Agents.GetVectorStoreFileBatchFiles");
+            using var scope = ClientDiagnostics.CreateScope("AgentClient.GetVectorStoreFileBatchFiles");
             scope.Start();
             try
             {

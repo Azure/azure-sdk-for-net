@@ -19,12 +19,8 @@ public partial class Sample_Agent_Basics
     public async Task BasicExample()
     {
         #region Snippet:OverviewCreateClient
-        Agents client = new AzureAIClient(
-            endpoint: new Uri(Environment.GetEnvironmentVariable("AZURE_AI_ENDPOINT")),
-            subscriptionId: Environment.GetEnvironmentVariable("AZURE_AI_SUBSCRIPTION_ID"),
-            resourceGroupName: Environment.GetEnvironmentVariable("AZURE_AI_RESOURCE_GROUP_NAME"),
-            projectName: Environment.GetEnvironmentVariable("AZURE_AI_PROJECT_NAME"),
-            credential: new DefaultAzureCredential()).GetAgentsClient();
+        var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
+        AgentClient client = new AgentClient(connectionString, new DefaultAzureCredential());
         #endregion
 
         // Step 1: Create an agent

@@ -32,12 +32,8 @@ creating, running, and using assistants and threads.
 
 To get started, create an `AssistantsClient`:
 ```C# Snippet:OverviewCreateClient
-Agents client = new AzureAIClient(
-    endpoint: new Uri(Environment.GetEnvironmentVariable("AZURE_AI_ENDPOINT")),
-    subscriptionId: Environment.GetEnvironmentVariable("AZURE_AI_SUBSCRIPTION_ID"),
-    resourceGroupName: Environment.GetEnvironmentVariable("AZURE_AI_RESOURCE_GROUP_NAME"),
-    projectName: Environment.GetEnvironmentVariable("AZURE_AI_PROJECT_NAME"),
-    credential: new DefaultAzureCredential()).GetAgentsClient();
+var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
+AgentClient client = new AgentClient(connectionString, new DefaultAzureCredential());
 ```
 
 > **NOTE**: The Assistants API should always be used from a trusted device. Because the same authentication mechanism for running threads also allows changing persistent resources like Assistant instructions, a malicious user could extract an API key and modify Assistant behavior for other customers.

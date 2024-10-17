@@ -16,8 +16,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Client
 {
     // Data plane generated sub-client.
-    /// <summary> The Evaluations sub-client. </summary>
-    public partial class Evaluations
+    /// <summary> The Evaluation sub-client. </summary>
+    public partial class EvaluationClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://management.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -34,12 +34,12 @@ namespace Azure.AI.Client
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of Evaluations for mocking. </summary>
-        protected Evaluations()
+        /// <summary> Initializes a new instance of EvaluationClient for mocking. </summary>
+        protected EvaluationClient()
         {
         }
 
-        /// <summary> Initializes a new instance of Evaluations. </summary>
+        /// <summary> Initializes a new instance of EvaluationClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
@@ -48,7 +48,7 @@ namespace Azure.AI.Client
         /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
         /// <param name="projectName"> The Azure AI Studio project name. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Evaluations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, string apiVersion)
+        internal EvaluationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -112,7 +112,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Evaluations.Create");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.Create");
             scope.Start();
             try
             {
@@ -150,7 +150,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Evaluations.Create");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.Create");
             scope.Start();
             try
             {
@@ -186,7 +186,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Evaluations.Update");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.Update");
             scope.Start();
             try
             {
@@ -222,7 +222,7 @@ namespace Azure.AI.Client
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Evaluations.Update");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.Update");
             scope.Start();
             try
             {
@@ -289,7 +289,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("Evaluations.GetEvaluation");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.GetEvaluation");
             scope.Start();
             try
             {
@@ -328,7 +328,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("Evaluations.GetEvaluation");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.GetEvaluation");
             scope.Start();
             try
             {
@@ -394,7 +394,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Evaluations.CreateSchedule");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.CreateSchedule");
             scope.Start();
             try
             {
@@ -432,7 +432,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Evaluations.CreateSchedule");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.CreateSchedule");
             scope.Start();
             try
             {
@@ -499,7 +499,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("Evaluations.GetSchedule");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.GetSchedule");
             scope.Start();
             try
             {
@@ -538,7 +538,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("Evaluations.GetSchedule");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.GetSchedule");
             scope.Start();
             try
             {
@@ -573,7 +573,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("Evaluations.DeleteSchedule");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.DeleteSchedule");
             scope.Start();
             try
             {
@@ -608,7 +608,7 @@ namespace Azure.AI.Client
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("Evaluations.DeleteSchedule");
+            using var scope = ClientDiagnostics.CreateScope("EvaluationClient.DeleteSchedule");
             scope.Start();
             try
             {
@@ -632,7 +632,7 @@ namespace Azure.AI.Client
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEvaluationsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Evaluation.DeserializeEvaluation(e), ClientDiagnostics, _pipeline, "Evaluations.GetEvaluations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Evaluation.DeserializeEvaluation(e), ClientDiagnostics, _pipeline, "EvaluationClient.GetEvaluations", "value", "nextLink", context);
         }
 
         /// <summary> List evaluations. </summary>
@@ -645,7 +645,7 @@ namespace Azure.AI.Client
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEvaluationsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Evaluation.DeserializeEvaluation(e), ClientDiagnostics, _pipeline, "Evaluations.GetEvaluations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Evaluation.DeserializeEvaluation(e), ClientDiagnostics, _pipeline, "EvaluationClient.GetEvaluations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -673,7 +673,7 @@ namespace Azure.AI.Client
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEvaluationsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Evaluations.GetEvaluations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationClient.GetEvaluations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -701,7 +701,7 @@ namespace Azure.AI.Client
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEvaluationsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Evaluations.GetEvaluations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationClient.GetEvaluations", "value", "nextLink", context);
         }
 
         /// <summary> List evaluation schedules. </summary>
@@ -714,7 +714,7 @@ namespace Azure.AI.Client
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EvaluationSchedule.DeserializeEvaluationSchedule(e), ClientDiagnostics, _pipeline, "Evaluations.GetSchedules", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EvaluationSchedule.DeserializeEvaluationSchedule(e), ClientDiagnostics, _pipeline, "EvaluationClient.GetSchedules", "value", "nextLink", context);
         }
 
         /// <summary> List evaluation schedules. </summary>
@@ -727,7 +727,7 @@ namespace Azure.AI.Client
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EvaluationSchedule.DeserializeEvaluationSchedule(e), ClientDiagnostics, _pipeline, "Evaluations.GetSchedules", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EvaluationSchedule.DeserializeEvaluationSchedule(e), ClientDiagnostics, _pipeline, "EvaluationClient.GetSchedules", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -755,7 +755,7 @@ namespace Azure.AI.Client
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Evaluations.GetSchedules", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationClient.GetSchedules", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -783,7 +783,7 @@ namespace Azure.AI.Client
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Evaluations.GetSchedules", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationClient.GetSchedules", "value", "nextLink", context);
         }
 
         /// <summary> List evaluations under a schedule. </summary>
@@ -801,7 +801,7 @@ namespace Azure.AI.Client
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScheduleEvaluationsRequest(id, maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScheduleEvaluationsNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Evaluation.DeserializeEvaluation(e), ClientDiagnostics, _pipeline, "Evaluations.GetScheduleEvaluations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Evaluation.DeserializeEvaluation(e), ClientDiagnostics, _pipeline, "EvaluationClient.GetScheduleEvaluations", "value", "nextLink", context);
         }
 
         /// <summary> List evaluations under a schedule. </summary>
@@ -819,7 +819,7 @@ namespace Azure.AI.Client
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScheduleEvaluationsRequest(id, maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScheduleEvaluationsNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Evaluation.DeserializeEvaluation(e), ClientDiagnostics, _pipeline, "Evaluations.GetScheduleEvaluations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Evaluation.DeserializeEvaluation(e), ClientDiagnostics, _pipeline, "EvaluationClient.GetScheduleEvaluations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -852,7 +852,7 @@ namespace Azure.AI.Client
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScheduleEvaluationsRequest(id, maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScheduleEvaluationsNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Evaluations.GetScheduleEvaluations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationClient.GetScheduleEvaluations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -885,7 +885,7 @@ namespace Azure.AI.Client
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScheduleEvaluationsRequest(id, maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScheduleEvaluationsNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Evaluations.GetScheduleEvaluations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationClient.GetScheduleEvaluations", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)

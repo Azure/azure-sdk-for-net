@@ -18,12 +18,8 @@ public partial class Sample_Agent_FileSearch
     [Test]
     public async Task FilesSearchExample()
     {
-        Agents client = new AzureAIClient(
-            endpoint: new Uri(Environment.GetEnvironmentVariable("AZURE_AI_ENDPOINT")),
-            subscriptionId: Environment.GetEnvironmentVariable("AZURE_AI_SUBSCRIPTION_ID"),
-            resourceGroupName: Environment.GetEnvironmentVariable("AZURE_AI_RESOURCE_GROUP_NAME"),
-            projectName: Environment.GetEnvironmentVariable("AZURE_AI_PROJECT_NAME"),
-            credential: new DefaultAzureCredential()).GetAgentsClient();
+        var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
+        AgentClient client = new AgentClient(connectionString, new DefaultAzureCredential());
 
         #region Snippet:UploadAgentFilesToUse
         // # Upload a file and wait for it to be processed

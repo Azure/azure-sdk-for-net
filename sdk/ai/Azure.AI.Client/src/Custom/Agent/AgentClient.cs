@@ -9,12 +9,82 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Client.Models;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.Client
 {
-    public partial class Agents
+    /// <summary> The Agents sub-client. </summary>
+    [CodeGenClient("Agents")]
+    public partial class AgentClient
     {
+        /// <summary> Initializes a new instance of AzureAIClient. </summary>
+        /// <param name="connectionString">The Azure AI Studio project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionString"/> </exception>
+        public AgentClient(string connectionString, TokenCredential credential) : this(connectionString, credential, new AzureAIClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of AzureAIClient.
+        /// </summary>
+        /// <param name="connectionString">The Azure AI Studio project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionString"/> is an empty string. </exception>
+        public AgentClient(string connectionString, TokenCredential credential, AzureAIClientOptions options)
+             : this(new Uri(ClientHelper.ParseConnectionString(connectionString, "endpoint")),
+                  ClientHelper.ParseConnectionString(connectionString, "subscriptionId"),
+                  ClientHelper.ParseConnectionString(connectionString, "resourceGroupName"),
+                  ClientHelper.ParseConnectionString(connectionString, "projectName"),
+                  credential,
+                  options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of AzureAIClient. </summary>
+        /// <param name="endpoint"> The Azure AI Studio project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
+        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
+        /// <param name="projectName"> The Azure AI Studio project name. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public AgentClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential) : this(endpoint, subscriptionId, resourceGroupName, projectName, credential, new AzureAIClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of AzureAIClient. </summary>
+        /// <param name="endpoint"> The Azure AI Studio project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
+        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
+        /// <param name="projectName"> The Azure AI Studio project name. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public AgentClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential, AzureAIClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AzureAIClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
+            _projectName = projectName;
+            _apiVersion = options.Version;
+        }
+
         /*
         * CUSTOM CODE DESCRIPTION:
         *
@@ -116,17 +186,18 @@ namespace Azure.AI.Client
         /// <summary>
         /// Uploads a file from a local file path accessible to <see cref="System.IO.File"/>.
         /// </summary>
-        /// <param name="localFilePath"> The local file path. </param>
+        /// <param name="filePath"> The local file path. </param>
         /// <param name="purpose"> The intended purpose of the uploaded file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<OpenAIFile> UploadFile(
-            string localFilePath,
+            string filePath,
             OpenAIFilePurpose purpose,
             CancellationToken cancellationToken = default)
         {
-            FileInfo localFileInfo = new(localFilePath);
-            using FileStream localFileStream = localFileInfo.OpenRead();
-            return UploadFile(localFileStream, purpose, localFileInfo.Name, cancellationToken);
+            Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
+
+            using FileStream stream = File.OpenRead(filePath);
+            return UploadFile(stream, purpose, filePath, cancellationToken);
         }
 
         /// <summary>
@@ -144,44 +215,6 @@ namespace Azure.AI.Client
 
             using FileStream stream = File.OpenRead(filePath);
             return await UploadFileAsync(stream, purpose, filePath, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Uploads a file that can be used across various operations. </summary>
-        /// <remarks> Individual files can be up to 512 MB, and the size of all files uploaded by one organization can be up to 100 GB. </remarks>
-        /// <param name="file"> The file bytes to upload. </param>
-        /// <param name="filename">
-        ///     The filename associated with the file bytes. The filename's extension (for example: .json) will be used to
-        ///     validate the file format. The request may fail if the filename's extension and the actual file format do
-        ///     not match.
-        /// </param>
-        /// <param name="purpose"> The intended purpose of the uploaded file. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="file"/> or <paramref name="filename"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filename"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Task<Response<OpenAIFile>> UploadFileAsync(BinaryData file, string filename, OpenAIFilePurpose purpose)
-        {
-            Argument.AssertNotNull(file, nameof(file));
-            Argument.AssertNotNullOrEmpty(filename, nameof(filename));
-
-            return UploadFileAsync(file?.ToStream(), purpose, filename);
-        }
-
-        /// <summary> Uploads a file that can be used across various operations. </summary>
-        /// <remarks> Individual files can be up to 512 MB, and the size of all files uploaded by one organization can be up to 100 GB. </remarks>
-        /// <param name="file"> The file bytes to upload. </param>
-        /// <param name="filename">
-        ///     The filename associated with the file bytes. The filename's extension (for example: .json) will be used to
-        ///     validate the file format. The request may fail if the filename's extension and the actual file format do
-        ///     not match.
-        /// </param>
-        /// <param name="purpose"> The intended purpose of the uploaded file. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="file"/> or <paramref name="filename"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filename"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OpenAIFile> UploadFile(BinaryData file, string filename, OpenAIFilePurpose purpose)
-        {
-            Argument.AssertNotNull(file, nameof(file));
-            Argument.AssertNotNullOrEmpty(filename, nameof(filename));
-
-            return UploadFile(file?.ToStream(), purpose, filename);
         }
 
         /// <summary> Uploads a file for use by other operations. </summary>
