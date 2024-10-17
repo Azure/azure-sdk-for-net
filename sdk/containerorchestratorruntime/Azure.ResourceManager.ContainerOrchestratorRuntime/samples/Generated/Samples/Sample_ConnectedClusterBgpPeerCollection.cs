@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task Get_BgpPeersGet()
         {
             // Generated from example definition: 2024-03-01/BgpPeers_Get.json
-            // this example is just showing the usage of "BgpPeers_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "BgpPeer_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task Exists_BgpPeersGet()
         {
             // Generated from example definition: 2024-03-01/BgpPeers_Get.json
-            // this example is just showing the usage of "BgpPeers_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "BgpPeer_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task GetIfExists_BgpPeersGet()
         {
             // Generated from example definition: 2024-03-01/BgpPeers_Get.json
-            // this example is just showing the usage of "BgpPeers_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "BgpPeer_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task CreateOrUpdate_BgpPeersCreateOrUpdate()
         {
             // Generated from example definition: 2024-03-01/BgpPeers_CreateOrUpdate.json
-            // this example is just showing the usage of "BgpPeers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "BgpPeer_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
