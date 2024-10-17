@@ -3,7 +3,6 @@
 
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using System;
-using PlaywrightConstants = Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility.Constants;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
 
@@ -23,22 +22,22 @@ internal class CiInfoProvider
     internal static string GetCIProvider()
     {
         if (IsGitHubActions())
-            return PlaywrightConstants.GITHUB_ACTIONS;
+            return CIConstants.s_gITHUB_ACTIONS;
         else if (IsAzureDevOps())
-            return PlaywrightConstants.AZURE_DEVOPS;
+            return CIConstants.s_aZURE_DEVOPS;
         else
-            return PlaywrightConstants.DEFAULT;
+            return CIConstants.s_dEFAULT;
     }
 
     internal static CIInfo GetCIInfo()
     {
         string ciProvider = GetCIProvider();
-        if (ciProvider == PlaywrightConstants.GITHUB_ACTIONS)
+        if (ciProvider == CIConstants.s_gITHUB_ACTIONS)
         {
             // Logic to get GitHub Actions CIInfo
             return new CIInfo
             {
-                Provider = PlaywrightConstants.GITHUB_ACTIONS,
+                Provider = CIConstants.s_gITHUB_ACTIONS,
                 Repo = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY_ID"),
                 Branch = GetGHBranchName(),
                 Author = Environment.GetEnvironmentVariable("GITHUB_ACTOR"),
@@ -53,12 +52,12 @@ internal class CiInfoProvider
                 JobId = Environment.GetEnvironmentVariable("GITHUB_JOB")
             };
         }
-        else if (ciProvider == PlaywrightConstants.AZURE_DEVOPS)
+        else if (ciProvider == CIConstants.s_aZURE_DEVOPS)
         {
             // Logic to get Azure DevOps CIInfo
             return new CIInfo
             {
-                Provider = PlaywrightConstants.AZURE_DEVOPS,
+                Provider = CIConstants.s_aZURE_DEVOPS,
                 Repo = Environment.GetEnvironmentVariable("BUILD_REPOSITORY_ID"),
                 Branch = Environment.GetEnvironmentVariable("BUILD_SOURCEBRANCH"),
                 Author = Environment.GetEnvironmentVariable("BUILD_REQUESTEDFOR"),
@@ -78,7 +77,7 @@ internal class CiInfoProvider
             // Handle unsupported CI provider
             return new CIInfo
             {
-                Provider = PlaywrightConstants.DEFAULT,
+                Provider = CIConstants.s_dEFAULT,
                 Repo = Environment.GetEnvironmentVariable("REPO"),
                 Branch = Environment.GetEnvironmentVariable("BRANCH"),
                 Author = Environment.GetEnvironmentVariable("AUTHOR"),

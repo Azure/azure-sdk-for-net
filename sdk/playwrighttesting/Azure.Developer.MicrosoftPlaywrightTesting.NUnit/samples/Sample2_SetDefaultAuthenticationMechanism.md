@@ -24,7 +24,7 @@ public class PlaywrightServiceSetup : PlaywrightServiceNUnit {};
 <RunSettings>
     <TestRunParameters>
         <!-- Set the service auth type as AccessToken -->
-        <Parameter name="ServiceAuth" value="AccessToken" />
+        <Parameter name="ServiceAuthType" value="AccessToken" />
     </TestRunParameters>
 </RunSettings>
 ```
