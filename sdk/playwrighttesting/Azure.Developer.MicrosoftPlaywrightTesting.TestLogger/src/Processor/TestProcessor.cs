@@ -10,6 +10,7 @@ using System.Text.Json;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
 using Azure.Storage.Blobs;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
@@ -152,6 +153,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                         {
                             if (RawTestResultsMap.TryGetValue(testResult.TestExecutionId!, out RawTestResult? rawResult) && rawResult != null)
                             {
+                                // Renew the SAS URI if needed
+                                var reporterUtils = new ReporterUtils();
+                                if (sasUri == null || !reporterUtils.IsTimeGreaterThanCurrentPlus10Minutes(sasUri.Uri))
+                                {
+                                    sasUri = _serviceClient.GetTestRunResultsUri(); // Create new SAS URI
+                                    _logger.Info($"Fetched SAS URI with validity: {sasUri?.ExpiresAt} and access: {sasUri?.AccessLevel}.");
+                                }
+
                                 // Upload rawResult to blob storage using sasUri
                                 var rawTestResultJson = JsonSerializer.Serialize(rawResult);
                                 var filePath = $"{testResult.TestExecutionId}/rawTestResult.json";
@@ -159,14 +168,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                             }
                             else
                             {
-                                _logger.Info("Couldnt find rawResult for Id: " + testResult.TestExecutionId);
+                                _logger.Info("Couldn't find rawResult for Id: " + testResult.TestExecutionId);
                             }
                         }
                         _logger.Info("Successfully uploaded raw test results");
                     }
                     else
                     {
-                        _logger.Error("Sas Uri is empty");
+                        _logger.Error("SAS URI is empty");
                     }
                 }
                 catch (Exception ex)
@@ -177,7 +186,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             EndTestRun(e);
         }
 
-        #region Test Processor Helper Methods
+  #region Test Processor Helper Methods
         private void EndTestRun(TestRunCompleteEventArgs e)
         {
             if (_cloudRunMetadata.EnableResultPublish && !FatalTestExecution)
