@@ -6,12 +6,6 @@
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.2 (2023-02-22)
 
 ### Features Added
