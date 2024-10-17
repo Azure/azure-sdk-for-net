@@ -10,7 +10,10 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model
         internal string? WorkspaceId { get; set; }
         internal string? RunId { get; set; }
         internal Uri? BaseUri { get; set; }
-        internal string? PortalUrl { get; set; }
+        internal string? PortalUrl
+        {
+            get { return ReporterConstants.s_portalBaseUrl + Uri.EscapeDataString(WorkspaceId) + ReporterConstants.s_reportingRoute + Uri.EscapeDataString(RunId); }
+        }
         internal bool EnableResultPublish { get; set; } = true;
         internal bool EnableGithubSummary { get; set; } = true;
         internal DateTime TestRunStartTime { get; set; }

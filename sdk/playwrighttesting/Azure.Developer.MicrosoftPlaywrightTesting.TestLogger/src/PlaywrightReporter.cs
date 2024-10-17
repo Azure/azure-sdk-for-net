@@ -16,11 +16,11 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor;
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
 [FriendlyName("microsoft-playwright-testing")]
-[ExtensionUri("logger://Microsoft/Playwright/ServiceLogger/v1")]
+[ExtensionUri("logger://MicrosoftPlaywrightTesting/Logger/v1")]
 internal class PlaywrightReporter : ITestLoggerWithParameters
 {
     private Dictionary<string, string?>? _parametersDictionary;
-    private PlaywrightService? playwrightService;
+    private PlaywrightService? _playwrightService;
     private readonly ILogger _logger;
     private TestProcessor? _testProcessor;
 
@@ -62,7 +62,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
     internal void TestRunCompleteHandler(object? sender, TestRunCompleteEventArgs e)
     {
         _testProcessor?.TestRunCompleteHandler(sender, e);
-        playwrightService?.Cleanup();
+        _playwrightService?.Cleanup();
     }
     #endregion
 
@@ -107,9 +107,9 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         }
 
         // setup entra rotation handlers
-        playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.ServiceAuth, null, playwrightServiceSettings.AzureTokenCredential);
+        _playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.ServiceAuth, null, playwrightServiceSettings.AzureTokenCredential);
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-        playwrightService.InitializeAsync().GetAwaiter().GetResult();
+        _playwrightService.InitializeAsync().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
 
         var cloudRunId = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
@@ -130,14 +130,12 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         var reporterUtils = new ReporterUtils();
         TokenDetails tokenDetails = reporterUtils.ParseWorkspaceIdFromAccessToken(jsonWebTokenHandler: null, accessToken: accessToken);
         var workspaceId = tokenDetails.aid;
-        var portalUri = ReporterConstants.s_portalBaseUrl + workspaceId + ReporterConstants.s_reportingRoute + cloudRunId;
 
         var cloudRunMetadata = new CloudRunMetadata
         {
             RunId = cloudRunId,
             WorkspaceId = workspaceId,
             BaseUri = baseUri,
-            PortalUrl = portalUri,
             EnableResultPublish = _enableResultPublish,
             EnableGithubSummary = _enableGitHubSummary,
             TestRunStartTime = DateTime.UtcNow,

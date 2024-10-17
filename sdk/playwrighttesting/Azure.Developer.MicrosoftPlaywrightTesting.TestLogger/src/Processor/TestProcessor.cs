@@ -78,7 +78,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 }
                 _testRunShard = testShard;
                 _logger.Info("Successfully patched test run shard - init");
-                _consoleWriter.WriteLine($"\nInitializing reporting for this test run. You can view the results at: {Uri.EscapeUriString(_cloudRunMetadata.PortalUrl!)}");
+                _consoleWriter.WriteLine($"\nInitializing reporting for this test run. You can view the results at: {_cloudRunMetadata.PortalUrl!}");
             }
             catch (Exception ex)
             {
@@ -201,7 +201,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 {
                     _logger.Error($"Failed to end test run shard: {ex}");
                 }
-                _consoleWriter.WriteLine($"\nTest Report: {Uri.EscapeUriString(_cloudRunMetadata.PortalUrl!)}");
+                _consoleWriter.WriteLine($"\nTest Report: {_cloudRunMetadata.PortalUrl!}");
                 if (_cloudRunMetadata.EnableGithubSummary)
                 {
                     GenerateMarkdownSummary();
