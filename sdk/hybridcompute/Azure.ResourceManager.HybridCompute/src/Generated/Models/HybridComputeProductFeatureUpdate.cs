@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> Describes the Run Commands List Result. </summary>
-    internal partial class MachineRunCommandsListResult
+    /// <summary> Product Feature. </summary>
+    public partial class HybridComputeProductFeatureUpdate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MachineRunCommandsListResult"/>. </summary>
-        internal MachineRunCommandsListResult()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeProductFeatureUpdate"/>. </summary>
+        public HybridComputeProductFeatureUpdate()
         {
-            Value = new ChangeTrackingList<MachineRunCommandData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineRunCommandsListResult"/>. </summary>
-        /// <param name="value"> The list of run commands. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of run commands. Call ListNext() with this to fetch the next page of run commands. </param>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeProductFeatureUpdate"/>. </summary>
+        /// <param name="name"> Product feature name. </param>
+        /// <param name="subscriptionStatus"> Indicates the new status of the product feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineRunCommandsListResult(IReadOnlyList<MachineRunCommandData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridComputeProductFeatureUpdate(string name, LicenseProfileSubscriptionStatusUpdate? subscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Name = name;
+            SubscriptionStatus = subscriptionStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of run commands. </summary>
-        public IReadOnlyList<MachineRunCommandData> Value { get; }
-        /// <summary> The uri to fetch the next page of run commands. Call ListNext() with this to fetch the next page of run commands. </summary>
-        public string NextLink { get; }
+        /// <summary> Product feature name. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
+        /// <summary> Indicates the new status of the product feature. </summary>
+        [WirePath("subscriptionStatus")]
+        public LicenseProfileSubscriptionStatusUpdate? SubscriptionStatus { get; set; }
     }
 }

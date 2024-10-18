@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> The List license operation response. </summary>
-    internal partial class GatewaysListResult
+    /// <summary> The List hybrid machine license profile operation response. </summary>
+    internal partial class LicenseProfilesListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +46,35 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GatewaysListResult"/>. </summary>
-        /// <param name="value"> The list of Gateways. </param>
+        /// <summary> Initializes a new instance of <see cref="LicenseProfilesListResult"/>. </summary>
+        /// <param name="value"> The list of license profiles. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal GatewaysListResult(IEnumerable<HybridComputeGatewayData> value)
+        internal LicenseProfilesListResult(IEnumerable<HybridComputeLicenseProfileData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GatewaysListResult"/>. </summary>
-        /// <param name="value"> The list of Gateways. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of Gateways. Call ListNext() with this URI to fetch the next page of Gateways. </param>
+        /// <summary> Initializes a new instance of <see cref="LicenseProfilesListResult"/>. </summary>
+        /// <param name="value"> The list of license profiles. </param>
+        /// <param name="nextLink"> The URI to fetch the next page of Machines. Call ListNext() with this URI to fetch the next page of license profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GatewaysListResult(IReadOnlyList<HybridComputeGatewayData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LicenseProfilesListResult(IReadOnlyList<HybridComputeLicenseProfileData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GatewaysListResult"/> for deserialization. </summary>
-        internal GatewaysListResult()
+        /// <summary> Initializes a new instance of <see cref="LicenseProfilesListResult"/> for deserialization. </summary>
+        internal LicenseProfilesListResult()
         {
         }
 
-        /// <summary> The list of Gateways. </summary>
-        public IReadOnlyList<HybridComputeGatewayData> Value { get; }
-        /// <summary> The URI to fetch the next page of Gateways. Call ListNext() with this URI to fetch the next page of Gateways. </summary>
+        /// <summary> The list of license profiles. </summary>
+        public IReadOnlyList<HybridComputeLicenseProfileData> Value { get; }
+        /// <summary> The URI to fetch the next page of Machines. Call ListNext() with this URI to fetch the next page of license profile. </summary>
         public string NextLink { get; }
     }
 }
