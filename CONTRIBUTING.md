@@ -499,6 +499,9 @@ Once all of the above steps are met, the following process will be followed:
 - When you are seeking to understand something rather than request corrections, it is suggested to use language such as "I'm curious ..." as a prefix to comments.
 - For comments that are just optional suggestions or are explicitly non-blocking, prefix them with "nit: " or "non-blocking: ".
 - Avoid marking a PR as "Request Changes" ![2022_01_27_08_33_07_Changes_for_discussion_to_the_PR_Template_by_christothes_Pull_Request_26631_](https://user-images.githubusercontent.com/1279263/151379844-b9babb22-b0fe-4b9c-b749-eb7488a38d84.png) unless you have serious concerns that should block the PR from merging.
+- When you are seeking to understand something rather than request corrections, it is suggested to use language such as "I'm curious ..." as a prefix to comments.
+- For comments that are just optional suggestions or are explicitly non-blocking, prefix them with "nit: " or "non-blocking: ".
+- Avoid marking a PR as "Request Changes" ![2022_01_27_08_33_07_Changes_for_discussion_to_the_PR_Template_by_christothes_Pull_Request_26631_](https://user-images.githubusercontent.com/1279263/151379844-b9babb22-b0fe-4b9c-b749-eb7488a38d84.png) unless you have serious concerns that should block the PR from merging.
 - When to mark a PR as "Approved"
   - You feel confident that the code meets a high quality bar, has adequate test coverage, is ready to merge.
   - You have left comments that are uncontroversial and there is a shared understanding with the author that the comments can be addressed or resolved prior to being merged without significant discussion or significant change to the design or approach.
@@ -563,3 +566,82 @@ Samples may take the following categories of dependencies:
 - **Tiered licensed**: Offerings that enable readers to use the license tier that corresponds to their characteristics. For example, tiers may be available for students, hobbyists, or companies with defined revenue  thresholds. For offerings with tiered licenses, strive to limit our use in tutorials to the features available in the lowest tier. This policy enables the widest audience for the article. [Docker](https://www.docker.com/), [IdentityServer](https://duendesoftware.com/products/identityserver), [ImageSharp](https://sixlabors.com/products/imagesharp/), and [Visual Studio](https://visualstudio.com) are examples of this license type.
 
 In general, we prefer taking dependencies on licensed components in the order of the listed categories. In cases where the category may not be well known, we'll document the category so that readers understand the choice that they're making by using that dependency.
+
+## Setting up the development environment
+
+To set up the development environment, follow these steps:
+
+1. Clone the repository to your local machine:
+   ```bash
+   git clone https://github.com/Azure/azure-sdk-for-net.git
+   cd azure-sdk-for-net
+   ```
+
+2. Install the required tools and dependencies:
+   - Visual Studio 2022 (Community or higher) with .NET cross-platform development workloads
+   - .NET 8.0.100 SDK (or a higher version within the 8.0.*** band)
+   - Git
+   - PowerShell (version 6 or higher)
+   - NodeJS (16.x.x)
+
+3. Restore the required NuGet packages:
+   ```bash
+   dotnet restore
+   ```
+
+4. Build the solution:
+   ```bash
+   dotnet build build.proj
+   ```
+
+## Running tests
+
+To run tests, follow these steps:
+
+1. Open a Developer Command Prompt.
+
+2. Navigate to the service directory you want to test, e.g., `sdk\eventhub`:
+   ```bash
+   cd sdk\eventhub
+   ```
+
+3. Run the tests:
+   ```bash
+   dotnet test --filter TestCategory!=Live
+   ```
+
+4. To run tests against the latest versions of the client libraries, use the `UseProjectReferenceToAzureClients` property:
+   ```bash
+   dotnet test eng\service.proj /p:ServiceDirectory=eventhub --filter TestCategory!=Live /p:UseProjectReferenceToAzureClients=true
+   ```
+
+5. To enable code coverage reporting, pass the `/p:CollectCoverage=true` property:
+   ```bash
+   dotnet tool restore
+   dotnet test /p:CollectCoverage=true
+   ```
+
+6. To run live tests, create live test resources and set the `AZURE_TEST_MODE` environment variable to `Live`:
+   ```bash
+   set AZURE_TEST_MODE=Live
+   dotnet test
+   ```
+
+7. To update public API listings after making changes to the public API, run the `Export-API.ps1` script:
+   ```bash
+   eng\scripts\Export-API.ps1 tables
+   ```
+
+8. To update sample snippets, run the `Update-Snippets.ps1` script:
+   ```bash
+   eng\scripts\Update-Snippets.ps1 keyvault
+   ```
+
+9. To run the `Export-API.ps1` and `Update-Snippets.ps1` scripts simultaneously as part of the build, set the `UpdateSourceOnBuild` property to `true`:
+   ```bash
+   dotnet build eng\service.proj /p:ServiceDirectory=eventhub /p:UpdateSourceOnBuild=true
+   ```
+
+10. To enforce API compatibility between versions, provide a `ApiCompatVersion` property in the project file and run the `ApiCompat` tool as part of the build process.
+
+For more information on setting up and running tests, refer to the [Test Framework documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework/README.md) and the [Live Test Resources documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/TestResources/README.md).
