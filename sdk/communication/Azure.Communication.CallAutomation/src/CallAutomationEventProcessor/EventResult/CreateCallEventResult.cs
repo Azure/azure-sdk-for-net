@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
         {
             IsSuccess = isSuccess;
             SuccessResult = successResult;
-            FailureResult = failureResult;
+            FailureResult= failureResult;
         }
     }
 }

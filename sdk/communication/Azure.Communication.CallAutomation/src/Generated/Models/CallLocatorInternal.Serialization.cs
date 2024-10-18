@@ -25,6 +25,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("serverCallId"u8);
                 writer.WriteStringValue(ServerCallId);
             }
+            if (Optional.IsDefined(RoomId))
+            {
+                writer.WritePropertyName("roomId"u8);
+                writer.WriteStringValue(RoomId);
+            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
