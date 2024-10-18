@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// VMCategories defined for Azure VMs.
     /// See: https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview?tabs=breakdownseries%2Cgeneralsizelist%2Ccomputesizelist%2Cmemorysizelist%2Cstoragesizelist%2Cgpusizelist%2Cfpgasizelist%2Chpcsizelist#general-purpose
     /// </summary>
-    public readonly partial struct VmCategory : IEquatable<VmCategory>
+    public readonly partial struct ComputeFleetVmCategory : IEquatable<ComputeFleetVmCategory>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="VmCategory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmCategory"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VmCategory(string value)
+        public ComputeFleetVmCategory(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -34,44 +34,44 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         private const string HighPerformanceComputeValue = "HighPerformanceCompute";
 
         /// <summary> General purpose VM sizes provide balanced CPU-to-memory ratio. Ideal for testing and development, small to medium databases, and low to medium traffic web servers. </summary>
-        public static VmCategory GeneralPurpose { get; } = new VmCategory(GeneralPurposeValue);
+        public static ComputeFleetVmCategory GeneralPurpose { get; } = new ComputeFleetVmCategory(GeneralPurposeValue);
         /// <summary> Compute optimized VM sizes have a high CPU-to-memory ratio. These sizes are good for medium traffic web servers, network appliances, batch processes, and application servers. </summary>
-        public static VmCategory ComputeOptimized { get; } = new VmCategory(ComputeOptimizedValue);
+        public static ComputeFleetVmCategory ComputeOptimized { get; } = new ComputeFleetVmCategory(ComputeOptimizedValue);
         /// <summary> Memory optimized VM sizes offer a high memory-to-CPU ratio that is great for relational database servers, medium to large caches, and in-memory analytics. </summary>
-        public static VmCategory MemoryOptimized { get; } = new VmCategory(MemoryOptimizedValue);
+        public static ComputeFleetVmCategory MemoryOptimized { get; } = new ComputeFleetVmCategory(MemoryOptimizedValue);
         /// <summary>
         /// Storage optimized virtual machine (VM) sizes offer high disk throughput and IO, and are ideal for Big Data, SQL, NoSQL databases, data warehousing, and large transactional databases.
         /// Examples include Cassandra, MongoDB, Cloudera, and Redis.
         /// </summary>
-        public static VmCategory StorageOptimized { get; } = new VmCategory(StorageOptimizedValue);
+        public static ComputeFleetVmCategory StorageOptimized { get; } = new ComputeFleetVmCategory(StorageOptimizedValue);
         /// <summary>
         /// GPU optimized VM sizes are specialized virtual machines available with single, multiple, or fractional GPUs.
         /// These sizes are designed for compute-intensive, graphics-intensive, and visualization workloads.
         /// </summary>
-        public static VmCategory GpuAccelerated { get; } = new VmCategory(GpuAcceleratedValue);
+        public static ComputeFleetVmCategory GpuAccelerated { get; } = new ComputeFleetVmCategory(GpuAcceleratedValue);
         /// <summary>
         /// FPGA optimized VM sizes are specialized virtual machines available with single or multiple FPGA.
         /// These sizes are designed for compute-intensive workloads. This article provides information about the number and type of FPGA, vCPUs, data disks, and NICs.
         /// Storage throughput and network bandwidth are also included for each size in this grouping.
         /// </summary>
-        public static VmCategory FpgaAccelerated { get; } = new VmCategory(FpgaAcceleratedValue);
+        public static ComputeFleetVmCategory FpgaAccelerated { get; } = new ComputeFleetVmCategory(FpgaAcceleratedValue);
         /// <summary>
         /// Azure High Performance Compute VMs are optimized for various HPC workloads such as computational fluid dynamics, finite element analysis, frontend and backend EDA,
         /// rendering, molecular dynamics, computational geo science, weather simulation, and financial risk analysis.
         /// </summary>
-        public static VmCategory HighPerformanceCompute { get; } = new VmCategory(HighPerformanceComputeValue);
-        /// <summary> Determines if two <see cref="VmCategory"/> values are the same. </summary>
-        public static bool operator ==(VmCategory left, VmCategory right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="VmCategory"/> values are not the same. </summary>
-        public static bool operator !=(VmCategory left, VmCategory right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VmCategory"/>. </summary>
-        public static implicit operator VmCategory(string value) => new VmCategory(value);
+        public static ComputeFleetVmCategory HighPerformanceCompute { get; } = new ComputeFleetVmCategory(HighPerformanceComputeValue);
+        /// <summary> Determines if two <see cref="ComputeFleetVmCategory"/> values are the same. </summary>
+        public static bool operator ==(ComputeFleetVmCategory left, ComputeFleetVmCategory right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ComputeFleetVmCategory"/> values are not the same. </summary>
+        public static bool operator !=(ComputeFleetVmCategory left, ComputeFleetVmCategory right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetVmCategory"/>. </summary>
+        public static implicit operator ComputeFleetVmCategory(string value) => new ComputeFleetVmCategory(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VmCategory other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeFleetVmCategory other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(VmCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeFleetVmCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

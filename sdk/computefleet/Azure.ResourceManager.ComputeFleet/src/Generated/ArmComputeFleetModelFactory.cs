@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="createdOn"> Specifies the time at which the Compute Fleet is created. </param>
         /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Compute Fleet. </param>
         /// <returns> A new <see cref="Models.ComputeFleetProperties"/> instance for mocking. </returns>
-        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = null, SpotPriorityProfile spotPriorityProfile = null, RegularPriorityProfile regularPriorityProfile = null, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = null, VmAttributes vmAttributes = null, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = null, ComputeFleetComputeProfile computeProfile = null, DateTimeOffset? createdOn = null, string uniqueId = null)
+        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = null, SpotPriorityProfile spotPriorityProfile = null, RegularPriorityProfile regularPriorityProfile = null, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = null, ComputeFleetVmAttributes vmAttributes = null, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = null, ComputeFleetComputeProfile computeProfile = null, DateTimeOffset? createdOn = null, string uniqueId = null)
         {
             vmSizesProfile ??= new List<ComputeFleetVmSizeProfile>();
             additionalLocationsLocationProfiles ??= new List<LocationProfile>();
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="operationStatus"> This represents the operationStatus of the VMSS in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error Information when `operationStatus` is `Failed`. </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmss"/> instance for mocking. </returns>
-        public static ComputeFleetVmss ComputeFleetVmss(string id = null, string type = null, ComputeFleetProvisioningState operationStatus = default, ComputeFleetApiError error = null)
+        public static ComputeFleetVmss ComputeFleetVmss(ResourceIdentifier id = null, string type = null, ComputeFleetProvisioningState operationStatus = default, ComputeFleetApiError error = null)
         {
             return new ComputeFleetVmss(id, type, operationStatus, error, serializedAdditionalRawData: null);
         }

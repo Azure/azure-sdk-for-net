@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="createdOn"> Specifies the time at which the Compute Fleet is created. </param>
         /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Compute Fleet. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, VmAttributes vmAttributes, AdditionalLocationsProfile additionalLocationsProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, AdditionalLocationsProfile additionalLocationsProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             SpotPriorityProfile = spotPriorityProfile;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> List of VM sizes supported for Compute Fleet. </summary>
         public IList<ComputeFleetVmSizeProfile> VmSizesProfile { get; }
         /// <summary> Attribute based Fleet. </summary>
-        public VmAttributes VmAttributes { get; set; }
+        public ComputeFleetVmAttributes VmAttributes { get; set; }
         /// <summary> Represents the configuration for additional locations where Fleet resources may be deployed. </summary>
         internal AdditionalLocationsProfile AdditionalLocationsProfile { get; set; }
         /// <summary> The list of location profiles. </summary>

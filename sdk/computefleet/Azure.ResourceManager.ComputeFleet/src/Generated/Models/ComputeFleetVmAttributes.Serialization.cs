@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    public partial class VmAttributes : IUtf8JsonSerializable, IJsonModel<VmAttributes>
+    public partial class ComputeFleetVmAttributes : IUtf8JsonSerializable, IJsonModel<ComputeFleetVmAttributes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmAttributes>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetVmAttributes>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VmAttributes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeFleetVmAttributes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmAttributes>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmAttributes)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetVmAttributes)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("vCpuCount"u8);
@@ -180,19 +180,19 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        VmAttributes IJsonModel<VmAttributes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeFleetVmAttributes IJsonModel<ComputeFleetVmAttributes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmAttributes>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmAttributes)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetVmAttributes)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVmAttributes(document.RootElement, options);
+            return DeserializeComputeFleetVmAttributes(document.RootElement, options);
         }
 
-        internal static VmAttributes DeserializeVmAttributes(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ComputeFleetVmAttributes DeserializeComputeFleetVmAttributes(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -200,25 +200,25 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            VmAttributeMinMaxInteger vCpuCount = default;
-            VmAttributeMinMaxDouble memoryInGiB = default;
-            VmAttributeMinMaxDouble memoryInGiBPerVCpu = default;
-            VmAttributeSupport? localStorageSupport = default;
-            VmAttributeMinMaxDouble localStorageInGiB = default;
+            ComputeFleetVmAttributeMinMaxInteger vCpuCount = default;
+            ComputeFleetVmAttributeMinMaxDouble memoryInGiB = default;
+            ComputeFleetVmAttributeMinMaxDouble memoryInGiBPerVCpu = default;
+            ComputeFleetVmAttributeSupport? localStorageSupport = default;
+            ComputeFleetVmAttributeMinMaxDouble localStorageInGiB = default;
             IList<LocalStorageDiskType> localStorageDiskTypes = default;
-            VmAttributeMinMaxInteger dataDiskCount = default;
-            VmAttributeMinMaxInteger networkInterfaceCount = default;
-            VmAttributeMinMaxDouble networkBandwidthInMbps = default;
-            VmAttributeSupport? rdmaSupport = default;
-            VmAttributeMinMaxInteger rdmaNetworkInterfaceCount = default;
-            VmAttributeSupport? acceleratorSupport = default;
+            ComputeFleetVmAttributeMinMaxInteger dataDiskCount = default;
+            ComputeFleetVmAttributeMinMaxInteger networkInterfaceCount = default;
+            ComputeFleetVmAttributeMinMaxDouble networkBandwidthInMbps = default;
+            ComputeFleetVmAttributeSupport? rdmaSupport = default;
+            ComputeFleetVmAttributeMinMaxInteger rdmaNetworkInterfaceCount = default;
+            ComputeFleetVmAttributeSupport? acceleratorSupport = default;
             IList<AcceleratorManufacturer> acceleratorManufacturers = default;
             IList<AcceleratorType> acceleratorTypes = default;
-            VmAttributeMinMaxInteger acceleratorCount = default;
-            IList<VmCategory> vmCategories = default;
+            ComputeFleetVmAttributeMinMaxInteger acceleratorCount = default;
+            IList<ComputeFleetVmCategory> vmCategories = default;
             IList<ArchitectureType> architectureTypes = default;
             IList<CpuManufacturer> cpuManufacturers = default;
-            VmAttributeSupport? burstableSupport = default;
+            ComputeFleetVmAttributeSupport? burstableSupport = default;
             IList<string> excludedVmSizes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -226,12 +226,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 if (property.NameEquals("vCpuCount"u8))
                 {
-                    vCpuCount = VmAttributeMinMaxInteger.DeserializeVmAttributeMinMaxInteger(property.Value, options);
+                    vCpuCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("memoryInGiB"u8))
                 {
-                    memoryInGiB = VmAttributeMinMaxDouble.DeserializeVmAttributeMinMaxDouble(property.Value, options);
+                    memoryInGiB = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("memoryInGiBPerVCpu"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    memoryInGiBPerVCpu = VmAttributeMinMaxDouble.DeserializeVmAttributeMinMaxDouble(property.Value, options);
+                    memoryInGiBPerVCpu = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("localStorageSupport"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    localStorageSupport = new VmAttributeSupport(property.Value.GetString());
+                    localStorageSupport = new ComputeFleetVmAttributeSupport(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("localStorageInGiB"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    localStorageInGiB = VmAttributeMinMaxDouble.DeserializeVmAttributeMinMaxDouble(property.Value, options);
+                    localStorageInGiB = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("localStorageDiskTypes"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    dataDiskCount = VmAttributeMinMaxInteger.DeserializeVmAttributeMinMaxInteger(property.Value, options);
+                    dataDiskCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkInterfaceCount"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    networkInterfaceCount = VmAttributeMinMaxInteger.DeserializeVmAttributeMinMaxInteger(property.Value, options);
+                    networkInterfaceCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkBandwidthInMbps"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    networkBandwidthInMbps = VmAttributeMinMaxDouble.DeserializeVmAttributeMinMaxDouble(property.Value, options);
+                    networkBandwidthInMbps = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rdmaSupport"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    rdmaSupport = new VmAttributeSupport(property.Value.GetString());
+                    rdmaSupport = new ComputeFleetVmAttributeSupport(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rdmaNetworkInterfaceCount"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    rdmaNetworkInterfaceCount = VmAttributeMinMaxInteger.DeserializeVmAttributeMinMaxInteger(property.Value, options);
+                    rdmaNetworkInterfaceCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("acceleratorSupport"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    acceleratorSupport = new VmAttributeSupport(property.Value.GetString());
+                    acceleratorSupport = new ComputeFleetVmAttributeSupport(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("acceleratorManufacturers"u8))
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    acceleratorCount = VmAttributeMinMaxInteger.DeserializeVmAttributeMinMaxInteger(property.Value, options);
+                    acceleratorCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vmCategories"u8))
@@ -372,10 +372,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    List<VmCategory> array = new List<VmCategory>();
+                    List<ComputeFleetVmCategory> array = new List<ComputeFleetVmCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new VmCategory(item.GetString()));
+                        array.Add(new ComputeFleetVmCategory(item.GetString()));
                     }
                     vmCategories = array;
                     continue;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    burstableSupport = new VmAttributeSupport(property.Value.GetString());
+                    burstableSupport = new ComputeFleetVmAttributeSupport(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("excludedVMSizes"u8))
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VmAttributes(
+            return new ComputeFleetVmAttributes(
                 vCpuCount,
                 memoryInGiB,
                 memoryInGiBPerVCpu,
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 acceleratorManufacturers ?? new ChangeTrackingList<AcceleratorManufacturer>(),
                 acceleratorTypes ?? new ChangeTrackingList<AcceleratorType>(),
                 acceleratorCount,
-                vmCategories ?? new ChangeTrackingList<VmCategory>(),
+                vmCategories ?? new ChangeTrackingList<ComputeFleetVmCategory>(),
                 architectureTypes ?? new ChangeTrackingList<ArchitectureType>(),
                 cpuManufacturers ?? new ChangeTrackingList<CpuManufacturer>(),
                 burstableSupport,
@@ -461,35 +461,35 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<VmAttributes>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeFleetVmAttributes>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmAttributes>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributes>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmAttributes)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetVmAttributes)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VmAttributes IPersistableModel<VmAttributes>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComputeFleetVmAttributes IPersistableModel<ComputeFleetVmAttributes>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmAttributes>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributes>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeVmAttributes(document.RootElement, options);
+                        return DeserializeComputeFleetVmAttributes(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmAttributes)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetVmAttributes)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VmAttributes>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeFleetVmAttributes>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

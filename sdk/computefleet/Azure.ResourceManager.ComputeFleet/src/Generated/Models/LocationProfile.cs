@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -47,11 +48,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Initializes a new instance of <see cref="LocationProfile"/>. </summary>
         /// <param name="location"> The ARM location name of the additional region. If LocationProfile is specified, then location is required. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public LocationProfile(string location)
+        public LocationProfile(AzureLocation location)
         {
-            Argument.AssertNotNull(location, nameof(location));
-
             Location = location;
         }
 
@@ -62,7 +60,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// This override is merged with the base virtual machine profile to define the final virtual machine profile for the resources deployed in this location.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LocationProfile(string location, ComputeFleetVmProfile virtualMachineProfileOverride, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LocationProfile(AzureLocation location, ComputeFleetVmProfile virtualMachineProfileOverride, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             VirtualMachineProfileOverride = virtualMachineProfileOverride;
@@ -75,7 +73,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> The ARM location name of the additional region. If LocationProfile is specified, then location is required. </summary>
-        public string Location { get; set; }
+        public AzureLocation Location { get; set; }
         /// <summary>
         /// An override for computeProfile.baseVirtualMachineProfile specific to this region.
         /// This override is merged with the base virtual machine profile to define the final virtual machine profile for the resources deployed in this location.

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    public partial class VmAttributeMinMaxDouble : IUtf8JsonSerializable, IJsonModel<VmAttributeMinMaxDouble>
+    public partial class ComputeFleetVmAttributeMinMaxInteger : IUtf8JsonSerializable, IJsonModel<ComputeFleetVmAttributeMinMaxInteger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmAttributeMinMaxDouble>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetVmAttributeMinMaxInteger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VmAttributeMinMaxDouble>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeFleetVmAttributeMinMaxInteger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmAttributeMinMaxDouble>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributeMinMaxInteger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmAttributeMinMaxDouble)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetVmAttributeMinMaxInteger)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Min))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        VmAttributeMinMaxDouble IJsonModel<VmAttributeMinMaxDouble>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeFleetVmAttributeMinMaxInteger IJsonModel<ComputeFleetVmAttributeMinMaxInteger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmAttributeMinMaxDouble>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributeMinMaxInteger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmAttributeMinMaxDouble)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetVmAttributeMinMaxInteger)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVmAttributeMinMaxDouble(document.RootElement, options);
+            return DeserializeComputeFleetVmAttributeMinMaxInteger(document.RootElement, options);
         }
 
-        internal static VmAttributeMinMaxDouble DeserializeVmAttributeMinMaxDouble(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ComputeFleetVmAttributeMinMaxInteger DeserializeComputeFleetVmAttributeMinMaxInteger(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            double? min = default;
-            double? max = default;
+            int? min = default;
+            int? max = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    min = property.Value.GetDouble();
+                    min = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("max"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    max = property.Value.GetDouble();
+                    max = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VmAttributeMinMaxDouble(min, max, serializedAdditionalRawData);
+            return new ComputeFleetVmAttributeMinMaxInteger(min, max, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<VmAttributeMinMaxDouble>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeFleetVmAttributeMinMaxInteger>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmAttributeMinMaxDouble>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributeMinMaxInteger>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmAttributeMinMaxDouble)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetVmAttributeMinMaxInteger)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VmAttributeMinMaxDouble IPersistableModel<VmAttributeMinMaxDouble>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComputeFleetVmAttributeMinMaxInteger IPersistableModel<ComputeFleetVmAttributeMinMaxInteger>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmAttributeMinMaxDouble>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributeMinMaxInteger>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeVmAttributeMinMaxDouble(document.RootElement, options);
+                        return DeserializeComputeFleetVmAttributeMinMaxInteger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmAttributeMinMaxDouble)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetVmAttributeMinMaxInteger)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VmAttributeMinMaxDouble>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeFleetVmAttributeMinMaxInteger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

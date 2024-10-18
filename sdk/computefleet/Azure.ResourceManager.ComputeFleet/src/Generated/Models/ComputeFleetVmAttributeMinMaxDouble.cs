@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    /// <summary> While retrieving VMSizes from CRS, Min = 0 (uint.MinValue) if not specified, Max = 4294967295 (uint.MaxValue) if not specified. This allows to filter VMAttributes on all available VMSizes. </summary>
-    public partial class VmAttributeMinMaxInteger
+    /// <summary> VMAttributes using double values. </summary>
+    public partial class ComputeFleetVmAttributeMinMaxDouble
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,25 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VmAttributeMinMaxInteger"/>. </summary>
-        public VmAttributeMinMaxInteger()
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmAttributeMinMaxDouble"/>. </summary>
+        public ComputeFleetVmAttributeMinMaxDouble()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VmAttributeMinMaxInteger"/>. </summary>
-        /// <param name="min"> Min VMSize from CRS, Min = 0 (uint.MinValue) if not specified. </param>
-        /// <param name="max"> Max VMSize from CRS, Max = 4294967295 (uint.MaxValue) if not specified. </param>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmAttributeMinMaxDouble"/>. </summary>
+        /// <param name="min"> Minimum value. default 0. Double.MinValue(). </param>
+        /// <param name="max"> Maximum value. Double.MaxValue(1.7976931348623157E+308). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VmAttributeMinMaxInteger(int? min, int? max, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeFleetVmAttributeMinMaxDouble(double? min, double? max, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Min = min;
             Max = max;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Min VMSize from CRS, Min = 0 (uint.MinValue) if not specified. </summary>
-        public int? Min { get; set; }
-        /// <summary> Max VMSize from CRS, Max = 4294967295 (uint.MaxValue) if not specified. </summary>
-        public int? Max { get; set; }
+        /// <summary> Minimum value. default 0. Double.MinValue(). </summary>
+        public double? Min { get; set; }
+        /// <summary> Maximum value. Double.MaxValue(1.7976931348623157E+308). </summary>
+        public double? Max { get; set; }
     }
 }
