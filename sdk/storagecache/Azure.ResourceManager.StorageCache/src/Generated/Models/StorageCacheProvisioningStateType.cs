@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static bool operator ==(StorageCacheProvisioningStateType left, StorageCacheProvisioningStateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageCacheProvisioningStateType"/> values are not the same. </summary>
         public static bool operator !=(StorageCacheProvisioningStateType left, StorageCacheProvisioningStateType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageCacheProvisioningStateType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageCacheProvisioningStateType"/>. </summary>
         public static implicit operator StorageCacheProvisioningStateType(string value) => new StorageCacheProvisioningStateType(value);
 
         /// <inheritdoc />

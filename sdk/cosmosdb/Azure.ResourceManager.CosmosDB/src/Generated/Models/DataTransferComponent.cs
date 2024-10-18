@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(DataTransferComponent left, DataTransferComponent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataTransferComponent"/> values are not the same. </summary>
         public static bool operator !=(DataTransferComponent left, DataTransferComponent right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataTransferComponent"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataTransferComponent"/>. </summary>
         public static implicit operator DataTransferComponent(string value) => new DataTransferComponent(value);
 
         /// <inheritdoc />

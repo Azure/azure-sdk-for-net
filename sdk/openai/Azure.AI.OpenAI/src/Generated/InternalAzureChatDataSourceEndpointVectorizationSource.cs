@@ -23,7 +23,7 @@ namespace Azure.AI.OpenAI.Chat
         /// Please note <see cref="DataSourceAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="authentication"/> is null. </exception>
-        internal InternalAzureChatDataSourceEndpointVectorizationSource(Uri endpoint, DataSourceAuthentication authentication)
+        public InternalAzureChatDataSourceEndpointVectorizationSource(Uri endpoint, DataSourceAuthentication authentication)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(authentication, nameof(authentication));
@@ -74,7 +74,7 @@ namespace Azure.AI.OpenAI.Chat
         /// The number of dimensions to request on embeddings.
         /// Only supported in 'text-embedding-3' and later models.
         /// </summary>
-        internal int? Dimensions { get; set; }
+        public int? Dimensions { get; set; }
     }
 }
 

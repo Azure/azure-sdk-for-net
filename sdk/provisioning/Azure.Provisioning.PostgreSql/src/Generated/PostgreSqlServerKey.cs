@@ -69,11 +69,15 @@ public partial class PostgreSqlServerKey : Resource
     /// <summary>
     /// Creates a new PostgreSqlServerKey.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlServerKey.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the PostgreSqlServerKey resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlServerKey.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlServerKey(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/keys", resourceVersion ?? "2020-01-01", context)
+    public PostgreSqlServerKey(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.DBforPostgreSQL/servers/keys", resourceVersion ?? "2020-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _serverKeyType = BicepValue<PostgreSqlServerKeyType>.DefineProperty(this, "ServerKeyType", ["properties", "serverKeyType"]);
@@ -104,9 +108,14 @@ public partial class PostgreSqlServerKey : Resource
     /// <summary>
     /// Creates a reference to an existing PostgreSqlServerKey.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlServerKey.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the PostgreSqlServerKey resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlServerKey.</param>
     /// <returns>The existing PostgreSqlServerKey resource.</returns>
-    public static PostgreSqlServerKey FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlServerKey FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

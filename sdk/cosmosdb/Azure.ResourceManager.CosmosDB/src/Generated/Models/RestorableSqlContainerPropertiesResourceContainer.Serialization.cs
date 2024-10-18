@@ -21,13 +21,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<RestorableSqlContainerPropertiesResourceContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RestorableSqlContainerPropertiesResourceContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestorableSqlContainerPropertiesResourceContainer)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Self))
             {
                 writer.WritePropertyName("_self"u8);
@@ -48,84 +57,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("_etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(ContainerName);
-            if (Optional.IsDefined(IndexingPolicy))
-            {
-                writer.WritePropertyName("indexingPolicy"u8);
-                writer.WriteObjectValue(IndexingPolicy, options);
-            }
-            if (Optional.IsDefined(PartitionKey))
-            {
-                writer.WritePropertyName("partitionKey"u8);
-                writer.WriteObjectValue(PartitionKey, options);
-            }
-            if (Optional.IsDefined(DefaultTtl))
-            {
-                writer.WritePropertyName("defaultTtl"u8);
-                writer.WriteNumberValue(DefaultTtl.Value);
-            }
-            if (Optional.IsDefined(UniqueKeyPolicy))
-            {
-                writer.WritePropertyName("uniqueKeyPolicy"u8);
-                writer.WriteObjectValue(UniqueKeyPolicy, options);
-            }
-            if (Optional.IsDefined(ConflictResolutionPolicy))
-            {
-                writer.WritePropertyName("conflictResolutionPolicy"u8);
-                writer.WriteObjectValue(ConflictResolutionPolicy, options);
-            }
-            if (Optional.IsDefined(ClientEncryptionPolicy))
-            {
-                writer.WritePropertyName("clientEncryptionPolicy"u8);
-                writer.WriteObjectValue(ClientEncryptionPolicy, options);
-            }
-            if (Optional.IsDefined(AnalyticalStorageTtl))
-            {
-                writer.WritePropertyName("analyticalStorageTtl"u8);
-                writer.WriteNumberValue(AnalyticalStorageTtl.Value);
-            }
-            if (Optional.IsDefined(RestoreParameters))
-            {
-                writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue(RestoreParameters, options);
-            }
-            if (Optional.IsDefined(CreateMode))
-            {
-                writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
-            }
-            if (Optional.IsDefined(MaterializedViewDefinition))
-            {
-                writer.WritePropertyName("materializedViewDefinition"u8);
-                writer.WriteObjectValue(MaterializedViewDefinition, options);
-            }
-            if (Optional.IsCollectionDefined(ComputedProperties))
-            {
-                writer.WritePropertyName("computedProperties"u8);
-                writer.WriteStartArray();
-                foreach (var item in ComputedProperties)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         RestorableSqlContainerPropertiesResourceContainer IJsonModel<RestorableSqlContainerPropertiesResourceContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

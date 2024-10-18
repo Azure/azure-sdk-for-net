@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         public SpringBootAppData() { }
         public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -88,6 +89,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         public SpringBootServerData() { }
         public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -141,6 +143,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         public SpringBootSiteData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteModelExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -167,6 +170,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         public SpringBootSiteErrorSummaryData() { }
         public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteErrorSummariesProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -247,6 +251,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         public SpringBootSiteSummaryData() { }
         public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteSummariesProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -339,6 +344,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public SpringBootAppApplicationConfigurationsItem(string key) { }
         public string Key { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppApplicationConfigurationsItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppApplicationConfigurationsItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppApplicationConfigurationsItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppApplicationConfigurationsItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppApplicationConfigurationsItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -351,6 +357,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public int? InstanceCount { get { throw null; } set { } }
         public int? JvmMemoryInMB { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MachineArmId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppInstancesItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppInstancesItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppInstancesItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppInstancesItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppInstancesItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -362,6 +369,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public SpringBootAppMiscsItem(string key) { }
         public string Key { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppMiscsItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppMiscsItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppMiscsItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppMiscsItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppMiscsItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -373,6 +381,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public SpringBootAppPatch() { }
         public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -410,6 +419,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public string SiteName { get { throw null; } set { } }
         public string SpringBootVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> StaticContentLocations { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -421,6 +431,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public SpringBootServerPatch() { }
         public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -438,6 +449,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public string Server { get { throw null; } set { } }
         public int? SpringBootApps { get { throw null; } set { } }
         public int? TotalApps { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -456,6 +468,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public string Severity { get { throw null; } set { } }
         public string SummaryMessage { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedTimeStamp { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -468,6 +481,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteErrorSummaryModel> DiscoveryScopeErrorSummaries { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteError> Errors { get { throw null; } }
         public Azure.ResourceManager.SpringAppDiscovery.Models.SpringAppDiscoveryProvisioningState? ProvisioningState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteErrorSummariesProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteErrorSummariesProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteErrorSummariesProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteErrorSummariesProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteErrorSummariesProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -479,6 +493,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public SpringBootSiteErrorSummaryModel() { }
         public long? AffectedObjectsCount { get { throw null; } set { } }
         public string AffectedResourceType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteErrorSummaryModel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteErrorSummaryModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteErrorSummaryModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteErrorSummaryModel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteErrorSummaryModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -490,6 +505,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public SpringBootSiteModelExtendedLocation() { }
         public string Name { get { throw null; } set { } }
         public string SpringbootsitesModelExtendedLocationType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteModelExtendedLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteModelExtendedLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteModelExtendedLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteModelExtendedLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteModelExtendedLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -500,6 +516,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     {
         public SpringBootSitePatch(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -512,6 +529,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public string MasterSiteId { get { throw null; } set { } }
         public string MigrateProjectId { get { throw null; } set { } }
         public Azure.ResourceManager.SpringAppDiscovery.Models.SpringAppDiscoveryProvisioningState? ProvisioningState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -525,6 +543,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public long? DiscoveredServers { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteError> Errors { get { throw null; } }
         public Azure.ResourceManager.SpringAppDiscovery.Models.SpringAppDiscoveryProvisioningState? ProvisioningState { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteSummariesProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteSummariesProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteSummariesProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteSummariesProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteSummariesProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

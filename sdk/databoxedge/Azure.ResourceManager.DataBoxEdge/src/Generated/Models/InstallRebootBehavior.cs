@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(InstallRebootBehavior left, InstallRebootBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InstallRebootBehavior"/> values are not the same. </summary>
         public static bool operator !=(InstallRebootBehavior left, InstallRebootBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InstallRebootBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InstallRebootBehavior"/>. </summary>
         public static implicit operator InstallRebootBehavior(string value) => new InstallRebootBehavior(value);
 
         /// <inheritdoc />

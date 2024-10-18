@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(SparkThriftTransportProtocol left, SparkThriftTransportProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkThriftTransportProtocol"/> values are not the same. </summary>
         public static bool operator !=(SparkThriftTransportProtocol left, SparkThriftTransportProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SparkThriftTransportProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SparkThriftTransportProtocol"/>. </summary>
         public static implicit operator SparkThriftTransportProtocol(string value) => new SparkThriftTransportProtocol(value);
 
         /// <inheritdoc />

@@ -23,17 +23,39 @@
     "dist/**"
   ],
   "dependencies": {
-    "@typespec/http-client-csharp": "latest"
+    "@typespec/http-client-csharp": "0.1.9-alpha.20241010.1"
+  },
+  "peerDependencies": {
+    "@azure-tools/typespec-azure-core": ">=0.46.0 <1.0.0 || ~0.47.0-0",
+    "@azure-tools/typespec-client-generator-core": ">=0.46.0 <1.0.0 || ~0.47.0-0",
+    "@typespec/compiler": ">=0.60.0 <1.0.0 || ~0.61.0-0",
+    "@typespec/http": ">=0.60.0 <1.0.0 || ~0.61.0-0",
+    "@typespec/openapi": ">=0.60.0 <1.0.0 || ~0.61.0-0",
+    "@typespec/rest": ">=0.60.0 <1.0.0 || ~0.61.0-0",
+    "@typespec/versioning": ">=0.60.0 <1.0.0 || ~0.61.0-0"
   },
   "devDependencies": {
+    "@azure-tools/typespec-azure-core": "0.46.0",
+    "@azure-tools/typespec-client-generator-core": "0.46.2",
+    "@azure-tools/typespec-azure-resource-manager": "0.46.1",
+    "@azure-tools/typespec-azure-rulesets": "0.46.0",
+    "@azure-tools/typespec-autorest": "0.46.0",
     "@eslint/js": "^9.2.0",
-    "@types/node": "~18.13.0",
+    "@types/node": "~22.7.5",
     "@types/prettier": "^2.6.3",
+    "@typespec/compiler": "0.60.0",
+    "@typespec/http": "0.60.0",
+    "@typespec/json-schema": "0.60.0",
+    "@typespec/library-linter": "0.60.0",
+    "@typespec/openapi": "0.60.0",
+    "@typespec/rest": "0.60.0",
+    "@typespec/versioning": "0.60.0",
+    "@typespec/xml": "0.60.0",
     "@vitest/coverage-v8": "^1.4.0",
     "@vitest/ui": "^1.4.0",
     "c8": "^9.1.0",
     "rimraf": "~5.0.5",
-    "typescript": "~5.4.3",
+    "typescript": "~5.6.3",
     "vitest": "^1.4.0",
     "copyfiles": "^2.4.1",
     "eslint": "^8.57.0",

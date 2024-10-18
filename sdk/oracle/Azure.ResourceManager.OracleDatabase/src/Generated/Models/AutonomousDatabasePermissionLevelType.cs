@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(AutonomousDatabasePermissionLevelType left, AutonomousDatabasePermissionLevelType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutonomousDatabasePermissionLevelType"/> values are not the same. </summary>
         public static bool operator !=(AutonomousDatabasePermissionLevelType left, AutonomousDatabasePermissionLevelType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutonomousDatabasePermissionLevelType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutonomousDatabasePermissionLevelType"/>. </summary>
         public static implicit operator AutonomousDatabasePermissionLevelType(string value) => new AutonomousDatabasePermissionLevelType(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(MaintenancePreference left, MaintenancePreference right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaintenancePreference"/> values are not the same. </summary>
         public static bool operator !=(MaintenancePreference left, MaintenancePreference right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MaintenancePreference"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MaintenancePreference"/>. </summary>
         public static implicit operator MaintenancePreference(string value) => new MaintenancePreference(value);
 
         /// <inheritdoc />

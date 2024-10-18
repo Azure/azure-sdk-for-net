@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static bool operator ==(PluginCurrentState left, PluginCurrentState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PluginCurrentState"/> values are not the same. </summary>
         public static bool operator !=(PluginCurrentState left, PluginCurrentState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PluginCurrentState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PluginCurrentState"/>. </summary>
         public static implicit operator PluginCurrentState(string value) => new PluginCurrentState(value);
 
         /// <inheritdoc />

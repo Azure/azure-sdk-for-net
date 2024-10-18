@@ -1,15 +1,41 @@
 # Release History
 
-## 12.20.0-beta.2 (Unreleased)
+## 12.21.0-beta.3 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed \[BUG\] Method overload ShareFileClient.OpenReadAsync()/OpenRead() to correctly handle the allowBlobModifications flag #45516
 
 ### Other Changes
+
+## 12.20.1 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.21.0-beta.2 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.21.0-beta.1 (2024-10-08)
+
+### Features Added
+- Added support for service version 2025-01-05.
+- Added support for the provisioned V2 billing model.
+- Added support for specifying the binary file permission format for ShareFileClient.StartCopy() and .StartCopyAsync().
+- Added ShareAccessTier.Premium enum value.
+
+## 12.20.0 (2024-09-18)
+
+### Features Added
+- Includes all features from 12.20.0-beta.1.
+
+### Bugs Fixed
+- Fixed \[BUG\] Method overload ShareFileClient.OpenReadAsync()/OpenRead() to correctly handle the allowBlobModifications flag #45516
+- Fixed \[BUG\] Fixed Equality failures due to implicit cast on ShareErrorCode #44213
 
 ## 12.20.0-beta.1 (2024-08-06)
 

@@ -1,16 +1,16 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2024-10-18)
 
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+- Add DNS Security Policy functionality for the following resources:
+    - DNS Security Policy
+    - DNS Security Policy Links
+    - Dns Security Rules
+    - DNS Resolver Domain Lists
 
 ## 1.1.0 (2023-11-27)
 

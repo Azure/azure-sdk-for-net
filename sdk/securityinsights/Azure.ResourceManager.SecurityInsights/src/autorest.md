@@ -15,6 +15,7 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+  sample: false # Disable generate samples due to https://github.com/Azure/azure-sdk-for-net/issues/45877
   skipped-operations:
     - AutomationRules_CreateOrUpdate
     - Incidents_CreateOrUpdate
@@ -23,6 +24,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
 enable-bicep-serialization: true
 
 #mgmt-debug:

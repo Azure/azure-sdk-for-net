@@ -1,14 +1,22 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2024-09-10)
+
+### Features Added
+- Added support for Iceberg format as a sink.
+- Enabled sslMode and useSystemTrustStore options for MariaDB.
 
 ## 1.3.0 (2024-08-16)
 

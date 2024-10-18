@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Workloads.Samples
             // invoke the operation
             SapStopContent content = new SapStopContent()
             {
-                SoftStopTimeoutSeconds = 1200,
+                SoftStopTimeoutSeconds = 1200L,
             };
             ArmOperation<OperationStatusResult> lro = await sapCentralServerInstance.StopInstanceAsync(WaitUntil.Completed, content: content);
             OperationStatusResult result = lro.Value;

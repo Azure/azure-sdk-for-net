@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CosmosDBServerVersion left, CosmosDBServerVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBServerVersion"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBServerVersion left, CosmosDBServerVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBServerVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBServerVersion"/>. </summary>
         public static implicit operator CosmosDBServerVersion(string value) => new CosmosDBServerVersion(value);
 
         /// <inheritdoc />

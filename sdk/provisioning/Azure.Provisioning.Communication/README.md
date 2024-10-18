@@ -9,7 +9,7 @@ Azure.Provisioning.Communication simplifies declarative resource provisioning in
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.Communication
+dotnet add package Azure.Provisioning.Communication --prerelease
 ```
 
 ### Prerequisites

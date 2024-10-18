@@ -16,7 +16,7 @@ This sample demonstrates using credentials to authorize clients with the Event H
 
 ## Prerequisites
 
-To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README.  You will also need to the fully qualified namespace for the Event Hubs resource that you would like to use.  This can be found in the Azure Portal view of the Event Hubs namespace in the "Overview" tab.  In the center pane, the "essentials" area will list a "hostname."  This is the fully qualified namespace and is likely be similar to: `{your-namespace}.servicebus.windows.net`.  
+To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README.  You will also need to the fully qualified namespace for the Event Hubs resource that you would like to use.  This can be found in the Azure Portal view of the Event Hubs namespace in the "Overview" tab.  In the center pane, the "essentials" area will list a "hostname."  This is the fully qualified namespace and is likely be similar to: `{your-namespace}.servicebus.windows.net`.
 
 If you'd like to use an identity credential for accessing Azure Storage, you will need one of the Blob service endpoint URLs.  These can be found in the Azure Portal view of the Azure Storage account in the "Properties" area under the "Settings" tab.  Either the primary or secondary endpoint can be used, but you'll need to ensure that "Blob service" appears under the endpoint that you've selected for it to be valid.  This endpoint is likely similar to: `{your-account-name}.blob.core.windows.net`.
 
@@ -24,30 +24,30 @@ Depending on the type of authorization that you wish to use, additional setup ma
 
 ### Identity authorization
 
-**Azure.Identity**  
+**Azure.Identity**
 
-The `Azure.Identity` library is recommended for identity-based authentication across the different sources supported by the Azure platform for  [role-based access control (RBAC)](https://docs.microsoft.com/azure/role-based-access-control/overview).  This includes Azure Active Directory principals and Managed Identities.  To allow for the best developer experience, and one that supports promoting applications between environments without code changes, this sample will concentrate on the `DefaultAzureCredential`.  Please see the [Azure.Identity README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential) for details on configuring your environment for `DefaultAzureCredential` integration.
+The `Azure.Identity` library is recommended for identity-based authentication across the different sources supported by the Azure platform for  [role-based access control (RBAC)](https://learn.microsoft.com/azure/role-based-access-control/overview).  This includes Azure Active Directory principals and Managed Identities.  To allow for the best developer experience, and one that supports promoting applications between environments without code changes, this sample will concentrate on the `DefaultAzureCredential`.  Please see the [Azure.Identity README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential) for details on configuring your environment for `DefaultAzureCredential` integration.
 
-**Role Assignments** 
+**Role Assignments**
 
-Once your environment is configured, you'll need to ensure that the principal that you've chosen has access to your Event Hubs resources in Azure.  To do so, they will need to be assigned the appropriate role.  For those unfamiliar with role assignments, it is recommended to follow [these steps](https://docs.microsoft.com/azure/event-hubs/authenticate-managed-identity?tabs=latest#to-assign-azure-roles-using-the-azure-portal) in the Azure portal for the most intuitive experience.  Roles may also be assigned via the [Azure CLI](https://docs.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az_role_assignment_create) or [PowerShell](https://docs.microsoft.com/powershell/module/az.resources/new-azroleassignment), though these require more in-depth knowledge of the Azure platform and may be difficult for developers exploring Azure for the first time.  
+Once your environment is configured, you'll need to ensure that the principal that you've chosen has access to your Event Hubs resources in Azure.  To do so, they will need to be assigned the appropriate role.  For those unfamiliar with role assignments, it is recommended to follow [these steps](https://learn.microsoft.com/azure/event-hubs/authenticate-managed-identity?tabs=latest#to-assign-azure-roles-using-the-azure-portal) in the Azure portal for the most intuitive experience.  Roles may also be assigned via the [Azure CLI](https://learn.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az_role_assignment_create) or [PowerShell](https://learn.microsoft.com/powershell/module/az.resources/new-azroleassignment), though these require more in-depth knowledge of the Azure platform and may be difficult for developers exploring Azure for the first time.
 
-The available role choices for Event Hubs are: 
+The available role choices for Event Hubs are:
 
-- [Azure Event Hubs Data Owner](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-owner) for full access to read and publish events.
-- [Azure Event Hubs Data Receiver](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-receiver) for the ability to read events but not publish them.
+- [Azure Event Hubs Data Owner](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-owner) for full access to read and publish events.
+- [Azure Event Hubs Data Receiver](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-receiver) for the ability to read events but not publish them.
 
-You will also need to ensure that your principal is assigned the [Storage Blob Data Contributor](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#storage-blob-data-contributor) role for the Blob Storage container that you're using for checkpoint and ownership data. 
+You will also need to ensure that your principal is assigned the [Storage Blob Data Contributor](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#storage-blob-data-contributor) role for the Blob Storage container that you're using for checkpoint and ownership data.
 
 ### Event Hubs Shared Access Signature authorization
 
 Shared access signatures (SAS) are recommended over shared access keys, when RBAC cannot be used.  A shared access signature allows for granular and time-limited access to Event Hubs resources.  In order to use SAS-based authorization, a token needs to be generated and the associated Event Hubs resource needs to be configured to authorize its use.
 
-The steps to to generate a SAS token can be found in the article "[Authenticate access to Event Hubs resources using shared access signatures (SAS)](https://docs.microsoft.com/azure/event-hubs/authenticate-shared-access-signature)", with details for some additional languages detailed in the article "[Generate SAS token](https://docs.microsoft.com/rest/api/eventhub/generate-sas-token)".   Information about configuring SAS authorization can be found in the article "[Authorizing access to Event Hubs resources using Shared Access Signatures](https://docs.microsoft.com/azure/event-hubs/authorize-access-shared-access-signature)".
+The steps to to generate a SAS token can be found in the article "[Authenticate access to Event Hubs resources using shared access signatures (SAS)](https://learn.microsoft.com/azure/event-hubs/authenticate-shared-access-signature)", with details for some additional languages detailed in the article "[Generate SAS token](https://learn.microsoft.com/rest/api/eventhub/generate-sas-token)".   Information about configuring SAS authorization can be found in the article "[Authorizing access to Event Hubs resources using Shared Access Signatures](https://learn.microsoft.com/azure/event-hubs/authorize-access-shared-access-signature)".
 
 ### Event Hubs Shared Access Key authorization
 
-Shared access keys for Event Hubs authorization are generated when access policies are created for an Event Hubs namespace or one of its Event Hub instances.  Since these keys are most often used in association with a connection string, the article "[Get an Event Hubs connection string](https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string#get-connection-string-from-the-portal)" is the best source of information on generating and accessing them.  
+Shared access keys for Event Hubs authorization are generated when access policies are created for an Event Hubs namespace or one of its Event Hub instances.  Since these keys are most often used in association with a connection string, the article "[Get an Event Hubs connection string](https://learn.microsoft.com/azure/event-hubs/event-hubs-get-connection-string#get-connection-string-from-the-portal)" is the best source of information on generating and accessing them.
 
 In step 6 of the article, the policy that you select will be the name of your shared access key when used for credential authorization.  In step 7, you'll want to copy the "Primary key" rather than connection string.
 
@@ -55,22 +55,24 @@ In step 6 of the article, the policy that you select will be the name of your sh
 
 The `EventProcessorClient` is intended to provide a robust and resilient client for processing events from an Event Hub and is capable of automatically managing the recovery process for transient failures.  It will also collaborate with other `EventProcessorClient` instances to dynamically distribute and share processing responsibility as processors are added and removed from the group.
 
-The `EventProcessorClient` is safe to cache and use for the lifetime of the application, which is best practice when the application processes events regularly or semi-regularly. The processor is responsible for efficient resource management, working to keep resource usage low during periods of inactivity and manage health during periods of higher use. Calling the `StopProcessingAsync` method when your application is closing will ensure that network resources and other unmanaged objects are cleaned up. 
+The `EventProcessorClient` is safe to cache and use for the lifetime of the application, which is best practice when the application processes events regularly or semi-regularly. The processor is responsible for efficient resource management, working to keep resource usage low during periods of inactivity and manage health during periods of higher use. Calling the `StopProcessingAsync` method when your application is closing will ensure that network resources and other unmanaged objects are cleaned up.
 
 ## Processing events with identity-based authorization
 
 ```C# Snippet:EventHubs_Processor_Sample05_DefaultAzureCredential
 var credential = new DefaultAzureCredential();
 
-var storageEndpoint = "<< STORAGE ENDPOINT (likely similar to {your-account}.blob.core.windows.net) >>";
+var storageAccountEndpoint = "<< Account Uri (likely similar to https://{your-account}.blob.core.windows.net) >>";
 var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 
 var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
-var blobUriBuilder = new BlobUriBuilder(new Uri(storageEndpoint));
-blobUriBuilder.BlobContainerName = blobContainerName;
+var blobUriBuilder = new BlobUriBuilder(new Uri(storageAccountEndpoint))
+{
+    BlobContainerName = blobContainerName
+};
 
 var storageClient = new BlobContainerClient(
     blobUriBuilder.ToUri(),

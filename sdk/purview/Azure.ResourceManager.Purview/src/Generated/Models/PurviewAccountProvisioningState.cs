@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Purview.Models
         public static bool operator ==(PurviewAccountProvisioningState left, PurviewAccountProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PurviewAccountProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(PurviewAccountProvisioningState left, PurviewAccountProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PurviewAccountProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PurviewAccountProvisioningState"/>. </summary>
         public static implicit operator PurviewAccountProvisioningState(string value) => new PurviewAccountProvisioningState(value);
 
         /// <inheritdoc />

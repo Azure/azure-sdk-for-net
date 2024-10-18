@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.TrustedSigning
         public System.Uri AccountUri { get { throw null; } }
         public Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName? SkuName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -96,6 +97,7 @@ namespace Azure.ResourceManager.TrustedSigning
         public string State { get { throw null; } }
         public Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus? Status { get { throw null; } }
         public string StreetAddress { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -237,6 +239,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public string Remarks { get { throw null; } set { } }
         public string SerialNumber { get { throw null; } }
         public string Thumbprint { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -248,6 +251,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public TrustedSigningAccountNameAvailabilityContent(string name, Azure.Core.ResourceType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -260,6 +264,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason? Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -289,6 +294,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public TrustedSigningAccountPatch() { }
         public Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName? SkuName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -310,6 +316,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus? StatusRevocationStatus { get { throw null; } }
         public string SubjectName { get { throw null; } }
         public string Thumbprint { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

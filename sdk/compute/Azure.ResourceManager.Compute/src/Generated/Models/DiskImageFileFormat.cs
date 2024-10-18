@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(DiskImageFileFormat left, DiskImageFileFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskImageFileFormat"/> values are not the same. </summary>
         public static bool operator !=(DiskImageFileFormat left, DiskImageFileFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiskImageFileFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskImageFileFormat"/>. </summary>
         public static implicit operator DiskImageFileFormat(string value) => new DiskImageFileFormat(value);
 
         /// <inheritdoc />

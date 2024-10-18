@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fix bug in 'MetricsClient' QueryResourceAsync method where the 'QueryTimeRange' parameter was incorrectly set
 
 ### Other Changes
 

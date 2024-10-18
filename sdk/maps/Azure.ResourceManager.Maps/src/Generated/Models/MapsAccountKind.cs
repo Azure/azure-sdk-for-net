@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Maps.Models
         public static bool operator ==(MapsAccountKind left, MapsAccountKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapsAccountKind"/> values are not the same. </summary>
         public static bool operator !=(MapsAccountKind left, MapsAccountKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MapsAccountKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MapsAccountKind"/>. </summary>
         public static implicit operator MapsAccountKind(string value) => new MapsAccountKind(value);
 
         /// <inheritdoc />

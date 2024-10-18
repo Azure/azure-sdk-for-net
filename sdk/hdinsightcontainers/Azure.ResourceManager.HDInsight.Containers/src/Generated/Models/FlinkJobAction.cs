@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(FlinkJobAction left, FlinkJobAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FlinkJobAction"/> values are not the same. </summary>
         public static bool operator !=(FlinkJobAction left, FlinkJobAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FlinkJobAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FlinkJobAction"/>. </summary>
         public static implicit operator FlinkJobAction(string value) => new FlinkJobAction(value);
 
         /// <inheritdoc />

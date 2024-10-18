@@ -11,8 +11,8 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/dc27f9b32787533cd4d07fe0de5245f2f8354dbe/specification/search/data-plane/Azure.Search/stable/2024-07-01/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/dc27f9b32787533cd4d07fe0de5245f2f8354dbe/specification/search/data-plane/Azure.Search/stable/2024-07-01/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/4b7fbd8b842b509a0330f20260821dd844328dff/specification/search/data-plane/Azure.Search/preview/2024-09-01-preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/4b7fbd8b842b509a0330f20260821dd844328dff/specification/search/data-plane/Azure.Search/preview/2024-09-01-preview/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -81,7 +81,7 @@ directive:
     $.additionalProperties = true;
 ```
 
-### Archboard feedback for 2024-07-01
+### Archboard feedback for 11.6.0
 
 ```yaml
 directive:

@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(OSType left, OSType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OSType"/> values are not the same. </summary>
         public static bool operator !=(OSType left, OSType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OSType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OSType"/>. </summary>
         public static implicit operator OSType(string value) => new OSType(value);
 
         /// <inheritdoc />

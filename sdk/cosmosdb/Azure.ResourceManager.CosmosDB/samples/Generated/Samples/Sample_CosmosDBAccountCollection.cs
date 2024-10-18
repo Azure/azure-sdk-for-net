@@ -166,7 +166,7 @@ IsZoneRedundant = false,
                 Kind = CosmosDBAccountKind.MongoDB,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness)
                 {
-                    MaxStalenessPrefix = 200,
+                    MaxStalenessPrefix = 200L,
                     MaxIntervalInSeconds = 10,
                 },
                 IPRules =
@@ -328,7 +328,7 @@ IsZoneRedundant = false,
                 Kind = CosmosDBAccountKind.GlobalDocumentDB,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness)
                 {
-                    MaxStalenessPrefix = 200,
+                    MaxStalenessPrefix = 200L,
                     MaxIntervalInSeconds = 10,
                 },
                 KeyVaultKeyUri = new Uri("https://myKeyVault.vault.azure.net"),

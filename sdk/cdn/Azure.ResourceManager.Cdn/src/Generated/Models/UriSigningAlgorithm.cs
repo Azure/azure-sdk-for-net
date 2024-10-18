@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(UriSigningAlgorithm left, UriSigningAlgorithm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriSigningAlgorithm"/> values are not the same. </summary>
         public static bool operator !=(UriSigningAlgorithm left, UriSigningAlgorithm right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UriSigningAlgorithm"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UriSigningAlgorithm"/>. </summary>
         public static implicit operator UriSigningAlgorithm(string value) => new UriSigningAlgorithm(value);
 
         /// <inheritdoc />

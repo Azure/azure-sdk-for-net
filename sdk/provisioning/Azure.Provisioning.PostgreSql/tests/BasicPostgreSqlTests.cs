@@ -20,38 +20,40 @@ public class BasicPostgreSqlTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "The database location."
-                    };
-                BicepParameter adminLogin =
+                Infrastructure infra = new();
+
+                ProvisioningParameter adminLogin =
                     new(nameof(adminLogin), typeof(string))
                     {
                         Description = "The administrator username of the server."
                     };
-                BicepParameter adminPass =
+                infra.Add(adminLogin);
+
+                ProvisioningParameter adminPass =
                     new(nameof(adminPass), typeof(string))
                     {
                         Description = "The administrator password of the server.",
                         IsSecure = true
                     };
-                BicepParameter aadAdminName =
+                infra.Add(adminPass);
+
+                ProvisioningParameter aadAdminName =
                     new(nameof(aadAdminName), typeof(string))
                     {
                         Description = "The AAD admin username."
                     };
-                BicepParameter aadAdminOid =
+                infra.Add(aadAdminName);
+
+                ProvisioningParameter aadAdminOid =
                     new(nameof(aadAdminOid), typeof(string))
                     {
                         Description = "The AAD admin Object ID."
                     };
+                infra.Add(aadAdminOid);
 
                 PostgreSqlFlexibleServer server =
-                    new(nameof(server))
+                    new(nameof(server), PostgreSqlFlexibleServer.ResourceVersions.V2022_12_01)
                     {
-                        Location = location,
                         Sku =
                             new PostgreSqlFlexibleServerSku
                             {
@@ -67,7 +69,7 @@ public class BasicPostgreSqlTests(bool async)
                             {
                                 ActiveDirectoryAuth = PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled,
                                 PasswordAuth = PostgreSqlFlexibleServerPasswordAuthEnum.Disabled,
-                                TenantId = BicepFunction.GetSubscription().TenantId
+                                TenantId = BicepFunction.GetTenant().TenantId
                             },
                         Storage =
                             new PostgreSqlFlexibleServerStorage
@@ -85,6 +87,7 @@ public class BasicPostgreSqlTests(bool async)
                             Mode = PostgreSqlFlexibleServerHighAvailabilityMode.Disabled
                         }
                     };
+                infra.Add(server);
 
                 PostgreSqlFlexibleServerActiveDirectoryAdministrator admin =
                     new(nameof(admin), PostgreSqlFlexibleServer.ResourceVersions.V2022_12_01)
@@ -95,12 +98,12 @@ public class BasicPostgreSqlTests(bool async)
                         PrincipalName = aadAdminName,
                         PrincipalType = PostgreSqlFlexibleServerPrincipalType.ServicePrincipal
                     };
+                infra.Add(admin);
+
+                return infra;
             })
         .Compare(
             """
-            @description('The database location.')
-            param location string = resourceGroup().location
-
             @description('The administrator username of the server.')
             param adminLogin string
 
@@ -114,44 +117,47 @@ public class BasicPostgreSqlTests(bool async)
             @description('The AAD admin Object ID.')
             param aadAdminOid string
 
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
             resource server 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
-                name: take('server${uniqueString(resourceGroup().id)}', 24)
-                location: location
-                properties: {
-                    administratorLogin: adminLogin
-                    administratorLoginPassword: adminPass
-                    authConfig: {
-                        activeDirectoryAuth: 'Enabled'
-                        passwordAuth: 'Disabled'
-                        tenantId: subscription().tenantId
-                    }
-                    backup: {
-                        backupRetentionDays: 7
-                        geoRedundantBackup: 'Disabled'
-                    }
-                    createMode: 'Default'
-                    highAvailability: {
-                        mode: 'Disabled'
-                    }
-                    storage: {
-                        storageSizeGB: 32
-                    }
-                    version: '14'
+              name: take('server-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              properties: {
+                administratorLogin: adminLogin
+                administratorLoginPassword: adminPass
+                authConfig: {
+                  activeDirectoryAuth: 'Enabled'
+                  passwordAuth: 'Disabled'
+                  tenantId: tenant().tenantId
                 }
-                sku: {
-                    name: 'Standard_D2ds_v4'
-                    tier: 'GeneralPurpose'
+                backup: {
+                  backupRetentionDays: 7
+                  geoRedundantBackup: 'Disabled'
                 }
+                createMode: 'Default'
+                highAvailability: {
+                  mode: 'Disabled'
+                }
+                storage: {
+                  storageSizeGB: 32
+                }
+                version: '14'
+              }
+              sku: {
+                name: 'Standard_D2ds_v4'
+                tier: 'GeneralPurpose'
+              }
             }
 
             resource admin 'Microsoft.DBforPostgreSQL/flexibleServers/administrators@2022-12-01' = {
-                name: aadAdminOid
-                properties: {
-                    principalName: aadAdminName
-                    principalType: 'ServicePrincipal'
-                    tenantId: subscription().tenantId
-                }
-                parent: server
+              name: aadAdminOid
+              properties: {
+                principalName: aadAdminName
+                principalType: 'ServicePrincipal'
+                tenantId: subscription().tenantId
+              }
+              parent: server
             }
             """)
         .Lint()

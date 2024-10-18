@@ -186,11 +186,15 @@ public partial class PostgreSqlMigration : Resource
     /// <summary>
     /// Creates a new PostgreSqlMigration.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlMigration.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the PostgreSqlMigration resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlMigration.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlMigration(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/migrations", resourceVersion, context)
+    public PostgreSqlMigration(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.DBforPostgreSQL/flexibleServers/migrations", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -221,11 +225,37 @@ public partial class PostgreSqlMigration : Resource
     }
 
     /// <summary>
+    /// Supported PostgreSqlMigration resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-08-01.
+        /// </summary>
+        public static readonly string V2024_08_01 = "2024-08-01";
+
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+
+        /// <summary>
+        /// 2021-06-01.
+        /// </summary>
+        public static readonly string V2021_06_01 = "2021-06-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing PostgreSqlMigration.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlMigration.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the PostgreSqlMigration resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlMigration.</param>
     /// <returns>The existing PostgreSqlMigration resource.</returns>
-    public static PostgreSqlMigration FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlMigration FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

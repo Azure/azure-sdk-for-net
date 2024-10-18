@@ -32,12 +32,12 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobsStorageResourceProvider(Azure.Storage.DataMovement.Blobs.BlobsStorageResourceProvider.GetTokenCredential getTokenCredentialAsync) { }
         public BlobsStorageResourceProvider(Azure.Storage.StorageSharedKeyCredential credential) { }
         protected override string ProviderId { get { throw null; } }
-        public Azure.Storage.DataMovement.StorageResource FromBlob(string blobUri, Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions options = null) { throw null; }
+        public Azure.Storage.DataMovement.StorageResource FromBlob(System.Uri blobUri, Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions options = null) { throw null; }
         public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.BlobContainerClient client, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null) { throw null; }
         public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.Specialized.AppendBlobClient client, Azure.Storage.DataMovement.Blobs.AppendBlobStorageResourceOptions options = null) { throw null; }
         public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.Specialized.BlockBlobClient client, Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceOptions options = null) { throw null; }
         public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.Specialized.PageBlobClient client, Azure.Storage.DataMovement.Blobs.PageBlobStorageResourceOptions options = null) { throw null; }
-        public Azure.Storage.DataMovement.StorageResource FromContainer(string containerUri, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null) { throw null; }
+        public Azure.Storage.DataMovement.StorageResource FromContainer(System.Uri containerUri, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null) { throw null; }
         protected override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromSourceAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
         public delegate Azure.AzureSasCredential GetAzureSasCredential(System.Uri uri, bool readOnly);

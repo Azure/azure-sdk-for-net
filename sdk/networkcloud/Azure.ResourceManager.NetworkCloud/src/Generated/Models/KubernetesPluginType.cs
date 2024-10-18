@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(KubernetesPluginType left, KubernetesPluginType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesPluginType"/> values are not the same. </summary>
         public static bool operator !=(KubernetesPluginType left, KubernetesPluginType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KubernetesPluginType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KubernetesPluginType"/>. </summary>
         public static implicit operator KubernetesPluginType(string value) => new KubernetesPluginType(value);
 
         /// <inheritdoc />

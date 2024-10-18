@@ -69,11 +69,15 @@ public partial class StaticSiteUserProvidedFunctionApp : Resource
     /// <summary>
     /// Creates a new StaticSiteUserProvidedFunctionApp.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteUserProvidedFunctionApp.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StaticSiteUserProvidedFunctionApp
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteUserProvidedFunctionApp.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StaticSiteUserProvidedFunctionApp(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/staticSites/userProvidedFunctionApps", resourceVersion ?? "2020-12-01", context)
+    public StaticSiteUserProvidedFunctionApp(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Web/staticSites/userProvidedFunctionApps", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _functionAppRegion = BicepValue<string>.DefineProperty(this, "FunctionAppRegion", ["properties", "functionAppRegion"]);
@@ -90,6 +94,11 @@ public partial class StaticSiteUserProvidedFunctionApp : Resource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
         /// <summary>
         /// 2023-12-01.
         /// </summary>
@@ -139,9 +148,14 @@ public partial class StaticSiteUserProvidedFunctionApp : Resource
     /// <summary>
     /// Creates a reference to an existing StaticSiteUserProvidedFunctionApp.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteUserProvidedFunctionApp.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StaticSiteUserProvidedFunctionApp
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteUserProvidedFunctionApp.</param>
     /// <returns>The existing StaticSiteUserProvidedFunctionApp resource.</returns>
-    public static StaticSiteUserProvidedFunctionApp FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StaticSiteUserProvidedFunctionApp FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

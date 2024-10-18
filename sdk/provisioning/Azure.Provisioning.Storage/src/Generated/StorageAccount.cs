@@ -361,11 +361,15 @@ public partial class StorageAccount : Resource
     /// <summary>
     /// Creates a new StorageAccount.
     /// </summary>
-    /// <param name="resourceName">Name of the StorageAccount.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StorageAccount resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StorageAccount.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StorageAccount(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts", resourceVersion ?? "2023-01-01", context)
+    public StorageAccount(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Storage/storageAccounts", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<StorageKind>.DefineProperty(this, "Kind", ["kind"], isRequired: true);
@@ -545,11 +549,16 @@ public partial class StorageAccount : Resource
     /// <summary>
     /// Creates a reference to an existing StorageAccount.
     /// </summary>
-    /// <param name="resourceName">Name of the StorageAccount.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the StorageAccount resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StorageAccount.</param>
     /// <returns>The existing StorageAccount resource.</returns>
-    public static StorageAccount FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StorageAccount FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this StorageAccount resource.
@@ -566,21 +575,41 @@ public partial class StorageAccount : Resource
     public BicepList<StorageAccountKey> GetKeys() =>
         BicepList<StorageAccountKey>.FromExpression(
             StorageAccountKey.FromExpression,
-            new MemberExpression(new FunctionCallExpression(new MemberExpression(new IdentifierExpression(ResourceName), "listKeys")), "keys"));
+            new MemberExpression(new FunctionCallExpression(new MemberExpression(new IdentifierExpression(IdentifierName), "listKeys")), "keys"));
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// StorageAccount.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this StorageAccount.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(StorageBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{identity.ResourceName}_{StorageBuiltInRole.GetBuiltInRoleName(role)}_{ResourceName}")
+    public RoleAssignment CreateRoleAssignment(StorageBuiltInRole role, UserAssignedIdentity identity) =>
+        new($"{IdentifierName}_{identity.IdentifierName}_{StorageBuiltInRole.GetBuiltInRoleName(role)}")
         {
-            Scope = new IdentifierExpression(ResourceName),
+            Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
+            Scope = new IdentifierExpression(IdentifierName),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
+        };
+
+    /// <summary>
+    /// Creates a role assignment for a principal that grants access to this
+    /// StorageAccount.
+    /// </summary>
+    /// <param name="role">The role to grant.</param>
+    /// <param name="principalType">The type of the principal to assign to.</param>
+    /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="identifierNameSuffix">Optional role assignment identifier name suffix.</param>
+    /// <returns>The <see cref="RoleAssignment"/>.</returns>
+    public RoleAssignment CreateRoleAssignment(StorageBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? identifierNameSuffix = default) =>
+        new($"{IdentifierName}_{StorageBuiltInRole.GetBuiltInRoleName(role)}{(identifierNameSuffix is null ? "" : "_")}{identifierNameSuffix}")
+        {
+            Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
+            Scope = new IdentifierExpression(IdentifierName),
+            PrincipalType = principalType,
+            RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
+            PrincipalId = principalId
         };
 }

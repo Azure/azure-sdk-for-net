@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         void IJsonModel<NetworkCloudAadConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudAadConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkCloudAadConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("adminGroupObjectIds"u8);
             writer.WriteStartArray();
             foreach (var item in AdminGroupObjectIds)
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NetworkCloudAadConfiguration IJsonModel<NetworkCloudAadConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

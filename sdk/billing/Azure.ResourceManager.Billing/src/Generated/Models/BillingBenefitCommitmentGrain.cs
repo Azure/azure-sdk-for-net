@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(BillingBenefitCommitmentGrain left, BillingBenefitCommitmentGrain right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingBenefitCommitmentGrain"/> values are not the same. </summary>
         public static bool operator !=(BillingBenefitCommitmentGrain left, BillingBenefitCommitmentGrain right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BillingBenefitCommitmentGrain"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingBenefitCommitmentGrain"/>. </summary>
         public static implicit operator BillingBenefitCommitmentGrain(string value) => new BillingBenefitCommitmentGrain(value);
 
         /// <inheritdoc />

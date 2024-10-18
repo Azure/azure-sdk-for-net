@@ -51,11 +51,15 @@ public partial class ManagedBackupShortTermRetentionPolicy : Resource
     /// <summary>
     /// Creates a new ManagedBackupShortTermRetentionPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedBackupShortTermRetentionPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ManagedBackupShortTermRetentionPolicy resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedBackupShortTermRetentionPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedBackupShortTermRetentionPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies", resourceVersion, context)
+    public ManagedBackupShortTermRetentionPolicy(string identifierName, string? resourceVersion = default)
+        : base(identifierName, "Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _retentionDays = BicepValue<int>.DefineProperty(this, "RetentionDays", ["properties", "retentionDays"]);
@@ -65,12 +69,33 @@ public partial class ManagedBackupShortTermRetentionPolicy : Resource
     }
 
     /// <summary>
+    /// Supported ManagedBackupShortTermRetentionPolicy resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing
     /// ManagedBackupShortTermRetentionPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedBackupShortTermRetentionPolicy.</param>
+    /// <param name="identifierName">
+    /// The the Bicep identifier name of the
+    /// ManagedBackupShortTermRetentionPolicy resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedBackupShortTermRetentionPolicy.</param>
     /// <returns>The existing ManagedBackupShortTermRetentionPolicy resource.</returns>
-    public static ManagedBackupShortTermRetentionPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedBackupShortTermRetentionPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
+        new(identifierName, resourceVersion) { IsExistingResource = true };
 }

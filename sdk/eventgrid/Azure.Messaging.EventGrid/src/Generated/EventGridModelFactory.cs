@@ -146,11 +146,12 @@ namespace Azure.Messaging.EventGrid
         /// <param name="scheduleTime"> The time the policy task was scheduled. </param>
         /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToCoolSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
+        /// <param name="tierToColdSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToArchiveSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <returns> A new <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/> instance for mocking. </returns>
-        public static StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime = null, StorageLifecyclePolicyActionSummaryDetail deleteSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary = null)
+        public static StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime = null, StorageLifecyclePolicyActionSummaryDetail deleteSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToColdSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary = null)
         {
-            return new StorageLifecyclePolicyCompletedEventData(scheduleTime, deleteSummary, tierToCoolSummary, tierToArchiveSummary);
+            return new StorageLifecyclePolicyCompletedEventData(scheduleTime, deleteSummary, tierToCoolSummary, tierToColdSummary, tierToArchiveSummary);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageLifecyclePolicyActionSummaryDetail"/>. </summary>
@@ -2103,9 +2104,10 @@ namespace Azure.Messaging.EventGrid
         /// <param name="callerDisplayName"> Display name of caller. </param>
         /// <param name="customContext"> Custom Context of Incoming Call. </param>
         /// <param name="incomingCallContext"> Signed incoming call context. </param>
+        /// <param name="onBehalfOfCallee"> The communication identifier of the user on behalf of whom the call is made. </param>
         /// <param name="correlationId"> CorrelationId (CallId). </param>
         /// <returns> A new <see cref="SystemEvents.AcsIncomingCallEventData"/> instance for mocking. </returns>
-        public static AcsIncomingCallEventData AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier = null, CommunicationIdentifierModel fromCommunicationIdentifier = null, string serverCallId = null, string callerDisplayName = null, AcsIncomingCallCustomContext customContext = null, string incomingCallContext = null, string correlationId = null)
+        public static AcsIncomingCallEventData AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier = null, CommunicationIdentifierModel fromCommunicationIdentifier = null, string serverCallId = null, string callerDisplayName = null, AcsIncomingCallCustomContext customContext = null, string incomingCallContext = null, CommunicationIdentifierModel onBehalfOfCallee = null, string correlationId = null)
         {
             return new AcsIncomingCallEventData(
                 toCommunicationIdentifier,
@@ -2114,6 +2116,7 @@ namespace Azure.Messaging.EventGrid
                 callerDisplayName,
                 customContext,
                 incomingCallContext,
+                onBehalfOfCallee,
                 correlationId);
         }
 
@@ -3533,7 +3536,7 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageInteractiveListReplyContent"/>. </summary>
         /// <param name="listItemId"> The ID of the selected list item. </param>
         /// <param name="title"> The title of the selected list item. </param>
-        /// <param name="description"> The sescription of the selected row. </param>
+        /// <param name="description"> The description of the selected row. </param>
         /// <returns> A new <see cref="SystemEvents.AcsMessageInteractiveListReplyContent"/> instance for mocking. </returns>
         public static AcsMessageInteractiveListReplyContent AcsMessageInteractiveListReplyContent(string listItemId = null, string title = null, string description = null)
         {

@@ -166,14 +166,14 @@ namespace Azure.ResourceManager.Nginx.Tests
             return lro.Value;
         }
 
-        protected static ResourceIdentifier GetSubnetId(VirtualNetworkResource vnet)
+        protected static ResourceIdentifier GetSubnetId(VirtualNetworkResource virtualNetwork)
         {
-            if (vnet == null)
+            if (virtualNetwork == null)
             {
-                throw new ArgumentNullException(nameof(vnet));
+                throw new ArgumentNullException(nameof(virtualNetwork));
             }
 
-            return new ResourceIdentifier(vnet.Data.Subnets.FirstOrDefault().Id);
+            return new ResourceIdentifier(virtualNetwork.Data.Subnets.FirstOrDefault().Id);
         }
 
         protected async Task<PublicIPAddressResource> CreatePublicIP(ResourceGroupResource resourceGroup, AzureLocation location)
@@ -241,8 +241,10 @@ namespace Azure.ResourceManager.Nginx.Tests
 
             NginxDeploymentScalingProperties nginxDeploymentScalingProperties = new NginxDeploymentScalingProperties(10, new List<NginxScaleProfile>(), null);
 
-            AutoUpgradeProfile autoUpgradeProfile = new AutoUpgradeProfile();
-            autoUpgradeProfile.UpgradeChannel = "preview";
+            AutoUpgradeProfile autoUpgradeProfile = new AutoUpgradeProfile
+            {
+                UpgradeChannel = "preview"
+            };
 
             NginxDeploymentProperties deploymentProperties = new NginxDeploymentProperties
             {
@@ -260,7 +262,7 @@ namespace Azure.ResourceManager.Nginx.Tests
             {
                 Identity = identity,
                 Properties = deploymentProperties,
-                SkuName = "standard_Monthly"
+                SkuName = "standardv2-test_Monthly"
             };
             ArmOperation<NginxDeploymentResource> lro = await resourceGroup.GetNginxDeployments().CreateOrUpdateAsync(WaitUntil.Completed, nginxDeploymentName, nginxDeploymentData);
             return lro.Value;

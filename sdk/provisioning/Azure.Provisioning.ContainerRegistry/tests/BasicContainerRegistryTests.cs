@@ -20,43 +20,40 @@ public class BasicContainerRegistryTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "Service location."
-                    };
+                Infrastructure infra = new();
 
                 ContainerRegistryService registry =
                     new(nameof(registry))
                     {
-                        Location = location,
                         Sku = new ContainerRegistrySku { Name = ContainerRegistrySkuName.Standard },
                         IsAdminUserEnabled = false,
                         Tags = { { "displayName", "ContainerRegistry" } }
                     };
                 registry.Tags.Add("container.registry", registry.Name);
+                infra.Add(registry);
 
-                _ = new BicepOutput("registryLoginServer", typeof(string)) { Value = registry.LoginServer };
+                infra.Add(new ProvisioningOutput("registryLoginServer", typeof(string)) { Value = registry.LoginServer });
+
+                return infra;
             })
         .Compare(
             """
-            @description('Service location.')
+            @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
             resource registry 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
-                name: take('registry${uniqueString(resourceGroup().id)}', 50)
-                location: location
-                sku: {
-                    name: 'Standard'
-                }
-                properties: {
-                    adminUserEnabled: false
-                }
-                tags: {
-                    displayName: 'ContainerRegistry'
-                    'container.registry': take('registry${uniqueString(resourceGroup().id)}', 50)
-                }
+              name: take('registry${uniqueString(resourceGroup().id)}', 50)
+              location: location
+              sku: {
+                name: 'Standard'
+              }
+              properties: {
+                adminUserEnabled: false
+              }
+              tags: {
+                displayName: 'ContainerRegistry'
+                'container.registry': take('registry${uniqueString(resourceGroup().id)}', 50)
+              }
             }
 
             output registryLoginServer string = registry.properties.loginServer
