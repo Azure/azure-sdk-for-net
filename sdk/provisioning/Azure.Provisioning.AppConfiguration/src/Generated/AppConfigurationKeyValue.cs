@@ -103,15 +103,15 @@ public partial class AppConfigurationKeyValue : Resource
     /// <summary>
     /// Creates a new AppConfigurationKeyValue.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the AppConfigurationKeyValue resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the AppConfigurationKeyValue.</param>
-    public AppConfigurationKeyValue(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.AppConfiguration/configurationStores/keyValues", resourceVersion ?? "2024-05-01")
+    public AppConfigurationKeyValue(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.AppConfiguration/configurationStores/keyValues", resourceVersion ?? "2024-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _contentType = BicepValue<string>.DefineProperty(this, "ContentType", ["properties", "contentType"]);
@@ -151,7 +151,7 @@ public partial class AppConfigurationKeyValue : Resource
     /// <summary>
     /// Creates a reference to an existing AppConfigurationKeyValue.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the AppConfigurationKeyValue resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -159,6 +159,6 @@ public partial class AppConfigurationKeyValue : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the AppConfigurationKeyValue.</param>
     /// <returns>The existing AppConfigurationKeyValue resource.</returns>
-    public static AppConfigurationKeyValue FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static AppConfigurationKeyValue FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

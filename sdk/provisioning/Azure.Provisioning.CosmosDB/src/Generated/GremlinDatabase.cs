@@ -76,15 +76,15 @@ public partial class GremlinDatabase : Resource
     /// <summary>
     /// Creates a new GremlinDatabase.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the GremlinDatabase resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the GremlinDatabase.</param>
-    public GremlinDatabase(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases", resourceVersion ?? "2024-08-15")
+    public GremlinDatabase(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -236,7 +236,7 @@ public partial class GremlinDatabase : Resource
     /// <summary>
     /// Creates a reference to an existing GremlinDatabase.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the GremlinDatabase resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -244,6 +244,6 @@ public partial class GremlinDatabase : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the GremlinDatabase.</param>
     /// <returns>The existing GremlinDatabase resource.</returns>
-    public static GremlinDatabase FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static GremlinDatabase FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

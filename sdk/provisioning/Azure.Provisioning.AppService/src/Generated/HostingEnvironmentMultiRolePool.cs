@@ -87,15 +87,15 @@ public partial class HostingEnvironmentMultiRolePool : Resource
     /// <summary>
     /// Creates a new HostingEnvironmentMultiRolePool.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the HostingEnvironmentMultiRolePool
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the HostingEnvironmentMultiRolePool.</param>
-    public HostingEnvironmentMultiRolePool(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/hostingEnvironments/multiRolePools", resourceVersion ?? "2024-04-01")
+    public HostingEnvironmentMultiRolePool(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments/multiRolePools", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _computeMode = BicepValue<ComputeModeOption>.DefineProperty(this, "ComputeMode", ["properties", "computeMode"]);
@@ -269,7 +269,7 @@ public partial class HostingEnvironmentMultiRolePool : Resource
     /// <summary>
     /// Creates a reference to an existing HostingEnvironmentMultiRolePool.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the HostingEnvironmentMultiRolePool
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -277,6 +277,6 @@ public partial class HostingEnvironmentMultiRolePool : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the HostingEnvironmentMultiRolePool.</param>
     /// <returns>The existing HostingEnvironmentMultiRolePool resource.</returns>
-    public static HostingEnvironmentMultiRolePool FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static HostingEnvironmentMultiRolePool FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

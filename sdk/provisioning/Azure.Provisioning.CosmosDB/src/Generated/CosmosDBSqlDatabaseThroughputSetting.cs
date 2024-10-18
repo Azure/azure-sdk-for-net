@@ -69,15 +69,15 @@ public partial class CosmosDBSqlDatabaseThroughputSetting : Resource
     /// <summary>
     /// Creates a new CosmosDBSqlDatabaseThroughputSetting.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// CosmosDBSqlDatabaseThroughputSetting resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlDatabaseThroughputSetting.</param>
-    public CosmosDBSqlDatabaseThroughputSetting(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/throughputSettings", resourceVersion ?? "2024-08-15")
+    public CosmosDBSqlDatabaseThroughputSetting(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/throughputSettings", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -228,7 +228,7 @@ public partial class CosmosDBSqlDatabaseThroughputSetting : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBSqlDatabaseThroughputSetting.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// CosmosDBSqlDatabaseThroughputSetting resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -236,6 +236,6 @@ public partial class CosmosDBSqlDatabaseThroughputSetting : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlDatabaseThroughputSetting.</param>
     /// <returns>The existing CosmosDBSqlDatabaseThroughputSetting resource.</returns>
-    public static CosmosDBSqlDatabaseThroughputSetting FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBSqlDatabaseThroughputSetting FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

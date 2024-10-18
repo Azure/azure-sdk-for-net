@@ -80,15 +80,15 @@ public partial class WorkloadClassifier : Resource
     /// <summary>
     /// Creates a new WorkloadClassifier.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WorkloadClassifier resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the WorkloadClassifier.</param>
-    public WorkloadClassifier(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/databases/workloadGroups/workloadClassifiers", resourceVersion ?? "2021-11-01")
+    public WorkloadClassifier(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/workloadGroups/workloadClassifiers", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _context = BicepValue<string>.DefineProperty(this, "Context", ["properties", "context"]);
@@ -121,7 +121,7 @@ public partial class WorkloadClassifier : Resource
     /// <summary>
     /// Creates a reference to an existing WorkloadClassifier.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WorkloadClassifier resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -129,6 +129,6 @@ public partial class WorkloadClassifier : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the WorkloadClassifier.</param>
     /// <returns>The existing WorkloadClassifier resource.</returns>
-    public static WorkloadClassifier FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static WorkloadClassifier FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

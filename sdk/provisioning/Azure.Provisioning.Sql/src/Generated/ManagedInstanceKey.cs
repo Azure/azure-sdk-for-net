@@ -83,15 +83,15 @@ public partial class ManagedInstanceKey : Resource
     /// <summary>
     /// Creates a new ManagedInstanceKey.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ManagedInstanceKey resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceKey.</param>
-    public ManagedInstanceKey(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/managedInstances/keys", resourceVersion ?? "2021-11-01")
+    public ManagedInstanceKey(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/keys", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _serverKeyType = BicepValue<SqlServerKeyType>.DefineProperty(this, "ServerKeyType", ["properties", "serverKeyType"]);
@@ -124,7 +124,7 @@ public partial class ManagedInstanceKey : Resource
     /// <summary>
     /// Creates a reference to an existing ManagedInstanceKey.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ManagedInstanceKey resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -132,6 +132,6 @@ public partial class ManagedInstanceKey : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceKey.</param>
     /// <returns>The existing ManagedInstanceKey resource.</returns>
-    public static ManagedInstanceKey FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceKey FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

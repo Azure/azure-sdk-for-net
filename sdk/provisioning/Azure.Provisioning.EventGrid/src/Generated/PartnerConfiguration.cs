@@ -63,15 +63,15 @@ public partial class PartnerConfiguration : Resource
     /// <summary>
     /// Creates a new PartnerConfiguration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PartnerConfiguration resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the PartnerConfiguration.</param>
-    public PartnerConfiguration(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventGrid/partnerConfigurations", resourceVersion ?? "2022-06-15")
+    public PartnerConfiguration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/partnerConfigurations", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -101,7 +101,7 @@ public partial class PartnerConfiguration : Resource
     /// <summary>
     /// Creates a reference to an existing PartnerConfiguration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PartnerConfiguration resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -109,6 +109,6 @@ public partial class PartnerConfiguration : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the PartnerConfiguration.</param>
     /// <returns>The existing PartnerConfiguration resource.</returns>
-    public static PartnerConfiguration FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static PartnerConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

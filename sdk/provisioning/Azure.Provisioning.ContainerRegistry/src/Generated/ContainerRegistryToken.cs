@@ -77,15 +77,15 @@ public partial class ContainerRegistryToken : Resource
     /// <summary>
     /// Creates a new ContainerRegistryToken.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerRegistryToken resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryToken.</param>
-    public ContainerRegistryToken(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.ContainerRegistry/registries/tokens", resourceVersion ?? "2023-07-01")
+    public ContainerRegistryToken(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/tokens", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _credentials = BicepValue<ContainerRegistryTokenCredentials>.DefineProperty(this, "Credentials", ["properties", "credentials"]);
@@ -122,7 +122,7 @@ public partial class ContainerRegistryToken : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerRegistryToken.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerRegistryToken resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -130,8 +130,8 @@ public partial class ContainerRegistryToken : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryToken.</param>
     /// <returns>The existing ContainerRegistryToken resource.</returns>
-    public static ContainerRegistryToken FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ContainerRegistryToken FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ContainerRegistryToken resource.

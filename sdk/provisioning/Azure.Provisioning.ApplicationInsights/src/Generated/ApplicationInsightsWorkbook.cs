@@ -134,15 +134,15 @@ public partial class ApplicationInsightsWorkbook : Resource
     /// <summary>
     /// Creates a new ApplicationInsightsWorkbook.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ApplicationInsightsWorkbook
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsWorkbook.</param>
-    public ApplicationInsightsWorkbook(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Insights/workbooks", resourceVersion ?? "2023-06-01")
+    public ApplicationInsightsWorkbook(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Insights/workbooks", resourceVersion ?? "2023-06-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -203,7 +203,7 @@ public partial class ApplicationInsightsWorkbook : Resource
     /// <summary>
     /// Creates a reference to an existing ApplicationInsightsWorkbook.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ApplicationInsightsWorkbook
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -211,6 +211,6 @@ public partial class ApplicationInsightsWorkbook : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsWorkbook.</param>
     /// <returns>The existing ApplicationInsightsWorkbook resource.</returns>
-    public static ApplicationInsightsWorkbook FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ApplicationInsightsWorkbook FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

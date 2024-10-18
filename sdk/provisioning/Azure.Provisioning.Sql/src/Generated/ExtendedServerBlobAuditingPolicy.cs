@@ -218,15 +218,15 @@ public partial class ExtendedServerBlobAuditingPolicy : Resource
     /// <summary>
     /// Creates a new ExtendedServerBlobAuditingPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ExtendedServerBlobAuditingPolicy
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ExtendedServerBlobAuditingPolicy.</param>
-    public ExtendedServerBlobAuditingPolicy(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/extendedAuditingSettings", resourceVersion ?? "2021-11-01")
+    public ExtendedServerBlobAuditingPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/extendedAuditingSettings", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _auditActionsAndGroups = BicepList<string>.DefineProperty(this, "AuditActionsAndGroups", ["properties", "auditActionsAndGroups"]);
@@ -265,7 +265,7 @@ public partial class ExtendedServerBlobAuditingPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing ExtendedServerBlobAuditingPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ExtendedServerBlobAuditingPolicy
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -273,6 +273,6 @@ public partial class ExtendedServerBlobAuditingPolicy : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ExtendedServerBlobAuditingPolicy.</param>
     /// <returns>The existing ExtendedServerBlobAuditingPolicy resource.</returns>
-    public static ExtendedServerBlobAuditingPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ExtendedServerBlobAuditingPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

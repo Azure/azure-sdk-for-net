@@ -82,7 +82,7 @@ public partial class EventHubsAccessKeys : ProvisioningConstruct
     /// </param>
     /// <returns>A EventHubsAccessKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static EventHubsAccessKeys FromExpression(Expression expression)
+    public static EventHubsAccessKeys FromExpression(BicepExpression expression)
     {
         EventHubsAccessKeys resource = new();
         resource.OverrideWithExpression(expression);

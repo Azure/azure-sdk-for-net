@@ -195,15 +195,15 @@ public partial class EventGridDomain : Resource
     /// <summary>
     /// Creates a new EventGridDomain.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventGridDomain resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridDomain.</param>
-    public EventGridDomain(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventGrid/domains", resourceVersion ?? "2022-06-15")
+    public EventGridDomain(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/domains", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -262,7 +262,7 @@ public partial class EventGridDomain : Resource
     /// <summary>
     /// Creates a reference to an existing EventGridDomain.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventGridDomain resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -270,8 +270,8 @@ public partial class EventGridDomain : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridDomain.</param>
     /// <returns>The existing EventGridDomain resource.</returns>
-    public static EventGridDomain FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static EventGridDomain FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this EventGridDomain resource.

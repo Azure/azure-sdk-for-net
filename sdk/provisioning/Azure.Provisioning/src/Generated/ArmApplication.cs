@@ -201,15 +201,15 @@ public partial class ArmApplication : Resource
     /// <summary>
     /// Creates a new ArmApplication.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ArmApplication resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ArmApplication.</param>
-    public ArmApplication(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Solutions/applications", resourceVersion ?? "2021-07-01")
+    public ArmApplication(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Solutions/applications", resourceVersion ?? "2021-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isRequired: true);
@@ -282,7 +282,7 @@ public partial class ArmApplication : Resource
     /// <summary>
     /// Creates a reference to an existing ArmApplication.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ArmApplication resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -290,6 +290,6 @@ public partial class ArmApplication : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ArmApplication.</param>
     /// <returns>The existing ArmApplication resource.</returns>
-    public static ArmApplication FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ArmApplication FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

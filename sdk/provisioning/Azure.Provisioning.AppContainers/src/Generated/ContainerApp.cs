@@ -148,15 +148,15 @@ public partial class ContainerApp : Resource
     /// <summary>
     /// Creates a new ContainerApp.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerApp resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerApp.</param>
-    public ContainerApp(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.App/containerApps", resourceVersion ?? "2024-03-01")
+    public ContainerApp(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/containerApps", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -214,7 +214,7 @@ public partial class ContainerApp : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerApp.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerApp resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -222,8 +222,8 @@ public partial class ContainerApp : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerApp.</param>
     /// <returns>The existing ContainerApp resource.</returns>
-    public static ContainerApp FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ContainerApp FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ContainerApp resource.

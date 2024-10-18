@@ -76,15 +76,15 @@ public partial class CassandraViewGetResult : Resource
     /// <summary>
     /// Creates a new CassandraViewGetResult.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CassandraViewGetResult resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CassandraViewGetResult.</param>
-    public CassandraViewGetResult(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/views", resourceVersion ?? "2024-08-15")
+    public CassandraViewGetResult(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/views", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -236,7 +236,7 @@ public partial class CassandraViewGetResult : Resource
     /// <summary>
     /// Creates a reference to an existing CassandraViewGetResult.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CassandraViewGetResult resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -244,6 +244,6 @@ public partial class CassandraViewGetResult : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CassandraViewGetResult.</param>
     /// <returns>The existing CassandraViewGetResult resource.</returns>
-    public static CassandraViewGetResult FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CassandraViewGetResult FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

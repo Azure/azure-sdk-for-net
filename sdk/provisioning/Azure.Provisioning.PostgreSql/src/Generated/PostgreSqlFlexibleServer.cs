@@ -193,15 +193,15 @@ public partial class PostgreSqlFlexibleServer : Resource
     /// <summary>
     /// Creates a new PostgreSqlFlexibleServer.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PostgreSqlFlexibleServer resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServer.</param>
-    public PostgreSqlFlexibleServer(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DBforPostgreSQL/flexibleServers", resourceVersion ?? "2024-08-01")
+    public PostgreSqlFlexibleServer(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -256,7 +256,7 @@ public partial class PostgreSqlFlexibleServer : Resource
     /// <summary>
     /// Creates a reference to an existing PostgreSqlFlexibleServer.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PostgreSqlFlexibleServer resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -264,8 +264,8 @@ public partial class PostgreSqlFlexibleServer : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServer.</param>
     /// <returns>The existing PostgreSqlFlexibleServer resource.</returns>
-    public static PostgreSqlFlexibleServer FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlFlexibleServer FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this PostgreSqlFlexibleServer resource.

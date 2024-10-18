@@ -69,15 +69,15 @@ public partial class GremlinGraphThroughputSetting : Resource
     /// <summary>
     /// Creates a new GremlinGraphThroughputSetting.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the GremlinGraphThroughputSetting
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the GremlinGraphThroughputSetting.</param>
-    public GremlinGraphThroughputSetting(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs/throughputSettings", resourceVersion ?? "2024-08-15")
+    public GremlinGraphThroughputSetting(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs/throughputSettings", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -228,7 +228,7 @@ public partial class GremlinGraphThroughputSetting : Resource
     /// <summary>
     /// Creates a reference to an existing GremlinGraphThroughputSetting.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the GremlinGraphThroughputSetting
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -236,6 +236,6 @@ public partial class GremlinGraphThroughputSetting : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the GremlinGraphThroughputSetting.</param>
     /// <returns>The existing GremlinGraphThroughputSetting resource.</returns>
-    public static GremlinGraphThroughputSetting FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static GremlinGraphThroughputSetting FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

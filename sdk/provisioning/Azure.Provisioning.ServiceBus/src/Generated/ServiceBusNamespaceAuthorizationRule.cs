@@ -59,15 +59,15 @@ public partial class ServiceBusNamespaceAuthorizationRule : Resource
     /// <summary>
     /// Creates a new ServiceBusNamespaceAuthorizationRule.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ServiceBusNamespaceAuthorizationRule resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusNamespaceAuthorizationRule.</param>
-    public ServiceBusNamespaceAuthorizationRule(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.ServiceBus/namespaces/AuthorizationRules", resourceVersion ?? "2024-01-01")
+    public ServiceBusNamespaceAuthorizationRule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/AuthorizationRules", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _rights = BicepList<ServiceBusAccessRight>.DefineProperty(this, "Rights", ["properties", "rights"]);
@@ -101,7 +101,7 @@ public partial class ServiceBusNamespaceAuthorizationRule : Resource
     /// <summary>
     /// Creates a reference to an existing ServiceBusNamespaceAuthorizationRule.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ServiceBusNamespaceAuthorizationRule resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -109,8 +109,8 @@ public partial class ServiceBusNamespaceAuthorizationRule : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusNamespaceAuthorizationRule.</param>
     /// <returns>The existing ServiceBusNamespaceAuthorizationRule resource.</returns>
-    public static ServiceBusNamespaceAuthorizationRule FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusNamespaceAuthorizationRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this
@@ -127,5 +127,5 @@ public partial class ServiceBusNamespaceAuthorizationRule : Resource
     /// <returns>The keys for this ServiceBusNamespaceAuthorizationRule resource.</returns>
     public ServiceBusAccessKeys GetKeys() =>
         ServiceBusAccessKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(IdentifierName), "listKeys")));
+            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
 }

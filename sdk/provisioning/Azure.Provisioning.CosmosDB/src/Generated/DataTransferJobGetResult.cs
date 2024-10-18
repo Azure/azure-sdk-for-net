@@ -138,15 +138,15 @@ public partial class DataTransferJobGetResult : Resource
     /// <summary>
     /// Creates a new DataTransferJobGetResult.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the DataTransferJobGetResult resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the DataTransferJobGetResult.</param>
-    public DataTransferJobGetResult(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/dataTransferJobs", resourceVersion ?? "2024-08-15")
+    public DataTransferJobGetResult(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/dataTransferJobs", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<DataTransferJobProperties>.DefineProperty(this, "Properties", ["properties"], isRequired: true);
@@ -305,7 +305,7 @@ public partial class DataTransferJobGetResult : Resource
     /// <summary>
     /// Creates a reference to an existing DataTransferJobGetResult.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the DataTransferJobGetResult resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -313,6 +313,6 @@ public partial class DataTransferJobGetResult : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the DataTransferJobGetResult.</param>
     /// <returns>The existing DataTransferJobGetResult resource.</returns>
-    public static DataTransferJobGetResult FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static DataTransferJobGetResult FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

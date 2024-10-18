@@ -123,15 +123,15 @@ public partial class SiteInstanceExtension : Resource
     /// <summary>
     /// Creates a new SiteInstanceExtension.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteInstanceExtension resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SiteInstanceExtension.</param>
-    public SiteInstanceExtension(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/instances/extensions", resourceVersion)
+    public SiteInstanceExtension(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/instances/extensions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _connectionString = BicepValue<string>.DefineProperty(this, "ConnectionString", ["properties", "connectionString"]);
@@ -154,7 +154,7 @@ public partial class SiteInstanceExtension : Resource
     /// <summary>
     /// Creates a reference to an existing SiteInstanceExtension.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteInstanceExtension resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -162,6 +162,6 @@ public partial class SiteInstanceExtension : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteInstanceExtension.</param>
     /// <returns>The existing SiteInstanceExtension resource.</returns>
-    public static SiteInstanceExtension FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SiteInstanceExtension FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -65,15 +65,15 @@ public partial class CognitiveServicesAccountDeployment : Resource
     /// <summary>
     /// Creates a new CognitiveServicesAccountDeployment.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CognitiveServicesAccountDeployment
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CognitiveServicesAccountDeployment.</param>
-    public CognitiveServicesAccountDeployment(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.CognitiveServices/accounts/deployments", resourceVersion ?? "2024-10-01")
+    public CognitiveServicesAccountDeployment(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts/deployments", resourceVersion ?? "2024-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<CognitiveServicesAccountDeploymentProperties>.DefineProperty(this, "Properties", ["properties"]);
@@ -133,7 +133,7 @@ public partial class CognitiveServicesAccountDeployment : Resource
     /// <summary>
     /// Creates a reference to an existing CognitiveServicesAccountDeployment.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CognitiveServicesAccountDeployment
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -141,6 +141,6 @@ public partial class CognitiveServicesAccountDeployment : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CognitiveServicesAccountDeployment.</param>
     /// <returns>The existing CognitiveServicesAccountDeployment resource.</returns>
-    public static CognitiveServicesAccountDeployment FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CognitiveServicesAccountDeployment FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

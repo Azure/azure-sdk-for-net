@@ -51,15 +51,15 @@ public partial class CassandraDataCenter : Resource
     /// <summary>
     /// Creates a new CassandraDataCenter.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CassandraDataCenter resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CassandraDataCenter.</param>
-    public CassandraDataCenter(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/cassandraClusters/dataCenters", resourceVersion ?? "2024-08-15")
+    public CassandraDataCenter(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/cassandraClusters/dataCenters", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<CassandraDataCenterProperties>.DefineProperty(this, "Properties", ["properties"]);
@@ -132,7 +132,7 @@ public partial class CassandraDataCenter : Resource
     /// <summary>
     /// Creates a reference to an existing CassandraDataCenter.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CassandraDataCenter resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -140,6 +140,6 @@ public partial class CassandraDataCenter : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CassandraDataCenter.</param>
     /// <returns>The existing CassandraDataCenter resource.</returns>
-    public static CassandraDataCenter FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CassandraDataCenter FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

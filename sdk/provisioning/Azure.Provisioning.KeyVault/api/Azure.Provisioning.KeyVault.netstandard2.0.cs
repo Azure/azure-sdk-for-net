@@ -219,7 +219,7 @@ namespace Azure.Provisioning.KeyVault
     }
     public partial class KeyVaultPrivateEndpointConnection : Azure.Provisioning.Primitives.Resource
     {
-        public KeyVaultPrivateEndpointConnection(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public KeyVaultPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.KeyVaultPrivateLinkServiceConnectionState> ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -230,7 +230,7 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.KeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
-        public static Azure.Provisioning.KeyVault.KeyVaultPrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.KeyVault.KeyVaultPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2015_06_01;
@@ -306,7 +306,7 @@ namespace Azure.Provisioning.KeyVault
     }
     public partial class KeyVaultSecret : Azure.Provisioning.Primitives.Resource
     {
-        public KeyVaultSecret(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public KeyVaultSecret(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -314,7 +314,7 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.SecretProperties> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.KeyVault.KeyVaultSecret FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.KeyVault.KeyVaultSecret FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -334,16 +334,16 @@ namespace Azure.Provisioning.KeyVault
     }
     public partial class KeyVaultService : Azure.Provisioning.Primitives.Resource
     {
-        public KeyVaultService(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public KeyVaultService(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.KeyVaultProperties> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? identifierNameSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
-        public static Azure.Provisioning.KeyVault.KeyVaultService FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.KeyVault.KeyVaultService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -386,7 +386,7 @@ namespace Azure.Provisioning.KeyVault
     }
     public partial class ManagedHsm : Azure.Provisioning.Primitives.Resource
     {
-        public ManagedHsm(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedHsm(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -394,7 +394,7 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.ManagedHsmSku> Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.KeyVault.ManagedHsm FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.KeyVault.ManagedHsm FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_10_01;
@@ -458,7 +458,7 @@ namespace Azure.Provisioning.KeyVault
     }
     public partial class ManagedHsmPrivateEndpointConnection : Azure.Provisioning.Primitives.Resource
     {
-        public ManagedHsmPrivateEndpointConnection(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedHsmPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
@@ -470,7 +470,7 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.ManagedHsmSku> Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.KeyVault.ManagedHsmPrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.KeyVault.ManagedHsmPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_10_01;

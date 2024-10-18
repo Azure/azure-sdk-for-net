@@ -59,7 +59,7 @@ public partial class WebPubSubKeys : ProvisioningConstruct
     /// </param>
     /// <returns>A WebPubSubKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static WebPubSubKeys FromExpression(Expression expression)
+    public static WebPubSubKeys FromExpression(BicepExpression expression)
     {
         WebPubSubKeys resource = new();
         resource.OverrideWithExpression(expression);

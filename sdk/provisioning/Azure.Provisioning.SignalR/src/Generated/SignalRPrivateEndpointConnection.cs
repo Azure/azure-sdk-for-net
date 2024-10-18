@@ -69,15 +69,15 @@ public partial class SignalRPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new SignalRPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SignalRPrivateEndpointConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SignalRPrivateEndpointConnection.</param>
-    public SignalRPrivateEndpointConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.SignalRService/signalR/privateEndpointConnections", resourceVersion ?? "2024-03-01")
+    public SignalRPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.SignalRService/signalR/privateEndpointConnections", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<SignalRPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -133,7 +133,7 @@ public partial class SignalRPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing SignalRPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SignalRPrivateEndpointConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -141,6 +141,6 @@ public partial class SignalRPrivateEndpointConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SignalRPrivateEndpointConnection.</param>
     /// <returns>The existing SignalRPrivateEndpointConnection resource.</returns>
-    public static SignalRPrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SignalRPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -47,7 +47,7 @@ public partial class RedisAccessKeys : ProvisioningConstruct
     /// </param>
     /// <returns>A RedisAccessKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static RedisAccessKeys FromExpression(Expression expression)
+    public static RedisAccessKeys FromExpression(BicepExpression expression)
     {
         RedisAccessKeys resource = new();
         resource.OverrideWithExpression(expression);

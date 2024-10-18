@@ -65,15 +65,15 @@ public partial class SiteNetworkConfig : Resource
     /// <summary>
     /// Creates a new SiteNetworkConfig.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteNetworkConfig resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SiteNetworkConfig.</param>
-    public SiteNetworkConfig(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/networkConfig", resourceVersion ?? "2024-04-01")
+    public SiteNetworkConfig(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/networkConfig", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _isSwiftSupported = BicepValue<bool>.DefineProperty(this, "IsSwiftSupported", ["properties", "swiftSupported"]);
@@ -213,7 +213,7 @@ public partial class SiteNetworkConfig : Resource
     /// <summary>
     /// Creates a reference to an existing SiteNetworkConfig.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteNetworkConfig resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -221,6 +221,6 @@ public partial class SiteNetworkConfig : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteNetworkConfig.</param>
     /// <returns>The existing SiteNetworkConfig resource.</returns>
-    public static SiteNetworkConfig FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SiteNetworkConfig FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

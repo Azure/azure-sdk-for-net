@@ -103,15 +103,15 @@ public partial class CommunicationService : Resource
     /// <summary>
     /// Creates a new CommunicationService.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CommunicationService resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CommunicationService.</param>
-    public CommunicationService(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Communication/communicationServices", resourceVersion ?? "2023-04-01")
+    public CommunicationService(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Communication/communicationServices", resourceVersion ?? "2023-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -157,7 +157,7 @@ public partial class CommunicationService : Resource
     /// <summary>
     /// Creates a reference to an existing CommunicationService.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CommunicationService resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -165,8 +165,8 @@ public partial class CommunicationService : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CommunicationService.</param>
     /// <returns>The existing CommunicationService resource.</returns>
-    public static CommunicationService FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CommunicationService FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this CommunicationService resource.
@@ -182,5 +182,5 @@ public partial class CommunicationService : Resource
     /// <returns>The keys for this CommunicationService resource.</returns>
     public CommunicationServiceKeys GetKeys() =>
         CommunicationServiceKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(IdentifierName), "listKeys")));
+            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
 }

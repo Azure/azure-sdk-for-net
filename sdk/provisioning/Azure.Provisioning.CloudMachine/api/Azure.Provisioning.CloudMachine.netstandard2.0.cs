@@ -106,7 +106,7 @@ namespace Azure.Provisioning.CloudMachine
         public Azure.Provisioning.ProvisioningParameter PrincipalIdParameter { get { throw null; } }
         public void AddFeature(Azure.Provisioning.CloudMachine.CloudMachineFeature resource) { }
         public void AddResource(Azure.Provisioning.Primitives.NamedProvisioningConstruct resource) { }
-        public Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
+        public Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningBuildOptions? context = null) { throw null; }
         public static bool Configure(string[] args, System.Action<Azure.Provisioning.CloudMachine.CloudMachineInfrastructure>? configure = null) { throw null; }
     }
 }

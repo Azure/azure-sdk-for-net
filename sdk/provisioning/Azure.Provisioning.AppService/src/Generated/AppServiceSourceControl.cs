@@ -68,15 +68,15 @@ public partial class AppServiceSourceControl : Resource
     /// <summary>
     /// Creates a new AppServiceSourceControl.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the AppServiceSourceControl resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the AppServiceSourceControl.</param>
-    public AppServiceSourceControl(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sourcecontrols", resourceVersion ?? "2024-04-01")
+    public AppServiceSourceControl(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sourcecontrols", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _expireOn = BicepValue<DateTimeOffset>.DefineProperty(this, "ExpireOn", ["properties", "expirationTime"]);
@@ -227,7 +227,7 @@ public partial class AppServiceSourceControl : Resource
     /// <summary>
     /// Creates a reference to an existing AppServiceSourceControl.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the AppServiceSourceControl resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -235,6 +235,6 @@ public partial class AppServiceSourceControl : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the AppServiceSourceControl.</param>
     /// <returns>The existing AppServiceSourceControl resource.</returns>
-    public static AppServiceSourceControl FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static AppServiceSourceControl FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

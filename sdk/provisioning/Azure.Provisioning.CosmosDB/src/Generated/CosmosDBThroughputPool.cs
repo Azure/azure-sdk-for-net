@@ -63,15 +63,15 @@ public partial class CosmosDBThroughputPool : Resource
     /// <summary>
     /// Creates a new CosmosDBThroughputPool.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CosmosDBThroughputPool resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBThroughputPool.</param>
-    public CosmosDBThroughputPool(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/throughputPools", resourceVersion ?? "2024-02-15-preview")
+    public CosmosDBThroughputPool(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/throughputPools", resourceVersion ?? "2024-02-15-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -96,7 +96,7 @@ public partial class CosmosDBThroughputPool : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBThroughputPool.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CosmosDBThroughputPool resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -104,6 +104,6 @@ public partial class CosmosDBThroughputPool : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBThroughputPool.</param>
     /// <returns>The existing CosmosDBThroughputPool resource.</returns>
-    public static CosmosDBThroughputPool FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBThroughputPool FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

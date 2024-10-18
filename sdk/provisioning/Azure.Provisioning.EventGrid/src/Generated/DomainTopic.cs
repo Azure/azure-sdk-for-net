@@ -51,15 +51,15 @@ public partial class DomainTopic : Resource
     /// <summary>
     /// Creates a new DomainTopic.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the DomainTopic resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the DomainTopic.</param>
-    public DomainTopic(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventGrid/domains/topics", resourceVersion ?? "2022-06-15")
+    public DomainTopic(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/domains/topics", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
@@ -102,7 +102,7 @@ public partial class DomainTopic : Resource
     /// <summary>
     /// Creates a reference to an existing DomainTopic.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the DomainTopic resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -110,8 +110,8 @@ public partial class DomainTopic : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the DomainTopic.</param>
     /// <returns>The existing DomainTopic resource.</returns>
-    public static DomainTopic FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static DomainTopic FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this DomainTopic resource.

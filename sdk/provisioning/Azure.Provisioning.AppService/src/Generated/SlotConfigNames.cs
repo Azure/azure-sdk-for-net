@@ -69,15 +69,15 @@ public partial class SlotConfigNames : Resource
     /// <summary>
     /// Creates a new SlotConfigNames.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SlotConfigNames resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SlotConfigNames.</param>
-    public SlotConfigNames(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/config", resourceVersion ?? "2024-04-01")
+    public SlotConfigNames(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/config", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _appSettingNames = BicepList<string>.DefineProperty(this, "AppSettingNames", ["properties", "appSettingNames"]);
@@ -253,7 +253,7 @@ public partial class SlotConfigNames : Resource
     /// <summary>
     /// Creates a reference to an existing SlotConfigNames.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SlotConfigNames resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -261,6 +261,6 @@ public partial class SlotConfigNames : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SlotConfigNames.</param>
     /// <returns>The existing SlotConfigNames resource.</returns>
-    public static SlotConfigNames FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SlotConfigNames FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

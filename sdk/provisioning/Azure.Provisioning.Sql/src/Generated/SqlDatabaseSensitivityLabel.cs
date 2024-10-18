@@ -100,15 +100,15 @@ public partial class SqlDatabaseSensitivityLabel : Resource
     /// <summary>
     /// Creates a new SqlDatabaseSensitivityLabel.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlDatabaseSensitivityLabel
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SqlDatabaseSensitivityLabel.</param>
-    public SqlDatabaseSensitivityLabel(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/databases/schemas/tables/columns/sensitivityLabels", resourceVersion)
+    public SqlDatabaseSensitivityLabel(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/schemas/tables/columns/sensitivityLabels", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _informationType = BicepValue<string>.DefineProperty(this, "InformationType", ["properties", "informationType"]);
@@ -128,7 +128,7 @@ public partial class SqlDatabaseSensitivityLabel : Resource
     /// <summary>
     /// Creates a reference to an existing SqlDatabaseSensitivityLabel.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlDatabaseSensitivityLabel
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -136,6 +136,6 @@ public partial class SqlDatabaseSensitivityLabel : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlDatabaseSensitivityLabel.</param>
     /// <returns>The existing SqlDatabaseSensitivityLabel resource.</returns>
-    public static SqlDatabaseSensitivityLabel FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SqlDatabaseSensitivityLabel FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

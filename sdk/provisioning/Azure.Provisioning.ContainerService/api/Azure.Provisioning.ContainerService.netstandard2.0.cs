@@ -28,7 +28,7 @@ namespace Azure.Provisioning.ContainerService
     }
     public partial class AgentPoolSnapshot : Azure.Provisioning.Primitives.Resource
     {
-        public AgentPoolSnapshot(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public AgentPoolSnapshot(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> CreationDataSourceResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableFips { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -42,7 +42,7 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> VmSize { get { throw null; } }
-        public static Azure.Provisioning.ContainerService.AgentPoolSnapshot FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ContainerService.AgentPoolSnapshot FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_08_01;
@@ -101,7 +101,7 @@ namespace Azure.Provisioning.ContainerService
     }
     public partial class ContainerServiceAgentPool : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerServiceAgentPool(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerServiceAgentPool(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> AvailabilityZones { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> CapacityReservationGroupId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Count { get { throw null; } set { } }
@@ -149,7 +149,7 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<string> VmSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VnetSubnetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.WorkloadRuntime> WorkloadRuntime { get { throw null; } set { } }
-        public static Azure.Provisioning.ContainerService.ContainerServiceAgentPool FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ContainerService.ContainerServiceAgentPool FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -266,7 +266,7 @@ namespace Azure.Provisioning.ContainerService
     }
     public partial class ContainerServiceMaintenanceConfiguration : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerServiceMaintenanceConfiguration(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerServiceMaintenanceConfiguration(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceMaintenanceWindow> MaintenanceWindow { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -274,7 +274,7 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.ContainerService.ContainerServiceManagedCluster? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.ContainerServiceTimeInWeek> TimesInWeek { get { throw null; } set { } }
-        public static Azure.Provisioning.ContainerService.ContainerServiceMaintenanceConfiguration FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ContainerService.ContainerServiceMaintenanceConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2017_08_31;
@@ -371,7 +371,7 @@ namespace Azure.Provisioning.ContainerService
     }
     public partial class ContainerServiceManagedCluster : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerServiceManagedCluster(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerServiceManagedCluster(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ManagedClusterAadProfile> AadProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.ContainerService.ManagedClusterAddonProfile> AddonProfiles { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.ManagedClusterAgentPoolProfile> AgentPoolProfiles { get { throw null; } set { } }
@@ -419,9 +419,9 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.UpgradeOverrideSettings> UpgradeOverrideSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ManagedClusterWindowsProfile> WindowsProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ManagedClusterWorkloadAutoScalerProfile> WorkloadAutoScalerProfile { get { throw null; } set { } }
-        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? identifierNameSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
-        public static Azure.Provisioning.ContainerService.ContainerServiceManagedCluster FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ContainerService.ContainerServiceManagedCluster FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -560,7 +560,7 @@ namespace Azure.Provisioning.ContainerService
     }
     public partial class ContainerServicePrivateEndpointConnection : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerServicePrivateEndpointConnection(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerServicePrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServicePrivateLinkServiceConnectionState> ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -568,7 +568,7 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServicePrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.ContainerService.ContainerServicePrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ContainerService.ContainerServicePrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2017_08_31;
@@ -684,7 +684,7 @@ namespace Azure.Provisioning.ContainerService
     }
     public partial class ContainerServiceTrustedAccessRoleBinding : Azure.Provisioning.Primitives.Resource
     {
-        public ContainerServiceTrustedAccessRoleBinding(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ContainerServiceTrustedAccessRoleBinding(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ContainerServiceManagedCluster? Parent { get { throw null; } set { } }
@@ -692,7 +692,7 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepList<string> Roles { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.ContainerService.ContainerServiceTrustedAccessRoleBinding FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ContainerService.ContainerServiceTrustedAccessRoleBinding FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2017_08_31;

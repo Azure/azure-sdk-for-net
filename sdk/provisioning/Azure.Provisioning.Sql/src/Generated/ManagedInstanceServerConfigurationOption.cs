@@ -56,7 +56,7 @@ public partial class ManagedInstanceServerConfigurationOption : Resource
     /// <summary>
     /// Creates a new ManagedInstanceServerConfigurationOption.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ManagedInstanceServerConfigurationOption resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -64,8 +64,8 @@ public partial class ManagedInstanceServerConfigurationOption : Resource
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceServerConfigurationOption.</param>
-    public ManagedInstanceServerConfigurationOption(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/managedInstances/serverConfigurationOptions", resourceVersion ?? "2021-11-01")
+    public ManagedInstanceServerConfigurationOption(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/serverConfigurationOptions", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _serverConfigurationOptionValue = BicepValue<int>.DefineProperty(this, "ServerConfigurationOptionValue", ["properties", "serverConfigurationOptionValue"]);
@@ -95,7 +95,7 @@ public partial class ManagedInstanceServerConfigurationOption : Resource
     /// Creates a reference to an existing
     /// ManagedInstanceServerConfigurationOption.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ManagedInstanceServerConfigurationOption resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -104,6 +104,6 @@ public partial class ManagedInstanceServerConfigurationOption : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceServerConfigurationOption.</param>
     /// <returns>The existing ManagedInstanceServerConfigurationOption resource.</returns>
-    public static ManagedInstanceServerConfigurationOption FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceServerConfigurationOption FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

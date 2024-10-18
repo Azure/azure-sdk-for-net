@@ -128,15 +128,15 @@ public partial class GenericResource : Resource
     /// <summary>
     /// Creates a new GenericResource.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the GenericResource resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the GenericResource.</param>
-    public GenericResource(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "", resourceVersion)
+    public GenericResource(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -158,7 +158,7 @@ public partial class GenericResource : Resource
     /// <summary>
     /// Creates a reference to an existing GenericResource.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the GenericResource resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -166,6 +166,6 @@ public partial class GenericResource : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the GenericResource.</param>
     /// <returns>The existing GenericResource resource.</returns>
-    public static GenericResource FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static GenericResource FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

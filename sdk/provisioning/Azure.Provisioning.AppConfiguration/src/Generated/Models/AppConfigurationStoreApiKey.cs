@@ -75,7 +75,7 @@ public partial class AppConfigurationStoreApiKey : ProvisioningConstruct
     /// </param>
     /// <returns>A AppConfigurationStoreApiKey resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static AppConfigurationStoreApiKey FromExpression(Expression expression)
+    public static AppConfigurationStoreApiKey FromExpression(BicepExpression expression)
     {
         AppConfigurationStoreApiKey resource = new();
         resource.OverrideWithExpression(expression);

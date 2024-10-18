@@ -69,15 +69,15 @@ public partial class SenderUsername : Resource
     /// <summary>
     /// Creates a new SenderUsername.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SenderUsername resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SenderUsername.</param>
-    public SenderUsername(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Communication/emailServices/domains/senderUsernames", resourceVersion ?? "2023-04-01")
+    public SenderUsername(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Communication/emailServices/domains/senderUsernames", resourceVersion ?? "2023-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["properties", "displayName"]);
@@ -113,7 +113,7 @@ public partial class SenderUsername : Resource
     /// <summary>
     /// Creates a reference to an existing SenderUsername.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SenderUsername resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -121,6 +121,6 @@ public partial class SenderUsername : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SenderUsername.</param>
     /// <returns>The existing SenderUsername resource.</returns>
-    public static SenderUsername FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SenderUsername FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

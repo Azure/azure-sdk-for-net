@@ -33,7 +33,7 @@ namespace Azure.Provisioning.SignalR
     }
     public partial class SignalRCustomCertificate : Azure.Provisioning.Primitives.Resource
     {
-        public SignalRCustomCertificate(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SignalRCustomCertificate(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> KeyVaultBaseUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KeyVaultSecretName { get { throw null; } set { } }
@@ -42,7 +42,7 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.SignalR.SignalRService? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.SignalR.SignalRCustomCertificate FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.SignalR.SignalRCustomCertificate FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2018_10_01;
@@ -56,7 +56,7 @@ namespace Azure.Provisioning.SignalR
     }
     public partial class SignalRCustomDomain : Azure.Provisioning.Primitives.Resource
     {
-        public SignalRCustomDomain(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SignalRCustomDomain(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> CustomCertificateId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DomainName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -64,7 +64,7 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.SignalR.SignalRService? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.SignalR.SignalRCustomDomain FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.SignalR.SignalRCustomDomain FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2020_05_01;
@@ -97,7 +97,7 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepValue<string> SecondaryConnectionString { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecondaryKey { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.SignalR.SignalRKeys FromExpression(Azure.Provisioning.Expressions.Expression expression) { throw null; }
+        public static Azure.Provisioning.SignalR.SignalRKeys FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
     }
     public partial class SignalRLiveTraceCategory : Azure.Provisioning.Primitives.ProvisioningConstruct
     {
@@ -136,7 +136,7 @@ namespace Azure.Provisioning.SignalR
     }
     public partial class SignalRPrivateEndpointConnection : Azure.Provisioning.Primitives.Resource
     {
-        public SignalRPrivateEndpointConnection(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SignalRPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRPrivateLinkServiceConnectionState> ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -145,7 +145,7 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.SignalR.SignalRPrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.SignalR.SignalRPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2018_10_01;
@@ -212,7 +212,7 @@ namespace Azure.Provisioning.SignalR
     }
     public partial class SignalRService : Azure.Provisioning.Primitives.Resource
     {
-        public SignalRService(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SignalRService(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> CorsAllowedOrigins { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> DisableAadAuth { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> DisableLocalAuth { get { throw null; } set { } }
@@ -240,9 +240,9 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRUpstreamTemplate> UpstreamTemplates { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
-        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.SignalR.SignalRBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? identifierNameSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.SignalR.SignalRBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.SignalR.SignalRBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
-        public static Azure.Provisioning.SignalR.SignalRService FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.SignalR.SignalRService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.SignalR.SignalRKeys GetKeys() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
@@ -264,7 +264,7 @@ namespace Azure.Provisioning.SignalR
     }
     public partial class SignalRSharedPrivateLink : Azure.Provisioning.Primitives.Resource
     {
-        public SignalRSharedPrivateLink(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SignalRSharedPrivateLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -274,7 +274,7 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepValue<string> RequestMessage { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRSharedPrivateLinkResourceStatus> Status { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.SignalR.SignalRSharedPrivateLink FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.SignalR.SignalRSharedPrivateLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2018_10_01;

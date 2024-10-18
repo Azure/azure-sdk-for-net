@@ -105,15 +105,15 @@ public partial class DistributedAvailabilityGroup : Resource
     /// <summary>
     /// Creates a new DistributedAvailabilityGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the DistributedAvailabilityGroup
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the DistributedAvailabilityGroup.</param>
-    public DistributedAvailabilityGroup(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/managedInstances/distributedAvailabilityGroups", resourceVersion ?? "2021-11-01")
+    public DistributedAvailabilityGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/distributedAvailabilityGroups", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _primaryAvailabilityGroupName = BicepValue<string>.DefineProperty(this, "PrimaryAvailabilityGroupName", ["properties", "primaryAvailabilityGroupName"]);
@@ -150,7 +150,7 @@ public partial class DistributedAvailabilityGroup : Resource
     /// <summary>
     /// Creates a reference to an existing DistributedAvailabilityGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the DistributedAvailabilityGroup
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -158,6 +158,6 @@ public partial class DistributedAvailabilityGroup : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the DistributedAvailabilityGroup.</param>
     /// <returns>The existing DistributedAvailabilityGroup resource.</returns>
-    public static DistributedAvailabilityGroup FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static DistributedAvailabilityGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

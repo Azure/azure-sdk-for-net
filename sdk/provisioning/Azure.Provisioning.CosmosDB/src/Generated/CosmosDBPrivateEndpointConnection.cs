@@ -68,15 +68,15 @@ public partial class CosmosDBPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new CosmosDBPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CosmosDBPrivateEndpointConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBPrivateEndpointConnection.</param>
-    public CosmosDBPrivateEndpointConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/privateEndpointConnections", resourceVersion ?? "2024-08-15")
+    public CosmosDBPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/privateEndpointConnections", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<CosmosDBPrivateLinkServiceConnectionStateProperty>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -227,7 +227,7 @@ public partial class CosmosDBPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CosmosDBPrivateEndpointConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -235,6 +235,6 @@ public partial class CosmosDBPrivateEndpointConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBPrivateEndpointConnection.</param>
     /// <returns>The existing CosmosDBPrivateEndpointConnection resource.</returns>
-    public static CosmosDBPrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

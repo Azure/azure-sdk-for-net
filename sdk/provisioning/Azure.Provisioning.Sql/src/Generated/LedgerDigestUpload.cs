@@ -57,15 +57,15 @@ public partial class LedgerDigestUpload : Resource
     /// <summary>
     /// Creates a new LedgerDigestUpload.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the LedgerDigestUpload resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the LedgerDigestUpload.</param>
-    public LedgerDigestUpload(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/databases/ledgerDigestUploads", resourceVersion ?? "2021-11-01")
+    public LedgerDigestUpload(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/ledgerDigestUploads", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _digestStorageEndpoint = BicepValue<string>.DefineProperty(this, "DigestStorageEndpoint", ["properties", "digestStorageEndpoint"]);
@@ -94,7 +94,7 @@ public partial class LedgerDigestUpload : Resource
     /// <summary>
     /// Creates a reference to an existing LedgerDigestUpload.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the LedgerDigestUpload resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -102,6 +102,6 @@ public partial class LedgerDigestUpload : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the LedgerDigestUpload.</param>
     /// <returns>The existing LedgerDigestUpload resource.</returns>
-    public static LedgerDigestUpload FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static LedgerDigestUpload FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

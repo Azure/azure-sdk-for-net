@@ -83,15 +83,15 @@ public partial class CommitmentPlan : Resource
     /// <summary>
     /// Creates a new CommitmentPlan.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CommitmentPlan resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CommitmentPlan.</param>
-    public CommitmentPlan(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.CognitiveServices/accounts/commitmentPlans", resourceVersion ?? "2024-10-01")
+    public CommitmentPlan(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts/commitmentPlans", resourceVersion ?? "2024-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
@@ -154,7 +154,7 @@ public partial class CommitmentPlan : Resource
     /// <summary>
     /// Creates a reference to an existing CommitmentPlan.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CommitmentPlan resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -162,6 +162,6 @@ public partial class CommitmentPlan : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CommitmentPlan.</param>
     /// <returns>The existing CommitmentPlan resource.</returns>
-    public static CommitmentPlan FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CommitmentPlan FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

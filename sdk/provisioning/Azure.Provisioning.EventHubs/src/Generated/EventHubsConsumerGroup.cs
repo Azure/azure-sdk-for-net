@@ -72,15 +72,15 @@ public partial class EventHubsConsumerGroup : Resource
     /// <summary>
     /// Creates a new EventHubsConsumerGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventHubsConsumerGroup resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the EventHubsConsumerGroup.</param>
-    public EventHubsConsumerGroup(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventHub/namespaces/eventhubs/consumergroups", resourceVersion ?? "2024-01-01")
+    public EventHubsConsumerGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventHub/namespaces/eventhubs/consumergroups", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _userMetadata = BicepValue<string>.DefineProperty(this, "UserMetadata", ["properties", "userMetadata"]);
@@ -121,7 +121,7 @@ public partial class EventHubsConsumerGroup : Resource
     /// <summary>
     /// Creates a reference to an existing EventHubsConsumerGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventHubsConsumerGroup resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -129,8 +129,8 @@ public partial class EventHubsConsumerGroup : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the EventHubsConsumerGroup.</param>
     /// <returns>The existing EventHubsConsumerGroup resource.</returns>
-    public static EventHubsConsumerGroup FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static EventHubsConsumerGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this EventHubsConsumerGroup resource.

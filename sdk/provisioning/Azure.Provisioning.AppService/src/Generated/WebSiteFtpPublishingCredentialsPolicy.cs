@@ -57,15 +57,15 @@ public partial class WebSiteFtpPublishingCredentialsPolicy : Resource
     /// <summary>
     /// Creates a new WebSiteFtpPublishingCredentialsPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// WebSiteFtpPublishingCredentialsPolicy resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteFtpPublishingCredentialsPolicy.</param>
-    public WebSiteFtpPublishingCredentialsPolicy(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/basicPublishingCredentialsPolicies", resourceVersion ?? "2024-04-01")
+    public WebSiteFtpPublishingCredentialsPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/basicPublishingCredentialsPolicies", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _allow = BicepValue<bool>.DefineProperty(this, "Allow", ["properties", "allow"]);
@@ -240,7 +240,7 @@ public partial class WebSiteFtpPublishingCredentialsPolicy : Resource
     /// Creates a reference to an existing
     /// WebSiteFtpPublishingCredentialsPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// WebSiteFtpPublishingCredentialsPolicy resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -248,6 +248,6 @@ public partial class WebSiteFtpPublishingCredentialsPolicy : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteFtpPublishingCredentialsPolicy.</param>
     /// <returns>The existing WebSiteFtpPublishingCredentialsPolicy resource.</returns>
-    public static WebSiteFtpPublishingCredentialsPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteFtpPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

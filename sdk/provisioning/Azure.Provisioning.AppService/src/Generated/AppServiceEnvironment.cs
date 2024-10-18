@@ -184,15 +184,15 @@ public partial class AppServiceEnvironment : Resource
     /// <summary>
     /// Creates a new AppServiceEnvironment.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the AppServiceEnvironment resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the AppServiceEnvironment.</param>
-    public AppServiceEnvironment(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/hostingEnvironments", resourceVersion ?? "2024-04-01")
+    public AppServiceEnvironment(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -386,7 +386,7 @@ public partial class AppServiceEnvironment : Resource
     /// <summary>
     /// Creates a reference to an existing AppServiceEnvironment.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the AppServiceEnvironment resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -394,6 +394,6 @@ public partial class AppServiceEnvironment : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the AppServiceEnvironment.</param>
     /// <returns>The existing AppServiceEnvironment resource.</returns>
-    public static AppServiceEnvironment FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static AppServiceEnvironment FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

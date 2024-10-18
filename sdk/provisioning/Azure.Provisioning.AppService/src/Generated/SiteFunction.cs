@@ -142,15 +142,15 @@ public partial class SiteFunction : Resource
     /// <summary>
     /// Creates a new SiteFunction.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteFunction resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SiteFunction.</param>
-    public SiteFunction(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/functions", resourceVersion ?? "2024-04-01")
+    public SiteFunction(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/functions", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _config = BicepValue<BinaryData>.DefineProperty(this, "Config", ["properties", "config"]);
@@ -336,7 +336,7 @@ public partial class SiteFunction : Resource
     /// <summary>
     /// Creates a reference to an existing SiteFunction.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteFunction resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -344,6 +344,6 @@ public partial class SiteFunction : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteFunction.</param>
     /// <returns>The existing SiteFunction resource.</returns>
-    public static SiteFunction FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SiteFunction FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

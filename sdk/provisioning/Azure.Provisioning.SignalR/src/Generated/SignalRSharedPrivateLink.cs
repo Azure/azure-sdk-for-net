@@ -76,15 +76,15 @@ public partial class SignalRSharedPrivateLink : Resource
     /// <summary>
     /// Creates a new SignalRSharedPrivateLink.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SignalRSharedPrivateLink resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SignalRSharedPrivateLink.</param>
-    public SignalRSharedPrivateLink(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.SignalRService/signalR/sharedPrivateLinkResources", resourceVersion ?? "2024-03-01")
+    public SignalRSharedPrivateLink(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.SignalRService/signalR/sharedPrivateLinkResources", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _groupId = BicepValue<string>.DefineProperty(this, "GroupId", ["properties", "groupId"]);
@@ -141,7 +141,7 @@ public partial class SignalRSharedPrivateLink : Resource
     /// <summary>
     /// Creates a reference to an existing SignalRSharedPrivateLink.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SignalRSharedPrivateLink resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -149,6 +149,6 @@ public partial class SignalRSharedPrivateLink : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SignalRSharedPrivateLink.</param>
     /// <returns>The existing SignalRSharedPrivateLink resource.</returns>
-    public static SignalRSharedPrivateLink FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SignalRSharedPrivateLink FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

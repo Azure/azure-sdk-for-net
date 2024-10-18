@@ -77,15 +77,15 @@ public partial class ObjectReplicationPolicy : Resource
     /// <summary>
     /// Creates a new ObjectReplicationPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ObjectReplicationPolicy resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ObjectReplicationPolicy.</param>
-    public ObjectReplicationPolicy(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Storage/storageAccounts/objectReplicationPolicies", resourceVersion ?? "2024-01-01")
+    public ObjectReplicationPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/objectReplicationPolicies", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _destinationAccount = BicepValue<string>.DefineProperty(this, "DestinationAccount", ["properties", "destinationAccount"]);
@@ -227,7 +227,7 @@ public partial class ObjectReplicationPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing ObjectReplicationPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ObjectReplicationPolicy resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -235,6 +235,6 @@ public partial class ObjectReplicationPolicy : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ObjectReplicationPolicy.</param>
     /// <returns>The existing ObjectReplicationPolicy resource.</returns>
-    public static ObjectReplicationPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ObjectReplicationPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

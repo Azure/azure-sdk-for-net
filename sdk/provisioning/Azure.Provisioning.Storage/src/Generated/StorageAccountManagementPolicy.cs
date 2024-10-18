@@ -59,15 +59,15 @@ public partial class StorageAccountManagementPolicy : Resource
     /// <summary>
     /// Creates a new StorageAccountManagementPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StorageAccountManagementPolicy
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the StorageAccountManagementPolicy.</param>
-    public StorageAccountManagementPolicy(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Storage/storageAccounts/managementPolicies", resourceVersion ?? "2024-01-01")
+    public StorageAccountManagementPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/managementPolicies", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], defaultValue: GetNameDefaultValue());
         _rules = BicepList<ManagementPolicyRule>.DefineProperty(this, "Rules", ["properties", "policy", "rules"]);
@@ -206,7 +206,7 @@ public partial class StorageAccountManagementPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing StorageAccountManagementPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StorageAccountManagementPolicy
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -214,6 +214,6 @@ public partial class StorageAccountManagementPolicy : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the StorageAccountManagementPolicy.</param>
     /// <returns>The existing StorageAccountManagementPolicy resource.</returns>
-    public static StorageAccountManagementPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static StorageAccountManagementPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

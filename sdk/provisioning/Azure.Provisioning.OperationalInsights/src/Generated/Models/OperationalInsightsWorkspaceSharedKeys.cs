@@ -47,7 +47,7 @@ public partial class OperationalInsightsWorkspaceSharedKeys : ProvisioningConstr
     /// </param>
     /// <returns>A OperationalInsightsWorkspaceSharedKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static OperationalInsightsWorkspaceSharedKeys FromExpression(Expression expression)
+    public static OperationalInsightsWorkspaceSharedKeys FromExpression(BicepExpression expression)
     {
         OperationalInsightsWorkspaceSharedKeys resource = new();
         resource.OverrideWithExpression(expression);

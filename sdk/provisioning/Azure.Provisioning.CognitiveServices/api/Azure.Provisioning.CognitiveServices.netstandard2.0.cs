@@ -14,7 +14,7 @@ namespace Azure.Provisioning.CognitiveServices
     }
     public partial class CognitiveServicesAccount : Azure.Provisioning.Primitives.Resource
     {
-        public CognitiveServicesAccount(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public CognitiveServicesAccount(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ManagedServiceIdentity> Identity { get { throw null; } set { } }
@@ -25,9 +25,9 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesSku> Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.CognitiveServices.CognitiveServicesBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? identifierNameSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.CognitiveServices.CognitiveServicesBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.CognitiveServices.CognitiveServicesBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
-        public static Azure.Provisioning.CognitiveServices.CognitiveServicesAccount FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.CognitiveServices.CognitiveServicesAccount FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.CognitiveServices.ServiceAccountApiKeys GetKeys() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
@@ -45,7 +45,7 @@ namespace Azure.Provisioning.CognitiveServices
     }
     public partial class CognitiveServicesAccountDeployment : Azure.Provisioning.Primitives.Resource
     {
-        public CognitiveServicesAccountDeployment(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public CognitiveServicesAccountDeployment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -53,7 +53,7 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesAccountDeploymentProperties> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesSku> Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.CognitiveServices.CognitiveServicesAccountDeployment FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.CognitiveServices.CognitiveServicesAccountDeployment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2017_04_18;
@@ -200,7 +200,7 @@ namespace Azure.Provisioning.CognitiveServices
     }
     public partial class CognitiveServicesCommitmentPlan : Azure.Provisioning.Primitives.Resource
     {
-        public CognitiveServicesCommitmentPlan(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public CognitiveServicesCommitmentPlan(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
@@ -210,7 +210,7 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesSku> Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.CognitiveServices.CognitiveServicesCommitmentPlan FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.CognitiveServices.CognitiveServicesCommitmentPlan FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2022_12_01;
@@ -352,7 +352,7 @@ namespace Azure.Provisioning.CognitiveServices
     }
     public partial class CommitmentPlan : Azure.Provisioning.Primitives.Resource
     {
-        public CommitmentPlan(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public CommitmentPlan(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
@@ -363,7 +363,7 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesSku> Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.CognitiveServices.CommitmentPlan FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.CognitiveServices.CommitmentPlan FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2017_04_18;
@@ -378,14 +378,14 @@ namespace Azure.Provisioning.CognitiveServices
     }
     public partial class CommitmentPlanAccountAssociation : Azure.Provisioning.Primitives.Resource
     {
-        public CommitmentPlanAccountAssociation(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public CommitmentPlanAccountAssociation(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AccountId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.CognitiveServices.CognitiveServicesCommitmentPlan? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.CognitiveServices.CommitmentPlanAccountAssociation FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.CognitiveServices.CommitmentPlanAccountAssociation FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2022_12_01;
@@ -445,7 +445,7 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<string> Key1 { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Key2 { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.CognitiveServices.ServiceAccountApiKeys FromExpression(Azure.Provisioning.Expressions.Expression expression) { throw null; }
+        public static Azure.Provisioning.CognitiveServices.ServiceAccountApiKeys FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
     }
     public partial class ServiceAccountApiProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
     {

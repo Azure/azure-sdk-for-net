@@ -68,15 +68,15 @@ public partial class SitePublicCertificate : Resource
     /// <summary>
     /// Creates a new SitePublicCertificate.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SitePublicCertificate resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SitePublicCertificate.</param>
-    public SitePublicCertificate(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/publicCertificates", resourceVersion ?? "2024-04-01")
+    public SitePublicCertificate(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/publicCertificates", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _blob = BicepValue<BinaryData>.DefineProperty(this, "Blob", ["properties", "blob"]);
@@ -252,7 +252,7 @@ public partial class SitePublicCertificate : Resource
     /// <summary>
     /// Creates a reference to an existing SitePublicCertificate.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SitePublicCertificate resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -260,6 +260,6 @@ public partial class SitePublicCertificate : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SitePublicCertificate.</param>
     /// <returns>The existing SitePublicCertificate resource.</returns>
-    public static SitePublicCertificate FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SitePublicCertificate FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

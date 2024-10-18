@@ -59,7 +59,7 @@ public partial class CosmosDBAccountKeyList : ProvisioningConstruct
     /// </param>
     /// <returns>A CosmosDBAccountKeyList resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static CosmosDBAccountKeyList FromExpression(Expression expression)
+    public static CosmosDBAccountKeyList FromExpression(BicepExpression expression)
     {
         CosmosDBAccountKeyList resource = new();
         resource.OverrideWithExpression(expression);

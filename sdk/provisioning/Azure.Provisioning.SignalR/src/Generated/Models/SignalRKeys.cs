@@ -59,7 +59,7 @@ public partial class SignalRKeys : ProvisioningConstruct
     /// </param>
     /// <returns>A SignalRKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static SignalRKeys FromExpression(Expression expression)
+    public static SignalRKeys FromExpression(BicepExpression expression)
     {
         SignalRKeys resource = new();
         resource.OverrideWithExpression(expression);

@@ -186,15 +186,15 @@ public partial class PostgreSqlMigration : Resource
     /// <summary>
     /// Creates a new PostgreSqlMigration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PostgreSqlMigration resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlMigration.</param>
-    public PostgreSqlMigration(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DBforPostgreSQL/flexibleServers/migrations", resourceVersion ?? "2024-08-01")
+    public PostgreSqlMigration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/migrations", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -248,7 +248,7 @@ public partial class PostgreSqlMigration : Resource
     /// <summary>
     /// Creates a reference to an existing PostgreSqlMigration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PostgreSqlMigration resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -256,6 +256,6 @@ public partial class PostgreSqlMigration : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlMigration.</param>
     /// <returns>The existing PostgreSqlMigration resource.</returns>
-    public static PostgreSqlMigration FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlMigration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

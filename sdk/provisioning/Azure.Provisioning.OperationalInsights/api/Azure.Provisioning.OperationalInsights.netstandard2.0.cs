@@ -2,7 +2,7 @@ namespace Azure.Provisioning.OperationalInsights
 {
     public partial class LogAnalyticsQuery : Azure.Provisioning.Primitives.Resource
     {
-        public LogAnalyticsQuery(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public LogAnalyticsQuery(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.Guid> ApplicationId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Author { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Body { get { throw null; } set { } }
@@ -16,7 +16,7 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.LogAnalyticsQueryRelatedMetadata> Related { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.BicepList<string>> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.OperationalInsights.LogAnalyticsQuery FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.OperationalInsights.LogAnalyticsQuery FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2019_09_01;
@@ -25,7 +25,7 @@ namespace Azure.Provisioning.OperationalInsights
     }
     public partial class LogAnalyticsQueryPack : Azure.Provisioning.Primitives.Resource
     {
-        public LogAnalyticsQueryPack(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public LogAnalyticsQueryPack(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
@@ -35,7 +35,7 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<System.Guid> QueryPackId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.OperationalInsights.LogAnalyticsQueryPack FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.OperationalInsights.LogAnalyticsQueryPack FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2019_09_01;
@@ -62,7 +62,7 @@ namespace Azure.Provisioning.OperationalInsights
     }
     public partial class OperationalInsightsCluster : Azure.Provisioning.Primitives.Resource
     {
-        public OperationalInsightsCluster(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public OperationalInsightsCluster(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.OperationalInsights.OperationalInsightsClusterAssociatedWorkspace> AssociatedWorkspaces { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsBillingType> BillingType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsCapacityReservationProperties> CapacityReservationProperties { get { throw null; } set { } }
@@ -80,7 +80,7 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsClusterSku> Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.OperationalInsights.OperationalInsightsCluster FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.OperationalInsights.OperationalInsightsCluster FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -174,7 +174,7 @@ namespace Azure.Provisioning.OperationalInsights
     }
     public partial class OperationalInsightsDataExport : Azure.Provisioning.Primitives.Resource
     {
-        public OperationalInsightsDataExport(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public OperationalInsightsDataExport(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> DataExportId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsDataExportDestinationType> DestinationType { get { throw null; } }
@@ -187,7 +187,7 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepList<string> TableNames { get { throw null; } set { } }
-        public static Azure.Provisioning.OperationalInsights.OperationalInsightsDataExport FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.OperationalInsights.OperationalInsightsDataExport FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2020_08_01;
@@ -210,7 +210,7 @@ namespace Azure.Provisioning.OperationalInsights
     }
     public partial class OperationalInsightsDataSource : Azure.Provisioning.Primitives.Resource
     {
-        public OperationalInsightsDataSource(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public OperationalInsightsDataSource(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsDataSourceKind> Kind { get { throw null; } set { } }
@@ -219,7 +219,7 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<System.BinaryData> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.OperationalInsights.OperationalInsightsDataSource FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.OperationalInsights.OperationalInsightsDataSource FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2020_08_01;
@@ -280,7 +280,7 @@ namespace Azure.Provisioning.OperationalInsights
     }
     public partial class OperationalInsightsLinkedService : Azure.Provisioning.Primitives.Resource
     {
-        public OperationalInsightsLinkedService(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public OperationalInsightsLinkedService(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspace? Parent { get { throw null; } set { } }
@@ -289,7 +289,7 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WriteAccessResourceId { get { throw null; } set { } }
-        public static Azure.Provisioning.OperationalInsights.OperationalInsightsLinkedService FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.OperationalInsights.OperationalInsightsLinkedService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2020_08_01;
@@ -305,14 +305,14 @@ namespace Azure.Provisioning.OperationalInsights
     }
     public partial class OperationalInsightsLinkedStorageAccounts : Azure.Provisioning.Primitives.Resource
     {
-        public OperationalInsightsLinkedStorageAccounts(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public OperationalInsightsLinkedStorageAccounts(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsDataSourceType> DataSourceType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspace? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Core.ResourceIdentifier> StorageAccountIds { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.OperationalInsights.OperationalInsightsLinkedStorageAccounts FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.OperationalInsights.OperationalInsightsLinkedStorageAccounts FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2020_08_01;
@@ -332,7 +332,7 @@ namespace Azure.Provisioning.OperationalInsights
     }
     public partial class OperationalInsightsSavedSearch : Azure.Provisioning.Primitives.Resource
     {
-        public OperationalInsightsSavedSearch(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public OperationalInsightsSavedSearch(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Category { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
@@ -345,7 +345,7 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.OperationalInsights.OperationalInsightsTag> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> Version { get { throw null; } set { } }
-        public static Azure.Provisioning.OperationalInsights.OperationalInsightsSavedSearch FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.OperationalInsights.OperationalInsightsSavedSearch FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2015_03_20;
@@ -379,7 +379,7 @@ namespace Azure.Provisioning.OperationalInsights
     }
     public partial class OperationalInsightsTable : Azure.Provisioning.Primitives.Resource
     {
-        public OperationalInsightsTable(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public OperationalInsightsTable(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<int> ArchiveRetentionInDays { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsRetentionInDaysAsDefault { get { throw null; } }
@@ -396,7 +396,7 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsTableSearchResults> SearchResults { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> TotalRetentionInDays { get { throw null; } set { } }
-        public static Azure.Provisioning.OperationalInsights.OperationalInsightsTable FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.OperationalInsights.OperationalInsightsTable FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2020_08_01;
@@ -470,7 +470,7 @@ namespace Azure.Provisioning.OperationalInsights
     }
     public partial class OperationalInsightsWorkspace : Azure.Provisioning.Primitives.Resource
     {
-        public OperationalInsightsWorkspace(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public OperationalInsightsWorkspace(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> CustomerId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DefaultDataCollectionRuleResourceId { get { throw null; } set { } }
@@ -491,7 +491,7 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceCapping> WorkspaceCapping { get { throw null; } set { } }
-        public static Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspace FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspace FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceSharedKeys GetKeys() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
@@ -557,7 +557,7 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<string> PrimarySharedKey { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecondarySharedKey { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceSharedKeys FromExpression(Azure.Provisioning.Expressions.Expression expression) { throw null; }
+        public static Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceSharedKeys FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
     }
     public partial class OperationalInsightsWorkspaceSku : Azure.Provisioning.Primitives.ProvisioningConstruct
     {
@@ -584,7 +584,7 @@ namespace Azure.Provisioning.OperationalInsights
     }
     public partial class StorageInsight : Azure.Provisioning.Primitives.Resource
     {
-        public StorageInsight(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public StorageInsight(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> Containers { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -595,7 +595,7 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepList<string> Tables { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.OperationalInsights.StorageInsight FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.OperationalInsights.StorageInsight FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2015_03_20;

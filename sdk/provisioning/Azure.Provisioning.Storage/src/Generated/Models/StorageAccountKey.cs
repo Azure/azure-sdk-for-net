@@ -59,7 +59,7 @@ public partial class StorageAccountKey : ProvisioningConstruct
     /// </param>
     /// <returns>A StorageAccountKey resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static StorageAccountKey FromExpression(Expression expression)
+    public static StorageAccountKey FromExpression(BicepExpression expression)
     {
         StorageAccountKey resource = new();
         resource.OverrideWithExpression(expression);

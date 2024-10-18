@@ -63,15 +63,15 @@ public partial class SiteSlotVirtualNetworkConnectionGateway : Resource
     /// <summary>
     /// Creates a new SiteSlotVirtualNetworkConnectionGateway.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// SiteSlotVirtualNetworkConnectionGateway resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotVirtualNetworkConnectionGateway.</param>
-    public SiteSlotVirtualNetworkConnectionGateway(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/slots/virtualNetworkConnections/gateways", resourceVersion ?? "2024-04-01")
+    public SiteSlotVirtualNetworkConnectionGateway(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/virtualNetworkConnections/gateways", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
@@ -247,7 +247,7 @@ public partial class SiteSlotVirtualNetworkConnectionGateway : Resource
     /// Creates a reference to an existing
     /// SiteSlotVirtualNetworkConnectionGateway.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// SiteSlotVirtualNetworkConnectionGateway resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -255,6 +255,6 @@ public partial class SiteSlotVirtualNetworkConnectionGateway : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotVirtualNetworkConnectionGateway.</param>
     /// <returns>The existing SiteSlotVirtualNetworkConnectionGateway resource.</returns>
-    public static SiteSlotVirtualNetworkConnectionGateway FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SiteSlotVirtualNetworkConnectionGateway FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

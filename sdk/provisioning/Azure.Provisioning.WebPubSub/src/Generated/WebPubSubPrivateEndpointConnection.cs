@@ -69,15 +69,15 @@ public partial class WebPubSubPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new WebPubSubPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WebPubSubPrivateEndpointConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the WebPubSubPrivateEndpointConnection.</param>
-    public WebPubSubPrivateEndpointConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.SignalRService/webPubSub/privateEndpointConnections", resourceVersion ?? "2024-03-01")
+    public WebPubSubPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.SignalRService/webPubSub/privateEndpointConnections", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<WebPubSubPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -123,7 +123,7 @@ public partial class WebPubSubPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing WebPubSubPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WebPubSubPrivateEndpointConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -131,6 +131,6 @@ public partial class WebPubSubPrivateEndpointConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the WebPubSubPrivateEndpointConnection.</param>
     /// <returns>The existing WebPubSubPrivateEndpointConnection resource.</returns>
-    public static WebPubSubPrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static WebPubSubPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

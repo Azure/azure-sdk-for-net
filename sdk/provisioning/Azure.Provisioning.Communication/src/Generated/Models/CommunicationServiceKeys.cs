@@ -60,7 +60,7 @@ public partial class CommunicationServiceKeys : ProvisioningConstruct
     /// </param>
     /// <returns>A CommunicationServiceKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static CommunicationServiceKeys FromExpression(Expression expression)
+    public static CommunicationServiceKeys FromExpression(BicepExpression expression)
     {
         CommunicationServiceKeys resource = new();
         resource.OverrideWithExpression(expression);

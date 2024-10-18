@@ -82,7 +82,7 @@ public partial class ServiceBusAccessKeys : ProvisioningConstruct
     /// </param>
     /// <returns>A ServiceBusAccessKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static ServiceBusAccessKeys FromExpression(Expression expression)
+    public static ServiceBusAccessKeys FromExpression(BicepExpression expression)
     {
         ServiceBusAccessKeys resource = new();
         resource.OverrideWithExpression(expression);

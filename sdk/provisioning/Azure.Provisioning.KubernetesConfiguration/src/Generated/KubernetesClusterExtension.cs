@@ -156,15 +156,15 @@ public partial class KubernetesClusterExtension : Resource
     /// <summary>
     /// Creates a new KubernetesClusterExtension.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the KubernetesClusterExtension
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the KubernetesClusterExtension.</param>
-    public KubernetesClusterExtension(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.KubernetesConfiguration/extensions", resourceVersion ?? "2023-05-01")
+    public KubernetesClusterExtension(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/extensions", resourceVersion ?? "2023-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _aksAssignedIdentity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "AksAssignedIdentity", ["properties", "aksAssignedIdentity"]);
@@ -217,7 +217,7 @@ public partial class KubernetesClusterExtension : Resource
     /// <summary>
     /// Creates a reference to an existing KubernetesClusterExtension.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the KubernetesClusterExtension
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -225,8 +225,8 @@ public partial class KubernetesClusterExtension : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the KubernetesClusterExtension.</param>
     /// <returns>The existing KubernetesClusterExtension resource.</returns>
-    public static KubernetesClusterExtension FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static KubernetesClusterExtension FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Creates a role assignment for a user-assigned identity that grants
@@ -236,10 +236,10 @@ public partial class KubernetesClusterExtension : Resource
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
     public RoleAssignment CreateRoleAssignment(KubernetesConfigurationBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{IdentifierName}_{identity.IdentifierName}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
+        new($"{BicepIdentifier}_{identity.BicepIdentifier}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(IdentifierName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
@@ -252,13 +252,13 @@ public partial class KubernetesClusterExtension : Resource
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
-    /// <param name="identifierNameSuffix">Optional role assignment identifier name suffix.</param>
+    /// <param name="bicepIdentifierSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment CreateRoleAssignment(KubernetesConfigurationBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? identifierNameSuffix = default) =>
-        new($"{IdentifierName}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}{(identifierNameSuffix is null ? "" : "_")}{identifierNameSuffix}")
+    public RoleAssignment CreateRoleAssignment(KubernetesConfigurationBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? bicepIdentifierSuffix = default) =>
+        new($"{BicepIdentifier}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}{(bicepIdentifierSuffix is null ? "" : "_")}{bicepIdentifierSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(IdentifierName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

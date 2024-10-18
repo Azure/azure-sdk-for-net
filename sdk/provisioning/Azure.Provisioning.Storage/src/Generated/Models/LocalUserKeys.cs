@@ -46,7 +46,7 @@ public partial class LocalUserKeys : ProvisioningConstruct
     /// </param>
     /// <returns>A LocalUserKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static LocalUserKeys FromExpression(Expression expression)
+    public static LocalUserKeys FromExpression(BicepExpression expression)
     {
         LocalUserKeys resource = new();
         resource.OverrideWithExpression(expression);

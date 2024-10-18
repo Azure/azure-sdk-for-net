@@ -76,15 +76,15 @@ public partial class CosmosDBSqlStoredProcedure : Resource
     /// <summary>
     /// Creates a new CosmosDBSqlStoredProcedure.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CosmosDBSqlStoredProcedure
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlStoredProcedure.</param>
-    public CosmosDBSqlStoredProcedure(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures", resourceVersion ?? "2024-08-15")
+    public CosmosDBSqlStoredProcedure(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -236,7 +236,7 @@ public partial class CosmosDBSqlStoredProcedure : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBSqlStoredProcedure.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CosmosDBSqlStoredProcedure
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -244,6 +244,6 @@ public partial class CosmosDBSqlStoredProcedure : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlStoredProcedure.</param>
     /// <returns>The existing CosmosDBSqlStoredProcedure resource.</returns>
-    public static CosmosDBSqlStoredProcedure FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBSqlStoredProcedure FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

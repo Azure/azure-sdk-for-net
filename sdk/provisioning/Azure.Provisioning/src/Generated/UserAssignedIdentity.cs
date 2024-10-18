@@ -72,15 +72,15 @@ public partial class UserAssignedIdentity : Resource
     /// <summary>
     /// Creates a new UserAssignedIdentity.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the UserAssignedIdentity resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the UserAssignedIdentity.</param>
-    public UserAssignedIdentity(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.ManagedIdentity/userAssignedIdentities", resourceVersion ?? "2023-01-31")
+    public UserAssignedIdentity(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ManagedIdentity/userAssignedIdentities", resourceVersion ?? "2023-01-31")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -131,7 +131,7 @@ public partial class UserAssignedIdentity : Resource
     /// <summary>
     /// Creates a reference to an existing UserAssignedIdentity.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the UserAssignedIdentity resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -139,8 +139,8 @@ public partial class UserAssignedIdentity : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the UserAssignedIdentity.</param>
     /// <returns>The existing UserAssignedIdentity resource.</returns>
-    public static UserAssignedIdentity FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static UserAssignedIdentity FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this UserAssignedIdentity resource.

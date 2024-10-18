@@ -63,7 +63,7 @@ public partial class ContainerServicePrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new ContainerServicePrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ContainerServicePrivateEndpointConnection resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -71,8 +71,8 @@ public partial class ContainerServicePrivateEndpointConnection : Resource
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerServicePrivateEndpointConnection.</param>
-    public ContainerServicePrivateEndpointConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.ContainerService/managedClusters/privateEndpointConnections", resourceVersion ?? "2024-08-01")
+    public ContainerServicePrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/privateEndpointConnections", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<ContainerServicePrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -348,7 +348,7 @@ public partial class ContainerServicePrivateEndpointConnection : Resource
     /// Creates a reference to an existing
     /// ContainerServicePrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ContainerServicePrivateEndpointConnection resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -357,6 +357,6 @@ public partial class ContainerServicePrivateEndpointConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerServicePrivateEndpointConnection.</param>
     /// <returns>The existing ContainerServicePrivateEndpointConnection resource.</returns>
-    public static ContainerServicePrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ContainerServicePrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
