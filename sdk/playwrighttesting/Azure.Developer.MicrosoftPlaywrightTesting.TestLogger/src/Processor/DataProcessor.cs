@@ -25,34 +25,27 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             _logger = logger ?? new Logger();
         }
 
-        public TestRunDtoV2 GetTestRun()
+        public TestRunDto GetTestRun()
         {
             var startTime = _cloudRunMetadata.TestRunStartTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
             var gitBasedRunName = ReporterUtils.GetRunName(CiInfoProvider.GetCIInfo())?.Trim();
             string runName = string.IsNullOrEmpty(gitBasedRunName) ? _cloudRunMetadata.RunId! : gitBasedRunName!;
-            var run = new TestRunDtoV2
+            var run = new TestRunDto
             {
                 TestRunId = _cloudRunMetadata.RunId!,
                 DisplayName = runName,
                 StartTime = startTime,
                 CreatorId = _cloudRunMetadata.AccessTokenDetails!.oid ?? "",
                 CreatorName = _cloudRunMetadata.AccessTokenDetails!.userName?.Trim() ?? "",
-                //CloudRunEnabled = "false",
-                CloudReportingEnabled = "true",
-                Summary = new TestRunSummary
+                CloudReportingEnabled = true,
+                CloudRunEnabled = false,
+                CiConfig = new CIConfig
                 {
-                    Status = "RUNNING",
-                    StartTime = startTime,
-                    //Projects = ["playwright-dotnet"],
-                    //Tags = ["Nunit", "dotnet"],
-                    //Jobs = ["playwright-dotnet"],
-                },
-                CiConfig = new CIConfig // TODO fetch dynamically
-                {
-                    Branch = _cIInfo.Branch ?? "",
-                    Author = _cIInfo.Author ?? "",
-                    CommitId = _cIInfo.CommitId ?? "",
-                    RevisionUrl = _cIInfo.RevisionUrl ?? ""
+                    Branch = _cIInfo.Branch,
+                    Author = _cIInfo.Author,
+                    CommitId = _cIInfo.CommitId,
+                    RevisionUrl = _cIInfo.RevisionUrl,
+                    CiProviderName = _cIInfo.Provider ?? CIConstants.s_dEFAULT
                 },
                 TestRunConfig = new ClientConfig // TODO fetch some of these dynamically
                 {
@@ -60,10 +53,10 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                     PwVersion = "1.40",
                     Timeout = 60000,
                     TestType = "WebTest",
-                    TestSdkLanguage = "Dotnet",
-                    TestFramework = new TestFramework() { Name = "VSTest", RunnerName = "Nunit/MSTest", Version = "3.1" }, // TODO fetch runner name MSTest/Nunit
-                    ReporterPackageVersion = "0.0.1-dotnet",
-                    Shards = new Shard() { Current = 0, Total = 1 }
+                    TestSdkLanguage = "CSHARP",
+                    TestFramework = new TestFramework() { Name = "PLAYWRIGHT", RunnerName = "NUNIT", Version = "3.1" }, // TODO fetch runner name MSTest/Nunit
+                    ReporterPackageVersion = "1.0.0-beta.1",
+                    Shards = new Shard() { Total = 1 }
                 }
             };
             return run;
@@ -74,23 +67,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             var startTime = _cloudRunMetadata.TestRunStartTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
             var shard = new TestRunShardDto
             {
-                UploadCompleted = "false",
+                UploadCompleted = false,
+                ShardId = "1",
                 Summary = new TestRunShardSummary
                 {
                     Status = "RUNNING",
                     StartTime = startTime,
                 },
-                TestRunConfig = new ClientConfig // TODO fetch some of these dynamically
-                {
-                    Workers = 1,
-                    PwVersion = "1.40",
-                    Timeout = 60000,
-                    TestType = "Functional",
-                    TestSdkLanguage = "dotnet",
-                    TestFramework = new TestFramework() { Name = "VSTest", RunnerName = "Nunit", Version = "3.1" },
-                    ReporterPackageVersion = "0.0.1-dotnet",
-                    Shards = new Shard() { Current = 0, Total = 1 },
-                }
+                Workers = 1
             };
             return shard;
         }
@@ -129,7 +113,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             testCaseResultData.ResultsSummary = new TestResultsSummary
             {
                 Duration = (long)duration.TotalMilliseconds, // TODO fallback get from End-Start
-                StartTime = testResultSource.StartTime.UtcDateTime.ToString(),
+                StartTime = testResultSource.StartTime.ToString("yyyy-MM-ddTHH:mm:ssZ"),
                 Status = TestCaseResultStatus.s_iNCONCLUSIVE
             };
             TestOutcome outcome = testResultSource.Outcome;

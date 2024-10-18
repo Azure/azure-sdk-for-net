@@ -15,15 +15,15 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
 {
     internal class ServiceClient : IServiceClient
     {
-        private readonly ReportingTestResultsClient _reportingTestResultsClient;
-        private readonly ReportingTestRunsClient _reportingTestRunsClient;
+        private readonly TestReportingClient _testReportingClient;
         private readonly CloudRunMetadata _cloudRunMetadata;
         private readonly ICloudRunErrorParser _cloudRunErrorParser;
         private readonly ILogger _logger;
         private static string AccessToken { get => $"Bearer {Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken)}"; set { } }
         private static string CorrelationId { get => Guid.NewGuid().ToString(); set { } }
+        private static readonly JsonSerializerOptions _jsonSerializerOptions = new() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
 
-        public ServiceClient(CloudRunMetadata cloudRunMetadata, ICloudRunErrorParser cloudRunErrorParser, ReportingTestResultsClient? reportingTestResultsClient = null, ReportingTestRunsClient? reportingTestRunsClient = null, ILogger? logger = null)
+        public ServiceClient(CloudRunMetadata cloudRunMetadata, ICloudRunErrorParser cloudRunErrorParser, TestReportingClient? testReportingClient = null, ILogger? logger = null)
         {
             _cloudRunMetadata = cloudRunMetadata;
             _cloudRunErrorParser = cloudRunErrorParser;
@@ -34,23 +34,21 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             }, EventLevel.Informational);
             var clientOptions = new TestReportingClientOptions();
             clientOptions.Diagnostics.IsLoggingEnabled = true;
-            clientOptions.Diagnostics.IsLoggingContentEnabled = false;
             clientOptions.Diagnostics.IsTelemetryEnabled = true;
             clientOptions.Retry.MaxRetries = ServiceClientConstants.s_mAX_RETRIES;
             clientOptions.Retry.MaxDelay = TimeSpan.FromSeconds(ServiceClientConstants.s_mAX_RETRY_DELAY_IN_SECONDS);
-            _reportingTestResultsClient = reportingTestResultsClient ?? new ReportingTestResultsClient(_cloudRunMetadata.BaseUri, clientOptions);
-            _reportingTestRunsClient = reportingTestRunsClient ?? new ReportingTestRunsClient(_cloudRunMetadata.BaseUri, clientOptions);
+            _testReportingClient = testReportingClient ?? new TestReportingClient(_cloudRunMetadata.BaseUri, clientOptions);
         }
 
-        public TestRunDtoV2? PatchTestRunInfo(TestRunDtoV2 run)
+        public TestRunDto? PatchTestRunInfo(TestRunDto run)
         {
             int statusCode;
             try
             {
-                Response? apiResponse = _reportingTestRunsClient.PatchTestRunInfo(_cloudRunMetadata.WorkspaceId!, _cloudRunMetadata.RunId!, RequestContent.Create(run), ReporterConstants.s_aPPLICATION_JSON, AccessToken, CorrelationId);
+                Response? apiResponse = _testReportingClient.PatchTestRunInfo(_cloudRunMetadata.WorkspaceId!, _cloudRunMetadata.RunId!, RequestContent.Create(JsonSerializer.Serialize(run)), AccessToken, CorrelationId);
                 if (apiResponse.Status == (int)HttpStatusCode.OK)
                 {
-                    return apiResponse.Content!.ToObject<TestRunDtoV2>(new JsonObjectSerializer());
+                    return apiResponse.Content!.ToObject<TestRunDto>(new JsonObjectSerializer());
                 }
                 statusCode = apiResponse.Status;
             }
@@ -76,12 +74,12 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             return null;
         }
 
-        public TestRunShardDto? PatchTestRunShardInfo(int shardId, TestRunShardDto runShard)
+        public TestRunShardDto? PostTestRunShardInfo(TestRunShardDto runShard)
         {
             int statusCode;
             try
             {
-                Response apiResponse = _reportingTestRunsClient.PatchTestRunShardInfo(_cloudRunMetadata.WorkspaceId!, _cloudRunMetadata.RunId!, shardId.ToString(), RequestContent.Create(runShard), ReporterConstants.s_aPPLICATION_JSON, AccessToken, CorrelationId);
+                Response apiResponse = _testReportingClient.PostTestRunShardInfo(_cloudRunMetadata.WorkspaceId!, _cloudRunMetadata.RunId!, RequestContent.Create(runShard), ReporterConstants.s_aPPLICATION_JSON, AccessToken, CorrelationId);
                 if (apiResponse.Status == (int)HttpStatusCode.OK)
                 {
                     return apiResponse.Content!.ToObject<TestRunShardDto>(new JsonObjectSerializer());
@@ -92,7 +90,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             {
                 statusCode = ex.Status;
             }
-            HandleAPIFailure(statusCode, "PatchTestRunShard");
+            HandleAPIFailure(statusCode, "PostTestRunShardInfo");
             return null;
         }
 
@@ -101,7 +99,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             int statusCode;
             try
             {
-                Response apiResponse = _reportingTestResultsClient.UploadBatchTestResults(_cloudRunMetadata.WorkspaceId!, RequestContent.Create(JsonSerializer.Serialize(uploadTestResultsRequest)), AccessToken, CorrelationId, null);
+                Response apiResponse = _testReportingClient.UploadBatchTestResults(_cloudRunMetadata.WorkspaceId!, RequestContent.Create(JsonSerializer.Serialize(uploadTestResultsRequest)), AccessToken, CorrelationId, null);
                 if (apiResponse.Status == (int)HttpStatusCode.OK)
                 {
                     return;
@@ -112,7 +110,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             {
                 statusCode = ex.Status;
             }
-            HandleAPIFailure(statusCode, "PostTestResults");
+            HandleAPIFailure(statusCode, "UploadBatchTestResults");
         }
 
         public TestResultsUri? GetTestRunResultsUri()
@@ -120,7 +118,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             int statusCode;
             try
             {
-                Response response = _reportingTestRunsClient.GetTestRunResultsUri(_cloudRunMetadata.WorkspaceId!, _cloudRunMetadata.RunId!, AccessToken, CorrelationId, null);
+                Response response = _testReportingClient.GetTestRunResultsUri(_cloudRunMetadata.WorkspaceId!, _cloudRunMetadata.RunId!, AccessToken, CorrelationId, null);
                 if (response.Status == (int)HttpStatusCode.OK)
                 {
                     return response.Content!.ToObject<TestResultsUri>(new JsonObjectSerializer());
@@ -131,7 +129,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             {
                 statusCode = ex.Status;
             }
-            HandleAPIFailure(statusCode, "GetStorageUri");
+            HandleAPIFailure(statusCode, "GetTestRunResultsUri");
             return null;
         }
 

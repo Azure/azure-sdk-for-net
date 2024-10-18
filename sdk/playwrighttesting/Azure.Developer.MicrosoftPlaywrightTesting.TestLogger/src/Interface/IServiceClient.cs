@@ -7,8 +7,8 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface
 {
     internal interface IServiceClient
     {
-        TestRunDtoV2? PatchTestRunInfo(TestRunDtoV2 run);
-        TestRunShardDto? PatchTestRunShardInfo(int shardId, TestRunShardDto runShard);
+        TestRunDto? PatchTestRunInfo(TestRunDto run);
+        TestRunShardDto? PostTestRunShardInfo(TestRunShardDto runShard);
         void UploadBatchTestResults(UploadTestResultsRequest uploadTestResultsRequest);
         TestResultsUri? GetTestRunResultsUri();
     }

@@ -212,9 +212,9 @@ internal class Constants
 
 internal class OSConstants
 {
-    internal static readonly string s_lINUX = "Linux";
-    internal static readonly string s_wINDOWS = "Windows";
-    internal static readonly string s_mACOS = "MacOS";
+    internal static readonly string s_lINUX = "LINUX";
+    internal static readonly string s_wINDOWS = "WINDOWS";
+    internal static readonly string s_mACOS = "MACOS";
 }
 
 internal class ReporterConstants
@@ -240,17 +240,17 @@ internal class ReporterConstants
 
 internal class CIConstants
 {
-    internal static readonly string s_gITHUB_ACTIONS = "GitHub Actions";
-    internal static readonly string s_aZURE_DEVOPS = "Azure DevOps";
-    internal static readonly string s_dEFAULT = "Default";
+    internal static readonly string s_gITHUB_ACTIONS = "GITHUB";
+    internal static readonly string s_aZURE_DEVOPS = "ADO";
+    internal static readonly string s_dEFAULT = "DEFAULT";
 }
 
 internal class TestCaseResultStatus
 {
-    internal static readonly string s_pASSED = "passed";
-    internal static readonly string s_fAILED = "failed";
-    internal static readonly string s_sKIPPED = "skipped";
-    internal static readonly string s_iNCONCLUSIVE = "inconclusive";
+    internal static readonly string s_pASSED = "PASSED";
+    internal static readonly string s_fAILED = "FAILED";
+    internal static readonly string s_sKIPPED = "SKIPPED";
+    internal static readonly string s_iNCONCLUSIVE = "INCONCLUSIVE";
 }
 
 internal class TestResultError
@@ -363,7 +363,7 @@ internal static class ApiErrorConstants
         { 503, "The service is currently unavailable. Please check the service status and try again." }
     };
 
-    private static Dictionary<int, string> GetTestRun { get; set; } = new Dictionary<int, string>()
+    private static Dictionary<int, string> UploadBatchTestResults { get; set; } = new Dictionary<int, string>()
     {
         { 400, "The request made to the server is invalid. Please check the request parameters and try again." },
         { 401, "The authentication token provided is invalid. Please check the token and try again." },
@@ -373,7 +373,7 @@ internal static class ApiErrorConstants
         { 504, "The request to the service timed out. Please try again later." },
         { 503, "The service is currently unavailable. Please check the service status and try again." }
     };
-    private static Dictionary<int, string> PatchTestRunShard { get; set; } = new Dictionary<int, string>()
+    private static Dictionary<int, string> PostTestRunShardInfo { get; set; } = new Dictionary<int, string>()
     {
         { 400, "The request made to the server is invalid. Please check the request parameters and try again." },
         { 401, "The authentication token provided is invalid. Please check the token and try again." },
@@ -383,7 +383,7 @@ internal static class ApiErrorConstants
         { 504, "The request to the service timed out. Please try again later." },
         { 503, "The service is currently unavailable. Please check the service status and try again." }
     };
-    private static Dictionary<int, string> GetStorageUri { get; set; } = new Dictionary<int, string>()
+    private static Dictionary<int, string> GetTestRunResultsUri { get; set; } = new Dictionary<int, string>()
     {
         { 400, "The request made to the server is invalid. Please check the request parameters and try again." },
         { 401, "The authentication token provided is invalid. Please check the token and try again." },
@@ -397,8 +397,8 @@ internal static class ApiErrorConstants
     internal static readonly Dictionary<string, Dictionary<int, string>> s_errorOperationPair = new()
     {
         { "PatchTestRun", PatchTestRun },
-        { "GetTestRun", GetTestRun },
-        { "PatchTestRunShard", PatchTestRunShard },
-        { "GetStorageUri", GetStorageUri }
+        { "UploadBatchTestResults", UploadBatchTestResults },
+        { "PostTestRunShardInfo", PostTestRunShardInfo },
+        { "GetTestRunResultsUri", GetTestRunResultsUri }
     };
 }

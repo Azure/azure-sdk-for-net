@@ -8,7 +8,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface
 {
     internal interface IDataProcessor
     {
-        TestRunDtoV2 GetTestRun();
+        TestRunDto GetTestRun();
         TestRunShardDto GetTestRunShard();
         TestResults GetTestCaseResultData(TestResult testResultSource);
     }

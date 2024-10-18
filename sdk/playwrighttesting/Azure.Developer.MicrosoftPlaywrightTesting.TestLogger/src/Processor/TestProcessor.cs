@@ -59,9 +59,9 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 {
                     return;
                 }
-                TestRunDtoV2 run = _dataProcessor.GetTestRun();
+                TestRunDto run = _dataProcessor.GetTestRun();
                 TestRunShardDto shard = _dataProcessor.GetTestRunShard();
-                TestRunDtoV2? testRun = _serviceClient.PatchTestRunInfo(run);
+                TestRunDto? testRun = _serviceClient.PatchTestRunInfo(run);
                 if (testRun == null)
                 {
                     _logger.Error("Failed to patch test run info");
@@ -69,7 +69,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                     return;
                 }
                 _logger.Info("Successfully patched test run - init");
-                TestRunShardDto? testShard = _serviceClient.PatchTestRunShardInfo(1, shard);
+                TestRunShardDto? testShard = _serviceClient.PostTestRunShardInfo(shard);
                 if (testShard == null)
                 {
                     _logger.Error("Failed to patch test run shard info");
@@ -199,7 +199,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 try
                 {
                     _testRunShard = GetTestRunEndShard(e);
-                    _serviceClient.PatchTestRunShardInfo(1, _testRunShard);
+                    _serviceClient.PostTestRunShardInfo(_testRunShard);
                     _logger.Info("Successfully ended test run shard");
                 }
                 catch (Exception ex)
@@ -251,16 +251,16 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             testRunShard.Summary.EndTime = testRunEndedOn.ToString("yyyy-MM-ddTHH:mm:ssZ");
             testRunShard.Summary.TotalTime = durationInMs;
             testRunShard.Summary.UploadMetadata = new UploadMetadata() { NumTestResults = TotalTestCount, NumTotalAttachments = 0, SizeTotalAttachments = 0 };
-            testRunShard.ResultsSummary = new TestRunResultsSummary
-            {
-                NumTotalTests = TotalTestCount,
-                NumPassedTests = PassedTestCount,
-                NumFailedTests = FailedTestCount,
-                NumSkippedTests = SkippedTestCount,
-                NumFlakyTests = 0, // TODO: Implement flaky tests
-                Status = result
-            };
-            testRunShard.UploadCompleted = "true";
+            //testRunShard.Summary = new TestRunResultsSummary
+            //{
+            //    NumTotalTests = TotalTestCount,
+            //    NumPassedTests = PassedTestCount,
+            //    NumFailedTests = FailedTestCount,
+            //    NumSkippedTests = SkippedTestCount,
+            //    NumFlakyTests = 0, // TODO: Implement flaky tests
+            //    Status = result
+            //};
+            testRunShard.UploadCompleted = true;
             return testRunShard;
         }
         private void GenerateMarkdownSummary()
@@ -270,13 +270,13 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 string markdownContent = @$"
 #### Results:
 
-![pass](https://img.shields.io/badge/status-passed-brightgreen) **Passed:** {_testRunShard!.ResultsSummary!.NumPassedTests}
+![pass](https://img.shields.io/badge/status-passed-brightgreen) **Passed:** {PassedTestCount}
 
-![fail](https://img.shields.io/badge/status-failed-red) **Failed:** {_testRunShard.ResultsSummary.NumFailedTests}
+![fail](https://img.shields.io/badge/status-failed-red) **Failed:** {FailedTestCount}
 
 ![flaky](https://img.shields.io/badge/status-flaky-yellow) **Flaky:** {"0"}
 
-![skipped](https://img.shields.io/badge/status-skipped-lightgrey) **Skipped:** {_testRunShard.ResultsSummary.NumSkippedTests}
+![skipped](https://img.shields.io/badge/status-skipped-lightgrey) **Skipped:** {SkippedTestCount}
 
 #### For more details, visit the [service dashboard]({Uri.EscapeUriString(_cloudRunMetadata.PortalUrl!)}).
 ";
