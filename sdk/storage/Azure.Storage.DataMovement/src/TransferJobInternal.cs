@@ -4,6 +4,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -279,9 +280,10 @@ namespace Azure.Storage.DataMovement
         /// Processes the job to job parts
         /// </summary>
         /// <returns>An IEnumerable that contains the job parts</returns>
-        public abstract IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync(CancellationToken cancellationToken = default);
-        public virtual async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync()
+        public virtual async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync(
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
+            _cancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationToken).Token;
             await OnJobStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
             int partNumber = 0;
 
