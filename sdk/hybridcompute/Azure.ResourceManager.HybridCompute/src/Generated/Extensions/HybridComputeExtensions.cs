@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LicenseProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LicenseProfileResource.CreateResourceIdentifier" /> to create a <see cref="LicenseProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridComputeLicenseProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridComputeLicenseProfileResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeLicenseProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetLicenseProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetHybridComputeLicenseProfileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LicenseProfileResource"/> object. </returns>
-        public static LicenseProfileResource GetLicenseProfileResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridComputeLicenseProfileResource"/> object. </returns>
+        public static HybridComputeLicenseProfileResource GetHybridComputeLicenseProfileResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHybridComputeArmClient(client).GetLicenseProfileResource(id);
+            return GetMockableHybridComputeArmClient(client).GetHybridComputeLicenseProfileResource(id);
         }
 
         /// <summary>

@@ -11,15 +11,15 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes a License Profile Update. </summary>
-    public partial class LicenseProfilePatch : HybridComputeResourceUpdate
+    public partial class HybridComputeLicenseProfilePatch : HybridComputeResourceUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="LicenseProfilePatch"/>. </summary>
-        public LicenseProfilePatch()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseProfilePatch"/>. </summary>
+        public HybridComputeLicenseProfilePatch()
         {
             ProductFeatures = new ChangeTrackingList<HybridComputeProductFeatureUpdate>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LicenseProfilePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseProfilePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="subscriptionStatus"> Indicates the subscription status of the product. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="productFeatures"> The list of product feature updates. </param>
         /// <param name="assignedLicense"> The resource id of the license. </param>
         /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
-        internal LicenseProfilePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, LicenseProfileSubscriptionStatusUpdate? subscriptionStatus, LicenseProfileProductType? productType, IList<HybridComputeProductFeatureUpdate> productFeatures, string assignedLicense, bool? softwareAssuranceCustomer) : base(tags, serializedAdditionalRawData)
+        internal HybridComputeLicenseProfilePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, LicenseProfileSubscriptionStatusUpdate? subscriptionStatus, LicenseProfileProductType? productType, IList<HybridComputeProductFeatureUpdate> productFeatures, string assignedLicense, bool? softwareAssuranceCustomer) : base(tags, serializedAdditionalRawData)
         {
             SubscriptionStatus = subscriptionStatus;
             ProductType = productType;

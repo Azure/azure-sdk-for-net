@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class LicenseProfilePatch : IUtf8JsonSerializable, IJsonModel<LicenseProfilePatch>
+    public partial class HybridComputeLicenseProfilePatch : IUtf8JsonSerializable, IJsonModel<HybridComputeLicenseProfilePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LicenseProfilePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeLicenseProfilePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<LicenseProfilePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeLicenseProfilePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LicenseProfilePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLicenseProfilePatch)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteEndObject();
         }
 
-        LicenseProfilePatch IJsonModel<LicenseProfilePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HybridComputeLicenseProfilePatch IJsonModel<HybridComputeLicenseProfilePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LicenseProfilePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLicenseProfilePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLicenseProfilePatch(document.RootElement, options);
+            return DeserializeHybridComputeLicenseProfilePatch(document.RootElement, options);
         }
 
-        internal static LicenseProfilePatch DeserializeLicenseProfilePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HybridComputeLicenseProfilePatch DeserializeHybridComputeLicenseProfilePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LicenseProfilePatch(
+            return new HybridComputeLicenseProfilePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 subscriptionStatus,
@@ -233,35 +233,35 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 softwareAssuranceCustomer);
         }
 
-        BinaryData IPersistableModel<LicenseProfilePatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HybridComputeLicenseProfilePatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LicenseProfilePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLicenseProfilePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        LicenseProfilePatch IPersistableModel<LicenseProfilePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HybridComputeLicenseProfilePatch IPersistableModel<HybridComputeLicenseProfilePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeLicenseProfilePatch(document.RootElement, options);
+                        return DeserializeHybridComputeLicenseProfilePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LicenseProfilePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLicenseProfilePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LicenseProfilePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeLicenseProfilePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

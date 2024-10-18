@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
-    /// A class representing the LicenseProfile data model.
+    /// A class representing the HybridComputeLicenseProfile data model.
     /// Describes a license profile in a hybrid machine.
     /// </summary>
-    public partial class LicenseProfileData : TrackedResourceData
+    public partial class HybridComputeLicenseProfileData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="LicenseProfileData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseProfileData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public LicenseProfileData(AzureLocation location) : base(location)
+        public HybridComputeLicenseProfileData(AzureLocation location) : base(location)
         {
             ProductFeatures = new ChangeTrackingList<HybridComputeProductFeature>();
             EsuKeys = new ChangeTrackingList<EsuKey>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LicenseProfileData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="assignedLicense"> The resource id of the license. </param>
         /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LicenseProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HybridComputeProvisioningState? provisioningState, LicenseProfileSubscriptionStatus? subscriptionStatus, LicenseProfileProductType? productType, DateTimeOffset? enrollmentOn, DateTimeOffset? billingStartOn, DateTimeOffset? disenrollmentOn, DateTimeOffset? billingEndOn, ResponseError error, IList<HybridComputeProductFeature> productFeatures, Guid? assignedLicenseImmutableId, IReadOnlyList<EsuKey> esuKeys, EsuServerType? serverType, EsuEligibility? esuEligibility, EsuKeyState? esuKeyState, string assignedLicense, bool? softwareAssuranceCustomer, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal HybridComputeLicenseProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HybridComputeProvisioningState? provisioningState, LicenseProfileSubscriptionStatus? subscriptionStatus, LicenseProfileProductType? productType, DateTimeOffset? enrollmentOn, DateTimeOffset? billingStartOn, DateTimeOffset? disenrollmentOn, DateTimeOffset? billingEndOn, ResponseError error, IList<HybridComputeProductFeature> productFeatures, Guid? assignedLicenseImmutableId, IReadOnlyList<EsuKey> esuKeys, EsuServerType? serverType, EsuEligibility? esuEligibility, EsuKeyState? esuKeyState, string assignedLicense, bool? softwareAssuranceCustomer, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             SubscriptionStatus = subscriptionStatus;
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.HybridCompute
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LicenseProfileData"/> for deserialization. </summary>
-        internal LicenseProfileData()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseProfileData"/> for deserialization. </summary>
+        internal HybridComputeLicenseProfileData()
         {
         }
 
@@ -156,6 +156,6 @@ namespace Azure.ResourceManager.HybridCompute
         public string AssignedLicense { get; set; }
         /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
         [WirePath("properties.softwareAssuranceCustomer")]
-        public bool? IsSoftwareAssuranceCustomer { get; set; }
+        public bool? SoftwareAssuranceCustomer { get; set; }
     }
 }

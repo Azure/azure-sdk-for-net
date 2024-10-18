@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="LicenseProfilesListResult"/>. </summary>
         /// <param name="value"> The list of license profiles. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal LicenseProfilesListResult(IEnumerable<LicenseProfileData> value)
+        internal LicenseProfilesListResult(IEnumerable<HybridComputeLicenseProfileData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="value"> The list of license profiles. </param>
         /// <param name="nextLink"> The URI to fetch the next page of Machines. Call ListNext() with this URI to fetch the next page of license profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LicenseProfilesListResult(IReadOnlyList<LicenseProfileData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LicenseProfilesListResult(IReadOnlyList<HybridComputeLicenseProfileData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The list of license profiles. </summary>
-        public IReadOnlyList<LicenseProfileData> Value { get; }
+        public IReadOnlyList<HybridComputeLicenseProfileData> Value { get; }
         /// <summary> The URI to fetch the next page of Machines. Call ListNext() with this URI to fetch the next page of license profile. </summary>
         public string NextLink { get; }
     }

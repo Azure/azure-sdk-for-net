@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridCompute.LicenseProfileData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputeLicenseProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -496,14 +496,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="esuKeyState"> Indicates whether there is an ESU Key currently active for the machine. </param>
         /// <param name="assignedLicense"> The resource id of the license. </param>
         /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
-        /// <returns> A new <see cref="HybridCompute.LicenseProfileData"/> instance for mocking. </returns>
-        public static LicenseProfileData LicenseProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, LicenseProfileSubscriptionStatus? subscriptionStatus = null, LicenseProfileProductType? productType = null, DateTimeOffset? enrollmentOn = null, DateTimeOffset? billingStartOn = null, DateTimeOffset? disenrollmentOn = null, DateTimeOffset? billingEndOn = null, ResponseError error = null, IEnumerable<HybridComputeProductFeature> productFeatures = null, Guid? assignedLicenseImmutableId = null, IEnumerable<EsuKey> esuKeys = null, EsuServerType? serverType = null, EsuEligibility? esuEligibility = null, EsuKeyState? esuKeyState = null, string assignedLicense = null, bool? softwareAssuranceCustomer = null)
+        /// <returns> A new <see cref="HybridCompute.HybridComputeLicenseProfileData"/> instance for mocking. </returns>
+        public static HybridComputeLicenseProfileData HybridComputeLicenseProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, LicenseProfileSubscriptionStatus? subscriptionStatus = null, LicenseProfileProductType? productType = null, DateTimeOffset? enrollmentOn = null, DateTimeOffset? billingStartOn = null, DateTimeOffset? disenrollmentOn = null, DateTimeOffset? billingEndOn = null, ResponseError error = null, IEnumerable<HybridComputeProductFeature> productFeatures = null, Guid? assignedLicenseImmutableId = null, IEnumerable<EsuKey> esuKeys = null, EsuServerType? serverType = null, EsuEligibility? esuEligibility = null, EsuKeyState? esuKeyState = null, string assignedLicense = null, bool? softwareAssuranceCustomer = null)
         {
             tags ??= new Dictionary<string, string>();
             productFeatures ??= new List<HybridComputeProductFeature>();
             esuKeys ??= new List<EsuKey>();
 
-            return new LicenseProfileData(
+            return new HybridComputeLicenseProfileData(
                 id,
                 name,
                 resourceType,

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2024-10-13)
+## 1.0.0 (2024-10-18)
 
 This is the first stable release of the Hybrid Compute library.
 

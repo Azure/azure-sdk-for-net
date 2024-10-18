@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridCompute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string machineName, LicenseProfileData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string machineName, HybridComputeLicenseProfileData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string machineName, LicenseProfileData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string machineName, HybridComputeLicenseProfileData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string machineName, LicenseProfileData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string machineName, HybridComputeLicenseProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string machineName, LicenseProfileData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string machineName, HybridComputeLicenseProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string machineName, LicenseProfilePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string machineName, HybridComputeLicenseProfilePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridCompute
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string machineName, LicenseProfilePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string machineName, HybridComputeLicenseProfilePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string machineName, LicenseProfilePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string machineName, HybridComputeLicenseProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string machineName, LicenseProfilePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string machineName, HybridComputeLicenseProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LicenseProfileData>> GetAsync(string subscriptionId, string resourceGroupName, string machineName, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridComputeLicenseProfileData>> GetAsync(string subscriptionId, string resourceGroupName, string machineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -285,13 +285,13 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 case 200:
                     {
-                        LicenseProfileData value = default;
+                        HybridComputeLicenseProfileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LicenseProfileData.DeserializeLicenseProfileData(document.RootElement);
+                        value = HybridComputeLicenseProfileData.DeserializeHybridComputeLicenseProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LicenseProfileData)null, message.Response);
+                    return Response.FromValue((HybridComputeLicenseProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LicenseProfileData> Get(string subscriptionId, string resourceGroupName, string machineName, CancellationToken cancellationToken = default)
+        public Response<HybridComputeLicenseProfileData> Get(string subscriptionId, string resourceGroupName, string machineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -316,13 +316,13 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 case 200:
                     {
-                        LicenseProfileData value = default;
+                        HybridComputeLicenseProfileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LicenseProfileData.DeserializeLicenseProfileData(document.RootElement);
+                        value = HybridComputeLicenseProfileData.DeserializeHybridComputeLicenseProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LicenseProfileData)null, message.Response);
+                    return Response.FromValue((HybridComputeLicenseProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

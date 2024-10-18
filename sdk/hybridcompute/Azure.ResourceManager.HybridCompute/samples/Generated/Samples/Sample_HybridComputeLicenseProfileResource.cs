@@ -13,7 +13,7 @@ using Azure.ResourceManager.HybridCompute.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Samples
 {
-    public partial class Sample_LicenseProfileResource
+    public partial class Sample_HybridComputeLicenseProfileResource
     {
         // Create or Update a License Profile
         [NUnit.Framework.Test]
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this LicenseProfileResource created on azure
-            // for more information of creating LicenseProfileResource, please refer to the document of LicenseProfileResource
+            // this example assumes you already have this HybridComputeLicenseProfileResource created on azure
+            // for more information of creating HybridComputeLicenseProfileResource, please refer to the document of HybridComputeLicenseProfileResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
-            ResourceIdentifier licenseProfileResourceId = LicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
-            LicenseProfileResource licenseProfile = client.GetLicenseProfileResource(licenseProfileResourceId);
+            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
+            HybridComputeLicenseProfileResource hybridComputeLicenseProfile = client.GetHybridComputeLicenseProfileResource(hybridComputeLicenseProfileResourceId);
 
             // invoke the operation
-            LicenseProfileData data = new LicenseProfileData(new AzureLocation("eastus2euap"))
+            HybridComputeLicenseProfileData data = new HybridComputeLicenseProfileData(new AzureLocation("eastus2euap"))
             {
                 SubscriptionStatus = LicenseProfileSubscriptionStatus.Enabled,
                 ProductType = LicenseProfileProductType.WindowsServer,
@@ -52,12 +52,12 @@ SubscriptionStatus = LicenseProfileSubscriptionStatus.Enabled,
                 AssignedLicense = "{LicenseResourceId}",
                 SoftwareAssuranceCustomer = true,
             };
-            ArmOperation<LicenseProfileResource> lro = await licenseProfile.CreateOrUpdateAsync(WaitUntil.Completed, data);
-            LicenseProfileResource result = lro.Value;
+            ArmOperation<HybridComputeLicenseProfileResource> lro = await hybridComputeLicenseProfile.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            HybridComputeLicenseProfileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            LicenseProfileData resourceData = result.Data;
+            HybridComputeLicenseProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -75,16 +75,16 @@ SubscriptionStatus = LicenseProfileSubscriptionStatus.Enabled,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this LicenseProfileResource created on azure
-            // for more information of creating LicenseProfileResource, please refer to the document of LicenseProfileResource
+            // this example assumes you already have this HybridComputeLicenseProfileResource created on azure
+            // for more information of creating HybridComputeLicenseProfileResource, please refer to the document of HybridComputeLicenseProfileResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
-            ResourceIdentifier licenseProfileResourceId = LicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
-            LicenseProfileResource licenseProfile = client.GetLicenseProfileResource(licenseProfileResourceId);
+            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
+            HybridComputeLicenseProfileResource hybridComputeLicenseProfile = client.GetHybridComputeLicenseProfileResource(hybridComputeLicenseProfileResourceId);
 
             // invoke the operation
-            LicenseProfilePatch patch = new LicenseProfilePatch()
+            HybridComputeLicenseProfilePatch patch = new HybridComputeLicenseProfilePatch()
             {
                 SubscriptionStatus = LicenseProfileSubscriptionStatusUpdate.Enable,
                 ProductType = LicenseProfileProductType.WindowsServer,
@@ -99,12 +99,12 @@ SubscriptionStatus = LicenseProfileSubscriptionStatusUpdate.Enable,
                 AssignedLicense = "{LicenseResourceId}",
                 SoftwareAssuranceCustomer = true,
             };
-            ArmOperation<LicenseProfileResource> lro = await licenseProfile.UpdateAsync(WaitUntil.Completed, patch);
-            LicenseProfileResource result = lro.Value;
+            ArmOperation<HybridComputeLicenseProfileResource> lro = await hybridComputeLicenseProfile.UpdateAsync(WaitUntil.Completed, patch);
+            HybridComputeLicenseProfileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            LicenseProfileData resourceData = result.Data;
+            HybridComputeLicenseProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -122,20 +122,20 @@ SubscriptionStatus = LicenseProfileSubscriptionStatusUpdate.Enable,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this LicenseProfileResource created on azure
-            // for more information of creating LicenseProfileResource, please refer to the document of LicenseProfileResource
+            // this example assumes you already have this HybridComputeLicenseProfileResource created on azure
+            // for more information of creating HybridComputeLicenseProfileResource, please refer to the document of HybridComputeLicenseProfileResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
-            ResourceIdentifier licenseProfileResourceId = LicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
-            LicenseProfileResource licenseProfile = client.GetLicenseProfileResource(licenseProfileResourceId);
+            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
+            HybridComputeLicenseProfileResource hybridComputeLicenseProfile = client.GetHybridComputeLicenseProfileResource(hybridComputeLicenseProfileResourceId);
 
             // invoke the operation
-            LicenseProfileResource result = await licenseProfile.GetAsync();
+            HybridComputeLicenseProfileResource result = await hybridComputeLicenseProfile.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            LicenseProfileData resourceData = result.Data;
+            HybridComputeLicenseProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -153,16 +153,16 @@ SubscriptionStatus = LicenseProfileSubscriptionStatusUpdate.Enable,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this LicenseProfileResource created on azure
-            // for more information of creating LicenseProfileResource, please refer to the document of LicenseProfileResource
+            // this example assumes you already have this HybridComputeLicenseProfileResource created on azure
+            // for more information of creating HybridComputeLicenseProfileResource, please refer to the document of HybridComputeLicenseProfileResource
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
-            ResourceIdentifier licenseProfileResourceId = LicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
-            LicenseProfileResource licenseProfile = client.GetLicenseProfileResource(licenseProfileResourceId);
+            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
+            HybridComputeLicenseProfileResource hybridComputeLicenseProfile = client.GetHybridComputeLicenseProfileResource(hybridComputeLicenseProfileResourceId);
 
             // invoke the operation
-            await licenseProfile.DeleteAsync(WaitUntil.Completed);
+            await hybridComputeLicenseProfile.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

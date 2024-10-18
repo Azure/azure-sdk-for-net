@@ -31,7 +31,6 @@ prepend-rp-prefix:
   - CloudMetadata
   - ConfigurationExtension
   - ConnectionDetail
-  - ExecutionState
   - ExtensionValue
   - IpAddress
   - License
@@ -65,9 +64,8 @@ prepend-rp-prefix:
   - ProvisioningIssue
   - ProvisioningIssueSeverity
   - ProvisioningIssueType
-  - Gateway
-  - GatewayUpdate
-  - GatewayType
+  - LicenseProfile
+  - LicenseProfileUpdate
   - ProductFeatureUpdate
 
 list-exception: 
@@ -101,19 +99,11 @@ rename-mapping:
   PatchServiceUsed.YUM: Yum
   PatchServiceUsed.APT: Apt
   PrivateLinkScopeValidationDetails.id: -|arm-id
-  RunCommandManagedIdentity.clientId: -|uuid
-  RunCommandManagedIdentity.objectId: -|uuid
   StatusLevelTypes: HybridComputeStatusLevelType
   StatusTypes: HybridComputeStatusType
   OSProfileWindowsConfiguration.patchSettings.enableHotpatching: IsHotpatchingEnabled
   PatchSettingsStatus: HybridComputePatchSettingsStatus
-  Settings: HybridComputeTargetResourceSettings
   OSProfileLinuxConfiguration.patchSettings.enableHotpatching: IsHotpatchingEnabled
-  LicenseProfileData: HybridComputeLicenseProfileData
-  LicenseProfilePatch: HybridComputeLicenseProfilePatch
-
-override-operation-name:
-  Settings_Update: UpdateTargetResourceSetting
 
 format-by-name-rules:
   'tenantId': 'uuid'

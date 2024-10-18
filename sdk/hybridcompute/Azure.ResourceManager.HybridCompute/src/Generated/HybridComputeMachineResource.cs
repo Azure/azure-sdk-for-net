@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.HybridCompute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a LicenseProfileResource along with the instance operations that can be performed on it in the HybridComputeMachine. </summary>
-        /// <returns> Returns a <see cref="LicenseProfileResource"/> object. </returns>
-        public virtual LicenseProfileResource GetLicenseProfile()
+        /// <summary> Gets an object representing a HybridComputeLicenseProfileResource along with the instance operations that can be performed on it in the HybridComputeMachine. </summary>
+        /// <returns> Returns a <see cref="HybridComputeLicenseProfileResource"/> object. </returns>
+        public virtual HybridComputeLicenseProfileResource GetHybridComputeLicenseProfile()
         {
-            return new LicenseProfileResource(Client, Id.AppendChildResource("licenseProfiles", "default"));
+            return new HybridComputeLicenseProfileResource(Client, Id.AppendChildResource("licenseProfiles", "default"));
         }
 
         /// <summary> Gets a collection of HybridComputeMachineExtensionResources in the HybridComputeMachine. </summary>

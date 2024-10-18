@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            IReadOnlyList<LicenseProfileData> value = default;
+            IReadOnlyList<HybridComputeLicenseProfileData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<LicenseProfileData> array = new List<LicenseProfileData>();
+                    List<HybridComputeLicenseProfileData> array = new List<HybridComputeLicenseProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LicenseProfileData.DeserializeLicenseProfileData(item, options));
+                        array.Add(HybridComputeLicenseProfileData.DeserializeHybridComputeLicenseProfileData(item, options));
                     }
                     value = array;
                     continue;
