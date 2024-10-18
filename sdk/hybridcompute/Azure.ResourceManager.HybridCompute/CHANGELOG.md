@@ -4,16 +4,16 @@
 
 This is the first stable release of the Hybrid Compute library.
 
-### Breaking Changes
+### Features Added
 
-- Upgraded api-version tag from 'package-preview-2024-05' to 'package-2024-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/15b16d1b5c3cccdecdd1cfe936f6a8005680c557/specification/hybridcompute/resource-manager/readme.md
+- Upgraded api-version tag from 'package-preview-2024-05' to 'package-2024-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/15b16d1b5c3cccdecdd1cfe936f6a8005680c557/specification/hybridcompute/resource-manager/readme.md.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.0.0-beta.10 (2024-07-19)
 
 ### Features Added
 
 - Upgraded api-version tag from 'package-preview-2024-03' to 'package-preview-2024-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b48d5d72073a296514d3d4db77887d8711526ccc/specification/hybridcompute/resource-manager/readme.md
-- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 - Added experimental Bicep serialization.
 
 ## 1.0.0-beta.9 (2024-06-07)
