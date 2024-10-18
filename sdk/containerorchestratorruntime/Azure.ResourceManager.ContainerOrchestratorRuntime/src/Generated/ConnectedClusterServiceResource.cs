@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <description>ServiceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <description>ServiceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Delete</description>
+        /// <description>ServiceResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_Delete</description>
+        /// <description>ServiceResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_CreateOrUpdate</description>
+        /// <description>ServiceResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_CreateOrUpdate</description>
+        /// <description>ServiceResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
