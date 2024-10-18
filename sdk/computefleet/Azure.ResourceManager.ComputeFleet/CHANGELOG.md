@@ -1,8 +1,6 @@
 # Release History
 
-## 1.0.0 (2024-11-01)
-
--  GA version
+## 1.0.0 (2024-10-22)
 
 ### Features Added
 
