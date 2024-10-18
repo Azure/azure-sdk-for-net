@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="LicenseProfilePatch"/>. </summary>
         public LicenseProfilePatch()
         {
-            ProductFeatures = new ChangeTrackingList<ProductFeatureUpdate>();
+            ProductFeatures = new ChangeTrackingList<HybridComputeProductFeatureUpdate>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LicenseProfilePatch"/>. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="productFeatures"> The list of product feature updates. </param>
         /// <param name="assignedLicense"> The resource id of the license. </param>
         /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
-        internal LicenseProfilePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, LicenseProfileSubscriptionStatusUpdate? subscriptionStatus, LicenseProfileProductType? productType, IList<ProductFeatureUpdate> productFeatures, string assignedLicense, bool? softwareAssuranceCustomer) : base(tags, serializedAdditionalRawData)
+        internal LicenseProfilePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, LicenseProfileSubscriptionStatusUpdate? subscriptionStatus, LicenseProfileProductType? productType, IList<HybridComputeProductFeatureUpdate> productFeatures, string assignedLicense, bool? softwareAssuranceCustomer) : base(tags, serializedAdditionalRawData)
         {
             SubscriptionStatus = subscriptionStatus;
             ProductType = productType;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public LicenseProfileProductType? ProductType { get; set; }
         /// <summary> The list of product feature updates. </summary>
         [WirePath("properties.productFeatures")]
-        public IList<ProductFeatureUpdate> ProductFeatures { get; }
+        public IList<HybridComputeProductFeatureUpdate> ProductFeatures { get; }
         /// <summary> The resource id of the license. </summary>
         [WirePath("properties.assignedLicense")]
         public string AssignedLicense { get; set; }
