@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
+            if (Optional.IsDefined(Bypass))
+            {
+                writer.WritePropertyName("bypass"u8);
+                writer.WriteStringValue(Bypass.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
@@ -99,6 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             CognitiveServicesNetworkRuleAction? defaultAction = default;
+            ByPassSelection? bypass = default;
             IList<CognitiveServicesIPRule> ipRules = default;
             IList<CognitiveServicesVirtualNetworkRule> virtualNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -112,6 +118,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         continue;
                     }
                     defaultAction = new CognitiveServicesNetworkRuleAction(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("bypass"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bypass = new ByPassSelection(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipRules"u8))
@@ -148,7 +163,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CognitiveServicesNetworkRuleSet(defaultAction, ipRules ?? new ChangeTrackingList<CognitiveServicesIPRule>(), virtualNetworkRules ?? new ChangeTrackingList<CognitiveServicesVirtualNetworkRule>(), serializedAdditionalRawData);
+            return new CognitiveServicesNetworkRuleSet(defaultAction, bypass, ipRules ?? new ChangeTrackingList<CognitiveServicesIPRule>(), virtualNetworkRules ?? new ChangeTrackingList<CognitiveServicesVirtualNetworkRule>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -174,6 +189,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     builder.Append("  defaultAction: ");
                     builder.AppendLine($"'{DefaultAction.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Bypass), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bypass: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Bypass))
+                {
+                    builder.Append("  bypass: ");
+                    builder.AppendLine($"'{Bypass.Value.ToString()}'");
                 }
             }
 

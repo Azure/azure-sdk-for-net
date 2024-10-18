@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetDeployment()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2023-05-01/examples/GetDeployment.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/GetDeployment.json
             // this example is just showing the usage of "Deployments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PutDeployment
+        // UpdateDeployment
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_PutDeployment()
+        public async Task Update_UpdateDeployment()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2023-05-01/examples/PutDeployment.json
-            // this example is just showing the usage of "Deployments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/UpdateDeployment.json
+            // this example is just showing the usage of "Deployments_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesAccountDeploymentResource created on azure
             // for more information of creating CognitiveServicesAccountDeploymentResource, please refer to the document of CognitiveServicesAccountDeploymentResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string accountName = "accountName";
             string deploymentName = "deploymentName";
@@ -70,24 +70,14 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             CognitiveServicesAccountDeploymentResource cognitiveServicesAccountDeployment = client.GetCognitiveServicesAccountDeploymentResource(cognitiveServicesAccountDeploymentResourceId);
 
             // invoke the operation
-            CognitiveServicesAccountDeploymentData data = new CognitiveServicesAccountDeploymentData()
+            PatchResourceTagsAndSku deployment = new PatchResourceTagsAndSku()
             {
-                Properties = new CognitiveServicesAccountDeploymentProperties()
+                Sku = new CognitiveServicesSku("Standard")
                 {
-                    Model = new CognitiveServicesAccountDeploymentModel()
-                    {
-                        Format = "OpenAI",
-                        Name = "ada",
-                        Version = "1",
-                    },
-                    ScaleSettings = new CognitiveServicesAccountDeploymentScaleSettings()
-                    {
-                        ScaleType = CognitiveServicesAccountDeploymentScaleType.Manual,
-                        Capacity = 1,
-                    },
+                    Capacity = 1,
                 },
             };
-            ArmOperation<CognitiveServicesAccountDeploymentResource> lro = await cognitiveServicesAccountDeployment.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<CognitiveServicesAccountDeploymentResource> lro = await cognitiveServicesAccountDeployment.UpdateAsync(WaitUntil.Completed, deployment);
             CognitiveServicesAccountDeploymentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -102,7 +92,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteDeployment()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2023-05-01/examples/DeleteDeployment.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/DeleteDeployment.json
             // this example is just showing the usage of "Deployments_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,6 +111,37 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // invoke the operation
             await cognitiveServicesAccountDeployment.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // ListDeploymentSkus
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetSkus_ListDeploymentSkus()
+        {
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/ListDeploymentSkus.json
+            // this example is just showing the usage of "Deployments_ListSkus" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CognitiveServicesAccountDeploymentResource created on azure
+            // for more information of creating CognitiveServicesAccountDeploymentResource, please refer to the document of CognitiveServicesAccountDeploymentResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "resourceGroupName";
+            string accountName = "accountName";
+            string deploymentName = "deploymentName";
+            ResourceIdentifier cognitiveServicesAccountDeploymentResourceId = CognitiveServicesAccountDeploymentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, deploymentName);
+            CognitiveServicesAccountDeploymentResource cognitiveServicesAccountDeployment = client.GetCognitiveServicesAccountDeploymentResource(cognitiveServicesAccountDeploymentResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (SkuResource item in cognitiveServicesAccountDeployment.GetSkusAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
             Console.WriteLine($"Succeeded");
         }
