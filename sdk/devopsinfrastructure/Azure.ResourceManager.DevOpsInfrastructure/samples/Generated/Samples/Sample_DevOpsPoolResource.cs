@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_PoolsGet()
         {
-            // Generated from example definition: 2024-04-04-preview/GetPool.json
-            // this example is just showing the usage of "Pools_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-10-19/GetPool.json
+            // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PoolsUpdate()
         {
-            // Generated from example definition: 2024-04-04-preview/UpdatePool.json
-            // this example is just showing the usage of "Pools_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-10-19/UpdatePool.json
+            // this example is just showing the usage of "Pool_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_PoolsDelete()
         {
-            // Generated from example definition: 2024-04-04-preview/DeletePool.json
-            // this example is just showing the usage of "Pools_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-10-19/DeletePool.json
+            // this example is just showing the usage of "Pool_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetDevOpsPools_PoolsListBySubscription()
         {
-            // Generated from example definition: 2024-04-04-preview/ListPoolsBySubscription.json
+            // Generated from example definition: 2024-10-19/ListPoolsBySubscription.json
             // this example is just showing the usage of "Pool_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetResourceDetails_ResourceDetailsListByPool()
         {
-            // Generated from example definition: 2024-04-04-preview/ResourceDetails_ListByPool.json
+            // Generated from example definition: 2024-10-19/ResourceDetails_ListByPool.json
             // this example is just showing the usage of "ResourceDetailsObject_ListByPool" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

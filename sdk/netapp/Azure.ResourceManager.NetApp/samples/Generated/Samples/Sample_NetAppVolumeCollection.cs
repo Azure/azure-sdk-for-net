@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation
             string volumeName = "volume1";
-            NetAppVolumeData data = new NetAppVolumeData(new AzureLocation("eastus"), "my-unique-file-path", 107374182400, new ResourceIdentifier("/subscriptions/9760acf5-4638-11e7-9bdb-020073ca7778/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+            NetAppVolumeData data = new NetAppVolumeData(new AzureLocation("eastus"), "my-unique-file-path", 107374182400L, new ResourceIdentifier("/subscriptions/9760acf5-4638-11e7-9bdb-020073ca7778/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
             {
                 ServiceLevel = NetAppFileServiceLevel.Premium,
             };

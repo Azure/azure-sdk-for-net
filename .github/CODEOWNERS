@@ -562,10 +562,10 @@
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                                     @heaths @schaabs @JonathanCrd @jsquire @christothes
+/sdk/keyvault/                                                     @schaabs @JonathanCrd @jsquire @christothes
 
 # ServiceLabel: %KeyVault
-# AzureSdkOwners:                                                  @heaths
+# AzureSdkOwners:                                                  @JonathanCrd
 # ServiceOwners:                                                   @RandalliLama @jlichwa
 
 # ServiceLabel: %Kubernetes Configuration
@@ -723,7 +723,7 @@
 # ServiceOwners:                                                   @netwatchsuppgithub
 
 # PRLabel: %Network - DNS
-/sdk/dns*/                                                         @dnssuppgithub
+/sdk/dns/                                                         @dnssuppgithub
 
 # ServiceLabel: %Network - DNS
 # ServiceOwnerS:                                                   @dnssuppgithub
@@ -771,7 +771,7 @@
 # ServiceOwners:                                                   @sunilagarwal @lfittl-msft @sr-msft @niklarin
 
 # PRLabel: %Provisioning
-/sdk/provisioning/                                                 @JoshLove-msft @tg-msft
+/sdk/provisioning/                                                 @JoshLove-msft @tg-msft @christothes @KrzysztofCwalina
 
 # ServiceLabel: %Provisioning
 # AzureSdkOwners:                                                  @JoshLove-msft
@@ -840,10 +840,10 @@
 # ServiceOwners:                                                   @hmlam
 
 # PRLabel: %SignalR
-/sdk/signalr/                                                      @sffamily @chenkennt @Y-Sindo
+/sdk/signalr/                                                      @chenkennt @vicancy @JialinXin @Y-Sindo
 
 # ServiceLabel: %SignalR
-# ServiceOwners:                                                   @sffamily @chenkennt @Y-Sindo
+# ServiceOwners:                                                   @sffamily @chenkennt @vicancy @JialinXin @Y-Sindo
 
 # ServiceLabel: %SQL
 # ServiceOwners:                                                   @azureSQLGitHub
@@ -967,6 +967,12 @@
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
 
+# PRLael: %Container Orchestrator Runtime
+/sdk/containerorchestratorruntime/Azure.ResourceManager.*/         @HE-Xinyu @ddadaal
+
+# ServiceLabel: %Container Orchestrator Runtime
+# ServiceOwners:                                                   @HE-Xinyu @ddadaal
+
 # PRLabel: %Device Registry
 /sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
@@ -1014,6 +1020,12 @@
 
 # ServiceLabel: %Network - Mobile %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
+
+# PRLabel: %Network - DNS Private Resolver
+/sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
+
+# ServiceLabel: %Network - DNS Private Resolver %Mgmt
+# ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %New Relic
 /sdk/newrelicobservability/Azure.ResourceManager.*/                @dipeshbhakat-microsoft @vipray-ms
@@ -1064,10 +1076,10 @@
 # ServiceOwners:                                                   @sunkun99
 
 # PRLabel: %Compute - Fleet
-/sdk/computefleet/                                                 @sahilarora92 @dhruvil009
+/sdk/computefleet/Azure.ResourceManager.*/                         @sahilarora92 @dhruvil009 @rahuls-microsoft
 
-# ServiceLabel: %Compute - Fleet
-# ServiceOwners:                                                   @sahilarora92 @dhruvil009
+# ServiceLabel: %Compute - Fleet %Mgmt
+# ServiceOwners:                                                   @sahilarora92 @dhruvil009 @rahuls-microsoft
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp

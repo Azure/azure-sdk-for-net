@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         void IJsonModel<RoleInstances>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RoleInstances>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoleInstances)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("roleInstances"u8);
             writer.WriteStartArray();
             foreach (var item in RoleInstancesValue)
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.Compute.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RoleInstances IJsonModel<RoleInstances>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

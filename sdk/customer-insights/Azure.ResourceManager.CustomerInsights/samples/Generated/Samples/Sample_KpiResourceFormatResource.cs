@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
 {
 "SavingAccountBalance"
 },
-                ThresHolds = new KpiThresholds(5, 50, true),
+                ThresHolds = new KpiThresholds(5M, 50M, true),
                 Aliases =
 {
 new KpiAlias("alias","Id+4")

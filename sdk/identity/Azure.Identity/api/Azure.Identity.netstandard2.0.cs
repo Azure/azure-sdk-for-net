@@ -46,6 +46,7 @@ namespace Azure.Identity
     public static partial class AzureAuthorityHosts
     {
         public static System.Uri AzureChina { get { throw null; } }
+        [System.ObsoleteAttribute("Microsoft Cloud Germany was closed on October 29th, 2021.")]
         public static System.Uri AzureGermany { get { throw null; } }
         public static System.Uri AzureGovernment { get { throw null; } }
         public static System.Uri AzurePublicCloud { get { throw null; } }

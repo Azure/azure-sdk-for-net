@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="ChatCompletionsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="endpoint"> Service host. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         public static IAzureClientBuilder<ChatCompletionsClient, ChatCompletionsClientOptions> AddChatCompletionsClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
@@ -27,7 +27,7 @@ namespace Microsoft.Extensions.Azure
 
         /// <summary> Registers a <see cref="ChatCompletionsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="endpoint"> Service host. </param>
         public static IAzureClientBuilder<ChatCompletionsClient, ChatCompletionsClientOptions> AddChatCompletionsClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
