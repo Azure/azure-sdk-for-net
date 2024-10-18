@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Result of the post subvolume and action is to get metadata of the subvolume. </summary>
+    /// <summary>
+    /// Result of the post subvolume and action is to get metadata of the subvolume.
+    /// Serialized Name: SubvolumeModel
+    /// </summary>
     public partial class NetAppSubvolumeMetadata : ResourceData
     {
         /// <summary>
@@ -57,16 +60,46 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="path"> Path to the subvolume. </param>
-        /// <param name="parentPath"> Path to the parent subvolume. </param>
-        /// <param name="size"> Size of subvolume. </param>
-        /// <param name="bytesUsed"> Bytes used. </param>
-        /// <param name="permissions"> Permissions of the subvolume. </param>
-        /// <param name="createdOn"> Creation time and date. </param>
-        /// <param name="accessedOn"> Most recent access time and date. </param>
-        /// <param name="modifiedOn"> Most recent modification time and date. </param>
-        /// <param name="changedOn"> Most recent change time and date. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="path">
+        /// Path to the subvolume
+        /// Serialized Name: SubvolumeModel.properties.path
+        /// </param>
+        /// <param name="parentPath">
+        /// Path to the parent subvolume
+        /// Serialized Name: SubvolumeModel.properties.parentPath
+        /// </param>
+        /// <param name="size">
+        /// Size of subvolume
+        /// Serialized Name: SubvolumeModel.properties.size
+        /// </param>
+        /// <param name="bytesUsed">
+        /// Bytes used
+        /// Serialized Name: SubvolumeModel.properties.bytesUsed
+        /// </param>
+        /// <param name="permissions">
+        /// Permissions of the subvolume
+        /// Serialized Name: SubvolumeModel.properties.permissions
+        /// </param>
+        /// <param name="createdOn">
+        /// Creation time and date
+        /// Serialized Name: SubvolumeModel.properties.creationTimeStamp
+        /// </param>
+        /// <param name="accessedOn">
+        /// Most recent access time and date
+        /// Serialized Name: SubvolumeModel.properties.accessedTimeStamp
+        /// </param>
+        /// <param name="modifiedOn">
+        /// Most recent modification time and date
+        /// Serialized Name: SubvolumeModel.properties.modifiedTimeStamp
+        /// </param>
+        /// <param name="changedOn">
+        /// Most recent change time and date
+        /// Serialized Name: SubvolumeModel.properties.changedTimeStamp
+        /// </param>
+        /// <param name="provisioningState">
+        /// Azure lifecycle management
+        /// Serialized Name: SubvolumeModel.properties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppSubvolumeMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, string parentPath, long? size, long? bytesUsed, string permissions, DateTimeOffset? createdOn, DateTimeOffset? accessedOn, DateTimeOffset? modifiedOn, DateTimeOffset? changedOn, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -83,25 +116,55 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Path to the subvolume. </summary>
+        /// <summary>
+        /// Path to the subvolume
+        /// Serialized Name: SubvolumeModel.properties.path
+        /// </summary>
         public string Path { get; }
-        /// <summary> Path to the parent subvolume. </summary>
+        /// <summary>
+        /// Path to the parent subvolume
+        /// Serialized Name: SubvolumeModel.properties.parentPath
+        /// </summary>
         public string ParentPath { get; }
-        /// <summary> Size of subvolume. </summary>
+        /// <summary>
+        /// Size of subvolume
+        /// Serialized Name: SubvolumeModel.properties.size
+        /// </summary>
         public long? Size { get; }
-        /// <summary> Bytes used. </summary>
+        /// <summary>
+        /// Bytes used
+        /// Serialized Name: SubvolumeModel.properties.bytesUsed
+        /// </summary>
         public long? BytesUsed { get; }
-        /// <summary> Permissions of the subvolume. </summary>
+        /// <summary>
+        /// Permissions of the subvolume
+        /// Serialized Name: SubvolumeModel.properties.permissions
+        /// </summary>
         public string Permissions { get; }
-        /// <summary> Creation time and date. </summary>
+        /// <summary>
+        /// Creation time and date
+        /// Serialized Name: SubvolumeModel.properties.creationTimeStamp
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Most recent access time and date. </summary>
+        /// <summary>
+        /// Most recent access time and date
+        /// Serialized Name: SubvolumeModel.properties.accessedTimeStamp
+        /// </summary>
         public DateTimeOffset? AccessedOn { get; }
-        /// <summary> Most recent modification time and date. </summary>
+        /// <summary>
+        /// Most recent modification time and date
+        /// Serialized Name: SubvolumeModel.properties.modifiedTimeStamp
+        /// </summary>
         public DateTimeOffset? ModifiedOn { get; }
-        /// <summary> Most recent change time and date. </summary>
+        /// <summary>
+        /// Most recent change time and date
+        /// Serialized Name: SubvolumeModel.properties.changedTimeStamp
+        /// </summary>
         public DateTimeOffset? ChangedOn { get; }
-        /// <summary> Azure lifecycle management. </summary>
+        /// <summary>
+        /// Azure lifecycle management
+        /// Serialized Name: SubvolumeModel.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
     }
 }

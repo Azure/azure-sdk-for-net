@@ -147,6 +147,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("networkFeatures"u8);
                 writer.WriteStringValue(NetworkFeatures.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(EffectiveNetworkFeatures))
+            {
+                writer.WritePropertyName("effectiveNetworkFeatures"u8);
+                writer.WriteStringValue(EffectiveNetworkFeatures.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(NetworkSiblingSetId))
             {
                 writer.WritePropertyName("networkSiblingSetId"u8);
@@ -470,6 +475,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string baremetalTenantId = default;
             ResourceIdentifier subnetId = default;
             NetAppNetworkFeature? networkFeatures = default;
+            NetAppNetworkFeature? effectiveNetworkFeatures = default;
             Guid? networkSiblingSetId = default;
             NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default;
             IReadOnlyList<NetAppVolumeMountTarget> mountTargets = default;
@@ -677,6 +683,15 @@ namespace Azure.ResourceManager.NetApp.Models
                                 continue;
                             }
                             networkFeatures = new NetAppNetworkFeature(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("effectiveNetworkFeatures"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            effectiveNetworkFeatures = new NetAppNetworkFeature(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("networkSiblingSetId"u8))
@@ -1088,6 +1103,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 baremetalTenantId,
                 subnetId,
                 networkFeatures,
+                effectiveNetworkFeatures,
                 networkSiblingSetId,
                 storageToNetworkProximity,
                 mountTargets ?? new ChangeTrackingList<NetAppVolumeMountTarget>(),
