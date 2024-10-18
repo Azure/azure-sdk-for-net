@@ -719,6 +719,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/46717
         public async Task StartTransfer_AwaitCompletion_Failed()
         {
             // Arrange
@@ -824,6 +825,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/46717
         public async Task StartTransfer_EnsureCompleted_Failed()
         {
             // Arrange
@@ -898,6 +900,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/46717
         public async Task StartTransfer_EnsureCompleted_Failed_SmallChunks()
         {
             // Arrange
