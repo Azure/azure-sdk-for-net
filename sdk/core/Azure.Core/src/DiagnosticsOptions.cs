@@ -21,7 +21,7 @@ namespace Azure.Core
         /// <summary>
         /// Creates a new instance of <see cref="DiagnosticsOptions"/> with default values.
         /// </summary>
-        protected internal DiagnosticsOptions() : this(ClientOptions.Default.Diagnostics)
+        public DiagnosticsOptions() : this(ClientOptions.Default.Diagnostics)
         { }
 
         /// <summary>

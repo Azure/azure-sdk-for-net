@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -15,24 +16,23 @@ public static class MapsClientServiceCollectionExtensions
 {
     public static IServiceCollection AddMapsClient(this IServiceCollection services)
     {
-        // Add common options
         services.AddCommonOptions();
 
-        // Add client options
         services.AddOptions<MapsClientOptions>()
-                .Configure(clientOptions =>
+                .Configure<IOptions<ClientOptions>>((clientOptions, commonOptions) =>
                 {
-                    clientOptions.Diagnostics.LoggerFactory = ClientOptions.Default.Diagnostics.LoggerFactory;
+                    clientOptions.Diagnostics.LoggerFactory = commonOptions.Value.Diagnostics.LoggerFactory;
                 });
 
         services.AddSingleton(sp =>
         {
             IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
+            IConfiguration commonConfiguration = configuration.GetSection("ClientCommon");
             IConfiguration clientConfiguration = configuration.GetSection("MapsClient");
 
             Uri endpoint = sp.GetClientEndpoint(clientConfiguration);
 
-            var credential = new MockCredential();
+            DefaultAzureCredential credential = new();
 
             IOptions<MapsClientOptions> iOptions = sp.GetRequiredService<IOptions<MapsClientOptions>>();
             MapsClientOptions options = iOptions.Value;
@@ -46,22 +46,22 @@ public static class MapsClientServiceCollectionExtensions
     }
 
     public static IServiceCollection AddMapsClient(this IServiceCollection services,
+        IConfiguration commonConfigurationSection,
         IConfiguration clientConfigurationSection)
     {
-        // Bind client options to common and client settings, and configure
-        // with caller-specified configure options delegate.
+        services.AddCommonOptions(commonConfigurationSection);
+
         services.AddOptions<MapsClientOptions>()
-                .Configure(clientOptions =>
+                .Configure<IOptions<ClientOptions>>((clientOptions, commonOptions) =>
                 {
-                    var defaultOptions = ClientOptions.Default;
-                    clientOptions.Diagnostics.LoggerFactory = defaultOptions.Diagnostics.LoggerFactory;
+                    clientOptions.Diagnostics.LoggerFactory = commonOptions.Value.Diagnostics.LoggerFactory;
                 })
             .Bind(clientConfigurationSection);
 
         services.AddSingleton(sp =>
         {
             Uri endpoint = sp.GetClientEndpoint(clientConfigurationSection);
-            var credential = new MockCredential();
+            DefaultAzureCredential credential = new();
 
             IOptions<MapsClientOptions> iOptions = sp.GetRequiredService<IOptions<MapsClientOptions>>();
             MapsClientOptions options = iOptions.Value;

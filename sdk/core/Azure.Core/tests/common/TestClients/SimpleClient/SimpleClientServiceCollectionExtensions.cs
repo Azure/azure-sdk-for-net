@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -20,19 +21,20 @@ public static class SimpleClientServiceCollectionExtensions
 
         // Add client options
         services.AddOptions<SimpleClientOptions>()
-                .Configure(clientOptions =>
+                .Configure<IOptions<ClientOptions>>((clientOptions, commonOptions) =>
                 {
-                    clientOptions.Diagnostics.LoggerFactory = ClientOptions.Default.Diagnostics.LoggerFactory;
+                    clientOptions.Diagnostics.LoggerFactory = commonOptions.Value.Diagnostics.LoggerFactory;
                 });
 
         services.AddSingleton(sp =>
         {
             IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
+            IConfiguration commonConfiguration = configuration.GetSection("ClientCommon");
             IConfiguration clientConfiguration = configuration.GetSection("SimpleClient");
 
             Uri endpoint = sp.GetClientEndpoint(clientConfiguration);
 
-            TokenCredential credential = new MockCredential();
+            DefaultAzureCredential credential = new();
 
             IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
             SimpleClientOptions options = iOptions.Value;
@@ -46,20 +48,24 @@ public static class SimpleClientServiceCollectionExtensions
     }
 
     public static IServiceCollection AddSimpleClient(this IServiceCollection services,
+        IConfiguration commonConfigurationSection,
         IConfiguration clientConfigurationSection)
     {
+        services.AddCommonOptions(commonConfigurationSection);
+
         services.AddOptions<SimpleClientOptions>()
-                .Configure(clientOptions =>
+                .Configure<IOptions<ClientOptions>>((clientOptions, commonOptions) =>
                 {
-                    clientOptions.Diagnostics.LoggerFactory = ClientOptions.Default.Diagnostics.LoggerFactory;
+                    clientOptions.Diagnostics.LoggerFactory = commonOptions.Value.Diagnostics.LoggerFactory;
                 })
+            .Bind(commonConfigurationSection)
             .Bind(clientConfigurationSection);
 
         services.AddSingleton(sp =>
         {
             Uri endpoint = sp.GetClientEndpoint(clientConfigurationSection);
 
-            TokenCredential credential = new MockCredential();
+            DefaultAzureCredential credential = new();
 
             IOptions<SimpleClientOptions> iOptions = sp.GetRequiredService<IOptions<SimpleClientOptions>>();
             SimpleClientOptions options = iOptions.Value;
@@ -73,26 +79,30 @@ public static class SimpleClientServiceCollectionExtensions
     }
 
     public static IServiceCollection AddSimpleClient(this IServiceCollection services,
+        IConfiguration commonConfigurationSection,
         IConfiguration clientConfigurationSection,
         Action<SimpleClientOptions> configureOptions,
         object key = default)
     {
+        services.AddCommonOptions(commonConfigurationSection);
+
         OptionsBuilder<SimpleClientOptions> optionsBuilder = key is null ?
             services.AddOptions<SimpleClientOptions>() :
             services.AddOptions<SimpleClientOptions>(key.ToString());
 
         optionsBuilder
-            .Configure(clientOptions =>
+            .Configure<IOptions<ClientOptions>>((clientOptions, commonOptions) =>
             {
-                clientOptions.Diagnostics.LoggerFactory = ClientOptions.Default.Diagnostics.LoggerFactory;
+                clientOptions.Diagnostics.LoggerFactory = commonOptions.Value.Diagnostics.LoggerFactory;
             })
+            .Bind(commonConfigurationSection)
             .Bind(clientConfigurationSection)
             .Configure(configureOptions);
 
         Func<IServiceProvider, object, SimpleClient> clientFactory = (sp, key) =>
         {
             Uri endpoint = sp.GetClientEndpoint(clientConfigurationSection);
-            TokenCredential credential = new MockCredential();
+            DefaultAzureCredential credential = new();
 
             IOptionsMonitor<SimpleClientOptions> iOptions =
                 sp.GetRequiredService<IOptionsMonitor<SimpleClientOptions>>();
