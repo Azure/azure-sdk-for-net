@@ -39,9 +39,9 @@ public class ClientRetryPolicy : PipelinePolicy
     /// TBD.
     /// </summary>
     /// <param name="options"></param>
-    public ClientRetryPolicy(ClientRetryOptions options)
+    public ClientRetryPolicy(ClientPipelineOptions options) : base(options)
     {
-        // TODO: wire these up
+        // TODO: wire up ClientRetryOptions
     }
 
     /// <inheritdoc/>

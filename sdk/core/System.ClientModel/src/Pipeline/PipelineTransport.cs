@@ -24,10 +24,12 @@ public abstract class PipelineTransport : PipelinePolicy
     }
 
     /// <summary>
-    /// TBD
+    /// TBD.
     /// </summary>
-    /// <param name="options"></param>
-    protected PipelineTransport(PipelineTransportOptions options)
+    /// <param name="pipelineOptions"></param>
+    /// <param name="transportOptions"></param>
+    protected PipelineTransport(PipelineTransportOptions transportOptions, ClientPipelineOptions pipelineOptions)
+        : base(pipelineOptions)
     {
         // TODO: use options
     }

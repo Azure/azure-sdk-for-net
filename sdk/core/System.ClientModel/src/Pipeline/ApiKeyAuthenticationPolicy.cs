@@ -3,6 +3,7 @@
 
 using System.ClientModel.Internal;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
@@ -80,6 +81,11 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
         _location = keyLocation;
         _keyPrefix = keyPrefix;
     }
+
+    //private ApiKeyAuthenticationPolicy(ClientPipelineOptions options) : base(options)
+    //{
+    //    //  TODO: use options
+    //}
 
     /// <inheritdoc/>
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)

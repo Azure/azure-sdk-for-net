@@ -161,7 +161,7 @@ public sealed partial class ClientPipeline
         if (options.Logging.EnableLogging != false)
         {
             policies[index++] = options.HttpLoggingPolicy ??
-                new MessageLoggingPolicy(options.Logging);
+                new MessageLoggingPolicy(options);
         }
 
         // TODO: issue with shared transport

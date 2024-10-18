@@ -11,9 +11,9 @@ public class MessageLoggingPolicy : PipelinePolicy
 {
     private readonly ClientLoggingOptions _options;
 
-    public MessageLoggingPolicy(ClientLoggingOptions options)
+    public MessageLoggingPolicy(ClientPipelineOptions options) : base(options)
     {
-        _options = options;
+        _options = options.Logging;
     }
 
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)

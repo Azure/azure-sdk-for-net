@@ -129,7 +129,7 @@ namespace System.ClientModel.Primitives
     }
     public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public ClientRetryPolicy(System.ClientModel.Primitives.ClientRetryOptions options) { }
+        public ClientRetryPolicy(System.ClientModel.Primitives.ClientPipelineOptions options) { }
         public ClientRetryPolicy(int maxRetries = 3) { }
         public static System.ClientModel.Primitives.ClientRetryPolicy Default { get { throw null; } }
         protected virtual System.TimeSpan GetNextDelay(System.ClientModel.Primitives.PipelineMessage message, int tryCount) { throw null; }
@@ -195,7 +195,7 @@ namespace System.ClientModel.Primitives
     }
     public partial class MessageLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public MessageLoggingPolicy(System.ClientModel.Primitives.ClientLoggingOptions options) { }
+        public MessageLoggingPolicy(System.ClientModel.Primitives.ClientPipelineOptions options) { }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
@@ -258,6 +258,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelinePolicy
     {
         protected PipelinePolicy() { }
+        protected PipelinePolicy(System.ClientModel.Primitives.ClientPipelineOptions options) { }
         public abstract void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex);
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex);
         protected static void ProcessNext(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
@@ -321,7 +322,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelineTransport : System.ClientModel.Primitives.PipelinePolicy
     {
         protected PipelineTransport() { }
-        protected PipelineTransport(System.ClientModel.Primitives.PipelineTransportOptions options) { }
+        protected PipelineTransport(System.ClientModel.Primitives.PipelineTransportOptions transportOptions, System.ClientModel.Primitives.ClientPipelineOptions pipelineOptions) { }
         public System.ClientModel.Primitives.PipelineMessage CreateMessage() { throw null; }
         protected abstract System.ClientModel.Primitives.PipelineMessage CreateMessageCore();
         public void Process(System.ClientModel.Primitives.PipelineMessage message) { }
