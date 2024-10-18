@@ -253,7 +253,7 @@ namespace Azure.Storage.DataMovement
         /// Processes the job to job parts
         /// </summary>
         /// <returns>An IEnumerable that contains the job parts</returns>
-        public abstract IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync();
+        public abstract IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Triggers the cancellation for the Job Part.
@@ -421,7 +421,8 @@ namespace Azure.Storage.DataMovement
         {
             await _checkpointer.SetJobTransferStatusAsync(
                 transferId: _dataTransfer.Id,
-                status: _dataTransfer.TransferStatus).ConfigureAwait(false);
+                status: _dataTransfer.TransferStatus,
+                cancellationToken: _cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -455,7 +456,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         protected async Task OnAllResourcesEnumerated()
         {
-            await _checkpointer.OnEnumerationCompleteAsync(_dataTransfer.Id).ConfigureAwait(false);
+            await _checkpointer.OnEnumerationCompleteAsync(_dataTransfer.Id, _cancellationToken).ConfigureAwait(false);
         }
 
         internal async Task CheckAndUpdateStatusAsync()
