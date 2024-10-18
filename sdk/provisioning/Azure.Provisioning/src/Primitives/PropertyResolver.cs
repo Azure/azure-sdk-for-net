@@ -16,5 +16,5 @@ public abstract class PropertyResolver
     /// </summary>
     /// <param name="options">The current build options.</param>
     /// <param name="construct">The construct with properties to resolve.</param>
-    public abstract void ResolveProperties(ProvisioningBuildOptions options, ProvisioningConstruct construct);
+    public abstract void ResolveProperties(ProvisioningBuildOptions options, ProvisionableConstruct construct);
 }

@@ -67,7 +67,7 @@ public class Resource(Specification spec, Type armType)
                 writer.WriteLine($"/// <summary>");
                 writer.WriteWrapped(Description ?? (Name + "."));
                 writer.WriteLine($"/// </summary>");
-                writer.WriteLine($"public partial class {Name} : Resource");
+                writer.WriteLine($"public partial class {Name} : ProvisionableResource");
                 using (writer.Scope("{", "}"))
                 {
                     // Write the properties

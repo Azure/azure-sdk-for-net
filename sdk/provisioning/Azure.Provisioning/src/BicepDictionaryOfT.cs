@@ -136,7 +136,7 @@ public class BicepDictionary<T> : BicepValue, IDictionary<string, BicepValue<T>>
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static BicepDictionary<T> DefineProperty(
-        ProvisioningConstruct construct,
+        ProvisionableConstruct construct,
         string propertyName,
         string[]? bicepPath,
         bool isOutput = false,

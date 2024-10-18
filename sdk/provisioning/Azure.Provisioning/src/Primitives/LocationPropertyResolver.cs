@@ -16,13 +16,13 @@ namespace Azure.Provisioning.Primitives;
 public class LocationPropertyResolver : PropertyResolver
 {
     /// <inheritdoc />
-    public override void ResolveProperties(ProvisioningBuildOptions options, ProvisioningConstruct construct)
+    public override void ResolveProperties(ProvisioningBuildOptions options, ProvisionableConstruct construct)
     {
         // We only need to set a location if one doesn't already exist
         if (construct.ProvisioningProperties.TryGetValue("Location", out BicepValue? location) &&
             location.Kind == BicepValueKind.Unset &&
             !location.IsOutput &&
-            (construct is not Resource r || !r.IsExistingResource))
+            (construct is not ProvisionableResource r || !r.IsExistingResource))
         {
             ProvisioningParameter param = GetOrCreateLocationParameter(options, construct);
             construct.SetProvisioningProperty(location, (BicepValue<string>)param);
@@ -40,7 +40,7 @@ public class LocationPropertyResolver : PropertyResolver
     /// `deployment().location` for resource groups.  This can be overridden to
     /// provide a different default location.
     /// </remarks>
-    protected virtual BicepValue<AzureLocation> GetDefaultLocation(ProvisioningBuildOptions options, ProvisioningConstruct construct) =>
+    protected virtual BicepValue<AzureLocation> GetDefaultLocation(ProvisioningBuildOptions options, ProvisionableConstruct construct) =>
         construct is not ResourceGroup ?
             BicepFunction.GetResourceGroup().Location :
             BicepFunction.GetDeployment().Location;
@@ -53,7 +53,7 @@ public class LocationPropertyResolver : PropertyResolver
     /// <returns></returns>
     private ProvisioningParameter GetOrCreateLocationParameter(
         ProvisioningBuildOptions options,
-        ProvisioningConstruct construct)
+        ProvisionableConstruct construct)
     {
         // Get the default value for the location
         BicepValue<AzureLocation> location = GetDefaultLocation(options, construct);
@@ -85,7 +85,7 @@ public class LocationPropertyResolver : PropertyResolver
             bool increment = true;
 
             // Optionally specialize to the resource
-            if (construct is NamedProvisioningConstruct resource)
+            if (construct is NamedProvisionableConstruct resource)
             {
                 name = $"{name}_{resource.BicepIdentifier}";
                 increment = existing.ContainsKey(name);

@@ -27,24 +27,24 @@ public class ProvisioningParameter : ProvisioningVariable
     /// <summary>
     /// Creates a new ProvisioningParameter.
     /// </summary>
-    /// <param name="name">
-    /// Name of the parameter.  This value can contain letters, numbers, and
-    /// underscores.
+    /// <param name="bicepIdentifier">
+    /// Bicep identifier of the parameter.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
     /// <param name="type">Type of the parameter.</param>
-    public ProvisioningParameter(string name, BicepExpression type)
-        : base(name, type, value: null) { }
+    public ProvisioningParameter(string bicepIdentifier, BicepExpression type)
+        : base(bicepIdentifier, type, value: null) { }
 
     /// <summary>
     /// Creates a new ProvisioningParameter.
     /// </summary>
-    /// <param name="name">
-    /// Name of the parameter.  This value can contain letters, numbers, and
-    /// underscores.
+    /// <param name="bicepIdentifier">
+    /// Bicep identifier of the parameter.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
     /// <param name="type">Type of the parameter.</param>
-    public ProvisioningParameter(string name, Type type)
-        : this(name, new TypeExpression(type)) { }
+    public ProvisioningParameter(string bicepIdentifier, Type type)
+        : this(bicepIdentifier, new TypeExpression(type)) { }
 
     /// <inheritdoc />
     protected internal override IEnumerable<BicepStatement> Compile()

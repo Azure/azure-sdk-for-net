@@ -11,16 +11,16 @@ namespace Azure.Provisioning.Primitives;
 // graph so we can intelligently and automatically split expressions across
 // module boundaries.
 
-public class BicepValueReference(ProvisioningConstruct construct, string propertyName, params string[]? path)
+public class BicepValueReference(ProvisionableConstruct construct, string propertyName, params string[]? path)
 {
-    public ProvisioningConstruct Construct { get; } = construct;
+    public ProvisionableConstruct Construct { get; } = construct;
     public string PropertyName { get; } = propertyName;
     public IReadOnlyList<string>? BicepPath { get; } = path;
 
     internal BicepExpression GetReference()
     {
         // We'll relax this soon
-        if (Construct is not NamedProvisioningConstruct named)
+        if (Construct is not NamedProvisionableConstruct named)
         {
             throw new NotImplementedException("Cannot reference a construct without a name yet.");
         }

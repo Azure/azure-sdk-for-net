@@ -95,7 +95,7 @@ internal static class BicepTypeMapping
             ETag e => BicepSyntax.Value(ToLiteralString(e)),
             ResourceIdentifier i => BicepSyntax.Value(ToLiteralString(i)),
             Enum e => BicepSyntax.Value(ToLiteralString(e)),
-            ProvisioningConstruct c => CompileNestedConstruct(c),
+            ProvisionableConstruct c => CompileNestedConstruct(c),
             IDictionary<string, BicepValue> d =>
                 d is BicepValue b && b.Kind == BicepValueKind.Expression ? b.Expression! : ToObject(d),
             IEnumerable seq =>
@@ -124,7 +124,7 @@ internal static class BicepTypeMapping
             return BicepSyntax.Object(values);
         }
 
-        BicepExpression CompileNestedConstruct(ProvisioningConstruct construct)
+        BicepExpression CompileNestedConstruct(ProvisionableConstruct construct)
         {
             IList<BicepStatement> statements = [.. construct.Compile()];
             if (statements.Count != 1 || statements[0] is not ExpressionStatement expr)

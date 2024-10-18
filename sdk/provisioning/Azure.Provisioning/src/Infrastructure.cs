@@ -13,13 +13,17 @@ namespace Azure.Provisioning;
 /// <summary>
 /// Collect resources and other constructs like parameters together.
 /// </summary>
-/// <param name="name"></param>
-public class Infrastructure(string name = "main") : Provisionable
+/// <param name="bicepName">
+/// A friendly name that can also be used as a file name if compiling to a
+/// module.
+/// </param>
+public class Infrastructure(string bicepName = "main") : Provisionable
 {
     /// <summary>
-    /// A friendly name that can also be used if compiling to a module.
+    /// A friendly name that can also be used as a file name if compiling to a
+    /// module.
     /// </summary>
-    public string Name { get; private set; } = name;
+    public string BicepName { get; private set; } = bicepName;
 
     /// <summary>
     /// Optional target scope for the infrastructure.  If left empty, then
@@ -44,7 +48,7 @@ public class Infrastructure(string name = "main") : Provisionable
     /// </remarks>
     public virtual void Add(Provisionable resource)
     {
-        if (resource is ProvisioningConstruct construct &&
+        if (resource is ProvisionableConstruct construct &&
             construct.ParentInfrastructure != this)
         {
             // Don't parent expression references
@@ -70,7 +74,7 @@ public class Infrastructure(string name = "main") : Provisionable
 
         // Ensure all cases are covered
         Debug.Assert(
-            resource is ProvisioningConstruct || resource is Infrastructure,
+            resource is ProvisionableConstruct || resource is Infrastructure,
             $"{nameof(Infrastructure)} needs to be updated if you add a new fork in the hierarchy derived from {nameof(Provisionable)}!");
     }
 
@@ -80,7 +84,7 @@ public class Infrastructure(string name = "main") : Provisionable
     /// <param name="resource">The provisionable construct to remove.</param>
     public virtual void Remove(Provisionable resource)
     {
-        if (resource is ProvisioningConstruct construct &&
+        if (resource is ProvisionableConstruct construct &&
             construct.ParentInfrastructure == this)
         {
             construct.ParentInfrastructure = null;
@@ -238,7 +242,7 @@ public class Infrastructure(string name = "main") : Provisionable
         // modules at once and automatically splitting resources across them.
         options ??= new();
         Dictionary<string, IEnumerable<BicepStatement>> modules = [];
-        modules.Add(Name, CompileInternal(options));
+        modules.Add(BicepName, CompileInternal(options));
 
         // Optionally add any nested modules
         List<Infrastructure> nested = [];
@@ -248,7 +252,7 @@ public class Infrastructure(string name = "main") : Provisionable
         }
         foreach (Infrastructure infra in nested)
         {
-            modules.Add(infra.Name, infra.CompileInternal(options));
+            modules.Add(infra.BicepName, infra.CompileInternal(options));
         }
 
         return modules;
@@ -277,7 +281,7 @@ public class Infrastructure(string name = "main") : Provisionable
 
         foreach (Provisionable resource in resources)
         {
-            if (resource is ProvisioningConstruct construct)
+            if (resource is ProvisionableConstruct construct)
             {
                 statements.AddRange(construct.Compile());
             }

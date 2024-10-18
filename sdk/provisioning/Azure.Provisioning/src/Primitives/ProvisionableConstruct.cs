@@ -9,46 +9,7 @@ using Azure.Provisioning.Expressions;
 
 namespace Azure.Provisioning.Primitives;
 
-/// <summary>
-/// A named Bicep entity, like a resource or parameter.
-/// </summary>
-public abstract class NamedProvisioningConstruct : ProvisioningConstruct
-{
-    /// <summary>
-    /// Gets or sets the the Bicep identifier name of the resource.  This can
-    /// be used to refer to the resource in expressions, but is not the Azure
-    /// name of the resource.  This value can contain letters, numbers, and
-    /// underscores.
-    /// </summary>
-    public string BicepIdentifier
-    {
-        get => _bicepIdentifier;
-        set
-        {
-            Infrastructure.ValidateBicepIdentifier(value, nameof(value));
-            _bicepIdentifier = value;
-        }
-    }
-    private string _bicepIdentifier;
-
-    /// <summary>
-    /// Creates a named Bicep entity, like a resource or parameter.
-    /// </summary>
-    /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the resource.  This can be used to
-    /// refer to the resource in expressions, but is not the Azure name of the
-    /// resource.  This value can contain letters, numbers, and underscores.
-    /// </param>
-    protected NamedProvisioningConstruct(string bicepIdentifier)
-    {
-        // TODO: In the near future we'll make this optional and only validate
-        // if the value passed in isn't null.
-        Infrastructure.ValidateBicepIdentifier(bicepIdentifier, nameof(bicepIdentifier));
-        _bicepIdentifier = bicepIdentifier;
-    }
-}
-
-public abstract class ProvisioningConstruct : Provisionable
+public abstract class ProvisionableConstruct : Provisionable
 {
     /// <summary>
     /// Gets the parent infrastructure construct, if any.
@@ -194,7 +155,7 @@ public abstract class ProvisioningConstruct : Provisionable
                 {
                     bicep[pair.Key] = value.Compile();
                 }
-                else if (pair.Value is ProvisioningConstruct construct)
+                else if (pair.Value is ProvisionableConstruct construct)
                 {
                     IList<BicepStatement> statements = [..construct.Compile()];
                     if (statements.Count != 1 || statements[0] is not ExpressionStatement expr)

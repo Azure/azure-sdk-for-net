@@ -13,11 +13,11 @@ namespace Azure.Provisioning.Primitives;
 /// <summary>
 /// Represents an Azure resource.
 /// </summary>
-/// <param name="resourceName">The friendly name of the resource.</param>
+/// <param name="bicepIdentifier">The bicep identifier name of the resource.</param>
 /// <param name="resourceType">The type of the resource.</param>
 /// <param name="resourceVersion">The version of the resource.</param>
-public abstract class Resource(string resourceName, ResourceType resourceType, string? resourceVersion = default)
-    : NamedProvisioningConstruct(resourceName)
+public abstract class ProvisionableResource(string bicepIdentifier, ResourceType resourceType, string? resourceVersion = default)
+    : NamedProvisionableConstruct(bicepIdentifier)
 {
     /// <summary>
     /// Gets the type of the resource.
@@ -56,11 +56,7 @@ public abstract class Resource(string resourceName, ResourceType resourceType, s
     /// dependencies, you should consider if there's a way to remove it.
     /// </para>
     /// </remarks>
-    public IList<Resource> DependsOn { get; } = [];
-    // TODO: Decide whether we want to support ResourceIdentifier in addition
-    // to actual Resources.  Given it's a niche scenario, right now I'd lean
-    // toward making people use Foo.FromExisting("...") if they wanted to add a
-    // dependency to an external resource.
+    public IList<ProvisionableResource> DependsOn { get; } = [];
 
     /// <summary>
     /// Compose the resource into a provisioning plan that can be saved as

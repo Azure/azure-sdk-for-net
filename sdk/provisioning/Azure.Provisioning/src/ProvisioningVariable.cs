@@ -12,7 +12,7 @@ namespace Azure.Provisioning;
 /// <summary>
 /// Represents a variable in a Bicep template.
 /// </summary>
-public class ProvisioningVariable : NamedProvisioningConstruct
+public class ProvisioningVariable : NamedProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets the value of the variable.
@@ -34,14 +34,14 @@ public class ProvisioningVariable : NamedProvisioningConstruct
     /// <summary>
     /// Creates a new ProvisioningVariable.
     /// </summary>
-    /// <param name="name">
-    /// Name of the variable.  This value can contain letters, numbers, and
-    /// underscores.
+    /// <param name="bicepIdentifier">
+    /// Bicep identifier of the variable.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
     /// <param name="type">Type of the variable.</param>
     /// <param name="value">Default value of the variable.</param>
-    protected ProvisioningVariable(string name, BicepExpression type, BicepValue<object>? value)
-        : base(name)
+    protected ProvisioningVariable(string bicepIdentifier, BicepExpression type, BicepValue<object>? value)
+        : base(bicepIdentifier)
     {
         BicepType = type;
         _value = BicepValue<object>.DefineProperty(this, nameof(Value), bicepPath: null, defaultValue: value);
@@ -50,13 +50,13 @@ public class ProvisioningVariable : NamedProvisioningConstruct
     /// <summary>
     /// Creates a new ProvisioningVariable.
     /// </summary>
-    /// <param name="name">
-    /// Name of the variable.  This value can contain letters, numbers, and
-    /// underscores.
+    /// <param name="bicepIdentifier">
+    /// Bicep identifier of the variable.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
     /// <param name="type">Type of the variable.</param>
-    public ProvisioningVariable(string name, Type type)
-        : this(name, new TypeExpression(type), value: null) { }
+    public ProvisioningVariable(string bicepIdentifier, Type type)
+        : this(bicepIdentifier, new TypeExpression(type), value: null) { }
 
     /// <inheritdoc />
     protected internal override IEnumerable<BicepStatement> Compile()

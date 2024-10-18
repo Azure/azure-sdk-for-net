@@ -42,7 +42,7 @@ public class SimpleModel(Specification spec, Type armType, string name, string? 
                 writer.WriteLine($"/// <summary>");
                 writer.WriteWrapped(Description ?? (Name + "."));
                 writer.WriteLine($"/// </summary>");
-                writer.WriteLine($"public partial class {Name} : {(BaseType is not null ? BaseType.Name : "ProvisioningConstruct")}");
+                writer.WriteLine($"public partial class {Name} : {(BaseType is not null ? BaseType.Name : "ProvisionableConstruct")}");
                 using (writer.Scope("{", "}"))
                 {
                     fence = new IndentWriter.Fenceposter();

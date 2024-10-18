@@ -141,7 +141,7 @@ public class BicepList<T> : BicepValue, IList<BicepValue<T>>
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static BicepList<T> DefineProperty(
-        ProvisioningConstruct construct,
+        ProvisionableConstruct construct,
         string propertyName,
         string[]? bicepPath,
         bool isOutput = false,

@@ -15,24 +15,24 @@ public class ProvisioningOutput : ProvisioningVariable
     /// <summary>
     /// Creates a new ProvisioningOutput.
     /// </summary>
-    /// <param name="name">
-    /// Name of the output.  This value can contain letters, numbers, and
-    /// underscores.
+    /// <param name="bicepIdentifier">
+    /// Bicep identifier of the output.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
     /// <param name="type">Type of the output.</param>
-    public ProvisioningOutput(string name, BicepExpression type)
-        : base(name, type, value: null) { }
+    public ProvisioningOutput(string bicepIdentifier, BicepExpression type)
+        : base(bicepIdentifier, type, value: null) { }
 
     /// <summary>
     /// Creates a new ProvisioningOutput.
     /// </summary>
-    /// <param name="name">
-    /// Name of the output.  This value can contain letters, numbers, and
-    /// underscores.
+    /// <param name="bicepIdentifier">
+    /// Bicep identifier of the output.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
     /// <param name="type">Type of the output.</param>
-    public ProvisioningOutput(string name, Type type)
-        : this(name, new TypeExpression(type)) { }
+    public ProvisioningOutput(string bicepIdentifier, Type type)
+        : this(bicepIdentifier, new TypeExpression(type)) { }
 
     /// <inheritdoc />
     protected internal override IEnumerable<BicepStatement> Compile()

@@ -29,15 +29,15 @@ public class BicepValue<T> : BicepValue
             // than just return null, we'll return a reference expression
             if (IsOutput &&
                 Kind == BicepValueKind.Unset &&
-                typeof(ProvisioningConstruct).IsAssignableFrom(typeof(T)) &&
-                Self?.Construct is NamedProvisioningConstruct)
+                typeof(ProvisionableConstruct).IsAssignableFrom(typeof(T)) &&
+                Self?.Construct is NamedProvisionableConstruct)
             {
                 // TODO: This is obviously a hack but we need to decide if we'd
                 // rather have a separate type for outputs (kind of like we
                 // do with ResourceReference<T>) or whether we want to merge
                 // this concept into BicepValue<T>.
                 T val = Activator.CreateInstance<T>();
-                (val as ProvisioningConstruct)!.OverrideWithExpression(Self.GetReference());
+                (val as ProvisionableConstruct)!.OverrideWithExpression(Self.GetReference());
                 return val;
             }
 
@@ -129,7 +129,7 @@ public class BicepValue<T> : BicepValue
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static BicepValue<T> DefineProperty(
-        ProvisioningConstruct construct,
+        ProvisionableConstruct construct,
         string propertyName,
         string[]? bicepPath,
         bool isOutput = false,

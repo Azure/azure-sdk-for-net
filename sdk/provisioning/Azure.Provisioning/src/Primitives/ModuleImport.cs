@@ -6,7 +6,7 @@ using Azure.Provisioning.Expressions;
 
 namespace Azure.Provisioning.Primitives;
 
-public class ModuleImport : NamedProvisioningConstruct
+public class ModuleImport : NamedProvisionableConstruct
 {
     private readonly BicepValue<string> _name;
     public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
@@ -19,7 +19,7 @@ public class ModuleImport : NamedProvisioningConstruct
 
     public BicepDictionary<object> Parameters { get; }
 
-    public ModuleImport(string identifierName, BicepValue<string> path) : base(identifierName)
+    public ModuleImport(string bicepIdentifier, BicepValue<string> path) : base(bicepIdentifier)
     {
         _name = BicepValue<string>.DefineProperty(this, nameof(Name), ["name"], isRequired: true);
         _path = BicepValue<string>.DefineProperty(this, nameof(Path), ["path"], defaultValue: path);
