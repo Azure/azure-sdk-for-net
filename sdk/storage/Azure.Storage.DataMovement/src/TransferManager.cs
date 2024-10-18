@@ -194,6 +194,7 @@ namespace Azure.Storage.DataMovement
         public virtual async IAsyncEnumerable<DataTransferProperties> GetResumableTransfersAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
+            cancellationToken = LinkCancellation(cancellationToken);
             List<string> storedTransfers = await _checkpointer.GetStoredTransfersAsync(cancellationToken).ConfigureAwait(false);
             foreach (string transferId in storedTransfers)
             {
