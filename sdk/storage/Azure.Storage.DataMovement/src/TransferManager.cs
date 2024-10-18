@@ -422,6 +422,7 @@ namespace Azure.Storage.DataMovement
 
         private async Task SetDataTransfers(CancellationToken cancellationToken = default)
         {
+            cancellationToken = LinkCancellation(cancellationToken);
             _dataTransfers.Clear();
 
             List<string> storedTransfers = await _checkpointer.GetStoredTransfersAsync(cancellationToken).ConfigureAwait(false);
