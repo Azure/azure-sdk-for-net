@@ -13,6 +13,7 @@ extends:
     ServiceDirectory: identity
     CloudConfig:
       Public:
+        Location: westus2
         SubscriptionConfigurations:
           # Contains alternate tenant, AAD app and cert info for testing
           - $(sub-config-identity-test-resources)
