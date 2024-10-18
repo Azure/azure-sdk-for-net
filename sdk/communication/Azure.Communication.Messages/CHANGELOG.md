@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0 (Unreleased)
+## 1.1.0 (2024-10-18)
 
 ### Features Added
 - Added support for additional media message types: documents, videos, and audio.
