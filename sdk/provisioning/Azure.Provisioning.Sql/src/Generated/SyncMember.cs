@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SyncMember.
 /// </summary>
-public partial class SyncMember : Resource
+public partial class SyncMember : ProvisionableResource
 {
     /// <summary>
     /// The name of the sync member.

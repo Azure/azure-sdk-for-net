@@ -17,7 +17,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ScopeMap.
 /// </summary>
-public partial class ScopeMap : Resource
+public partial class ScopeMap : ProvisionableResource
 {
     /// <summary>
     /// The name of the scope map.

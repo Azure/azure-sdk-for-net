@@ -16,7 +16,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsDataExport.
 /// </summary>
-public partial class OperationalInsightsDataExport : Resource
+public partial class OperationalInsightsDataExport : ProvisionableResource
 {
     /// <summary>
     /// The data export rule name.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// The EventGridInboundIPRule.
 /// </summary>
-public partial class EventGridInboundIPRule : ProvisioningConstruct
+public partial class EventGridInboundIPRule : ProvisionableConstruct
 {
     /// <summary>
     /// IP Address in CIDR notation e.g., 10.0.0.0/8.

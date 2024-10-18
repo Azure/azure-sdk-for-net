@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusRule.
 /// </summary>
-public partial class ServiceBusRule : Resource
+public partial class ServiceBusRule : ProvisionableResource
 {
     /// <summary>
     /// The rule name.

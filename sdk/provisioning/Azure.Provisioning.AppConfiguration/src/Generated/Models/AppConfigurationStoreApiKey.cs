@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppConfiguration;
 /// <summary>
 /// An API key used for authenticating with a configuration store endpoint.
 /// </summary>
-public partial class AppConfigurationStoreApiKey : ProvisioningConstruct
+public partial class AppConfigurationStoreApiKey : ProvisionableConstruct
 {
     /// <summary>
     /// The key ID.

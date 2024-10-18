@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerDevOpsAuditingSetting.
 /// </summary>
-public partial class SqlServerDevOpsAuditingSetting : Resource
+public partial class SqlServerDevOpsAuditingSetting : ProvisionableResource
 {
     /// <summary>
     /// The name of the devops audit settings. This should always be Default.

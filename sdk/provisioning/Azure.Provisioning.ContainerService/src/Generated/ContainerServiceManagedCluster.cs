@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// ContainerServiceManagedCluster.
 /// </summary>
-public partial class ContainerServiceManagedCluster : Resource
+public partial class ContainerServiceManagedCluster : ProvisionableResource
 {
     /// <summary>
     /// The name of the managed cluster resource.

@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// RedisResource.
 /// </summary>
-public partial class RedisResource : Resource
+public partial class RedisResource : ProvisionableResource
 {
     /// <summary>
     /// The name of the Redis cache.

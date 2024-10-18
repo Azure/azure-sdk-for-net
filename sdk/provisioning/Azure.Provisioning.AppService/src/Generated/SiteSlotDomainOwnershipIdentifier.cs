@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotDomainOwnershipIdentifier.
 /// </summary>
-public partial class SiteSlotDomainOwnershipIdentifier : Resource
+public partial class SiteSlotDomainOwnershipIdentifier : ProvisionableResource
 {
     /// <summary>
     /// Name of domain ownership identifier.

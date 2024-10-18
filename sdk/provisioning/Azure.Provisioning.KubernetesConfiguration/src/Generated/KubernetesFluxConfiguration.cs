@@ -19,7 +19,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// KubernetesFluxConfiguration.
 /// </summary>
-public partial class KubernetesFluxConfiguration : Resource
+public partial class KubernetesFluxConfiguration : ProvisionableResource
 {
     /// <summary>
     /// Name of the Flux Configuration.

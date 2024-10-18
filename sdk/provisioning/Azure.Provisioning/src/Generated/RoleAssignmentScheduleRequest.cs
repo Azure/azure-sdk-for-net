@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// RoleAssignmentScheduleRequest.
 /// </summary>
-public partial class RoleAssignmentScheduleRequest : Resource
+public partial class RoleAssignmentScheduleRequest : ProvisionableResource
 {
     /// <summary>
     /// A GUID for the role assignment to create. The name must be unique and

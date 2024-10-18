@@ -16,7 +16,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// WebPubSubPrivateEndpointConnection.
 /// </summary>
-public partial class WebPubSubPrivateEndpointConnection : Resource
+public partial class WebPubSubPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The name of the private endpoint connection.

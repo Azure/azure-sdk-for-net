@@ -18,7 +18,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusNamespaceAuthorizationRule.
 /// </summary>
-public partial class ServiceBusNamespaceAuthorizationRule : Resource
+public partial class ServiceBusNamespaceAuthorizationRule : ProvisionableResource
 {
     /// <summary>
     /// The authorization rule name.

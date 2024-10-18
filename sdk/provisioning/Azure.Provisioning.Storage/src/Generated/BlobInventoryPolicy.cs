@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// BlobInventoryPolicy.
 /// </summary>
-public partial class BlobInventoryPolicy : Resource
+public partial class BlobInventoryPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

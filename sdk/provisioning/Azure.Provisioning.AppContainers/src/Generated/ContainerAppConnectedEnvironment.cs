@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppConnectedEnvironment.
 /// </summary>
-public partial class ContainerAppConnectedEnvironment : Resource
+public partial class ContainerAppConnectedEnvironment : ProvisionableResource
 {
     /// <summary>
     /// Name of the connectedEnvironment.

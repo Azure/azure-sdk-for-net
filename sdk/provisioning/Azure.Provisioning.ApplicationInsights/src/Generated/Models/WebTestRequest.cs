@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ApplicationInsights;
 /// <summary>
 /// The collection of request properties.
 /// </summary>
-public partial class WebTestRequest : ProvisioningConstruct
+public partial class WebTestRequest : ProvisionableConstruct
 {
     /// <summary>
     /// Url location to test.

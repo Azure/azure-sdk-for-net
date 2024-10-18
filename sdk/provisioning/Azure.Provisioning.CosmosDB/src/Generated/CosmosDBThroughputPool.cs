@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBThroughputPool.
 /// </summary>
-public partial class CosmosDBThroughputPool : Resource
+public partial class CosmosDBThroughputPool : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB Throughput Pool name.

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// RoleManagementPolicyAssignment.
 /// </summary>
-public partial class RoleManagementPolicyAssignment : Resource
+public partial class RoleManagementPolicyAssignment : ProvisionableResource
 {
     /// <summary>
     /// The name of format {guid_guid} the role management policy assignment to

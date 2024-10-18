@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlFirewallRule.
 /// </summary>
-public partial class SqlFirewallRule : Resource
+public partial class SqlFirewallRule : ProvisionableResource
 {
     /// <summary>
     /// The name of the firewall rule.

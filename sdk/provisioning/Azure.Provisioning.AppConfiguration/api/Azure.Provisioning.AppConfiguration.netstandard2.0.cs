@@ -30,7 +30,7 @@ namespace Azure.Provisioning.AppConfiguration
         Recover = 0,
         Default = 1,
     }
-    public partial class AppConfigurationKeyValue : Azure.Provisioning.Primitives.Resource
+    public partial class AppConfigurationKeyValue : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public AppConfigurationKeyValue(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ContentType { get { throw null; } set { } }
@@ -53,13 +53,13 @@ namespace Azure.Provisioning.AppConfiguration
             public static readonly string V2024_05_01;
         }
     }
-    public partial class AppConfigurationKeyVaultProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class AppConfigurationKeyVaultProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AppConfigurationKeyVaultProperties() { }
         public Azure.Provisioning.BicepValue<string> IdentityClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KeyIdentifier { get { throw null; } set { } }
     }
-    public partial class AppConfigurationPrivateEndpointConnection : Azure.Provisioning.Primitives.Resource
+    public partial class AppConfigurationPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public AppConfigurationPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationPrivateLinkServiceConnectionState> ConnectionState { get { throw null; } set { } }
@@ -79,7 +79,7 @@ namespace Azure.Provisioning.AppConfiguration
             public static readonly string V2024_05_01;
         }
     }
-    public partial class AppConfigurationPrivateEndpointConnectionReference : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class AppConfigurationPrivateEndpointConnectionReference : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AppConfigurationPrivateEndpointConnectionReference() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationPrivateLinkServiceConnectionState> ConnectionState { get { throw null; } }
@@ -89,7 +89,7 @@ namespace Azure.Provisioning.AppConfiguration
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
     }
-    public partial class AppConfigurationPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class AppConfigurationPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AppConfigurationPrivateLinkServiceConnectionState() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationActionsRequired> ActionsRequired { get { throw null; } }
@@ -117,7 +117,7 @@ namespace Azure.Provisioning.AppConfiguration
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class AppConfigurationReplica : Azure.Provisioning.Primitives.Resource
+    public partial class AppConfigurationReplica : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public AppConfigurationReplica(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Endpoint { get { throw null; } }
@@ -144,7 +144,7 @@ namespace Azure.Provisioning.AppConfiguration
         Failed = 3,
         Canceled = 4,
     }
-    public partial class AppConfigurationStore : Azure.Provisioning.Primitives.Resource
+    public partial class AppConfigurationStore : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public AppConfigurationStore(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
@@ -179,7 +179,7 @@ namespace Azure.Provisioning.AppConfiguration
             public static readonly string V2024_05_01;
         }
     }
-    public partial class AppConfigurationStoreApiKey : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class AppConfigurationStoreApiKey : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AppConfigurationStoreApiKey() { }
         public Azure.Provisioning.BicepValue<string> ConnectionString { get { throw null; } }

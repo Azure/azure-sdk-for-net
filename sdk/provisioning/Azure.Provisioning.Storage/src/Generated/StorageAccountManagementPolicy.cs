@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// StorageAccountManagementPolicy.
 /// </summary>
-public partial class StorageAccountManagementPolicy : Resource
+public partial class StorageAccountManagementPolicy : ProvisionableResource
 {
     private readonly BicepValue<string> _name;
 

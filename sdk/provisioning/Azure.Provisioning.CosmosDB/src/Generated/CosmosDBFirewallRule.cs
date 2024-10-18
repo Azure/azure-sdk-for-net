@@ -15,7 +15,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBFirewallRule.
 /// </summary>
-public partial class CosmosDBFirewallRule : Resource
+public partial class CosmosDBFirewallRule : ProvisionableResource
 {
     /// <summary>
     /// The name of the mongo cluster firewall rule.

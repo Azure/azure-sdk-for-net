@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Kubernetes;
 /// <summary>
 /// ConnectedCluster.
 /// </summary>
-public partial class ConnectedCluster : Resource
+public partial class ConnectedCluster : ProvisionableResource
 {
     /// <summary>
     /// The name of the Kubernetes cluster on which get is called.

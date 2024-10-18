@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedDatabase.
 /// </summary>
-public partial class ManagedDatabase : Resource
+public partial class ManagedDatabase : ProvisionableResource
 {
     /// <summary>
     /// The name of the database.

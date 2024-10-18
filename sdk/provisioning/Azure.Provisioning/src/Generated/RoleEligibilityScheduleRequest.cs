@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// RoleEligibilityScheduleRequest.
 /// </summary>
-public partial class RoleEligibilityScheduleRequest : Resource
+public partial class RoleEligibilityScheduleRequest : ProvisionableResource
 {
     /// <summary>
     /// The name of the role eligibility to create. It can be any valid GUID.

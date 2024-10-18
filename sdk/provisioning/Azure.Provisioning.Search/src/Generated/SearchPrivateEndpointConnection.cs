@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Search;
 /// <summary>
 /// SearchPrivateEndpointConnection.
 /// </summary>
-public partial class SearchPrivateEndpointConnection : Resource
+public partial class SearchPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The name of the private endpoint connection to the Azure AI Search

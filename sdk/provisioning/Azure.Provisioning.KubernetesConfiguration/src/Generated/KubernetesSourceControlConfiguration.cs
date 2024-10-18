@@ -16,7 +16,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// KubernetesSourceControlConfiguration.
 /// </summary>
-public partial class KubernetesSourceControlConfiguration : Resource
+public partial class KubernetesSourceControlConfiguration : ProvisionableResource
 {
     /// <summary>
     /// Name of the Source Control Configuration.

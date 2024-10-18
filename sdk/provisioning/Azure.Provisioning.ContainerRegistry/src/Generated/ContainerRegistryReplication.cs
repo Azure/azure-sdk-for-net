@@ -17,7 +17,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ContainerRegistryReplication.
 /// </summary>
-public partial class ContainerRegistryReplication : Resource
+public partial class ContainerRegistryReplication : ProvisionableResource
 {
     /// <summary>
     /// The name of the replication.

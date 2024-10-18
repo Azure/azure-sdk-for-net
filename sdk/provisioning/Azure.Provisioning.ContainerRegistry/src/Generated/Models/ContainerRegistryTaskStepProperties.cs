@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// and
 /// Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryFileTaskStep.
 /// </summary>
-public partial class ContainerRegistryTaskStepProperties : ProvisioningConstruct
+public partial class ContainerRegistryTaskStepProperties : ProvisionableConstruct
 {
     /// <summary>
     /// List of base image dependencies for a step.

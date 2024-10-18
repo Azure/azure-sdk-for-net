@@ -17,7 +17,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// EventGridTopic.
 /// </summary>
-public partial class EventGridTopic : Resource
+public partial class EventGridTopic : ProvisionableResource
 {
     /// <summary>
     /// Name of the topic.

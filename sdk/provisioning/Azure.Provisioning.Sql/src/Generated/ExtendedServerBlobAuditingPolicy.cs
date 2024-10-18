@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ExtendedServerBlobAuditingPolicy.
 /// </summary>
-public partial class ExtendedServerBlobAuditingPolicy : Resource
+public partial class ExtendedServerBlobAuditingPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

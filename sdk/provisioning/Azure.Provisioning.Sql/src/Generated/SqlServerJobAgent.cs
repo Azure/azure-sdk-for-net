@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerJobAgent.
 /// </summary>
-public partial class SqlServerJobAgent : Resource
+public partial class SqlServerJobAgent : ProvisionableResource
 {
     /// <summary>
     /// The name of the job agent to be created or updated.

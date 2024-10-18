@@ -15,7 +15,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// MigrationConfiguration.
 /// </summary>
-public partial class MigrationConfiguration : Resource
+public partial class MigrationConfiguration : ProvisionableResource
 {
     private readonly BicepValue<string> _name;
 

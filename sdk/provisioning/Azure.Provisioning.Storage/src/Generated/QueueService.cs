@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// QueueService.
 /// </summary>
-public partial class QueueService : Resource
+public partial class QueueService : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

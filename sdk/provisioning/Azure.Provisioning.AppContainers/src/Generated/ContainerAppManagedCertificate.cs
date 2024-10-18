@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppManagedCertificate.
 /// </summary>
-public partial class ContainerAppManagedCertificate : Resource
+public partial class ContainerAppManagedCertificate : ProvisionableResource
 {
     /// <summary>
     /// Name of the Managed Certificate.

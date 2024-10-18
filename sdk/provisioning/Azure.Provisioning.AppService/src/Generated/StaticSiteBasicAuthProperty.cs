@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSiteBasicAuthProperty.
 /// </summary>
-public partial class StaticSiteBasicAuthProperty : Resource
+public partial class StaticSiteBasicAuthProperty : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

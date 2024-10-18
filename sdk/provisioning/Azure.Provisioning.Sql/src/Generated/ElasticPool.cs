@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ElasticPool.
 /// </summary>
-public partial class ElasticPool : Resource
+public partial class ElasticPool : ProvisionableResource
 {
     /// <summary>
     /// The name of the elastic pool.

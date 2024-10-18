@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// StorageAccountLocalUser.
 /// </summary>
-public partial class StorageAccountLocalUser : Resource
+public partial class StorageAccountLocalUser : ProvisionableResource
 {
     /// <summary>
     /// The name of local user. The username must contain lowercase letters and

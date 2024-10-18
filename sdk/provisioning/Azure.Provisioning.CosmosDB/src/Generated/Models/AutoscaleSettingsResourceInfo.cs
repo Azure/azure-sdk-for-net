@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB provisioned throughput settings object.
 /// </summary>
-public partial class AutoscaleSettingsResourceInfo : ProvisioningConstruct
+public partial class AutoscaleSettingsResourceInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Represents maximum throughput container can scale up to.

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// CaCertificate.
 /// </summary>
-public partial class CaCertificate : Resource
+public partial class CaCertificate : ProvisionableResource
 {
     /// <summary>
     /// The CA certificate name.

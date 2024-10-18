@@ -5,7 +5,7 @@ namespace Azure.Provisioning.ContainerRegistry
         None = 0,
         Recreate = 1,
     }
-    public partial class ContainerRegistryAgentPool : Azure.Provisioning.Primitives.Resource
+    public partial class ContainerRegistryAgentPool : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerRegistryAgentPool(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<int> Count { get { throw null; } set { } }
@@ -25,7 +25,7 @@ namespace Azure.Provisioning.ContainerRegistry
             public static readonly string V2019_06_01_preview;
         }
     }
-    public partial class ContainerRegistryBaseImageDependency : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryBaseImageDependency : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryBaseImageDependency() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryBaseImageDependencyType> DependencyType { get { throw null; } }
@@ -39,7 +39,7 @@ namespace Azure.Provisioning.ContainerRegistry
         BuildTime = 0,
         RunTime = 1,
     }
-    public partial class ContainerRegistryBaseImageTrigger : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryBaseImageTrigger : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryBaseImageTrigger() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryBaseImageTriggerType> BaseImageTriggerType { get { throw null; } set { } }
@@ -86,7 +86,7 @@ namespace Azure.Provisioning.ContainerRegistry
         [System.Runtime.Serialization.DataMemberAttribute(Name="v8")]
         V8 = 2,
     }
-    public partial class ContainerRegistryCredentials : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryCredentials : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryCredentials() { }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.ContainerRegistry.CustomRegistryCredentials> CustomRegistries { get { throw null; } set { } }
@@ -136,7 +136,7 @@ namespace Azure.Provisioning.ContainerRegistry
         public Azure.Provisioning.BicepValue<string> EncodedValuesContent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryTaskOverridableValue> Values { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryEncryption : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryEncryption : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryEncryption() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryKeyVaultProperties> KeyVaultProperties { get { throw null; } set { } }
@@ -175,7 +175,7 @@ namespace Azure.Provisioning.ContainerRegistry
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryTaskOverridableValue> Values { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ValuesFilePath { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryImageDescriptor : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryImageDescriptor : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryImageDescriptor() { }
         public Azure.Provisioning.BicepValue<string> Digest { get { throw null; } set { } }
@@ -183,14 +183,14 @@ namespace Azure.Provisioning.ContainerRegistry
         public Azure.Provisioning.BicepValue<string> Repository { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Tag { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryImageUpdateTrigger : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryImageUpdateTrigger : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryImageUpdateTrigger() { }
         public Azure.Provisioning.BicepValue<System.Guid> Id { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryImageDescriptor> Images { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> Timestamp { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryIPRule : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryIPRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryIPRule() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryIPRuleAction> Action { get { throw null; } set { } }
@@ -200,7 +200,7 @@ namespace Azure.Provisioning.ContainerRegistry
     {
         Allow = 0,
     }
-    public partial class ContainerRegistryKeyVaultProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryKeyVaultProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryKeyVaultProperties() { }
         public Azure.Provisioning.BicepValue<string> Identity { get { throw null; } set { } }
@@ -219,7 +219,7 @@ namespace Azure.Provisioning.ContainerRegistry
         Allow = 0,
         Deny = 1,
     }
-    public partial class ContainerRegistryNetworkRuleSet : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryNetworkRuleSet : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryNetworkRuleSet() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryNetworkRuleDefaultAction> DefaultAction { get { throw null; } set { } }
@@ -243,7 +243,7 @@ namespace Azure.Provisioning.ContainerRegistry
         [System.Runtime.Serialization.DataMemberAttribute(Name="arm64")]
         Arm64 = 4,
     }
-    public partial class ContainerRegistryOverrideTaskStepProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryOverrideTaskStepProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryOverrideTaskStepProperties() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryRunArgument> Arguments { get { throw null; } set { } }
@@ -253,14 +253,14 @@ namespace Azure.Provisioning.ContainerRegistry
         public Azure.Provisioning.BicepValue<string> UpdateTriggerToken { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryTaskOverridableValue> Values { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryPlatformProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryPlatformProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryPlatformProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryOSArchitecture> Architecture { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryOS> OS { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryCpuVariant> Variant { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryPolicies : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryPolicies : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryPolicies() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryExportPolicyStatus> ExportStatus { get { throw null; } set { } }
@@ -275,7 +275,7 @@ namespace Azure.Provisioning.ContainerRegistry
         [System.Runtime.Serialization.DataMemberAttribute(Name="disabled")]
         Disabled = 1,
     }
-    public partial class ContainerRegistryPrivateEndpointConnection : Azure.Provisioning.Primitives.Resource
+    public partial class ContainerRegistryPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerRegistryPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryPrivateLinkServiceConnectionState> ConnectionState { get { throw null; } set { } }
@@ -294,7 +294,7 @@ namespace Azure.Provisioning.ContainerRegistry
             public static readonly string V2023_11_01_preview;
         }
     }
-    public partial class ContainerRegistryPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryPrivateEndpointConnectionData() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryPrivateLinkServiceConnectionState> ConnectionState { get { throw null; } set { } }
@@ -304,7 +304,7 @@ namespace Azure.Provisioning.ContainerRegistry
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
     }
-    public partial class ContainerRegistryPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryPrivateLinkServiceConnectionState() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ActionsRequiredForPrivateLinkServiceConsumer> ActionsRequired { get { throw null; } set { } }
@@ -332,7 +332,7 @@ namespace Azure.Provisioning.ContainerRegistry
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class ContainerRegistryReplication : Azure.Provisioning.Primitives.Resource
+    public partial class ContainerRegistryReplication : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerRegistryReplication(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -358,35 +358,35 @@ namespace Azure.Provisioning.ContainerRegistry
             public static readonly string V2023_11_01_preview;
         }
     }
-    public partial class ContainerRegistryResourceStatus : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryResourceStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryResourceStatus() { }
         public Azure.Provisioning.BicepValue<string> DisplayStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Message { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> Timestamp { get { throw null; } }
     }
-    public partial class ContainerRegistryRetentionPolicy : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryRetentionPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryRetentionPolicy() { }
         public Azure.Provisioning.BicepValue<int> Days { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastUpdatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryPolicyStatus> Status { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryRunArgument : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryRunArgument : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryRunArgument() { }
         public Azure.Provisioning.BicepValue<bool> IsSecret { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryRunContent : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryRunContent : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryRunContent() { }
         public Azure.Provisioning.BicepValue<string> AgentPoolName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsArchiveEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> LogTemplate { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryRunData : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryRunData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryRunData() { }
         public Azure.Provisioning.BicepValue<int> AgentCpu { get { throw null; } set { } }
@@ -433,7 +433,7 @@ namespace Azure.Provisioning.ContainerRegistry
         AutoBuild = 2,
         AutoRun = 3,
     }
-    public partial class ContainerRegistrySecretObject : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistrySecretObject : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistrySecretObject() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistrySecretObjectType> ObjectType { get { throw null; } set { } }
@@ -445,7 +445,7 @@ namespace Azure.Provisioning.ContainerRegistry
         [System.Runtime.Serialization.DataMemberAttribute(Name="Vaultsecret")]
         VaultSecret = 1,
     }
-    public partial class ContainerRegistryService : Azure.Provisioning.Primitives.Resource
+    public partial class ContainerRegistryService : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerRegistryService(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
@@ -485,7 +485,7 @@ namespace Azure.Provisioning.ContainerRegistry
             public static readonly string V2023_11_01_preview;
         }
     }
-    public partial class ContainerRegistrySku : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistrySku : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistrySku() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistrySkuName> Name { get { throw null; } set { } }
@@ -505,7 +505,7 @@ namespace Azure.Provisioning.ContainerRegistry
         Standard = 2,
         Premium = 3,
     }
-    public partial class ContainerRegistrySourceTrigger : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistrySourceTrigger : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistrySourceTrigger() { }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -513,7 +513,7 @@ namespace Azure.Provisioning.ContainerRegistry
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistrySourceTriggerEvent> SourceTriggerEvents { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryTriggerStatus> Status { get { throw null; } set { } }
     }
-    public partial class ContainerRegistrySourceTriggerDescriptor : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistrySourceTriggerDescriptor : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistrySourceTriggerDescriptor() { }
         public Azure.Provisioning.BicepValue<string> BranchName { get { throw null; } set { } }
@@ -531,7 +531,7 @@ namespace Azure.Provisioning.ContainerRegistry
         [System.Runtime.Serialization.DataMemberAttribute(Name="pullrequest")]
         PullRequest = 1,
     }
-    public partial class ContainerRegistryTask : Azure.Provisioning.Primitives.Resource
+    public partial class ContainerRegistryTask : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerRegistryTask(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<int> AgentCpu { get { throw null; } set { } }
@@ -563,14 +563,14 @@ namespace Azure.Provisioning.ContainerRegistry
             public static readonly string V2019_06_01_preview;
         }
     }
-    public partial class ContainerRegistryTaskOverridableValue : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryTaskOverridableValue : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryTaskOverridableValue() { }
         public Azure.Provisioning.BicepValue<bool> IsSecret { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryTaskRun : Azure.Provisioning.Primitives.Resource
+    public partial class ContainerRegistryTaskRun : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerRegistryTaskRun(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ForceUpdateTag { get { throw null; } set { } }
@@ -600,27 +600,27 @@ namespace Azure.Provisioning.ContainerRegistry
         Disabled = 0,
         Enabled = 1,
     }
-    public partial class ContainerRegistryTaskStepProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryTaskStepProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryTaskStepProperties() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryBaseImageDependency> BaseImageDependencies { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ContextAccessToken { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ContextPath { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryTimerTrigger : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryTimerTrigger : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryTimerTrigger() { }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Schedule { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryTriggerStatus> Status { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryTimerTriggerDescriptor : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryTimerTriggerDescriptor : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryTimerTriggerDescriptor() { }
         public Azure.Provisioning.BicepValue<string> ScheduleOccurrence { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TimerTriggerName { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryToken : Azure.Provisioning.Primitives.Resource
+    public partial class ContainerRegistryToken : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerRegistryToken(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
@@ -642,7 +642,7 @@ namespace Azure.Provisioning.ContainerRegistry
             public static readonly string V2023_11_01_preview;
         }
     }
-    public partial class ContainerRegistryTokenCertificate : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryTokenCertificate : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryTokenCertificate() { }
         public Azure.Provisioning.BicepValue<string> EncodedPemCertificate { get { throw null; } set { } }
@@ -657,13 +657,13 @@ namespace Azure.Provisioning.ContainerRegistry
         [System.Runtime.Serialization.DataMemberAttribute(Name="certificate2")]
         Certificate2 = 1,
     }
-    public partial class ContainerRegistryTokenCredentials : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryTokenCredentials : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryTokenCredentials() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryTokenCertificate> Certificates { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryTokenPassword> Passwords { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryTokenPassword : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryTokenPassword : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryTokenPassword() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } set { } }
@@ -685,7 +685,7 @@ namespace Azure.Provisioning.ContainerRegistry
         [System.Runtime.Serialization.DataMemberAttribute(Name="disabled")]
         Disabled = 1,
     }
-    public partial class ContainerRegistryTriggerProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryTriggerProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryTriggerProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryBaseImageTrigger> BaseImageTrigger { get { throw null; } set { } }
@@ -697,7 +697,7 @@ namespace Azure.Provisioning.ContainerRegistry
         Disabled = 0,
         Enabled = 1,
     }
-    public partial class ContainerRegistryTrustPolicy : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ContainerRegistryTrustPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryTrustPolicy() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryTrustPolicyType> PolicyType { get { throw null; } set { } }
@@ -712,7 +712,7 @@ namespace Azure.Provisioning.ContainerRegistry
         Default = 0,
         Token = 1,
     }
-    public partial class ContainerRegistryWebhook : Azure.Provisioning.Primitives.Resource
+    public partial class ContainerRegistryWebhook : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerRegistryWebhook(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryWebhookAction> Actions { get { throw null; } set { } }
@@ -765,14 +765,14 @@ namespace Azure.Provisioning.ContainerRegistry
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class CustomRegistryCredentials : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class CustomRegistryCredentials : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CustomRegistryCredentials() { }
         public Azure.Provisioning.BicepValue<string> Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistrySecretObject> Password { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistrySecretObject> UserName { get { throw null; } set { } }
     }
-    public partial class ScopeMap : Azure.Provisioning.Primitives.Resource
+    public partial class ScopeMap : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ScopeMap(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> Actions { get { throw null; } set { } }
@@ -794,7 +794,7 @@ namespace Azure.Provisioning.ContainerRegistry
             public static readonly string V2023_11_01_preview;
         }
     }
-    public partial class SourceCodeRepoAuthInfo : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SourceCodeRepoAuthInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SourceCodeRepoAuthInfo() { }
         public Azure.Provisioning.BicepValue<int> ExpireInSeconds { get { throw null; } set { } }
@@ -809,7 +809,7 @@ namespace Azure.Provisioning.ContainerRegistry
         Pat = 0,
         OAuth = 1,
     }
-    public partial class SourceCodeRepoProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SourceCodeRepoProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SourceCodeRepoProperties() { }
         public Azure.Provisioning.BicepValue<string> Branch { get { throw null; } set { } }

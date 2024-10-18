@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// AppServicePlan.
 /// </summary>
-public partial class AppServicePlan : Resource
+public partial class AppServicePlan : ProvisionableResource
 {
     /// <summary>
     /// Name of the App Service plan.

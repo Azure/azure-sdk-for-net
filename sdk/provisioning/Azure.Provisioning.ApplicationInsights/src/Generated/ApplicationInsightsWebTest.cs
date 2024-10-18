@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ApplicationInsights;
 /// <summary>
 /// ApplicationInsightsWebTest.
 /// </summary>
-public partial class ApplicationInsightsWebTest : Resource
+public partial class ApplicationInsightsWebTest : ProvisionableResource
 {
     /// <summary>
     /// The name of the Application Insights WebTest resource.

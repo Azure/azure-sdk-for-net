@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerJob.
 /// </summary>
-public partial class SqlServerJob : Resource
+public partial class SqlServerJob : ProvisionableResource
 {
     /// <summary>
     /// The name of the job to get.

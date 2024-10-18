@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// GremlinDatabase.
 /// </summary>
-public partial class GremlinDatabase : Resource
+public partial class GremlinDatabase : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB database name.

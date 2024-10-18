@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// TagResource.
 /// </summary>
-public partial class TagResource : Resource
+public partial class TagResource : ProvisionableResource
 {
     /// <summary>
     /// The name of the resource.

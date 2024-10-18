@@ -39,7 +39,7 @@ namespace Azure.Provisioning.EventGrid;
 /// Azure.ResourceManager.EventGrid.Models.StringNotEndsWithAdvancedFilter and
 /// Azure.ResourceManager.EventGrid.Models.StringNotInAdvancedFilter.
 /// </summary>
-public partial class AdvancedFilter : ProvisioningConstruct
+public partial class AdvancedFilter : ProvisionableConstruct
 {
     /// <summary>
     /// The field/property in the event based on which you want to filter.

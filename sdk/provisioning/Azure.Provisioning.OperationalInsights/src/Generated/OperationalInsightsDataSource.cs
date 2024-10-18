@@ -17,7 +17,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsDataSource.
 /// </summary>
-public partial class OperationalInsightsDataSource : Resource
+public partial class OperationalInsightsDataSource : ProvisionableResource
 {
     /// <summary>
     /// The name of the datasource resource.

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// RoleAssignment.
 /// </summary>
-public partial class RoleAssignment : Resource
+public partial class RoleAssignment : ProvisionableResource
 {
     /// <summary>
     /// The name of the role assignment. It can be any valid GUID.

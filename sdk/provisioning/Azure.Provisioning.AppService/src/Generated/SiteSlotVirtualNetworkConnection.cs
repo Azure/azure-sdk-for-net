@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotVirtualNetworkConnection.
 /// </summary>
-public partial class SiteSlotVirtualNetworkConnection : Resource
+public partial class SiteSlotVirtualNetworkConnection : ProvisionableResource
 {
     /// <summary>
     /// Name of an existing Virtual Network.

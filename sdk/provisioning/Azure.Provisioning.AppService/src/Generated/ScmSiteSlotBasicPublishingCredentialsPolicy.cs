@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// ScmSiteSlotBasicPublishingCredentialsPolicy.
 /// </summary>
-public partial class ScmSiteSlotBasicPublishingCredentialsPolicy : Resource
+public partial class ScmSiteSlotBasicPublishingCredentialsPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

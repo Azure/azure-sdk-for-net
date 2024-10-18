@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// GenericResource.
 /// </summary>
-public partial class GenericResource : Resource
+public partial class GenericResource : ProvisionableResource
 {
     /// <summary>
     /// The name of the resource.

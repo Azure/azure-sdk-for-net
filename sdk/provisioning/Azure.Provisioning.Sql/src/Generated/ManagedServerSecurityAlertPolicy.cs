@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedServerSecurityAlertPolicy.
 /// </summary>
-public partial class ManagedServerSecurityAlertPolicy : Resource
+public partial class ManagedServerSecurityAlertPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

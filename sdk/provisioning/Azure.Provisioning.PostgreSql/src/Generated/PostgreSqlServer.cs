@@ -17,7 +17,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlServer.
 /// </summary>
-public partial class PostgreSqlServer : Resource
+public partial class PostgreSqlServer : ProvisionableResource
 {
     /// <summary>
     /// The name of the server.

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteExtension.
 /// </summary>
-public partial class SiteExtension : Resource
+public partial class SiteExtension : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

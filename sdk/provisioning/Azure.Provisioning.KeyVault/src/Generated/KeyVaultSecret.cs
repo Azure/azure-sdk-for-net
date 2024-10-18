@@ -17,7 +17,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// KeyVaultSecret.
 /// </summary>
-public partial class KeyVaultSecret : Resource
+public partial class KeyVaultSecret : ProvisionableResource
 {
     /// <summary>
     /// Name of the secret. The value you provide may be copied globally for

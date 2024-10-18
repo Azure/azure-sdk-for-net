@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceLongTermRetentionPolicy.
 /// </summary>
-public partial class ManagedInstanceLongTermRetentionPolicy : Resource
+public partial class ManagedInstanceLongTermRetentionPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

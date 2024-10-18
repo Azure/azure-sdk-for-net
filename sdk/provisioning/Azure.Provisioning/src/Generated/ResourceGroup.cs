@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ResourceGroup.
 /// </summary>
-public partial class ResourceGroup : Resource
+public partial class ResourceGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the resource group to create or update. Can include

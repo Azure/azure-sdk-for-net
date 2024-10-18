@@ -15,7 +15,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubsPrivateEndpointConnection.
 /// </summary>
-public partial class EventHubsPrivateEndpointConnection : Resource
+public partial class EventHubsPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The PrivateEndpointConnection name.

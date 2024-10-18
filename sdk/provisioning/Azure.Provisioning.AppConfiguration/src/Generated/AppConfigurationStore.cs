@@ -20,7 +20,7 @@ namespace Azure.Provisioning.AppConfiguration;
 /// <summary>
 /// AppConfigurationStore.
 /// </summary>
-public partial class AppConfigurationStore : Resource
+public partial class AppConfigurationStore : ProvisionableResource
 {
     /// <summary>
     /// The name of the configuration store.

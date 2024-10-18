@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Communication;
 /// <summary>
 /// CommunicationService.
 /// </summary>
-public partial class CommunicationService : Resource
+public partial class CommunicationService : ProvisionableResource
 {
     /// <summary>
     /// The name of the CommunicationService resource.

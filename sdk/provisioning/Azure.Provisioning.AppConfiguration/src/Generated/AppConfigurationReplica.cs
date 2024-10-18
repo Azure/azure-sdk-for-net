@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppConfiguration;
 /// <summary>
 /// AppConfigurationReplica.
 /// </summary>
-public partial class AppConfigurationReplica : Resource
+public partial class AppConfigurationReplica : ProvisionableResource
 {
     /// <summary>
     /// The name of the replica.

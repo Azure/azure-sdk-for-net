@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ManagementLock.
 /// </summary>
-public partial class ManagementLock : Resource
+public partial class ManagementLock : ProvisionableResource
 {
     /// <summary>
     /// The name of lock.

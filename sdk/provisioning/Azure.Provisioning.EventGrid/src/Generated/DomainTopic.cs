@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// DomainTopic.
 /// </summary>
-public partial class DomainTopic : Resource
+public partial class DomainTopic : ProvisionableResource
 {
     /// <summary>
     /// Name of the domain topic.

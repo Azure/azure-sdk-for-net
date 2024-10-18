@@ -15,7 +15,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// ContainerServicePrivateEndpointConnection.
 /// </summary>
-public partial class ContainerServicePrivateEndpointConnection : Resource
+public partial class ContainerServicePrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The name of the private endpoint connection.

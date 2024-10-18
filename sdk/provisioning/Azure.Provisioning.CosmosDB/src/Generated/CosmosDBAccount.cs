@@ -20,7 +20,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBAccount.
 /// </summary>
-public partial class CosmosDBAccount : Resource
+public partial class CosmosDBAccount : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB database account name.

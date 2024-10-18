@@ -17,7 +17,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// ManagedHsmPrivateEndpointConnection.
 /// </summary>
-public partial class ManagedHsmPrivateEndpointConnection : Resource
+public partial class ManagedHsmPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// Name of the private endpoint connection associated with the managed hsm

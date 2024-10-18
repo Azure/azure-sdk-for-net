@@ -20,7 +20,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ContainerRegistryService.
 /// </summary>
-public partial class ContainerRegistryService : Resource
+public partial class ContainerRegistryService : ProvisionableResource
 {
     /// <summary>
     /// The name of the container registry.

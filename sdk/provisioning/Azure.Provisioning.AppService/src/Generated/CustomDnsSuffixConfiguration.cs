@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// CustomDnsSuffixConfiguration.
 /// </summary>
-public partial class CustomDnsSuffixConfiguration : Resource
+public partial class CustomDnsSuffixConfiguration : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

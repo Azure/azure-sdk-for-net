@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// PolicyAssignment.
 /// </summary>
-public partial class PolicyAssignment : Resource
+public partial class PolicyAssignment : ProvisionableResource
 {
     /// <summary>
     /// The name of the policy assignment.

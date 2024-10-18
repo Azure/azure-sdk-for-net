@@ -15,7 +15,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// WebPubSubSharedPrivateLink.
 /// </summary>
-public partial class WebPubSubSharedPrivateLink : Resource
+public partial class WebPubSubSharedPrivateLink : ProvisionableResource
 {
     /// <summary>
     /// The name of the shared private link resource.

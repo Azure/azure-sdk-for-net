@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSiteDatabaseConnection.
 /// </summary>
-public partial class StaticSiteDatabaseConnection : Resource
+public partial class StaticSiteDatabaseConnection : ProvisionableResource
 {
     /// <summary>
     /// Name of the database connection.

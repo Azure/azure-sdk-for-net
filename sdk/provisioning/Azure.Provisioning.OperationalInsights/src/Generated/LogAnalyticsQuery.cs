@@ -15,7 +15,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// LogAnalyticsQuery.
 /// </summary>
-public partial class LogAnalyticsQuery : Resource
+public partial class LogAnalyticsQuery : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

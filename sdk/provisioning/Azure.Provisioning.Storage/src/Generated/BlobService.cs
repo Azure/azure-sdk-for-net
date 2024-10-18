@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// BlobService.
 /// </summary>
-public partial class BlobService : Resource
+public partial class BlobService : ProvisionableResource
 {
     private readonly BicepValue<string> _name;
 

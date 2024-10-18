@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// PartnerNamespaceChannel.
 /// </summary>
-public partial class PartnerNamespaceChannel : Resource
+public partial class PartnerNamespaceChannel : ProvisionableResource
 {
     /// <summary>
     /// Name of the channel.

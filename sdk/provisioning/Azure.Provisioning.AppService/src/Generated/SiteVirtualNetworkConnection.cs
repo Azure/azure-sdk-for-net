@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteVirtualNetworkConnection.
 /// </summary>
-public partial class SiteVirtualNetworkConnection : Resource
+public partial class SiteVirtualNetworkConnection : ProvisionableResource
 {
     /// <summary>
     /// Name of an existing Virtual Network.

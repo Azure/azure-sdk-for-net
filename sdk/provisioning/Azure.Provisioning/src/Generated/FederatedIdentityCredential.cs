@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Roles;
 /// <summary>
 /// FederatedIdentityCredential.
 /// </summary>
-public partial class FederatedIdentityCredential : Resource
+public partial class FederatedIdentityCredential : ProvisionableResource
 {
     /// <summary>
     /// The name of the federated identity credential resource.

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceAdvancedThreatProtection.
 /// </summary>
-public partial class ManagedInstanceAdvancedThreatProtection : Resource
+public partial class ManagedInstanceAdvancedThreatProtection : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

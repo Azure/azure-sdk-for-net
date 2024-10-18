@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// HostingEnvironmentMultiRolePool.
 /// </summary>
-public partial class HostingEnvironmentMultiRolePool : Resource
+public partial class HostingEnvironmentMultiRolePool : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

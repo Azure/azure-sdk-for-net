@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSlotPublicCertificate.
 /// </summary>
-public partial class WebSiteSlotPublicCertificate : Resource
+public partial class WebSiteSlotPublicCertificate : ProvisionableResource
 {
     /// <summary>
     /// Public certificate name.

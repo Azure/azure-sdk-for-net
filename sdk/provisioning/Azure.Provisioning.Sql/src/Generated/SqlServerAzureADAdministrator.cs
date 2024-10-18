@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerAzureADAdministrator.
 /// </summary>
-public partial class SqlServerAzureADAdministrator : Resource
+public partial class SqlServerAzureADAdministrator : ProvisionableResource
 {
     private readonly BicepValue<string> _name;
 

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ContainerRegistryWebhook.
 /// </summary>
-public partial class ContainerRegistryWebhook : Resource
+public partial class ContainerRegistryWebhook : ProvisionableResource
 {
     /// <summary>
     /// The name of the webhook.

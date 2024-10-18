@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlDatabase.
 /// </summary>
-public partial class SqlDatabase : Resource
+public partial class SqlDatabase : ProvisionableResource
 {
     /// <summary>
     /// The name of the database.

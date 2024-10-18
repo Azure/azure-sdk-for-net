@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppConnectedEnvironmentCertificate.
 /// </summary>
-public partial class ContainerAppConnectedEnvironmentCertificate : Resource
+public partial class ContainerAppConnectedEnvironmentCertificate : ProvisionableResource
 {
     /// <summary>
     /// Name of the Certificate.

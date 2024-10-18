@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// Details of single instance of redis.
 /// </summary>
-public partial class RedisInstanceDetails : ProvisioningConstruct
+public partial class RedisInstanceDetails : ProvisionableConstruct
 {
     /// <summary>
     /// Redis instance SSL port.

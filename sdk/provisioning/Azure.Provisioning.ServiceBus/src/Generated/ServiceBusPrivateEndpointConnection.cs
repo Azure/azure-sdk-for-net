@@ -15,7 +15,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusPrivateEndpointConnection.
 /// </summary>
-public partial class ServiceBusPrivateEndpointConnection : Resource
+public partial class ServiceBusPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The PrivateEndpointConnection name.

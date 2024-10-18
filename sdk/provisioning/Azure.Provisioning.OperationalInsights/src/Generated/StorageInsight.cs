@@ -17,7 +17,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// StorageInsight.
 /// </summary>
-public partial class StorageInsight : Resource
+public partial class StorageInsight : ProvisionableResource
 {
     /// <summary>
     /// Name of the storageInsightsConfigs resource.

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// KeyVaultPrivateEndpointConnection.
 /// </summary>
-public partial class KeyVaultPrivateEndpointConnection : Resource
+public partial class KeyVaultPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// Name of the private endpoint connection associated with the key vault.

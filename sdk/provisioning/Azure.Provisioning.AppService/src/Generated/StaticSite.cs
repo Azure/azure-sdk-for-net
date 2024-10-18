@@ -18,7 +18,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSite.
 /// </summary>
-public partial class StaticSite : Resource
+public partial class StaticSite : ProvisionableResource
 {
     /// <summary>
     /// Name of the static site to create or update.

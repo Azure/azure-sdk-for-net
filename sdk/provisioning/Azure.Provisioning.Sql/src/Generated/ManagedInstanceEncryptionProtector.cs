@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceEncryptionProtector.
 /// </summary>
-public partial class ManagedInstanceEncryptionProtector : Resource
+public partial class ManagedInstanceEncryptionProtector : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

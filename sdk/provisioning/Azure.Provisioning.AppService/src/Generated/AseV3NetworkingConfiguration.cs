@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// AseV3NetworkingConfiguration.
 /// </summary>
-public partial class AseV3NetworkingConfiguration : Resource
+public partial class AseV3NetworkingConfiguration : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

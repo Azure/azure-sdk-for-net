@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// TemplateSpec.
 /// </summary>
-public partial class TemplateSpec : Resource
+public partial class TemplateSpec : ProvisionableResource
 {
     /// <summary>
     /// Name of the Template Spec.

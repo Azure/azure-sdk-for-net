@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBTable.
 /// </summary>
-public partial class CosmosDBTable : Resource
+public partial class CosmosDBTable : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB table name.

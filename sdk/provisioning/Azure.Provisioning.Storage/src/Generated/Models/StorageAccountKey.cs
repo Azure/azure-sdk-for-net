@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// An access key for the storage account.
 /// </summary>
-public partial class StorageAccountKey : ProvisioningConstruct
+public partial class StorageAccountKey : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the key.

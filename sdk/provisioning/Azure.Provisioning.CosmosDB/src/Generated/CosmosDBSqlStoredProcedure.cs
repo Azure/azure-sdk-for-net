@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBSqlStoredProcedure.
 /// </summary>
-public partial class CosmosDBSqlStoredProcedure : Resource
+public partial class CosmosDBSqlStoredProcedure : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB storedProcedure name.

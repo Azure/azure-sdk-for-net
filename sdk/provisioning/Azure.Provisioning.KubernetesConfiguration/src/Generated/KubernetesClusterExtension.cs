@@ -20,7 +20,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// KubernetesClusterExtension.
 /// </summary>
-public partial class KubernetesClusterExtension : Resource
+public partial class KubernetesClusterExtension : ProvisionableResource
 {
     /// <summary>
     /// Name of the Extension.

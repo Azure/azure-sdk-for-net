@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// HostingEnvironmentWorkerPool.
 /// </summary>
-public partial class HostingEnvironmentWorkerPool : Resource
+public partial class HostingEnvironmentWorkerPool : ProvisionableResource
 {
     /// <summary>
     /// Name of the worker pool.

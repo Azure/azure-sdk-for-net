@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ArmDeploymentScript.
 /// </summary>
-public partial class ArmDeploymentScript : Resource
+public partial class ArmDeploymentScript : ProvisionableResource
 {
     /// <summary>
     /// Name of the deployment script.

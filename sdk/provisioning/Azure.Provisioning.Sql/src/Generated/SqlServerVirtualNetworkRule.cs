@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerVirtualNetworkRule.
 /// </summary>
-public partial class SqlServerVirtualNetworkRule : Resource
+public partial class SqlServerVirtualNetworkRule : ProvisionableResource
 {
     /// <summary>
     /// The name of the virtual network rule.

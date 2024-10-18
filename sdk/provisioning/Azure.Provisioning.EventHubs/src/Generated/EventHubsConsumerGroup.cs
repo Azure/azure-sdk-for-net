@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubsConsumerGroup.
 /// </summary>
-public partial class EventHubsConsumerGroup : Resource
+public partial class EventHubsConsumerGroup : ProvisionableResource
 {
     /// <summary>
     /// The consumer group name.

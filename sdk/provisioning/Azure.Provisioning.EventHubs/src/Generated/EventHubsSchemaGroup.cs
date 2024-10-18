@@ -17,7 +17,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubsSchemaGroup.
 /// </summary>
-public partial class EventHubsSchemaGroup : Resource
+public partial class EventHubsSchemaGroup : ProvisionableResource
 {
     /// <summary>
     /// The Schema Group name.

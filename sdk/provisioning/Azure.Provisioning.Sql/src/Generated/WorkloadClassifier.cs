@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// WorkloadClassifier.
 /// </summary>
-public partial class WorkloadClassifier : Resource
+public partial class WorkloadClassifier : ProvisionableResource
 {
     /// <summary>
     /// The name of the workload classifier to create/update.

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubsDisasterRecovery.
 /// </summary>
-public partial class EventHubsDisasterRecovery : Resource
+public partial class EventHubsDisasterRecovery : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

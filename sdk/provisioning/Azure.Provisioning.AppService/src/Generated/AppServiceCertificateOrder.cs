@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// AppServiceCertificateOrder.
 /// </summary>
-public partial class AppServiceCertificateOrder : Resource
+public partial class AppServiceCertificateOrder : ProvisionableResource
 {
     /// <summary>
     /// Name of the certificate order.

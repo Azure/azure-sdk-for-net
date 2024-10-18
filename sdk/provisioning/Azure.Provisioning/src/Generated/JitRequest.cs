@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// JitRequest.
 /// </summary>
-public partial class JitRequest : Resource
+public partial class JitRequest : ProvisionableResource
 {
     /// <summary>
     /// The name of the JIT request.

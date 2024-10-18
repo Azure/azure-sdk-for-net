@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// Redis cache access keys.
 /// </summary>
-public partial class RedisAccessKeys : ProvisioningConstruct
+public partial class RedisAccessKeys : ProvisionableConstruct
 {
     /// <summary>
     /// The current primary key that clients can use to authenticate with Redis

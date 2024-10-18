@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Managed service identity (system assigned and/or user assigned identities).
 /// </summary>
-public partial class ManagedServiceIdentity : ProvisioningConstruct
+public partial class ManagedServiceIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// The service principal ID of the system assigned identity. This property

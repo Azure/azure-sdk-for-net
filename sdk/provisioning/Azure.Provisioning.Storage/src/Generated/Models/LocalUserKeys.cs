@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// The Storage Account Local User keys.
 /// </summary>
-public partial class LocalUserKeys : ProvisioningConstruct
+public partial class LocalUserKeys : ProvisionableConstruct
 {
     /// <summary>
     /// Optional, local user ssh authorized keys for SFTP.

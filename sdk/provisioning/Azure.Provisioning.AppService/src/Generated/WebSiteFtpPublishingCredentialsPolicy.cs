@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteFtpPublishingCredentialsPolicy.
 /// </summary>
-public partial class WebSiteFtpPublishingCredentialsPolicy : Resource
+public partial class WebSiteFtpPublishingCredentialsPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

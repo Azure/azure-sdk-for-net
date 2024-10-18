@@ -13,7 +13,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// A class represents the access keys of the resource.
 /// </summary>
-public partial class SignalRKeys : ProvisioningConstruct
+public partial class SignalRKeys : ProvisionableConstruct
 {
     /// <summary>
     /// The primary access key.

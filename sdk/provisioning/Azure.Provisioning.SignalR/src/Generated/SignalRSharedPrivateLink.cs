@@ -15,7 +15,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// SignalRSharedPrivateLink.
 /// </summary>
-public partial class SignalRSharedPrivateLink : Resource
+public partial class SignalRSharedPrivateLink : ProvisionableResource
 {
     /// <summary>
     /// The name of the shared private link resource.

@@ -105,7 +105,7 @@ namespace Azure.Provisioning.CloudMachine
         public Azure.Provisioning.Roles.UserAssignedIdentity Identity { get { throw null; } }
         public Azure.Provisioning.ProvisioningParameter PrincipalIdParameter { get { throw null; } }
         public void AddFeature(Azure.Provisioning.CloudMachine.CloudMachineFeature resource) { }
-        public void AddResource(Azure.Provisioning.Primitives.NamedProvisioningConstruct resource) { }
+        public void AddResource(Azure.Provisioning.Primitives.NamedProvisionableConstruct resource) { }
         public Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningBuildOptions? context = null) { throw null; }
         public static bool Configure(string[] args, System.Action<Azure.Provisioning.CloudMachine.CloudMachineInfrastructure>? configure = null) { throw null; }
     }

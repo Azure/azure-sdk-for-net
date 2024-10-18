@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerKey.
 /// </summary>
-public partial class SqlServerKey : Resource
+public partial class SqlServerKey : ProvisionableResource
 {
     /// <summary>
     /// The name of the server key to be operated on (updated or created). The

@@ -14,7 +14,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteDeployment.
 /// </summary>
-public partial class SiteDeployment : Resource
+public partial class SiteDeployment : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

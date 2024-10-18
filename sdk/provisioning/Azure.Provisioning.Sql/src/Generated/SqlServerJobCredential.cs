@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerJobCredential.
 /// </summary>
-public partial class SqlServerJobCredential : Resource
+public partial class SqlServerJobCredential : ProvisionableResource
 {
     /// <summary>
     /// The name of the credential.

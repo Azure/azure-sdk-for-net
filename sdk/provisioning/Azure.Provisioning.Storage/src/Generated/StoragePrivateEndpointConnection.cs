@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// StoragePrivateEndpointConnection.
 /// </summary>
-public partial class StoragePrivateEndpointConnection : Resource
+public partial class StoragePrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The name of the private endpoint connection associated with the Azure

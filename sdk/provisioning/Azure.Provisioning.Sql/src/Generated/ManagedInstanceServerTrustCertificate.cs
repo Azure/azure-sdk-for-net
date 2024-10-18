@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceServerTrustCertificate.
 /// </summary>
-public partial class ManagedInstanceServerTrustCertificate : Resource
+public partial class ManagedInstanceServerTrustCertificate : ProvisionableResource
 {
     /// <summary>
     /// Name of of the certificate to upload.

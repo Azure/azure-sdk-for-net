@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotFunction.
 /// </summary>
-public partial class SiteSlotFunction : Resource
+public partial class SiteSlotFunction : ProvisionableResource
 {
     /// <summary>
     /// Function name.

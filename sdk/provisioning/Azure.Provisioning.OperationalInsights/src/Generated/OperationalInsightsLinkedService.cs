@@ -16,7 +16,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsLinkedService.
 /// </summary>
-public partial class OperationalInsightsLinkedService : Resource
+public partial class OperationalInsightsLinkedService : ProvisionableResource
 {
     /// <summary>
     /// Name of the linkedServices resource.

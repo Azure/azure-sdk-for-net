@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Tenant.
 /// </summary>
-public partial class Tenant : Resource
+public partial class Tenant : ProvisionableResource
 {
     /// <summary>
     /// Country/region name of the address for the tenant.

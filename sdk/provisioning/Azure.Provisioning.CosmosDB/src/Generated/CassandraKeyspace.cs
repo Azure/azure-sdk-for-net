@@ -17,7 +17,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CassandraKeyspace.
 /// </summary>
-public partial class CassandraKeyspace : Resource
+public partial class CassandraKeyspace : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB keyspace name.

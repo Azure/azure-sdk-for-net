@@ -17,7 +17,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ContainerRegistryToken.
 /// </summary>
-public partial class ContainerRegistryToken : Resource
+public partial class ContainerRegistryToken : ProvisionableResource
 {
     /// <summary>
     /// The name of the token.

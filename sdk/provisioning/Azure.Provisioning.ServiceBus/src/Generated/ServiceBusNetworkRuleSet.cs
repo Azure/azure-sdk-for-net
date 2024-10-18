@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusNetworkRuleSet.
 /// </summary>
-public partial class ServiceBusNetworkRuleSet : Resource
+public partial class ServiceBusNetworkRuleSet : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

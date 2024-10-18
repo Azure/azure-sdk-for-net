@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// ContainerServiceMaintenanceConfiguration.
 /// </summary>
-public partial class ContainerServiceMaintenanceConfiguration : Resource
+public partial class ContainerServiceMaintenanceConfiguration : ProvisionableResource
 {
     /// <summary>
     /// The name of the maintenance configuration.

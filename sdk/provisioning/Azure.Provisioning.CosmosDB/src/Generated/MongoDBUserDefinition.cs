@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// MongoDBUserDefinition.
 /// </summary>
-public partial class MongoDBUserDefinition : Resource
+public partial class MongoDBUserDefinition : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

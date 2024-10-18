@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubsApplicationGroup.
 /// </summary>
-public partial class EventHubsApplicationGroup : Resource
+public partial class EventHubsApplicationGroup : ProvisionableResource
 {
     /// <summary>
     /// The Application Group name.

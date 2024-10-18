@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Application definition artifact.
 /// </summary>
-public partial class ArmApplicationDefinitionArtifact : ProvisioningConstruct
+public partial class ArmApplicationDefinitionArtifact : ProvisionableConstruct
 {
     /// <summary>
     /// The managed application definition artifact name.

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSlot.
 /// </summary>
-public partial class WebSiteSlot : Resource
+public partial class WebSiteSlot : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

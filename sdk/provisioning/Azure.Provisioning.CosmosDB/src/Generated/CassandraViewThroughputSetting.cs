@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CassandraViewThroughputSetting.
 /// </summary>
-public partial class CassandraViewThroughputSetting : Resource
+public partial class CassandraViewThroughputSetting : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

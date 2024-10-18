@@ -15,7 +15,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlServerKey.
 /// </summary>
-public partial class PostgreSqlServerKey : Resource
+public partial class PostgreSqlServerKey : ProvisionableResource
 {
     /// <summary>
     /// The name of the PostgreSQL Server key to be operated on (updated or

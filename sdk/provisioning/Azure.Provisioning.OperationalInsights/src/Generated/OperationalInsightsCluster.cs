@@ -17,7 +17,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsCluster.
 /// </summary>
-public partial class OperationalInsightsCluster : Resource
+public partial class OperationalInsightsCluster : ProvisionableResource
 {
     /// <summary>
     /// The name of the Log Analytics cluster.

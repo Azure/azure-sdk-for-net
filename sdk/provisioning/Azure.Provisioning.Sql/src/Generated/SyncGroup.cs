@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SyncGroup.
 /// </summary>
-public partial class SyncGroup : Resource
+public partial class SyncGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the sync group.

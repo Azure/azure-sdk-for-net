@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// PartnerTopic.
 /// </summary>
-public partial class PartnerTopic : Resource
+public partial class PartnerTopic : ProvisionableResource
 {
     /// <summary>
     /// Name of the partner topic.

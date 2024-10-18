@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// RedisPrivateEndpointConnection.
 /// </summary>
-public partial class RedisPrivateEndpointConnection : Resource
+public partial class RedisPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The name of the private endpoint connection associated with the Azure

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// The billing information of the resource.
 /// </summary>
-public partial class BillingInfoSku : ProvisioningConstruct
+public partial class BillingInfoSku : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the SKU. Required.                           Allowed

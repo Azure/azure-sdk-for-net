@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// StorageQueue.
 /// </summary>
-public partial class StorageQueue : Resource
+public partial class StorageQueue : ProvisionableResource
 {
     /// <summary>
     /// A queue name must be unique within a storage account and must be

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedServerDnsAlias.
 /// </summary>
-public partial class ManagedServerDnsAlias : Resource
+public partial class ManagedServerDnsAlias : ProvisionableResource
 {
     /// <summary>
     /// The System.String to use.

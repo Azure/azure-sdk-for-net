@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// KubeEnvironment.
 /// </summary>
-public partial class KubeEnvironment : Resource
+public partial class KubeEnvironment : ProvisionableResource
 {
     /// <summary>
     /// Name of the Kubernetes Environment.

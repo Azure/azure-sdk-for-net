@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceServerConfigurationOption.
 /// </summary>
-public partial class ManagedInstanceServerConfigurationOption : Resource
+public partial class ManagedInstanceServerConfigurationOption : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// AppCertificate.
 /// </summary>
-public partial class AppCertificate : Resource
+public partial class AppCertificate : ProvisionableResource
 {
     /// <summary>
     /// Name of the certificate.

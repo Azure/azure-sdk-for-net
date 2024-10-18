@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerJobStep.
 /// </summary>
-public partial class SqlServerJobStep : Resource
+public partial class SqlServerJobStep : ProvisionableResource
 {
     /// <summary>
     /// The name of the job step.

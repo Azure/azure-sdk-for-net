@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Properties of the Topic Spaces Configuration.
 /// </summary>
-public partial class TopicSpacesConfiguration : ProvisioningConstruct
+public partial class TopicSpacesConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Indicate if Topic Spaces Configuration is enabled for the namespace.

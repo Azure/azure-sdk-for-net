@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// ContainerServiceTrustedAccessRoleBinding.
 /// </summary>
-public partial class ContainerServiceTrustedAccessRoleBinding : Resource
+public partial class ContainerServiceTrustedAccessRoleBinding : ProvisionableResource
 {
     /// <summary>
     /// The name of trusted access role binding.

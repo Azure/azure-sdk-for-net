@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// EventGridTopicPrivateEndpointConnection.
 /// </summary>
-public partial class EventGridTopicPrivateEndpointConnection : Resource
+public partial class EventGridTopicPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The name of the private endpoint connection connection.

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlAgentConfiguration.
 /// </summary>
-public partial class SqlAgentConfiguration : Resource
+public partial class SqlAgentConfiguration : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

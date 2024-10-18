@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServer.
 /// </summary>
-public partial class SqlServer : Resource
+public partial class SqlServer : ProvisionableResource
 {
     /// <summary>
     /// The name of the server.

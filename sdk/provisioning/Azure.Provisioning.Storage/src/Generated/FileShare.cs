@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// FileShare.
 /// </summary>
-public partial class FileShare : Resource
+public partial class FileShare : ProvisionableResource
 {
     /// <summary>
     /// The name of the file share within the specified storage account. File

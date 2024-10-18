@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// CommitmentPlanAccountAssociation.
 /// </summary>
-public partial class CommitmentPlanAccountAssociation : Resource
+public partial class CommitmentPlanAccountAssociation : ProvisionableResource
 {
     /// <summary>
     /// The name of the commitment plan association with the Cognitive Services

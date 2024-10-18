@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceAdministrator.
 /// </summary>
-public partial class ManagedInstanceAdministrator : Resource
+public partial class ManagedInstanceAdministrator : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

@@ -13,7 +13,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// A class represents the access keys of the resource.
 /// </summary>
-public partial class WebPubSubKeys : ProvisioningConstruct
+public partial class WebPubSubKeys : ProvisionableConstruct
 {
     /// <summary>
     /// The primary access key.

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// LedgerDigestUpload.
 /// </summary>
-public partial class LedgerDigestUpload : Resource
+public partial class LedgerDigestUpload : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

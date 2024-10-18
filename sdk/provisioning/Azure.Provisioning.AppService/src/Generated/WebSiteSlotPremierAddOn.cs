@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSlotPremierAddOn.
 /// </summary>
-public partial class WebSiteSlotPremierAddOn : Resource
+public partial class WebSiteSlotPremierAddOn : ProvisionableResource
 {
     /// <summary>
     /// Add-on name.

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// SubscriptionPolicySetDefinition.
 /// </summary>
-public partial class SubscriptionPolicySetDefinition : Resource
+public partial class SubscriptionPolicySetDefinition : ProvisionableResource
 {
     /// <summary>
     /// The name of the policy set definition to create.

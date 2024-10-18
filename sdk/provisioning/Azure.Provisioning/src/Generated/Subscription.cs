@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Subscription.
 /// </summary>
-public partial class Subscription : Resource
+public partial class Subscription : ProvisionableResource
 {
     /// <summary>
     /// The authorization source of the request. Valid values are one or more

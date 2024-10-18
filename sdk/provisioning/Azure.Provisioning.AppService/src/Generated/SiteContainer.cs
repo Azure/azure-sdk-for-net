@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteContainer.
 /// </summary>
-public partial class SiteContainer : Resource
+public partial class SiteContainer : ProvisionableResource
 {
     /// <summary>
     /// Site Container Name.

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// PartnerRegistration.
 /// </summary>
-public partial class PartnerRegistration : Resource
+public partial class PartnerRegistration : ProvisionableResource
 {
     /// <summary>
     /// Name of the partner registration.

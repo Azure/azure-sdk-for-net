@@ -15,7 +15,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlFlexibleServerActiveDirectoryAdministrator.
 /// </summary>
-public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Resource
+public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : ProvisionableResource
 {
     /// <summary>
     /// Gets or sets the Name.

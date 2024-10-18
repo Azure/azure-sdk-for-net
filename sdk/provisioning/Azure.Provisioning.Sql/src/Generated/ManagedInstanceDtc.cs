@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceDtc.
 /// </summary>
-public partial class ManagedInstanceDtc : Resource
+public partial class ManagedInstanceDtc : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

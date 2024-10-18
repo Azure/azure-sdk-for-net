@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Communication;
 /// <summary>
 /// SenderUsername.
 /// </summary>
-public partial class SenderUsername : Resource
+public partial class SenderUsername : ProvisionableResource
 {
     /// <summary>
     /// The valid sender Username.

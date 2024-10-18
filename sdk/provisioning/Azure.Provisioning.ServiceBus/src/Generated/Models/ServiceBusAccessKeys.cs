@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// Namespace/ServiceBus Connection String.
 /// </summary>
-public partial class ServiceBusAccessKeys : ProvisioningConstruct
+public partial class ServiceBusAccessKeys : ProvisionableConstruct
 {
     /// <summary>
     /// Primary connection string of the created namespace authorization rule.

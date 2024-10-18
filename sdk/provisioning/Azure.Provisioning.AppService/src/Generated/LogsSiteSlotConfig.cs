@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// LogsSiteSlotConfig.
 /// </summary>
-public partial class LogsSiteSlotConfig : Resource
+public partial class LogsSiteSlotConfig : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

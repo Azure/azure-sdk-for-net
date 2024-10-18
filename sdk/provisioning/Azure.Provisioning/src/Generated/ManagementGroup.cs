@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ManagementGroup.
 /// </summary>
-public partial class ManagementGroup : Resource
+public partial class ManagementGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the management group. For example,

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// AgentPoolSnapshot.
 /// </summary>
-public partial class AgentPoolSnapshot : Resource
+public partial class AgentPoolSnapshot : ProvisionableResource
 {
     /// <summary>
     /// The name of the managed cluster resource.

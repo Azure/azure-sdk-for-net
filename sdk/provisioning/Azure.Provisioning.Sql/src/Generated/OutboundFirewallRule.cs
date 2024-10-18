@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// OutboundFirewallRule.
 /// </summary>
-public partial class OutboundFirewallRule : Resource
+public partial class OutboundFirewallRule : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

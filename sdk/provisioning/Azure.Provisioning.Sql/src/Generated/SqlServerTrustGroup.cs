@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerTrustGroup.
 /// </summary>
-public partial class SqlServerTrustGroup : Resource
+public partial class SqlServerTrustGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the server trust group.

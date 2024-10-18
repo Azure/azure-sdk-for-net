@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// MongoCluster.
 /// </summary>
-public partial class MongoCluster : Resource
+public partial class MongoCluster : ProvisionableResource
 {
     /// <summary>
     /// The name of the mongo cluster.

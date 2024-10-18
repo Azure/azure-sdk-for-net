@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppManagedEnvironmentDaprComponent.
 /// </summary>
-public partial class ContainerAppManagedEnvironmentDaprComponent : Resource
+public partial class ContainerAppManagedEnvironmentDaprComponent : ProvisionableResource
 {
     /// <summary>
     /// Name of the Dapr Component.

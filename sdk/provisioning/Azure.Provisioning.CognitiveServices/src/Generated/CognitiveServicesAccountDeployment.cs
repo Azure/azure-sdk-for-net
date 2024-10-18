@@ -17,7 +17,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// CognitiveServicesAccountDeployment.
 /// </summary>
-public partial class CognitiveServicesAccountDeployment : Resource
+public partial class CognitiveServicesAccountDeployment : ProvisionableResource
 {
     /// <summary>
     /// The name of the deployment associated with the Cognitive Services

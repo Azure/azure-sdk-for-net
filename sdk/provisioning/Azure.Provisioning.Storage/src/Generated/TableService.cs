@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// TableService.
 /// </summary>
-public partial class TableService : Resource
+public partial class TableService : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

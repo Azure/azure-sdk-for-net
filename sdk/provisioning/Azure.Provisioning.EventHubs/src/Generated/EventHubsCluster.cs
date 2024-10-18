@@ -20,7 +20,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubsCluster.
 /// </summary>
-public partial class EventHubsCluster : Resource
+public partial class EventHubsCluster : ProvisionableResource
 {
     /// <summary>
     /// The name of the Event Hubs Cluster.

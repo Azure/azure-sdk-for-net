@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// StorageTable.
 /// </summary>
-public partial class StorageTable : Resource
+public partial class StorageTable : ProvisionableResource
 {
     /// <summary>
     /// A table name must be unique within a storage account and must be

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusTopic.
 /// </summary>
-public partial class ServiceBusTopic : Resource
+public partial class ServiceBusTopic : ProvisionableResource
 {
     /// <summary>
     /// The topic name.

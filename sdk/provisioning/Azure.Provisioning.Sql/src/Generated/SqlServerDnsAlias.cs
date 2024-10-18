@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerDnsAlias.
 /// </summary>
-public partial class SqlServerDnsAlias : Resource
+public partial class SqlServerDnsAlias : ProvisionableResource
 {
     /// <summary>
     /// The name of the server dns alias.

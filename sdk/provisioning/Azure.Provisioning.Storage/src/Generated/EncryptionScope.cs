@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// EncryptionScope.
 /// </summary>
-public partial class EncryptionScope : Resource
+public partial class EncryptionScope : ProvisionableResource
 {
     /// <summary>
     /// The name of the encryption scope within the specified storage account.

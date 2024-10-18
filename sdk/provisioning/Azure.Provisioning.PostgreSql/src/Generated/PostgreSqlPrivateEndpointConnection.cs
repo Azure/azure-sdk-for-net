@@ -15,7 +15,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlPrivateEndpointConnection.
 /// </summary>
-public partial class PostgreSqlPrivateEndpointConnection : Resource
+public partial class PostgreSqlPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The System.String to use.

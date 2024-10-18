@@ -18,7 +18,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerApp.
 /// </summary>
-public partial class ContainerApp : Resource
+public partial class ContainerApp : ProvisionableResource
 {
     /// <summary>
     /// Name of the Container App.

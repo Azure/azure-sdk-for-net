@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// HostingEnvironmentPrivateEndpointConnection.
 /// </summary>
-public partial class HostingEnvironmentPrivateEndpointConnection : Resource
+public partial class HostingEnvironmentPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The System.String to use.

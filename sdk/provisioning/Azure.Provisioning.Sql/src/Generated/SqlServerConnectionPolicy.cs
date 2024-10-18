@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerConnectionPolicy.
 /// </summary>
-public partial class SqlServerConnectionPolicy : Resource
+public partial class SqlServerConnectionPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerDatabaseRestorePoint.
 /// </summary>
-public partial class SqlServerDatabaseRestorePoint : Resource
+public partial class SqlServerDatabaseRestorePoint : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

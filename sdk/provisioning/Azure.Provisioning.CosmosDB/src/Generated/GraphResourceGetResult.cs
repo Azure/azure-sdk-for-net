@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// GraphResourceGetResult.
 /// </summary>
-public partial class GraphResourceGetResult : Resource
+public partial class GraphResourceGetResult : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB graph resource name.

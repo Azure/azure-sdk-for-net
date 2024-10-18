@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// DatabaseAdvancedThreatProtection.
 /// </summary>
-public partial class DatabaseAdvancedThreatProtection : Resource
+public partial class DatabaseAdvancedThreatProtection : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

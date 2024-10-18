@@ -16,7 +16,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// WebPubSubHub.
 /// </summary>
-public partial class WebPubSubHub : Resource
+public partial class WebPubSubHub : ProvisionableResource
 {
     /// <summary>
     /// The hub name.

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// AppServiceSourceControl.
 /// </summary>
-public partial class AppServiceSourceControl : Resource
+public partial class AppServiceSourceControl : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBSqlRoleAssignment.
 /// </summary>
-public partial class CosmosDBSqlRoleAssignment : Resource
+public partial class CosmosDBSqlRoleAssignment : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

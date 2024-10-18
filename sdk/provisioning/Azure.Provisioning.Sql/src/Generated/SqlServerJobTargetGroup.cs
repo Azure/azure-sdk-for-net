@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerJobTargetGroup.
 /// </summary>
-public partial class SqlServerJobTargetGroup : Resource
+public partial class SqlServerJobTargetGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the target group.

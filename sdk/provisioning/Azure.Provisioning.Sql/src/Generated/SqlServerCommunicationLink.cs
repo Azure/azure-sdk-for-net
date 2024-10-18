@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerCommunicationLink.
 /// </summary>
-public partial class SqlServerCommunicationLink : Resource
+public partial class SqlServerCommunicationLink : ProvisionableResource
 {
     /// <summary>
     /// The name of the server communication link.

@@ -1,6 +1,6 @@
 namespace Azure.Provisioning.Kubernetes
 {
-    public partial class ConnectedCluster : Azure.Provisioning.Primitives.Resource
+    public partial class ConnectedCluster : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ConnectedCluster(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AgentPublicKeyCertificate { get { throw null; } set { } }

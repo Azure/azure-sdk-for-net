@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// DistributedAvailabilityGroup.
 /// </summary>
-public partial class DistributedAvailabilityGroup : Resource
+public partial class DistributedAvailabilityGroup : ProvisionableResource
 {
     /// <summary>
     /// The distributed availability group name.

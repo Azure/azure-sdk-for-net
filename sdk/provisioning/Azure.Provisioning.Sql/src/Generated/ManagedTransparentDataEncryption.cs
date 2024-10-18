@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedTransparentDataEncryption.
 /// </summary>
-public partial class ManagedTransparentDataEncryption : Resource
+public partial class ManagedTransparentDataEncryption : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

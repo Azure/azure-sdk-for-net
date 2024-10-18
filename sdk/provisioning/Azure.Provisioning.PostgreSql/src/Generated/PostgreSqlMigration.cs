@@ -16,7 +16,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlMigration.
 /// </summary>
-public partial class PostgreSqlMigration : Resource
+public partial class PostgreSqlMigration : ProvisionableResource
 {
     /// <summary>
     /// The name of the migration.

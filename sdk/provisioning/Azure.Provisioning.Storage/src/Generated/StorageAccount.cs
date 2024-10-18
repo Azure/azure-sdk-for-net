@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// StorageAccount.
 /// </summary>
-public partial class StorageAccount : Resource
+public partial class StorageAccount : ProvisionableResource
 {
     /// <summary>
     /// The name of the storage account within the specified resource group.

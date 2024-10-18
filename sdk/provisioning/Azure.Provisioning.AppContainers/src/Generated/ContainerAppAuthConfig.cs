@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppAuthConfig.
 /// </summary>
-public partial class ContainerAppAuthConfig : Resource
+public partial class ContainerAppAuthConfig : ProvisionableResource
 {
     /// <summary>
     /// Name of the Container App AuthConfig.

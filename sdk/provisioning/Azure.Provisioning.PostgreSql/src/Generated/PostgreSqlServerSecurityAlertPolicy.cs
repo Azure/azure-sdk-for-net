@@ -16,7 +16,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlServerSecurityAlertPolicy.
 /// </summary>
-public partial class PostgreSqlServerSecurityAlertPolicy : Resource
+public partial class PostgreSqlServerSecurityAlertPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

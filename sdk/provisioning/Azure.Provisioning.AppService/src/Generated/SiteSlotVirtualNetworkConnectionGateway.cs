@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotVirtualNetworkConnectionGateway.
 /// </summary>
-public partial class SiteSlotVirtualNetworkConnectionGateway : Resource
+public partial class SiteSlotVirtualNetworkConnectionGateway : ProvisionableResource
 {
     /// <summary>
     /// Name of the gateway. Currently, the only supported string is

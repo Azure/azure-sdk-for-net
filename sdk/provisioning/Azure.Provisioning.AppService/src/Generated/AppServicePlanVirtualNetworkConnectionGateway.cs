@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// AppServicePlanVirtualNetworkConnectionGateway.
 /// </summary>
-public partial class AppServicePlanVirtualNetworkConnectionGateway : Resource
+public partial class AppServicePlanVirtualNetworkConnectionGateway : ProvisionableResource
 {
     /// <summary>
     /// Name of the gateway. Only the &apos;primary&apos; gateway is supported.

@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Search;
 /// <summary>
 /// SearchService.
 /// </summary>
-public partial class SearchService : Resource
+public partial class SearchService : ProvisionableResource
 {
     /// <summary>
     /// The name of the Azure AI Search service to create or update. Search

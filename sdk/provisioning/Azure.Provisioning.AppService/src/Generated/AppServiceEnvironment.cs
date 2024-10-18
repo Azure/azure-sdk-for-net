@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// AppServiceEnvironment.
 /// </summary>
-public partial class AppServiceEnvironment : Resource
+public partial class AppServiceEnvironment : ProvisionableResource
 {
     /// <summary>
     /// Name of the App Service Environment.

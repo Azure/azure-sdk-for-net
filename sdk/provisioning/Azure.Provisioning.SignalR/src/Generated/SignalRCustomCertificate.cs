@@ -15,7 +15,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// SignalRCustomCertificate.
 /// </summary>
-public partial class SignalRCustomCertificate : Resource
+public partial class SignalRCustomCertificate : ProvisionableResource
 {
     /// <summary>
     /// Custom certificate name.

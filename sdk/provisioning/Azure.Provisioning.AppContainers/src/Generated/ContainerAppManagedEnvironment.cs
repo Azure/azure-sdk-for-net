@@ -20,7 +20,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppManagedEnvironment.
 /// </summary>
-public partial class ContainerAppManagedEnvironment : Resource
+public partial class ContainerAppManagedEnvironment : ProvisionableResource
 {
     /// <summary>
     /// Name of the Environment.

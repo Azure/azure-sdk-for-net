@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// RedisPatchSchedule.
 /// </summary>
-public partial class RedisPatchSchedule : Resource
+public partial class RedisPatchSchedule : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

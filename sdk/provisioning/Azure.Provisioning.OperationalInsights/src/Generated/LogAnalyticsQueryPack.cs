@@ -16,7 +16,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// LogAnalyticsQueryPack.
 /// </summary>
-public partial class LogAnalyticsQueryPack : Resource
+public partial class LogAnalyticsQueryPack : ProvisionableResource
 {
     /// <summary>
     /// The name of the Log Analytics QueryPack resource.

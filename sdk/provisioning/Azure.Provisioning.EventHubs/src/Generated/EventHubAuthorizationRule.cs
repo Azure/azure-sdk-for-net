@@ -18,7 +18,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubAuthorizationRule.
 /// </summary>
-public partial class EventHubAuthorizationRule : Resource
+public partial class EventHubAuthorizationRule : ProvisionableResource
 {
     /// <summary>
     /// The authorization rule name.

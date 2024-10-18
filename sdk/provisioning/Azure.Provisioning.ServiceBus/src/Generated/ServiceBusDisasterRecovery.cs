@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusDisasterRecovery.
 /// </summary>
-public partial class ServiceBusDisasterRecovery : Resource
+public partial class ServiceBusDisasterRecovery : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

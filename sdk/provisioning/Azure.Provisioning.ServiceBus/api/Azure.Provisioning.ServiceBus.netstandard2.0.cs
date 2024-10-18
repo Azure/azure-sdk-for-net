@@ -1,6 +1,6 @@
 namespace Azure.Provisioning.ServiceBus
 {
-    public partial class MessageCountDetails : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class MessageCountDetails : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MessageCountDetails() { }
         public Azure.Provisioning.BicepValue<long> ActiveMessageCount { get { throw null; } }
@@ -9,7 +9,7 @@ namespace Azure.Provisioning.ServiceBus
         public Azure.Provisioning.BicepValue<long> TransferDeadLetterMessageCount { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> TransferMessageCount { get { throw null; } }
     }
-    public partial class MigrationConfiguration : Azure.Provisioning.Primitives.Resource
+    public partial class MigrationConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public MigrationConfiguration(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -34,7 +34,7 @@ namespace Azure.Provisioning.ServiceBus
         [System.Runtime.Serialization.DataMemberAttribute(Name="$default")]
         Default = 0,
     }
-    public partial class ServiceBusAccessKeys : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ServiceBusAccessKeys : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceBusAccessKeys() { }
         public Azure.Provisioning.BicepValue<string> AliasPrimaryConnectionString { get { throw null; } }
@@ -74,14 +74,14 @@ namespace Azure.Provisioning.ServiceBus
         public static bool operator !=(Azure.Provisioning.ServiceBus.ServiceBusBuiltInRole left, Azure.Provisioning.ServiceBus.ServiceBusBuiltInRole right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceBusClientAffineProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ServiceBusClientAffineProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceBusClientAffineProperties() { }
         public Azure.Provisioning.BicepValue<string> ClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsDurable { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsShared { get { throw null; } set { } }
     }
-    public partial class ServiceBusCorrelationFilter : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ServiceBusCorrelationFilter : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceBusCorrelationFilter() { }
         public Azure.Provisioning.BicepDictionary<object> ApplicationProperties { get { throw null; } set { } }
@@ -95,7 +95,7 @@ namespace Azure.Provisioning.ServiceBus
         public Azure.Provisioning.BicepValue<string> SessionId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Subject { get { throw null; } set { } }
     }
-    public partial class ServiceBusDisasterRecovery : Azure.Provisioning.Primitives.Resource
+    public partial class ServiceBusDisasterRecovery : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ServiceBusDisasterRecovery(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AlternateName { get { throw null; } set { } }
@@ -130,7 +130,7 @@ namespace Azure.Provisioning.ServiceBus
         PrimaryNotReplicating = 1,
         Secondary = 2,
     }
-    public partial class ServiceBusEncryption : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ServiceBusEncryption : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceBusEncryption() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceBus.ServiceBusEncryptionKeySource> KeySource { get { throw null; } set { } }
@@ -142,7 +142,7 @@ namespace Azure.Provisioning.ServiceBus
         [System.Runtime.Serialization.DataMemberAttribute(Name="Microsoft.KeyVault")]
         MicrosoftKeyVault = 0,
     }
-    public partial class ServiceBusFilterAction : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ServiceBusFilterAction : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceBusFilterAction() { }
         public Azure.Provisioning.BicepValue<int> CompatibilityLevel { get { throw null; } set { } }
@@ -154,7 +154,7 @@ namespace Azure.Provisioning.ServiceBus
         SqlFilter = 0,
         CorrelationFilter = 1,
     }
-    public partial class ServiceBusKeyVaultProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ServiceBusKeyVaultProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceBusKeyVaultProperties() { }
         public Azure.Provisioning.BicepValue<string> KeyName { get { throw null; } set { } }
@@ -183,7 +183,7 @@ namespace Azure.Provisioning.ServiceBus
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.2")]
         Tls1_2 = 2,
     }
-    public partial class ServiceBusNamespace : Azure.Provisioning.Primitives.Resource
+    public partial class ServiceBusNamespace : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ServiceBusNamespace(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AlternateName { get { throw null; } set { } }
@@ -221,7 +221,7 @@ namespace Azure.Provisioning.ServiceBus
             public static readonly string V2024_01_01;
         }
     }
-    public partial class ServiceBusNamespaceAuthorizationRule : Azure.Provisioning.Primitives.Resource
+    public partial class ServiceBusNamespaceAuthorizationRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ServiceBusNamespaceAuthorizationRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -245,7 +245,7 @@ namespace Azure.Provisioning.ServiceBus
     {
         Allow = 0,
     }
-    public partial class ServiceBusNetworkRuleSet : Azure.Provisioning.Primitives.Resource
+    public partial class ServiceBusNetworkRuleSet : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ServiceBusNetworkRuleSet(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceBus.ServiceBusNetworkRuleSetDefaultAction> DefaultAction { get { throw null; } set { } }
@@ -271,19 +271,19 @@ namespace Azure.Provisioning.ServiceBus
         Allow = 0,
         Deny = 1,
     }
-    public partial class ServiceBusNetworkRuleSetIPRules : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ServiceBusNetworkRuleSetIPRules : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceBusNetworkRuleSetIPRules() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceBus.ServiceBusNetworkRuleIPAction> Action { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> IPMask { get { throw null; } set { } }
     }
-    public partial class ServiceBusNetworkRuleSetVirtualNetworkRules : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ServiceBusNetworkRuleSetVirtualNetworkRules : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceBusNetworkRuleSetVirtualNetworkRules() { }
         public Azure.Provisioning.BicepValue<bool> IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SubnetId { get { throw null; } set { } }
     }
-    public partial class ServiceBusPrivateEndpointConnection : Azure.Provisioning.Primitives.Resource
+    public partial class ServiceBusPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ServiceBusPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceBus.ServiceBusPrivateLinkServiceConnectionState> ConnectionState { get { throw null; } set { } }
@@ -301,7 +301,7 @@ namespace Azure.Provisioning.ServiceBus
             public static readonly string V2024_01_01;
         }
     }
-    public partial class ServiceBusPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ServiceBusPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceBusPrivateEndpointConnectionData() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceBus.ServiceBusPrivateLinkServiceConnectionState> ConnectionState { get { throw null; } set { } }
@@ -328,7 +328,7 @@ namespace Azure.Provisioning.ServiceBus
         Rejected = 2,
         Disconnected = 3,
     }
-    public partial class ServiceBusPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ServiceBusPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceBusPrivateLinkServiceConnectionState() { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
@@ -345,7 +345,7 @@ namespace Azure.Provisioning.ServiceBus
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class ServiceBusQueue : Azure.Provisioning.Primitives.Resource
+    public partial class ServiceBusQueue : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ServiceBusQueue(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> AccessedOn { get { throw null; } }
@@ -385,7 +385,7 @@ namespace Azure.Provisioning.ServiceBus
             public static readonly string V2024_01_01;
         }
     }
-    public partial class ServiceBusQueueAuthorizationRule : Azure.Provisioning.Primitives.Resource
+    public partial class ServiceBusQueueAuthorizationRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ServiceBusQueueAuthorizationRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -405,7 +405,7 @@ namespace Azure.Provisioning.ServiceBus
             public static readonly string V2024_01_01;
         }
     }
-    public partial class ServiceBusRule : Azure.Provisioning.Primitives.Resource
+    public partial class ServiceBusRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ServiceBusRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceBus.ServiceBusFilterAction> Action { get { throw null; } set { } }
@@ -425,7 +425,7 @@ namespace Azure.Provisioning.ServiceBus
             public static readonly string V2024_01_01;
         }
     }
-    public partial class ServiceBusSku : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ServiceBusSku : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceBusSku() { }
         public Azure.Provisioning.BicepValue<int> Capacity { get { throw null; } set { } }
@@ -444,14 +444,14 @@ namespace Azure.Provisioning.ServiceBus
         Standard = 1,
         Premium = 2,
     }
-    public partial class ServiceBusSqlFilter : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ServiceBusSqlFilter : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceBusSqlFilter() { }
         public Azure.Provisioning.BicepValue<int> CompatibilityLevel { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> RequiresPreprocessing { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SqlExpression { get { throw null; } set { } }
     }
-    public partial class ServiceBusSubscription : Azure.Provisioning.Primitives.Resource
+    public partial class ServiceBusSubscription : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ServiceBusSubscription(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> AccessedOn { get { throw null; } }
@@ -488,7 +488,7 @@ namespace Azure.Provisioning.ServiceBus
             public static readonly string V2024_01_01;
         }
     }
-    public partial class ServiceBusTopic : Azure.Provisioning.Primitives.Resource
+    public partial class ServiceBusTopic : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ServiceBusTopic(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> AccessedOn { get { throw null; } }
@@ -523,7 +523,7 @@ namespace Azure.Provisioning.ServiceBus
             public static readonly string V2024_01_01;
         }
     }
-    public partial class ServiceBusTopicAuthorizationRule : Azure.Provisioning.Primitives.Resource
+    public partial class ServiceBusTopicAuthorizationRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ServiceBusTopicAuthorizationRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }

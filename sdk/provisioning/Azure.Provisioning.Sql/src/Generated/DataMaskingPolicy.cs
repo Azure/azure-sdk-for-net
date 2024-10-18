@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// DataMaskingPolicy.
 /// </summary>
-public partial class DataMaskingPolicy : Resource
+public partial class DataMaskingPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

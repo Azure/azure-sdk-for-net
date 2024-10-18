@@ -17,7 +17,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// EventGridDomain.
 /// </summary>
-public partial class EventGridDomain : Resource
+public partial class EventGridDomain : ProvisionableResource
 {
     /// <summary>
     /// Name of the domain.

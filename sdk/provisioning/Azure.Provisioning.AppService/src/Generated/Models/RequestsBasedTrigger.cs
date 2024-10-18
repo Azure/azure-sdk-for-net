@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Trigger based on total requests.
 /// </summary>
-public partial class RequestsBasedTrigger : ProvisioningConstruct
+public partial class RequestsBasedTrigger : ProvisionableConstruct
 {
     /// <summary>
     /// Request Count.

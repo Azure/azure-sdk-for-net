@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// GremlinDatabaseThroughputSetting.
 /// </summary>
-public partial class GremlinDatabaseThroughputSetting : Resource
+public partial class GremlinDatabaseThroughputSetting : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

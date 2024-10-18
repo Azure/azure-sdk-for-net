@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// EncryptionProtector.
 /// </summary>
-public partial class EncryptionProtector : Resource
+public partial class EncryptionProtector : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

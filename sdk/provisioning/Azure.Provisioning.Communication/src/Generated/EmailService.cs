@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Communication;
 /// <summary>
 /// EmailService.
 /// </summary>
-public partial class EmailService : Resource
+public partial class EmailService : ProvisionableResource
 {
     /// <summary>
     /// The name of the EmailService resource.

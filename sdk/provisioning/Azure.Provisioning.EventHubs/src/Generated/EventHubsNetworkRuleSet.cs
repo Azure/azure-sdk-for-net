@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubsNetworkRuleSet.
 /// </summary>
-public partial class EventHubsNetworkRuleSet : Resource
+public partial class EventHubsNetworkRuleSet : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

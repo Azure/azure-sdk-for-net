@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// A remote private endpoint connection.
 /// </summary>
-public partial class RemotePrivateEndpointConnection : ProvisioningConstruct
+public partial class RemotePrivateEndpointConnection : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the provisioning state.

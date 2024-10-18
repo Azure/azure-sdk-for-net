@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ManagementGroupPolicyDefinition.
 /// </summary>
-public partial class ManagementGroupPolicyDefinition : Resource
+public partial class ManagementGroupPolicyDefinition : ProvisionableResource
 {
     /// <summary>
     /// The name of the policy definition to create.

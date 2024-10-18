@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSiteLinkedBackend.
 /// </summary>
-public partial class StaticSiteLinkedBackend : Resource
+public partial class StaticSiteLinkedBackend : ProvisionableResource
 {
     /// <summary>
     /// Name of the backend to link to the static site.

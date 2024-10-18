@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSiteBuildUserProvidedFunctionApp.
 /// </summary>
-public partial class StaticSiteBuildUserProvidedFunctionApp : Resource
+public partial class StaticSiteBuildUserProvidedFunctionApp : ProvisionableResource
 {
     /// <summary>
     /// Gets or sets the Name.

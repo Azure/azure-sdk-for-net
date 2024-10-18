@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// EventGridNamespace.
 /// </summary>
-public partial class EventGridNamespace : Resource
+public partial class EventGridNamespace : ProvisionableResource
 {
     /// <summary>
     /// Name of the namespace.

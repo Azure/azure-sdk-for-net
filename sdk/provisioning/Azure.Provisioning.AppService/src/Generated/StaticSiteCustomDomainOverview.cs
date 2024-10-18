@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSiteCustomDomainOverview.
 /// </summary>
-public partial class StaticSiteCustomDomainOverview : Resource
+public partial class StaticSiteCustomDomainOverview : ProvisionableResource
 {
     /// <summary>
     /// The custom domain to create.

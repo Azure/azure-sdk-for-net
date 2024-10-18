@@ -17,7 +17,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsSavedSearch.
 /// </summary>
-public partial class OperationalInsightsSavedSearch : Resource
+public partial class OperationalInsightsSavedSearch : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

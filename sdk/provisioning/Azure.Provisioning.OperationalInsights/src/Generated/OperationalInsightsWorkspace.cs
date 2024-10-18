@@ -19,7 +19,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsWorkspace.
 /// </summary>
-public partial class OperationalInsightsWorkspace : Resource
+public partial class OperationalInsightsWorkspace : ProvisionableResource
 {
     /// <summary>
     /// The name of the workspace.

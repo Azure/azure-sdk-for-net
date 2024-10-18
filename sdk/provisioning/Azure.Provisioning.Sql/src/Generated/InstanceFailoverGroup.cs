@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// InstanceFailoverGroup.
 /// </summary>
-public partial class InstanceFailoverGroup : Resource
+public partial class InstanceFailoverGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the failover group.

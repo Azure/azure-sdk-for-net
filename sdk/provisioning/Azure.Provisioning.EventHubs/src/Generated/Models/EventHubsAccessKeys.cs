@@ -13,7 +13,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// Namespace/EventHub Connection String.
 /// </summary>
-public partial class EventHubsAccessKeys : ProvisioningConstruct
+public partial class EventHubsAccessKeys : ProvisionableConstruct
 {
     /// <summary>
     /// Primary connection string of the created namespace AuthorizationRule.

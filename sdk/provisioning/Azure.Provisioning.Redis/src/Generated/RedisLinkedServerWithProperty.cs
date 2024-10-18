@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// RedisLinkedServerWithProperty.
 /// </summary>
-public partial class RedisLinkedServerWithProperty : Resource
+public partial class RedisLinkedServerWithProperty : ProvisionableResource
 {
     /// <summary>
     /// The name of the linked server that is being added to the Redis cache.

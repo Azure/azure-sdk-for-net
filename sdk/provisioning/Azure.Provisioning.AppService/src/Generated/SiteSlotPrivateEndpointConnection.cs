@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotPrivateEndpointConnection.
 /// </summary>
-public partial class SiteSlotPrivateEndpointConnection : Resource
+public partial class SiteSlotPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The System.String to use.

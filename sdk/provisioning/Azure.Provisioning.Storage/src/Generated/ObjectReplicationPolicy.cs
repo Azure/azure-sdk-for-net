@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// ObjectReplicationPolicy.
 /// </summary>
-public partial class ObjectReplicationPolicy : Resource
+public partial class ObjectReplicationPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

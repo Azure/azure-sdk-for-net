@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHub.
 /// </summary>
-public partial class EventHub : Resource
+public partial class EventHub : ProvisionableResource
 {
     /// <summary>
     /// The Event Hub name.

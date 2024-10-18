@@ -15,7 +15,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBPrivateEndpointConnection.
 /// </summary>
-public partial class CosmosDBPrivateEndpointConnection : Resource
+public partial class CosmosDBPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The name of the private endpoint connection.

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// AppServiceDomain.
 /// </summary>
-public partial class AppServiceDomain : Resource
+public partial class AppServiceDomain : ProvisionableResource
 {
     /// <summary>
     /// Name of the domain.

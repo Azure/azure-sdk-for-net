@@ -197,7 +197,7 @@ public class CloudMachineInfrastructure
         };
     }
 
-    public void AddResource(NamedProvisioningConstruct resource)
+    public void AddResource(NamedProvisionableConstruct resource)
     {
         _resources.Add(resource);
     }

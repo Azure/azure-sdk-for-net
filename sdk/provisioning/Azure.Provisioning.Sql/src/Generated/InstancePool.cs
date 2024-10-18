@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// InstancePool.
 /// </summary>
-public partial class InstancePool : Resource
+public partial class InstancePool : ProvisionableResource
 {
     /// <summary>
     /// The name of the instance pool to be created or updated.

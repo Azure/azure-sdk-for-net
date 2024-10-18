@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// PublishingUser.
 /// </summary>
-public partial class PublishingUser : Resource
+public partial class PublishingUser : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

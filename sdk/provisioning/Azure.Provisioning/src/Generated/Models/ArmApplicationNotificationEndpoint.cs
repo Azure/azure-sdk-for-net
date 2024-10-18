@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Managed application notification endpoint.
 /// </summary>
-public partial class ArmApplicationNotificationEndpoint : ProvisioningConstruct
+public partial class ArmApplicationNotificationEndpoint : ProvisionableConstruct
 {
     /// <summary>
     /// The managed application notification endpoint uri.

@@ -20,7 +20,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// SignalRService.
 /// </summary>
-public partial class SignalRService : Resource
+public partial class SignalRService : ProvisionableResource
 {
     /// <summary>
     /// The name of the resource.

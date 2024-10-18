@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CassandraViewGetResult.
 /// </summary>
-public partial class CassandraViewGetResult : Resource
+public partial class CassandraViewGetResult : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB view name.

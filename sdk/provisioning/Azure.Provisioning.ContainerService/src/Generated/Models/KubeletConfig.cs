@@ -14,7 +14,7 @@ namespace Azure.Provisioning.ContainerService;
 /// configuration](https://docs.microsoft.com/azure/aks/custom-node-configuration)
 /// for more details.
 /// </summary>
-public partial class KubeletConfig : ProvisioningConstruct
+public partial class KubeletConfig : ProvisionableConstruct
 {
     /// <summary>
     /// The default is &apos;none&apos;. See [Kubernetes CPU management

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSlotHybridConnection.
 /// </summary>
-public partial class WebSiteSlotHybridConnection : Resource
+public partial class WebSiteSlotHybridConnection : ProvisionableResource
 {
     /// <summary>
     /// Name of the hybrid connection configuration.

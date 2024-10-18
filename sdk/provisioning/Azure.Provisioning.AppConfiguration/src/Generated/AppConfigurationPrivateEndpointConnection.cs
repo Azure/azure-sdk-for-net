@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppConfiguration;
 /// <summary>
 /// AppConfigurationPrivateEndpointConnection.
 /// </summary>
-public partial class AppConfigurationPrivateEndpointConnection : Resource
+public partial class AppConfigurationPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// Private endpoint connection name.

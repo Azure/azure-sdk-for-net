@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceAzureADOnlyAuthentication.
 /// </summary>
-public partial class ManagedInstanceAzureADOnlyAuthentication : Resource
+public partial class ManagedInstanceAzureADOnlyAuthentication : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

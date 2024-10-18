@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotHybridConnectionNamespaceRelay.
 /// </summary>
-public partial class SiteSlotHybridConnectionNamespaceRelay : Resource
+public partial class SiteSlotHybridConnectionNamespaceRelay : ProvisionableResource
 {
     /// <summary>
     /// The namespace for this hybrid connection.

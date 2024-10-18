@@ -16,7 +16,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// SignalRPrivateEndpointConnection.
 /// </summary>
-public partial class SignalRPrivateEndpointConnection : Resource
+public partial class SignalRPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The name of the private endpoint connection.

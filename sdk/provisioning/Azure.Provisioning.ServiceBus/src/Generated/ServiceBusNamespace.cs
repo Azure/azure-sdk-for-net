@@ -20,7 +20,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusNamespace.
 /// </summary>
-public partial class ServiceBusNamespace : Resource
+public partial class ServiceBusNamespace : ProvisionableResource
 {
     /// <summary>
     /// The namespace name.

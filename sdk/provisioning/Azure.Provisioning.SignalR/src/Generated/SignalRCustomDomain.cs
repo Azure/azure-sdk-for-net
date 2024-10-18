@@ -15,7 +15,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// SignalRCustomDomain.
 /// </summary>
-public partial class SignalRCustomDomain : Resource
+public partial class SignalRCustomDomain : ProvisionableResource
 {
     /// <summary>
     /// Custom domain name.

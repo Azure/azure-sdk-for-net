@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// MongoDBCollectionThroughputSetting.
 /// </summary>
-public partial class MongoDBCollectionThroughputSetting : Resource
+public partial class MongoDBCollectionThroughputSetting : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

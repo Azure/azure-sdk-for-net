@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusSubscription.
 /// </summary>
-public partial class ServiceBusSubscription : Resource
+public partial class ServiceBusSubscription : ProvisionableResource
 {
     /// <summary>
     /// The subscription name.

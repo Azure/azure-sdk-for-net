@@ -17,7 +17,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlFirewallRule.
 /// </summary>
-public partial class PostgreSqlFirewallRule : Resource
+public partial class PostgreSqlFirewallRule : ProvisionableResource
 {
     /// <summary>
     /// The name of the server firewall rule.

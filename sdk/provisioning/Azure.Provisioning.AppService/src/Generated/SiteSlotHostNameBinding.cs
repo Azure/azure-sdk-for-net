@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotHostNameBinding.
 /// </summary>
-public partial class SiteSlotHostNameBinding : Resource
+public partial class SiteSlotHostNameBinding : ProvisionableResource
 {
     /// <summary>
     /// Hostname in the hostname binding.

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusQueue.
 /// </summary>
-public partial class ServiceBusQueue : Resource
+public partial class ServiceBusQueue : ProvisionableResource
 {
     /// <summary>
     /// The queue name.

@@ -13,7 +13,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// The access keys for the cognitive services account.
 /// </summary>
-public partial class ServiceAccountApiKeys : ProvisioningConstruct
+public partial class ServiceAccountApiKeys : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the value of key 1.

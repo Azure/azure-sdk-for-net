@@ -16,7 +16,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlVirtualNetworkRule.
 /// </summary>
-public partial class PostgreSqlVirtualNetworkRule : Resource
+public partial class PostgreSqlVirtualNetworkRule : ProvisionableResource
 {
     /// <summary>
     /// The name of the virtual network rule.

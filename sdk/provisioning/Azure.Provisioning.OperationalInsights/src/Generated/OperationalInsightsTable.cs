@@ -16,7 +16,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsTable.
 /// </summary>
-public partial class OperationalInsightsTable : Resource
+public partial class OperationalInsightsTable : ProvisionableResource
 {
     /// <summary>
     /// The name of the table.

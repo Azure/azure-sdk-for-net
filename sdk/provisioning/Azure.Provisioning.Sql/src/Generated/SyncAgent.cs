@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SyncAgent.
 /// </summary>
-public partial class SyncAgent : Resource
+public partial class SyncAgent : ProvisionableResource
 {
     /// <summary>
     /// The name of the sync agent.

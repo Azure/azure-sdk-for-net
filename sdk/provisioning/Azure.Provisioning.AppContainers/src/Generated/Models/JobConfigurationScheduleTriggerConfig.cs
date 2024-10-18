@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppContainers;
 /// cronjobs. Properties completions and parallelism would be set to 1 by
 /// default.
 /// </summary>
-public partial class JobConfigurationScheduleTriggerConfig : ProvisioningConstruct
+public partial class JobConfigurationScheduleTriggerConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Minimum number of successful replica completions before overall job

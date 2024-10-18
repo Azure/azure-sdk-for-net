@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// RedisCacheAccessPolicyAssignment.
 /// </summary>
-public partial class RedisCacheAccessPolicyAssignment : Resource
+public partial class RedisCacheAccessPolicyAssignment : ProvisionableResource
 {
     /// <summary>
     /// The name of the access policy assignment.

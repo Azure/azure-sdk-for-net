@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ApplicationInsights;
 /// <summary>
 /// ApplicationInsightsWorkbookTemplate.
 /// </summary>
-public partial class ApplicationInsightsWorkbookTemplate : Resource
+public partial class ApplicationInsightsWorkbookTemplate : ProvisionableResource
 {
     /// <summary>
     /// The name of the Application Insights component resource.

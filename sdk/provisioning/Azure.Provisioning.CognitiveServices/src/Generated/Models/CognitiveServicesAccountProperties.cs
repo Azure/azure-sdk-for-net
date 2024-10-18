@@ -15,7 +15,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// Properties of Cognitive Services account.
 /// </summary>
-public partial class CognitiveServicesAccountProperties : ProvisioningConstruct
+public partial class CognitiveServicesAccountProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the status of the cognitive services account at the time the

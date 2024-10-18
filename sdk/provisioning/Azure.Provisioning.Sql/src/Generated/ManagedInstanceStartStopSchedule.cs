@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceStartStopSchedule.
 /// </summary>
-public partial class ManagedInstanceStartStopSchedule : Resource
+public partial class ManagedInstanceStartStopSchedule : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

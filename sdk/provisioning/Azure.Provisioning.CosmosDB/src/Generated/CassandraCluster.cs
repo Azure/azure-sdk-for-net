@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CassandraCluster.
 /// </summary>
-public partial class CassandraCluster : Resource
+public partial class CassandraCluster : ProvisionableResource
 {
     /// <summary>
     /// Managed Cassandra cluster name.

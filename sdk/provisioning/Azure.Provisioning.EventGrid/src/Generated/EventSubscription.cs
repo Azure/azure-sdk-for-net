@@ -17,7 +17,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// EventSubscription.
 /// </summary>
-public partial class EventSubscription : Resource
+public partial class EventSubscription : ProvisionableResource
 {
     /// <summary>
     /// Name of the event subscription to be created. Event subscription names

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// ImmutabilityPolicy.
 /// </summary>
-public partial class ImmutabilityPolicy : Resource
+public partial class ImmutabilityPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppConfiguration;
 /// <summary>
 /// AppConfigurationKeyValue.
 /// </summary>
-public partial class AppConfigurationKeyValue : Resource
+public partial class AppConfigurationKeyValue : ProvisionableResource
 {
     /// <summary>
     /// Identifier of key and label combination. Key and label are joined by $

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Roles;
 /// <summary>
 /// UserAssignedIdentity.
 /// </summary>
-public partial class UserAssignedIdentity : Resource
+public partial class UserAssignedIdentity : ProvisionableResource
 {
     /// <summary>
     /// The name of the identity resource.

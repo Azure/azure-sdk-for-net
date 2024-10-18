@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// TemplateSpecVersion.
 /// </summary>
-public partial class TemplateSpecVersion : Resource
+public partial class TemplateSpecVersion : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

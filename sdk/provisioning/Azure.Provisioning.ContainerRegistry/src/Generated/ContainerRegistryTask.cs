@@ -17,7 +17,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ContainerRegistryTask.
 /// </summary>
-public partial class ContainerRegistryTask : Resource
+public partial class ContainerRegistryTask : ProvisionableResource
 {
     /// <summary>
     /// The name of the container registry task.

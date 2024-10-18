@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SlotConfigNames.
 /// </summary>
-public partial class SlotConfigNames : Resource
+public partial class SlotConfigNames : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

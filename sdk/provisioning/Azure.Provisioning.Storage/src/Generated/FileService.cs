@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// FileService.
 /// </summary>
-public partial class FileService : Resource
+public partial class FileService : ProvisionableResource
 {
     private readonly BicepValue<string> _name;
 

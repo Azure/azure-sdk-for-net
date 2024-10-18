@@ -16,7 +16,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsLinkedStorageAccounts.
 /// </summary>
-public partial class OperationalInsightsLinkedStorageAccounts : Resource
+public partial class OperationalInsightsLinkedStorageAccounts : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

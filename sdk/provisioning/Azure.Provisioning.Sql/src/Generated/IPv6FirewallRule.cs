@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// IPv6FirewallRule.
 /// </summary>
-public partial class IPv6FirewallRule : Resource
+public partial class IPv6FirewallRule : ProvisionableResource
 {
     /// <summary>
     /// The name of the firewall rule.

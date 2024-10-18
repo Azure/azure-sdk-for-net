@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Scale and concurrency settings for the function app.
 /// </summary>
-public partial class FunctionAppScaleAndConcurrency : ProvisioningConstruct
+public partial class FunctionAppScaleAndConcurrency : ProvisionableConstruct
 {
     /// <summary>
     /// &apos;Always Ready&apos; configuration for the function app.

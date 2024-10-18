@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSite.
 /// </summary>
-public partial class WebSite : Resource
+public partial class WebSite : ProvisionableResource
 {
     /// <summary>
     /// Unique name of the app to create or update. To create or update a

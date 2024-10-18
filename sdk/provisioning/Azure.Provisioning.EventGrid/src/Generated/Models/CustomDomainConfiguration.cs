@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid;
 /// A custom domain configuration that allows users to publish to their own
 /// domain name.
 /// </summary>
-public partial class CustomDomainConfiguration : ProvisioningConstruct
+public partial class CustomDomainConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Fully Qualified Domain Name (FQDN) for the custom domain.

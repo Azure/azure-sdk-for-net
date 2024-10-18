@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ArmApplication.
 /// </summary>
-public partial class ArmApplication : Resource
+public partial class ArmApplication : ProvisionableResource
 {
     /// <summary>
     /// The name of the managed application.

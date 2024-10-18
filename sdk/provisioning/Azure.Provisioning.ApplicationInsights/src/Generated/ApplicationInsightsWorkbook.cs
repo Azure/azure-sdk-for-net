@@ -17,7 +17,7 @@ namespace Azure.Provisioning.ApplicationInsights;
 /// <summary>
 /// ApplicationInsightsWorkbook.
 /// </summary>
-public partial class ApplicationInsightsWorkbook : Resource
+public partial class ApplicationInsightsWorkbook : ProvisionableResource
 {
     /// <summary>
     /// The name of the workbook resource. The value must be an UUID.

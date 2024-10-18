@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// BlobContainer.
 /// </summary>
-public partial class BlobContainer : Resource
+public partial class BlobContainer : ProvisionableResource
 {
     /// <summary>
     /// The name of the blob container within the specified storage account.

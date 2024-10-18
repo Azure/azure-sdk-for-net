@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSlotPrivateAccess.
 /// </summary>
-public partial class WebSiteSlotPrivateAccess : Resource
+public partial class WebSiteSlotPrivateAccess : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

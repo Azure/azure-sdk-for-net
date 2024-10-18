@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Communication;
 /// <summary>
 /// CommunicationDomain.
 /// </summary>
-public partial class CommunicationDomain : Resource
+public partial class CommunicationDomain : ProvisionableResource
 {
     /// <summary>
     /// The name of the Domains resource.

@@ -21,7 +21,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// KeyVaultService.
 /// </summary>
-public partial class KeyVaultService : Resource
+public partial class KeyVaultService : ProvisionableResource
 {
     /// <summary>
     /// Name of the vault.

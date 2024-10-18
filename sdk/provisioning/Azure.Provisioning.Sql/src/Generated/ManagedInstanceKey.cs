@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceKey.
 /// </summary>
-public partial class ManagedInstanceKey : Resource
+public partial class ManagedInstanceKey : ProvisionableResource
 {
     /// <summary>
     /// The name of the managed instance key to be operated on (updated or

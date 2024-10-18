@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// AuthorizationRoleDefinition.
 /// </summary>
-public partial class AuthorizationRoleDefinition : Resource
+public partial class AuthorizationRoleDefinition : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

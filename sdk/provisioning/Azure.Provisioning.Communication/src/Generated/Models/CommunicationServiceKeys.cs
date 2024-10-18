@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Communication;
 /// <summary>
 /// A class representing the access keys of a CommunicationService.
 /// </summary>
-public partial class CommunicationServiceKeys : ProvisioningConstruct
+public partial class CommunicationServiceKeys : ProvisionableConstruct
 {
     /// <summary>
     /// The primary access key.

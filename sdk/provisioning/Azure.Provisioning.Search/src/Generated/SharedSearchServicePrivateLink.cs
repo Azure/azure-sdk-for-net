@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Search;
 /// <summary>
 /// SharedSearchServicePrivateLink.
 /// </summary>
-public partial class SharedSearchServicePrivateLink : Resource
+public partial class SharedSearchServicePrivateLink : ProvisionableResource
 {
     /// <summary>
     /// The name of the shared private link resource managed by the Azure AI

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ContainerRegistryAgentPool.
 /// </summary>
-public partial class ContainerRegistryAgentPool : Resource
+public partial class ContainerRegistryAgentPool : ProvisionableResource
 {
     /// <summary>
     /// The name of the agent pool.

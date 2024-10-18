@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// RedisFirewallRule.
 /// </summary>
-public partial class RedisFirewallRule : Resource
+public partial class RedisFirewallRule : ProvisionableResource
 {
     /// <summary>
     /// The name of the firewall rule.

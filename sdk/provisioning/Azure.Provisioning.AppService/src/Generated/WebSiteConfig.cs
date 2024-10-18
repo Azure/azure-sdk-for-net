@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteConfig.
 /// </summary>
-public partial class WebSiteConfig : Resource
+public partial class WebSiteConfig : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

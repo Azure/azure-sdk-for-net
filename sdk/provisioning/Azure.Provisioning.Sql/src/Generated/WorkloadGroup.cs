@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// WorkloadGroup.
 /// </summary>
-public partial class WorkloadGroup : Resource
+public partial class WorkloadGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the workload group.

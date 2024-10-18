@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// GeoBackupPolicy.
 /// </summary>
-public partial class GeoBackupPolicy : Resource
+public partial class GeoBackupPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

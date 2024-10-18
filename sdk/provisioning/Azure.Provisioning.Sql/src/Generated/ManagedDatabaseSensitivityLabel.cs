@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedDatabaseSensitivityLabel.
 /// </summary>
-public partial class ManagedDatabaseSensitivityLabel : Resource
+public partial class ManagedDatabaseSensitivityLabel : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

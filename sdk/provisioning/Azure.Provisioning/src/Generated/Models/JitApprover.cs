@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// JIT approver definition.
 /// </summary>
-public partial class JitApprover : ProvisioningConstruct
+public partial class JitApprover : ProvisionableConstruct
 {
     /// <summary>
     /// The approver service principal Id.

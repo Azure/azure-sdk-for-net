@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstancePrivateEndpointConnection.
 /// </summary>
-public partial class ManagedInstancePrivateEndpointConnection : Resource
+public partial class ManagedInstancePrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The System.String to use.

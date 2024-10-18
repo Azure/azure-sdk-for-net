@@ -15,7 +15,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// DataTransferJobGetResult.
 /// </summary>
-public partial class DataTransferJobGetResult : Resource
+public partial class DataTransferJobGetResult : ProvisionableResource
 {
     /// <summary>
     /// Name of the Data Transfer Job.

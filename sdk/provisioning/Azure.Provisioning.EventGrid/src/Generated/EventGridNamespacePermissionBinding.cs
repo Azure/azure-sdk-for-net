@@ -15,7 +15,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// EventGridNamespacePermissionBinding.
 /// </summary>
-public partial class EventGridNamespacePermissionBinding : Resource
+public partial class EventGridNamespacePermissionBinding : ProvisionableResource
 {
     /// <summary>
     /// The permission binding name.

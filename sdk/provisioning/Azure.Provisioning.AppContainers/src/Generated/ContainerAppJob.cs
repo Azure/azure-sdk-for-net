@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppJob.
 /// </summary>
-public partial class ContainerAppJob : Resource
+public partial class ContainerAppJob : ProvisionableResource
 {
     /// <summary>
     /// Job Name.

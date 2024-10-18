@@ -17,7 +17,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// ManagedHsm.
 /// </summary>
-public partial class ManagedHsm : Resource
+public partial class ManagedHsm : ProvisionableResource
 {
     /// <summary>
     /// Name of the managed HSM Pool.

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// LogicalDatabaseTransparentDataEncryption.
 /// </summary>
-public partial class LogicalDatabaseTransparentDataEncryption : Resource
+public partial class LogicalDatabaseTransparentDataEncryption : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.

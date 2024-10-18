@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// BackupShortTermRetentionPolicy.
 /// </summary>
-public partial class BackupShortTermRetentionPolicy : Resource
+public partial class BackupShortTermRetentionPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
