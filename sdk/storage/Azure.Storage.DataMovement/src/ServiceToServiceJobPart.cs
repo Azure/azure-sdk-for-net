@@ -177,8 +177,10 @@ namespace Azure.Storage.DataMovement
                 createPreference: createPreference);
         }
 
-        public override async Task ProcessPartToChunkAsync()
+        public override async Task ProcessPartToChunkAsync(
+            CancellationToken cancellationToken = default)
         {
+            _cancellationToken = CancellationTokenSource.CreateLinkedTokenSource(_cancellationToken, cancellationToken).Token;
             await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
 
             long? fileLength = default;
