@@ -10,6 +10,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface
     {
         TestRunDto GetTestRun();
         TestRunShardDto GetTestRunShard();
-        TestResults GetTestCaseResultData(TestResult testResultSource);
+        TestResults GetTestCaseResultData(TestResult? testResultSource);
     }
 }

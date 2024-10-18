@@ -30,14 +30,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         private readonly CloudRunMetadata _cloudRunMetadata;
 
         // Test Metadata
-        private int TotalTestCount { get; set; } = 0;
-        private int PassedTestCount { get; set; } = 0;
-        private int FailedTestCount { get; set; } = 0;
-        private int SkippedTestCount { get; set; } = 0;
-        private List<TestResults> TestResults { get; set; } = new List<TestResults>();
-        private ConcurrentDictionary<string, RawTestResult?> RawTestResultsMap { get; set; } = new();
-        private bool FatalTestExecution { get; set; } = false;
-        private TestRunShardDto? _testRunShard;
+        internal int TotalTestCount { get; set; } = 0;
+        internal int PassedTestCount { get; set; } = 0;
+        internal int FailedTestCount { get; set; } = 0;
+        internal int SkippedTestCount { get; set; } = 0;
+        internal List<TestResults> TestResults { get; set; } = new List<TestResults>();
+        internal ConcurrentDictionary<string, RawTestResult?> RawTestResultsMap { get; set; } = new();
+        internal bool FatalTestExecution { get; set; } = false;
+        internal TestRunShardDto? _testRunShard;
 
         public TestProcessor(CloudRunMetadata cloudRunMetadata, CIInfo cIInfo, ILogger? logger = null, IDataProcessor? dataProcessor = null, ICloudRunErrorParser? cloudRunErrorParser = null, IServiceClient? serviceClient = null, IConsoleWriter? consoleWriter = null)
         {
@@ -117,9 +117,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                     {
                         SkippedTestCount++;
                     }
-                }
-                if (testResult != null)
-                {
                     TestResults.Add(testResult);
                 }
             }
@@ -251,15 +248,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             testRunShard.Summary.EndTime = testRunEndedOn.ToString("yyyy-MM-ddTHH:mm:ssZ");
             testRunShard.Summary.TotalTime = durationInMs;
             testRunShard.Summary.UploadMetadata = new UploadMetadata() { NumTestResults = TotalTestCount, NumTotalAttachments = 0, SizeTotalAttachments = 0 };
-            //testRunShard.Summary = new TestRunResultsSummary
-            //{
-            //    NumTotalTests = TotalTestCount,
-            //    NumPassedTests = PassedTestCount,
-            //    NumFailedTests = FailedTestCount,
-            //    NumSkippedTests = SkippedTestCount,
-            //    NumFlakyTests = 0, // TODO: Implement flaky tests
-            //    Status = result
-            //};
             testRunShard.UploadCompleted = true;
             return testRunShard;
         }

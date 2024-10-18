@@ -133,17 +133,23 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             return null;
         }
 
-        private void HandleAPIFailure(int? statusCode, string operationName)
+        internal void HandleAPIFailure(int? statusCode, string operationName)
         {
-            if (statusCode == null)
-                return;
-            ApiErrorConstants.s_errorOperationPair.TryGetValue(operationName, out System.Collections.Generic.Dictionary<int, string>? errorObject);
-            if (errorObject == null)
-                return;
-            errorObject.TryGetValue((int)statusCode, out string? errorMessage);
-            if (errorMessage == null)
-                errorMessage = ReporterConstants.s_uNKNOWN_ERROR_MESSAGE;
-            _cloudRunErrorParser.TryPushMessageAndKey(errorMessage, statusCode.ToString());
+            try
+            {
+                if (statusCode == null)
+                    return;
+                ApiErrorConstants.s_errorOperationPair.TryGetValue(operationName, out System.Collections.Generic.Dictionary<int, string>? errorObject);
+                if (errorObject == null)
+                    return;
+                errorObject.TryGetValue((int)statusCode, out string? errorMessage);
+                errorMessage ??= ReporterConstants.s_uNKNOWN_ERROR_MESSAGE;
+                _cloudRunErrorParser.TryPushMessageAndKey(errorMessage, statusCode.ToString());
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message);
+            }
         }
     }
 }

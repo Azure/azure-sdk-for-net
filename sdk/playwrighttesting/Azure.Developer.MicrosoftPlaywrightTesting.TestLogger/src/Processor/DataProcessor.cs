@@ -78,7 +78,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             };
             return shard;
         }
-        public TestResults GetTestCaseResultData(TestResult testResultSource)
+        public TestResults GetTestCaseResultData(TestResult? testResultSource)
         {
             if (testResultSource == null)
                 return new TestResults();
@@ -139,9 +139,11 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             return testCaseResultData;
         }
 
-        public static RawTestResult GetRawResultObject(TestResult testResultSource)
+        public static RawTestResult GetRawResultObject(TestResult? testResultSource)
         {
-            List<MPTError> errors = new();//[testResultSource.ErrorMessage];
+            if (testResultSource == null)
+                return new RawTestResult();
+            List <MPTError> errors = new();//[testResultSource.ErrorMessage];
             if (testResultSource.ErrorMessage != null)
                 errors.Add(new MPTError() { message = testResultSource.ErrorMessage });
             var rawTestResult = new RawTestResult
