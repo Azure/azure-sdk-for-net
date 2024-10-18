@@ -15,25 +15,24 @@ namespace Azure.Provisioning;
 public class ProvisioningBuildOptions
 {
     /// <summary>
-    /// Gets or sets the collection of <see cref="PropertyResolver"/>s to apply
-    /// to all resources being composed.
-    /// </summary>
-    public IList<PropertyResolver> PropertyResolvers { get; set; } =
-    [
-        new DynamicResourceNamePropertyResolver(),
-        new LocationPropertyResolver(),
-    ];
-    // TODO: Do we want to make this less mutable like AddPipelinePolicy to
-    // maintain more control over how people are able to modify these?
-
-    /// <summary>
     /// Gets or sets the collection of <see cref="InfrastructureResolver"/>s to
     /// apply to any <see cref="Infrastructure"/> being composed.
     /// </summary>
-    public IList<InfrastructureResolver> InfrastructureResolvers { get; set; } =
+    /// <remarks>
+    /// By default this adds <see cref="DynamicResourceNamePropertyResolver"/>,
+    /// <see cref="LocationPropertyResolver"/>, and
+    /// <see cref="OrderingInfrastructureResolver"/>.  You can clear this list
+    /// and replace it with other resolvers.  You can also insert your own
+    /// resolvers before or after these resolvers.
+    /// </remarks>
+    public IList<InfrastructureResolver> InfrastructureResolvers { get; } =
     [
+        new DynamicResourceNamePropertyResolver(),
+        new LocationPropertyResolver(),
         new OrderingInfrastructureResolver(),
     ];
+    // TODO: Resource resolvers
+    // TODO: IConfig PropertyProvider
 
     /// <summary>
     /// Gets or sets a random generator.  It defaults to a new
@@ -46,6 +45,4 @@ public class ProvisioningBuildOptions
     public Random Random { get; set; } = new Random();
 
     // TODO: Add a DefaultScope to allow globally scoping all resources
-    // TODO: Resource resolvers
-    // TODO: IConfig PropertyProvider
 }

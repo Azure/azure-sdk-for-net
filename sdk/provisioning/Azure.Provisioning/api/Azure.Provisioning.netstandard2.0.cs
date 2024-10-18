@@ -97,7 +97,7 @@ namespace Azure.Provisioning
         public virtual Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningBuildOptions? options = null) { throw null; }
         protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
         protected internal System.Collections.Generic.IDictionary<string, System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement>> CompileModules(Azure.Provisioning.ProvisioningBuildOptions? options = null) { throw null; }
-        public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> GetResources() { throw null; }
+        public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> GetProvisionableResources() { throw null; }
         public static bool IsValidBicepIdentifier(string? bicepIdentifier) { throw null; }
         public static string NormalizeBicepIdentifier(string? bicepIdentifier) { throw null; }
         public virtual void Remove(Azure.Provisioning.Primitives.Provisionable resource) { }
@@ -108,8 +108,7 @@ namespace Azure.Provisioning
     public partial class ProvisioningBuildOptions
     {
         public ProvisioningBuildOptions() { }
-        public System.Collections.Generic.IList<Azure.Provisioning.Primitives.InfrastructureResolver> InfrastructureResolvers { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Provisioning.Primitives.PropertyResolver> PropertyResolvers { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Provisioning.Primitives.InfrastructureResolver> InfrastructureResolvers { get { throw null; } }
         public System.Random Random { get { throw null; } set { } }
     }
     public partial class ProvisioningOutput : Azure.Provisioning.ProvisioningVariable
@@ -597,7 +596,7 @@ namespace Azure.Provisioning.Expressions
     public partial class BoolLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression
     {
         public BoolLiteralExpression(bool value) : base (default(object)) { }
-        public bool Value { get { throw null; } }
+        public new bool Value { get { throw null; } }
     }
     public partial class CommentStatement : Azure.Provisioning.Expressions.BicepStatement
     {
@@ -647,12 +646,12 @@ namespace Azure.Provisioning.Expressions
     public partial class IntLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression
     {
         public IntLiteralExpression(int value) : base (default(object)) { }
-        public int Value { get { throw null; } }
+        public new int Value { get { throw null; } }
     }
     public abstract partial class LiteralExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        protected LiteralExpression(object? literalValue = null) { }
-        public object? LiteralValue { get { throw null; } }
+        protected LiteralExpression(object? value = null) { }
+        public object? Value { get { throw null; } }
     }
     public partial class MemberExpression : Azure.Provisioning.Expressions.BicepExpression
     {
@@ -729,7 +728,7 @@ namespace Azure.Provisioning.Expressions
     public partial class StringLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression
     {
         public StringLiteralExpression(string value) : base (default(object)) { }
-        public string Value { get { throw null; } }
+        public new string Value { get { throw null; } }
     }
     public partial class TargetScopeStatement : Azure.Provisioning.Expressions.BicepStatement
     {
@@ -780,7 +779,7 @@ namespace Azure.Provisioning.Primitives
     public partial class ClientCreatorOutputResolver : Azure.Provisioning.Primitives.InfrastructureResolver
     {
         public ClientCreatorOutputResolver() { }
-        public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> ResolveResources(Azure.Provisioning.ProvisioningBuildOptions options, System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> resources) { throw null; }
+        public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> ResolveResources(System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> resources, Azure.Provisioning.ProvisioningBuildOptions options) { throw null; }
     }
     public partial class DynamicResourceNamePropertyResolver : Azure.Provisioning.Primitives.ResourceNamePropertyResolver
     {
@@ -799,15 +798,16 @@ namespace Azure.Provisioning.Primitives
     public abstract partial class InfrastructureResolver
     {
         protected InfrastructureResolver() { }
-        public System.Collections.Generic.IEnumerable<Azure.Provisioning.Infrastructure> GetNestedInfrastructure(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Infrastructure infrastructure) { throw null; }
-        public virtual void ResolveInfrastructure(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Infrastructure infrastructure) { }
-        public virtual System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> ResolveResources(Azure.Provisioning.ProvisioningBuildOptions options, System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> resources) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Provisioning.Infrastructure> GetNestedInfrastructure(Azure.Provisioning.Infrastructure infrastructure, Azure.Provisioning.ProvisioningBuildOptions options) { throw null; }
+        public virtual void ResolveInfrastructure(Azure.Provisioning.Infrastructure infrastructure, Azure.Provisioning.ProvisioningBuildOptions options) { }
+        public virtual void ResolveProperties(Azure.Provisioning.Primitives.ProvisionableConstruct construct, Azure.Provisioning.ProvisioningBuildOptions options) { }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> ResolveResources(System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> resources, Azure.Provisioning.ProvisioningBuildOptions options) { throw null; }
     }
-    public partial class LocationPropertyResolver : Azure.Provisioning.Primitives.PropertyResolver
+    public partial class LocationPropertyResolver : Azure.Provisioning.Primitives.InfrastructureResolver
     {
         public LocationPropertyResolver() { }
         protected virtual Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> GetDefaultLocation(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Primitives.ProvisionableConstruct construct) { throw null; }
-        public override void ResolveProperties(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Primitives.ProvisionableConstruct construct) { }
+        public override void ResolveProperties(Azure.Provisioning.Primitives.ProvisionableConstruct construct, Azure.Provisioning.ProvisioningBuildOptions options) { }
     }
     public partial class ModuleImport : Azure.Provisioning.Primitives.NamedProvisionableConstruct
     {
@@ -827,18 +827,13 @@ namespace Azure.Provisioning.Primitives
     public partial class OrderingInfrastructureResolver : Azure.Provisioning.Primitives.InfrastructureResolver
     {
         public OrderingInfrastructureResolver() { }
-        public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> ResolveResources(Azure.Provisioning.ProvisioningBuildOptions options, System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> resources) { throw null; }
-    }
-    public abstract partial class PropertyResolver
-    {
-        protected PropertyResolver() { }
-        public abstract void ResolveProperties(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Primitives.ProvisionableConstruct construct);
+        public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> ResolveResources(System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> resources, Azure.Provisioning.ProvisioningBuildOptions options) { throw null; }
     }
     public abstract partial class Provisionable
     {
         internal Provisionable() { }
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile();
-        public virtual System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> GetResources() { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> GetProvisionableResources() { throw null; }
         protected internal virtual void Resolve(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
         protected internal virtual void Validate(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
     }
@@ -849,7 +844,7 @@ namespace Azure.Provisioning.Primitives
         public Azure.Provisioning.Infrastructure? ParentInfrastructure { get { throw null; } }
         protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> GetResources() { throw null; }
+        public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> GetProvisionableResources() { throw null; }
         protected internal void OverrideWithExpression(Azure.Provisioning.Expressions.BicepExpression reference) { }
         protected internal override void Resolve(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -882,11 +877,11 @@ namespace Azure.Provisioning.Primitives
         Period = 32,
         Parentheses = 64,
     }
-    public abstract partial class ResourceNamePropertyResolver : Azure.Provisioning.Primitives.PropertyResolver
+    public abstract partial class ResourceNamePropertyResolver : Azure.Provisioning.Primitives.InfrastructureResolver
     {
         protected ResourceNamePropertyResolver() { }
         public abstract Azure.Provisioning.BicepValue<string>? ResolveName(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Primitives.ProvisionableResource resource, Azure.Provisioning.Primitives.ResourceNameRequirements requirements);
-        public override void ResolveProperties(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Primitives.ProvisionableConstruct construct) { }
+        public override void ResolveProperties(Azure.Provisioning.Primitives.ProvisionableConstruct construct, Azure.Provisioning.ProvisioningBuildOptions options) { }
         protected static string SanitizeText(string text, Azure.Provisioning.Primitives.ResourceNameCharacters validCharacters) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
