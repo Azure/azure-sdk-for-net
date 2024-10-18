@@ -390,7 +390,7 @@ namespace Azure.Identity.Tests
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
-            var expectedMessage = $"connecting to 169.254.169.254:80: connecting to 169.254.169.254:80: dial tcp 169.254.169.254:80: connectex: A socket operation was attempted to an unreachable {error}.";
+            var expectedMessage = error;
             var response = CreateInvalidJsonResponse(403, expectedMessage);
             var mockTransport = new MockTransport(response);
             var options = new TokenCredentialOptions() { Transport = mockTransport, IsChainedCredential = true };
@@ -420,6 +420,31 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             Assert.That(ex.Message, Does.Contain(expectedMessage));
+        }
+
+        [NonParallelizable]
+        [Test]
+        [TestCase("""{"error":"invalid_request","error_description":"Identity not found"}""")]
+        [TestCase(null)]
+        public void VerifyImdsRequestFailureWithValidJsonIdentityNotFoundErrorThrowsCUE(string content)
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var response = CreateResponse(400, content);
+            var mockTransport = new MockTransport(req => response);
+            var options = new TokenCredentialOptions() { Transport = mockTransport, IsChainedCredential = true };
+            var pipeline = CredentialPipeline.GetInstance(options);
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", pipeline, options));
+            if (content != null)
+            {
+                var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+                Assert.That(ex.Message, Does.Contain(ImdsManagedIdentityProbeSource.IdentityUnavailableError));
+            }
+            else
+            {
+                var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            }
         }
 
         [NonParallelizable]
@@ -1126,6 +1151,16 @@ namespace Azure.Identity.Tests
         {
             var response = new MockResponse(status);
             response.SetContent(message);
+            return response;
+        }
+
+        private static MockResponse CreateResponse(int status, string message)
+        {
+            var response = new MockResponse(status);
+            if (message != null)
+            {
+                response.SetContent(message);
+            }
             return response;
         }
     }
