@@ -4,8 +4,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
 using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests
@@ -22,7 +20,13 @@ namespace Azure.Data.Tables.Tests
             {
                 Category = "cat",
                 Name = "name",
-                Priority = 1234
+                Priority = 1234,
+                Price = 99.99m,
+                CreatedDate = new DateTime(2023, 1, 1),
+                LastUpdated = new DateTimeOffset(new DateTime(2023, 1, 1), TimeSpan.Zero),
+                Identifier = new Guid("12345678-1234-1234-1234-1234567890ab"),
+                Counter = 100,
+                Rating = 4.5
             };
 
             sourceDictionary = new Dictionary<string, object> {
@@ -31,6 +35,12 @@ namespace Azure.Data.Tables.Tests
                 {"Priority", 1234},
                 {"PartitionKey", "cat"},
                 {"RowKey", "name"},
+                {"Price", "99.99"},
+                {"CreatedDate", "2023-01-01T00:00:00Z"},
+                {"LastUpdated", "2023-01-01T00:00:00Z"},
+                {"Identifier", "12345678-1234-1234-1234-1234567890ab"},
+                {"Counter", "100"},
+                {"Rating", 4.5},
             };
         }
 
@@ -39,11 +49,17 @@ namespace Azure.Data.Tables.Tests
         {
             var model = sourceDictionary.ToTableEntity<ExplicitInterfaceModel>();
 
+            Assert.AreEqual("cat", ((ITableEntity)model).PartitionKey);
+            Assert.AreEqual("name", ((ITableEntity)model).RowKey);
             Assert.AreEqual("cat", model.Category);
             Assert.AreEqual("name", model.Name);
             Assert.AreEqual(1234, model.Priority);
-            Assert.AreEqual("cat", ((ITableEntity)model).PartitionKey);
-            Assert.AreEqual("name", ((ITableEntity)model).RowKey);
+            Assert.AreEqual(99.99m, model.Price);
+            Assert.AreEqual(new DateTime(2023, 1, 1), model.CreatedDate);
+            Assert.AreEqual(new DateTimeOffset(new DateTime(2023, 1, 1), TimeSpan.Zero), model.LastUpdated);
+            Assert.AreEqual(new Guid("12345678-1234-1234-1234-1234567890ab"), model.Identifier);
+            Assert.AreEqual(100, model.Counter);
+            Assert.AreEqual(4.5, model.Rating);
         }
 
         [Test]
@@ -51,11 +67,17 @@ namespace Azure.Data.Tables.Tests
         {
             var model = sourceDictionary.ToTableEntity<TableEntity>();
 
+            Assert.AreEqual("cat", model.PartitionKey);
+            Assert.AreEqual("name", model.RowKey);
             Assert.AreEqual("cat", model["Category"]);
             Assert.AreEqual("name", model["Name"]);
             Assert.AreEqual(1234, model["Priority"]);
-            Assert.AreEqual("cat", model.PartitionKey);
-            Assert.AreEqual("name", model.RowKey);
+            Assert.AreEqual("99.99", model["Price"]);
+            Assert.AreEqual("2023-01-01T00:00:00Z", model["CreatedDate"]);
+            Assert.AreEqual("2023-01-01T00:00:00Z", model["LastUpdated"]);
+            Assert.AreEqual("12345678-1234-1234-1234-1234567890ab", model["Identifier"]);
+            Assert.AreEqual("100", model["Counter"]);
+            Assert.AreEqual(4.5, model["Rating"]);
         }
 
         [Test]
@@ -63,11 +85,17 @@ namespace Azure.Data.Tables.Tests
         {
             var model = sourceDictionary.ToTableEntity<CustomIDictionary>();
 
+            Assert.AreEqual("cat", model.PartitionKey);
+            Assert.AreEqual("name", model.RowKey);
             Assert.AreEqual("cat", model.Category);
             Assert.AreEqual("name", model.Name);
             Assert.AreEqual(1234, model.Priority);
-            Assert.AreEqual("cat", model.PartitionKey);
-            Assert.AreEqual("name", model.RowKey);
+            Assert.AreEqual(99.99m, model.Price);
+            Assert.AreEqual(new DateTime(2023, 1, 1), model.CreatedDate);
+            Assert.AreEqual(new DateTimeOffset(new DateTime(2023, 1, 1), TimeSpan.Zero), model.LastUpdated);
+            Assert.AreEqual(new Guid("12345678-1234-1234-1234-1234567890ab"), model.Identifier);
+            Assert.AreEqual(100, model.Counter);
+            Assert.AreEqual(4.5, model.Rating);
         }
 
         [Test]
@@ -77,11 +105,17 @@ namespace Azure.Data.Tables.Tests
 
             foreach (var model in models)
             {
+                Assert.AreEqual("cat", ((ITableEntity)model).PartitionKey);
+                Assert.AreEqual("name", ((ITableEntity)model).RowKey);
                 Assert.AreEqual("cat", model.Category);
                 Assert.AreEqual("name", model.Name);
                 Assert.AreEqual(1234, model.Priority);
-                Assert.AreEqual("cat", ((ITableEntity)model).PartitionKey);
-                Assert.AreEqual("name", ((ITableEntity)model).RowKey);
+                Assert.AreEqual(99.99m, model.Price);
+                Assert.AreEqual(new DateTime(2023, 1, 1), model.CreatedDate);
+                Assert.AreEqual(new DateTimeOffset(new DateTime(2023, 1, 1), TimeSpan.Zero), model.LastUpdated);
+                Assert.AreEqual(new Guid("12345678-1234-1234-1234-1234567890ab"), model.Identifier);
+                Assert.AreEqual(100, model.Counter);
+                Assert.AreEqual(4.5, model.Rating);
             }
         }
 
@@ -92,9 +126,14 @@ namespace Azure.Data.Tables.Tests
 
             new TablesTypeBinder().Serialize(sourceModel, dictionary);
 
-            Assert.AreEqual("cat", dictionary["Category"]);
             Assert.AreEqual("cat", dictionary["PartitionKey"]);
             Assert.AreEqual("name", dictionary["RowKey"]);
+            Assert.AreEqual("cat", dictionary["Category"]);
+            Assert.AreEqual("name", dictionary["Name"]);
+            Assert.AreEqual(1234, dictionary["Priority"]);
+            Assert.AreEqual("99.99", dictionary["Price"]);
+            Assert.AreEqual(new DateTime(2023, 1, 1), dictionary["CreatedDate"]);
+            Assert.AreEqual(new DateTimeOffset(new DateTime(2023, 1, 1), TimeSpan.Zero), dictionary["LastUpdated"]);
         }
 
         private class ExplicitInterfaceModel : ITableEntity
@@ -102,6 +141,12 @@ namespace Azure.Data.Tables.Tests
             public string Category { get; set; }
             public string Name { get; set; }
             public int Priority { get; set; }
+            public decimal Price { get; set; }
+            public DateTime CreatedDate { get; set; }
+            public DateTimeOffset LastUpdated { get; set; }
+            public Guid Identifier { get; set; }
+            public long Counter { get; set; }
+            public double Rating { get; set; }
 
             string ITableEntity.PartitionKey
             {
@@ -145,6 +190,74 @@ namespace Azure.Data.Tables.Tests
                     };
                 }
                 set => _dict["Name"] = value;
+            }
+            public decimal Price
+            {
+                get
+                {
+                    return _dict.TryGetValue("Price", out var value) switch
+                    {
+                        true => Convert.ToDecimal(value, System.Globalization.CultureInfo.InvariantCulture),
+                        _ => default
+                    };
+                }
+            }
+            public DateTime CreatedDate
+            {
+                get
+                {
+                    return _dict.TryGetValue("CreatedDate", out var value) switch
+                    {
+                        true => Convert.ToDateTime(value, System.Globalization.CultureInfo.InvariantCulture),
+                        _ => default
+                    };
+                }
+            }
+            public DateTimeOffset LastUpdated
+            {
+                get
+                {
+                    return _dict.TryGetValue("LastUpdated", out var value) switch
+                    {
+                        true => DateTimeOffset.Parse(value.ToString(), System.Globalization.CultureInfo.InvariantCulture),
+                        _ => default
+                    };
+                }
+            }
+            public Guid Identifier
+            {
+                get
+                {
+                    return _dict.TryGetValue("Identifier", out var value) switch
+                    {
+                        true => Guid.Parse(value.ToString()),
+                        _ => default
+                    };
+                }
+            }
+
+            public long Counter
+            {
+                get
+                {
+                    return _dict.TryGetValue("Counter", out var value) switch
+                    {
+                        true => long.Parse(value.ToString(), System.Globalization.CultureInfo.InvariantCulture),
+                        _ => default
+                    };
+                }
+            }
+
+            public double Rating
+            {
+                get
+                {
+                    return _dict.TryGetValue("Rating", out var value) switch
+                    {
+                        true => double.Parse(value.ToString(), System.Globalization.CultureInfo.InvariantCulture),
+                        _ => default
+                    };
+                }
             }
             public int Priority
             {
