@@ -261,10 +261,10 @@
 # ServiceOwners:                                                   @quentinRobinson @bidisha-c
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                                                  @mikeymcz @cpoulain @joseharriaga
+/sdk/translation/                                                  @mikeymcz @cpoulain @joseharriaga @vikaspalaskar
 
 # ServiceLabel: %Cognitive - Translator
-# ServiceOwners:                                                   @swmachan @mikeymcz @cpoulain
+# ServiceOwners:                                                   @swmachan @mikeymcz @cpoulain @vikaspalaskar
 
 # ServiceLabel: %Cognitive - Speech
 # ServiceOwners:                                                   @robch
