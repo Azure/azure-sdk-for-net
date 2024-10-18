@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
                 //Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
             };
 
-            cloudHsmClusterBody.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
+            //cloudHsmClusterBody.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
             CloudHsmClusterCollection collection = ResourceGroupResource.GetCloudHsmClusters();
             var createOperation = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, cloudHsmClusterBody);
             CloudHsmClusterResource cloudHsmClusterResult = createOperation.Value;
