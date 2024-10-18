@@ -27,23 +27,17 @@ namespace Azure.AI.Inference
 
         private const string Base64Value = "base64";
         private const string BinaryValue = "binary";
-        private const string FloatValue = "float";
-        private const string Int8Value = "int8";
+        private const string SingleValue = "float";
+        private const string SByteValue = "int8";
         private const string UbinaryValue = "ubinary";
-        private const string Uint8Value = "uint8";
+        private const string ByteValue = "uint8";
 
         /// <summary> Base64. </summary>
         public static EmbeddingEncodingFormat Base64 { get; } = new EmbeddingEncodingFormat(Base64Value);
         /// <summary> Binary. </summary>
         public static EmbeddingEncodingFormat Binary { get; } = new EmbeddingEncodingFormat(BinaryValue);
-        /// <summary> Floating point. </summary>
-        public static EmbeddingEncodingFormat Float { get; } = new EmbeddingEncodingFormat(FloatValue);
-        /// <summary> Signed 8-bit integer. </summary>
-        public static EmbeddingEncodingFormat Int8 { get; } = new EmbeddingEncodingFormat(Int8Value);
         /// <summary> ubinary. </summary>
         public static EmbeddingEncodingFormat Ubinary { get; } = new EmbeddingEncodingFormat(UbinaryValue);
-        /// <summary> Unsigned 8-bit integer. </summary>
-        public static EmbeddingEncodingFormat Uint8 { get; } = new EmbeddingEncodingFormat(Uint8Value);
         /// <summary> Determines if two <see cref="EmbeddingEncodingFormat"/> values are the same. </summary>
         public static bool operator ==(EmbeddingEncodingFormat left, EmbeddingEncodingFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EmbeddingEncodingFormat"/> values are not the same. </summary>
