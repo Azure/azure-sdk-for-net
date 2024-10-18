@@ -1,0 +1,11 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Security.KeyVault.Administration",
+  "library-name": "Azure.Security.KeyVault.Administration",
+  "use-model-reader-writer": true,
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "flavor": "azure"
+}
