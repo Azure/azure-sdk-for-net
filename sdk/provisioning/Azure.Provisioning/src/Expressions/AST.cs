@@ -30,9 +30,9 @@ public class IdentifierExpression(string name) : BicepExpression
     internal override BicepWriter Write(BicepWriter writer) => writer.Append(Name);
 }
 
-public abstract class LiteralExpression(object? literalValue = null) : BicepExpression
+public abstract class LiteralExpression(object? value = null) : BicepExpression
 {
-    public object? LiteralValue { get; } = literalValue;
+    public object? Value { get; } = value;
 }
 
 public class NullLiteralExpression() : LiteralExpression()
@@ -42,19 +42,19 @@ public class NullLiteralExpression() : LiteralExpression()
 
 public class BoolLiteralExpression(bool value) : LiteralExpression(value)
 {
-    public bool Value { get; } = value;
+    public new bool Value { get => (bool)base.Value!; }
     internal override BicepWriter Write(BicepWriter writer) => writer.Append(Value ? "true" : "false");
 }
 
 public class IntLiteralExpression(int value) : LiteralExpression(value)
 {
-    public int Value { get; } = value;
+    public new int Value { get => (int)base.Value!; }
     internal override BicepWriter Write(BicepWriter writer) => writer.Append(Value.ToString());
 }
 
 public class StringLiteralExpression(string value) : LiteralExpression(value)
 {
-    public string Value { get; } = value;
+    public new string Value { get => (string)base.Value!; }
     internal override BicepWriter Write(BicepWriter writer) =>
         (Value == null) ?
             writer.Append("null") :

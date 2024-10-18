@@ -13,10 +13,10 @@ namespace Azure.Provisioning.Primitives;
 /// <summary>
 /// Default all location properties to their resource group's location.
 /// </summary>
-public class LocationPropertyResolver : PropertyResolver
+public class LocationPropertyResolver : InfrastructureResolver
 {
     /// <inheritdoc />
-    public override void ResolveProperties(ProvisioningBuildOptions options, ProvisionableConstruct construct)
+    public override void ResolveProperties(ProvisionableConstruct construct, ProvisioningBuildOptions options)
     {
         // We only need to set a location if one doesn't already exist
         if (construct.ProvisioningProperties.TryGetValue("Location", out BicepValue? location) &&
@@ -62,8 +62,8 @@ public class LocationPropertyResolver : PropertyResolver
         // Try to find an existing location param with the same value
         Infrastructure infra = construct.ParentInfrastructure ??
             throw new InvalidOperationException($"Construct {construct} must be added to an {nameof(Infrastructure)} instance before resolving properties.");
-        IDictionary<string, ProvisioningParameter> existing =
-            infra.GetResources()
+        Dictionary<string, ProvisioningParameter> existing =
+            infra.GetProvisionableResources()
             .OfType<ProvisioningParameter>()
             .Where(p => p.BicepIdentifier.StartsWith("location"))
             .ToDictionary(p => p.BicepIdentifier);

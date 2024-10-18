@@ -19,7 +19,7 @@ public abstract class ProvisionableConstruct : Provisionable
 
     /// <inheritdoc />
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override IEnumerable<Provisionable> GetResources() => base.GetResources();
+    public override IEnumerable<Provisionable> GetProvisionableResources() => base.GetProvisionableResources();
 
     /// <summary>
     /// Gets the properties of the construct.
@@ -82,9 +82,9 @@ public abstract class ProvisionableConstruct : Provisionable
         base.Resolve(options);
 
         // Resolve any property values
-        foreach (PropertyResolver resolver in options.PropertyResolvers)
+        foreach (InfrastructureResolver resolver in options.InfrastructureResolvers)
         {
-            resolver.ResolveProperties(options, this);
+            resolver.ResolveProperties(this, options);
         }
     }
 

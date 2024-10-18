@@ -101,10 +101,10 @@ public readonly struct ResourceNameRequirements(
 /// https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules
 /// </see>.
 /// </remarks>
-public abstract class ResourceNamePropertyResolver : PropertyResolver
+public abstract class ResourceNamePropertyResolver : InfrastructureResolver
 {
     /// <inheritdoc />
-    public override void ResolveProperties(ProvisioningBuildOptions options, ProvisionableConstruct construct)
+    public override void ResolveProperties(ProvisionableConstruct construct, ProvisioningBuildOptions options)
     {
         // We only need to name resources
         if (construct is not ProvisionableResource resource) { return; }

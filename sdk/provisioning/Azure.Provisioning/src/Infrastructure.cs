@@ -35,7 +35,7 @@ public class Infrastructure(string bicepName = "main") : Provisionable
     private Infrastructure? _parent = null;
 
     /// <inheritdoc/>
-    public override IEnumerable<Provisionable> GetResources() => _resources;
+    public override IEnumerable<Provisionable> GetProvisionableResources() => _resources;
     private readonly List<Provisionable> _resources = [];
 
     /// <summary>
@@ -206,7 +206,7 @@ public class Infrastructure(string bicepName = "main") : Provisionable
     {
         options ??= new();
         base.Validate(options);
-        foreach (Provisionable resource in GetResources()) { resource.Validate(options); }
+        foreach (Provisionable resource in GetProvisionableResources()) { resource.Validate(options); }
     }
 
     /// <inheritdoc/>
@@ -215,12 +215,12 @@ public class Infrastructure(string bicepName = "main") : Provisionable
         options ??= new();
         base.Resolve(options);
 
-        Provisionable[] cached = [.. GetResources()]; // Copy so Resolve can mutate
+        Provisionable[] cached = [.. GetProvisionableResources()]; // Copy so Resolve can mutate
         foreach (Provisionable resource in cached) { resource.Resolve(options); }
 
         foreach (InfrastructureResolver resolver in options.InfrastructureResolvers)
         {
-            resolver.ResolveInfrastructure(options, this);
+            resolver.ResolveInfrastructure(this, options);
         }
     }
 
@@ -248,7 +248,7 @@ public class Infrastructure(string bicepName = "main") : Provisionable
         List<Infrastructure> nested = [];
         foreach (InfrastructureResolver resolver in options.InfrastructureResolvers)
         {
-            nested.AddRange(resolver.GetNestedInfrastructure(options, this));
+            nested.AddRange(resolver.GetNestedInfrastructure(this, options));
         }
         foreach (Infrastructure infra in nested)
         {
@@ -267,7 +267,7 @@ public class Infrastructure(string bicepName = "main") : Provisionable
             statements.Add(new TargetScopeStatement(TargetScope));
         }
 
-        IEnumerable<Provisionable> resources = GetResources();
+        IEnumerable<Provisionable> resources = GetProvisionableResources();
 
         // Optionally customize the resources with the extensibility hooks on
         // ProvisioningBuildOptions.
@@ -275,7 +275,7 @@ public class Infrastructure(string bicepName = "main") : Provisionable
         {
             foreach (InfrastructureResolver resolver in options.InfrastructureResolvers)
             {
-                resources = resolver.ResolveResources(options, resources);
+                resources = resolver.ResolveResources(resources, options);
             }
         }
 
