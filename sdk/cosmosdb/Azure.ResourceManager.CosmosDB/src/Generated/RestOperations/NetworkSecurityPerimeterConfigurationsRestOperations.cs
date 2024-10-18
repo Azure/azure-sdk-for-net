@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-15-preview";
+            _apiVersion = apiVersion ?? "2024-09-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets list of effective Network Security Perimeter Configuration for cosmos db account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets list of effective Network Security Perimeter Configuration for cosmos db account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets effective Network Security Perimeter Configuration for association. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets effective Network Security Perimeter Configuration for association. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Refreshes any information about the association. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Refreshes any information about the association. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets list of effective Network Security Perimeter Configuration for cosmos db account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets list of effective Network Security Perimeter Configuration for cosmos db account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
