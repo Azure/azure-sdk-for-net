@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.ContentSafety
 {
-    /// <summary> Image analysis result. </summary>
-    public partial class ImageCategoriesAnalysis
+    /// <summary> Text analysis result. </summary>
+    public partial class TextCategoriesAnalysis
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,32 @@ namespace Azure.AI.ContentSafety
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ImageCategoriesAnalysis"/>. </summary>
-        /// <param name="category"> The image analysis category. </param>
-        internal ImageCategoriesAnalysis(ImageCategory category)
+        /// <summary> Initializes a new instance of <see cref="TextCategoriesAnalysis"/>. </summary>
+        /// <param name="category"> The text analysis category. </param>
+        public TextCategoriesAnalysis(TextCategory category)
         {
             Category = category;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageCategoriesAnalysis"/>. </summary>
-        /// <param name="category"> The image analysis category. </param>
-        /// <param name="severity"> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’, and the output value can be 0, 2, 4, 6. </param>
+        /// <summary> Initializes a new instance of <see cref="TextCategoriesAnalysis"/>. </summary>
+        /// <param name="category"> The text analysis category. </param>
+        /// <param name="severity"> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’ or ‘EightSeverity Levels’, and the output value can be 0, 2, 4, 6 or 0, 1, 2, 3, 4, 5, 6, or 7. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageCategoriesAnalysis(ImageCategory category, int? severity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        public TextCategoriesAnalysis(TextCategory category, int? severity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Severity = severity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageCategoriesAnalysis"/> for deserialization. </summary>
-        internal ImageCategoriesAnalysis()
+        /// <summary> Initializes a new instance of <see cref="TextCategoriesAnalysis"/> for deserialization. </summary>
+        public TextCategoriesAnalysis()
         {
         }
 
-        /// <summary> The image analysis category. </summary>
-        public ImageCategory Category { get; }
-        /// <summary> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’, and the output value can be 0, 2, 4, 6. </summary>
-        public int? Severity { get; }
+        /// <summary> The text analysis category. </summary>
+        public TextCategory Category { get; set; }
+        /// <summary> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’ or ‘EightSeverity Levels’, and the output value can be 0, 2, 4, 6 or 0, 1, 2, 3, 4, 5, 6, or 7. </summary>
+        public int? Severity { get; set; }
     }
 }
