@@ -235,7 +235,7 @@ resource newCluster 'Microsoft.ContainerService/managedClusters@2023-06-01' = {
       {
         name: 'agentpool'
         count: 1
-        vmSize: 'Standard_D2s_v3'
+        vmSize: 'Standard_D2s_v5'
         osDiskSizeGB: 128
         osDiskType: 'Managed'
         kubeletDiskType: 'OS'
