@@ -8,7 +8,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Terraform.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Terraform.Tests.Tests
+namespace Azure.ResourceManager.Terraform.Tests
 {
     public class ExportTerraformTests : TerraformManagementTestBase
     {
