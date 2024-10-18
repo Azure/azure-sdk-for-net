@@ -58,23 +58,19 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="exportParameter"> The export parameter. </param>
+        /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportParameter"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationStatus>> ExportTerraformAsync(WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response<ExportResult>> ExportTerraformAsync(BaseExportModel body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(exportParameter, nameof(exportParameter));
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = ExportTerraformClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
             scope.Start();
             try
             {
-                var response = await ExportTerraformRestClient.ExportTerraformAsync(Id.SubscriptionId, exportParameter, cancellationToken).ConfigureAwait(false);
-                var operation = new TerraformArmOperation<OperationStatus>(new OperationStatusOperationSource(), ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateExportTerraformRequest(Id.SubscriptionId, exportParameter).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
+                var response = await ExportTerraformRestClient.ExportTerraformAsync(Id.SubscriptionId, body, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -100,109 +96,19 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="exportParameter"> The export parameter. </param>
+        /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportParameter"/> is null. </exception>
-        public virtual ArmOperation<OperationStatus> ExportTerraform(WaitUntil waitUntil, BaseExportModel exportParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response<ExportResult> ExportTerraform(BaseExportModel body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(exportParameter, nameof(exportParameter));
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = ExportTerraformClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
             scope.Start();
             try
             {
-                var response = ExportTerraformRestClient.ExportTerraform(Id.SubscriptionId, exportParameter, cancellationToken);
-                var operation = new TerraformArmOperation<OperationStatus>(new OperationStatusOperationSource(), ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateExportTerraformRequest(Id.SubscriptionId, exportParameter).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the status of a long running azure asynchronous operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureTerraform/operationStatuses/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExportTerraform_OperationStatuses</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<ArmOperation> OperationStatusesAsync(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = ExportTerraformClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.OperationStatuses");
-            scope.Start();
-            try
-            {
-                var response = await ExportTerraformRestClient.OperationStatusesAsync(Id.SubscriptionId, operationId, cancellationToken).ConfigureAwait(false);
-                var operation = new TerraformArmOperation(ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateOperationStatusesRequest(Id.SubscriptionId, operationId).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the status of a long running azure asynchronous operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureTerraform/operationStatuses/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExportTerraform_OperationStatuses</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual ArmOperation OperationStatuses(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = ExportTerraformClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.OperationStatuses");
-            scope.Start();
-            try
-            {
-                var response = ExportTerraformRestClient.OperationStatuses(Id.SubscriptionId, operationId, cancellationToken);
-                var operation = new TerraformArmOperation(ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateOperationStatusesRequest(Id.SubscriptionId, operationId).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
+                var response = ExportTerraformRestClient.ExportTerraform(Id.SubscriptionId, body, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

@@ -2,5 +2,5 @@
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/terraform/Azure.ResourceManager.Terraform",
-  "Tag": "net/terraform/Azure.ResourceManager.Terraform_d87638c046"
+  "Tag": ""
 }

@@ -54,28 +54,6 @@ namespace Azure.ResourceManager.Terraform.Models
                 namePattern);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OperationStatus"/>. </summary>
-        /// <param name="properties"> RP-specific properties for the operationStatus resource, only appears when operation ended with Succeeded status. </param>
-        /// <param name="status"> The operation status. </param>
-        /// <param name="name"> The name of the  operationStatus resource. </param>
-        /// <param name="startOn"> Operation start time. </param>
-        /// <param name="endOn"> Operation complete time. </param>
-        /// <param name="percentComplete"> The progress made toward completing the operation. </param>
-        /// <param name="error"> Errors that occurred if the operation ended with Canceled or Failed status. </param>
-        /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
-        public static OperationStatus OperationStatus(ExportResult properties = null, ResourceProvisioningState status = default, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, ResponseError error = null)
-        {
-            return new OperationStatus(
-                properties,
-                status,
-                name,
-                startOn,
-                endOn,
-                percentComplete,
-                error,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ExportResult"/>. </summary>
         /// <param name="configuration"> The Terraform configuration content. </param>
         /// <param name="skippedResources"> A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform. </param>
