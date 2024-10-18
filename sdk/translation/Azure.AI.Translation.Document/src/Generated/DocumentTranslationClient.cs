@@ -839,13 +839,14 @@ namespace Azure.AI.Translation.Document
         /// destination, it will be overwritten. The targetUrl for each target language
         /// must be unique.
         /// </remarks>
-        public virtual async Task<Operation> StartTranslationAsync(WaitUntil waitUntil, StartTranslationDetails startTranslationDetails, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<TranslationStatusResult>> StartTranslationAsync(WaitUntil waitUntil, StartTranslationDetails startTranslationDetails, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(startTranslationDetails, nameof(startTranslationDetails));
 
             using RequestContent content = startTranslationDetails.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return await StartTranslationAsync(waitUntil, content, context).ConfigureAwait(false);
+            Operation<BinaryData> response = await StartTranslationAsync(waitUntil, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, TranslationStatusResult.FromResponse, ClientDiagnostics, "DocumentTranslationClient.StartTranslation");
         }
 
         /// <summary> Submit a document translation request to the Document Translation service. </summary>
@@ -874,13 +875,14 @@ namespace Azure.AI.Translation.Document
         /// destination, it will be overwritten. The targetUrl for each target language
         /// must be unique.
         /// </remarks>
-        public virtual Operation StartTranslation(WaitUntil waitUntil, StartTranslationDetails startTranslationDetails, CancellationToken cancellationToken = default)
+        public virtual Operation<TranslationStatusResult> StartTranslation(WaitUntil waitUntil, StartTranslationDetails startTranslationDetails, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(startTranslationDetails, nameof(startTranslationDetails));
 
             using RequestContent content = startTranslationDetails.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return StartTranslation(waitUntil, content, context);
+            Operation<BinaryData> response = StartTranslation(waitUntil, content, context);
+            return ProtocolOperationHelpers.Convert(response, TranslationStatusResult.FromResponse, ClientDiagnostics, "DocumentTranslationClient.StartTranslation");
         }
 
         /// <summary>
@@ -904,7 +906,7 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual async Task<Operation> StartTranslationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> StartTranslationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -913,7 +915,7 @@ namespace Azure.AI.Translation.Document
             try
             {
                 using HttpMessage message = CreateStartTranslationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DocumentTranslationClient.StartTranslation", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentTranslationClient.StartTranslation", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -943,7 +945,7 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual Operation StartTranslation(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> StartTranslation(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -952,7 +954,7 @@ namespace Azure.AI.Translation.Document
             try
             {
                 using HttpMessage message = CreateStartTranslationRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DocumentTranslationClient.StartTranslation", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentTranslationClient.StartTranslation", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
