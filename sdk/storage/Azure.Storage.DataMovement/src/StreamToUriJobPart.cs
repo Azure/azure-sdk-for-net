@@ -181,8 +181,10 @@ namespace Azure.Storage.DataMovement
         /// Processes the job to job parts
         /// </summary>
         /// <returns>The task that's queueing up the chunks</returns>
-        public override async Task ProcessPartToChunkAsync()
+        public override async Task ProcessPartToChunkAsync(
+            CancellationToken cancellationToken = default)
         {
+            _cancellationToken = CancellationTokenSource.CreateLinkedTokenSource(_cancellationToken, cancellationToken).Token;
             // Attempt to get the length, it's possible the file could
             // not be accessible (or does not exist).
             string operationName = $"{nameof(TransferManager.StartTransferAsync)}";

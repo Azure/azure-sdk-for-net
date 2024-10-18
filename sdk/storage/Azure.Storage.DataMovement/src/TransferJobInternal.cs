@@ -4,6 +4,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -279,8 +280,10 @@ namespace Azure.Storage.DataMovement
         /// Processes the job to job parts
         /// </summary>
         /// <returns>An IEnumerable that contains the job parts</returns>
-        public virtual async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync()
+        public virtual async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync(
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
+            _cancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationToken).Token;
             await OnJobStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
             int partNumber = 0;
 
@@ -602,7 +605,8 @@ namespace Azure.Storage.DataMovement
         {
             await _checkpointer.SetJobTransferStatusAsync(
                 transferId: _dataTransfer.Id,
-                status: _dataTransfer.TransferStatus).ConfigureAwait(false);
+                status: _dataTransfer.TransferStatus,
+                cancellationToken: _cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -636,7 +640,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         protected async Task OnAllResourcesEnumerated()
         {
-            await _checkpointer.OnEnumerationCompleteAsync(_dataTransfer.Id).ConfigureAwait(false);
+            await _checkpointer.OnEnumerationCompleteAsync(_dataTransfer.Id, _cancellationToken).ConfigureAwait(false);
         }
 
         internal async Task CheckAndUpdateStatusAsync()
