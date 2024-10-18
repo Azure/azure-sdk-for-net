@@ -6,12 +6,12 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
+using Azure.Core;
 
 namespace BasicTypeSpec
 {
     /// <summary> Client options for <see cref="BasicTypeSpecClient"/>. </summary>
-    public partial class BasicTypeSpecClientOptions : ClientPipelineOptions
+    public partial class BasicTypeSpecClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_08_16_Preview;
 

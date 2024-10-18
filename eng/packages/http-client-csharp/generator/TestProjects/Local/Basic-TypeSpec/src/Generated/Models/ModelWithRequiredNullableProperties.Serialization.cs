@@ -6,10 +6,11 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Core;
 using BasicTypeSpec;
 
 namespace BasicTypeSpec.Models
@@ -182,16 +183,18 @@ namespace BasicTypeSpec.Models
 
         string IPersistableModel<ModelWithRequiredNullableProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="modelWithRequiredNullableProperties"> The <see cref="ModelWithRequiredNullableProperties"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(ModelWithRequiredNullableProperties modelWithRequiredNullableProperties)
+        /// <param name="modelWithRequiredNullableProperties"> The <see cref="ModelWithRequiredNullableProperties"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ModelWithRequiredNullableProperties modelWithRequiredNullableProperties)
         {
-            return BinaryContent.Create(modelWithRequiredNullableProperties, ModelSerializationExtensions.WireOptions);
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(modelWithRequiredNullableProperties, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ModelWithRequiredNullableProperties"/> from. </param>
-        public static explicit operator ModelWithRequiredNullableProperties(ClientResult result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ModelWithRequiredNullableProperties"/> from. </param>
+        public static explicit operator ModelWithRequiredNullableProperties(Response result)
         {
-            using PipelineResponse response = result.GetRawResponse();
+            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeModelWithRequiredNullableProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
