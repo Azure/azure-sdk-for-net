@@ -134,7 +134,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -213,7 +213,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -274,7 +274,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -335,7 +335,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -396,7 +396,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -457,7 +457,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -518,7 +518,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -579,7 +579,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -640,7 +640,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -701,7 +701,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -762,7 +762,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -823,7 +823,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -884,7 +884,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -945,7 +945,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1006,7 +1006,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1080,7 +1080,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1154,7 +1154,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1228,7 +1228,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1302,7 +1302,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1376,7 +1376,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1450,7 +1450,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1524,7 +1524,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1598,7 +1598,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1672,7 +1672,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/CloudhsmSDKTest7983?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1747,7 +1747,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters?api-version=2022-08-31-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg1232/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
