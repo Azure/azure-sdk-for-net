@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Terraform
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExportTerraform_ExportTerraform</description>
+        /// <description>Terraform_ExportTerraform</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Terraform
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExportTerraform_ExportTerraform</description>
+        /// <description>Terraform_ExportTerraform</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Terraform.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableTerraformSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _exportTerraformClientDiagnostics;
-        private ExportTerraformRestOperations _exportTerraformRestClient;
+        private ClientDiagnostics _terraformClientDiagnostics;
+        private TerraformRestOperations _terraformRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableTerraformSubscriptionResource"/> class for mocking. </summary>
         protected MockableTerraformSubscriptionResource()
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Terraform.Mocking
         {
         }
 
-        private ClientDiagnostics ExportTerraformClientDiagnostics => _exportTerraformClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Terraform", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ExportTerraformRestOperations ExportTerraformRestClient => _exportTerraformRestClient ??= new ExportTerraformRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics TerraformClientDiagnostics => _terraformClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Terraform", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private TerraformRestOperations TerraformRestClient => _terraformRestClient ??= new TerraformRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExportTerraform_ExportTerraform</description>
+        /// <description>Terraform_ExportTerraform</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Terraform.Mocking
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = ExportTerraformClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
+            using var scope = TerraformClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
             scope.Start();
             try
             {
-                var response = await ExportTerraformRestClient.ExportTerraformAsync(Id.SubscriptionId, body, cancellationToken).ConfigureAwait(false);
-                var operation = new TerraformArmOperation<TerraformOperationStatus>(new TerraformOperationStatusOperationSource(), ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateExportTerraformRequest(Id.SubscriptionId, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await TerraformRestClient.ExportTerraformAsync(Id.SubscriptionId, body, cancellationToken).ConfigureAwait(false);
+                var operation = new TerraformArmOperation<TerraformOperationStatus>(new TerraformOperationStatusOperationSource(), TerraformClientDiagnostics, Pipeline, TerraformRestClient.CreateExportTerraformRequest(Id.SubscriptionId, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExportTerraform_ExportTerraform</description>
+        /// <description>Terraform_ExportTerraform</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.Terraform.Mocking
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = ExportTerraformClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
+            using var scope = TerraformClientDiagnostics.CreateScope("MockableTerraformSubscriptionResource.ExportTerraform");
             scope.Start();
             try
             {
-                var response = ExportTerraformRestClient.ExportTerraform(Id.SubscriptionId, body, cancellationToken);
-                var operation = new TerraformArmOperation<TerraformOperationStatus>(new TerraformOperationStatusOperationSource(), ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateExportTerraformRequest(Id.SubscriptionId, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = TerraformRestClient.ExportTerraform(Id.SubscriptionId, body, cancellationToken);
+                var operation = new TerraformArmOperation<TerraformOperationStatus>(new TerraformOperationStatusOperationSource(), TerraformClientDiagnostics, Pipeline, TerraformRestClient.CreateExportTerraformRequest(Id.SubscriptionId, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
