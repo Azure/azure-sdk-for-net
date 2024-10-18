@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The GremlinGraphPropertiesConfig.
 /// </summary>
-public partial class GremlinGraphPropertiesConfig : ProvisioningConstruct
+public partial class GremlinGraphPropertiesConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Value of the Cosmos DB resource throughput or autoscaleSettings. Use

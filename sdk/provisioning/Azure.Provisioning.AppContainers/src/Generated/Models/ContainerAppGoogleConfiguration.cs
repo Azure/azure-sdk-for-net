@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the Google provider.
 /// </summary>
-public partial class ContainerAppGoogleConfiguration : ProvisioningConstruct
+public partial class ContainerAppGoogleConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// &lt;code&gt;false&lt;/code&gt; if the Google provider should not be

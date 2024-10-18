@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// The policy definition group.
 /// </summary>
-public partial class PolicyDefinitionGroup : ProvisioningConstruct
+public partial class PolicyDefinitionGroup : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the group.

@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// A private link resource.
 /// </summary>
-public partial class ContainerServicePrivateLinkResourceData : ProvisioningConstruct
+public partial class ContainerServicePrivateLinkResourceData : ProvisionableConstruct
 {
     /// <summary>
     /// The ID of the private link resource.

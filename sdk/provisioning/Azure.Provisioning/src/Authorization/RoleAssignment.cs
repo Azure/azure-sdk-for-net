@@ -12,5 +12,5 @@ public partial class RoleAssignment
     // won't be able to manage that as cleanly.  Anyone who really wants can
     // override the value though.
     private partial BicepValue<string> GetNameDefaultValue() =>
-        BicepFunction.CreateGuid(BicepFunction.GetResourceGroup().Id, IdentifierName);
+        BicepFunction.CreateGuid(BicepFunction.GetResourceGroup().Id, BicepIdentifier);
 }

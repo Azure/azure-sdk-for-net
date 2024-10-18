@@ -65,8 +65,7 @@ We continue to support API key and AAD authentication methods when creating the 
 Creating new clients in `Azure.AI.FormRecognizer`:
 ```C#
 string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var credential = new AzureKeyCredential(apiKey);
+var credential = new DefaultAzureCredential();
 
 var documentAnalysisClient = new DocumentAnalysisClient(new Uri(endpoint), credential);
 var documentModelAdministrationClient = new DocumentModelAdministrationClient(new Uri(endpoint), credential);
@@ -75,8 +74,7 @@ var documentModelAdministrationClient = new DocumentModelAdministrationClient(ne
 Creating new clients in `Azure.AI.DocumentIntelligence`:
 ```C# Snippet:Migration_CreateBothDocumentIntelligenceClients
 string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var credential = new AzureKeyCredential(apiKey);
+var credential = new DefaultAzureCredential();
 
 var documentIntelligenceClient = new DocumentIntelligenceClient(new Uri(endpoint), credential);
 var documentIntelligenceAdministrationClient = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), credential);
@@ -352,7 +350,7 @@ Differences between the versions:
 Building a document model with `Azure.AI.FormRecognizer`:
 ```C#
 Uri blobContainerUri = new Uri("<blobContainerUri>");
-var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var client = new DocumentModelAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
 
 BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;

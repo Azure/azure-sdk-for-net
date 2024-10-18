@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// WorkloadGroup.
 /// </summary>
-public partial class WorkloadGroup : Resource
+public partial class WorkloadGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the workload group.
@@ -80,15 +80,15 @@ public partial class WorkloadGroup : Resource
     /// <summary>
     /// Creates a new WorkloadGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WorkloadGroup resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the WorkloadGroup.</param>
-    public WorkloadGroup(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/databases/workloadGroups", resourceVersion ?? "2021-11-01")
+    public WorkloadGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/workloadGroups", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _importance = BicepValue<string>.DefineProperty(this, "Importance", ["properties", "importance"]);
@@ -121,7 +121,7 @@ public partial class WorkloadGroup : Resource
     /// <summary>
     /// Creates a reference to an existing WorkloadGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WorkloadGroup resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -129,6 +129,6 @@ public partial class WorkloadGroup : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the WorkloadGroup.</param>
     /// <returns>The existing WorkloadGroup resource.</returns>
-    public static WorkloadGroup FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static WorkloadGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

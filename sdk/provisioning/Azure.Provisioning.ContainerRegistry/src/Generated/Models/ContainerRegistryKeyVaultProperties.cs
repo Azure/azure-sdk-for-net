@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The ContainerRegistryKeyVaultProperties.
 /// </summary>
-public partial class ContainerRegistryKeyVaultProperties : ProvisioningConstruct
+public partial class ContainerRegistryKeyVaultProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Key vault uri to access the encryption key.

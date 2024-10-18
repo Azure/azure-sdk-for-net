@@ -17,7 +17,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// KeyVaultPrivateEndpointConnection.
 /// </summary>
-public partial class KeyVaultPrivateEndpointConnection : Resource
+public partial class KeyVaultPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// Name of the private endpoint connection associated with the key vault.
@@ -83,15 +83,15 @@ public partial class KeyVaultPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new KeyVaultPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the KeyVaultPrivateEndpointConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the KeyVaultPrivateEndpointConnection.</param>
-    public KeyVaultPrivateEndpointConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.KeyVault/vaults/privateEndpointConnections", resourceVersion ?? "2023-07-01")
+    public KeyVaultPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.KeyVault/vaults/privateEndpointConnections", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<KeyVaultPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -169,7 +169,7 @@ public partial class KeyVaultPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing KeyVaultPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the KeyVaultPrivateEndpointConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -177,6 +177,6 @@ public partial class KeyVaultPrivateEndpointConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the KeyVaultPrivateEndpointConnection.</param>
     /// <returns>The existing KeyVaultPrivateEndpointConnection resource.</returns>
-    public static KeyVaultPrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static KeyVaultPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

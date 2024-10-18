@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Representation of a publisher plan for marketplace RPs.
 /// </summary>
-public partial class ArmPlan : ProvisioningConstruct
+public partial class ArmPlan : ProvisionableConstruct
 {
     /// <summary>
     /// A user defined name of the 3rd Party Artifact that is being procured.

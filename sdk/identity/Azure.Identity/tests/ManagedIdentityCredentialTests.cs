@@ -34,28 +34,6 @@ namespace Azure.Identity.Tests
 
         private const string ExpectedToken = "mock-msi-access-token";
 
-        [NonParallelizable]
-        [Test]
-        public async Task VerifyTokenCaching()
-        {
-            using var environment = new TestEnvVar(new() { { "AZURE_IDENTITY_ENABLE_LEGACY_IMDS_BEHAVIOR", "true" } });
-            int callCount = 0;
-
-            var mockClient = new MockManagedIdentityClient(CredentialPipeline.GetInstance(null))
-            {
-                TokenFactory = () => { callCount++; return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddHours(24)); }
-            };
-
-            var cred = InstrumentClient(new ManagedIdentityCredential(mockClient));
-
-            for (int i = 0; i < 5; i++)
-            {
-                await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
-            }
-
-            Assert.AreEqual(1, callCount);
-        }
-
         [Test]
         public async Task VerifyExpiringTokenRefresh()
         {
@@ -1035,6 +1013,11 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyTokenExchangeMsiRequestMockAsync()
         {
+            List<string> messages = new();
+            using AzureEventSourceListener listener = new AzureEventSourceListener(
+                (_, message) => messages.Add(message),
+                EventLevel.Informational);
+
             var tenantId = "mock-tenant-id";
             var clientId = "mock-client-id";
             var authorityHostUrl = "https://mock.authority.com";
@@ -1081,6 +1064,7 @@ namespace Azure.Identity.Tests
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
             Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.ManagedIdentitySourceAttemptedMessage, "TokenExchangeManagedIdentitySource", true)));
         }
 
         private static IEnumerable<TestCaseData> ResourceAndClientIds()
@@ -1113,7 +1097,6 @@ namespace Azure.Identity.Tests
             // params
             // az thrown Exception message, expected message, expected  exception
             yield return new object[] { AzureAuthorityHosts.AzureChina };
-            yield return new object[] { AzureAuthorityHosts.AzureGermany };
             yield return new object[] { AzureAuthorityHosts.AzureGovernment };
             yield return new object[] { AzureAuthorityHosts.AzurePublicCloud };
         }

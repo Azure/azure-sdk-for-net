@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceServerTrustCertificate.
 /// </summary>
-public partial class ManagedInstanceServerTrustCertificate : Resource
+public partial class ManagedInstanceServerTrustCertificate : ProvisionableResource
 {
     /// <summary>
     /// Name of of the certificate to upload.
@@ -62,15 +62,15 @@ public partial class ManagedInstanceServerTrustCertificate : Resource
     /// <summary>
     /// Creates a new ManagedInstanceServerTrustCertificate.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ManagedInstanceServerTrustCertificate resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceServerTrustCertificate.</param>
-    public ManagedInstanceServerTrustCertificate(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/managedInstances/serverTrustCertificates", resourceVersion ?? "2021-11-01")
+    public ManagedInstanceServerTrustCertificate(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/serverTrustCertificates", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _publicBlob = BicepValue<string>.DefineProperty(this, "PublicBlob", ["properties", "publicBlob"]);
@@ -101,7 +101,7 @@ public partial class ManagedInstanceServerTrustCertificate : Resource
     /// Creates a reference to an existing
     /// ManagedInstanceServerTrustCertificate.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ManagedInstanceServerTrustCertificate resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -109,6 +109,6 @@ public partial class ManagedInstanceServerTrustCertificate : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceServerTrustCertificate.</param>
     /// <returns>The existing ManagedInstanceServerTrustCertificate resource.</returns>
-    public static ManagedInstanceServerTrustCertificate FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceServerTrustCertificate FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

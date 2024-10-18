@@ -12,7 +12,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// A set of rules governing the network accessibility of a vault.
 /// </summary>
-public partial class KeyVaultNetworkRuleSet : ProvisioningConstruct
+public partial class KeyVaultNetworkRuleSet : ProvisionableConstruct
 {
     /// <summary>
     /// Tells what traffic can bypass network rules. This can be

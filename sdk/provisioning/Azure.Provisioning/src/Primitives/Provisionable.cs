@@ -26,18 +26,18 @@ public abstract class Provisionable
     /// <summary>
     /// Resolve any resources or properties that were not explicitly specified.
     /// </summary>
-    /// <param name="context">Optional <see cref="ProvisioningContext"/>.</param>
-    protected internal virtual void Resolve(ProvisioningContext? context = default) { }
+    /// <param name="options">Optional <see cref="ProvisioningBuildOptions"/>.</param>
+    protected internal virtual void Resolve(ProvisioningBuildOptions? options = default) { }
 
     /// <summary>
     /// Validate the presence of any required members.
     /// </summary>
-    /// <param name="context">Optional <see cref="ProvisioningContext"/>.</param>
-    protected internal virtual void Validate(ProvisioningContext? context = default) { }
+    /// <param name="options">Optional <see cref="ProvisioningBuildOptions"/>.</param>
+    protected internal virtual void Validate(ProvisioningBuildOptions? options = default) { }
 
     /// <summary>
     /// Compile the resource into a set of Bicep statements.
     /// </summary>
     /// <returns>Bicep representation of the resource.</returns>
-    protected internal abstract IEnumerable<Statement> Compile();
+    protected internal abstract IEnumerable<BicepStatement> Compile();
 }

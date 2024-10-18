@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The CassandraKeyspacePropertiesConfig.
 /// </summary>
-public partial class CassandraKeyspacePropertiesConfig : ProvisioningConstruct
+public partial class CassandraKeyspacePropertiesConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Value of the Cosmos DB resource throughput or autoscaleSettings. Use

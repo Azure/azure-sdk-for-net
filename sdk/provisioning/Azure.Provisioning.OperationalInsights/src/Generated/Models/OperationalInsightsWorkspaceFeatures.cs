@@ -13,7 +13,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// Workspace features.
 /// </summary>
-public partial class OperationalInsightsWorkspaceFeatures : ProvisioningConstruct
+public partial class OperationalInsightsWorkspaceFeatures : ProvisionableConstruct
 {
     /// <summary>
     /// Flag that indicate if data should be exported.

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// AppServicePlanVirtualNetworkConnectionGateway.
 /// </summary>
-public partial class AppServicePlanVirtualNetworkConnectionGateway : Resource
+public partial class AppServicePlanVirtualNetworkConnectionGateway : ProvisionableResource
 {
     /// <summary>
     /// Name of the gateway. Only the &apos;primary&apos; gateway is supported.
@@ -56,7 +56,7 @@ public partial class AppServicePlanVirtualNetworkConnectionGateway : Resource
     /// <summary>
     /// Creates a new AppServicePlanVirtualNetworkConnectionGateway.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// AppServicePlanVirtualNetworkConnectionGateway resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
@@ -64,8 +64,8 @@ public partial class AppServicePlanVirtualNetworkConnectionGateway : Resource
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the AppServicePlanVirtualNetworkConnectionGateway.</param>
-    public AppServicePlanVirtualNetworkConnectionGateway(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/serverfarms/virtualNetworkConnections/gateways", resourceVersion)
+    public AppServicePlanVirtualNetworkConnectionGateway(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/serverfarms/virtualNetworkConnections/gateways", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
@@ -79,7 +79,7 @@ public partial class AppServicePlanVirtualNetworkConnectionGateway : Resource
     /// Creates a reference to an existing
     /// AppServicePlanVirtualNetworkConnectionGateway.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// AppServicePlanVirtualNetworkConnectionGateway resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
@@ -88,6 +88,6 @@ public partial class AppServicePlanVirtualNetworkConnectionGateway : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the AppServicePlanVirtualNetworkConnectionGateway.</param>
     /// <returns>The existing AppServicePlanVirtualNetworkConnectionGateway resource.</returns>
-    public static AppServicePlanVirtualNetworkConnectionGateway FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static AppServicePlanVirtualNetworkConnectionGateway FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

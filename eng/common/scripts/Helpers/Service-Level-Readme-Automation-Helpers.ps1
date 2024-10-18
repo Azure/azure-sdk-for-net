@@ -11,8 +11,17 @@ function create-service-readme(
   $readmePath = Join-Path $readmeFolder -ChildPath $readmeName
   $content = ""
   if (Test-Path (Join-Path $readmeFolder -ChildPath $indexTableLink)) {
+    # Escape the close parentheses in the URL. This is required by docs
+    # https://github.com/Azure/azure-sdk-tools/issues/5433
+    # This line looks incorrect but the left parameter is a regex and must
+    # escape the parentheses. The right is a literal string and, since this is
+    # PowerShell, the backslash does not itself need to be escaped.
+
+    # Example: "filename-with-(parens).md" -> "filename-with-(parens\).md"
+    $escapedIndexTableLink = $indexTableLink -replace '\)', '\)'
+
     $content = "## Packages - $moniker`r`n"
-    $content += "[!INCLUDE [packages]($indexTableLink)]"
+    $content += "[!INCLUDE [packages]($escapedIndexTableLink)]"
   }
   if (!$content) {
     LogError "There are no packages under service '$serviceName'. "
@@ -101,15 +110,15 @@ function generate-service-level-readme(
   $readmeFolder = "$docRepoLocation/$pathPrefix/$moniker/"
   $serviceReadme = "$readmeBaseName.md"
   $indexReadme  = "$readmeBaseName-index.md"
- 
+
   if ($packageInfos) {
     generate-markdown-table `
       -readmeFolder $readmeFolder `
       -readmeName $indexReadme `
       -packageInfos $packageInfos `
-      -moniker $moniker  
+      -moniker $moniker
   }
-  
+
   if (!(Test-Path "$readmeFolder$serviceReadme") -and $packageInfos) {
     create-service-readme `
       -readmeFolder $readmeFolder `

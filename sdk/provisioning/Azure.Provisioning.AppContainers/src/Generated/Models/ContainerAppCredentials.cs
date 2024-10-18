@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Container App credentials.
 /// </summary>
-public partial class ContainerAppCredentials : ProvisioningConstruct
+public partial class ContainerAppCredentials : ProvisionableConstruct
 {
     /// <summary>
     /// Client Id.

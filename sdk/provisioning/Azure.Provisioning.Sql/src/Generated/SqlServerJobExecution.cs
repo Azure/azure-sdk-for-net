@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerJobExecution.
 /// </summary>
-public partial class SqlServerJobExecution : Resource
+public partial class SqlServerJobExecution : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -122,15 +122,15 @@ public partial class SqlServerJobExecution : Resource
     /// <summary>
     /// Creates a new SqlServerJobExecution.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlServerJobExecution resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerJobExecution.</param>
-    public SqlServerJobExecution(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/jobAgents/jobs/executions", resourceVersion ?? "2021-11-01")
+    public SqlServerJobExecution(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents/jobs/executions", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _createOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreateOn", ["properties", "createTime"], isOutput: true);
@@ -170,7 +170,7 @@ public partial class SqlServerJobExecution : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerJobExecution.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlServerJobExecution resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -178,6 +178,6 @@ public partial class SqlServerJobExecution : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerJobExecution.</param>
     /// <returns>The existing SqlServerJobExecution resource.</returns>
-    public static SqlServerJobExecution FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerJobExecution FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

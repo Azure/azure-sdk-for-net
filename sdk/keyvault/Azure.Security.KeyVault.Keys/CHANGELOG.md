@@ -1,9 +1,8 @@
 # Release History
 
-## 4.7.0-beta.1 (Unreleased)
+## 4.8.0-beta.1 (Unreleased)
 
 ### Features Added
-- Support for Continuous Access Evaluation (CAE).
 
 ### Breaking Changes
 
@@ -11,7 +10,11 @@
 
 ### Other Changes
 
-- The default service version is now "V7_6_Preview_1".
+## 4.7.0 (2024-10-14)
+
+### Features Added
+
+- Support for Continuous Access Evaluation (CAE).
 
 ## 4.6.0 (2024-02-14)
 
@@ -109,7 +112,7 @@ The following changes are only breaking from the previous beta. They are not bre
 
 - Verify the challenge resource matches the vault domain.
   This should affect few customers who can set `KeyClientOptions.DisableChallengeResourceVerification` or `CryptographyClientOptions.DisableChallengeResourceVerification` to `true` to disable.
-  See <https://aka.ms/azsdk/blog/vault-uri> for more information.
+  See https://aka.ms/azsdk/blog/vault-uri for more information.
 
 ## 4.3.0 (2022-03-24)
 
@@ -400,7 +403,7 @@ Changes from both the last release and the last beta include:
 
 Version 4.0.0-preview.1 is the first preview of our efforts to create a user-friendly client library for Azure Key Vault. For more information about
 preview releases of other Azure SDK libraries, please visit
-<https://aka.ms/azure-sdk-preview1-net>.
+https://aka.ms/azure-sdk-preview1-net.
 
 This library is not a direct replacement for `Microsoft.Azure.KeyVault`. Applications
 using that library would require code changes to use `Azure.Security.KeyVault.Keys`.
@@ -425,7 +428,7 @@ only).
   [Azure Identity documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity)
   for more information
 
-### `Microsoft.Azure.KeyVault` features not implemented in this release
+### `Microsoft.Azure.KeyVault` features not implemented in this release:
 
 - Certificate management APIs
 - Cryptographic operations, e.g. sign, un/wrap, verify, en- and

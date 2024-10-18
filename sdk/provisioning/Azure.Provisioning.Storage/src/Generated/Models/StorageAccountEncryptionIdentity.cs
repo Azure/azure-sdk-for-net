@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Encryption identity for the storage account.
 /// </summary>
-public partial class StorageAccountEncryptionIdentity : ProvisioningConstruct
+public partial class StorageAccountEncryptionIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// Resource identifier of the UserAssigned identity to be associated with

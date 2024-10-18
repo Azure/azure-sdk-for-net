@@ -17,10 +17,10 @@ public abstract class InfrastructureResolver
     /// <summary>
     /// Resolve any properties of the infrastructure.
     /// </summary>
-    /// <param name="context">The current provisioning context.</param>
+    /// <param name="options">The current build options.</param>
     /// <param name="infrastructure">The infrastructure to resolve properties of.</param>
     public virtual void ResolveInfrastructure(
-        ProvisioningContext context,
+        ProvisioningBuildOptions options,
         Infrastructure infrastructure)
     {
     }
@@ -28,23 +28,23 @@ public abstract class InfrastructureResolver
     /// <summary>
     /// Process the collection of resources in the infrastructure.
     /// </summary>
-    /// <param name="context">The current provisioning context.</param>
+    /// <param name="options">The current build options.</param>
     /// <param name="resources">The existing resources to resolve.</param>
     public virtual IEnumerable<Provisionable> ResolveResources(
-        ProvisioningContext context,
+        ProvisioningBuildOptions options,
         IEnumerable<Provisionable> resources) =>
         resources;
 
     /// <summary>
     /// Gets any nested infrastructure that should be composed separately.
     /// </summary>
-    /// <param name="context">The current provisioning context.</param>
+    /// <param name="options">The current build options.</param>
     /// <param name="infrastructure">
     /// The infrastructure to inspect for any nested infrastructure.
     /// </param>
     /// <returns></returns>
     public IEnumerable<Infrastructure> GetNestedInfrastructure(
-        ProvisioningContext context,
+        ProvisioningBuildOptions options,
         Infrastructure infrastructure) =>
         [];
 }

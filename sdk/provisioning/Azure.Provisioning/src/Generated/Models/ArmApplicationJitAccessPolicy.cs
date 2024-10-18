@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Managed application Jit access policy.
 /// </summary>
-public partial class ArmApplicationJitAccessPolicy : ProvisioningConstruct
+public partial class ArmApplicationJitAccessPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// Whether the JIT access is enabled.

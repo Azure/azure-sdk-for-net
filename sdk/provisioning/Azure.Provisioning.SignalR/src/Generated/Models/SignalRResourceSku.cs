@@ -11,7 +11,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// The billing information of the resource.
 /// </summary>
-public partial class SignalRResourceSku : ProvisioningConstruct
+public partial class SignalRResourceSku : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the SKU. Required.                           Allowed

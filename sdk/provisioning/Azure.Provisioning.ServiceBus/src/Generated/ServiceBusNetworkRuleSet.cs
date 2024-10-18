@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusNetworkRuleSet.
 /// </summary>
-public partial class ServiceBusNetworkRuleSet : Resource
+public partial class ServiceBusNetworkRuleSet : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -82,15 +82,15 @@ public partial class ServiceBusNetworkRuleSet : Resource
     /// <summary>
     /// Creates a new ServiceBusNetworkRuleSet.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ServiceBusNetworkRuleSet resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusNetworkRuleSet.</param>
-    public ServiceBusNetworkRuleSet(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.ServiceBus/namespaces/networkRuleSets", resourceVersion ?? "2024-01-01")
+    public ServiceBusNetworkRuleSet(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/networkRuleSets", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _defaultAction = BicepValue<ServiceBusNetworkRuleSetDefaultAction>.DefineProperty(this, "DefaultAction", ["properties", "defaultAction"]);
@@ -128,7 +128,7 @@ public partial class ServiceBusNetworkRuleSet : Resource
     /// <summary>
     /// Creates a reference to an existing ServiceBusNetworkRuleSet.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ServiceBusNetworkRuleSet resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -136,6 +136,6 @@ public partial class ServiceBusNetworkRuleSet : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusNetworkRuleSet.</param>
     /// <returns>The existing ServiceBusNetworkRuleSet resource.</returns>
-    public static ServiceBusNetworkRuleSet FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusNetworkRuleSet FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

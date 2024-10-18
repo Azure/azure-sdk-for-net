@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// SKU for the resource.
 /// </summary>
-public partial class ArmApplicationSku : ProvisioningConstruct
+public partial class ArmApplicationSku : ProvisionableConstruct
 {
     /// <summary>
     /// The SKU name.

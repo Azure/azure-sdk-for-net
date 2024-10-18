@@ -313,7 +313,7 @@ public static class BicepFunction
                 text.GetArgument(i) switch
                 {
                     BicepValue v => v,
-                    ProvisioningVariable v => BicepSyntax.Var(v.IdentifierName),
+                    ProvisioningVariable v => BicepSyntax.Var(v.BicepIdentifier),
                     var a => new BicepValue<object>(a?.ToString() ?? "")
                 };
         };

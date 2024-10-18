@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Specification for a node group.
 /// </summary>
-public partial class NodeGroupSpec : ProvisioningConstruct
+public partial class NodeGroupSpec : ProvisionableConstruct
 {
     /// <summary>
     /// The node type deployed in the node group.

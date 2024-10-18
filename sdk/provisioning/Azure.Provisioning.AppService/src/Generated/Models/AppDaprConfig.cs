@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// App Dapr configuration.
 /// </summary>
-public partial class AppDaprConfig : ProvisioningConstruct
+public partial class AppDaprConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Boolean indicating if the Dapr side car is enabled.

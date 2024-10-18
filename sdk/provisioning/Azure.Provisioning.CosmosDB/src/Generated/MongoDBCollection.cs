@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// MongoDBCollection.
 /// </summary>
-public partial class MongoDBCollection : Resource
+public partial class MongoDBCollection : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB collection name.
@@ -76,15 +76,15 @@ public partial class MongoDBCollection : Resource
     /// <summary>
     /// Creates a new MongoDBCollection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the MongoDBCollection resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the MongoDBCollection.</param>
-    public MongoDBCollection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections", resourceVersion ?? "2024-08-15")
+    public MongoDBCollection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -236,7 +236,7 @@ public partial class MongoDBCollection : Resource
     /// <summary>
     /// Creates a reference to an existing MongoDBCollection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the MongoDBCollection resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -244,6 +244,6 @@ public partial class MongoDBCollection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the MongoDBCollection.</param>
     /// <returns>The existing MongoDBCollection resource.</returns>
-    public static MongoDBCollection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static MongoDBCollection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

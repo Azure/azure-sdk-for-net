@@ -22,7 +22,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// and
 /// Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceProperties.
 /// </summary>
-public partial class CosmosDBServiceProperties : ProvisioningConstruct
+public partial class CosmosDBServiceProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Time of the last state change (ISO-8601 format).

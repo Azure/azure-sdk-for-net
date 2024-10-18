@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Deployment operation parameters.
 /// </summary>
-public partial class ArmDeploymentContent : ProvisioningConstruct
+public partial class ArmDeploymentContent : ProvisionableConstruct
 {
     /// <summary>
     /// The location to store the deployment data.

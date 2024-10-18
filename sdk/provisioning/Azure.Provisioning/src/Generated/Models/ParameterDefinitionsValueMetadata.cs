@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// General metadata for the parameter.
 /// </summary>
-public partial class ParameterDefinitionsValueMetadata : ProvisioningConstruct
+public partial class ParameterDefinitionsValueMetadata : ProvisionableConstruct
 {
     /// <summary>
     /// The display name for the parameter.
