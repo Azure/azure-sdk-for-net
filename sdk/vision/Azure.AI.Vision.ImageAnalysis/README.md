@@ -55,8 +55,14 @@ Here we are using environment variables to hold the endpoint and key for the Com
 
 #### Create ImageAnalysisClient with a Microsoft Entra ID Credential
 
-Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Microsoft Entra ID (formerly Azure Active Directory) using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][azure_identity_dac] provider shown below,
-or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
+**Prerequisites for Entra ID Authentication**:
+- The role `Cognitive Services User` assigned to you. Role assignment can be done via the "Access Control (IAM)" tab of your Computer Vision resource in the Azure portal.
+- [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) installed.
+- You are logged into your Azure account by running `az login`.
+
+Also note that if you have multiple Azure subscriptions, the subscription that contains your Computer Vision resource must be your default subscription. Run `az account list --output table` to list all your subscriptions and see which one is the default. Run `az account set --subscription "Your Subscription ID or Name"` to change your default subscription.
+
+Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Microsoft Entra ID (formerly Azure Active Directory) using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][azure_identity_dac] provider shown below, or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
 
 ```dotnetcli
 dotnet add package Azure.Identity

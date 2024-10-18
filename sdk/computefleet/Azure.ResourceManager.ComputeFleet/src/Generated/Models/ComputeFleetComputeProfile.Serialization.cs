@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
+            if (Optional.IsDefined(AdditionalVirtualMachineCapabilities))
+            {
+                writer.WritePropertyName("additionalVirtualMachineCapabilities"u8);
+                writer.WriteObjectValue(AdditionalVirtualMachineCapabilities, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -86,6 +91,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             ComputeFleetVmProfile baseVirtualMachineProfile = default;
             string computeApiVersion = default;
             int? platformFaultDomainCount = default;
+            AdditionalCapabilities additionalVirtualMachineCapabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,13 +115,22 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     platformFaultDomainCount = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("additionalVirtualMachineCapabilities"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    additionalVirtualMachineCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ComputeFleetComputeProfile(baseVirtualMachineProfile, computeApiVersion, platformFaultDomainCount, serializedAdditionalRawData);
+            return new ComputeFleetComputeProfile(baseVirtualMachineProfile, computeApiVersion, platformFaultDomainCount, additionalVirtualMachineCapabilities, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeFleetComputeProfile>.Write(ModelReaderWriterOptions options)
