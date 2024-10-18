@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // invoke the operation
             CosmosDBChaosFaultResourceData data = new CosmosDBChaosFaultResourceData()
             {
-                Action = SupportedAction.Enable,
+                CosmosDBChaosFaultSupportedActions = CosmosDBChaosFaultSupportedAction.Enable,
                 Region = "EastUS",
                 DatabaseName = "testDatabase",
                 ContainerName = "testCollection",

@@ -358,7 +358,6 @@ prepend-rp-prefix:
 - Type
 - ConnectionString
 - ChaosFaultResource
-- SupportedAction
 
 models-to-treat-empty-string-as-null:
   - CosmosDBAccountData
@@ -461,6 +460,12 @@ directive:
   transform: >
     $.CommandPublicResource.properties.cassandraStopStart["x-ms-client-name"] = "shouldStopCassandraBeforeStart";
     $.CommandPublicResource.properties.readWrite["x-ms-client-name"] = "isReadWrite";
+- from: chaosFault.json
+  where: $.definitions
+  transform: >
+    $.chaosFaultProperties.properties.action['x-ms-client-name'] = "CosmosDBChaosFaultSupportedActions";
+    $.chaosFaultProperties.properties.action['x-ms-enum']['name'] = "CosmosDBChaosFaultSupportedActions";
+
 # Below is a workaround for ADO 6196
 - remove-operation:
   - DatabaseAccounts_GetReadOnlyKeys
@@ -661,5 +666,4 @@ directive:
 - rename-model:
     from: SqlRoleDefinitionCreateUpdateParameters
     to: CosmosDBSqlRoleDefinitionCreateUpdateData
-
 ```

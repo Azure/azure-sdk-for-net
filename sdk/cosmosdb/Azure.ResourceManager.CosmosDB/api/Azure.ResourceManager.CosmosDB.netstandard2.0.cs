@@ -610,8 +610,8 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class CosmosDBChaosFaultResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>
     {
         public CosmosDBChaosFaultResourceData() { }
-        public Azure.ResourceManager.CosmosDB.Models.SupportedAction? Action { get { throw null; } set { } }
         public string ContainerName { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBChaosFaultSupportedAction? CosmosDBChaosFaultSupportedActions { get { throw null; } set { } }
         public string DatabaseName { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string Region { get { throw null; } set { } }
@@ -2429,7 +2429,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBBackupInformation CosmosDBBackupInformation(System.DateTimeOffset? continuousBackupInformationLatestRestorableTimestamp = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseMetric CosmosDBBaseMetric(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string timeGrain = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType? unit = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType?), Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricName name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricValue> metricValues = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseUsage CosmosDBBaseUsage(Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType? unit = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricUnitType?), Azure.ResourceManager.CosmosDB.Models.CosmosDBMetricName name = null, string quotaPeriod = null, long? limit = default(long?), long? currentValue = default(long?)) { throw null; }
-        public static Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData CosmosDBChaosFaultResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CosmosDB.Models.SupportedAction? action = default(Azure.ResourceManager.CosmosDB.Models.SupportedAction?), string region = null, string databaseName = null, string containerName = null, string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData CosmosDBChaosFaultResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBChaosFaultSupportedAction? cosmosDBChaosFaultSupportedActions = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBChaosFaultSupportedAction?), string region = null, string databaseName = null, string containerName = null, string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBContainerPartitionKey CosmosDBContainerPartitionKey(System.Collections.Generic.IEnumerable<string> paths = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBPartitionKind? kind = default(Azure.ResourceManager.CosmosDB.Models.CosmosDBPartitionKind?), int? version = default(int?), bool? isSystemKey = default(bool?)) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBErrorResult CosmosDBErrorResult(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.CosmosDB.Models.CosmosDBFailoverPolicy CosmosDBFailoverPolicy(string id = null, Azure.Core.AzureLocation? locationName = default(Azure.Core.AzureLocation?), int? failoverPriority = default(int?)) { throw null; }
@@ -3774,6 +3774,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseUsage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseUsage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBBaseUsage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum CosmosDBChaosFaultSupportedAction
+    {
+        Enable = 0,
+        Disable = 1,
     }
     public partial class CosmosDBClientEncryptionIncludedPath : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionIncludedPath>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBClientEncryptionIncludedPath>
     {
@@ -6150,11 +6155,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public enum SupportedAction
-    {
-        Enable = 0,
-        Disable = 1,
     }
     public partial class ThroughputPolicyResourceInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.ThroughputPolicyResourceInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.ThroughputPolicyResourceInfo>
     {

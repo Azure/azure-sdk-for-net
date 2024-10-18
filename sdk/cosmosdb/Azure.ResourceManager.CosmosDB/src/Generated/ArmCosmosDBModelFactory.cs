@@ -3301,20 +3301,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="action"> Indicates whether what action to take for the Chaos Fault. </param>
+        /// <param name="cosmosDBChaosFaultSupportedActions"> Indicates whether what action to take for the Chaos Fault. </param>
         /// <param name="region"> Region of the account where the Chaos Fault is to be enabled/disabled. </param>
         /// <param name="databaseName"> Database name. </param>
         /// <param name="containerName"> Container name. </param>
         /// <param name="provisioningState"> A provisioning state of the Chaos Fault. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBChaosFaultResourceData"/> instance for mocking. </returns>
-        public static CosmosDBChaosFaultResourceData CosmosDBChaosFaultResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SupportedAction? action = null, string region = null, string databaseName = null, string containerName = null, string provisioningState = null)
+        public static CosmosDBChaosFaultResourceData CosmosDBChaosFaultResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBChaosFaultSupportedAction? cosmosDBChaosFaultSupportedActions = null, string region = null, string databaseName = null, string containerName = null, string provisioningState = null)
         {
             return new CosmosDBChaosFaultResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                action,
+                cosmosDBChaosFaultSupportedActions,
                 region,
                 databaseName,
                 containerName,

@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.CosmosDB
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Action))
+            if (Optional.IsDefined(CosmosDBChaosFaultSupportedActions))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteStringValue(Action.Value.ToSerialString());
+                writer.WriteStringValue(CosmosDBChaosFaultSupportedActions.Value.ToSerialString());
             }
             if (Optional.IsDefined(Region))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            SupportedAction? action = default;
+            CosmosDBChaosFaultSupportedAction? action = default;
             string region = default;
             string databaseName = default;
             string containerName = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            action = property0.Value.GetString().ToSupportedAction();
+                            action = property0.Value.GetString().ToCosmosDBChaosFaultSupportedAction();
                             continue;
                         }
                         if (property0.NameEquals("region"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.CosmosDB
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Action), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CosmosDBChaosFaultSupportedActions), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    action: ");
@@ -286,10 +286,10 @@ namespace Azure.ResourceManager.CosmosDB
             }
             else
             {
-                if (Optional.IsDefined(Action))
+                if (Optional.IsDefined(CosmosDBChaosFaultSupportedActions))
                 {
                     builder.Append("    action: ");
-                    builder.AppendLine($"'{Action.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{CosmosDBChaosFaultSupportedActions.Value.ToSerialString()}'");
                 }
             }
 

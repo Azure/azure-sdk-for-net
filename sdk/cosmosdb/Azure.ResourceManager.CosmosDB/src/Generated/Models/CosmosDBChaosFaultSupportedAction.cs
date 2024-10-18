@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Indicates whether what action to take for the Chaos Fault. </summary>
-    public enum SupportedAction
+    public enum CosmosDBChaosFaultSupportedAction
     {
         /// <summary> Enable. </summary>
         Enable,

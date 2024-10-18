@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             string chaosFault = "ServiceUnavailability";
             CosmosDBChaosFaultResourceData data = new CosmosDBChaosFaultResourceData()
             {
-                Action = SupportedAction.Enable,
+                CosmosDBChaosFaultSupportedActions = CosmosDBChaosFaultSupportedAction.Enable,
                 Region = "EastUS",
                 DatabaseName = "testDatabase",
                 ContainerName = "testCollection",

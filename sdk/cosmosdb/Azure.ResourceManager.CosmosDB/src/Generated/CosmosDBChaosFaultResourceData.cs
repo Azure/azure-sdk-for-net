@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="action"> Indicates whether what action to take for the Chaos Fault. </param>
+        /// <param name="cosmosDBChaosFaultSupportedActions"> Indicates whether what action to take for the Chaos Fault. </param>
         /// <param name="region"> Region of the account where the Chaos Fault is to be enabled/disabled. </param>
         /// <param name="databaseName"> Database name. </param>
         /// <param name="containerName"> Container name. </param>
         /// <param name="provisioningState"> A provisioning state of the Chaos Fault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBChaosFaultResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SupportedAction? action, string region, string databaseName, string containerName, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CosmosDBChaosFaultResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBChaosFaultSupportedAction? cosmosDBChaosFaultSupportedActions, string region, string databaseName, string containerName, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Action = action;
+            CosmosDBChaosFaultSupportedActions = cosmosDBChaosFaultSupportedActions;
             Region = region;
             DatabaseName = databaseName;
             ContainerName = containerName;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Indicates whether what action to take for the Chaos Fault. </summary>
         [WirePath("properties.action")]
-        public SupportedAction? Action { get; set; }
+        public CosmosDBChaosFaultSupportedAction? CosmosDBChaosFaultSupportedActions { get; set; }
         /// <summary> Region of the account where the Chaos Fault is to be enabled/disabled. </summary>
         [WirePath("properties.region")]
         public string Region { get; set; }
