@@ -69,8 +69,6 @@ namespace Azure.AI.ContentSafety.Tests
             var response = await client.AnalyzeTextAsync(request);
 
             string jsonString = JsonSerializer.Serialize(response.Value.CategoriesAnalysis);
-            Console.WriteLine(jsonString);
-
             var obj = JsonSerializer.Deserialize<List<TextCategoriesAnalysis>>(jsonString);
 
             Assert.IsNotNull(response);
@@ -80,6 +78,14 @@ namespace Azure.AI.ContentSafety.Tests
             Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.SelfHarm));
             Assert.IsNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Sexual));
             Assert.IsNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Violence));
+
+            Assert.AreEqual("[{\"Category\":\"Hate\",\"Severity\":2},{\"Category\":\"SelfHarm\",\"Severity\":0}]", jsonString);
+
+            Assert.AreEqual(2, obj.Count);
+            Assert.AreEqual(TextCategory.Hate, obj[0].Category);
+            Assert.AreEqual(2, obj[0].Severity);
+            Assert.AreEqual(TextCategory.SelfHarm, obj[1].Category);
+            Assert.AreEqual(0, obj[1].Severity);
         }
 
         [RecordedTest]
@@ -91,12 +97,26 @@ namespace Azure.AI.ContentSafety.Tests
             var request = new AnalyzeImageOptions(image);
             var response = await client.AnalyzeImageAsync(request);
 
+            string jsonString = JsonSerializer.Serialize(response.Value.CategoriesAnalysis);
+            var obj = JsonSerializer.Deserialize<List<ImageCategoriesAnalysis>>(jsonString);
+
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Value.CategoriesAnalysis);
             Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Violence));
             Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Hate));
             Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Sexual));
             Assert.IsNotNull(response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.SelfHarm));
+
+            Assert.AreEqual("[{\"Category\":\"Hate\",\"Severity\":0},{\"Category\":\"SelfHarm\",\"Severity\":0},{\"Category\":\"Sexual\",\"Severity\":0},{\"Category\":\"Violence\",\"Severity\":0}]", jsonString);
+            Assert.AreEqual(4, obj.Count);
+            Assert.AreEqual(ImageCategory.Hate, obj[0].Category);
+            Assert.AreEqual(0, obj[0].Severity);
+            Assert.AreEqual(ImageCategory.SelfHarm, obj[1].Category);
+            Assert.AreEqual(0, obj[1].Severity);
+            Assert.AreEqual(ImageCategory.Sexual, obj[2].Category);
+            Assert.AreEqual(0, obj[2].Severity);
+            Assert.AreEqual(ImageCategory.Violence, obj[3].Category);
+            Assert.AreEqual(0, obj[3].Severity);
         }
 
         [RecordedTest]

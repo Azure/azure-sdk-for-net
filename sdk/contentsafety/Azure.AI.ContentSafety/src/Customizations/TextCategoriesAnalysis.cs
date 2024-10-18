@@ -47,7 +47,7 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Initializes a new instance of <see cref="TextCategoriesAnalysis"/>. </summary>
         /// <param name="category"> The text analysis category. </param>
-        internal TextCategoriesAnalysis(TextCategory category)
+        public TextCategoriesAnalysis(TextCategory category)
         {
             Category = category;
         }

@@ -7,10 +7,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace Azure.AI.ContentSafety
 {
     /// <summary> Image analyze category. </summary>
+    [JsonConverter(typeof(ImageCategoryJsonConverter))]
     public readonly partial struct ImageCategory : IEquatable<ImageCategory>
     {
         private readonly string _value;
@@ -53,5 +56,22 @@ namespace Azure.AI.ContentSafety
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
+
+        /// <summary>
+        /// JSON converter for <see cref="ImageCategory"/>.
+        /// </summary>
+        private class ImageCategoryJsonConverter : JsonConverter<ImageCategory>
+        {
+            public override ImageCategory Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                string value = reader.GetString();
+                return new ImageCategory(value);
+            }
+
+            public override void Write(Utf8JsonWriter writer, ImageCategory value, JsonSerializerOptions options)
+            {
+                writer.WriteStringValue(value._value);
+            }
+        }
     }
 }

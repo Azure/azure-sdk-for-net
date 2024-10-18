@@ -57,7 +57,6 @@ namespace Azure.AI.ContentSafety
         /// <inheritdoc />
         public override string ToString() => _value;
 
-        // Add XML comment for TextCategoryJsonConverter to fix CS1591
         /// <summary>
         /// JSON converter for <see cref="TextCategory"/>.
         /// </summary>

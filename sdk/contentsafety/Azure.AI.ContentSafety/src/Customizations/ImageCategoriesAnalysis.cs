@@ -47,7 +47,7 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Initializes a new instance of <see cref="ImageCategoriesAnalysis"/>. </summary>
         /// <param name="category"> The image analysis category. </param>
-        internal ImageCategoriesAnalysis(ImageCategory category)
+        public ImageCategoriesAnalysis(ImageCategory category)
         {
             Category = category;
         }
@@ -56,7 +56,7 @@ namespace Azure.AI.ContentSafety
         /// <param name="category"> The image analysis category. </param>
         /// <param name="severity"> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’, and the output value can be 0, 2, 4, 6. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageCategoriesAnalysis(ImageCategory category, int? severity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        public ImageCategoriesAnalysis(ImageCategory category, int? severity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Severity = severity;
@@ -64,13 +64,13 @@ namespace Azure.AI.ContentSafety
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageCategoriesAnalysis"/> for deserialization. </summary>
-        internal ImageCategoriesAnalysis()
+        public ImageCategoriesAnalysis()
         {
         }
 
         /// <summary> The image analysis category. </summary>
-        public ImageCategory Category { get; }
+        public ImageCategory Category { get; set; }
         /// <summary> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’, and the output value can be 0, 2, 4, 6. </summary>
-        public int? Severity { get; }
+        public int? Severity { get; set;  }
     }
 }
