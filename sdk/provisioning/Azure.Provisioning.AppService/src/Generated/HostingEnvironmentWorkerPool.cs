@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// HostingEnvironmentWorkerPool.
 /// </summary>
-public partial class HostingEnvironmentWorkerPool : Resource
+public partial class HostingEnvironmentWorkerPool : ProvisionableResource
 {
     /// <summary>
     /// Name of the worker pool.
@@ -87,15 +87,15 @@ public partial class HostingEnvironmentWorkerPool : Resource
     /// <summary>
     /// Creates a new HostingEnvironmentWorkerPool.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the HostingEnvironmentWorkerPool
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the HostingEnvironmentWorkerPool.</param>
-    public HostingEnvironmentWorkerPool(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/hostingEnvironments/workerPools", resourceVersion ?? "2024-04-01")
+    public HostingEnvironmentWorkerPool(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments/workerPools", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _computeMode = BicepValue<ComputeModeOption>.DefineProperty(this, "ComputeMode", ["properties", "computeMode"]);
@@ -269,7 +269,7 @@ public partial class HostingEnvironmentWorkerPool : Resource
     /// <summary>
     /// Creates a reference to an existing HostingEnvironmentWorkerPool.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the HostingEnvironmentWorkerPool
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -277,6 +277,6 @@ public partial class HostingEnvironmentWorkerPool : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the HostingEnvironmentWorkerPool.</param>
     /// <returns>The existing HostingEnvironmentWorkerPool resource.</returns>
-    public static HostingEnvironmentWorkerPool FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static HostingEnvironmentWorkerPool FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

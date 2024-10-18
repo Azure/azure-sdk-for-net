@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// Sku change info of account.
 /// </summary>
-public partial class CognitiveServicesSkuChangeInfo : ProvisioningConstruct
+public partial class CognitiveServicesSkuChangeInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the count of downgrades.

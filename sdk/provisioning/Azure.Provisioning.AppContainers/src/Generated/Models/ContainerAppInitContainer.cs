@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Container App init container definition.
 /// </summary>
-public partial class ContainerAppInitContainer : ProvisioningConstruct
+public partial class ContainerAppInitContainer : ProvisionableConstruct
 {
     /// <summary>
     /// Container image tag.

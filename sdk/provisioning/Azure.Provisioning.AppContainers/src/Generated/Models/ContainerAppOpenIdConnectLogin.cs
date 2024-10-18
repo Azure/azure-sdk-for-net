@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppContainers;
 /// The configuration settings of the login flow of the custom Open ID Connect
 /// provider.
 /// </summary>
-public partial class ContainerAppOpenIdConnectLogin : ProvisioningConstruct
+public partial class ContainerAppOpenIdConnectLogin : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the claim that contains the users name.

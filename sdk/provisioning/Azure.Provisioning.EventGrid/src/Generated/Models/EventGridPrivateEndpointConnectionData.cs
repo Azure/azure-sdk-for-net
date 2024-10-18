@@ -14,7 +14,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// A class representing the EventGridPrivateEndpointConnection data model.
 /// </summary>
-public partial class EventGridPrivateEndpointConnectionData : ProvisioningConstruct
+public partial class EventGridPrivateEndpointConnectionData : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets Id.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB resource throughput policy.
 /// </summary>
-public partial class ThroughputPolicyResourceInfo : ProvisioningConstruct
+public partial class ThroughputPolicyResourceInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Determines whether the ThroughputPolicy is active or not.

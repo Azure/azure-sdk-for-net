@@ -11,7 +11,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// High availability properties of a server.
 /// </summary>
-public partial class PostgreSqlFlexibleServerHighAvailability : ProvisioningConstruct
+public partial class PostgreSqlFlexibleServerHighAvailability : ProvisionableConstruct
 {
     /// <summary>
     /// The HA mode for the server.

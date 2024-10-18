@@ -71,7 +71,7 @@ public interface IClientCreator<TClient, TOptions> :
 public class ClientCreatorOutputResolver : InfrastructureResolver
 {
     /// <inheritdoc/>
-    public override IEnumerable<Provisionable> ResolveResources(ProvisioningContext context, IEnumerable<Provisionable> resources)
+    public override IEnumerable<Provisionable> ResolveResources(ProvisioningBuildOptions options, IEnumerable<Provisionable> resources)
     {
         foreach (Provisionable resource in resources)
         {

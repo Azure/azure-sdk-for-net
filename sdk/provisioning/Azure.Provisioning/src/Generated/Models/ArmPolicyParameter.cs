@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// The definition of a parameter that can be provided to the policy.
 /// </summary>
-public partial class ArmPolicyParameter : ProvisioningConstruct
+public partial class ArmPolicyParameter : ProvisionableConstruct
 {
     /// <summary>
     /// The data type of the parameter.

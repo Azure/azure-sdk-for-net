@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ContainerService;
 /// Maintenance window used to configure scheduled auto-upgrade for a Managed
 /// Cluster.
 /// </summary>
-public partial class ContainerServiceMaintenanceWindow : ProvisioningConstruct
+public partial class ContainerServiceMaintenanceWindow : ProvisionableConstruct
 {
     /// <summary>
     /// Recurrence schedule for the maintenance window.

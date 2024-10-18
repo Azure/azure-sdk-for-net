@@ -42,7 +42,7 @@ internal static class Azd
         ModuleImport import = new("cm", $"cm.bicep")
         {
             Name = "cm",
-            Scope = new IdentifierExpression(rg.IdentifierName)
+            Scope = new IdentifierExpression(rg.BicepIdentifier)
         };
         import.Parameters.Add(nameof(location), location);
         import.Parameters.Add(nameof(principalId), principalId);

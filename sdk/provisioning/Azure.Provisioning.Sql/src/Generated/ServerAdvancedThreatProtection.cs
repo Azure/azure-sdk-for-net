@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ServerAdvancedThreatProtection.
 /// </summary>
-public partial class ServerAdvancedThreatProtection : Resource
+public partial class ServerAdvancedThreatProtection : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -58,15 +58,15 @@ public partial class ServerAdvancedThreatProtection : Resource
     /// <summary>
     /// Creates a new ServerAdvancedThreatProtection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ServerAdvancedThreatProtection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ServerAdvancedThreatProtection.</param>
-    public ServerAdvancedThreatProtection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/advancedThreatProtectionSettings", resourceVersion ?? "2021-11-01")
+    public ServerAdvancedThreatProtection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/advancedThreatProtectionSettings", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<AdvancedThreatProtectionState>.DefineProperty(this, "State", ["properties", "state"]);
@@ -95,7 +95,7 @@ public partial class ServerAdvancedThreatProtection : Resource
     /// <summary>
     /// Creates a reference to an existing ServerAdvancedThreatProtection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ServerAdvancedThreatProtection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -103,6 +103,6 @@ public partial class ServerAdvancedThreatProtection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ServerAdvancedThreatProtection.</param>
     /// <returns>The existing ServerAdvancedThreatProtection resource.</returns>
-    public static ServerAdvancedThreatProtection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ServerAdvancedThreatProtection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

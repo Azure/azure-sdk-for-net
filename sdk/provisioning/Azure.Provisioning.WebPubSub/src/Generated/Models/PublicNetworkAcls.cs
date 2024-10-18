@@ -11,7 +11,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// Network ACL.
 /// </summary>
-public partial class PublicNetworkAcls : ProvisioningConstruct
+public partial class PublicNetworkAcls : ProvisionableConstruct
 {
     /// <summary>
     /// Allowed request types. The value can be one or more of:

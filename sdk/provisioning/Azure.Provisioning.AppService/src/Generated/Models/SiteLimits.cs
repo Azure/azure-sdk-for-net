@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Metric limits set on an app.
 /// </summary>
-public partial class SiteLimits : ProvisioningConstruct
+public partial class SiteLimits : ProvisionableConstruct
 {
     /// <summary>
     /// Maximum allowed CPU usage percentage.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// Read-only endpoint of the failover group instance.
 /// </summary>
-public partial class FailoverGroupReadOnlyEndpoint : ProvisioningConstruct
+public partial class FailoverGroupReadOnlyEndpoint : ProvisionableConstruct
 {
     /// <summary>
     /// Failover policy of the read-only endpoint for the failover group.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Http logs to file system configuration.
 /// </summary>
-public partial class FileSystemHttpLogsConfig : ProvisioningConstruct
+public partial class FileSystemHttpLogsConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Maximum size in megabytes that http log files can use.             When

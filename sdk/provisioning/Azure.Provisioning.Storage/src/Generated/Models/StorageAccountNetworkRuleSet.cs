@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Network rule set.
 /// </summary>
-public partial class StorageAccountNetworkRuleSet : ProvisioningConstruct
+public partial class StorageAccountNetworkRuleSet : ProvisionableConstruct
 {
     /// <summary>
     /// Specifies whether traffic is bypassed for

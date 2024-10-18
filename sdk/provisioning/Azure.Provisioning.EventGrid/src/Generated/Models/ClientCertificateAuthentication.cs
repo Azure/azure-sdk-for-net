@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// The certificate authentication properties for the client.
 /// </summary>
-public partial class ClientCertificateAuthentication : ProvisioningConstruct
+public partial class ClientCertificateAuthentication : ProvisionableConstruct
 {
     /// <summary>
     /// The validation scheme used to authenticate the client. Default value is

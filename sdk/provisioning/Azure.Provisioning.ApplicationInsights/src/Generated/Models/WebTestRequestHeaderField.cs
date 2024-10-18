@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ApplicationInsights;
 /// <summary>
 /// A header to add to the WebTest.
 /// </summary>
-public partial class WebTestRequestHeaderField : ProvisioningConstruct
+public partial class WebTestRequestHeaderField : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the header.

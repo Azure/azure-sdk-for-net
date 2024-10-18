@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ResourceTypeAliasPattern.
 /// </summary>
-public partial class ResourceTypeAliasPattern : ProvisioningConstruct
+public partial class ResourceTypeAliasPattern : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the Phrase.

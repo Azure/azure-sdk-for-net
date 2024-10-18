@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Application logs to Azure table storage configuration.
 /// </summary>
-public partial class AppServiceTableStorageApplicationLogsConfig : ProvisioningConstruct
+public partial class AppServiceTableStorageApplicationLogsConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Log level.
