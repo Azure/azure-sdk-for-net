@@ -40,18 +40,19 @@ namespace Azure.ResourceManager.Terraform
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.ExportTerraform(BaseExportModel,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.ExportTerraform(WaitUntil,BaseExportModel,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="body"/> is null. </exception>
-        public static async Task<Response<ExportResult>> ExportTerraformAsync(this SubscriptionResource subscriptionResource, BaseExportModel body, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<TerraformOperationStatus>> ExportTerraformAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, BaseExportModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableTerraformSubscriptionResource(subscriptionResource).ExportTerraformAsync(body, cancellationToken).ConfigureAwait(false);
+            return await GetMockableTerraformSubscriptionResource(subscriptionResource).ExportTerraformAsync(waitUntil, body, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -72,18 +73,19 @@ namespace Azure.ResourceManager.Terraform
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.ExportTerraform(BaseExportModel,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.ExportTerraform(WaitUntil,BaseExportModel,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="body"/> is null. </exception>
-        public static Response<ExportResult> ExportTerraform(this SubscriptionResource subscriptionResource, BaseExportModel body, CancellationToken cancellationToken = default)
+        public static ArmOperation<TerraformOperationStatus> ExportTerraform(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, BaseExportModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableTerraformSubscriptionResource(subscriptionResource).ExportTerraform(body, cancellationToken);
+            return GetMockableTerraformSubscriptionResource(subscriptionResource).ExportTerraform(waitUntil, body, cancellationToken);
         }
     }
 }

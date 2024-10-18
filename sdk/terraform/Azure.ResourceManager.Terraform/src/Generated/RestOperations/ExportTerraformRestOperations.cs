@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.Terraform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExportResult>> ExportTerraformAsync(string subscriptionId, BaseExportModel body, CancellationToken cancellationToken = default)
+        public async Task<Response> ExportTerraformAsync(string subscriptionId, BaseExportModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(body, nameof(body));
@@ -83,13 +82,8 @@ namespace Azure.ResourceManager.Terraform
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
-                    {
-                        ExportResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExportResult.DeserializeExportResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -101,7 +95,7 @@ namespace Azure.ResourceManager.Terraform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExportResult> ExportTerraform(string subscriptionId, BaseExportModel body, CancellationToken cancellationToken = default)
+        public Response ExportTerraform(string subscriptionId, BaseExportModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(body, nameof(body));
@@ -110,13 +104,8 @@ namespace Azure.ResourceManager.Terraform
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
-                    {
-                        ExportResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExportResult.DeserializeExportResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -58,10 +58,11 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<ExportResult>> ExportTerraformAsync(BaseExportModel body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TerraformOperationStatus>> ExportTerraformAsync(WaitUntil waitUntil, BaseExportModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -70,7 +71,10 @@ namespace Azure.ResourceManager.Terraform.Mocking
             try
             {
                 var response = await ExportTerraformRestClient.ExportTerraformAsync(Id.SubscriptionId, body, cancellationToken).ConfigureAwait(false);
-                return response;
+                var operation = new TerraformArmOperation<TerraformOperationStatus>(new TerraformOperationStatusOperationSource(), ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateExportTerraformRequest(Id.SubscriptionId, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -96,10 +100,11 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<ExportResult> ExportTerraform(BaseExportModel body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TerraformOperationStatus> ExportTerraform(WaitUntil waitUntil, BaseExportModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -108,7 +113,10 @@ namespace Azure.ResourceManager.Terraform.Mocking
             try
             {
                 var response = ExportTerraformRestClient.ExportTerraform(Id.SubscriptionId, body, cancellationToken);
-                return response;
+                var operation = new TerraformArmOperation<TerraformOperationStatus>(new TerraformOperationStatusOperationSource(), ExportTerraformClientDiagnostics, Pipeline, ExportTerraformRestClient.CreateExportTerraformRequest(Id.SubscriptionId, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
