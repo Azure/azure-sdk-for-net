@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task Get_GetsAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Get.json
-            // this example is just showing the usage of "MongoClusters_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task Update_UpdatesTheDiskSizeOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PatchDiskSize.json
-            // this example is just showing the usage of "MongoClusters_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task Update_DisablesPublicNetworkAccessOnAMongoClusterResourceWithAPrivateEndpointConnection()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PatchPrivateNetworkAccess.json
-            // this example is just showing the usage of "MongoClusters_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task Update_ResetsTheAdministratorLoginPassword()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_ResetPassword.json
-            // this example is just showing the usage of "MongoClusters_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task Update_UpdatesAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Update.json
-            // this example is just showing the usage of "MongoClusters_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task Delete_DeletesAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Delete.json
-            // this example is just showing the usage of "MongoClusters_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
