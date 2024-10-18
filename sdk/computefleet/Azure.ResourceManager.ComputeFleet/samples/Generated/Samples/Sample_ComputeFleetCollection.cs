@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
         {
             // Generated from example definition: 2024-11-01/Fleets_Get.json
             // this example is just showing the usage of "Fleets_Get" operation, for the dependent resources, they will have to be created separately.
-
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
@@ -89,7 +88,6 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
         {
             // Generated from example definition: 2024-11-01/Fleets_Get.json
             // this example is just showing the usage of "Fleets_Get" operation, for the dependent resources, they will have to be created separately.
-
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
@@ -131,7 +129,6 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
         {
             // Generated from example definition: 2024-11-01/Fleets_CreateOrUpdate.json
             // this example is just showing the usage of "Fleets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
@@ -560,7 +557,6 @@ IsAutomaticUpgradeEnabled = true,
         {
             // Generated from example definition: 2024-11-01/Fleets_CreateOrUpdate_MinimumSet.json
             // this example is just showing the usage of "Fleets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
@@ -689,7 +685,6 @@ IsIPForwardingEnabled = true,
         {
             // Generated from example definition: 2024-11-01/Fleets_ListByResourceGroup.json
             // this example is just showing the usage of "Fleet_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
-
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
