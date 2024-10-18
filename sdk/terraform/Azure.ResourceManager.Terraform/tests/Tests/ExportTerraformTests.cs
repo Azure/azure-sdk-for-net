@@ -10,12 +10,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Terraform.Tests.Tests
 {
-    [TestFixture]
     public class ExportTerraformTests : TerraformManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
 
-        public ExportTerraformTests() : base(true)
+        public ExportTerraformTests(bool isAsync) : base(isAsync)
         {
         }
 
