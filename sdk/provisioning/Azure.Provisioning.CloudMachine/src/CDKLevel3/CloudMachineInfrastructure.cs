@@ -19,6 +19,8 @@ namespace Azure.Provisioning.CloudMachine;
 
 public class CloudMachineInfrastructure
 {
+    internal const string SB_PRIVATE_TOPIC = "cm_servicebus_topic_private";
+    internal const string SB_PRIVATE_SUB = "cm_servicebus_subscription_private";
     private readonly string _cmid;
 
     private Infrastructure _infrastructure = new Infrastructure("cm");
@@ -114,9 +116,9 @@ public class CloudMachineInfrastructure
             SupportOrdering = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusSubscription_private = new("cm_servicebus_subscription_private", "2021-11-01")
+        _serviceBusSubscription_private = new(SB_PRIVATE_SUB, "2021-11-01")
         {
-            Name = "cm_servicebus_subscription_private",
+            Name = SB_PRIVATE_SUB,
             Parent = _serviceBusTopic_private,
             IsClientAffine = false,
             LockDuration = new StringLiteral("PT30S"),

@@ -28,15 +28,31 @@ namespace Azure.CloudMachine
         public void SendMessage(object serializable) { }
         public void WhenMessageReceived(System.Action<string> received) { }
     }
+    public partial class StorageFile
+    {
+        internal StorageFile() { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } }
+        public string Path { get { throw null; } }
+        public string RequestId { get { throw null; } }
+        public void Delete() { }
+        public System.BinaryData Download() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static implicit operator Azure.Response (Azure.CloudMachine.StorageFile result) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageServices
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public System.BinaryData DownloadBlob(string name) { throw null; }
+        public void DeleteBlob(string path) { }
+        public System.BinaryData DownloadBlob(string path) { throw null; }
         public string UploadBlob(object json, string? name = null) { throw null; }
-        public void WhenBlobCreated(System.Func<string, System.Threading.Tasks.Task> function) { }
-        public void WhenBlobUploaded(System.Action<string> function) { }
+        public void WhenBlobUploaded(System.Action<Azure.CloudMachine.StorageFile> function) { }
     }
 }
 namespace Azure.Core

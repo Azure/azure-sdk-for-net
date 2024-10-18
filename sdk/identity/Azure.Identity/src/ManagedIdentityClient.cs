@@ -20,8 +20,8 @@ namespace Azure.Identity
         internal Lazy<ManagedIdentitySource> _identitySource;
         private MsalConfidentialClient _msalConfidentialClient;
         private MsalManagedIdentityClient _msalManagedIdentityClient;
-        private bool _enableLegacyMI;
         private bool _isChainedCredential;
+        private ManagedIdentityClientOptions _options;
 
         protected ManagedIdentityClient()
         {
@@ -39,12 +39,12 @@ namespace Azure.Identity
 
         public ManagedIdentityClient(ManagedIdentityClientOptions options)
         {
+            _options = options.Clone();
             ManagedIdentityId = options.ManagedIdentityId;
             Pipeline = options.Pipeline;
-            _enableLegacyMI = options.EnableManagedIdentityLegacyBehavior;
             _isChainedCredential = options.Options?.IsChainedCredential ?? false;
             _msalManagedIdentityClient = new MsalManagedIdentityClient(options);
-            _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options, _enableLegacyMI, _msalManagedIdentityClient));
+            _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options, _msalManagedIdentityClient));
             _msalConfidentialClient = new MsalConfidentialClient(
                 Pipeline,
                 "MANAGED-IDENTITY-RESOURCE-TENENT",
@@ -60,31 +60,33 @@ namespace Azure.Identity
         public async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             AuthenticationResult result;
-            if (_enableLegacyMI)
+
+            var availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
+
+            // If the source is DefaultToImds and the credential is chained, we should probe the IMDS endpoint first.
+            if (availableSource == MSAL.ManagedIdentitySource.DefaultToImds && _isChainedCredential)
             {
-                result = await _msalConfidentialClient.AcquireTokenForClientAsync(context.Scopes, context.TenantId, context.Claims, context.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
+                return await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
             }
-            else
+
+            // ServiceFabric does not support specifying user-assigned managed identity by client ID or resource ID. The managed identity selected is based on the resource configuration.
+            if (availableSource == MSAL.ManagedIdentitySource.ServiceFabric && (ManagedIdentityId?._idType != ManagedIdentityIdType.SystemAssigned))
             {
-                var availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
-
-                // If the source is DefaultToImds and the credential is chained, we should probe the IMDS endpoint first.
-                if (availableSource == MSAL.ManagedIdentitySource.DefaultToImds && _isChainedCredential)
-                {
-                    return await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
-                }
-
-                // ServiceFabric does not support specifying user-assigned managed identity by client ID or resource ID. The managed identity selected is based on the resource configuration.
-                if (availableSource == MSAL.ManagedIdentitySource.ServiceFabric && (ManagedIdentityId?._idType != ManagedIdentityIdType.SystemAssigned))
-                {
-                    throw new AuthenticationFailedException(Constants.MiSeviceFabricNoUserAssignedIdentityMessage);
-                }
-
-                // The default case is to use the MSAL implementation, which does no probing of the IMDS endpoint.
-                result = async ?
-                    await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false) :
-                    _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, cancellationToken);
+                throw new AuthenticationFailedException(Constants.MiSeviceFabricNoUserAssignedIdentityMessage);
             }
+
+            // First try the TokenExchangeManagedIdentitySource, if it is not available, fall back to MSAL directly.
+            var tokenExchangeManagedIdentitySource = TokenExchangeManagedIdentitySource.TryCreate(_options);
+            if (default != tokenExchangeManagedIdentitySource)
+            {
+                return await tokenExchangeManagedIdentitySource.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
+            }
+
+            // The default case is to use the MSAL implementation, which does no probing of the IMDS endpoint.
+            result = async ?
+                await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false) :
+                _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, cancellationToken);
+
             return result.ToAccessToken();
         }
 
@@ -115,24 +117,10 @@ namespace Azure.Identity
             };
         }
 
-        private static ManagedIdentitySource SelectManagedIdentitySource(ManagedIdentityClientOptions options, bool _enableLegacyMI = true, MsalManagedIdentityClient client = null)
+        private static ManagedIdentitySource SelectManagedIdentitySource(ManagedIdentityClientOptions options, MsalManagedIdentityClient client = null)
         {
-            if (_enableLegacyMI)
-            {
-                return
-                    ServiceFabricManagedIdentitySource.TryCreate(options) ??
-                    AppServiceV2019ManagedIdentitySource.TryCreate(options) ??
-                    AppServiceV2017ManagedIdentitySource.TryCreate(options) ??
-                    CloudShellManagedIdentitySource.TryCreate(options) ??
-                    AzureArcManagedIdentitySource.TryCreate(options) ??
-                    TokenExchangeManagedIdentitySource.TryCreate(options) ??
-                    new ImdsManagedIdentitySource(options);
-            }
-            else
-            {
-                return TokenExchangeManagedIdentitySource.TryCreate(options) ??
-                new ImdsManagedIdentityProbeSource(options, client);
-            }
+            return TokenExchangeManagedIdentitySource.TryCreate(options) ??
+            new ImdsManagedIdentityProbeSource(options, client);
         }
     }
 }
