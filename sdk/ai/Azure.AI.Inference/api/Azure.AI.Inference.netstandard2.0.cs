@@ -434,10 +434,10 @@ namespace Azure.AI.Inference
         public EmbeddingEncodingFormat(string value) { throw null; }
         public static Azure.AI.Inference.EmbeddingEncodingFormat Base64 { get { throw null; } }
         public static Azure.AI.Inference.EmbeddingEncodingFormat Binary { get { throw null; } }
-        public static Azure.AI.Inference.EmbeddingEncodingFormat Float { get { throw null; } }
-        public static Azure.AI.Inference.EmbeddingEncodingFormat Int8 { get { throw null; } }
+        public static Azure.AI.Inference.EmbeddingEncodingFormat Byte { get { throw null; } }
+        public static Azure.AI.Inference.EmbeddingEncodingFormat SByte { get { throw null; } }
+        public static Azure.AI.Inference.EmbeddingEncodingFormat Single { get { throw null; } }
         public static Azure.AI.Inference.EmbeddingEncodingFormat Ubinary { get { throw null; } }
-        public static Azure.AI.Inference.EmbeddingEncodingFormat Uint8 { get { throw null; } }
         public bool Equals(Azure.AI.Inference.EmbeddingEncodingFormat other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
