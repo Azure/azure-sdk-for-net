@@ -192,6 +192,7 @@ trigger:
     - sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics
     - sdk/subscription/Azure.ResourceManager.Subscription
     - sdk/support/Azure.ResourceManager.Support
+    - sdk/symphony/Azure.ResourceManager.ToolchainOrchestrator
     - sdk/synapse/Azure.ResourceManager.Synapse
     - sdk/trafficmanager/Azure.ResourceManager.TrafficManager
     - sdk/trustedsigning/Azure.ResourceManager.TrustedSigning
@@ -394,6 +395,7 @@ pr:
     - sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics
     - sdk/subscription/Azure.ResourceManager.Subscription
     - sdk/support/Azure.ResourceManager.Support
+    - sdk/symphony/Azure.ResourceManager.ToolchainOrchestrator
     - sdk/synapse/Azure.ResourceManager.Synapse
     - sdk/trafficmanager/Azure.ResourceManager.TrafficManager
     - sdk/trustedsigning/Azure.ResourceManager.TrustedSigning

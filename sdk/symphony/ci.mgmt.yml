@@ -10,14 +10,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/symphony/ci.mgmt.yml
-    - sdk/symphony/Azure.ResourceManager.ToolchainOrchestrator/
+    - sdk/toolchainorchestrator/ci.mgmt.yml
+    - sdk/toolchainorchestrator/Azure.ResourceManager.ToolchainOrchestrator/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SDKType: mgmtclient
-    ServiceDirectory: symphony
+    ServiceDirectory: toolchainorchestrator
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.ToolchainOrchestrator
