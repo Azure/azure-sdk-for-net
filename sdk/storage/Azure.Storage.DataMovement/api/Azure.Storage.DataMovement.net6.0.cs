@@ -251,8 +251,8 @@ namespace Azure.Storage.DataMovement
     {
         protected TransferManager() { }
         public TransferManager(Azure.Storage.DataMovement.TransferManagerOptions options = null) { }
-        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.DataTransferProperties> GetResumableTransfersAsync() { throw null; }
-        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.DataTransfer> GetTransfersAsync(params Azure.Storage.DataMovement.DataTransferStatus[] filterByStatus) { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.DataTransferProperties> GetResumableTransfersAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.DataTransfer> GetTransfersAsync(Azure.Storage.DataMovement.DataTransferStatus[] filterByStatus = null, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task PauseTransferIfRunningAsync(string transferId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.List<Azure.Storage.DataMovement.DataTransfer>> ResumeAllTransfersAsync(Azure.Storage.DataMovement.DataTransferOptions transferOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> ResumeTransferAsync(string transferId, Azure.Storage.DataMovement.DataTransferOptions transferOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
