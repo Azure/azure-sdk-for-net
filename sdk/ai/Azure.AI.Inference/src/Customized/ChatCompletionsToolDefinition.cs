@@ -2,18 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.Inference {
-    public partial class ChatCompletionsFunctionToolDefinition : ChatCompletionsToolDefinition
+    public partial class ChatCompletionsToolDefinition
     {
         // CUSTOM CODE NOTE:
         //   This code allows the concrete tool type to directly pass through use of its underlying function
         //   definition rather than having a separate layer of indirection.
-
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolDefinition"/>. </summary>
-        public ChatCompletionsFunctionToolDefinition()
-            : this(new FunctionDefinition())
-        { }
 
         /// <inheritdoc cref="FunctionDefinition.Name"/>
         public string Name

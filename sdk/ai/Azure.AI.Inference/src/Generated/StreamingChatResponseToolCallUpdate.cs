@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Inference
 {
-    /// <summary> A tool selection of a specific, named function tool that will limit chat completions to using the named function. </summary>
-    public partial class ChatCompletionsFunctionToolSelection
+    /// <summary> An update to the function tool call information requested by the AI model. </summary>
+    public partial class StreamingChatResponseToolCallUpdate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +45,38 @@ namespace Azure.AI.Inference
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolSelection"/>. </summary>
-        /// <param name="name"> The name of the function that should be called. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ChatCompletionsFunctionToolSelection(string name)
+        /// <summary> Initializes a new instance of <see cref="StreamingChatResponseToolCallUpdate"/>. </summary>
+        /// <param name="id"> The ID of the tool call. </param>
+        /// <param name="function"> Updates to the function call requested by the AI model. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="function"/> is null. </exception>
+        internal StreamingChatResponseToolCallUpdate(string id, FunctionCall function)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(function, nameof(function));
 
-            Name = name;
+            Id = id;
+            Function = function;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolSelection"/>. </summary>
-        /// <param name="name"> The name of the function that should be called. </param>
+        /// <summary> Initializes a new instance of <see cref="StreamingChatResponseToolCallUpdate"/>. </summary>
+        /// <param name="id"> The ID of the tool call. </param>
+        /// <param name="function"> Updates to the function call requested by the AI model. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletionsFunctionToolSelection(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StreamingChatResponseToolCallUpdate(string id, FunctionCall function, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
+            Id = id;
+            Function = function;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolSelection"/> for deserialization. </summary>
-        internal ChatCompletionsFunctionToolSelection()
+        /// <summary> Initializes a new instance of <see cref="StreamingChatResponseToolCallUpdate"/> for deserialization. </summary>
+        internal StreamingChatResponseToolCallUpdate()
         {
         }
 
-        /// <summary> The name of the function that should be called. </summary>
-        public string Name { get; }
+        /// <summary> The ID of the tool call. </summary>
+        public string Id { get; }
+        /// <summary> Updates to the function call requested by the AI model. </summary>
+        public FunctionCall Function { get; }
     }
 }

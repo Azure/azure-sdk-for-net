@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Inference
 {
-    /// <summary>
-    /// An abstract representation of an explicit, named tool selection to use for a chat completions request.
-    /// Please note <see cref="ChatCompletionsNamedToolSelection"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ChatCompletionsNamedFunctionToolSelection"/>.
-    /// </summary>
-    public abstract partial class ChatCompletionsNamedToolSelection
+    /// <summary> The EmbedRequest. </summary>
+    internal partial class EmbedRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +43,33 @@ namespace Azure.AI.Inference
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionsNamedToolSelection"/>. </summary>
-        protected ChatCompletionsNamedToolSelection()
+        /// <summary> Initializes a new instance of <see cref="EmbedRequest"/>. </summary>
+        /// <param name="embeddingsOptions"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="embeddingsOptions"/> is null. </exception>
+        internal EmbedRequest(EmbeddingsOptions embeddingsOptions)
         {
+            Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
+
+            EmbeddingsOptions = embeddingsOptions;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionsNamedToolSelection"/>. </summary>
-        /// <param name="type"> The object type. </param>
+        /// <summary> Initializes a new instance of <see cref="EmbedRequest"/>. </summary>
+        /// <param name="embeddingsOptions"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletionsNamedToolSelection(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EmbedRequest(EmbeddingsOptions embeddingsOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            EmbeddingsOptions = embeddingsOptions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The object type. </summary>
-        internal string Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="EmbedRequest"/> for deserialization. </summary>
+        internal EmbedRequest()
+        {
+        }
+
+        /// <summary> Gets the embeddings options. </summary>
+        public EmbeddingsOptions EmbeddingsOptions { get; }
     }
 }

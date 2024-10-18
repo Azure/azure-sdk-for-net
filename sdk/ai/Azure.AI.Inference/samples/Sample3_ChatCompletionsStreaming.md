@@ -14,7 +14,7 @@ Set these two environment variables before running the sample:
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
 var requestOptions = new ChatCompletionsOptions()
 {
@@ -48,7 +48,7 @@ An `async` option is also available for the initial streaming call.
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
 var requestOptions = new ChatCompletionsOptions()
 {

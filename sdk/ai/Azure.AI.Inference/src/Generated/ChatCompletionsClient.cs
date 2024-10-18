@@ -42,7 +42,7 @@ namespace Azure.AI.Inference
         /// <param name="endpoint"> Service host. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ChatCompletionsClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ChatCompletionsClientOptions())
+        public ChatCompletionsClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureAIInferenceClientOptions())
         {
         }
 
@@ -50,26 +50,8 @@ namespace Azure.AI.Inference
         /// <param name="endpoint"> Service host. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ChatCompletionsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ChatCompletionsClientOptions())
+        public ChatCompletionsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureAIInferenceClientOptions())
         {
-        }
-
-        /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ChatCompletionsClient(Uri endpoint, AzureKeyCredential credential, ChatCompletionsClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new ChatCompletionsClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
         }
 
         /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
@@ -77,11 +59,11 @@ namespace Azure.AI.Inference
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ChatCompletionsClient(Uri endpoint, TokenCredential credential, ChatCompletionsClientOptions options)
+        public ChatCompletionsClient(Uri endpoint, TokenCredential credential, AzureAIInferenceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new ChatCompletionsClientOptions();
+            options ??= new AzureAIInferenceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
@@ -177,6 +159,8 @@ namespace Azure.AI.Inference
         /// <summary>
         /// Returns information about the AI model.
         /// The method makes a REST API call to the `/info` route on the given endpoint.
+        /// This method will only work when using Serverless API or Managed Compute endpoint.
+        /// It will not work for GitHub Models endpoint or Azure OpenAI endpoint.
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfoAsync(CancellationToken)']/*" />
@@ -190,6 +174,8 @@ namespace Azure.AI.Inference
         /// <summary>
         /// Returns information about the AI model.
         /// The method makes a REST API call to the `/info` route on the given endpoint.
+        /// This method will only work when using Serverless API or Managed Compute endpoint.
+        /// It will not work for GitHub Models endpoint or Azure OpenAI endpoint.
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfo(CancellationToken)']/*" />
@@ -203,6 +189,8 @@ namespace Azure.AI.Inference
         /// <summary>
         /// [Protocol Method] Returns information about the AI model.
         /// The method makes a REST API call to the `/info` route on the given endpoint.
+        /// This method will only work when using Serverless API or Managed Compute endpoint.
+        /// It will not work for GitHub Models endpoint or Azure OpenAI endpoint.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -239,6 +227,8 @@ namespace Azure.AI.Inference
         /// <summary>
         /// [Protocol Method] Returns information about the AI model.
         /// The method makes a REST API call to the `/info` route on the given endpoint.
+        /// This method will only work when using Serverless API or Managed Compute endpoint.
+        /// It will not work for GitHub Models endpoint or Azure OpenAI endpoint.
         /// <list type="bullet">
         /// <item>
         /// <description>
