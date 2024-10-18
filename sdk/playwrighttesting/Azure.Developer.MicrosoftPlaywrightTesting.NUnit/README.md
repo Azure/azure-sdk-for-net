@@ -81,7 +81,7 @@ Ensure that the `PLAYWRIGHT_SERVICE_URL` that you obtained in previous step is a
 Run Playwright tests against browsers managed by the service using the configuration you created above.
 
 ```dotnetcli
-dotnet test --logger "ms-playwright-service"
+dotnet test --logger "microsoft-playwright-testing"
 ```
 
 ## Key concepts
