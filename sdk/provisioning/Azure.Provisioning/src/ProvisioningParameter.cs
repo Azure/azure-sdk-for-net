@@ -13,8 +13,9 @@ namespace Azure.Provisioning;
 public class ProvisioningParameter : ProvisioningVariable
 {
     /// <summary>
-    /// Gets or sets whether this parameter uses a secure value.  It will default
-    /// to secure if provided a <see cref="ProvisioningVariable.Value"/> that is known to be secure.
+    /// Gets or sets whether this parameter uses a secure value.  It will
+    /// default to secure if provided a <see cref="ProvisioningVariable.Value"/>
+    /// that is known to be secure.
     /// </summary>
     public bool IsSecure
     {
@@ -31,7 +32,7 @@ public class ProvisioningParameter : ProvisioningVariable
     /// underscores.
     /// </param>
     /// <param name="type">Type of the parameter.</param>
-    public ProvisioningParameter(string name, Expression type)
+    public ProvisioningParameter(string name, BicepExpression type)
         : base(name, type, value: null) { }
 
     /// <summary>
@@ -46,11 +47,15 @@ public class ProvisioningParameter : ProvisioningVariable
         : this(name, new TypeExpression(type)) { }
 
     /// <inheritdoc />
-    protected internal override IEnumerable<Statement> Compile()
+    protected internal override IEnumerable<BicepStatement> Compile()
     {
-        ParameterStatement stmt = BicepSyntax.Declare.Param(IdentifierName, BicepType, Value.Kind == BicepValueKind.Unset ? null : Value.Compile());
-        if (IsSecure) { stmt = stmt.Decorate("secure"); }
-        if (Description is not null) { stmt = stmt.Decorate("description", BicepSyntax.Value(Description)); }
-        yield return stmt;
+        ParameterStatement statement =
+            BicepSyntax.Declare.Param(
+                BicepIdentifier,
+                BicepType,
+                Value.Kind == BicepValueKind.Unset ? null : Value.Compile());
+        if (IsSecure) { statement = statement.Decorate("secure"); }
+        if (Description is not null) { statement = statement.Decorate("description", BicepSyntax.Value(Description)); }
+        yield return statement;
     }
 }

@@ -34,8 +34,8 @@ public class BicepList<T> : BicepValue, IList<BicepValue<T>>
     /// </summary>
     public BicepList(IList<BicepValue<T>>? values) : this(self: null, values) { }
 
-    private BicepList(Expression expression) : base(self: null, expression) { _values = []; }
-    private protected BicepList(BicepValueReference? self, Expression expression) : base(self, expression) { _values = []; }
+    private BicepList(BicepExpression expression) : base(self: null, expression) { _values = []; }
+    private protected BicepList(BicepValueReference? self, BicepExpression expression) : base(self, expression) { _values = []; }
     private BicepList(BicepValueReference? self, IList<BicepValue<T>>? values = null)
         : base(self)
     {
@@ -66,7 +66,7 @@ public class BicepList<T> : BicepValue, IList<BicepValue<T>>
     public static implicit operator BicepList<T>(ProvisioningVariable reference) =>
         new(
             new BicepValueReference(reference, "<value>"),
-            BicepSyntax.Var(reference.IdentifierName))
+            BicepSyntax.Var(reference.BicepIdentifier))
         {
             IsSecure = reference is ProvisioningParameter p && p.IsSecure
         };
@@ -135,9 +135,9 @@ public class BicepList<T> : BicepValue, IList<BicepValue<T>>
     /// </param>
     /// <returns>A BicepList.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static BicepList<T> FromExpression(Func<Expression, T> referenceFactory, Expression expression) =>
+    public static BicepList<T> FromExpression(Func<BicepExpression, T> referenceFactory, BicepExpression expression) =>
         new(expression) { _referenceFactory = referenceFactory };
-    private Func<Expression, T>? _referenceFactory = null;
+    private Func<BicepExpression, T>? _referenceFactory = null;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static BicepList<T> DefineProperty(

@@ -29,7 +29,7 @@ public class ResourceReference<T>(BicepValue<string> reference) where T : Resour
                 // TODO: Consider tracking the source like we do for
                 // BicepValue<T> if that'll improve the overall experience
                 // (debugging/errors/etc.)
-                BicepSyntax.Var(_value.IdentifierName);
+                BicepSyntax.Var(_value.BicepIdentifier);
         }
     }
 

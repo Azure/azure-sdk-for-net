@@ -8,11 +8,11 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning;
 
 /// <summary>
-/// ProvisioningContext collects common values, settings, and functionality
+/// ProvisioningBuildOptions collects common values, settings, and functionality
 /// that are used for composing, building, and deploying resources with
 /// Azure.Provisioning libraries.
 /// </summary>
-public class ProvisioningContext
+public class ProvisioningBuildOptions
 {
     /// <summary>
     /// Gets or sets the collection of <see cref="PropertyResolver"/>s to apply

@@ -20,7 +20,7 @@ public class ProvisioningOutput : ProvisioningVariable
     /// underscores.
     /// </param>
     /// <param name="type">Type of the output.</param>
-    public ProvisioningOutput(string name, Expression type)
+    public ProvisioningOutput(string name, BicepExpression type)
         : base(name, type, value: null) { }
 
     /// <summary>
@@ -35,10 +35,10 @@ public class ProvisioningOutput : ProvisioningVariable
         : this(name, new TypeExpression(type)) { }
 
     /// <inheritdoc />
-    protected internal override IEnumerable<Statement> Compile()
+    protected internal override IEnumerable<BicepStatement> Compile()
     {
-        OutputStatement stmt = BicepSyntax.Declare.Output(IdentifierName, BicepType, Value.Compile());
-        if (Description is not null) { stmt = stmt.Decorate("description", BicepSyntax.Value(Description)); }
-        yield return stmt;
+        OutputStatement statement = BicepSyntax.Declare.Output(BicepIdentifier, BicepType, Value.Compile());
+        if (Description is not null) { statement = statement.Decorate("description", BicepSyntax.Value(Description)); }
+        yield return statement;
     }
 }

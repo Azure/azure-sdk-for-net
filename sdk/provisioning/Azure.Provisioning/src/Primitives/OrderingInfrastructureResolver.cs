@@ -14,7 +14,7 @@ public class OrderingInfrastructureResolver : InfrastructureResolver
 {
     /// <inheritdoc />
     public override IEnumerable<Provisionable> ResolveResources(
-        ProvisioningContext context,
+        ProvisioningBuildOptions options,
         IEnumerable<Provisionable> resources) =>
         resources.OrderBy(construct =>
             construct switch

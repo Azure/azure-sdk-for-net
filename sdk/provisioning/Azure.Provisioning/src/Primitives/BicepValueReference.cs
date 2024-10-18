@@ -17,7 +17,7 @@ public class BicepValueReference(ProvisioningConstruct construct, string propert
     public string PropertyName { get; } = propertyName;
     public IReadOnlyList<string>? BicepPath { get; } = path;
 
-    internal Expression GetReference()
+    internal BicepExpression GetReference()
     {
         // We'll relax this soon
         if (Construct is not NamedProvisioningConstruct named)
@@ -25,7 +25,7 @@ public class BicepValueReference(ProvisioningConstruct construct, string propert
             throw new NotImplementedException("Cannot reference a construct without a name yet.");
         }
 
-        Expression target = BicepSyntax.Var(named.IdentifierName);
+        BicepExpression target = BicepSyntax.Var(named.BicepIdentifier);
         if (BicepPath is not null)
         {
             foreach (string segment in BicepPath)

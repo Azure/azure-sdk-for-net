@@ -20,33 +20,31 @@ public abstract class NamedProvisioningConstruct : ProvisioningConstruct
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </summary>
-    public string IdentifierName
+    public string BicepIdentifier
     {
-        get => _identifierName;
+        get => _bicepIdentifier;
         set
         {
-            Infrastructure.ValidateIdentifierName(value, nameof(value));
-            _identifierName = value;
+            Infrastructure.ValidateBicepIdentifier(value, nameof(value));
+            _bicepIdentifier = value;
         }
     }
-    private string _identifierName;
-    // TODO: Listen for customer feedback and discuss IdentifierName vs.
-    // ProvisioningName in the Arch Board
+    private string _bicepIdentifier;
 
     /// <summary>
     /// Creates a named Bicep entity, like a resource or parameter.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
-    protected NamedProvisioningConstruct(string identifierName)
+    protected NamedProvisioningConstruct(string bicepIdentifier)
     {
         // TODO: In the near future we'll make this optional and only validate
         // if the value passed in isn't null.
-        Infrastructure.ValidateIdentifierName(identifierName, nameof(identifierName));
-        _identifierName = identifierName;
+        Infrastructure.ValidateBicepIdentifier(bicepIdentifier, nameof(bicepIdentifier));
+        _bicepIdentifier = bicepIdentifier;
     }
 }
 
@@ -74,7 +72,7 @@ public abstract class ProvisioningConstruct : Provisionable
     /// `resourceGroup()` function so people can use
     /// `BicepFunctions.GetResourceGroup().Location` just like `myRg.Location`).
     /// </summary>
-    internal Expression? ExpressionOverride { get; private set; }
+    internal BicepExpression? ExpressionOverride { get; private set; }
 
     /// <summary>
     /// Set this construct to represent the result of an expression.  This is
@@ -82,7 +80,7 @@ public abstract class ProvisioningConstruct : Provisionable
     /// specific resources or constructs.
     /// </summary>
     /// <param name="reference">The expression.</param>
-    protected internal void OverrideWithExpression(Expression reference)
+    protected internal void OverrideWithExpression(BicepExpression reference)
     {
         ExpressionOverride = reference;
 
@@ -117,23 +115,23 @@ public abstract class ProvisioningConstruct : Provisionable
     }
 
     /// <inheritdoc/>
-    protected internal override void Resolve(ProvisioningContext? context = null)
+    protected internal override void Resolve(ProvisioningBuildOptions? options = null)
     {
-        context ??= new();
-        base.Resolve(context);
+        options ??= new();
+        base.Resolve(options);
 
         // Resolve any property values
-        foreach (PropertyResolver resolver in context.PropertyResolvers)
+        foreach (PropertyResolver resolver in options.PropertyResolvers)
         {
-            resolver.ResolveProperties(context, this);
+            resolver.ResolveProperties(options, this);
         }
     }
 
     /// <inheritdoc/>
-    protected internal override void Validate(ProvisioningContext? context = null)
+    protected internal override void Validate(ProvisioningBuildOptions? options = null)
     {
-        context ??= new();
-        base.Validate(context);
+        options ??= new();
+        base.Validate(options);
     }
 
     private protected virtual void ValidateProperties()
@@ -153,10 +151,10 @@ public abstract class ProvisioningConstruct : Provisionable
     }
 
     /// <inheritdoc/>
-    protected internal override IEnumerable<Statement> Compile() =>
-        [new ExprStatement(CompileProperties())];
+    protected internal override IEnumerable<BicepStatement> Compile() =>
+        [new ExpressionStatement(CompileProperties())];
 
-    private protected Expression CompileProperties()
+    private protected BicepExpression CompileProperties()
     {
         if (ExpressionOverride is not null) { return ExpressionOverride; }
 
@@ -185,7 +183,7 @@ public abstract class ProvisioningConstruct : Provisionable
         // compiling values along the way
         static ObjectExpression CompileValues(IDictionary<string, object> dict)
         {
-            Dictionary<string, Expression> bicep = [];
+            Dictionary<string, BicepExpression> bicep = [];
             foreach (KeyValuePair<string, object> pair in dict)
             {
                 if (pair.Value is Dictionary<string, object> nested)
@@ -198,8 +196,8 @@ public abstract class ProvisioningConstruct : Provisionable
                 }
                 else if (pair.Value is ProvisioningConstruct construct)
                 {
-                    IList<Statement> statements = [..construct.Compile()];
-                    if (statements.Count != 1 || statements[0] is not ExprStatement expr)
+                    IList<BicepStatement> statements = [..construct.Compile()];
+                    if (statements.Count != 1 || statements[0] is not ExpressionStatement expr)
                     {
                         throw new InvalidOperationException($"Expected a single expression statement for {pair.Key}.");
                     }

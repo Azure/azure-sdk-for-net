@@ -116,12 +116,12 @@ public class Resource(Specification spec, Type armType)
                     writer.WriteLine($"/// <summary>");
                     writer.WriteWrapped($"Creates a new {Name}.");
                     writer.WriteLine($"/// </summary>");
-                    writer.WriteLine($"/// <param name=\"identifierName\">");
+                    writer.WriteLine($"/// <param name=\"bicepIdentifier\">");
                     writer.WriteWrapped($"The the Bicep identifier name of the {Name} resource.  This can be used to refer to the resource in expressions, but is not the Azure name of the resource.  This value can contain letters, numbers, and underscores.");
                     writer.WriteLine($"/// </param>");
                     writer.WriteLine($"/// <param name=\"resourceVersion\">Version of the {Name}.</param>");
-                    writer.WriteLine($"public {Name}(string identifierName, string? resourceVersion = default)");
-                    writer.Write($"    : base(identifierName, \"{ResourceType}\", resourceVersion");
+                    writer.WriteLine($"public {Name}(string bicepIdentifier, string? resourceVersion = default)");
+                    writer.Write($"    : base(bicepIdentifier, \"{ResourceType}\", resourceVersion");
                     if (DefaultResourceVersion is not null)
                     {
                         writer.Write($" ?? \"{DefaultResourceVersion}\"");
@@ -178,15 +178,15 @@ public class Resource(Specification spec, Type armType)
                         writer.WriteLine($"/// <summary>");
                         writer.WriteWrapped($"Creates a reference to an existing {Name}.");
                         writer.WriteLine($"/// </summary>");
-                        writer.WriteLine($"/// <param name=\"identifierName\">");
+                        writer.WriteLine($"/// <param name=\"bicepIdentifier\">");
                         writer.WriteWrapped($"The the Bicep identifier name of the {Name} resource.  This can be used to refer to the resource in expressions, but is not the Azure name of the resource.  This value can contain letters, numbers, and underscores.");
                         writer.WriteLine($"/// </param>");
                         writer.WriteLine($"/// <param name=\"resourceVersion\">Version of the {Name}.</param>");
                         writer.WriteLine($"/// <returns>The existing {Name} resource.</returns>");
-                        writer.WriteLine($"public static {Name} FromExisting(string identifierName, string? resourceVersion = default) =>");
+                        writer.WriteLine($"public static {Name} FromExisting(string bicepIdentifier, string? resourceVersion = default) =>");
                         using (writer.Scope())
                         {
-                            writer.WriteLine($"new(identifierName, resourceVersion) {{ IsExistingResource = true }};");
+                            writer.WriteLine($"new(bicepIdentifier, resourceVersion) {{ IsExistingResource = true }};");
                         }
                     }
 
@@ -203,7 +203,7 @@ public class Resource(Specification spec, Type armType)
                         writer.WriteLine($"/// </param>");
                         writer.WriteLine($"/// <returns>A {Name} resource.</returns>");
                         writer.WriteLine($"[EditorBrowsable(EditorBrowsableState.Never)]");
-                        writer.WriteLine($"public static {Name} FromExpression(Expression expression)");
+                        writer.WriteLine($"public static {Name} FromExpression(BicepExpression expression)");
                         using (writer.Scope("{", "}"))
                         {
                             writer.WriteLine($"{Name} resource = new(nameof({Name}));");
@@ -258,7 +258,7 @@ public class Resource(Specification spec, Type armType)
                                 {
                                     writer.WriteLine($"{GetKeysType.Name}.FromExpression,");
                                 }
-                                string expr = $"new FunctionCallExpression(new MemberExpression(new IdentifierExpression(IdentifierName), \"listKeys\"))";
+                                string expr = $"new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), \"listKeys\"))";
                                 if (GetKeysIsList)
                                 {
                                     expr = $"new MemberExpression({expr}, \"keys\")";
@@ -281,13 +281,13 @@ public class Resource(Specification spec, Type armType)
                         writer.WriteLine($"public RoleAssignment CreateRoleAssignment({Spec!.Name}BuiltInRole role, UserAssignedIdentity identity) =>");
                         using (writer.Scope())
                         {
-                            writer.WriteLine($"new($\"{{IdentifierName}}_{{identity.IdentifierName}}_{{{Spec!.Name}BuiltInRole.GetBuiltInRoleName(role)}}\")");
+                            writer.WriteLine($"new($\"{{BicepIdentifier}}_{{identity.BicepIdentifier}}_{{{Spec!.Name}BuiltInRole.GetBuiltInRoleName(role)}}\")");
                             using (writer.Scope("{", "};"))
                             {
                                 writer.Write($"Name = BicepFunction.CreateGuid(");
                                 if (Properties.Any(p => p.Name == "Id")) { writer.Write("Id, "); }
                                 writer.WriteLine($"identity.PrincipalId, BicepFunction.GetSubscriptionResourceId(\"Microsoft.Authorization/roleDefinitions\", role.ToString())),");
-                                writer.WriteLine($"Scope = new IdentifierExpression(IdentifierName),");
+                                writer.WriteLine($"Scope = new IdentifierExpression(BicepIdentifier),");
                                 writer.WriteLine($"PrincipalType = RoleManagementPrincipalType.ServicePrincipal,");
                                 writer.WriteLine($"RoleDefinitionId = BicepFunction.GetSubscriptionResourceId(\"Microsoft.Authorization/roleDefinitions\", role.ToString()),");
                                 writer.WriteLine($"PrincipalId = identity.PrincipalId");
@@ -301,18 +301,18 @@ public class Resource(Specification spec, Type armType)
                         writer.WriteLine($"/// <param name=\"role\">The role to grant.</param>");
                         writer.WriteLine($"/// <param name=\"principalType\">The type of the principal to assign to.</param>");
                         writer.WriteLine($"/// <param name=\"principalId\">The principal to assign to.</param>");
-                        writer.WriteLine($"/// <param name=\"identifierNameSuffix\">Optional role assignment identifier name suffix.</param>");
+                        writer.WriteLine($"/// <param name=\"bicepIdentifierSuffix\">Optional role assignment identifier name suffix.</param>");
                         writer.WriteLine($"/// <returns>The <see cref=\"RoleAssignment\"/>.</returns>");
-                        writer.WriteLine($"public RoleAssignment CreateRoleAssignment({Spec!.Name}BuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? identifierNameSuffix = default) =>");
+                        writer.WriteLine($"public RoleAssignment CreateRoleAssignment({Spec!.Name}BuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? bicepIdentifierSuffix = default) =>");
                         using (writer.Scope())
                         {
-                            writer.WriteLine($"new($\"{{IdentifierName}}_{{{Spec!.Name}BuiltInRole.GetBuiltInRoleName(role)}}{{(identifierNameSuffix is null ? \"\" : \"_\")}}{{identifierNameSuffix}}\")");
+                            writer.WriteLine($"new($\"{{BicepIdentifier}}_{{{Spec!.Name}BuiltInRole.GetBuiltInRoleName(role)}}{{(bicepIdentifierSuffix is null ? \"\" : \"_\")}}{{bicepIdentifierSuffix}}\")");
                             using (writer.Scope("{", "};"))
                             {
                                 writer.Write($"Name = BicepFunction.CreateGuid(");
                                 if (Properties.Any(p => p.Name == "Id")) { writer.Write("Id, "); }
                                 writer.WriteLine($"principalId, BicepFunction.GetSubscriptionResourceId(\"Microsoft.Authorization/roleDefinitions\", role.ToString())),");
-                                writer.WriteLine($"Scope = new IdentifierExpression(IdentifierName),");
+                                writer.WriteLine($"Scope = new IdentifierExpression(BicepIdentifier),");
                                 writer.WriteLine($"PrincipalType = principalType,");
                                 writer.WriteLine($"RoleDefinitionId = BicepFunction.GetSubscriptionResourceId(\"Microsoft.Authorization/roleDefinitions\", role.ToString()),");
                                 writer.WriteLine($"PrincipalId = principalId");

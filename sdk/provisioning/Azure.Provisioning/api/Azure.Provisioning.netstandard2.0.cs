@@ -51,7 +51,7 @@ namespace Azure.Provisioning
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Provisioning.BicepList<T> DefineProperty(Azure.Provisioning.Primitives.ProvisioningConstruct construct, string propertyName, string[]? bicepPath, bool isOutput = false, bool isRequired = false) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.BicepList<T> FromExpression(System.Func<Azure.Provisioning.Expressions.Expression, T> referenceFactory, Azure.Provisioning.Expressions.Expression expression) { throw null; }
+        public static Azure.Provisioning.BicepList<T> FromExpression(System.Func<Azure.Provisioning.Expressions.BicepExpression, T> referenceFactory, Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
         public System.Collections.Generic.IEnumerator<Azure.Provisioning.BicepValue<T>> GetEnumerator() { throw null; }
         public int IndexOf(Azure.Provisioning.BicepValue<T> item) { throw null; }
         public void Insert(int index, Azure.Provisioning.BicepValue<T> item) { }
@@ -63,9 +63,9 @@ namespace Azure.Provisioning
     public abstract partial class BicepValue
     {
         internal BicepValue() { }
-        public Azure.Provisioning.Expressions.Expression? Expression { get { throw null; } set { } }
+        public Azure.Provisioning.Expressions.BicepExpression? Expression { get { throw null; } set { } }
         public Azure.Provisioning.BicepValueKind Kind { get { throw null; } set { } }
-        public Azure.Provisioning.Expressions.Expression Compile() { throw null; }
+        public Azure.Provisioning.Expressions.BicepExpression Compile() { throw null; }
         public override string ToString() { throw null; }
     }
     public enum BicepValueKind
@@ -76,7 +76,7 @@ namespace Azure.Provisioning
     }
     public partial class BicepValue<T> : Azure.Provisioning.BicepValue
     {
-        public BicepValue(Azure.Provisioning.Expressions.Expression expression) { }
+        public BicepValue(Azure.Provisioning.Expressions.BicepExpression expression) { }
         public BicepValue(T literal) { }
         public T? Value { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -84,7 +84,7 @@ namespace Azure.Provisioning
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Provisioning.BicepValue<T> DefineProperty(Azure.Provisioning.Primitives.ProvisioningConstruct construct, string propertyName, string[]? bicepPath, bool isOutput = false, bool isRequired = false, bool isSecure = false, Azure.Provisioning.BicepValue<T>? defaultValue = null) { throw null; }
         public static implicit operator Azure.Provisioning.BicepValue<System.String> (Azure.Provisioning.BicepValue<T> value) { throw null; }
-        public static implicit operator Azure.Provisioning.BicepValue<T> (Azure.Provisioning.Expressions.Expression expression) { throw null; }
+        public static implicit operator Azure.Provisioning.BicepValue<T> (Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
         public static implicit operator Azure.Provisioning.BicepValue<T> (Azure.Provisioning.ProvisioningVariable reference) { throw null; }
         public static implicit operator Azure.Provisioning.BicepValue<T> (T value) { throw null; }
     }
@@ -94,61 +94,61 @@ namespace Azure.Provisioning
         public string Name { get { throw null; } }
         public string? TargetScope { get { throw null; } set { } }
         public virtual void Add(Azure.Provisioning.Primitives.Provisionable resource) { }
-        public virtual Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
-        protected internal System.Collections.Generic.IDictionary<string, System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement>> CompileModules(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
+        public virtual Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningBuildOptions? options = null) { throw null; }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
+        protected internal System.Collections.Generic.IDictionary<string, System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement>> CompileModules(Azure.Provisioning.ProvisioningBuildOptions? options = null) { throw null; }
         public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> GetResources() { throw null; }
-        public static bool IsValidIdentifierName(string? identifierName) { throw null; }
-        public static string NormalizeIdentifierName(string? identifierName) { throw null; }
+        public static bool IsValidBicepIdentifier(string? bicepIdentifier) { throw null; }
+        public static string NormalizeBicepIdentifier(string? bicepIdentifier) { throw null; }
         public virtual void Remove(Azure.Provisioning.Primitives.Provisionable resource) { }
-        protected internal override void Resolve(Azure.Provisioning.ProvisioningContext? context = null) { }
-        protected internal override void Validate(Azure.Provisioning.ProvisioningContext? context = null) { }
-        public static void ValidateIdentifierName(string? identifierName, string? paramName = null) { }
+        protected internal override void Resolve(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
+        protected internal override void Validate(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
+        public static void ValidateBicepIdentifier(string? bicepIdentifier, string? paramName = null) { }
     }
-    public partial class ProvisioningContext
+    public partial class ProvisioningBuildOptions
     {
-        public ProvisioningContext() { }
+        public ProvisioningBuildOptions() { }
         public System.Collections.Generic.IList<Azure.Provisioning.Primitives.InfrastructureResolver> InfrastructureResolvers { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Provisioning.Primitives.PropertyResolver> PropertyResolvers { get { throw null; } set { } }
         public System.Random Random { get { throw null; } set { } }
     }
     public partial class ProvisioningOutput : Azure.Provisioning.ProvisioningVariable
     {
-        public ProvisioningOutput(string name, Azure.Provisioning.Expressions.Expression type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
-        public ProvisioningOutput(string name, System.Type type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
+        public ProvisioningOutput(string name, Azure.Provisioning.Expressions.BicepExpression type) : base (default(string), default(Azure.Provisioning.Expressions.BicepExpression), default(Azure.Provisioning.BicepValue<object>)) { }
+        public ProvisioningOutput(string name, System.Type type) : base (default(string), default(Azure.Provisioning.Expressions.BicepExpression), default(Azure.Provisioning.BicepValue<object>)) { }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
     }
     public partial class ProvisioningParameter : Azure.Provisioning.ProvisioningVariable
     {
-        public ProvisioningParameter(string name, Azure.Provisioning.Expressions.Expression type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
-        public ProvisioningParameter(string name, System.Type type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
+        public ProvisioningParameter(string name, Azure.Provisioning.Expressions.BicepExpression type) : base (default(string), default(Azure.Provisioning.Expressions.BicepExpression), default(Azure.Provisioning.BicepValue<object>)) { }
+        public ProvisioningParameter(string name, System.Type type) : base (default(string), default(Azure.Provisioning.Expressions.BicepExpression), default(Azure.Provisioning.BicepValue<object>)) { }
         public bool IsSecure { get { throw null; } set { } }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
     }
     public partial class ProvisioningPlan
     {
         internal ProvisioningPlan() { }
+        public Azure.Provisioning.ProvisioningBuildOptions BuildOptions { get { throw null; } }
         public Azure.Provisioning.Infrastructure Infrastructure { get { throw null; } }
-        public Azure.Provisioning.ProvisioningContext ProvisioningContext { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Compile() { throw null; }
         public System.Collections.Generic.IEnumerable<string> Save(string directoryPath) { throw null; }
     }
     public partial class ProvisioningVariable : Azure.Provisioning.Primitives.NamedProvisioningConstruct
     {
-        protected ProvisioningVariable(string name, Azure.Provisioning.Expressions.Expression type, Azure.Provisioning.BicepValue<object>? value) : base (default(string)) { }
+        protected ProvisioningVariable(string name, Azure.Provisioning.Expressions.BicepExpression type, Azure.Provisioning.BicepValue<object>? value) : base (default(string)) { }
         public ProvisioningVariable(string name, System.Type type) : base (default(string)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public Azure.Provisioning.Expressions.Expression BicepType { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression BicepType { get { throw null; } }
         public string? Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<object> Value { get { throw null; } set { } }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
     }
 }
 namespace Azure.Provisioning.Authorization
 {
     public partial class AuthorizationRoleDefinition : Azure.Provisioning.Primitives.Resource
     {
-        public AuthorizationRoleDefinition(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public AuthorizationRoleDefinition(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> AssignableScopes { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -157,7 +157,7 @@ namespace Azure.Provisioning.Authorization
         public Azure.Provisioning.BicepValue<string> RoleName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.AuthorizationRoleType> RoleType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Authorization.AuthorizationRoleDefinition FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Authorization.AuthorizationRoleDefinition FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2015_06_01;
@@ -197,7 +197,7 @@ namespace Azure.Provisioning.Authorization
     }
     public partial class RoleAssignment : Azure.Provisioning.Primitives.Resource
     {
-        public RoleAssignment(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public RoleAssignment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Condition { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ConditionVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> CreatedBy { get { throw null; } }
@@ -213,7 +213,7 @@ namespace Azure.Provisioning.Authorization
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> UpdatedBy { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpdatedOn { get { throw null; } }
-        public static Azure.Provisioning.Authorization.RoleAssignment FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Authorization.RoleAssignment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2015_06_01;
@@ -233,7 +233,7 @@ namespace Azure.Provisioning.Authorization
     }
     public partial class RoleAssignmentScheduleRequest : Azure.Provisioning.Primitives.Resource
     {
-        public RoleAssignmentScheduleRequest(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public RoleAssignmentScheduleRequest(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ApprovalId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Condition { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ConditionVersion { get { throw null; } set { } }
@@ -258,7 +258,7 @@ namespace Azure.Provisioning.Authorization
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetRoleAssignmentScheduleId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetRoleAssignmentScheduleInstanceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleAssignmentScheduleTicketInfo> TicketInfo { get { throw null; } set { } }
-        public static Azure.Provisioning.Authorization.RoleAssignmentScheduleRequest FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Authorization.RoleAssignmentScheduleRequest FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2020_10_01;
@@ -281,7 +281,7 @@ namespace Azure.Provisioning.Authorization
     }
     public partial class RoleEligibilityScheduleRequest : Azure.Provisioning.Primitives.Resource
     {
-        public RoleEligibilityScheduleRequest(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public RoleEligibilityScheduleRequest(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ApprovalId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Condition { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ConditionVersion { get { throw null; } set { } }
@@ -305,7 +305,7 @@ namespace Azure.Provisioning.Authorization
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetRoleEligibilityScheduleId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetRoleEligibilityScheduleInstanceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleEligibilityScheduleRequestPropertiesTicketInfo> TicketInfo { get { throw null; } set { } }
-        public static Azure.Provisioning.Authorization.RoleEligibilityScheduleRequest FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Authorization.RoleEligibilityScheduleRequest FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2020_10_01;
@@ -370,7 +370,7 @@ namespace Azure.Provisioning.Authorization
     }
     public partial class RoleManagementPolicyAssignment : Azure.Provisioning.Primitives.Resource
     {
-        public RoleManagementPolicyAssignment(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public RoleManagementPolicyAssignment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Authorization.RoleManagementPolicyRule> EffectiveRules { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -379,11 +379,11 @@ namespace Azure.Provisioning.Authorization
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> RoleDefinitionId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Scope { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Authorization.RoleManagementPolicyAssignment FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Authorization.RoleManagementPolicyAssignment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2020_10_01;
-            public static readonly string V2020_10_01_preview;
+            public static readonly string V2024_09_01_preview;
         }
     }
     public partial class RoleManagementPolicyAuthenticationContextRule : Azure.Provisioning.Authorization.RoleManagementPolicyRule
@@ -524,10 +524,19 @@ namespace Azure.Provisioning.Authorization
 }
 namespace Azure.Provisioning.Expressions
 {
-    public partial class ArrayExpression : Azure.Provisioning.Expressions.Expression
+    public partial class ArrayExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        public ArrayExpression(params Azure.Provisioning.Expressions.Expression[] values) { }
-        public Azure.Provisioning.Expressions.Expression[] Values { get { throw null; } }
+        public ArrayExpression(params Azure.Provisioning.Expressions.BicepExpression[] values) { }
+        public Azure.Provisioning.Expressions.BicepExpression[] Values { get { throw null; } }
+    }
+    public abstract partial class BicepExpression
+    {
+        protected BicepExpression() { }
+        public static implicit operator Azure.Provisioning.Expressions.BicepExpression (bool value) { throw null; }
+        public static implicit operator Azure.Provisioning.Expressions.BicepExpression (int value) { throw null; }
+        public static implicit operator Azure.Provisioning.Expressions.BicepExpression (string value) { throw null; }
+        public override string ToString() { throw null; }
+        internal abstract Azure.Provisioning.Expressions.BicepWriter Write(Azure.Provisioning.Expressions.BicepWriter writer);
     }
     public static partial class BicepFunction
     {
@@ -548,19 +557,18 @@ namespace Azure.Provisioning.Expressions
     }
     public partial class BicepProgram
     {
-        public BicepProgram(params Azure.Provisioning.Expressions.Statement[] body) { }
-        public Azure.Provisioning.Expressions.Statement[] Body { get { throw null; } }
+        public BicepProgram(params Azure.Provisioning.Expressions.BicepStatement[] body) { }
+        public Azure.Provisioning.Expressions.BicepStatement[] Body { get { throw null; } }
         public string? ModuleName { get { throw null; } set { } }
         public override string ToString() { throw null; }
     }
-    public partial class BinaryExpression : Azure.Provisioning.Expressions.Expression
+    public abstract partial class BicepStatement
     {
-        public BinaryExpression(Azure.Provisioning.Expressions.Expression left, Azure.Provisioning.Expressions.BinaryOperator op, Azure.Provisioning.Expressions.Expression right) { }
-        public Azure.Provisioning.Expressions.Expression Left { get { throw null; } }
-        public Azure.Provisioning.Expressions.BinaryOperator Operator { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Right { get { throw null; } }
+        protected BicepStatement() { }
+        public override string ToString() { throw null; }
+        internal abstract Azure.Provisioning.Expressions.BicepWriter Write(Azure.Provisioning.Expressions.BicepWriter writer);
     }
-    public enum BinaryOperator
+    public enum BinaryBicepOperator
     {
         And = 0,
         Or = 1,
@@ -579,195 +587,187 @@ namespace Azure.Provisioning.Expressions
         Divide = 14,
         Modulo = 15,
     }
-    public partial class BoolLiteral : Azure.Provisioning.Expressions.Literal
+    public partial class BinaryExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        public BoolLiteral(bool value) : base (default(object)) { }
+        public BinaryExpression(Azure.Provisioning.Expressions.BicepExpression left, Azure.Provisioning.Expressions.BinaryBicepOperator op, Azure.Provisioning.Expressions.BicepExpression right) { }
+        public Azure.Provisioning.Expressions.BicepExpression Left { get { throw null; } }
+        public Azure.Provisioning.Expressions.BinaryBicepOperator Operator { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Right { get { throw null; } }
+    }
+    public partial class BoolLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression
+    {
+        public BoolLiteralExpression(bool value) : base (default(object)) { }
         public bool Value { get { throw null; } }
     }
-    public partial class CommentStatement : Azure.Provisioning.Expressions.Statement
+    public partial class CommentStatement : Azure.Provisioning.Expressions.BicepStatement
     {
         public CommentStatement(string comment) { }
         public string Comment { get { throw null; } }
     }
-    public partial class ConditionalExpression : Azure.Provisioning.Expressions.Expression
+    public partial class ConditionalExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        public ConditionalExpression(Azure.Provisioning.Expressions.Expression condition, Azure.Provisioning.Expressions.Expression consequent, Azure.Provisioning.Expressions.Expression alternate) { }
-        public Azure.Provisioning.Expressions.Expression Alternate { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Condition { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Consequent { get { throw null; } }
+        public ConditionalExpression(Azure.Provisioning.Expressions.BicepExpression condition, Azure.Provisioning.Expressions.BicepExpression consequent, Azure.Provisioning.Expressions.BicepExpression alternate) { }
+        public Azure.Provisioning.Expressions.BicepExpression Alternate { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Condition { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Consequent { get { throw null; } }
     }
-    public partial class DecoratorExpression : Azure.Provisioning.Expressions.Expression
+    public partial class DecoratorExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        public DecoratorExpression(Azure.Provisioning.Expressions.Expression expr) { }
-        public Azure.Provisioning.Expressions.Expression Expr { get { throw null; } }
+        public DecoratorExpression(Azure.Provisioning.Expressions.BicepExpression value) { }
+        public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
     }
-    public abstract partial class Expression
+    public partial class ExpressionStatement : Azure.Provisioning.Expressions.BicepStatement
     {
-        protected Expression() { }
-        public static implicit operator Azure.Provisioning.Expressions.Expression (bool value) { throw null; }
-        public static implicit operator Azure.Provisioning.Expressions.Expression (int value) { throw null; }
-        public static implicit operator Azure.Provisioning.Expressions.Expression (string value) { throw null; }
-        public override string ToString() { throw null; }
-        internal abstract Azure.Provisioning.Expressions.BicepWriter Write(Azure.Provisioning.Expressions.BicepWriter writer);
+        public ExpressionStatement(Azure.Provisioning.Expressions.BicepExpression expression) { }
+        public Azure.Provisioning.Expressions.BicepExpression Expression { get { throw null; } }
     }
-    public partial class ExprStatement : Azure.Provisioning.Expressions.Statement
+    public partial class FunctionCallExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        public ExprStatement(Azure.Provisioning.Expressions.Expression expr) { }
-        public Azure.Provisioning.Expressions.Expression Expression { get { throw null; } }
+        public FunctionCallExpression(Azure.Provisioning.Expressions.BicepExpression function, params Azure.Provisioning.Expressions.BicepExpression[] arguments) { }
+        public Azure.Provisioning.Expressions.BicepExpression[] Arguments { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Function { get { throw null; } }
     }
-    public partial class FunctionCallExpression : Azure.Provisioning.Expressions.Expression
-    {
-        public FunctionCallExpression(Azure.Provisioning.Expressions.Expression function, params Azure.Provisioning.Expressions.Expression[] arguments) { }
-        public Azure.Provisioning.Expressions.Expression[] Arguments { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Function { get { throw null; } }
-    }
-    public partial class IdentifierExpression : Azure.Provisioning.Expressions.Expression
+    public partial class IdentifierExpression : Azure.Provisioning.Expressions.BicepExpression
     {
         public IdentifierExpression(string name) { }
         public string Name { get { throw null; } }
     }
-    public partial class IndexExpression : Azure.Provisioning.Expressions.Expression
+    public partial class IndexExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        public IndexExpression(Azure.Provisioning.Expressions.Expression value, Azure.Provisioning.Expressions.Expression index) { }
-        public Azure.Provisioning.Expressions.Expression Index { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Value { get { throw null; } }
+        public IndexExpression(Azure.Provisioning.Expressions.BicepExpression value, Azure.Provisioning.Expressions.BicepExpression index) { }
+        public Azure.Provisioning.Expressions.BicepExpression Index { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
     }
-    public partial class InterpolatedString : Azure.Provisioning.Expressions.Expression
+    public partial class InterpolatedStringExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        public InterpolatedString(string format, Azure.Provisioning.Expressions.Expression[] values) { }
+        public InterpolatedStringExpression(string format, Azure.Provisioning.Expressions.BicepExpression[] values) { }
         public string Format { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression[] Values { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression[] Values { get { throw null; } }
     }
-    public partial class IntLiteral : Azure.Provisioning.Expressions.Literal
+    public partial class IntLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression
     {
-        public IntLiteral(int value) : base (default(object)) { }
+        public IntLiteralExpression(int value) : base (default(object)) { }
         public int Value { get { throw null; } }
     }
-    public abstract partial class Literal : Azure.Provisioning.Expressions.Expression
+    public abstract partial class LiteralExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        protected Literal(object? literalValue = null) { }
+        protected LiteralExpression(object? literalValue = null) { }
         public object? LiteralValue { get { throw null; } }
     }
-    public partial class MemberExpression : Azure.Provisioning.Expressions.Expression
+    public partial class MemberExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        public MemberExpression(Azure.Provisioning.Expressions.Expression value, string member) { }
+        public MemberExpression(Azure.Provisioning.Expressions.BicepExpression value, string member) { }
         public string Member { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Value { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
     }
-    public partial class ModuleStatement : Azure.Provisioning.Expressions.Statement
+    public partial class ModuleStatement : Azure.Provisioning.Expressions.BicepStatement
     {
-        public ModuleStatement(string name, Azure.Provisioning.Expressions.Expression type, Azure.Provisioning.Expressions.Expression body) { }
-        public Azure.Provisioning.Expressions.Expression Body { get { throw null; } }
+        public ModuleStatement(string name, Azure.Provisioning.Expressions.BicepExpression type, Azure.Provisioning.Expressions.BicepExpression body) { }
+        public Azure.Provisioning.Expressions.BicepExpression Body { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.DecoratorExpression> Decorators { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Type { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Type { get { throw null; } }
     }
-    public partial class NestedExpression : Azure.Provisioning.Expressions.Expression
+    public partial class NestedExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        public NestedExpression(Azure.Provisioning.Expressions.Expression value, string nestedMember) { }
+        public NestedExpression(Azure.Provisioning.Expressions.BicepExpression value, string nestedMember) { }
         public string NestedMember { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Value { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
     }
-    public partial class NullLiteral : Azure.Provisioning.Expressions.Literal
+    public partial class NullLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression
     {
-        public NullLiteral() : base (default(object)) { }
+        public NullLiteralExpression() : base (default(object)) { }
     }
-    public partial class ObjectExpression : Azure.Provisioning.Expressions.Expression
+    public partial class ObjectExpression : Azure.Provisioning.Expressions.BicepExpression
     {
         public ObjectExpression(params Azure.Provisioning.Expressions.PropertyExpression[] properties) { }
         public Azure.Provisioning.Expressions.PropertyExpression[] Properties { get { throw null; } }
     }
-    public partial class OutputStatement : Azure.Provisioning.Expressions.Statement
+    public partial class OutputStatement : Azure.Provisioning.Expressions.BicepStatement
     {
-        public OutputStatement(string name, Azure.Provisioning.Expressions.Expression type, Azure.Provisioning.Expressions.Expression value) { }
+        public OutputStatement(string name, Azure.Provisioning.Expressions.BicepExpression type, Azure.Provisioning.Expressions.BicepExpression value) { }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.DecoratorExpression> Decorators { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Type { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Value { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Type { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
     }
-    public partial class ParameterStatement : Azure.Provisioning.Expressions.Statement
+    public partial class ParameterStatement : Azure.Provisioning.Expressions.BicepStatement
     {
-        public ParameterStatement(string name, Azure.Provisioning.Expressions.Expression type, Azure.Provisioning.Expressions.Expression? defaultValue) { }
+        public ParameterStatement(string name, Azure.Provisioning.Expressions.BicepExpression type, Azure.Provisioning.Expressions.BicepExpression? defaultValue) { }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.DecoratorExpression> Decorators { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression? DefaultValue { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression? DefaultValue { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Type { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Type { get { throw null; } }
     }
-    public partial class PropertyExpression : Azure.Provisioning.Expressions.Expression
+    public partial class PropertyExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        public PropertyExpression(string name, Azure.Provisioning.Expressions.Expression value) { }
+        public PropertyExpression(string name, Azure.Provisioning.Expressions.BicepExpression value) { }
         public string Name { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Value { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
     }
-    public partial class ResourceStatement : Azure.Provisioning.Expressions.Statement
+    public partial class ResourceStatement : Azure.Provisioning.Expressions.BicepStatement
     {
-        public ResourceStatement(string name, Azure.Provisioning.Expressions.Expression type, Azure.Provisioning.Expressions.Expression body) { }
-        public Azure.Provisioning.Expressions.Expression Body { get { throw null; } }
+        public ResourceStatement(string name, Azure.Provisioning.Expressions.BicepExpression type, Azure.Provisioning.Expressions.BicepExpression body) { }
+        public Azure.Provisioning.Expressions.BicepExpression Body { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.DecoratorExpression> Decorators { get { throw null; } }
         public bool Existing { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Type { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Type { get { throw null; } }
     }
-    public partial class SafeIndexExpression : Azure.Provisioning.Expressions.Expression
+    public partial class SafeIndexExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        public SafeIndexExpression(Azure.Provisioning.Expressions.Expression value, Azure.Provisioning.Expressions.Expression index) { }
-        public Azure.Provisioning.Expressions.Expression Index { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Value { get { throw null; } }
+        public SafeIndexExpression(Azure.Provisioning.Expressions.BicepExpression value, Azure.Provisioning.Expressions.BicepExpression index) { }
+        public Azure.Provisioning.Expressions.BicepExpression Index { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
     }
-    public partial class SafeMemberExpression : Azure.Provisioning.Expressions.Expression
+    public partial class SafeMemberExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        public SafeMemberExpression(Azure.Provisioning.Expressions.Expression value, string member) { }
+        public SafeMemberExpression(Azure.Provisioning.Expressions.BicepExpression value, string member) { }
         public string Member { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Value { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
     }
-    public abstract partial class Statement
+    public partial class StringLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression
     {
-        protected Statement() { }
-        public override string ToString() { throw null; }
-        internal abstract Azure.Provisioning.Expressions.BicepWriter Write(Azure.Provisioning.Expressions.BicepWriter writer);
-    }
-    public partial class StringLiteral : Azure.Provisioning.Expressions.Literal
-    {
-        public StringLiteral(string value) : base (default(object)) { }
+        public StringLiteralExpression(string value) : base (default(object)) { }
         public string Value { get { throw null; } }
     }
-    public partial class TargetScopeStatement : Azure.Provisioning.Expressions.Statement
+    public partial class TargetScopeStatement : Azure.Provisioning.Expressions.BicepStatement
     {
-        public TargetScopeStatement(Azure.Provisioning.Expressions.Expression scope) { }
-        public Azure.Provisioning.Expressions.Expression Scope { get { throw null; } }
+        public TargetScopeStatement(Azure.Provisioning.Expressions.BicepExpression scope) { }
+        public Azure.Provisioning.Expressions.BicepExpression Scope { get { throw null; } }
     }
-    public partial class TypeExpression : Azure.Provisioning.Expressions.Expression
+    public partial class TypeExpression : Azure.Provisioning.Expressions.BicepExpression
     {
         public TypeExpression(System.Type type) { }
         public System.Type Type { get { throw null; } }
     }
-    public partial class UnaryExpression : Azure.Provisioning.Expressions.Expression
-    {
-        public UnaryExpression(Azure.Provisioning.Expressions.UnaryOperator op, Azure.Provisioning.Expressions.Expression value) { }
-        public Azure.Provisioning.Expressions.UnaryOperator Operator { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Value { get { throw null; } }
-    }
-    public enum UnaryOperator
+    public enum UnaryBicepOperator
     {
         Not = 0,
         Negate = 1,
         SuppressNull = 2,
     }
-    public partial class VariableStatement : Azure.Provisioning.Expressions.Statement
+    public partial class UnaryExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        public VariableStatement(string name, Azure.Provisioning.Expressions.Expression value) { }
+        public UnaryExpression(Azure.Provisioning.Expressions.UnaryBicepOperator op, Azure.Provisioning.Expressions.BicepExpression value) { }
+        public Azure.Provisioning.Expressions.UnaryBicepOperator Operator { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
+    }
+    public partial class VariableStatement : Azure.Provisioning.Expressions.BicepStatement
+    {
+        public VariableStatement(string name, Azure.Provisioning.Expressions.BicepExpression value) { }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.DecoratorExpression> Decorators { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.Provisioning.Expressions.Expression Value { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
     }
 }
 namespace Azure.Provisioning.Primitives
 {
     public partial class BicepLiteral : Azure.Provisioning.Primitives.NamedProvisioningConstruct
     {
-        public BicepLiteral(string resourceName, params Azure.Provisioning.Expressions.Statement[] statements) : base (default(string)) { }
-        public System.Collections.Generic.IList<Azure.Provisioning.Expressions.Statement> Statements { get { throw null; } }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
+        public BicepLiteral(string resourceName, params Azure.Provisioning.Expressions.BicepStatement[] statements) : base (default(string)) { }
+        public System.Collections.Generic.IList<Azure.Provisioning.Expressions.BicepStatement> Statements { get { throw null; } }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
     }
     public partial class BicepValueReference
     {
@@ -780,13 +780,13 @@ namespace Azure.Provisioning.Primitives
     public partial class ClientCreatorOutputResolver : Azure.Provisioning.Primitives.InfrastructureResolver
     {
         public ClientCreatorOutputResolver() { }
-        public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> ResolveResources(Azure.Provisioning.ProvisioningContext context, System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> resources) { throw null; }
+        public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> ResolveResources(Azure.Provisioning.ProvisioningBuildOptions options, System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> resources) { throw null; }
     }
     public partial class DynamicResourceNamePropertyResolver : Azure.Provisioning.Primitives.ResourceNamePropertyResolver
     {
         public DynamicResourceNamePropertyResolver() { }
-        protected virtual Azure.Provisioning.BicepValue<string> GetUniqueSuffix(Azure.Provisioning.ProvisioningContext context, Azure.Provisioning.Primitives.Resource resource) { throw null; }
-        public override Azure.Provisioning.BicepValue<string>? ResolveName(Azure.Provisioning.ProvisioningContext context, Azure.Provisioning.Primitives.Resource resource, Azure.Provisioning.Primitives.ResourceNameRequirements requirements) { throw null; }
+        protected virtual Azure.Provisioning.BicepValue<string> GetUniqueSuffix(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Primitives.Resource resource) { throw null; }
+        public override Azure.Provisioning.BicepValue<string>? ResolveName(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Primitives.Resource resource, Azure.Provisioning.Primitives.ResourceNameRequirements requirements) { throw null; }
     }
     public partial interface IClientCreator
     {
@@ -799,15 +799,15 @@ namespace Azure.Provisioning.Primitives
     public abstract partial class InfrastructureResolver
     {
         protected InfrastructureResolver() { }
-        public System.Collections.Generic.IEnumerable<Azure.Provisioning.Infrastructure> GetNestedInfrastructure(Azure.Provisioning.ProvisioningContext context, Azure.Provisioning.Infrastructure infrastructure) { throw null; }
-        public virtual void ResolveInfrastructure(Azure.Provisioning.ProvisioningContext context, Azure.Provisioning.Infrastructure infrastructure) { }
-        public virtual System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> ResolveResources(Azure.Provisioning.ProvisioningContext context, System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> resources) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.Provisioning.Infrastructure> GetNestedInfrastructure(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Infrastructure infrastructure) { throw null; }
+        public virtual void ResolveInfrastructure(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Infrastructure infrastructure) { }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> ResolveResources(Azure.Provisioning.ProvisioningBuildOptions options, System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> resources) { throw null; }
     }
     public partial class LocationPropertyResolver : Azure.Provisioning.Primitives.PropertyResolver
     {
         public LocationPropertyResolver() { }
-        protected virtual Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> GetDefaultLocation(Azure.Provisioning.ProvisioningContext context, Azure.Provisioning.Primitives.ProvisioningConstruct construct) { throw null; }
-        public override void ResolveProperties(Azure.Provisioning.ProvisioningContext context, Azure.Provisioning.Primitives.ProvisioningConstruct construct) { }
+        protected virtual Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> GetDefaultLocation(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Primitives.ProvisioningConstruct construct) { throw null; }
+        public override void ResolveProperties(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Primitives.ProvisioningConstruct construct) { }
     }
     public partial class ModuleImport : Azure.Provisioning.Primitives.NamedProvisioningConstruct
     {
@@ -816,45 +816,45 @@ namespace Azure.Provisioning.Primitives
         public Azure.Provisioning.BicepDictionary<object> Parameters { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Path { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Scope { get { throw null; } set { } }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
-        protected internal override void Validate(Azure.Provisioning.ProvisioningContext? context = null) { }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
+        protected internal override void Validate(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
     }
     public abstract partial class NamedProvisioningConstruct : Azure.Provisioning.Primitives.ProvisioningConstruct
     {
-        protected NamedProvisioningConstruct(string identifierName) { }
-        public string IdentifierName { get { throw null; } set { } }
+        protected NamedProvisioningConstruct(string bicepIdentifier) { }
+        public string BicepIdentifier { get { throw null; } set { } }
     }
     public partial class OrderingInfrastructureResolver : Azure.Provisioning.Primitives.InfrastructureResolver
     {
         public OrderingInfrastructureResolver() { }
-        public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> ResolveResources(Azure.Provisioning.ProvisioningContext context, System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> resources) { throw null; }
+        public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> ResolveResources(Azure.Provisioning.ProvisioningBuildOptions options, System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> resources) { throw null; }
     }
     public abstract partial class PropertyResolver
     {
         protected PropertyResolver() { }
-        public abstract void ResolveProperties(Azure.Provisioning.ProvisioningContext context, Azure.Provisioning.Primitives.ProvisioningConstruct construct);
+        public abstract void ResolveProperties(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Primitives.ProvisioningConstruct construct);
     }
     public abstract partial class Provisionable
     {
         internal Provisionable() { }
-        protected internal abstract System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile();
+        protected internal abstract System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile();
         public virtual System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> GetResources() { throw null; }
-        protected internal virtual void Resolve(Azure.Provisioning.ProvisioningContext? context = null) { }
-        protected internal virtual void Validate(Azure.Provisioning.ProvisioningContext? context = null) { }
+        protected internal virtual void Resolve(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
+        protected internal virtual void Validate(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
     }
     public abstract partial class ProvisioningConstruct : Azure.Provisioning.Primitives.Provisionable
     {
         protected ProvisioningConstruct() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.Infrastructure? ParentInfrastructure { get { throw null; } }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> GetResources() { throw null; }
-        protected internal void OverrideWithExpression(Azure.Provisioning.Expressions.Expression reference) { }
-        protected internal override void Resolve(Azure.Provisioning.ProvisioningContext? context = null) { }
+        protected internal void OverrideWithExpression(Azure.Provisioning.Expressions.BicepExpression reference) { }
+        protected internal override void Resolve(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetProvisioningProperty(Azure.Provisioning.BicepValue property, Azure.Provisioning.BicepValue value) { }
-        protected internal override void Validate(Azure.Provisioning.ProvisioningContext? context = null) { }
+        protected internal override void Validate(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
     }
     public abstract partial class Resource : Azure.Provisioning.Primitives.NamedProvisioningConstruct
     {
@@ -863,11 +863,11 @@ namespace Azure.Provisioning.Primitives
         public bool IsExistingResource { get { throw null; } protected set { } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
         public string? ResourceVersion { get { throw null; } set { } }
-        public virtual Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
+        public virtual Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningBuildOptions? options = null) { throw null; }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        protected internal override void Validate(Azure.Provisioning.ProvisioningContext? context = null) { }
+        protected internal override void Validate(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
     }
     [System.FlagsAttribute]
     public enum ResourceNameCharacters
@@ -885,8 +885,8 @@ namespace Azure.Provisioning.Primitives
     public abstract partial class ResourceNamePropertyResolver : Azure.Provisioning.Primitives.PropertyResolver
     {
         protected ResourceNamePropertyResolver() { }
-        public abstract Azure.Provisioning.BicepValue<string>? ResolveName(Azure.Provisioning.ProvisioningContext context, Azure.Provisioning.Primitives.Resource resource, Azure.Provisioning.Primitives.ResourceNameRequirements requirements);
-        public override void ResolveProperties(Azure.Provisioning.ProvisioningContext context, Azure.Provisioning.Primitives.ProvisioningConstruct construct) { }
+        public abstract Azure.Provisioning.BicepValue<string>? ResolveName(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Primitives.Resource resource, Azure.Provisioning.Primitives.ResourceNameRequirements requirements);
+        public override void ResolveProperties(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Primitives.ProvisioningConstruct construct) { }
         protected static string SanitizeText(string text, Azure.Provisioning.Primitives.ResourceNameCharacters validCharacters) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -908,7 +908,7 @@ namespace Azure.Provisioning.Primitives
     public partial class StaticResourceNamePropertyResolver : Azure.Provisioning.Primitives.ResourceNamePropertyResolver
     {
         public StaticResourceNamePropertyResolver() { }
-        public override Azure.Provisioning.BicepValue<string>? ResolveName(Azure.Provisioning.ProvisioningContext context, Azure.Provisioning.Primitives.Resource resource, Azure.Provisioning.Primitives.ResourceNameRequirements requirements) { throw null; }
+        public override Azure.Provisioning.BicepValue<string>? ResolveName(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Primitives.Resource resource, Azure.Provisioning.Primitives.ResourceNameRequirements requirements) { throw null; }
     }
 }
 namespace Azure.Provisioning.Resources
@@ -921,7 +921,7 @@ namespace Azure.Provisioning.Resources
     }
     public partial class ArmApplication : Azure.Provisioning.Primitives.Resource
     {
-        public ArmApplication(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ArmApplication(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ApplicationDefinitionId { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.ArmApplicationArtifact> Artifacts { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.ArmApplicationAuthorization> Authorizations { get { throw null; } }
@@ -947,7 +947,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ArmApplicationDetails> UpdatedBy { get { throw null; } }
-        public static Azure.Provisioning.Resources.ArmApplication FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.ArmApplication FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2017_09_01;
@@ -987,7 +987,7 @@ namespace Azure.Provisioning.Resources
     }
     public partial class ArmApplicationDefinition : Azure.Provisioning.Primitives.Resource
     {
-        public ArmApplicationDefinition(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ArmApplicationDefinition(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.ArmApplicationDefinitionArtifact> Artifacts { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.ArmApplicationAuthorization> Authorizations { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.BinaryData> CreateUiDefinition { get { throw null; } set { } }
@@ -1008,7 +1008,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ArmApplicationSku> Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.Resources.ArmApplicationDefinition FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.ArmApplicationDefinition FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2017_09_01;
@@ -1165,16 +1165,16 @@ namespace Azure.Provisioning.Resources
     }
     public partial class ArmDeployment : Azure.Provisioning.Primitives.Resource
     {
-        public ArmDeployment(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ArmDeployment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ArmDeploymentPropertiesExtended> Properties { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
-        public static Azure.Provisioning.Resources.ArmDeployment FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.ArmDeployment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.Resources.ArmDeployment FromExpression(Azure.Provisioning.Expressions.Expression expression) { throw null; }
+        public static Azure.Provisioning.Resources.ArmDeployment FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -1262,14 +1262,14 @@ namespace Azure.Provisioning.Resources
     }
     public partial class ArmDeploymentScript : Azure.Provisioning.Primitives.Resource
     {
-        public ArmDeploymentScript(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ArmDeploymentScript(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ArmDeploymentScriptManagedIdentity> Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.Resources.ArmDeploymentScript FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.ArmDeploymentScript FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2020_10_01;
@@ -1398,7 +1398,7 @@ namespace Azure.Provisioning.Resources
     }
     public partial class GenericResource : Azure.Provisioning.Primitives.Resource
     {
-        public GenericResource(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public GenericResource(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ChangedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ExtendedAzureLocation> ExtendedLocation { get { throw null; } set { } }
@@ -1414,7 +1414,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ResourcesSku> Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.Resources.GenericResource FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.GenericResource FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
     }
     public enum JitApprovalMode
     {
@@ -1444,7 +1444,7 @@ namespace Azure.Provisioning.Resources
     }
     public partial class JitRequest : Azure.Provisioning.Primitives.Resource
     {
-        public JitRequest(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public JitRequest(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ApplicationResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ArmApplicationDetails> CreatedBy { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -1458,7 +1458,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ArmApplicationDetails> UpdatedBy { get { throw null; } }
-        public static Azure.Provisioning.Resources.JitRequest FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.JitRequest FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2019_07_01;
@@ -1518,7 +1518,7 @@ namespace Azure.Provisioning.Resources
     }
     public partial class ManagementGroup : Azure.Provisioning.Primitives.Resource
     {
-        public ManagementGroup(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagementGroup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.ManagementGroupChildOptions> Children { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.CreateManagementGroupDetails> Details { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
@@ -1526,7 +1526,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
-        public static Azure.Provisioning.Resources.ManagementGroup FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.ManagementGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -1591,7 +1591,7 @@ namespace Azure.Provisioning.Resources
     }
     public partial class ManagementGroupPolicyDefinition : Azure.Provisioning.Primitives.Resource
     {
-        public ManagementGroupPolicyDefinition(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagementGroupPolicyDefinition(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -1602,7 +1602,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<System.BinaryData> PolicyRule { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.PolicyType> PolicyType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Resources.ManagementGroupPolicyDefinition FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.ManagementGroupPolicyDefinition FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -1623,7 +1623,7 @@ namespace Azure.Provisioning.Resources
     }
     public partial class ManagementGroupPolicySetDefinition : Azure.Provisioning.Primitives.Resource
     {
-        public ManagementGroupPolicySetDefinition(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagementGroupPolicySetDefinition(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -1634,7 +1634,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.PolicyDefinitionReference> PolicyDefinitions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.PolicyType> PolicyType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Resources.ManagementGroupPolicySetDefinition FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.ManagementGroupPolicySetDefinition FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -1653,7 +1653,7 @@ namespace Azure.Provisioning.Resources
     }
     public partial class ManagementGroupSubscription : Azure.Provisioning.Primitives.Resource
     {
-        public ManagementGroupSubscription(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagementGroupSubscription(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
@@ -1662,7 +1662,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<string> State { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Tenant { get { throw null; } }
-        public static Azure.Provisioning.Resources.ManagementGroupSubscription FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.ManagementGroupSubscription FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2018_03_01_beta;
@@ -1676,14 +1676,14 @@ namespace Azure.Provisioning.Resources
     }
     public partial class ManagementLock : Azure.Provisioning.Primitives.Resource
     {
-        public ManagementLock(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagementLock(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ManagementLockLevel> Level { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Notes { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.ManagementLockOwner> Owners { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Resources.ManagementLock FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.ManagementLock FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -1730,7 +1730,7 @@ namespace Azure.Provisioning.Resources
     }
     public partial class PolicyAssignment : Azure.Provisioning.Primitives.Resource
     {
-        public PolicyAssignment(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PolicyAssignment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.EnforcementMode> EnforcementMode { get { throw null; } set { } }
@@ -1747,7 +1747,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.ResourceSelector> ResourceSelectors { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Scope { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Resources.PolicyAssignment FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.PolicyAssignment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -1834,7 +1834,7 @@ namespace Azure.Provisioning.Resources
     }
     public partial class ResourceGroup : Azure.Provisioning.Primitives.Resource
     {
-        public ResourceGroup(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ResourceGroup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ManagedBy { get { throw null; } set { } }
@@ -1842,9 +1842,9 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<string> ResourceGroupProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.Resources.ResourceGroup FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.ResourceGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.Resources.ResourceGroup FromExpression(Azure.Provisioning.Expressions.Expression expression) { throw null; }
+        public static Azure.Provisioning.Resources.ResourceGroup FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -2024,7 +2024,7 @@ namespace Azure.Provisioning.Resources
     }
     public partial class Subscription : Azure.Provisioning.Primitives.Resource
     {
-        public Subscription(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Subscription(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AuthorizationSource { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -2035,7 +2035,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.Resources.Subscription FromExpression(Azure.Provisioning.Expressions.Expression expression) { throw null; }
+        public static Azure.Provisioning.Resources.Subscription FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2015_01_01;
@@ -2072,7 +2072,7 @@ namespace Azure.Provisioning.Resources
     }
     public partial class SubscriptionPolicyDefinition : Azure.Provisioning.Primitives.Resource
     {
-        public SubscriptionPolicyDefinition(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SubscriptionPolicyDefinition(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -2083,13 +2083,13 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<System.BinaryData> PolicyRule { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.PolicyType> PolicyType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Resources.SubscriptionPolicyDefinition FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.SubscriptionPolicyDefinition FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
     }
     public partial class SubscriptionPolicySetDefinition : Azure.Provisioning.Primitives.Resource
     {
-        public SubscriptionPolicySetDefinition(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SubscriptionPolicySetDefinition(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -2100,7 +2100,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.PolicyDefinitionReference> PolicyDefinitions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.PolicyType> PolicyType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Resources.SubscriptionPolicySetDefinition FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.SubscriptionPolicySetDefinition FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
     }
@@ -2136,12 +2136,12 @@ namespace Azure.Provisioning.Resources
     }
     public partial class TagResource : Azure.Provisioning.Primitives.Resource
     {
-        public TagResource(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public TagResource(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> TagValues { get { throw null; } set { } }
-        public static Azure.Provisioning.Resources.TagResource FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.TagResource FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -2157,7 +2157,7 @@ namespace Azure.Provisioning.Resources
     }
     public partial class TemplateSpec : Azure.Provisioning.Primitives.Resource
     {
-        public TemplateSpec(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public TemplateSpec(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -2167,7 +2167,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.Resources.TemplateSpecVersionInfo> Versions { get { throw null; } }
-        public static Azure.Provisioning.Resources.TemplateSpec FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.TemplateSpec FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -2178,7 +2178,7 @@ namespace Azure.Provisioning.Resources
     }
     public partial class TemplateSpecVersion : Azure.Provisioning.Primitives.Resource
     {
-        public TemplateSpecVersion(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public TemplateSpecVersion(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.LinkedTemplateArtifact> LinkedTemplates { get { throw null; } set { } }
@@ -2190,7 +2190,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.BinaryData> UiFormDefinition { get { throw null; } set { } }
-        public static Azure.Provisioning.Resources.TemplateSpecVersion FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Resources.TemplateSpecVersion FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_05_01;
@@ -2206,7 +2206,7 @@ namespace Azure.Provisioning.Resources
     }
     public partial class Tenant : Azure.Provisioning.Primitives.Resource
     {
-        public Tenant(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Tenant(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Country { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> CountryCode { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DefaultDomain { get { throw null; } }
@@ -2218,7 +2218,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TenantType { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.Resources.Tenant FromExpression(Azure.Provisioning.Expressions.Expression expression) { throw null; }
+        public static Azure.Provisioning.Resources.Tenant FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2015_01_01;
@@ -2279,7 +2279,7 @@ namespace Azure.Provisioning.Roles
 {
     public partial class FederatedIdentityCredential : Azure.Provisioning.Primitives.Resource
     {
-        public FederatedIdentityCredential(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FederatedIdentityCredential(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> Audiences { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> IssuerUri { get { throw null; } set { } }
@@ -2287,7 +2287,7 @@ namespace Azure.Provisioning.Roles
         public Azure.Provisioning.Roles.UserAssignedIdentity? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Subject { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Roles.FederatedIdentityCredential FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Roles.FederatedIdentityCredential FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2022_01_31_PREVIEW;
@@ -2297,7 +2297,7 @@ namespace Azure.Provisioning.Roles
     }
     public partial class UserAssignedIdentity : Azure.Provisioning.Primitives.Resource
     {
-        public UserAssignedIdentity(string identifierName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public UserAssignedIdentity(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.Guid> ClientId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
@@ -2306,7 +2306,7 @@ namespace Azure.Provisioning.Roles
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
-        public static Azure.Provisioning.Roles.UserAssignedIdentity FromExisting(string identifierName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Roles.UserAssignedIdentity FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions

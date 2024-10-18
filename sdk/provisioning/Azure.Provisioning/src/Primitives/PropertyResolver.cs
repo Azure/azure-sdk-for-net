@@ -14,7 +14,7 @@ public abstract class PropertyResolver
     /// <summary>
     /// Try to resolve the values of any unset properties in the given construct.
     /// </summary>
-    /// <param name="context">The current provisioning context.</param>
+    /// <param name="options">The current build options.</param>
     /// <param name="construct">The construct with properties to resolve.</param>
-    public abstract void ResolveProperties(ProvisioningContext context, ProvisioningConstruct construct);
+    public abstract void ResolveProperties(ProvisioningBuildOptions options, ProvisioningConstruct construct);
 }

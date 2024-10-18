@@ -27,19 +27,19 @@ public class ModuleImport : NamedProvisioningConstruct
         Parameters = BicepDictionary<object>.DefineProperty(this, nameof(Parameters), ["params"]);
     }
 
-    protected internal override void Validate(ProvisioningContext? context = null)
+    protected internal override void Validate(ProvisioningBuildOptions? options = null)
     {
-        base.Validate(context);
+        base.Validate(options);
         ValidateProperties();
     }
 
-    protected internal override IEnumerable<Statement> Compile()
+    protected internal override IEnumerable<BicepStatement> Compile()
     {
-        List<Statement> statements = [];
-        Dictionary<string, Expression> properties = new() { { "name", _name.Compile() } };
+        List<BicepStatement> statements = [];
+        Dictionary<string, BicepExpression> properties = new() { { "name", _name.Compile() } };
         if (_scope.Kind != BicepValueKind.Unset) { properties.Add("scope", _scope.Compile()); }
         if (Parameters.Count > 0) { properties.Add("params", Parameters.Compile()); }
-        ModuleStatement module = BicepSyntax.Declare.Module(IdentifierName, _path.Compile(), BicepSyntax.Object(properties));
+        ModuleStatement module = BicepSyntax.Declare.Module(BicepIdentifier, _path.Compile(), BicepSyntax.Object(properties));
         statements.Add(module);
         return statements;
     }

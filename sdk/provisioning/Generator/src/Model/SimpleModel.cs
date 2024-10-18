@@ -120,7 +120,7 @@ public class SimpleModel(Specification spec, Type armType, string name, string? 
                         writer.WriteLine($"/// </param>");
                         writer.WriteLine($"/// <returns>A {Name} resource.</returns>");
                         writer.WriteLine($"[EditorBrowsable(EditorBrowsableState.Never)]");
-                        writer.WriteLine($"public static {Name} FromExpression(Expression expression)");
+                        writer.WriteLine($"public static {Name} FromExpression(BicepExpression expression)");
                         using (writer.Scope("{", "}"))
                         {
                             writer.WriteLine($"{Name} resource = new();");
