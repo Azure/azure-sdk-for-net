@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// Properties of Cognitive Services account deployment.
 /// </summary>
-public partial class CognitiveServicesAccountDeploymentProperties : ProvisioningConstruct
+public partial class CognitiveServicesAccountDeploymentProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the status of the resource at the time the operation was called.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Parameters to indicate the information about the restore.
 /// </summary>
-public partial class ResourceRestoreParameters : ProvisioningConstruct
+public partial class ResourceRestoreParameters : ProvisionableConstruct
 {
     /// <summary>
     /// The id of the restorable database account from which the restore has to

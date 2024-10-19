@@ -13,7 +13,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// Private endpoint connection item.
 /// </summary>
-public partial class KeyVaultPrivateEndpointConnectionItemData : ProvisioningConstruct
+public partial class KeyVaultPrivateEndpointConnectionItemData : ProvisionableConstruct
 {
     /// <summary>
     /// Id of private endpoint connection.

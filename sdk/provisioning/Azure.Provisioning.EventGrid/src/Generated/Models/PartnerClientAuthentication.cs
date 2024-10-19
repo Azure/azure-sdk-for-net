@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// include
 /// Azure.ResourceManager.EventGrid.Models.AzureADPartnerClientAuthentication.
 /// </summary>
-public partial class PartnerClientAuthentication : ProvisioningConstruct
+public partial class PartnerClientAuthentication : ProvisionableConstruct
 {
     /// <summary>
     /// Creates a new PartnerClientAuthentication.

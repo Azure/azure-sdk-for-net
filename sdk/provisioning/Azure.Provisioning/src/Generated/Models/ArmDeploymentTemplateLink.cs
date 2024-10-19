@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Entity representing the reference to the template.
 /// </summary>
-public partial class ArmDeploymentTemplateLink : ProvisioningConstruct
+public partial class ArmDeploymentTemplateLink : ProvisionableConstruct
 {
     /// <summary>
     /// The URI of the template to deploy. Use either the uri or id property,

@@ -13,7 +13,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// The unique key on that enforces uniqueness constraint on documents in the
 /// collection in the Azure Cosmos DB service.
 /// </summary>
-public partial class CosmosDBUniqueKey : ProvisioningConstruct
+public partial class CosmosDBUniqueKey : ProvisionableConstruct
 {
     /// <summary>
     /// List of paths must be unique for each document in the Azure Cosmos DB

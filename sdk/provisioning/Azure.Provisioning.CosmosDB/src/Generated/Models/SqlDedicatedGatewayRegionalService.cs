@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Resource for a regional service location.
 /// </summary>
-public partial class SqlDedicatedGatewayRegionalService : ProvisioningConstruct
+public partial class SqlDedicatedGatewayRegionalService : ProvisionableConstruct
 {
     /// <summary>
     /// The regional endpoint for SqlDedicatedGateway.

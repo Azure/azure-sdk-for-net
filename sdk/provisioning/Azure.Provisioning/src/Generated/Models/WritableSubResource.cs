@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// A class representing a sub-resource that contains only the ID.
 /// </summary>
-public partial class WritableSubResource : ProvisioningConstruct
+public partial class WritableSubResource : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets the ARM resource identifier.

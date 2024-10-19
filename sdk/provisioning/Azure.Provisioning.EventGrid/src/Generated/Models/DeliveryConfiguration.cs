@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid;
 /// Properties of the delivery configuration information of the event
 /// subscription.
 /// </summary>
-public partial class DeliveryConfiguration : ProvisioningConstruct
+public partial class DeliveryConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Delivery mode of the event subscription.

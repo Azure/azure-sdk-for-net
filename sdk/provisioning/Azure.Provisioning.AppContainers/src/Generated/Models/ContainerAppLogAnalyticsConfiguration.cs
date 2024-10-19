@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// Log Analytics configuration, must only be provided when destination is
 /// configured as &apos;log-analytics&apos;.
 /// </summary>
-public partial class ContainerAppLogAnalyticsConfiguration : ProvisioningConstruct
+public partial class ContainerAppLogAnalyticsConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Log analytics customer id.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Properties for Helm operator.
 /// </summary>
-public partial class HelmOperatorProperties : ProvisioningConstruct
+public partial class HelmOperatorProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Version of the operator Helm chart.

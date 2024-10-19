@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ResourceTypeAliasPath.
 /// </summary>
-public partial class ResourceTypeAliasPath : ProvisioningConstruct
+public partial class ResourceTypeAliasPath : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the Path.

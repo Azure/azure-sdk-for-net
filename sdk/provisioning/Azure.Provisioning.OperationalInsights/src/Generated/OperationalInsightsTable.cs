@@ -16,7 +16,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsTable.
 /// </summary>
-public partial class OperationalInsightsTable : Resource
+public partial class OperationalInsightsTable : ProvisionableResource
 {
     /// <summary>
     /// The name of the table.
@@ -126,15 +126,15 @@ public partial class OperationalInsightsTable : Resource
     /// <summary>
     /// Creates a new OperationalInsightsTable.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the OperationalInsightsTable resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsTable.</param>
-    public OperationalInsightsTable(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.OperationalInsights/workspaces/tables", resourceVersion ?? "2023-09-01")
+    public OperationalInsightsTable(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.OperationalInsights/workspaces/tables", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _plan = BicepValue<OperationalInsightsTablePlan>.DefineProperty(this, "Plan", ["properties", "plan"]);
@@ -178,7 +178,7 @@ public partial class OperationalInsightsTable : Resource
     /// <summary>
     /// Creates a reference to an existing OperationalInsightsTable.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the OperationalInsightsTable resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -186,6 +186,6 @@ public partial class OperationalInsightsTable : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsTable.</param>
     /// <returns>The existing OperationalInsightsTable resource.</returns>
-    public static OperationalInsightsTable FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static OperationalInsightsTable FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

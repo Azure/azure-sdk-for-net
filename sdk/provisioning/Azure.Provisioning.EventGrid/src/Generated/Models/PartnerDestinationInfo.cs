@@ -19,7 +19,7 @@ namespace Azure.Provisioning.EventGrid;
 /// include
 /// Azure.ResourceManager.EventGrid.Models.WebhookPartnerDestinationInfo.
 /// </summary>
-public partial class PartnerDestinationInfo : ProvisioningConstruct
+public partial class PartnerDestinationInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Azure subscription ID of the subscriber. The partner destination

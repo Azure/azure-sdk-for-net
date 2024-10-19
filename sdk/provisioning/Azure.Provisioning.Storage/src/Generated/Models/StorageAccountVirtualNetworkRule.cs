@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Virtual Network rule.
 /// </summary>
-public partial class StorageAccountVirtualNetworkRule : ProvisioningConstruct
+public partial class StorageAccountVirtualNetworkRule : ProvisionableConstruct
 {
     /// <summary>
     /// Resource ID of a subnet, for example:

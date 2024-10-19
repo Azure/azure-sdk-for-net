@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Traffic weight assigned to a revision.
 /// </summary>
-public partial class ContainerAppRevisionTrafficWeight : ProvisioningConstruct
+public partial class ContainerAppRevisionTrafficWeight : ProvisionableConstruct
 {
     /// <summary>
     /// Name of a revision.

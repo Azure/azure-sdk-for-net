@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// The commitment plan association.
 /// </summary>
-public partial class CommitmentPlanAssociation : ProvisioningConstruct
+public partial class CommitmentPlanAssociation : ProvisionableConstruct
 {
     /// <summary>
     /// The Azure resource id of the commitment plan.

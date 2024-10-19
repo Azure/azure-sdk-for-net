@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppContainers;
 /// The configuration settings of the Azure Active Directory token validation
 /// flow.
 /// </summary>
-public partial class ContainerAppAzureActiveDirectoryValidationConfiguration : ProvisioningConstruct
+public partial class ContainerAppAzureActiveDirectoryValidationConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// The configuration settings of the checks that should be made while

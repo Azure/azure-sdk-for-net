@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Push settings for the App.
 /// </summary>
-public partial class WebAppPushSettings : ProvisioningConstruct
+public partial class WebAppPushSettings : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets a flag indicating whether the Push endpoint is enabled.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// SubResource.
 /// </summary>
-public partial class SubResource : ProvisioningConstruct
+public partial class SubResource : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the Id.

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// LogsSiteConfig.
 /// </summary>
-public partial class LogsSiteConfig : Resource
+public partial class LogsSiteConfig : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -76,15 +76,15 @@ public partial class LogsSiteConfig : Resource
     /// <summary>
     /// Creates a new LogsSiteConfig.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the LogsSiteConfig resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the LogsSiteConfig.</param>
-    public LogsSiteConfig(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/config", resourceVersion ?? "2024-04-01")
+    public LogsSiteConfig(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/config", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _applicationLogs = BicepValue<ApplicationLogsConfig>.DefineProperty(this, "ApplicationLogs", ["properties", "applicationLogs"]);
@@ -261,7 +261,7 @@ public partial class LogsSiteConfig : Resource
     /// <summary>
     /// Creates a reference to an existing LogsSiteConfig.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the LogsSiteConfig resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -269,6 +269,6 @@ public partial class LogsSiteConfig : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the LogsSiteConfig.</param>
     /// <returns>The existing LogsSiteConfig resource.</returns>
-    public static LogsSiteConfig FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static LogsSiteConfig FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

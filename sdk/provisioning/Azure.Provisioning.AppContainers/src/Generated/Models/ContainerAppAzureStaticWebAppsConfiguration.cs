@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the Azure Static Web Apps provider.
 /// </summary>
-public partial class ContainerAppAzureStaticWebAppsConfiguration : ProvisioningConstruct
+public partial class ContainerAppAzureStaticWebAppsConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// &lt;code&gt;false&lt;/code&gt; if the Azure Static Web Apps provider

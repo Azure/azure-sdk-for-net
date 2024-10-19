@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// IpAddressOrRange object.
 /// </summary>
-public partial class CosmosDBIPAddressOrRange : ProvisioningConstruct
+public partial class CosmosDBIPAddressOrRange : ProvisionableConstruct
 {
     /// <summary>
     /// A single IPv4 address or a single IPv4 address range in CIDR format.

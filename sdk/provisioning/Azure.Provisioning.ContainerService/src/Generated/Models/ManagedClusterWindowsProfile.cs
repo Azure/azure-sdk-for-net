@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Profile for Windows VMs in the managed cluster.
 /// </summary>
-public partial class ManagedClusterWindowsProfile : ProvisioningConstruct
+public partial class ManagedClusterWindowsProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Specifies the name of the administrator account. &lt;br&gt;&lt;br&gt;

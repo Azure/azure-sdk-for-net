@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The policies for a container registry.
 /// </summary>
-public partial class ContainerRegistryPolicies : ProvisioningConstruct
+public partial class ContainerRegistryPolicies : ProvisionableConstruct
 {
     /// <summary>
     /// The value that indicates whether the policy is enabled or not.

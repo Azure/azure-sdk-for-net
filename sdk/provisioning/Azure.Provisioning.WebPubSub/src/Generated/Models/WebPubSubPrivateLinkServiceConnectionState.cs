@@ -11,7 +11,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// Connection state of the private endpoint connection.
 /// </summary>
-public partial class WebPubSubPrivateLinkServiceConnectionState : ProvisioningConstruct
+public partial class WebPubSubPrivateLinkServiceConnectionState : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates whether the connection has been Approved/Rejected/Removed by

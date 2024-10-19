@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// The blob service properties for Last access time based tracking policy.
 /// </summary>
-public partial class LastAccessTimeTrackingPolicy : ProvisioningConstruct
+public partial class LastAccessTimeTrackingPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// When set to true last access time based tracking is enabled.

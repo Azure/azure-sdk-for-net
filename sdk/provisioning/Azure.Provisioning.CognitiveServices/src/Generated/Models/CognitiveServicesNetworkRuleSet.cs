@@ -13,7 +13,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// A set of rules governing the network accessibility.
 /// </summary>
-public partial class CognitiveServicesNetworkRuleSet : ProvisioningConstruct
+public partial class CognitiveServicesNetworkRuleSet : ProvisionableConstruct
 {
     /// <summary>
     /// The default action when no rule from ipRules and from

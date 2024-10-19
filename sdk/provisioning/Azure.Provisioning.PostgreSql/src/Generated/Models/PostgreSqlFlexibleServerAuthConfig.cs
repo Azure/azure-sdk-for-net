@@ -11,7 +11,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// Authentication configuration properties of a server.
 /// </summary>
-public partial class PostgreSqlFlexibleServerAuthConfig : ProvisioningConstruct
+public partial class PostgreSqlFlexibleServerAuthConfig : ProvisionableConstruct
 {
     /// <summary>
     /// If Enabled, Azure Active Directory authentication is enabled.

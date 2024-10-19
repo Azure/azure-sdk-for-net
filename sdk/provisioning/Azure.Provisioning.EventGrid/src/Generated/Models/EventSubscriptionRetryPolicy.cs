@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Information about the retry policy for an event subscription.
 /// </summary>
-public partial class EventSubscriptionRetryPolicy : ProvisioningConstruct
+public partial class EventSubscriptionRetryPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// Maximum number of delivery retry attempts for events.

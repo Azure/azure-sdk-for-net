@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// Cognitive Services account ModelDeprecationInfo.
 /// </summary>
-public partial class ServiceAccountModelDeprecationInfo : ProvisioningConstruct
+public partial class ServiceAccountModelDeprecationInfo : ProvisionableConstruct
 {
     /// <summary>
     /// The datetime of deprecation of the fineTune Model.

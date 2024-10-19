@@ -18,7 +18,7 @@ namespace Azure.Provisioning.EventGrid;
 /// Azure.ResourceManager.EventGrid.Models.DynamicDeliveryAttributeMapping and
 /// Azure.ResourceManager.EventGrid.Models.StaticDeliveryAttributeMapping.
 /// </summary>
-public partial class DeliveryAttributeMapping : ProvisioningConstruct
+public partial class DeliveryAttributeMapping : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the delivery attribute or header.

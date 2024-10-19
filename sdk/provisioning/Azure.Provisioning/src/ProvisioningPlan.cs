@@ -20,26 +20,26 @@ namespace Azure.Provisioning;
 public partial class ProvisioningPlan
 {
     /// <summary>
-    /// Gets the provisioning context used to compose these resources.
+    /// Gets the build options used to compose these resources.
     /// </summary>
-    public ProvisioningContext ProvisioningContext { get; }
+    public ProvisioningBuildOptions BuildOptions { get; }
 
     /// <summary>
     /// Gets the resources to be composed.
     /// </summary>
     public Infrastructure Infrastructure { get; }
 
-    internal ProvisioningPlan(Infrastructure infrastructure, ProvisioningContext context)
+    internal ProvisioningPlan(Infrastructure infrastructure, ProvisioningBuildOptions options)
     {
         Infrastructure = infrastructure;
-        ProvisioningContext = context;
+        BuildOptions = options;
     }
 
     // This is a placeholder until we get proper module splitting in place
     public IDictionary<string, string> Compile()
     {
         Dictionary<string, string> source = [];
-        foreach (KeyValuePair<string, IEnumerable<Statement>> pair in Infrastructure.CompileModules(ProvisioningContext))
+        foreach (KeyValuePair<string, IEnumerable<BicepStatement>> pair in Infrastructure.CompileModules(BuildOptions))
         {
             source[$"{pair.Key}.bicep"] = string.Join(Environment.NewLine, pair.Value).Trim();
         }

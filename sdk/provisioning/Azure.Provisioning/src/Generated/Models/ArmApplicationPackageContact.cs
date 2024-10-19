@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// The application package contact information.
 /// </summary>
-public partial class ArmApplicationPackageContact : ProvisioningConstruct
+public partial class ArmApplicationPackageContact : ProvisionableConstruct
 {
     /// <summary>
     /// The contact name.

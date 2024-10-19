@@ -13,11 +13,11 @@ namespace Azure.Provisioning.Primitives;
 /// <summary>
 /// Represents an Azure resource.
 /// </summary>
-/// <param name="resourceName">The friendly name of the resource.</param>
+/// <param name="bicepIdentifier">The bicep identifier name of the resource.</param>
 /// <param name="resourceType">The type of the resource.</param>
 /// <param name="resourceVersion">The version of the resource.</param>
-public abstract class Resource(string resourceName, ResourceType resourceType, string? resourceVersion = default)
-    : NamedProvisioningConstruct(resourceName)
+public abstract class ProvisionableResource(string bicepIdentifier, ResourceType resourceType, string? resourceVersion = default)
+    : NamedProvisionableConstruct(bicepIdentifier)
 {
     /// <summary>
     /// Gets the type of the resource.
@@ -56,37 +56,33 @@ public abstract class Resource(string resourceName, ResourceType resourceType, s
     /// dependencies, you should consider if there's a way to remove it.
     /// </para>
     /// </remarks>
-    public IList<Resource> DependsOn { get; } = [];
-    // TODO: Decide whether we want to support ResourceIdentifier in addition
-    // to actual Resources.  Given it's a niche scenario, right now I'd lean
-    // toward making people use Foo.FromExisting("...") if they wanted to add a
-    // dependency to an external resource.
+    public IList<ProvisionableResource> DependsOn { get; } = [];
 
     /// <summary>
     /// Compose the resource into a provisioning plan that can be saved as
     /// Bicep or deployed directly.
     /// </summary>
-    /// <param name="context">Optional ProvisioningContext.</param>
+    /// <param name="options">Optional ProvisioningBuildOptions.</param>
     /// <returns>
     /// A provisioning plan that can be saved as Bicep or deployed directly.
     /// </returns>
-    public virtual ProvisioningPlan Build(ProvisioningContext? context = default) =>
-        ParentInfrastructure?.Build(context ?? new()) ??
-            throw new InvalidOperationException($"Cannot build a provisioning plan for {GetType().Name} resource {IdentifierName} before it has been added to {nameof(Infrastructure)}.");
+    public virtual ProvisioningPlan Build(ProvisioningBuildOptions? options = default) =>
+        ParentInfrastructure?.Build(options ?? new()) ??
+            throw new InvalidOperationException($"Cannot build a provisioning plan for {GetType().Name} resource {BicepIdentifier} before it has been added to {nameof(Infrastructure)}.");
 
     /// <inheritdoc />
-    protected internal override void Validate(ProvisioningContext? context = null)
+    protected internal override void Validate(ProvisioningBuildOptions? options = null)
     {
-        base.Validate(context);
+        base.Validate(options);
 
         if (ResourceVersion is null)
         {
-            throw new InvalidOperationException($"{GetType().Name} resource {IdentifierName} must have {nameof(ResourceVersion)} specified.");
+            throw new InvalidOperationException($"{GetType().Name} resource {BicepIdentifier} must have {nameof(ResourceVersion)} specified.");
         }
 
         if (DependsOn.Count > 0 && (IsExistingResource || ExpressionOverride is not null))
         {
-            throw new InvalidOperationException($"{GetType().Name} resource {IdentifierName} cannot have dependencies if it's an existing resource or an expression override.");
+            throw new InvalidOperationException($"{GetType().Name} resource {BicepIdentifier} cannot have dependencies if it's an existing resource or an expression override.");
         }
 
         if (IsExistingResource)
@@ -105,16 +101,16 @@ public abstract class Resource(string resourceName, ResourceType resourceType, s
     }
 
     /// <inheritdoc />
-    protected internal override IEnumerable<Statement> Compile()
+    protected internal override IEnumerable<BicepStatement> Compile()
     {
         if (ExpressionOverride is not null)
         {
-            yield return new ExprStatement(ExpressionOverride);
+            yield return new ExpressionStatement(ExpressionOverride);
             yield break;
         }
 
         // Compile the properties into an object
-        Expression body = CompileProperties();
+        BicepExpression body = CompileProperties();
 
         // Optionally add any explicit dependencies
         if (DependsOn.Count > 0)
@@ -122,17 +118,17 @@ public abstract class Resource(string resourceName, ResourceType resourceType, s
             // This should be caught by Validate above
             if (body is not ObjectExpression obj)
             {
-                throw new InvalidOperationException($"{GetType().Name} resource {IdentifierName} cannot have dependencies if it's an existing resource or an expression override.");
+                throw new InvalidOperationException($"{GetType().Name} resource {BicepIdentifier} cannot have dependencies if it's an existing resource or an expression override.");
             }
 
             // Add the dependsOn property
-            ArrayExpression dependencies = new(DependsOn.Select(r => BicepSyntax.Var(r.IdentifierName)).ToArray());
+            ArrayExpression dependencies = new(DependsOn.Select(r => BicepSyntax.Var(r.BicepIdentifier)).ToArray());
             body = new ObjectExpression([.. obj.Properties, new PropertyExpression("dependsOn", dependencies)]);
         }
 
         // Create a resource declaration
         ResourceStatement resource = BicepSyntax.Declare.Resource(
-            IdentifierName,
+            BicepIdentifier,
             $"{ResourceType}@{ResourceVersion}",
             body);
         if (IsExistingResource)

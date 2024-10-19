@@ -11,7 +11,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// Live trace category configuration of a Microsoft.SignalRService resource.
 /// </summary>
-public partial class SignalRLiveTraceCategory : ProvisioningConstruct
+public partial class SignalRLiveTraceCategory : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets the live trace category&apos;s name.             Available

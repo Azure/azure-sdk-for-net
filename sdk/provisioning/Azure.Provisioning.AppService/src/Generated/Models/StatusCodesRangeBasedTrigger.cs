@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Trigger based on range of status codes.
 /// </summary>
-public partial class StatusCodesRangeBasedTrigger : ProvisioningConstruct
+public partial class StatusCodesRangeBasedTrigger : ProvisionableConstruct
 {
     /// <summary>
     /// HTTP status code.

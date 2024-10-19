@@ -11,7 +11,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// Network ACL.
 /// </summary>
-public partial class SignalRNetworkAcl : ProvisioningConstruct
+public partial class SignalRNetworkAcl : ProvisionableConstruct
 {
     /// <summary>
     /// Allowed request types. The value can be one or more of:

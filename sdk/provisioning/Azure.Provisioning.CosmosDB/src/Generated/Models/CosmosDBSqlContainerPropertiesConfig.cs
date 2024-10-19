@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The CosmosDBSqlContainerPropertiesConfig.
 /// </summary>
-public partial class CosmosDBSqlContainerPropertiesConfig : ProvisioningConstruct
+public partial class CosmosDBSqlContainerPropertiesConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Value of the Cosmos DB resource throughput or autoscaleSettings. Use

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Configuration of application logs.
 /// </summary>
-public partial class ContainerAppLogsConfiguration : ProvisioningConstruct
+public partial class ContainerAppLogsConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Logs destination, can be &apos;log-analytics&apos;,

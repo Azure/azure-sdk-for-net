@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// Partner region information for the failover group.
 /// </summary>
-public partial class PartnerRegionInfo : ProvisioningConstruct
+public partial class PartnerRegionInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Geo location of the partner managed instances.

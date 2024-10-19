@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// For example, between &apos;2022-12-23&apos; and &apos;2023-01-05&apos;.
 /// </summary>
-public partial class ContainerServiceDateSpan : ProvisioningConstruct
+public partial class ContainerServiceDateSpan : ProvisionableConstruct
 {
     /// <summary>
     /// The start date of the date span.

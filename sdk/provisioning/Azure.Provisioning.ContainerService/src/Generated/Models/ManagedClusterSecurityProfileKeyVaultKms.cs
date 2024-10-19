@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Azure Key Vault key management service settings for the security profile.
 /// </summary>
-public partial class ManagedClusterSecurityProfileKeyVaultKms : ProvisioningConstruct
+public partial class ManagedClusterSecurityProfileKeyVaultKms : ProvisionableConstruct
 {
     /// <summary>
     /// Whether to enable Azure Key Vault key management service. The default

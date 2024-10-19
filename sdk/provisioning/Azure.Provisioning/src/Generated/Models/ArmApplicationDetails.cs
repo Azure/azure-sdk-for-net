@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// The application client details to track the entity creating/updating the
 /// managed app resource.
 /// </summary>
-public partial class ArmApplicationDetails : ProvisioningConstruct
+public partial class ArmApplicationDetails : ProvisionableConstruct
 {
     /// <summary>
     /// The client Oid.

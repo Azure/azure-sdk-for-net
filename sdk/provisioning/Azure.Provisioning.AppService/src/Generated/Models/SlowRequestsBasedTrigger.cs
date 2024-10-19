@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Trigger based on request execution time.
 /// </summary>
-public partial class SlowRequestsBasedTrigger : ProvisioningConstruct
+public partial class SlowRequestsBasedTrigger : ProvisionableConstruct
 {
     /// <summary>
     /// Time taken.

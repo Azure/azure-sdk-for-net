@@ -15,7 +15,7 @@ namespace Azure.Provisioning.SignalR;
 /// A class representing the SignalRPrivateEndpointConnection data model.
 /// A private endpoint connection to an azure resource
 /// </summary>
-public partial class SignalRPrivateEndpointConnectionData : ProvisioningConstruct
+public partial class SignalRPrivateEndpointConnectionData : ProvisionableConstruct
 {
     /// <summary>
     /// Provisioning state of the resource.

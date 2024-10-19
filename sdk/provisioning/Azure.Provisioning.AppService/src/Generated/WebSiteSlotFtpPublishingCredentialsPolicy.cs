@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSlotFtpPublishingCredentialsPolicy.
 /// </summary>
-public partial class WebSiteSlotFtpPublishingCredentialsPolicy : Resource
+public partial class WebSiteSlotFtpPublishingCredentialsPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -57,7 +57,7 @@ public partial class WebSiteSlotFtpPublishingCredentialsPolicy : Resource
     /// <summary>
     /// Creates a new WebSiteSlotFtpPublishingCredentialsPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// WebSiteSlotFtpPublishingCredentialsPolicy resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -65,8 +65,8 @@ public partial class WebSiteSlotFtpPublishingCredentialsPolicy : Resource
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotFtpPublishingCredentialsPolicy.</param>
-    public WebSiteSlotFtpPublishingCredentialsPolicy(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies", resourceVersion ?? "2024-04-01")
+    public WebSiteSlotFtpPublishingCredentialsPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _allow = BicepValue<bool>.DefineProperty(this, "Allow", ["properties", "allow"]);
@@ -241,7 +241,7 @@ public partial class WebSiteSlotFtpPublishingCredentialsPolicy : Resource
     /// Creates a reference to an existing
     /// WebSiteSlotFtpPublishingCredentialsPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// WebSiteSlotFtpPublishingCredentialsPolicy resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -250,6 +250,6 @@ public partial class WebSiteSlotFtpPublishingCredentialsPolicy : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotFtpPublishingCredentialsPolicy.</param>
     /// <returns>The existing WebSiteSlotFtpPublishingCredentialsPolicy resource.</returns>
-    public static WebSiteSlotFtpPublishingCredentialsPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteSlotFtpPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppContainers;
 /// The configuration settings of the checks that should be made while
 /// validating the JWT Claims.
 /// </summary>
-public partial class ContainerAppJwtClaimChecks : ProvisioningConstruct
+public partial class ContainerAppJwtClaimChecks : ProvisionableConstruct
 {
     /// <summary>
     /// The list of the allowed groups.

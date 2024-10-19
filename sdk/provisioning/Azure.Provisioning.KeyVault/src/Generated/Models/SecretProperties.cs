@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// Properties of the secret.
 /// </summary>
-public partial class SecretProperties : ProvisioningConstruct
+public partial class SecretProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The value of the secret. NOTE: &apos;value&apos; will never be returned

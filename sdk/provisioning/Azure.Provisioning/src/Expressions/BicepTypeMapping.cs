@@ -79,11 +79,8 @@ internal static class BicepTypeMapping
     /// <exception cref="InvalidOperationException">
     /// Thrown when we cannot convert a value to a Bicep expression.
     /// </exception>
-    public static Expression ToBicep(object? value)
+    public static BicepExpression ToBicep(object? value)
     {
-        // Note: Not explicitly fetching context from the provider and letting
-        // any potential nested constructs fetch it themselves if needed.
-
         return value switch
         {
             null => BicepSyntax.Null(),
@@ -98,7 +95,7 @@ internal static class BicepTypeMapping
             ETag e => BicepSyntax.Value(ToLiteralString(e)),
             ResourceIdentifier i => BicepSyntax.Value(ToLiteralString(i)),
             Enum e => BicepSyntax.Value(ToLiteralString(e)),
-            ProvisioningConstruct c => CompileNestedConstruct(c),
+            ProvisionableConstruct c => CompileNestedConstruct(c),
             IDictionary<string, BicepValue> d =>
                 d is BicepValue b && b.Kind == BicepValueKind.Expression ? b.Expression! : ToObject(d),
             IEnumerable seq =>
@@ -119,7 +116,7 @@ internal static class BicepTypeMapping
 
         ObjectExpression ToObject(IDictionary<string, BicepValue> dict)
         {
-            Dictionary<string, Expression> values = [];
+            Dictionary<string, BicepExpression> values = [];
             foreach (KeyValuePair<string, BicepValue> pair in dict)
             {
                 values[pair.Key] = ToBicep(pair.Value);
@@ -127,10 +124,10 @@ internal static class BicepTypeMapping
             return BicepSyntax.Object(values);
         }
 
-        Expression CompileNestedConstruct(ProvisioningConstruct construct)
+        BicepExpression CompileNestedConstruct(ProvisionableConstruct construct)
         {
-            IList<Statement> statements = [.. construct.Compile()];
-            if (statements.Count != 1 || statements[0] is not ExprStatement expr)
+            IList<BicepStatement> statements = [.. construct.Compile()];
+            if (statements.Count != 1 || statements[0] is not ExpressionStatement expr)
             {
                 throw statements.Count == 1 ?
                     new InvalidOperationException($"Cannot convert {construct} into a Bicep expression because it compiles to {statements[0]} instead.") :

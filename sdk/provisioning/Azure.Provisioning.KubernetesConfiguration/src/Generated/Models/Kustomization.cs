@@ -13,7 +13,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// The Kustomization defining how to reconcile the artifact pulled by the
 /// source type on the cluster.
 /// </summary>
-public partial class Kustomization : ProvisioningConstruct
+public partial class Kustomization : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the Kustomization, matching the key in the Kustomizations

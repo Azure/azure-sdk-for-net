@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ResourceTypeAlias.
 /// </summary>
-public partial class ResourceTypeAlias : ProvisioningConstruct
+public partial class ResourceTypeAlias : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the Name.

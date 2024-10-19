@@ -13,7 +13,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// Statuses of objects deployed by the user-specified kustomizations from the
 /// git repository.
 /// </summary>
-public partial class KubernetesObjectStatus : ProvisioningConstruct
+public partial class KubernetesObjectStatus : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the applied object.

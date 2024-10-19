@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The definition of a computed property.
 /// </summary>
-public partial class ComputedProperty : ProvisioningConstruct
+public partial class ComputedProperty : ProvisionableConstruct
 {
     /// <summary>
     /// The name of a computed property, for example - &quot;cp_lowerName&quot;.

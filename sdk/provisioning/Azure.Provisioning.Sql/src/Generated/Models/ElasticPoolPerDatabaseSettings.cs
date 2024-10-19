@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// Per database settings of an elastic pool.
 /// </summary>
-public partial class ElasticPoolPerDatabaseSettings : ProvisioningConstruct
+public partial class ElasticPoolPerDatabaseSettings : ProvisionableConstruct
 {
     /// <summary>
     /// The minimum capacity all databases are guaranteed.

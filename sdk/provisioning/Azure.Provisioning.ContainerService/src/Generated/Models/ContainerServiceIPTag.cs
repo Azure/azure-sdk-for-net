@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Contains the IPTag associated with the object.
 /// </summary>
-public partial class ContainerServiceIPTag : ProvisioningConstruct
+public partial class ContainerServiceIPTag : ProvisionableConstruct
 {
     /// <summary>
     /// The IP tag type. Example: RoutingPreference.

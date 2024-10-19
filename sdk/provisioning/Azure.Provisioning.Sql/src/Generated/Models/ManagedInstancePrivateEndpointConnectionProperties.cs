@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// Properties of a private endpoint connection.
 /// </summary>
-public partial class ManagedInstancePrivateEndpointConnectionProperties : ProvisioningConstruct
+public partial class ManagedInstancePrivateEndpointConnectionProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets Id.

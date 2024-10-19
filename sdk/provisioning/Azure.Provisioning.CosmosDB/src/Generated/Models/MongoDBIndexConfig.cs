@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB MongoDB collection index options.
 /// </summary>
-public partial class MongoDBIndexConfig : ProvisioningConstruct
+public partial class MongoDBIndexConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Expire after seconds.

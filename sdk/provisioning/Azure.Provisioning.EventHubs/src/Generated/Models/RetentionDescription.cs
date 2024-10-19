@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// Properties to configure retention settings for the  eventhub.
 /// </summary>
-public partial class RetentionDescription : ProvisioningConstruct
+public partial class RetentionDescription : ProvisionableConstruct
 {
     /// <summary>
     /// Enumerates the possible values for cleanup policy.

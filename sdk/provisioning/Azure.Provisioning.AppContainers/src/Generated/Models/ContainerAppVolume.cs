@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Volume definitions for the Container App.
 /// </summary>
-public partial class ContainerAppVolume : ProvisioningConstruct
+public partial class ContainerAppVolume : ProvisionableConstruct
 {
     /// <summary>
     /// Volume name.

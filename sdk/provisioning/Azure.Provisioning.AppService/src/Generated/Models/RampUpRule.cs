@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// Routing rules for ramp up testing. This rule allows to redirect static
 /// traffic % to a slot or to gradually change routing % based on performance.
 /// </summary>
-public partial class RampUpRule : ProvisioningConstruct
+public partial class RampUpRule : ProvisionableConstruct
 {
     /// <summary>
     /// Hostname of a slot to which the traffic will be redirected if decided

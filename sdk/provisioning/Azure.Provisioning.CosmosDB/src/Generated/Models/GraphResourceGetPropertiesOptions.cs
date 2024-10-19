@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The GraphResourceGetPropertiesOptions.
 /// </summary>
-public partial class GraphResourceGetPropertiesOptions : ProvisioningConstruct
+public partial class GraphResourceGetPropertiesOptions : ProvisionableConstruct
 {
     /// <summary>
     /// Value of the Cosmos DB resource throughput or autoscaleSettings. Use

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Profile for Linux VMs in the container service cluster.
 /// </summary>
-public partial class ContainerServiceLinuxProfile : ProvisioningConstruct
+public partial class ContainerServiceLinuxProfile : ProvisionableConstruct
 {
     /// <summary>
     /// The administrator username to use for Linux VMs.

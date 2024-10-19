@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// The plan object in Azure Resource Manager, represents a marketplace plan.
 /// </summary>
-public partial class AppServiceArmPlan : ProvisioningConstruct
+public partial class AppServiceArmPlan : ProvisionableConstruct
 {
     /// <summary>
     /// The name.

@@ -50,7 +50,7 @@ internal class BicepWriter
     }
     public BicepWriter AppendIf(bool condition, Func<BicepWriter, BicepWriter> write) => condition ? write(this) : this;
     public BicepWriter AppendAll<T>(IEnumerable<T> values, Func<BicepWriter, T, BicepWriter> append, Func<BicepWriter, BicepWriter>? separate = null)
-        where T : Expression
+        where T : BicepExpression
     {
         bool first = true;
         BicepWriter writer = this;
@@ -66,6 +66,6 @@ internal class BicepWriter
         }
         return writer;
     }
-    public BicepWriter Append(Expression expr) => expr.Write(this);
-    public BicepWriter Append(Statement stmt) => stmt.Write(this);
+    public BicepWriter Append(BicepExpression expr) => expr.Write(this);
+    public BicepWriter Append(BicepStatement stmt) => stmt.Write(this);
 }

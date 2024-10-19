@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppContainers;
 /// Probe describes a health check to be performed against a container to
 /// determine whether it is alive or ready to receive traffic.
 /// </summary>
-public partial class ContainerAppProbe : ProvisioningConstruct
+public partial class ContainerAppProbe : ProvisionableConstruct
 {
     /// <summary>
     /// Minimum consecutive failures for the probe to be considered failed

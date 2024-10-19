@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ApiProfile.
 /// </summary>
-public partial class ApiProfile : ProvisioningConstruct
+public partial class ApiProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the ProfileVersion.

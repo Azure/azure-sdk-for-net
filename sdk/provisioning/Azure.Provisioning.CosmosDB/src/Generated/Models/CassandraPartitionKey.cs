@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB Cassandra table partition key.
 /// </summary>
-public partial class CassandraPartitionKey : ProvisioningConstruct
+public partial class CassandraPartitionKey : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the Cosmos DB Cassandra table partition key.

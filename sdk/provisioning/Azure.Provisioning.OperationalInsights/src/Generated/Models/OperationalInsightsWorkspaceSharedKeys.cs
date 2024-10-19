@@ -13,7 +13,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// The shared keys for a workspace.
 /// </summary>
-public partial class OperationalInsightsWorkspaceSharedKeys : ProvisioningConstruct
+public partial class OperationalInsightsWorkspaceSharedKeys : ProvisionableConstruct
 {
     /// <summary>
     /// The primary shared key of a workspace.
@@ -47,7 +47,7 @@ public partial class OperationalInsightsWorkspaceSharedKeys : ProvisioningConstr
     /// </param>
     /// <returns>A OperationalInsightsWorkspaceSharedKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static OperationalInsightsWorkspaceSharedKeys FromExpression(Expression expression)
+    public static OperationalInsightsWorkspaceSharedKeys FromExpression(BicepExpression expression)
     {
         OperationalInsightsWorkspaceSharedKeys resource = new();
         resource.OverrideWithExpression(expression);

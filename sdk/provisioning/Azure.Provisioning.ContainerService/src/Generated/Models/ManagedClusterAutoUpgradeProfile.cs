@@ -10,7 +10,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Auto upgrade profile for a managed cluster.
 /// </summary>
-public partial class ManagedClusterAutoUpgradeProfile : ProvisioningConstruct
+public partial class ManagedClusterAutoUpgradeProfile : ProvisionableConstruct
 {
     /// <summary>
     /// For more information see [setting the AKS cluster auto-upgrade

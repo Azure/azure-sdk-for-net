@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Search;
 /// Describes a policy that determines how resources within the search service
 /// are to be encrypted with customer managed keys.
 /// </summary>
-public partial class SearchEncryptionWithCmk : ProvisioningConstruct
+public partial class SearchEncryptionWithCmk : ProvisionableConstruct
 {
     /// <summary>
     /// Describes how a search service should enforce compliance if it finds

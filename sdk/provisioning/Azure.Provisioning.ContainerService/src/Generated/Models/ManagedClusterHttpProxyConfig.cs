@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Cluster HTTP proxy configuration.
 /// </summary>
-public partial class ManagedClusterHttpProxyConfig : ProvisioningConstruct
+public partial class ManagedClusterHttpProxyConfig : ProvisionableConstruct
 {
     /// <summary>
     /// The HTTP proxy server endpoint to use.

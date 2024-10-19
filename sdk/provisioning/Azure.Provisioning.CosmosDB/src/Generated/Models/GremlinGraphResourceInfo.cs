@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB Gremlin graph resource object.
 /// </summary>
-public partial class GremlinGraphResourceInfo : ProvisioningConstruct
+public partial class GremlinGraphResourceInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the Cosmos DB Gremlin graph.

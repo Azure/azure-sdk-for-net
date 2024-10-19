@@ -11,7 +11,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// Server admin credentials.
 /// </summary>
-public partial class PostgreSqlMigrationAdminCredentials : ProvisioningConstruct
+public partial class PostgreSqlMigrationAdminCredentials : ProvisionableConstruct
 {
     /// <summary>
     /// Password for source server.

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.EventGrid;
 /// default value to be used, and at least one of these two properties should
 /// be provided.
 /// </summary>
-public partial class JsonFieldWithDefault : ProvisioningConstruct
+public partial class JsonFieldWithDefault : ProvisionableConstruct
 {
     /// <summary>
     /// Name of a field in the input event schema that&apos;s to be used as the

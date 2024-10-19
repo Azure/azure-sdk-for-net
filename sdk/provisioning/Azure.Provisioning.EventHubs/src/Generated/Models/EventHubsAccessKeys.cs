@@ -13,7 +13,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// Namespace/EventHub Connection String.
 /// </summary>
-public partial class EventHubsAccessKeys : ProvisioningConstruct
+public partial class EventHubsAccessKeys : ProvisionableConstruct
 {
     /// <summary>
     /// Primary connection string of the created namespace AuthorizationRule.
@@ -82,7 +82,7 @@ public partial class EventHubsAccessKeys : ProvisioningConstruct
     /// </param>
     /// <returns>A EventHubsAccessKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static EventHubsAccessKeys FromExpression(Expression expression)
+    public static EventHubsAccessKeys FromExpression(BicepExpression expression)
     {
         EventHubsAccessKeys resource = new();
         resource.OverrideWithExpression(expression);

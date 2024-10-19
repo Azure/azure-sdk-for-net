@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Entity representing the reference to the deployment parameters.
 /// </summary>
-public partial class ArmDeploymentParametersLink : ProvisioningConstruct
+public partial class ArmDeploymentParametersLink : ProvisionableConstruct
 {
     /// <summary>
     /// The URI of the parameters file.

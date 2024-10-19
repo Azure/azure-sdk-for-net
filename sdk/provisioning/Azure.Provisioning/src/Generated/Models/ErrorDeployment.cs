@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Deployment on error behavior.
 /// </summary>
-public partial class ErrorDeployment : ProvisioningConstruct
+public partial class ErrorDeployment : ProvisionableConstruct
 {
     /// <summary>
     /// The deployment on error behavior type. Possible values are

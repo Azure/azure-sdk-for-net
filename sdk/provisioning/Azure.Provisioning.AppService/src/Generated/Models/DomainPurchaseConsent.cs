@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppService;
 /// Domain purchase consent object, representing acceptance of applicable legal
 /// agreements.
 /// </summary>
-public partial class DomainPurchaseConsent : ProvisioningConstruct
+public partial class DomainPurchaseConsent : ProvisionableConstruct
 {
     /// <summary>
     /// List of applicable legal agreement keys. This list can be retrieved

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppConfiguration;
 /// <summary>
 /// AppConfigurationPrivateEndpointConnection.
 /// </summary>
-public partial class AppConfigurationPrivateEndpointConnection : Resource
+public partial class AppConfigurationPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// Private endpoint connection name.
@@ -63,7 +63,7 @@ public partial class AppConfigurationPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new AppConfigurationPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// AppConfigurationPrivateEndpointConnection resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -71,8 +71,8 @@ public partial class AppConfigurationPrivateEndpointConnection : Resource
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the AppConfigurationPrivateEndpointConnection.</param>
-    public AppConfigurationPrivateEndpointConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.AppConfiguration/configurationStores/privateEndpointConnections", resourceVersion ?? "2024-05-01")
+    public AppConfigurationPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.AppConfiguration/configurationStores/privateEndpointConnections", resourceVersion ?? "2024-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<AppConfigurationPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -118,7 +118,7 @@ public partial class AppConfigurationPrivateEndpointConnection : Resource
     /// Creates a reference to an existing
     /// AppConfigurationPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// AppConfigurationPrivateEndpointConnection resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -127,6 +127,6 @@ public partial class AppConfigurationPrivateEndpointConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the AppConfigurationPrivateEndpointConnection.</param>
     /// <returns>The existing AppConfigurationPrivateEndpointConnection resource.</returns>
-    public static AppConfigurationPrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static AppConfigurationPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

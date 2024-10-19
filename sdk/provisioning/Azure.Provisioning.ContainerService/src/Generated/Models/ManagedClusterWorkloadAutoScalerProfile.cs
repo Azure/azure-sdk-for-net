@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Workload Auto-scaler profile for the managed cluster.
 /// </summary>
-public partial class ManagedClusterWorkloadAutoScalerProfile : ProvisioningConstruct
+public partial class ManagedClusterWorkloadAutoScalerProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Whether to enable KEDA.

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Managed application locking policy.
 /// </summary>
-public partial class ArmApplicationPackageLockingPolicy : ProvisioningConstruct
+public partial class ArmApplicationPackageLockingPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// The deny assignment excluded actions.

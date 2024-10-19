@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// QueueService.
 /// </summary>
-public partial class QueueService : Resource
+public partial class QueueService : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -52,15 +52,15 @@ public partial class QueueService : Resource
     /// <summary>
     /// Creates a new QueueService.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the QueueService resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the QueueService.</param>
-    public QueueService(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Storage/storageAccounts/queueServices", resourceVersion ?? "2024-01-01")
+    public QueueService(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/queueServices", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _corsRules = BicepList<StorageCorsRule>.DefineProperty(this, "CorsRules", ["properties", "cors", "corsRules"]);
@@ -188,7 +188,7 @@ public partial class QueueService : Resource
     /// <summary>
     /// Creates a reference to an existing QueueService.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the QueueService resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -196,6 +196,6 @@ public partial class QueueService : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the QueueService.</param>
     /// <returns>The existing QueueService resource.</returns>
-    public static QueueService FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static QueueService FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

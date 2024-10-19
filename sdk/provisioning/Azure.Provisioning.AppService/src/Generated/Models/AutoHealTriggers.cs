@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Triggers for auto-heal.
 /// </summary>
-public partial class AutoHealTriggers : ProvisioningConstruct
+public partial class AutoHealTriggers : ProvisionableConstruct
 {
     /// <summary>
     /// A rule based on total requests.

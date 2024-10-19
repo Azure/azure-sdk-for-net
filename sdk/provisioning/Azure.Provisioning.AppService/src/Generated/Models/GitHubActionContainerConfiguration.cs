@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// The GitHub action container configuration.
 /// </summary>
-public partial class GitHubActionContainerConfiguration : ProvisioningConstruct
+public partial class GitHubActionContainerConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// The server URL for the container registry where the build will be

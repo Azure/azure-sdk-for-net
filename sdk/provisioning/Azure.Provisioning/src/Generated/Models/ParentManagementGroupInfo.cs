@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// (Optional) The ID of the parent management group.
 /// </summary>
-public partial class ParentManagementGroupInfo : ProvisioningConstruct
+public partial class ParentManagementGroupInfo : ProvisionableConstruct
 {
     /// <summary>
     /// The fully qualified ID for the parent management group.  For example,

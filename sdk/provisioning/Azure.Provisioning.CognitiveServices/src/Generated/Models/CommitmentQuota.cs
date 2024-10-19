@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// Cognitive Services account commitment quota.
 /// </summary>
-public partial class CommitmentQuota : ProvisioningConstruct
+public partial class CommitmentQuota : ProvisionableConstruct
 {
     /// <summary>
     /// Commitment quota quantity.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// The call rate limit Cognitive Services account.
 /// </summary>
-public partial class CognitiveServicesRegionSetting : ProvisioningConstruct
+public partial class CognitiveServicesRegionSetting : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the region.

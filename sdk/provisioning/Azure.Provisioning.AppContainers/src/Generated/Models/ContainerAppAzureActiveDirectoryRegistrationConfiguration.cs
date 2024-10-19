@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the Azure Active Directory app registration.
 /// </summary>
-public partial class ContainerAppAzureActiveDirectoryRegistrationConfiguration : ProvisioningConstruct
+public partial class ContainerAppAzureActiveDirectoryRegistrationConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// The OpenID Connect Issuer URI that represents the entity which issues

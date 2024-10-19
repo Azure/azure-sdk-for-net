@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// The ServiceAccountThrottlingMatchPattern.
 /// </summary>
-public partial class ServiceAccountThrottlingMatchPattern : ProvisioningConstruct
+public partial class ServiceAccountThrottlingMatchPattern : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the path.

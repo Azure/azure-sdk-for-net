@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Status from the extension.
 /// </summary>
-public partial class KubernetesClusterExtensionStatus : ProvisioningConstruct
+public partial class KubernetesClusterExtensionStatus : ProvisionableConstruct
 {
     /// <summary>
     /// Status code provided by the Extension.

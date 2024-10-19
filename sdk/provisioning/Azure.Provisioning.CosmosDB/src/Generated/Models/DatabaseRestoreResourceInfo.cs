@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Specific Databases to restore.
 /// </summary>
-public partial class DatabaseRestoreResourceInfo : ProvisioningConstruct
+public partial class DatabaseRestoreResourceInfo : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the database available for restore.

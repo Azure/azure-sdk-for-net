@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// The action to be executed by a job step.
 /// </summary>
-public partial class JobStepAction : ProvisioningConstruct
+public partial class JobStepAction : ProvisionableConstruct
 {
     /// <summary>
     /// Type of action being executed by the job step.

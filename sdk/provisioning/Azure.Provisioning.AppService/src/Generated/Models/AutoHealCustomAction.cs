@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// Custom action to be executed             when an auto heal rule is
 /// triggered.
 /// </summary>
-public partial class AutoHealCustomAction : ProvisioningConstruct
+public partial class AutoHealCustomAction : ProvisionableConstruct
 {
     /// <summary>
     /// Executable to be run.

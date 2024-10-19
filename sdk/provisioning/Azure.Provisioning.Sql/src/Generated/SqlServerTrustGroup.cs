@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerTrustGroup.
 /// </summary>
-public partial class SqlServerTrustGroup : Resource
+public partial class SqlServerTrustGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the server trust group.
@@ -51,15 +51,15 @@ public partial class SqlServerTrustGroup : Resource
     /// <summary>
     /// Creates a new SqlServerTrustGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlServerTrustGroup resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerTrustGroup.</param>
-    public SqlServerTrustGroup(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/locations/serverTrustGroups", resourceVersion ?? "2021-11-01")
+    public SqlServerTrustGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/locations/serverTrustGroups", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _groupMembers = BicepList<ServerTrustGroupServerInfo>.DefineProperty(this, "GroupMembers", ["properties", "groupMembers"]);
@@ -87,7 +87,7 @@ public partial class SqlServerTrustGroup : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerTrustGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlServerTrustGroup resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -95,6 +95,6 @@ public partial class SqlServerTrustGroup : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerTrustGroup.</param>
     /// <returns>The existing SqlServerTrustGroup resource.</returns>
-    public static SqlServerTrustGroup FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerTrustGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

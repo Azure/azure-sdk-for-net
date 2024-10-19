@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Management policy action for snapshot.
 /// </summary>
-public partial class ManagementPolicySnapShot : ProvisioningConstruct
+public partial class ManagementPolicySnapShot : ProvisionableConstruct
 {
     /// <summary>
     /// The function to tier blob snapshot to cool storage.

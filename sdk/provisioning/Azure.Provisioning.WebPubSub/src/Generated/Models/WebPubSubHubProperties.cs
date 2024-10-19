@@ -12,7 +12,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// Properties of a hub.
 /// </summary>
-public partial class WebPubSubHubProperties : ProvisioningConstruct
+public partial class WebPubSubHubProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Event handler of a hub.

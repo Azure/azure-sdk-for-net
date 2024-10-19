@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// Properties that describe a base image dependency.
 /// </summary>
-public partial class ContainerRegistryBaseImageDependency : ProvisioningConstruct
+public partial class ContainerRegistryBaseImageDependency : ProvisionableConstruct
 {
     /// <summary>
     /// The type of the base image dependency.

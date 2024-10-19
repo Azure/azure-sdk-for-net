@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Managed application policy.
 /// </summary>
-public partial class ArmApplicationPolicy : ProvisioningConstruct
+public partial class ArmApplicationPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// The policy name.

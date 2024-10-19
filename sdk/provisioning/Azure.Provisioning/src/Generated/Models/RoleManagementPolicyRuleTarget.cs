@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// The role management policy rule target.
 /// </summary>
-public partial class RoleManagementPolicyRuleTarget : ProvisioningConstruct
+public partial class RoleManagementPolicyRuleTarget : ProvisionableConstruct
 {
     /// <summary>
     /// The caller of the setting.

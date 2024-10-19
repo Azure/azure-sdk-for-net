@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// The object representing the state of the migration between the backup
 /// policies.
 /// </summary>
-public partial class BackupPolicyMigrationState : ProvisioningConstruct
+public partial class BackupPolicyMigrationState : ProvisionableConstruct
 {
     /// <summary>
     /// Describes the status of migration between backup policy types.

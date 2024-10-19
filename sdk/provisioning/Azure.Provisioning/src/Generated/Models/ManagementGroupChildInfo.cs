@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// The child information of a management group.
 /// </summary>
-public partial class ManagementGroupChildInfo : ProvisioningConstruct
+public partial class ManagementGroupChildInfo : ProvisionableConstruct
 {
     /// <summary>
     /// The fully qualified resource type which includes provider namespace

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Security profile for the container service cluster.
 /// </summary>
-public partial class ManagedClusterSecurityProfile : ProvisioningConstruct
+public partial class ManagedClusterSecurityProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Microsoft Defender settings for the security profile.

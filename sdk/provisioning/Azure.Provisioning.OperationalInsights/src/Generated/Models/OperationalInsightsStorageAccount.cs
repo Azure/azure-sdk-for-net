@@ -12,7 +12,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// Describes a storage account connection.
 /// </summary>
-public partial class OperationalInsightsStorageAccount : ProvisioningConstruct
+public partial class OperationalInsightsStorageAccount : ProvisionableConstruct
 {
     /// <summary>
     /// The Azure Resource Manager ID of the storage account resource.

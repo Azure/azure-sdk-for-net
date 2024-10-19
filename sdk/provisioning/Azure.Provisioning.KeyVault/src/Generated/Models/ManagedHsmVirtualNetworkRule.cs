@@ -12,7 +12,7 @@ namespace Azure.Provisioning.KeyVault;
 /// A rule governing the accessibility of a managed hsm pool from a specific
 /// virtual network.
 /// </summary>
-public partial class ManagedHsmVirtualNetworkRule : ProvisioningConstruct
+public partial class ManagedHsmVirtualNetworkRule : ProvisionableConstruct
 {
     /// <summary>
     /// Full resource id of a vnet subnet, such as

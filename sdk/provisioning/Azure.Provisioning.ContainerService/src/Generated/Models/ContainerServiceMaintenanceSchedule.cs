@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ContainerService;
 /// &apos;daily&apos;, &apos;weekly&apos;, &apos;absoluteMonthly&apos; or
 /// &apos;relativeMonthly&apos; for your maintenance schedule.
 /// </summary>
-public partial class ContainerServiceMaintenanceSchedule : ProvisioningConstruct
+public partial class ContainerServiceMaintenanceSchedule : ProvisionableConstruct
 {
     /// <summary>
     /// Specifies the number of days between each set of occurrences.

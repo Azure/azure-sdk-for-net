@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The properties of a timer trigger.
 /// </summary>
-public partial class ContainerRegistryTimerTrigger : ProvisioningConstruct
+public partial class ContainerRegistryTimerTrigger : ProvisionableConstruct
 {
     /// <summary>
     /// The CRON expression for the task schedule.

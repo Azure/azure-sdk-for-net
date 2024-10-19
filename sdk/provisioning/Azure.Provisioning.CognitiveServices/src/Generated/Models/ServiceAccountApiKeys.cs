@@ -13,7 +13,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// The access keys for the cognitive services account.
 /// </summary>
-public partial class ServiceAccountApiKeys : ProvisioningConstruct
+public partial class ServiceAccountApiKeys : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the value of key 1.
@@ -45,7 +45,7 @@ public partial class ServiceAccountApiKeys : ProvisioningConstruct
     /// </param>
     /// <returns>A ServiceAccountApiKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static ServiceAccountApiKeys FromExpression(Expression expression)
+    public static ServiceAccountApiKeys FromExpression(BicepExpression expression)
     {
         ServiceAccountApiKeys resource = new();
         resource.OverrideWithExpression(expression);

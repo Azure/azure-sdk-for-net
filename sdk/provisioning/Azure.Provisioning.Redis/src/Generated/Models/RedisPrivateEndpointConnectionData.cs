@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Redis;
 /// A class representing the RedisPrivateEndpointConnection data model.
 /// The Private Endpoint Connection resource.
 /// </summary>
-public partial class RedisPrivateEndpointConnectionData : ProvisioningConstruct
+public partial class RedisPrivateEndpointConnectionData : ProvisionableConstruct
 {
     /// <summary>
     /// Gets Id.

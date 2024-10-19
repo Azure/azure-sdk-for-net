@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// The Storage Account Local User keys.
 /// </summary>
-public partial class LocalUserKeys : ProvisioningConstruct
+public partial class LocalUserKeys : ProvisionableConstruct
 {
     /// <summary>
     /// Optional, local user ssh authorized keys for SFTP.
@@ -46,7 +46,7 @@ public partial class LocalUserKeys : ProvisioningConstruct
     /// </param>
     /// <returns>A LocalUserKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static LocalUserKeys FromExpression(Expression expression)
+    public static LocalUserKeys FromExpression(BicepExpression expression)
     {
         LocalUserKeys resource = new();
         resource.OverrideWithExpression(expression);

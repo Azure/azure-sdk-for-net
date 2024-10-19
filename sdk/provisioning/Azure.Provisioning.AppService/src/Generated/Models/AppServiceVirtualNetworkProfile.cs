@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Specification for using a Virtual Network.
 /// </summary>
-public partial class AppServiceVirtualNetworkProfile : ProvisioningConstruct
+public partial class AppServiceVirtualNetworkProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Resource id of the Virtual Network.

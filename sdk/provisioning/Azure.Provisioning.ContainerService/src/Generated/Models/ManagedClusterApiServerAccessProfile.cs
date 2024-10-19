@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Access profile for managed cluster API server.
 /// </summary>
-public partial class ManagedClusterApiServerAccessProfile : ProvisioningConstruct
+public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstruct
 {
     /// <summary>
     /// IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This

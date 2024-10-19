@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Metadata pertaining to creation and last modification of the resource.
 /// </summary>
-public partial class SystemData : ProvisioningConstruct
+public partial class SystemData : ProvisionableConstruct
 {
     /// <summary>
     /// The identity that created the resource.

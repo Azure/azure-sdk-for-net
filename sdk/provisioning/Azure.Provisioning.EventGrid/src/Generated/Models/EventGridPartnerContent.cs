@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Information about the partner.
 /// </summary>
-public partial class EventGridPartnerContent : ProvisioningConstruct
+public partial class EventGridPartnerContent : ProvisionableConstruct
 {
     /// <summary>
     /// The immutableId of the corresponding partner registration.

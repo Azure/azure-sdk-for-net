@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// The configuration settings of the secrets references of encryption key and
 /// signing key for ContainerApp Service Authentication/Authorization.
 /// </summary>
-public partial class EncryptionSettings : ProvisioningConstruct
+public partial class EncryptionSettings : ProvisionableConstruct
 {
     /// <summary>
     /// The secret name which is referenced for EncryptionKey.

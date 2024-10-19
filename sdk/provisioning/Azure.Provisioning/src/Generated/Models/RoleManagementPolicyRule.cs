@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Authorization;
 /// and
 /// Azure.ResourceManager.Authorization.Models.RoleManagementPolicyNotificationRule.
 /// </summary>
-public partial class RoleManagementPolicyRule : ProvisioningConstruct
+public partial class RoleManagementPolicyRule : ProvisionableConstruct
 {
     /// <summary>
     /// The id of the rule.

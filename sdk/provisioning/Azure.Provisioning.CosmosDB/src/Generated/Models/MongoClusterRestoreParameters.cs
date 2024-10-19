@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Parameters used for restore operations.
 /// </summary>
-public partial class MongoClusterRestoreParameters : ProvisioningConstruct
+public partial class MongoClusterRestoreParameters : ProvisionableConstruct
 {
     /// <summary>
     /// UTC point in time to restore a mongo cluster.

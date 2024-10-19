@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ContainerService;
 /// configuration](https://docs.microsoft.com/azure/aks/custom-node-configuration)
 /// for more details.
 /// </summary>
-public partial class LinuxOSConfig : ProvisioningConstruct
+public partial class LinuxOSConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Sysctl settings for Linux agent nodes.

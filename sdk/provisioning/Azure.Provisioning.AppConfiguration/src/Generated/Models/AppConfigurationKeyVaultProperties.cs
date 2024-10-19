@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppConfiguration;
 /// <summary>
 /// Settings concerning key vault encryption for a configuration store.
 /// </summary>
-public partial class AppConfigurationKeyVaultProperties : ProvisioningConstruct
+public partial class AppConfigurationKeyVaultProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The URI of the key vault key used to encrypt data.

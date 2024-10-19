@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the Apple provider.
 /// </summary>
-public partial class ContainerAppAppleConfiguration : ProvisioningConstruct
+public partial class ContainerAppAppleConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// &lt;code&gt;false&lt;/code&gt; if the Apple provider should not be

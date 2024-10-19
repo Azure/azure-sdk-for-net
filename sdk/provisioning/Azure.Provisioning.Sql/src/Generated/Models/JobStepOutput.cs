@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// The output configuration of a job step.
 /// </summary>
-public partial class JobStepOutput : ProvisioningConstruct
+public partial class JobStepOutput : ProvisionableConstruct
 {
     /// <summary>
     /// The output destination type.

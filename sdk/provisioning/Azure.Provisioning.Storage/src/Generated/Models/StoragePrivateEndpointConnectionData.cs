@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Storage;
 /// A class representing the StoragePrivateEndpointConnection data model.
 /// The Private Endpoint Connection resource.
 /// </summary>
-public partial class StoragePrivateEndpointConnectionData : ProvisioningConstruct
+public partial class StoragePrivateEndpointConnectionData : ProvisionableConstruct
 {
     /// <summary>
     /// Gets Id.

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// Configuration properties that define the mutable settings of a Container
 /// App SourceControl.
 /// </summary>
-public partial class ContainerAppGitHubActionConfiguration : ProvisioningConstruct
+public partial class ContainerAppGitHubActionConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Registry configurations.

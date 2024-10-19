@@ -13,7 +13,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// The configuration of the partition key to be used for partitioning data
 /// into multiple partitions.
 /// </summary>
-public partial class CosmosDBContainerPartitionKey : ProvisioningConstruct
+public partial class CosmosDBContainerPartitionKey : ProvisionableConstruct
 {
     /// <summary>
     /// List of paths using which data within the container can be partitioned.

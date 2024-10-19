@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Subscription.
 /// </summary>
-public partial class Subscription : Resource
+public partial class Subscription : ProvisionableResource
 {
     /// <summary>
     /// The authorization source of the request. Valid values are one or more
@@ -79,15 +79,15 @@ public partial class Subscription : Resource
     /// <summary>
     /// Creates a new Subscription.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the Subscription resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the Subscription.</param>
-    public Subscription(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Resources/subscriptions", resourceVersion ?? "2019-10-01")
+    public Subscription(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Resources/subscriptions", resourceVersion ?? "2019-10-01")
     {
         _authorizationSource = BicepValue<string>.DefineProperty(this, "AuthorizationSource", ["authorizationSource"], isOutput: true);
         _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["displayName"], isOutput: true);
@@ -230,7 +230,7 @@ public partial class Subscription : Resource
     /// </param>
     /// <returns>A Subscription resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static Subscription FromExpression(Expression expression)
+    public static Subscription FromExpression(BicepExpression expression)
     {
         Subscription resource = new(nameof(Subscription));
         resource.OverrideWithExpression(expression);

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// Represents the correlation filter expression.
 /// </summary>
-public partial class ServiceBusCorrelationFilter : ProvisioningConstruct
+public partial class ServiceBusCorrelationFilter : ProvisionableConstruct
 {
     /// <summary>
     /// dictionary object for custom filters.

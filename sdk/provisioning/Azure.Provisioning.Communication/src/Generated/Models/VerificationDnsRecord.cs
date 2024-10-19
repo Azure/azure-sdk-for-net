@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Communication;
 /// <summary>
 /// A class that represents a VerificationStatus record.
 /// </summary>
-public partial class VerificationDnsRecord : ProvisioningConstruct
+public partial class VerificationDnsRecord : ProvisionableConstruct
 {
     /// <summary>
     /// Type of the DNS record. Example: TXT.

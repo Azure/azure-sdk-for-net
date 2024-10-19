@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Subscription policies.
 /// </summary>
-public partial class SubscriptionPolicies : ProvisioningConstruct
+public partial class SubscriptionPolicies : ProvisionableConstruct
 {
     /// <summary>
     /// The subscription location placement ID. The ID indicates which regions

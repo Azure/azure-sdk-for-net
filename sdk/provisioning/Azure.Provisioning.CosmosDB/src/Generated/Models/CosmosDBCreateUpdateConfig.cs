@@ -14,7 +14,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// &quot;If-None-Match&quot;, &quot;Session-Token&quot; and
 /// &quot;Throughput&quot;.
 /// </summary>
-public partial class CosmosDBCreateUpdateConfig : ProvisioningConstruct
+public partial class CosmosDBCreateUpdateConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Request Units per second. For example, &quot;throughput&quot;: 10000.

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSiteDatabaseConnection.
 /// </summary>
-public partial class StaticSiteDatabaseConnection : Resource
+public partial class StaticSiteDatabaseConnection : ProvisionableResource
 {
     /// <summary>
     /// Name of the database connection.
@@ -85,15 +85,15 @@ public partial class StaticSiteDatabaseConnection : Resource
     /// <summary>
     /// Creates a new StaticSiteDatabaseConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StaticSiteDatabaseConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteDatabaseConnection.</param>
-    public StaticSiteDatabaseConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/staticSites/databaseConnections", resourceVersion ?? "2024-04-01")
+    public StaticSiteDatabaseConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/staticSites/databaseConnections", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionIdentity = BicepValue<string>.DefineProperty(this, "ConnectionIdentity", ["properties", "connectionIdentity"]);
@@ -186,7 +186,7 @@ public partial class StaticSiteDatabaseConnection : Resource
     /// <summary>
     /// Creates a reference to an existing StaticSiteDatabaseConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StaticSiteDatabaseConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -194,6 +194,6 @@ public partial class StaticSiteDatabaseConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteDatabaseConnection.</param>
     /// <returns>The existing StaticSiteDatabaseConnection resource.</returns>
-    public static StaticSiteDatabaseConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static StaticSiteDatabaseConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

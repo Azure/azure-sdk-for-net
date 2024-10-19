@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// The ContainerAppsConfiguration.
 /// </summary>
-public partial class ContainerAppsConfiguration : ProvisioningConstruct
+public partial class ContainerAppsConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Azure Monitor instrumentation key used by Dapr to export Service to

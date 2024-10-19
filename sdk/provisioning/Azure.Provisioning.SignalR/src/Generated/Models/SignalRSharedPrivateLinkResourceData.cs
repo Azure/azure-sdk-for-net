@@ -14,7 +14,7 @@ namespace Azure.Provisioning.SignalR;
 /// A class representing the SignalRSharedPrivateLinkResource data model.
 /// Describes a Shared Private Link Resource
 /// </summary>
-public partial class SignalRSharedPrivateLinkResourceData : ProvisioningConstruct
+public partial class SignalRSharedPrivateLinkResourceData : ProvisionableConstruct
 {
     /// <summary>
     /// The group id from the provider of resource the shared private link

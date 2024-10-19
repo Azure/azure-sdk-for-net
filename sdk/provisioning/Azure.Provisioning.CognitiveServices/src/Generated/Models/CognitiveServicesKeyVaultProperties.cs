@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// Properties to configure keyVault Properties.
 /// </summary>
-public partial class CognitiveServicesKeyVaultProperties : ProvisioningConstruct
+public partial class CognitiveServicesKeyVaultProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the Key from KeyVault.

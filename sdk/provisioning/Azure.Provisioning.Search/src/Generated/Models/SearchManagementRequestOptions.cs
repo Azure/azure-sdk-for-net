@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Search;
 /// <summary>
 /// Parameter group.
 /// </summary>
-public partial class SearchManagementRequestOptions : ProvisioningConstruct
+public partial class SearchManagementRequestOptions : ProvisionableConstruct
 {
     /// <summary>
     /// A client-generated GUID value that identifies this request. If

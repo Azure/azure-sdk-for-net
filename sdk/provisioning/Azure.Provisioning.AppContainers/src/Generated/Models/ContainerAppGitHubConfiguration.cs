@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the GitHub provider.
 /// </summary>
-public partial class ContainerAppGitHubConfiguration : ProvisioningConstruct
+public partial class ContainerAppGitHubConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// &lt;code&gt;false&lt;/code&gt; if the GitHub provider should not be

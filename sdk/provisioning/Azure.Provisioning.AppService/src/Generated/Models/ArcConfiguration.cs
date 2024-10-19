@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// The ArcConfiguration.
 /// </summary>
-public partial class ArcConfiguration : ProvisioningConstruct
+public partial class ArcConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets the artifacts storage type.

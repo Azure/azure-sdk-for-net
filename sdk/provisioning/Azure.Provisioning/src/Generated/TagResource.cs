@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// TagResource.
 /// </summary>
-public partial class TagResource : Resource
+public partial class TagResource : ProvisionableResource
 {
     /// <summary>
     /// The name of the resource.
@@ -47,15 +47,15 @@ public partial class TagResource : Resource
     /// <summary>
     /// Creates a new TagResource.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the TagResource resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the TagResource.</param>
-    public TagResource(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Resources/tags", resourceVersion ?? "2023-07-01")
+    public TagResource(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Resources/tags", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _tagValues = BicepDictionary<string>.DefineProperty(this, "TagValues", ["properties", "tags"]);
@@ -107,7 +107,7 @@ public partial class TagResource : Resource
     /// <summary>
     /// Creates a reference to an existing TagResource.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the TagResource resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -115,8 +115,8 @@ public partial class TagResource : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the TagResource.</param>
     /// <returns>The existing TagResource resource.</returns>
-    public static TagResource FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static TagResource FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this TagResource resource.

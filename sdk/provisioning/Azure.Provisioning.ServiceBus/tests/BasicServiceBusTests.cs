@@ -45,15 +45,15 @@ public class BasicServiceBusTests(bool async)
                         // Hack around TimeSpan not serializing ISO durations
                         // correctly using a Bicep string literal expression.
                         // TODO: Change these to regular strings when patched.
-                        LockDuration = new StringLiteral("PT5M"),
+                        LockDuration = new StringLiteralExpression("PT5M"),
                         MaxSizeInMegabytes = 1024,
                         RequiresDuplicateDetection = false,
                         RequiresSession = false,
-                        DefaultMessageTimeToLive = new StringLiteral("P10675199DT2H48M5.4775807S"),
+                        DefaultMessageTimeToLive = new StringLiteralExpression("P10675199DT2H48M5.4775807S"),
                         DeadLetteringOnMessageExpiration = false,
-                        DuplicateDetectionHistoryTimeWindow = new StringLiteral("PT10M"),
+                        DuplicateDetectionHistoryTimeWindow = new StringLiteralExpression("PT10M"),
                         MaxDeliveryCount = 10,
-                        AutoDeleteOnIdle = new StringLiteral("P10675199DT2H48M5.4775807S"),
+                        AutoDeleteOnIdle = new StringLiteralExpression("P10675199DT2H48M5.4775807S"),
                         EnablePartitioning = false,
                         EnableExpress = false
                     };

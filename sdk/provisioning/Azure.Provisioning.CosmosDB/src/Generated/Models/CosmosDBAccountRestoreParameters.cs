@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Parameters to indicate the information about the restore.
 /// </summary>
-public partial class CosmosDBAccountRestoreParameters : ProvisioningConstruct
+public partial class CosmosDBAccountRestoreParameters : ProvisionableConstruct
 {
     /// <summary>
     /// Describes the mode of the restore.

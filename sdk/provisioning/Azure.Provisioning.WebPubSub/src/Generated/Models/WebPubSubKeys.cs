@@ -13,7 +13,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// A class represents the access keys of the resource.
 /// </summary>
-public partial class WebPubSubKeys : ProvisioningConstruct
+public partial class WebPubSubKeys : ProvisionableConstruct
 {
     /// <summary>
     /// The primary access key.
@@ -59,7 +59,7 @@ public partial class WebPubSubKeys : ProvisioningConstruct
     /// </param>
     /// <returns>A WebPubSubKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static WebPubSubKeys FromExpression(Expression expression)
+    public static WebPubSubKeys FromExpression(BicepExpression expression)
     {
         WebPubSubKeys resource = new();
         resource.OverrideWithExpression(expression);

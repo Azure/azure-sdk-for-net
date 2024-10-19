@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Search;
 /// Describes the current state of an existing Azure Private Link service
 /// connection to the private endpoint.
 /// </summary>
-public partial class SearchServicePrivateLinkServiceConnectionState : ProvisioningConstruct
+public partial class SearchServicePrivateLinkServiceConnectionState : ProvisionableConstruct
 {
     /// <summary>
     /// Status of the the private link service connection. Valid values are

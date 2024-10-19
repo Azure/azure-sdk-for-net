@@ -13,7 +13,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The access keys for the given database account.
 /// </summary>
-public partial class CosmosDBAccountKeyList : ProvisioningConstruct
+public partial class CosmosDBAccountKeyList : ProvisionableConstruct
 {
     /// <summary>
     /// Base 64 encoded value of the primary read-write key.
@@ -59,7 +59,7 @@ public partial class CosmosDBAccountKeyList : ProvisioningConstruct
     /// </param>
     /// <returns>A CosmosDBAccountKeyList resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static CosmosDBAccountKeyList FromExpression(Expression expression)
+    public static CosmosDBAccountKeyList FromExpression(BicepExpression expression)
     {
         CosmosDBAccountKeyList resource = new();
         resource.OverrideWithExpression(expression);

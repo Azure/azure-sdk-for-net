@@ -14,7 +14,7 @@ namespace Azure.Provisioning.AppService;
 /// available through the Whois             directories as per ICANN
 /// requirements.
 /// </summary>
-public partial class RegistrationContactInfo : ProvisioningConstruct
+public partial class RegistrationContactInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Mailing address.

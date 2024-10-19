@@ -11,7 +11,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// Storage properties of a server.
 /// </summary>
-public partial class PostgreSqlFlexibleServerStorage : ProvisioningConstruct
+public partial class PostgreSqlFlexibleServerStorage : ProvisionableConstruct
 {
     /// <summary>
     /// Max storage allowed for a server.

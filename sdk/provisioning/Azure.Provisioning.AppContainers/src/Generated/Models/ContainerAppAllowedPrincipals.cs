@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the Azure Active Directory allowed principals.
 /// </summary>
-public partial class ContainerAppAllowedPrincipals : ProvisioningConstruct
+public partial class ContainerAppAllowedPrincipals : ProvisionableConstruct
 {
     /// <summary>
     /// The list of the allowed groups.

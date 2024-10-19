@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppService;
 /// Message envelope that contains the common Azure resource manager properties
 /// and the resource provider specific content.
 /// </summary>
-public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : ProvisioningConstruct
+public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : ProvisionableConstruct
 {
     /// <summary>
     /// Azure-AsyncOperation Error info.

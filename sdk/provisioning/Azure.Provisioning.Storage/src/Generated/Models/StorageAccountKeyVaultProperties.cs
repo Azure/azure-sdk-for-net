@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Properties of key vault.
 /// </summary>
-public partial class StorageAccountKeyVaultProperties : ProvisioningConstruct
+public partial class StorageAccountKeyVaultProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The name of KeyVault key.

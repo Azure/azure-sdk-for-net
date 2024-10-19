@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// The approval stage.
 /// </summary>
-public partial class RoleManagementApprovalStage : ProvisioningConstruct
+public partial class RoleManagementApprovalStage : ProvisionableConstruct
 {
     /// <summary>
     /// The time in days when approval request would be timed out.

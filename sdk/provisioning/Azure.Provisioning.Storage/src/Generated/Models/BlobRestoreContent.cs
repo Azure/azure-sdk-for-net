@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Blob restore parameters.
 /// </summary>
-public partial class BlobRestoreContent : ProvisioningConstruct
+public partial class BlobRestoreContent : ProvisionableConstruct
 {
     /// <summary>
     /// Restore blob to the specified time.

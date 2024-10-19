@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedLedgerDigestUpload.
 /// </summary>
-public partial class ManagedLedgerDigestUpload : Resource
+public partial class ManagedLedgerDigestUpload : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -57,15 +57,15 @@ public partial class ManagedLedgerDigestUpload : Resource
     /// <summary>
     /// Creates a new ManagedLedgerDigestUpload.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ManagedLedgerDigestUpload
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedLedgerDigestUpload.</param>
-    public ManagedLedgerDigestUpload(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/managedInstances/databases/ledgerDigestUploads", resourceVersion ?? "2024-05-01-preview")
+    public ManagedLedgerDigestUpload(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/ledgerDigestUploads", resourceVersion ?? "2024-05-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _digestStorageEndpoint = BicepValue<string>.DefineProperty(this, "DigestStorageEndpoint", ["properties", "digestStorageEndpoint"]);
@@ -89,7 +89,7 @@ public partial class ManagedLedgerDigestUpload : Resource
     /// <summary>
     /// Creates a reference to an existing ManagedLedgerDigestUpload.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ManagedLedgerDigestUpload
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -97,6 +97,6 @@ public partial class ManagedLedgerDigestUpload : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedLedgerDigestUpload.</param>
     /// <returns>The existing ManagedLedgerDigestUpload resource.</returns>
-    public static ManagedLedgerDigestUpload FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ManagedLedgerDigestUpload FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

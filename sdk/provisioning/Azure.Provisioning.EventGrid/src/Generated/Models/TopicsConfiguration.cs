@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Properties of the Topics Configuration.
 /// </summary>
-public partial class TopicsConfiguration : ProvisioningConstruct
+public partial class TopicsConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// The hostname for the topics configuration. This is a read-only property.

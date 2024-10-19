@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// The abuse penalty.
 /// </summary>
-public partial class AbusePenalty : ProvisioningConstruct
+public partial class AbusePenalty : ProvisionableConstruct
 {
     /// <summary>
     /// The action of AbusePenalty.

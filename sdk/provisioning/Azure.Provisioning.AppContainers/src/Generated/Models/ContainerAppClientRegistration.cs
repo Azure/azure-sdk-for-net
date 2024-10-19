@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// The configuration settings of the app registration for providers that have
 /// client ids and client secrets.
 /// </summary>
-public partial class ContainerAppClientRegistration : ProvisioningConstruct
+public partial class ContainerAppClientRegistration : ProvisionableConstruct
 {
     /// <summary>
     /// The Client ID of the app used for login.

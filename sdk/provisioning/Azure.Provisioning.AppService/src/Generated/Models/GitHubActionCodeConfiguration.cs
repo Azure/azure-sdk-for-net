@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// The GitHub action code configuration.
 /// </summary>
-public partial class GitHubActionCodeConfiguration : ProvisioningConstruct
+public partial class GitHubActionCodeConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Runtime stack is used to determine the workflow file content for code

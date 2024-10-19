@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Container App Dapr configuration.
 /// </summary>
-public partial class ContainerAppDaprConfiguration : ProvisioningConstruct
+public partial class ContainerAppDaprConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Boolean indicating if the Dapr side car is enabled.

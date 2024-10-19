@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Cross-Origin-Resource-Sharing policy.
 /// </summary>
-public partial class ContainerAppCorsPolicy : ProvisioningConstruct
+public partial class ContainerAppCorsPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// Specifies the content for the access-control-allow-origins header.

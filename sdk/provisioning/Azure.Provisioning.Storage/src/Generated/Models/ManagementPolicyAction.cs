@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Storage;
 /// Actions are applied to the filtered blobs when the execution condition is
 /// met.
 /// </summary>
-public partial class ManagementPolicyAction : ProvisioningConstruct
+public partial class ManagementPolicyAction : ProvisionableConstruct
 {
     /// <summary>
     /// The management policy action for base blob.

@@ -14,7 +14,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// A class representing the ServiceBusPrivateEndpointConnection data model.
 /// Properties of the PrivateEndpointConnection.
 /// </summary>
-public partial class ServiceBusPrivateEndpointConnectionData : ProvisioningConstruct
+public partial class ServiceBusPrivateEndpointConnectionData : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets Id.

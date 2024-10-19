@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// MachineKey of an app.
 /// </summary>
-public partial class SiteMachineKey : ProvisioningConstruct
+public partial class SiteMachineKey : ProvisionableConstruct
 {
     /// <summary>
     /// MachineKey validation.

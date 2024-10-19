@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The set of data plane operations permitted through this Role Definition.
 /// </summary>
-public partial class MongoDBPrivilege : ProvisioningConstruct
+public partial class MongoDBPrivilege : ProvisionableConstruct
 {
     /// <summary>
     /// An Azure Cosmos DB Mongo DB Resource.

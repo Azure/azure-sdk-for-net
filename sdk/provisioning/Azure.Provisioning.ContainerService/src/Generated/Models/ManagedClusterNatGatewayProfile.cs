@@ -14,7 +14,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Profile of the managed cluster NAT gateway.
 /// </summary>
-public partial class ManagedClusterNatGatewayProfile : ProvisioningConstruct
+public partial class ManagedClusterNatGatewayProfile : ProvisionableConstruct
 {
     /// <summary>
     /// The desired number of outbound IPs created/managed by Azure. Allowed

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteExtension.
 /// </summary>
-public partial class WebSiteExtension : Resource
+public partial class WebSiteExtension : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -172,15 +172,15 @@ public partial class WebSiteExtension : Resource
     /// <summary>
     /// Creates a new WebSiteExtension.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WebSiteExtension resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteExtension.</param>
-    public WebSiteExtension(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/siteextensions", resourceVersion ?? "2024-04-01")
+    public WebSiteExtension(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/siteextensions", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _authors = BicepList<string>.DefineProperty(this, "Authors", ["properties", "authors"], isOutput: true);
@@ -373,7 +373,7 @@ public partial class WebSiteExtension : Resource
     /// <summary>
     /// Creates a reference to an existing WebSiteExtension.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WebSiteExtension resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -381,6 +381,6 @@ public partial class WebSiteExtension : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteExtension.</param>
     /// <returns>The existing WebSiteExtension resource.</returns>
-    public static WebSiteExtension FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteExtension FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerDatabaseRestorePoint.
 /// </summary>
-public partial class SqlServerDatabaseRestorePoint : Resource
+public partial class SqlServerDatabaseRestorePoint : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -74,15 +74,15 @@ public partial class SqlServerDatabaseRestorePoint : Resource
     /// <summary>
     /// Creates a new SqlServerDatabaseRestorePoint.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlServerDatabaseRestorePoint
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerDatabaseRestorePoint.</param>
-    public SqlServerDatabaseRestorePoint(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/databases/restorePoints", resourceVersion ?? "2021-11-01")
+    public SqlServerDatabaseRestorePoint(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/restorePoints", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _earliestRestoreOn = BicepValue<DateTimeOffset>.DefineProperty(this, "EarliestRestoreOn", ["properties", "earliestRestoreDate"], isOutput: true);
@@ -129,7 +129,7 @@ public partial class SqlServerDatabaseRestorePoint : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerDatabaseRestorePoint.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlServerDatabaseRestorePoint
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -137,6 +137,6 @@ public partial class SqlServerDatabaseRestorePoint : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerDatabaseRestorePoint.</param>
     /// <returns>The existing SqlServerDatabaseRestorePoint resource.</returns>
-    public static SqlServerDatabaseRestorePoint FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerDatabaseRestorePoint FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

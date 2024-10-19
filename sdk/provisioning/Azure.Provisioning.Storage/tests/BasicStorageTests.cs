@@ -165,7 +165,7 @@ public class BasicStorageTests(bool async)
                 infra.Add(role);
 
                 role = storage.CreateRoleAssignment(StorageBuiltInRole.StorageBlobDataContributor, RoleManagementPrincipalType.ServicePrincipal, id.PrincipalId);
-                role.IdentifierName = "storage_writer";
+                role.BicepIdentifier = "storage_writer";
                 infra.Add(role);
 
                 return infra;

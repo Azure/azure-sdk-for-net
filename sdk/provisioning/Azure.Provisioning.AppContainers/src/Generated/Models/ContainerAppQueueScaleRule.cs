@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Container App container Azure Queue based scaling rule.
 /// </summary>
-public partial class ContainerAppQueueScaleRule : ProvisioningConstruct
+public partial class ContainerAppQueueScaleRule : ProvisionableConstruct
 {
     /// <summary>
     /// Queue name.

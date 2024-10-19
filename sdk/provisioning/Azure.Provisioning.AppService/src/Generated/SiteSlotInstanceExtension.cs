@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotInstanceExtension.
 /// </summary>
-public partial class SiteSlotInstanceExtension : Resource
+public partial class SiteSlotInstanceExtension : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -123,15 +123,15 @@ public partial class SiteSlotInstanceExtension : Resource
     /// <summary>
     /// Creates a new SiteSlotInstanceExtension.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteSlotInstanceExtension
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotInstanceExtension.</param>
-    public SiteSlotInstanceExtension(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/slots/instances/extensions", resourceVersion)
+    public SiteSlotInstanceExtension(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/instances/extensions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _connectionString = BicepValue<string>.DefineProperty(this, "ConnectionString", ["properties", "connectionString"]);
@@ -154,7 +154,7 @@ public partial class SiteSlotInstanceExtension : Resource
     /// <summary>
     /// Creates a reference to an existing SiteSlotInstanceExtension.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteSlotInstanceExtension
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -162,6 +162,6 @@ public partial class SiteSlotInstanceExtension : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotInstanceExtension.</param>
     /// <returns>The existing SiteSlotInstanceExtension resource.</returns>
-    public static SiteSlotInstanceExtension FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SiteSlotInstanceExtension FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

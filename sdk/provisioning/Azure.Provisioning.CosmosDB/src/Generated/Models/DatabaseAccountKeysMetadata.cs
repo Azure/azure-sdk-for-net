@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// The metadata related to each access key for the given Cosmos DB database
 /// account.
 /// </summary>
-public partial class DatabaseAccountKeysMetadata : ProvisioningConstruct
+public partial class DatabaseAccountKeysMetadata : ProvisionableConstruct
 {
     /// <summary>
     /// Generation time in UTC of the key in ISO-8601 format. If the value is

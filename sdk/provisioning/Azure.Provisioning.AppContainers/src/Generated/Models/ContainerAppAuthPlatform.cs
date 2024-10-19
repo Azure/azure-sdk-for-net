@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// The configuration settings of the platform of ContainerApp Service
 /// Authentication/Authorization.
 /// </summary>
-public partial class ContainerAppAuthPlatform : ProvisioningConstruct
+public partial class ContainerAppAuthPlatform : ProvisionableConstruct
 {
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization

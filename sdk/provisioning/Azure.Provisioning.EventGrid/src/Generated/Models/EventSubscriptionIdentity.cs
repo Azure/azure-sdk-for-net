@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// The identity information with the event subscription.
 /// </summary>
-public partial class EventSubscriptionIdentity : ProvisioningConstruct
+public partial class EventSubscriptionIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// The type of managed identity used. Can be either

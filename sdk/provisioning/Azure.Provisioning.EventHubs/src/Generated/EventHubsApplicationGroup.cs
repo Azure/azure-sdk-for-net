@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubsApplicationGroup.
 /// </summary>
-public partial class EventHubsApplicationGroup : Resource
+public partial class EventHubsApplicationGroup : ProvisionableResource
 {
     /// <summary>
     /// The Application Group name.
@@ -81,15 +81,15 @@ public partial class EventHubsApplicationGroup : Resource
     /// <summary>
     /// Creates a new EventHubsApplicationGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventHubsApplicationGroup
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the EventHubsApplicationGroup.</param>
-    public EventHubsApplicationGroup(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventHub/namespaces/applicationGroups", resourceVersion ?? "2024-01-01")
+    public EventHubsApplicationGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventHub/namespaces/applicationGroups", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _clientAppGroupIdentifier = BicepValue<string>.DefineProperty(this, "ClientAppGroupIdentifier", ["properties", "clientAppGroupIdentifier"]);
@@ -120,7 +120,7 @@ public partial class EventHubsApplicationGroup : Resource
     /// <summary>
     /// Creates a reference to an existing EventHubsApplicationGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventHubsApplicationGroup
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -128,6 +128,6 @@ public partial class EventHubsApplicationGroup : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the EventHubsApplicationGroup.</param>
     /// <returns>The existing EventHubsApplicationGroup resource.</returns>
-    public static EventHubsApplicationGroup FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static EventHubsApplicationGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

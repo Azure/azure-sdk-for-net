@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Blob range.
 /// </summary>
-public partial class BlobRestoreRange : ProvisioningConstruct
+public partial class BlobRestoreRange : ProvisionableConstruct
 {
     /// <summary>
     /// Blob start range. This is inclusive. Empty means account start.

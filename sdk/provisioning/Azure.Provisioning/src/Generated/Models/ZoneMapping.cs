@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ZoneMapping.
 /// </summary>
-public partial class ZoneMapping : ProvisioningConstruct
+public partial class ZoneMapping : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the Location.

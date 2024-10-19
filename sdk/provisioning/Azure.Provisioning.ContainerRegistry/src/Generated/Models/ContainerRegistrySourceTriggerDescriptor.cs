@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The source trigger that caused a run.
 /// </summary>
-public partial class ContainerRegistrySourceTriggerDescriptor : ProvisioningConstruct
+public partial class ContainerRegistrySourceTriggerDescriptor : ProvisionableConstruct
 {
     /// <summary>
     /// The unique ID of the trigger.

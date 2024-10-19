@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// Ticket Info of the role eligibility.
 /// </summary>
-public partial class RoleEligibilityScheduleRequestPropertiesTicketInfo : ProvisioningConstruct
+public partial class RoleEligibilityScheduleRequestPropertiesTicketInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Ticket number for the role eligibility.

@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// IP security restriction on an app.
 /// </summary>
-public partial class AppServiceIPSecurityRestriction : ProvisioningConstruct
+public partial class AppServiceIPSecurityRestriction : ProvisionableConstruct
 {
     /// <summary>
     /// IP address the security restriction is valid for.             It can be

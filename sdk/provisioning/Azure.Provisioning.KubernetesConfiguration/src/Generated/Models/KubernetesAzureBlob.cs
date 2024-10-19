@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Parameters to reconcile to the AzureBlob source kind type.
 /// </summary>
-public partial class KubernetesAzureBlob : ProvisioningConstruct
+public partial class KubernetesAzureBlob : ProvisionableConstruct
 {
     /// <summary>
     /// The URL to sync for the flux configuration Azure Blob storage account.

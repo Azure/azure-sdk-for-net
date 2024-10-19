@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Communication;
 /// <summary>
 /// List of VerificationStatusRecord.
 /// </summary>
-public partial class DomainPropertiesVerificationStates : ProvisioningConstruct
+public partial class DomainPropertiesVerificationStates : ProvisionableConstruct
 {
     /// <summary>
     /// A class that represents a VerificationStatus record.

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid;
 /// Information about the delivery for an event subscription with resource
 /// identity.
 /// </summary>
-public partial class DeliveryWithResourceIdentity : ProvisioningConstruct
+public partial class DeliveryWithResourceIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// The identity to use when delivering events.

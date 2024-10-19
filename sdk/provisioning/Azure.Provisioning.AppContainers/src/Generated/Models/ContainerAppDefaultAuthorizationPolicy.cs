@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppContainers;
 /// The configuration settings of the Azure Active Directory default
 /// authorization policy.
 /// </summary>
-public partial class ContainerAppDefaultAuthorizationPolicy : ProvisioningConstruct
+public partial class ContainerAppDefaultAuthorizationPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// The configuration settings of the Azure Active Directory allowed

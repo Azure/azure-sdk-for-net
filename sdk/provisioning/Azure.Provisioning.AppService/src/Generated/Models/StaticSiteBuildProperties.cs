@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Build properties for the static site.
 /// </summary>
-public partial class StaticSiteBuildProperties : ProvisioningConstruct
+public partial class StaticSiteBuildProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The path to the app code within the repository.

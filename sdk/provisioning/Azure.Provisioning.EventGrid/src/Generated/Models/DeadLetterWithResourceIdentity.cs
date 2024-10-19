@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Information about the deadletter destination with resource identity.
 /// </summary>
-public partial class DeadLetterWithResourceIdentity : ProvisioningConstruct
+public partial class DeadLetterWithResourceIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// The identity to use when dead-lettering events.

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ApplicationInsights;
 /// <summary>
 /// Localized template data and gallery information.
 /// </summary>
-public partial class WorkbookTemplateLocalizedGallery : ProvisioningConstruct
+public partial class WorkbookTemplateLocalizedGallery : ProvisionableConstruct
 {
     /// <summary>
     /// Valid JSON object containing workbook template payload.

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// A private endpoint connection under a managed instance.
 /// </summary>
-public partial class ManagedInstancePecProperty : ProvisioningConstruct
+public partial class ManagedInstancePecProperty : ProvisionableConstruct
 {
     /// <summary>
     /// Resource ID.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Application logs azure blob storage configuration.
 /// </summary>
-public partial class AppServiceBlobStorageApplicationLogsConfig : ProvisioningConstruct
+public partial class AppServiceBlobStorageApplicationLogsConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Log level.

@@ -13,7 +13,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// The api properties for special APIs.
 /// </summary>
-public partial class ServiceAccountApiProperties : ProvisioningConstruct
+public partial class ServiceAccountApiProperties : ProvisionableConstruct
 {
     /// <summary>
     /// (QnAMaker Only) The runtime endpoint of QnAMaker.

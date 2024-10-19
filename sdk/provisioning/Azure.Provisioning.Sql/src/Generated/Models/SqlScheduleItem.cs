@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// Schedule info describing when the server should be started or stopped.
 /// </summary>
-public partial class SqlScheduleItem : ProvisioningConstruct
+public partial class SqlScheduleItem : ProvisionableConstruct
 {
     /// <summary>
     /// Start day.

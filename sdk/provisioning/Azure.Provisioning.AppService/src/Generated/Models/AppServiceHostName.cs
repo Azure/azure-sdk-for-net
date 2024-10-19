@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Details of a hostname derived from a domain.
 /// </summary>
-public partial class AppServiceHostName : ProvisioningConstruct
+public partial class AppServiceHostName : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the hostname.

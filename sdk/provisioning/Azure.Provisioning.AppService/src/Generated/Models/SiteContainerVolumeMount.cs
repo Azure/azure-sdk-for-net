@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// The SiteContainerVolumeMount.
 /// </summary>
-public partial class SiteContainerVolumeMount : ProvisioningConstruct
+public partial class SiteContainerVolumeMount : ProvisionableConstruct
 {
     /// <summary>
     /// Sub path in the volume where volume is mounted from.

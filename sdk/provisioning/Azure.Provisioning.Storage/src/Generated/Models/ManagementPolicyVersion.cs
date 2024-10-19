@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Management policy action for blob version.
 /// </summary>
-public partial class ManagementPolicyVersion : ProvisioningConstruct
+public partial class ManagementPolicyVersion : ProvisionableConstruct
 {
     /// <summary>
     /// The function to tier blob version to cool storage.

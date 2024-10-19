@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Communication;
 /// <summary>
 /// A class representing the access keys of a CommunicationService.
 /// </summary>
-public partial class CommunicationServiceKeys : ProvisioningConstruct
+public partial class CommunicationServiceKeys : ProvisionableConstruct
 {
     /// <summary>
     /// The primary access key.
@@ -60,7 +60,7 @@ public partial class CommunicationServiceKeys : ProvisioningConstruct
     /// </param>
     /// <returns>A CommunicationServiceKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static CommunicationServiceKeys FromExpression(Expression expression)
+    public static CommunicationServiceKeys FromExpression(BicepExpression expression)
     {
         CommunicationServiceKeys resource = new();
         resource.OverrideWithExpression(expression);

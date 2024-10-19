@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Application logs configuration.
 /// </summary>
-public partial class ApplicationLogsConfig : ProvisioningConstruct
+public partial class ApplicationLogsConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Log level.

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Specification for an App Service Environment to use for this resource.
 /// </summary>
-public partial class HostingEnvironmentProfile : ProvisioningConstruct
+public partial class HostingEnvironmentProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Resource ID of the App Service Environment.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// The GitHub action configuration.
 /// </summary>
-public partial class GitHubActionConfiguration : ProvisioningConstruct
+public partial class GitHubActionConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// GitHub Action code configuration.

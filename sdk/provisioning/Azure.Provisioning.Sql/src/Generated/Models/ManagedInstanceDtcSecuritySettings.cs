@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// The Security Settings of managed instance DTC.
 /// </summary>
-public partial class ManagedInstanceDtcSecuritySettings : ProvisioningConstruct
+public partial class ManagedInstanceDtcSecuritySettings : ProvisionableConstruct
 {
     /// <summary>
     /// Transaction Manager communication settings of managed instance DTC.

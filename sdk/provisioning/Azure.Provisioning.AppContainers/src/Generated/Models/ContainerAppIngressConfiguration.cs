@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Container App Ingress configuration.
 /// </summary>
-public partial class ContainerAppIngressConfiguration : ProvisioningConstruct
+public partial class ContainerAppIngressConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Hostname.

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ContainerRegistryTaskRun.
 /// </summary>
-public partial class ContainerRegistryTaskRun : Resource
+public partial class ContainerRegistryTaskRun : ProvisionableResource
 {
     /// <summary>
     /// The name of the task run.
@@ -92,15 +92,15 @@ public partial class ContainerRegistryTaskRun : Resource
     /// <summary>
     /// Creates a new ContainerRegistryTaskRun.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerRegistryTaskRun resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryTaskRun.</param>
-    public ContainerRegistryTaskRun(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.ContainerRegistry/registries/taskRuns", resourceVersion ?? "2019-06-01-preview")
+    public ContainerRegistryTaskRun(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/taskRuns", resourceVersion ?? "2019-06-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _forceUpdateTag = BicepValue<string>.DefineProperty(this, "ForceUpdateTag", ["properties", "forceUpdateTag"]);
@@ -128,7 +128,7 @@ public partial class ContainerRegistryTaskRun : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerRegistryTaskRun.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerRegistryTaskRun resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -136,6 +136,6 @@ public partial class ContainerRegistryTaskRun : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryTaskRun.</param>
     /// <returns>The existing ContainerRegistryTaskRun resource.</returns>
-    public static ContainerRegistryTaskRun FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ContainerRegistryTaskRun FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

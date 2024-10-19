@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// Patch schedule entry for a Premium Redis Cache.
 /// </summary>
-public partial class RedisPatchScheduleSetting : ProvisioningConstruct
+public partial class RedisPatchScheduleSetting : ProvisionableConstruct
 {
     /// <summary>
     /// Day of the week when a cache can be patched.

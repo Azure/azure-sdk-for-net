@@ -13,7 +13,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Properties of a managed Cassandra data center.
 /// </summary>
-public partial class CassandraDataCenterProperties : ProvisioningConstruct
+public partial class CassandraDataCenterProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The status of the resource at the time the operation was called.

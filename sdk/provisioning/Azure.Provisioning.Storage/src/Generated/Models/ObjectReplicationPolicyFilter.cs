@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Storage;
 /// A logical OR is performed on values in the filter. If multiple filters are
 /// defined, a logical AND is performed on all filters.
 /// </summary>
-public partial class ObjectReplicationPolicyFilter : ProvisioningConstruct
+public partial class ObjectReplicationPolicyFilter : ProvisionableConstruct
 {
     /// <summary>
     /// Optional. Filters the results to replicate only blobs whose names begin

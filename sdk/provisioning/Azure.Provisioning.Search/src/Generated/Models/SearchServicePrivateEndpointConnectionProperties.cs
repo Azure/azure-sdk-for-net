@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Search;
 /// Describes the properties of an existing private endpoint connection to the
 /// search service.
 /// </summary>
-public partial class SearchServicePrivateEndpointConnectionProperties : ProvisioningConstruct
+public partial class SearchServicePrivateEndpointConnectionProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets Id.

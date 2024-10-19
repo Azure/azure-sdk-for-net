@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Istio components configuration.
 /// </summary>
-public partial class IstioComponents : ProvisioningConstruct
+public partial class IstioComponents : ProvisionableConstruct
 {
     /// <summary>
     /// Istio ingress gateways.

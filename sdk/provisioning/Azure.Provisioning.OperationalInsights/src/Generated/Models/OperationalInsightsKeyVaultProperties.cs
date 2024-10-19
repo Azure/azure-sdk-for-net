@@ -11,7 +11,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// The key vault properties.
 /// </summary>
-public partial class OperationalInsightsKeyVaultProperties : ProvisioningConstruct
+public partial class OperationalInsightsKeyVaultProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The Key Vault uri which holds they key associated with the Log

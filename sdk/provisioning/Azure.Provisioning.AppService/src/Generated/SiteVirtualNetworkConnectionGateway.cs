@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteVirtualNetworkConnectionGateway.
 /// </summary>
-public partial class SiteVirtualNetworkConnectionGateway : Resource
+public partial class SiteVirtualNetworkConnectionGateway : ProvisionableResource
 {
     /// <summary>
     /// Name of the gateway. Currently, the only supported string is
@@ -63,15 +63,15 @@ public partial class SiteVirtualNetworkConnectionGateway : Resource
     /// <summary>
     /// Creates a new SiteVirtualNetworkConnectionGateway.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// SiteVirtualNetworkConnectionGateway resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SiteVirtualNetworkConnectionGateway.</param>
-    public SiteVirtualNetworkConnectionGateway(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/virtualNetworkConnections/gateways", resourceVersion ?? "2024-04-01")
+    public SiteVirtualNetworkConnectionGateway(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/virtualNetworkConnections/gateways", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
@@ -246,7 +246,7 @@ public partial class SiteVirtualNetworkConnectionGateway : Resource
     /// <summary>
     /// Creates a reference to an existing SiteVirtualNetworkConnectionGateway.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// SiteVirtualNetworkConnectionGateway resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -254,6 +254,6 @@ public partial class SiteVirtualNetworkConnectionGateway : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteVirtualNetworkConnectionGateway.</param>
     /// <returns>The existing SiteVirtualNetworkConnectionGateway resource.</returns>
-    public static SiteVirtualNetworkConnectionGateway FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SiteVirtualNetworkConnectionGateway FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Function app configuration.
 /// </summary>
-public partial class FunctionAppConfig : ProvisioningConstruct
+public partial class FunctionAppConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Storage for deployed package used by the function app.

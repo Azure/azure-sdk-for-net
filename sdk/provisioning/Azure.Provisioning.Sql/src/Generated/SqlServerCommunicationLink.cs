@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerCommunicationLink.
 /// </summary>
-public partial class SqlServerCommunicationLink : Resource
+public partial class SqlServerCommunicationLink : ProvisionableResource
 {
     /// <summary>
     /// The name of the server communication link.
@@ -69,15 +69,15 @@ public partial class SqlServerCommunicationLink : Resource
     /// <summary>
     /// Creates a new SqlServerCommunicationLink.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlServerCommunicationLink
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerCommunicationLink.</param>
-    public SqlServerCommunicationLink(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/communicationLinks", resourceVersion ?? "2014-04-01")
+    public SqlServerCommunicationLink(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/communicationLinks", resourceVersion ?? "2014-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _partnerServer = BicepValue<string>.DefineProperty(this, "PartnerServer", ["properties", "partnerServer"]);
@@ -113,7 +113,7 @@ public partial class SqlServerCommunicationLink : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerCommunicationLink.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlServerCommunicationLink
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -121,6 +121,6 @@ public partial class SqlServerCommunicationLink : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerCommunicationLink.</param>
     /// <returns>The existing SqlServerCommunicationLink resource.</returns>
-    public static SqlServerCommunicationLink FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerCommunicationLink FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

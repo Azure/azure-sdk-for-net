@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The CassandraError.
 /// </summary>
-public partial class CassandraError : ProvisioningConstruct
+public partial class CassandraError : ProvisionableConstruct
 {
     /// <summary>
     /// The code of error that occurred.

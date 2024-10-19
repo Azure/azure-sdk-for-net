@@ -15,7 +15,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// A class representing the WebPubSubPrivateEndpointConnection data model.
 /// A private endpoint connection to an azure resource
 /// </summary>
-public partial class WebPubSubPrivateEndpointConnectionData : ProvisioningConstruct
+public partial class WebPubSubPrivateEndpointConnectionData : ProvisionableConstruct
 {
     /// <summary>
     /// Provisioning state of the resource.

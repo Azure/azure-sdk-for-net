@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// The parameters that describes a set of credentials that will be used when a
 /// run is invoked.
 /// </summary>
-public partial class ContainerRegistryCredentials : ProvisioningConstruct
+public partial class ContainerRegistryCredentials : ProvisionableConstruct
 {
     /// <summary>
     /// The authentication mode which determines the source registry login

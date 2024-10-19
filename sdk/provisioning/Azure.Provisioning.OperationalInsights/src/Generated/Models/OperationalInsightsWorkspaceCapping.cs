@@ -11,7 +11,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// The daily volume cap for ingestion.
 /// </summary>
-public partial class OperationalInsightsWorkspaceCapping : ProvisioningConstruct
+public partial class OperationalInsightsWorkspaceCapping : ProvisionableConstruct
 {
     /// <summary>
     /// The workspace daily quota for ingestion.

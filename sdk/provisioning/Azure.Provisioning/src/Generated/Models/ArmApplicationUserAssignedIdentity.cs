@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// Represents the user assigned identity that is contained within the
 /// UserAssignedIdentities dictionary on ResourceIdentity.
 /// </summary>
-public partial class ArmApplicationUserAssignedIdentity : ProvisioningConstruct
+public partial class ArmApplicationUserAssignedIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// The principal id of user assigned identity.

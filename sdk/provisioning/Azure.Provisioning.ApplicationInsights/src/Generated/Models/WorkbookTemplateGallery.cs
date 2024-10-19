@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ApplicationInsights;
 /// <summary>
 /// Gallery information for a workbook template.
 /// </summary>
-public partial class WorkbookTemplateGallery : ProvisioningConstruct
+public partial class WorkbookTemplateGallery : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the workbook template in the gallery.

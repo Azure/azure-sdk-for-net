@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The CassandraViewGetPropertiesOptions.
 /// </summary>
-public partial class CassandraViewGetPropertiesOptions : ProvisioningConstruct
+public partial class CassandraViewGetPropertiesOptions : ProvisionableConstruct
 {
     /// <summary>
     /// Value of the Cosmos DB resource throughput or autoscaleSettings. Use

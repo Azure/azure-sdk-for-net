@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Additional information about every inline event.
 /// </summary>
-public partial class InlineEventProperties : ProvisioningConstruct
+public partial class InlineEventProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The description for the inline event.

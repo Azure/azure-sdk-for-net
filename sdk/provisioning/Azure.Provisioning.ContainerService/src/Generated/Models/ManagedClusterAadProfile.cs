@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ContainerService;
 /// For more details see [managed AAD on
 /// AKS](https://docs.microsoft.com/azure/aks/managed-aad).
 /// </summary>
-public partial class ManagedClusterAadProfile : ProvisioningConstruct
+public partial class ManagedClusterAadProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Whether to enable managed AAD.

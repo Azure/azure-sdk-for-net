@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// Manual trigger configuration for a single execution job. Properties
 /// replicaCompletionCount and parallelism would be set to 1 by default.
 /// </summary>
-public partial class JobConfigurationManualTriggerConfig : ProvisioningConstruct
+public partial class JobConfigurationManualTriggerConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Minimum number of successful replica completions before overall job

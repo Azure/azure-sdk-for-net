@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// The properties of the credentials that can be used for authenticating the
 /// token.
 /// </summary>
-public partial class ContainerRegistryTokenCredentials : ProvisioningConstruct
+public partial class ContainerRegistryTokenCredentials : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the certificates.

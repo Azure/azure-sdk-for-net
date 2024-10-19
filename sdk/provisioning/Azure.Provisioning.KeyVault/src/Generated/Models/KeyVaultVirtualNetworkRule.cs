@@ -12,7 +12,7 @@ namespace Azure.Provisioning.KeyVault;
 /// A rule governing the accessibility of a vault from a specific virtual
 /// network.
 /// </summary>
-public partial class KeyVaultVirtualNetworkRule : ProvisioningConstruct
+public partial class KeyVaultVirtualNetworkRule : ProvisionableConstruct
 {
     /// <summary>
     /// Full resource id of a vnet subnet, such as

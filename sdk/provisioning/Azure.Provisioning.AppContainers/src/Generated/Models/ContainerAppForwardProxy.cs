@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of a forward proxy used to make the requests.
 /// </summary>
-public partial class ContainerAppForwardProxy : ProvisioningConstruct
+public partial class ContainerAppForwardProxy : ProvisionableConstruct
 {
     /// <summary>
     /// The convention used to determine the url of the request made.

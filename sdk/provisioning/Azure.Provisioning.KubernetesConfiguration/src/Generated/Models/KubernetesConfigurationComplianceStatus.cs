@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Compliance Status details.
 /// </summary>
-public partial class KubernetesConfigurationComplianceStatus : ProvisioningConstruct
+public partial class KubernetesConfigurationComplianceStatus : ProvisionableConstruct
 {
     /// <summary>
     /// The compliance state of the configuration.

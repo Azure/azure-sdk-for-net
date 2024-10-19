@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Information needed for cloning operation.
 /// </summary>
-public partial class CloningInfo : ProvisioningConstruct
+public partial class CloningInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Correlation ID of cloning operation. This ID ties multiple cloning

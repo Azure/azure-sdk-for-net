@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The trigger based on base image dependency.
 /// </summary>
-public partial class ContainerRegistryBaseImageTrigger : ProvisioningConstruct
+public partial class ContainerRegistryBaseImageTrigger : ProvisionableConstruct
 {
     /// <summary>
     /// The type of the auto trigger for base image dependency updates.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Address information for domain registration.
 /// </summary>
-public partial class RegistrationAddressInfo : ProvisioningConstruct
+public partial class RegistrationAddressInfo : ProvisionableConstruct
 {
     /// <summary>
     /// First line of an Address.

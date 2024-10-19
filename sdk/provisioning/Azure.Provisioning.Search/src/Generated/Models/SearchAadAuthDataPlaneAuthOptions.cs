@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Search;
 /// Defines the options for how the search service authenticates a data plane
 /// request. This cannot be set if &apos;disableLocalAuth&apos; is set to true.
 /// </summary>
-public partial class SearchAadAuthDataPlaneAuthOptions : ProvisioningConstruct
+public partial class SearchAadAuthDataPlaneAuthOptions : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates that only the API key can be used for authentication.

@@ -13,7 +13,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// GeoDR Replication properties.
 /// </summary>
-public partial class NamespaceGeoDataReplicationProperties : ProvisioningConstruct
+public partial class NamespaceGeoDataReplicationProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The maximum acceptable lag for data replication operations from the

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Auth Secrets for Scale Rule.
 /// </summary>
-public partial class ContainerAppScaleRuleAuth : ProvisioningConstruct
+public partial class ContainerAppScaleRuleAuth : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the secret from which to pull the auth params.

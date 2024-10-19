@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// RoleEligibilityScheduleRequest.
 /// </summary>
-public partial class RoleEligibilityScheduleRequest : Resource
+public partial class RoleEligibilityScheduleRequest : ProvisionableResource
 {
     /// <summary>
     /// The name of the role eligibility to create. It can be any valid GUID.
@@ -163,15 +163,15 @@ public partial class RoleEligibilityScheduleRequest : Resource
     /// <summary>
     /// Creates a new RoleEligibilityScheduleRequest.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the RoleEligibilityScheduleRequest
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the RoleEligibilityScheduleRequest.</param>
-    public RoleEligibilityScheduleRequest(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Authorization/roleEligibilityScheduleRequests", resourceVersion ?? "2020-10-01")
+    public RoleEligibilityScheduleRequest(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Authorization/roleEligibilityScheduleRequests", resourceVersion ?? "2020-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _condition = BicepValue<string>.DefineProperty(this, "Condition", ["properties", "condition"]);
@@ -217,7 +217,7 @@ public partial class RoleEligibilityScheduleRequest : Resource
     /// <summary>
     /// Creates a reference to an existing RoleEligibilityScheduleRequest.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the RoleEligibilityScheduleRequest
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -225,6 +225,6 @@ public partial class RoleEligibilityScheduleRequest : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the RoleEligibilityScheduleRequest.</param>
     /// <returns>The existing RoleEligibilityScheduleRequest resource.</returns>
-    public static RoleEligibilityScheduleRequest FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static RoleEligibilityScheduleRequest FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

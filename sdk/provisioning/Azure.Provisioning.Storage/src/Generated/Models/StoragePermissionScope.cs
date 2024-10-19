@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// The StoragePermissionScope.
 /// </summary>
-public partial class StoragePermissionScope : ProvisioningConstruct
+public partial class StoragePermissionScope : ProvisionableConstruct
 {
     /// <summary>
     /// The permissions for the local user. Possible values include: Read (r),

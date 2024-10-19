@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Non versioned Container Apps Job configuration properties.
 /// </summary>
-public partial class ContainerAppJobConfiguration : ProvisioningConstruct
+public partial class ContainerAppJobConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Collection of secrets used by a Container Apps Job.

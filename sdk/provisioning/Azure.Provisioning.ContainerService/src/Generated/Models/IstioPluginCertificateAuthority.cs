@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Plugin certificates information for Service Mesh.
 /// </summary>
-public partial class IstioPluginCertificateAuthority : ProvisioningConstruct
+public partial class IstioPluginCertificateAuthority : ProvisionableConstruct
 {
     /// <summary>
     /// The resource ID of the Key Vault.

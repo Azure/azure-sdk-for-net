@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Container App registry information.
 /// </summary>
-public partial class ContainerAppRegistryInfo : ProvisioningConstruct
+public partial class ContainerAppRegistryInfo : ProvisionableConstruct
 {
     /// <summary>
     /// registry server Url.

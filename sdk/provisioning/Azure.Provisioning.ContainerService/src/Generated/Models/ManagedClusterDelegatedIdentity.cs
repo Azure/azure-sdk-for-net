@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Delegated resource properties - internal use only.
 /// </summary>
-public partial class ManagedClusterDelegatedIdentity : ProvisioningConstruct
+public partial class ManagedClusterDelegatedIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// The ARM resource id of the delegated resource - internal use only.

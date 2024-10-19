@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Information about the certificate that is used for token validation.
 /// </summary>
-public partial class IssuerCertificateInfo : ProvisioningConstruct
+public partial class IssuerCertificateInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Keyvault certificate URL in

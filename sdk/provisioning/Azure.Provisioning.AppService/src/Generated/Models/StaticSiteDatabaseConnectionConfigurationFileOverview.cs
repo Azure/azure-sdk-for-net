@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// A database connection configuration file.
 /// </summary>
-public partial class StaticSiteDatabaseConnectionConfigurationFileOverview : ProvisioningConstruct
+public partial class StaticSiteDatabaseConnectionConfigurationFileOverview : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the configuration file.

@@ -14,7 +14,7 @@ namespace Azure.Provisioning.ContainerService;
 /// the addon. See aka.ms/AzureManagedPrometheus-optional-parameters for
 /// details.
 /// </summary>
-public partial class ManagedClusterMonitorProfileKubeStateMetrics : ProvisioningConstruct
+public partial class ManagedClusterMonitorProfileKubeStateMetrics : ProvisionableConstruct
 {
     /// <summary>
     /// Comma-separated list of additional Kubernetes label keys that will be

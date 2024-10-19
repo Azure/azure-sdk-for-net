@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ConnectionState information.
 /// </summary>
-public partial class ServiceBusPrivateLinkServiceConnectionState : ProvisioningConstruct
+public partial class ServiceBusPrivateLinkServiceConnectionState : ProvisionableConstruct
 {
     /// <summary>
     /// Status of the connection.

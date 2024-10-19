@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Describes the capabilities/features allowed for a specific SKU.
 /// </summary>
-public partial class AppServiceSkuCapability : ProvisioningConstruct
+public partial class AppServiceSkuCapability : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the SKU capability.

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// Cosmos DB resource throughput object. Either throughput is required or
 /// autoscaleSettings is required, but not both.
 /// </summary>
-public partial class ThroughputSettingsResourceInfo : ProvisioningConstruct
+public partial class ThroughputSettingsResourceInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Value of the Cosmos DB resource throughput. Either throughput is

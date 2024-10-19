@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppContainers;
 /// desired state of an immutable revision.             Any changes to this
 /// section Will result in a new revision being created
 /// </summary>
-public partial class ContainerAppTemplate : ProvisioningConstruct
+public partial class ContainerAppTemplate : ProvisionableConstruct
 {
     /// <summary>
     /// User friendly suffix that is appended to the revision name.

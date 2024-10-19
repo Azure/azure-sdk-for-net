@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// The response from the List namespace operation.
 /// </summary>
-public partial class EventHubsNetworkRuleSetIPRules : ProvisioningConstruct
+public partial class EventHubsNetworkRuleSetIPRules : ProvisionableConstruct
 {
     /// <summary>
     /// IP Mask.

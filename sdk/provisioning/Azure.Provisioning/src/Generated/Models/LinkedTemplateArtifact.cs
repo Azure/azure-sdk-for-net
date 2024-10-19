@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// Represents a Template Spec artifact containing an embedded Azure Resource
 /// Manager template for use as a linked template.
 /// </summary>
-public partial class LinkedTemplateArtifact : ProvisioningConstruct
+public partial class LinkedTemplateArtifact : ProvisionableConstruct
 {
     /// <summary>
     /// A filesystem safe relative path of the artifact.

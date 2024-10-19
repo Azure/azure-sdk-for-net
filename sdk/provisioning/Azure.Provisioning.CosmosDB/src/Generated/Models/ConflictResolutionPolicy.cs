@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The conflict resolution policy for the container.
 /// </summary>
-public partial class ConflictResolutionPolicy : ProvisioningConstruct
+public partial class ConflictResolutionPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates the conflict resolution mode.

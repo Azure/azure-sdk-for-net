@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// Properties to configure capture description for eventhub.
 /// </summary>
-public partial class CaptureDescription : ProvisioningConstruct
+public partial class CaptureDescription : ProvisionableConstruct
 {
     /// <summary>
     /// A value that indicates whether capture description is enabled.

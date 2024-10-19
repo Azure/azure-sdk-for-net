@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// The RoleManagementExpandedProperties.
 /// </summary>
-public partial class RoleManagementExpandedProperties : ProvisioningConstruct
+public partial class RoleManagementExpandedProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Id of the principal.

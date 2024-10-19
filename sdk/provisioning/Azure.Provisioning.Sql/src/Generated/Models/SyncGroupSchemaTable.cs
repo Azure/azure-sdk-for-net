@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// Properties of table in sync group schema.
 /// </summary>
-public partial class SyncGroupSchemaTable : ProvisioningConstruct
+public partial class SyncGroupSchemaTable : ProvisionableConstruct
 {
     /// <summary>
     /// List of columns in sync group schema.

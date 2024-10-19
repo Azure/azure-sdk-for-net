@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ApplicationInsights;
 /// Geo-physical location to run a WebTest from. You must specify one or more
 /// locations for the test to run from.
 /// </summary>
-public partial class WebTestGeolocation : ProvisioningConstruct
+public partial class WebTestGeolocation : ProvisionableConstruct
 {
     /// <summary>
     /// Location ID for the WebTest to run from.

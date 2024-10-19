@@ -12,7 +12,7 @@ namespace Azure.Provisioning.KeyVault;
 /// A rule governing the accessibility of a managed HSM pool from a specific IP
 /// address or IP range.
 /// </summary>
-public partial class ManagedHsmIPRule : ProvisioningConstruct
+public partial class ManagedHsmIPRule : ProvisionableConstruct
 {
     /// <summary>
     /// An IPv4 address range in CIDR notation, such as

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the Facebook provider.
 /// </summary>
-public partial class ContainerAppFacebookConfiguration : ProvisioningConstruct
+public partial class ContainerAppFacebookConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Storage;
 /// This property enables and defines account-level immutability. Enabling the
 /// feature auto-enables Blob Versioning.
 /// </summary>
-public partial class ImmutableStorageAccount : ProvisioningConstruct
+public partial class ImmutableStorageAccount : ProvisionableConstruct
 {
     /// <summary>
     /// A boolean flag which enables account-level immutability. All the

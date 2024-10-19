@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Managed identity generic object.
 /// </summary>
-public partial class ArmDeploymentScriptManagedIdentity : ProvisioningConstruct
+public partial class ArmDeploymentScriptManagedIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// Type of the managed identity.

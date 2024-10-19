@@ -20,7 +20,7 @@ namespace Azure.Provisioning.EventGrid;
 /// include
 /// Azure.ResourceManager.EventGrid.Models.EventGridJsonInputSchemaMapping.
 /// </summary>
-public partial class EventGridInputSchemaMapping : ProvisioningConstruct
+public partial class EventGridInputSchemaMapping : ProvisionableConstruct
 {
     /// <summary>
     /// Creates a new EventGridInputSchemaMapping.

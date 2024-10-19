@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Represents available Sku pricing tiers.
 /// </summary>
-public partial class NamespaceSku : ProvisioningConstruct
+public partial class NamespaceSku : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the SKU.

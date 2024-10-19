@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// Describes the properties of a secret object value.
 /// </summary>
-public partial class ContainerRegistrySecretObject : ProvisioningConstruct
+public partial class ContainerRegistrySecretObject : ProvisionableConstruct
 {
     /// <summary>
     /// The value of the secret. The format of this value will be determined

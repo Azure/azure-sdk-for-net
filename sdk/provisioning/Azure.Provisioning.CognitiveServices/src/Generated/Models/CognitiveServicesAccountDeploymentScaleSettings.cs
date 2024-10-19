@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// Properties of Cognitive Services account deployment model.
 /// </summary>
-public partial class CognitiveServicesAccountDeploymentScaleSettings : ProvisioningConstruct
+public partial class CognitiveServicesAccountDeploymentScaleSettings : ProvisionableConstruct
 {
     /// <summary>
     /// Deployment scale type.

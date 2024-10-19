@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// An update history of the ImmutabilityPolicy of a blob container.
 /// </summary>
-public partial class UpdateHistoryEntry : ProvisioningConstruct
+public partial class UpdateHistoryEntry : ProvisionableConstruct
 {
     /// <summary>
     /// The ImmutabilityPolicy update type of a blob container, possible values

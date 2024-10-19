@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// Description of NetWorkRuleSet - IpRules resource.
 /// </summary>
-public partial class ServiceBusNetworkRuleSetIPRules : ProvisioningConstruct
+public partial class ServiceBusNetworkRuleSetIPRules : ProvisionableConstruct
 {
     /// <summary>
     /// IP Mask.

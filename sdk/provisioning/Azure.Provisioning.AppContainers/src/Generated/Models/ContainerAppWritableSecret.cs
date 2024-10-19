@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Secret definition.
 /// </summary>
-public partial class ContainerAppWritableSecret : ProvisioningConstruct
+public partial class ContainerAppWritableSecret : ProvisionableConstruct
 {
     /// <summary>
     /// Secret Name.

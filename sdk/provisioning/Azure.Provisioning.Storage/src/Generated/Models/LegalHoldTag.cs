@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// A tag of the LegalHold of a blob container.
 /// </summary>
-public partial class LegalHoldTag : ProvisioningConstruct
+public partial class LegalHoldTag : ProvisionableConstruct
 {
     /// <summary>
     /// The tag value.

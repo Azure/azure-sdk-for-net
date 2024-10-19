@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// Properties of a active directory administrator.
 /// </summary>
-public partial class ServerExternalAdministrator : ProvisioningConstruct
+public partial class ServerExternalAdministrator : ProvisionableConstruct
 {
     /// <summary>
     /// Type of the sever administrator.

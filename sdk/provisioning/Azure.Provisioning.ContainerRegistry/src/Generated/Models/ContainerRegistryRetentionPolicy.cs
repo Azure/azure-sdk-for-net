@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The retention policy for a container registry.
 /// </summary>
-public partial class ContainerRegistryRetentionPolicy : ProvisioningConstruct
+public partial class ContainerRegistryRetentionPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// The number of days to retain an untagged manifest after which it gets

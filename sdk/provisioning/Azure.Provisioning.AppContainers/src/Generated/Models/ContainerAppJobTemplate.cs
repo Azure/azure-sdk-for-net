@@ -14,7 +14,7 @@ namespace Azure.Provisioning.AppContainers;
 /// state of an immutable revision. Any changes to this section Will result in
 /// a new revision being created.
 /// </summary>
-public partial class ContainerAppJobTemplate : ProvisioningConstruct
+public partial class ContainerAppJobTemplate : ProvisionableConstruct
 {
     /// <summary>
     /// List of specialized containers that run before app containers.

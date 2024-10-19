@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedBackupShortTermRetentionPolicy.
 /// </summary>
-public partial class ManagedBackupShortTermRetentionPolicy : Resource
+public partial class ManagedBackupShortTermRetentionPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -51,15 +51,15 @@ public partial class ManagedBackupShortTermRetentionPolicy : Resource
     /// <summary>
     /// Creates a new ManagedBackupShortTermRetentionPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ManagedBackupShortTermRetentionPolicy resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedBackupShortTermRetentionPolicy.</param>
-    public ManagedBackupShortTermRetentionPolicy(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies", resourceVersion ?? "2021-11-01")
+    public ManagedBackupShortTermRetentionPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _retentionDays = BicepValue<int>.DefineProperty(this, "RetentionDays", ["properties", "retentionDays"]);
@@ -88,7 +88,7 @@ public partial class ManagedBackupShortTermRetentionPolicy : Resource
     /// Creates a reference to an existing
     /// ManagedBackupShortTermRetentionPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ManagedBackupShortTermRetentionPolicy resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -96,6 +96,6 @@ public partial class ManagedBackupShortTermRetentionPolicy : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedBackupShortTermRetentionPolicy.</param>
     /// <returns>The existing ManagedBackupShortTermRetentionPolicy resource.</returns>
-    public static ManagedBackupShortTermRetentionPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ManagedBackupShortTermRetentionPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

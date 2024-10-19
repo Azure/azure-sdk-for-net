@@ -19,7 +19,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// KubernetesFluxConfiguration.
 /// </summary>
-public partial class KubernetesFluxConfiguration : Resource
+public partial class KubernetesFluxConfiguration : ProvisionableResource
 {
     /// <summary>
     /// Name of the Flux Configuration.
@@ -153,15 +153,15 @@ public partial class KubernetesFluxConfiguration : Resource
     /// <summary>
     /// Creates a new KubernetesFluxConfiguration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the KubernetesFluxConfiguration
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the KubernetesFluxConfiguration.</param>
-    public KubernetesFluxConfiguration(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.KubernetesConfiguration/fluxConfigurations", resourceVersion ?? "2023-05-01")
+    public KubernetesFluxConfiguration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/fluxConfigurations", resourceVersion ?? "2023-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _azureBlob = BicepValue<KubernetesAzureBlob>.DefineProperty(this, "AzureBlob", ["properties", "azureBlob"]);
@@ -219,7 +219,7 @@ public partial class KubernetesFluxConfiguration : Resource
     /// <summary>
     /// Creates a reference to an existing KubernetesFluxConfiguration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the KubernetesFluxConfiguration
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -227,8 +227,8 @@ public partial class KubernetesFluxConfiguration : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the KubernetesFluxConfiguration.</param>
     /// <returns>The existing KubernetesFluxConfiguration resource.</returns>
-    public static KubernetesFluxConfiguration FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static KubernetesFluxConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Creates a role assignment for a user-assigned identity that grants
@@ -238,10 +238,10 @@ public partial class KubernetesFluxConfiguration : Resource
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
     public RoleAssignment CreateRoleAssignment(KubernetesConfigurationBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{IdentifierName}_{identity.IdentifierName}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
+        new($"{BicepIdentifier}_{identity.BicepIdentifier}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(IdentifierName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
@@ -254,13 +254,13 @@ public partial class KubernetesFluxConfiguration : Resource
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
-    /// <param name="identifierNameSuffix">Optional role assignment identifier name suffix.</param>
+    /// <param name="bicepIdentifierSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment CreateRoleAssignment(KubernetesConfigurationBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? identifierNameSuffix = default) =>
-        new($"{IdentifierName}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}{(identifierNameSuffix is null ? "" : "_")}{identifierNameSuffix}")
+    public RoleAssignment CreateRoleAssignment(KubernetesConfigurationBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? bicepIdentifierSuffix = default) =>
+        new($"{BicepIdentifier}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}{(bicepIdentifierSuffix is null ? "" : "_")}{bicepIdentifierSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(IdentifierName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

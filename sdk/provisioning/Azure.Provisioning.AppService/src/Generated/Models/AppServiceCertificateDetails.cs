@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SSL certificate details.
 /// </summary>
-public partial class AppServiceCertificateDetails : ProvisioningConstruct
+public partial class AppServiceCertificateDetails : ProvisionableConstruct
 {
     /// <summary>
     /// Certificate Version.

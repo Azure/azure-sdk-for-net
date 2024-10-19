@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Search;
 /// Network specific rules that determine how the Azure AI Search service may
 /// be reached.
 /// </summary>
-public partial class SearchServiceNetworkRuleSet : ProvisioningConstruct
+public partial class SearchServiceNetworkRuleSet : ProvisionableConstruct
 {
     /// <summary>
     /// A list of IP restriction rules that defines the inbound network(s) with

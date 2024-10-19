@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The ContainerRegistryTimerTriggerDescriptor.
 /// </summary>
-public partial class ContainerRegistryTimerTriggerDescriptor : ProvisioningConstruct
+public partial class ContainerRegistryTimerTriggerDescriptor : ProvisionableConstruct
 {
     /// <summary>
     /// The timer trigger name that caused the run.

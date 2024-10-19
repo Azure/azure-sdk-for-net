@@ -12,7 +12,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// Data encryption properties of a server.
 /// </summary>
-public partial class PostgreSqlFlexibleServerDataEncryption : ProvisioningConstruct
+public partial class PostgreSqlFlexibleServerDataEncryption : ProvisionableConstruct
 {
     /// <summary>
     /// URI for the key in keyvault for data encryption of the primary server.

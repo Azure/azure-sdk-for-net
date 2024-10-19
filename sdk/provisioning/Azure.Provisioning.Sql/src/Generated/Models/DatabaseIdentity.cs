@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// Azure Active Directory identity configuration for a resource.
 /// </summary>
-public partial class DatabaseIdentity : ProvisioningConstruct
+public partial class DatabaseIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// The identity type.

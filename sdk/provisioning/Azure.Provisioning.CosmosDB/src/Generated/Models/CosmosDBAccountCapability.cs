@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB capability object.
 /// </summary>
-public partial class CosmosDBAccountCapability : ProvisioningConstruct
+public partial class CosmosDBAccountCapability : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the Cosmos DB capability. For example, &quot;name&quot;:

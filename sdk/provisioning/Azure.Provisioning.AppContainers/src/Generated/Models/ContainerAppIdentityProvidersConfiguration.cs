@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppContainers;
 /// The configuration settings of each of the identity providers used to
 /// configure ContainerApp Service Authentication/Authorization.
 /// </summary>
-public partial class ContainerAppIdentityProvidersConfiguration : ProvisioningConstruct
+public partial class ContainerAppIdentityProvidersConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// The configuration settings of the Azure Active directory provider.

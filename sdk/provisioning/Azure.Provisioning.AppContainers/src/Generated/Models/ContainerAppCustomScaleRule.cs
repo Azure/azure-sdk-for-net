@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Container App container Custom scaling rule.
 /// </summary>
-public partial class ContainerAppCustomScaleRule : ProvisioningConstruct
+public partial class ContainerAppCustomScaleRule : ProvisionableConstruct
 {
     /// <summary>
     /// Type of the custom scale rule             eg: azure-servicebus, redis

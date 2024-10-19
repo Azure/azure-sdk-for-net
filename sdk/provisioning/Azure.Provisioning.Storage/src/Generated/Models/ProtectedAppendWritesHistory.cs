@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Storage;
 /// Protected append writes history setting for the blob container with Legal
 /// holds.
 /// </summary>
-public partial class ProtectedAppendWritesHistory : ProvisioningConstruct
+public partial class ProtectedAppendWritesHistory : ProvisionableConstruct
 {
     /// <summary>
     /// When enabled, new blocks can be written to both &apos;Append and Bock

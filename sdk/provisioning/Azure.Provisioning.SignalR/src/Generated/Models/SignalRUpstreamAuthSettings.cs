@@ -11,7 +11,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// Upstream auth settings. If not set, no auth is used for upstream messages.
 /// </summary>
-public partial class SignalRUpstreamAuthSettings : ProvisioningConstruct
+public partial class SignalRUpstreamAuthSettings : ProvisionableConstruct
 {
     /// <summary>
     /// Upstream auth type enum.

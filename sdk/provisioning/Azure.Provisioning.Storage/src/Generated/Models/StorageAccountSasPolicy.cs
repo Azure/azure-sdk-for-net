@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// SasPolicy assigned to the storage account.
 /// </summary>
-public partial class StorageAccountSasPolicy : ProvisioningConstruct
+public partial class StorageAccountSasPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// The SAS expiration period, DD.HH:MM:SS.

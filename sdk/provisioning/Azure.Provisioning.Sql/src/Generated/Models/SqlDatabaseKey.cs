@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// Database level key used for encryption at rest.
 /// </summary>
-public partial class SqlDatabaseKey : ProvisioningConstruct
+public partial class SqlDatabaseKey : ProvisionableConstruct
 {
     /// <summary>
     /// The database key type. Only supported value is

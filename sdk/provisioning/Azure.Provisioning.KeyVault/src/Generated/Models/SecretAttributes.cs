@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// The secret management attributes.
 /// </summary>
-public partial class SecretAttributes : ProvisioningConstruct
+public partial class SecretAttributes : ProvisionableConstruct
 {
     /// <summary>
     /// Determines whether the object is enabled.

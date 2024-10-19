@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// Describes the credentials that will be used to access a custom registry
 /// during a run.
 /// </summary>
-public partial class CustomRegistryCredentials : ProvisioningConstruct
+public partial class CustomRegistryCredentials : ProvisionableConstruct
 {
     /// <summary>
     /// The username for logging into the custom registry.

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// A collection of information about the state of the connection between
 /// service consumer and provider.
 /// </summary>
-public partial class CognitiveServicesPrivateLinkServiceConnectionState : ProvisioningConstruct
+public partial class CognitiveServicesPrivateLinkServiceConnectionState : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates whether the connection has been Approved/Rejected/Removed by

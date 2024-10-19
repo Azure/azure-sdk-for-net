@@ -14,7 +14,7 @@ namespace Azure.Provisioning.AppContainers;
 /// Non versioned Container App configuration properties that define the
 /// mutable settings of a Container app.
 /// </summary>
-public partial class ContainerAppConfiguration : ProvisioningConstruct
+public partial class ContainerAppConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Collection of secrets used by a Container app.

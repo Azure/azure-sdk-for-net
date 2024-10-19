@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// Scheduling properties of a job.
 /// </summary>
-public partial class SqlServerJobSchedule : ProvisioningConstruct
+public partial class SqlServerJobSchedule : ProvisionableConstruct
 {
     /// <summary>
     /// Schedule start time.

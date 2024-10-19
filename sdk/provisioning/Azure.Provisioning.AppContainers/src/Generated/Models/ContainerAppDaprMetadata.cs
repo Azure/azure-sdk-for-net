@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Dapr component metadata.
 /// </summary>
-public partial class ContainerAppDaprMetadata : ProvisioningConstruct
+public partial class ContainerAppDaprMetadata : ProvisionableConstruct
 {
     /// <summary>
     /// Metadata property name.

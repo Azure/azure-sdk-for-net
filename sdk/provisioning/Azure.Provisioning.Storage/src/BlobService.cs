@@ -19,12 +19,12 @@ public partial class BlobService
     /// Get the default value for the Name property.
     /// </summary>
     private partial BicepValue<string> GetNameDefaultValue() =>
-        new StringLiteral("default");
+        new StringLiteralExpression("default");
 
     /// <inheritdoc/>
     IEnumerable<ProvisioningOutput> IClientCreator.GetOutputs()
     {
-        yield return new ProvisioningOutput($"{IdentifierName}_endpoint", typeof(string))
+        yield return new ProvisioningOutput($"{BicepIdentifier}_endpoint", typeof(string))
         {
             Value = Parent!.PrimaryEndpoints.Value!.BlobUri
         };
@@ -50,10 +50,10 @@ public partial class BlobService
         BlobClientOptions? options)
     {
         // TODO: Move into a shared helper off ProvCtx's namescoping
-        string qualifiedName = $"{IdentifierName}_endpoint";
+        string qualifiedName = $"{BicepIdentifier}_endpoint";
         string endpoint = (deploymentOutputs.TryGetValue(qualifiedName, out object? raw) && raw is string value) ?
             value :
-            throw new InvalidOperationException($"Could not find output value {qualifiedName} to construct {GetType().Name} resource {IdentifierName}.");
+            throw new InvalidOperationException($"Could not find output value {qualifiedName} to construct {GetType().Name} resource {BicepIdentifier}.");
         return new BlobServiceClient(new Uri(endpoint), credential, options);
     }
 }

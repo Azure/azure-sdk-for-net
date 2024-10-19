@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// The managed application provider authorization.
 /// </summary>
-public partial class ArmApplicationAuthorization : ProvisioningConstruct
+public partial class ArmApplicationAuthorization : ProvisionableConstruct
 {
     /// <summary>
     /// The provider&apos;s principal identifier. This is the identity that the

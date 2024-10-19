@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// Role definition permissions.
 /// </summary>
-public partial class RoleDefinitionPermission : ProvisioningConstruct
+public partial class RoleDefinitionPermission : ProvisionableConstruct
 {
     /// <summary>
     /// Allowed actions.

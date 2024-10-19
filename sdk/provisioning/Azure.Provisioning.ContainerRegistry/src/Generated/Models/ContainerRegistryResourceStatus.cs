@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The status of an Azure resource at the time the operation was called.
 /// </summary>
-public partial class ContainerRegistryResourceStatus : ProvisioningConstruct
+public partial class ContainerRegistryResourceStatus : ProvisionableConstruct
 {
     /// <summary>
     /// The short label for the status.

@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Service mesh profile for a managed cluster.
 /// </summary>
-public partial class ServiceMeshProfile : ProvisioningConstruct
+public partial class ServiceMeshProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Mode of the service mesh.

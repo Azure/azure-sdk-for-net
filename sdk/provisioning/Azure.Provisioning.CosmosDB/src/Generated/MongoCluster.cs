@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// MongoCluster.
 /// </summary>
-public partial class MongoCluster : Resource
+public partial class MongoCluster : ProvisionableResource
 {
     /// <summary>
     /// The name of the mongo cluster.
@@ -112,15 +112,15 @@ public partial class MongoCluster : Resource
     /// <summary>
     /// Creates a new MongoCluster.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the MongoCluster resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the MongoCluster.</param>
-    public MongoCluster(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/mongoClusters", resourceVersion ?? "2024-07-01")
+    public MongoCluster(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/mongoClusters", resourceVersion ?? "2024-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -153,7 +153,7 @@ public partial class MongoCluster : Resource
     /// <summary>
     /// Creates a reference to an existing MongoCluster.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the MongoCluster resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -161,6 +161,6 @@ public partial class MongoCluster : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the MongoCluster.</param>
     /// <returns>The existing MongoCluster resource.</returns>
-    public static MongoCluster FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static MongoCluster FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

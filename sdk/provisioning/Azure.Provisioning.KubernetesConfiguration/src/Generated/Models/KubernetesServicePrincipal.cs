@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Parameters to authenticate using Service Principal.
 /// </summary>
-public partial class KubernetesServicePrincipal : ProvisioningConstruct
+public partial class KubernetesServicePrincipal : ProvisionableConstruct
 {
     /// <summary>
     /// The client Id for authenticating a Service Principal.

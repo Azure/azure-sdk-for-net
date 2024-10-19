@@ -12,7 +12,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// Live trace configuration of a Microsoft.SignalRService resource.
 /// </summary>
-public partial class SignalRLiveTraceConfiguration : ProvisioningConstruct
+public partial class SignalRLiveTraceConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates whether or not enable live trace.             When it&apos;s

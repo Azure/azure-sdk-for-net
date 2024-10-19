@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// The port range.
 /// </summary>
-public partial class AgentPoolNetworkPortRange : ProvisioningConstruct
+public partial class AgentPoolNetworkPortRange : ProvisionableConstruct
 {
     /// <summary>
     /// The minimum port that is included in the range. It should be ranged

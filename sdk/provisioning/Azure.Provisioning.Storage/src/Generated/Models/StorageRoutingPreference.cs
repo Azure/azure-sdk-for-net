@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Storage;
 /// internet routing to be used to deliver the user data, the default option
 /// is microsoft routing.
 /// </summary>
-public partial class StorageRoutingPreference : ProvisioningConstruct
+public partial class StorageRoutingPreference : ProvisionableConstruct
 {
     /// <summary>
     /// Routing Choice defines the kind of network routing opted by the user.

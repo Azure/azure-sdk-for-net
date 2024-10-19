@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SSL-enabled hostname.
 /// </summary>
-public partial class HostNameSslState : ProvisioningConstruct
+public partial class HostNameSslState : ProvisionableConstruct
 {
     /// <summary>
     /// Hostname.

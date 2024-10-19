@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Description of a SKU for a scalable resource.
 /// </summary>
-public partial class AppServiceSkuDescription : ProvisioningConstruct
+public partial class AppServiceSkuDescription : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the resource SKU.

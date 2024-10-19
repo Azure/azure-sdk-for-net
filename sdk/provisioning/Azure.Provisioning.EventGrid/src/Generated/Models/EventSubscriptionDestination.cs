@@ -27,7 +27,7 @@ namespace Azure.Provisioning.EventGrid;
 /// and
 /// Azure.ResourceManager.EventGrid.Models.WebHookEventSubscriptionDestination.
 /// </summary>
-public partial class EventSubscriptionDestination : ProvisioningConstruct
+public partial class EventSubscriptionDestination : ProvisionableConstruct
 {
     /// <summary>
     /// Creates a new EventSubscriptionDestination.

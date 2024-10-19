@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// The call rate limit Cognitive Services account.
 /// </summary>
-public partial class ServiceAccountCallRateLimit : ProvisioningConstruct
+public partial class ServiceAccountCallRateLimit : ProvisionableConstruct
 {
     /// <summary>
     /// The count value of Call Rate Limit.

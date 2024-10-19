@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// The encryption settings on the storage account.
 /// </summary>
-public partial class StorageAccountEncryption : ProvisioningConstruct
+public partial class StorageAccountEncryption : ProvisionableConstruct
 {
     /// <summary>
     /// List of services which support encryption.

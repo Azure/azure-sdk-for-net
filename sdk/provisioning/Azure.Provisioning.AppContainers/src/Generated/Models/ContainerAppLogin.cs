@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppContainers;
 /// The configuration settings of the login flow of users using ContainerApp
 /// Service Authentication/Authorization.
 /// </summary>
-public partial class ContainerAppLogin : ProvisioningConstruct
+public partial class ContainerAppLogin : ProvisionableConstruct
 {
     /// <summary>
     /// The endpoint at which a logout request should be made.

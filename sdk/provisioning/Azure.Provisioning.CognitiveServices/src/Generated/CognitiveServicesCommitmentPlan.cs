@@ -17,7 +17,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// CognitiveServicesCommitmentPlan.
 /// </summary>
-public partial class CognitiveServicesCommitmentPlan : Resource
+public partial class CognitiveServicesCommitmentPlan : ProvisionableResource
 {
     /// <summary>
     /// The name of the commitmentPlan associated with the Cognitive Services
@@ -77,15 +77,15 @@ public partial class CognitiveServicesCommitmentPlan : Resource
     /// <summary>
     /// Creates a new CognitiveServicesCommitmentPlan.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CognitiveServicesCommitmentPlan
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CognitiveServicesCommitmentPlan.</param>
-    public CognitiveServicesCommitmentPlan(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.CognitiveServices/commitmentPlans", resourceVersion ?? "2024-10-01")
+    public CognitiveServicesCommitmentPlan(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.CognitiveServices/commitmentPlans", resourceVersion ?? "2024-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
@@ -122,7 +122,7 @@ public partial class CognitiveServicesCommitmentPlan : Resource
     /// <summary>
     /// Creates a reference to an existing CognitiveServicesCommitmentPlan.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CognitiveServicesCommitmentPlan
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -130,6 +130,6 @@ public partial class CognitiveServicesCommitmentPlan : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CognitiveServicesCommitmentPlan.</param>
     /// <returns>The existing CognitiveServicesCommitmentPlan resource.</returns>
-    public static CognitiveServicesCommitmentPlan FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CognitiveServicesCommitmentPlan FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

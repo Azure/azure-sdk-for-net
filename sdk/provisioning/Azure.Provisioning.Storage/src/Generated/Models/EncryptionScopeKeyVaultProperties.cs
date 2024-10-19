@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Storage;
 /// if encryption scope &apos;source&apos; attribute is set to
 /// &apos;Microsoft.KeyVault&apos;.
 /// </summary>
-public partial class EncryptionScopeKeyVaultProperties : ProvisioningConstruct
+public partial class EncryptionScopeKeyVaultProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The object identifier for a key vault key object. When applied, the

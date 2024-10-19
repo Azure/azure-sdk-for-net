@@ -178,13 +178,13 @@ internal class SampleTests(bool async)
                     new("aspireDashboard",
                         new ResourceStatement(
                             "aspireDashboard",
-                            new StringLiteral("Microsoft.App/managedEnvironments/dotNetComponents@2024-02-02-preview"),
+                            new StringLiteralExpression("Microsoft.App/managedEnvironments/dotNetComponents@2024-02-02-preview"),
                             new ObjectExpression(
                                 new PropertyExpression("name", "aspire-dashboard"),
-                                new PropertyExpression("parent", new IdentifierExpression(cae.IdentifierName)),
+                                new PropertyExpression("parent", new IdentifierExpression(cae.BicepIdentifier)),
                                 new PropertyExpression("properties",
                                     new ObjectExpression(
-                                        new PropertyExpression("componentType", new StringLiteral("AspireDashboard")))))));
+                                        new PropertyExpression("componentType", new StringLiteralExpression("AspireDashboard")))))));
                 infra.Add(aspireDashboard);
 
                 infra.Add(new ProvisioningOutput("MANAGED_IDENTITY_CLIENT_ID", typeof(string)) { Value = mi.ClientId });
@@ -350,19 +350,19 @@ internal class SampleTests(bool async)
     public void ValidNames()
     {
         // Check null is invalid
-        Assert.IsFalse(Infrastructure.IsValidIdentifierName(null));
-        Assert.Throws<ArgumentNullException>(() => Infrastructure.ValidateIdentifierName(null));
+        Assert.IsFalse(Infrastructure.IsValidBicepIdentifier(null));
+        Assert.Throws<ArgumentNullException>(() => Infrastructure.ValidateBicepIdentifier(null));
         Assert.Throws<ArgumentNullException>(() => new StorageAccount(null!));
 
         // Check invalid names
         List<string> invalid = ["", "my-storage", "my storage", "my:storage", "storage$", "1storage", "KforKelvin"];
         foreach (string name in invalid)
         {
-            Assert.IsFalse(Infrastructure.IsValidIdentifierName(name));
-            Assert.Throws<ArgumentException>(() => Infrastructure.ValidateIdentifierName(name));
+            Assert.IsFalse(Infrastructure.IsValidBicepIdentifier(name));
+            Assert.Throws<ArgumentException>(() => Infrastructure.ValidateBicepIdentifier(name));
             if (!string.IsNullOrEmpty(name))
             {
-                Assert.AreNotEqual(name, Infrastructure.NormalizeIdentifierName(name));
+                Assert.AreNotEqual(name, Infrastructure.NormalizeBicepIdentifier(name));
             }
             Assert.Throws<ArgumentException>(() => new StorageAccount(name));
         }
@@ -371,9 +371,9 @@ internal class SampleTests(bool async)
         List<string> valid = ["foo", "FOO", "Foo", "f", "_foo", "_", "foo123", "ABCdef123_"];
         foreach (string name in valid)
         {
-            Assert.IsTrue(Infrastructure.IsValidIdentifierName(name));
-            Assert.DoesNotThrow(() => Infrastructure.ValidateIdentifierName(name));
-            Assert.AreEqual(name, Infrastructure.NormalizeIdentifierName(name));
+            Assert.IsTrue(Infrastructure.IsValidBicepIdentifier(name));
+            Assert.DoesNotThrow(() => Infrastructure.ValidateBicepIdentifier(name));
+            Assert.AreEqual(name, Infrastructure.NormalizeBicepIdentifier(name));
             Assert.DoesNotThrow(() => new StorageAccount(name));
         }
     }

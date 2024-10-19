@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Storage profile for the container service cluster.
 /// </summary>
-public partial class ManagedClusterStorageProfile : ProvisioningConstruct
+public partial class ManagedClusterStorageProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Whether to enable AzureDisk CSI Driver. The default value is true.

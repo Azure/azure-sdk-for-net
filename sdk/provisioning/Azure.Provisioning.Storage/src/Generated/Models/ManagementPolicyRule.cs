@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Storage;
 /// An object that wraps the Lifecycle rule. Each rule is uniquely defined by
 /// name.
 /// </summary>
-public partial class ManagementPolicyRule : ProvisioningConstruct
+public partial class ManagementPolicyRule : ProvisionableConstruct
 {
     /// <summary>
     /// Rule is enabled if set to true.

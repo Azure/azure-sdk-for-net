@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// A rule governing the accessibility from a specific ip address or ip range.
 /// </summary>
-public partial class CognitiveServicesIPRule : ProvisioningConstruct
+public partial class CognitiveServicesIPRule : ProvisionableConstruct
 {
     /// <summary>
     /// An IPv4 address range in CIDR notation, such as

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// LogicalDatabaseTransparentDataEncryption.
 /// </summary>
-public partial class LogicalDatabaseTransparentDataEncryption : Resource
+public partial class LogicalDatabaseTransparentDataEncryption : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -50,7 +50,7 @@ public partial class LogicalDatabaseTransparentDataEncryption : Resource
     /// <summary>
     /// Creates a new LogicalDatabaseTransparentDataEncryption.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// LogicalDatabaseTransparentDataEncryption resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -58,8 +58,8 @@ public partial class LogicalDatabaseTransparentDataEncryption : Resource
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the LogicalDatabaseTransparentDataEncryption.</param>
-    public LogicalDatabaseTransparentDataEncryption(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/databases/transparentDataEncryption", resourceVersion ?? "2021-11-01")
+    public LogicalDatabaseTransparentDataEncryption(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/transparentDataEncryption", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<TransparentDataEncryptionState>.DefineProperty(this, "State", ["properties", "state"]);
@@ -93,7 +93,7 @@ public partial class LogicalDatabaseTransparentDataEncryption : Resource
     /// Creates a reference to an existing
     /// LogicalDatabaseTransparentDataEncryption.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// LogicalDatabaseTransparentDataEncryption resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -102,6 +102,6 @@ public partial class LogicalDatabaseTransparentDataEncryption : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the LogicalDatabaseTransparentDataEncryption.</param>
     /// <returns>The existing LogicalDatabaseTransparentDataEncryption resource.</returns>
-    public static LogicalDatabaseTransparentDataEncryption FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static LogicalDatabaseTransparentDataEncryption FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

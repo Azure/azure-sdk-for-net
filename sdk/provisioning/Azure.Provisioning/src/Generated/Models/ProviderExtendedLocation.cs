@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ProviderExtendedLocation.
 /// </summary>
-public partial class ProviderExtendedLocation : ProvisioningConstruct
+public partial class ProviderExtendedLocation : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the Location.

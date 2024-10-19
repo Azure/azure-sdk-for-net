@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Virtual Network ACL Rule object.
 /// </summary>
-public partial class CosmosDBVirtualNetworkRule : ProvisioningConstruct
+public partial class CosmosDBVirtualNetworkRule : ProvisionableConstruct
 {
     /// <summary>
     /// Resource ID of a subnet, for example:

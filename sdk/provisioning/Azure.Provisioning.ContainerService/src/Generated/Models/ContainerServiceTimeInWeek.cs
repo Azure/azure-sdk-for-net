@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Time in a week.
 /// </summary>
-public partial class ContainerServiceTimeInWeek : ProvisioningConstruct
+public partial class ContainerServiceTimeInWeek : ProvisionableConstruct
 {
     /// <summary>
     /// The day of the week.

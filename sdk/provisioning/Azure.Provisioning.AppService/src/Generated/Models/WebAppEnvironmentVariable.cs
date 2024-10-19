@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// The WebAppEnvironmentVariable.
 /// </summary>
-public partial class WebAppEnvironmentVariable : ProvisioningConstruct
+public partial class WebAppEnvironmentVariable : ProvisionableConstruct
 {
     /// <summary>
     /// Environment variable name.

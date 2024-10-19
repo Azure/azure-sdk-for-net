@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Storage account keys creation time.
 /// </summary>
-public partial class StorageAccountKeyCreationTime : ProvisioningConstruct
+public partial class StorageAccountKeyCreationTime : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the key 1.

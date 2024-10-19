@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the Azure Active Directory login flow.
 /// </summary>
-public partial class ContainerAppAzureActiveDirectoryLoginConfiguration : ProvisioningConstruct
+public partial class ContainerAppAzureActiveDirectoryLoginConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Login parameters to send to the OpenID Connect authorization endpoint

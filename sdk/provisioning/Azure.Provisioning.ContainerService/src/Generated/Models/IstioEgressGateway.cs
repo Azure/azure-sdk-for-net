@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Istio egress gateway configuration.
 /// </summary>
-public partial class IstioEgressGateway : ProvisioningConstruct
+public partial class IstioEgressGateway : ProvisionableConstruct
 {
     /// <summary>
     /// Whether to enable the egress gateway.

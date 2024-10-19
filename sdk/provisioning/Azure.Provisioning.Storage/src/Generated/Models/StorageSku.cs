@@ -10,7 +10,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// The SKU of the storage account.
 /// </summary>
-public partial class StorageSku : ProvisioningConstruct
+public partial class StorageSku : ProvisionableConstruct
 {
     /// <summary>
     /// The SKU name. Required for account creation; optional for update. Note

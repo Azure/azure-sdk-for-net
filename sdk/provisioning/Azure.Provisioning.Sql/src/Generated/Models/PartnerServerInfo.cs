@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// Partner server information for the failover group.
 /// </summary>
-public partial class PartnerServerInfo : ProvisioningConstruct
+public partial class PartnerServerInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Resource identifier of the partner server.

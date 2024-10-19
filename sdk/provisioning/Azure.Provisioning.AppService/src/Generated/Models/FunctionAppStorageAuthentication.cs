@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Authentication method to access the storage account for deployment.
 /// </summary>
-public partial class FunctionAppStorageAuthentication : ProvisioningConstruct
+public partial class FunctionAppStorageAuthentication : ProvisionableConstruct
 {
     /// <summary>
     /// Property to select authentication type to access the selected storage

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB SQL userDefinedFunction resource object.
 /// </summary>
-public partial class CosmosDBSqlUserDefinedFunctionResourceInfo : ProvisioningConstruct
+public partial class CosmosDBSqlUserDefinedFunctionResourceInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the Cosmos DB SQL userDefinedFunction.

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// The ServiceAccountQuotaLimit.
 /// </summary>
-public partial class ServiceAccountQuotaLimit : ProvisioningConstruct
+public partial class ServiceAccountQuotaLimit : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the count.

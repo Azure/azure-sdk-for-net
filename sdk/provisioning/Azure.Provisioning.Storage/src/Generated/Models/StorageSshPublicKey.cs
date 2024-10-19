@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// The StorageSshPublicKey.
 /// </summary>
-public partial class StorageSshPublicKey : ProvisioningConstruct
+public partial class StorageSshPublicKey : ProvisionableConstruct
 {
     /// <summary>
     /// Optional. It is used to store the function/usage of the key.

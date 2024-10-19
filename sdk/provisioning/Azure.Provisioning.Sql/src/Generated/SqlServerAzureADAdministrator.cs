@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerAzureADAdministrator.
 /// </summary>
-public partial class SqlServerAzureADAdministrator : Resource
+public partial class SqlServerAzureADAdministrator : ProvisionableResource
 {
     private readonly BicepValue<string> _name;
 
@@ -75,15 +75,15 @@ public partial class SqlServerAzureADAdministrator : Resource
     /// <summary>
     /// Creates a new SqlServerAzureADAdministrator.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlServerAzureADAdministrator
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerAzureADAdministrator.</param>
-    public SqlServerAzureADAdministrator(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/administrators", resourceVersion ?? "2021-11-01")
+    public SqlServerAzureADAdministrator(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/administrators", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
         _administratorType = BicepValue<SqlAdministratorType>.DefineProperty(this, "AdministratorType", ["properties", "administratorType"]);
@@ -125,7 +125,7 @@ public partial class SqlServerAzureADAdministrator : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerAzureADAdministrator.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlServerAzureADAdministrator
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -133,6 +133,6 @@ public partial class SqlServerAzureADAdministrator : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerAzureADAdministrator.</param>
     /// <returns>The existing SqlServerAzureADAdministrator resource.</returns>
-    public static SqlServerAzureADAdministrator FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerAzureADAdministrator FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

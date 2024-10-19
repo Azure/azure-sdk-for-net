@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// A class representing the CognitiveServicesPrivateEndpointConnection data
 /// model.             The Private Endpoint Connection resource.
 /// </summary>
-public partial class CognitiveServicesPrivateEndpointConnectionData : ProvisioningConstruct
+public partial class CognitiveServicesPrivateEndpointConnectionData : ProvisionableConstruct
 {
     /// <summary>
     /// The location of the private endpoint connection.

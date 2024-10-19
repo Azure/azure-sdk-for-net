@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB client encryption policy.
 /// </summary>
-public partial class CosmosDBClientEncryptionPolicy : ProvisioningConstruct
+public partial class CosmosDBClientEncryptionPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// Paths of the item that need encryption along with path-specific

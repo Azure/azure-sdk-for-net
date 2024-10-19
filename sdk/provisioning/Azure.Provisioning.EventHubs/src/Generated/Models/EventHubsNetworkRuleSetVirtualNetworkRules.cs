@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// The response from the List namespace operation.
 /// </summary>
-public partial class EventHubsNetworkRuleSetVirtualNetworkRules : ProvisioningConstruct
+public partial class EventHubsNetworkRuleSetVirtualNetworkRules : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets Id.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// ConnectionState information.
 /// </summary>
-public partial class EventGridPrivateEndpointConnectionState : ProvisioningConstruct
+public partial class EventGridPrivateEndpointConnectionState : ProvisionableConstruct
 {
     /// <summary>
     /// Status of the connection.

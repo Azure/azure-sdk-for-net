@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// ConnectionState information.
 /// </summary>
-public partial class EventHubsPrivateLinkServiceConnectionState : ProvisioningConstruct
+public partial class EventHubsPrivateLinkServiceConnectionState : ProvisionableConstruct
 {
     /// <summary>
     /// Status of the connection.

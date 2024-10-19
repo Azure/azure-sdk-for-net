@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Ldap authentication method properties. This feature is in preview.
 /// </summary>
-public partial class AuthenticationMethodLdapProperties : ProvisioningConstruct
+public partial class AuthenticationMethodLdapProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Hostname of the LDAP server.

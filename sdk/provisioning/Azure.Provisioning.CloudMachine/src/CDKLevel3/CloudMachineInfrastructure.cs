@@ -110,7 +110,7 @@ public class CloudMachineInfrastructure
             Name = "cm_servicebus_topic_private",
             Parent = _serviceBusNamespace,
             MaxMessageSizeInKilobytes = 256,
-            DefaultMessageTimeToLive = new StringLiteral("P14D"),
+            DefaultMessageTimeToLive = new StringLiteralExpression("P14D"),
             RequiresDuplicateDetection = false,
             EnableBatchedOperations = true,
             SupportOrdering = true,
@@ -121,9 +121,9 @@ public class CloudMachineInfrastructure
             Name = SB_PRIVATE_SUB,
             Parent = _serviceBusTopic_private,
             IsClientAffine = false,
-            LockDuration = new StringLiteral("PT30S"),
+            LockDuration = new StringLiteralExpression("PT30S"),
             RequiresSession = false,
-            DefaultMessageTimeToLive = new StringLiteral("P14D"),
+            DefaultMessageTimeToLive = new StringLiteralExpression("P14D"),
             DeadLetteringOnFilterEvaluationExceptions = true,
             DeadLetteringOnMessageExpiration = true,
             MaxDeliveryCount = 10,
@@ -135,7 +135,7 @@ public class CloudMachineInfrastructure
             Name = "cm_servicebus_default_topic",
             Parent = _serviceBusNamespace,
             MaxMessageSizeInKilobytes = 256,
-            DefaultMessageTimeToLive = new StringLiteral("P14D"),
+            DefaultMessageTimeToLive = new StringLiteralExpression("P14D"),
             RequiresDuplicateDetection = false,
             EnableBatchedOperations = true,
             SupportOrdering = true,
@@ -146,9 +146,9 @@ public class CloudMachineInfrastructure
             Name = "cm_servicebus_subscription_default",
             Parent = _serviceBusTopic_default,
             IsClientAffine = false,
-            LockDuration = new StringLiteral("PT30S"),
+            LockDuration = new StringLiteralExpression("PT30S"),
             RequiresSession = false,
-            DefaultMessageTimeToLive = new StringLiteral("P14D"),
+            DefaultMessageTimeToLive = new StringLiteralExpression("P14D"),
             DeadLetteringOnFilterEvaluationExceptions = true,
             DeadLetteringOnMessageExpiration = true,
             MaxDeliveryCount = 10,
@@ -197,7 +197,7 @@ public class CloudMachineInfrastructure
         };
     }
 
-    public void AddResource(NamedProvisioningConstruct resource)
+    public void AddResource(NamedProvisionableConstruct resource)
     {
         _resources.Add(resource);
     }
@@ -206,7 +206,7 @@ public class CloudMachineInfrastructure
         resource.AddTo(this);
     }
 
-    public ProvisioningPlan Build(ProvisioningContext? context = null)
+    public ProvisioningPlan Build(ProvisioningBuildOptions? context = null)
     {
         // Always add a default location parameter.
         // azd assumes there will be a location parameter for every module.
@@ -239,7 +239,7 @@ public class CloudMachineInfrastructure
         var role = ServiceBusBuiltInRole.AzureServiceBusDataSender;
         RoleAssignment roleAssignment = new RoleAssignment("cm_servicebus_role");
         roleAssignment.Name = BicepFunction.CreateGuid(_serviceBusNamespace.Id, Identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()));
-        roleAssignment.Scope = new IdentifierExpression(_serviceBusNamespace.IdentifierName);
+        roleAssignment.Scope = new IdentifierExpression(_serviceBusNamespace.BicepIdentifier);
         roleAssignment.PrincipalType = RoleManagementPrincipalType.ServicePrincipal;
         roleAssignment.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString());
         roleAssignment.PrincipalId = Identity.PrincipalId;

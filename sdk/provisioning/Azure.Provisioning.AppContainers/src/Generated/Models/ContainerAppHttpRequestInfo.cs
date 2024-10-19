@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// HTTPGet specifies the http request to perform.
 /// </summary>
-public partial class ContainerAppHttpRequestInfo : ProvisioningConstruct
+public partial class ContainerAppHttpRequestInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Host name to connect to, defaults to the pod IP. You probably want to

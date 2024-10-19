@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB MongoDB database resource object.
 /// </summary>
-public partial class MongoDBDatabaseResourceInfo : ProvisioningConstruct
+public partial class MongoDBDatabaseResourceInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the Cosmos DB MongoDB database.

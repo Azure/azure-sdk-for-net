@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Custom Domain of a Container App.
 /// </summary>
-public partial class ContainerAppCustomDomain : ProvisioningConstruct
+public partial class ContainerAppCustomDomain : ProvisionableConstruct
 {
     /// <summary>
     /// Hostname.

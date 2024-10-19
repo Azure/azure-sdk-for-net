@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Workload profile to scope container app execution.
 /// </summary>
-public partial class ContainerAppWorkloadProfile : ProvisioningConstruct
+public partial class ContainerAppWorkloadProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Workload profile type for the workloads to run on.

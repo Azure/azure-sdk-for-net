@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Storage;
 /// Queue and File services. It is only available when geo-redundant
 /// replication is enabled for the storage account.
 /// </summary>
-public partial class GeoReplicationStatistics : ProvisioningConstruct
+public partial class GeoReplicationStatistics : ProvisionableConstruct
 {
     /// <summary>
     /// The status of the secondary location. Possible values are: - Live:

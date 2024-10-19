@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// Properties specific to client affine subscriptions.
 /// </summary>
-public partial class ServiceBusClientAffineProperties : ProvisioningConstruct
+public partial class ServiceBusClientAffineProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates the Client ID of the application that created the

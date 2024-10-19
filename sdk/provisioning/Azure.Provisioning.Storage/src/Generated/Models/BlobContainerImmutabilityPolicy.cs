@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// The properties of an ImmutabilityPolicy of a blob container.
 /// </summary>
-public partial class BlobContainerImmutabilityPolicy : ProvisioningConstruct
+public partial class BlobContainerImmutabilityPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// ImmutabilityPolicy Etag.

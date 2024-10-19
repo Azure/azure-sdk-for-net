@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// Namespace/ServiceBus Connection String.
 /// </summary>
-public partial class ServiceBusAccessKeys : ProvisioningConstruct
+public partial class ServiceBusAccessKeys : ProvisionableConstruct
 {
     /// <summary>
     /// Primary connection string of the created namespace authorization rule.
@@ -82,7 +82,7 @@ public partial class ServiceBusAccessKeys : ProvisioningConstruct
     /// </param>
     /// <returns>A ServiceBusAccessKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static ServiceBusAccessKeys FromExpression(Expression expression)
+    public static ServiceBusAccessKeys FromExpression(BicepExpression expression)
     {
         ServiceBusAccessKeys resource = new();
         resource.OverrideWithExpression(expression);

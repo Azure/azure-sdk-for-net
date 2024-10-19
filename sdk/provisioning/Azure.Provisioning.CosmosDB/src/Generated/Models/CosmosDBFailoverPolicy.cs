@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The failover policy for a given region of a database account.
 /// </summary>
-public partial class CosmosDBFailoverPolicy : ProvisioningConstruct
+public partial class CosmosDBFailoverPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// The unique identifier of the region in which the database account

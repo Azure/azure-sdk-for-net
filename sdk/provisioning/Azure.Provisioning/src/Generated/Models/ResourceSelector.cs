@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// The resource selector to filter policies by resource properties.
 /// </summary>
-public partial class ResourceSelector : ProvisioningConstruct
+public partial class ResourceSelector : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the resource selector.

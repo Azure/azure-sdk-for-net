@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The CassandraCertificate.
 /// </summary>
-public partial class CassandraCertificate : ProvisioningConstruct
+public partial class CassandraCertificate : ProvisionableConstruct
 {
     /// <summary>
     /// PEM formatted public key.

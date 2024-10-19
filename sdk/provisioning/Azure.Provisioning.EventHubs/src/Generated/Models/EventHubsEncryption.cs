@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// Properties to configure Encryption.
 /// </summary>
-public partial class EventHubsEncryption : ProvisioningConstruct
+public partial class EventHubsEncryption : ProvisionableConstruct
 {
     /// <summary>
     /// Properties of KeyVault.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Resource extended location.
 /// </summary>
-public partial class ExtendedAzureLocation : ProvisioningConstruct
+public partial class ExtendedAzureLocation : ProvisionableConstruct
 {
     /// <summary>
     /// The extended location type.

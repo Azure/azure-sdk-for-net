@@ -12,7 +12,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// Properties of a private endpoint connection.
 /// </summary>
-public partial class PostgreSqlServerPrivateEndpointConnectionProperties : ProvisioningConstruct
+public partial class PostgreSqlServerPrivateEndpointConnectionProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets Id.

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Configuration to bind a ContainerApp to a dev ContainerApp Service.
 /// </summary>
-public partial class ContainerAppServiceBind : ProvisioningConstruct
+public partial class ContainerAppServiceBind : ProvisionableConstruct
 {
     /// <summary>
     /// Resource id of the target service.

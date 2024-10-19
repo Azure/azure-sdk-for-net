@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// Properties for a registry image.
 /// </summary>
-public partial class ContainerRegistryImageDescriptor : ProvisioningConstruct
+public partial class ContainerRegistryImageDescriptor : ProvisionableConstruct
 {
     /// <summary>
     /// The registry login server.

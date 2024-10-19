@@ -19,7 +19,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsWorkspace.
 /// </summary>
-public partial class OperationalInsightsWorkspace : Resource
+public partial class OperationalInsightsWorkspace : ProvisionableResource
 {
     /// <summary>
     /// The name of the workspace.
@@ -150,15 +150,15 @@ public partial class OperationalInsightsWorkspace : Resource
     /// <summary>
     /// Creates a new OperationalInsightsWorkspace.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the OperationalInsightsWorkspace
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsWorkspace.</param>
-    public OperationalInsightsWorkspace(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.OperationalInsights/workspaces", resourceVersion ?? "2023-09-01")
+    public OperationalInsightsWorkspace(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.OperationalInsights/workspaces", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -221,7 +221,7 @@ public partial class OperationalInsightsWorkspace : Resource
     /// <summary>
     /// Creates a reference to an existing OperationalInsightsWorkspace.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the OperationalInsightsWorkspace
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -229,8 +229,8 @@ public partial class OperationalInsightsWorkspace : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsWorkspace.</param>
     /// <returns>The existing OperationalInsightsWorkspace resource.</returns>
-    public static OperationalInsightsWorkspace FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static OperationalInsightsWorkspace FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this OperationalInsightsWorkspace
@@ -247,5 +247,5 @@ public partial class OperationalInsightsWorkspace : Resource
     /// <returns>The keys for this OperationalInsightsWorkspace resource.</returns>
     public OperationalInsightsWorkspaceSharedKeys GetKeys() =>
         OperationalInsightsWorkspaceSharedKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(IdentifierName), "listKeys")));
+            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
 }

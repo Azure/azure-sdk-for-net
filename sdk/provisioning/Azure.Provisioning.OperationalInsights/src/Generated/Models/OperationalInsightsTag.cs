@@ -11,7 +11,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// A tag of a saved search.
 /// </summary>
-public partial class OperationalInsightsTag : ProvisioningConstruct
+public partial class OperationalInsightsTag : ProvisionableConstruct
 {
     /// <summary>
     /// The tag name.

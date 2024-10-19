@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the Twitter provider.
 /// </summary>
-public partial class ContainerAppTwitterConfiguration : ProvisioningConstruct
+public partial class ContainerAppTwitterConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be

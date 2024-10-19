@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// The security domain properties of the managed hsm.
 /// </summary>
-public partial class ManagedHSMSecurityDomainProperties : ProvisioningConstruct
+public partial class ManagedHSMSecurityDomainProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Activation Status.

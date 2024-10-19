@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Sql;
 /// A job target, for example a specific database or a container of databases
 /// that is evaluated during job execution.
 /// </summary>
-public partial class JobTarget : ProvisioningConstruct
+public partial class JobTarget : ProvisionableConstruct
 {
     /// <summary>
     /// Whether the target is included or excluded from the group.

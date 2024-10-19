@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The properties of a run argument.
 /// </summary>
-public partial class ContainerRegistryRunArgument : ProvisioningConstruct
+public partial class ContainerRegistryRunArgument : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the argument.

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// TemplateSpecVersion.
 /// </summary>
-public partial class TemplateSpecVersion : Resource
+public partial class TemplateSpecVersion : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -127,15 +127,15 @@ public partial class TemplateSpecVersion : Resource
     /// <summary>
     /// Creates a new TemplateSpecVersion.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the TemplateSpecVersion resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the TemplateSpecVersion.</param>
-    public TemplateSpecVersion(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Resources/templateSpecs/versions", resourceVersion ?? "2022-02-01")
+    public TemplateSpecVersion(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Resources/templateSpecs/versions", resourceVersion ?? "2022-02-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -169,7 +169,7 @@ public partial class TemplateSpecVersion : Resource
     /// <summary>
     /// Creates a reference to an existing TemplateSpecVersion.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the TemplateSpecVersion resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -177,6 +177,6 @@ public partial class TemplateSpecVersion : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the TemplateSpecVersion.</param>
     /// <returns>The existing TemplateSpecVersion resource.</returns>
-    public static TemplateSpecVersion FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static TemplateSpecVersion FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

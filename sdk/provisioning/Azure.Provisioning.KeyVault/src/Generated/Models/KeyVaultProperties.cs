@@ -14,7 +14,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// Properties of the vault.
 /// </summary>
-public partial class KeyVaultProperties : ProvisioningConstruct
+public partial class KeyVaultProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The Azure Active Directory tenant ID that should be used for

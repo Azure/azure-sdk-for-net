@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Description of the App Service plan scale options.
 /// </summary>
-public partial class AppServiceSkuCapacity : ProvisioningConstruct
+public partial class AppServiceSkuCapacity : ProvisionableConstruct
 {
     /// <summary>
     /// Minimum number of workers for this App Service plan SKU.

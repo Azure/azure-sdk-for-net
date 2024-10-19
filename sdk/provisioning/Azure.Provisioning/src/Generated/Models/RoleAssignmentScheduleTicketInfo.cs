@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// Ticket Info of the role assignment.
 /// </summary>
-public partial class RoleAssignmentScheduleTicketInfo : ProvisioningConstruct
+public partial class RoleAssignmentScheduleTicketInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Ticket number for the role assignment.

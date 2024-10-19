@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The complex type of the extended location.
 /// </summary>
-public partial class ContainerAppExtendedLocation : ProvisioningConstruct
+public partial class ContainerAppExtendedLocation : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the extended location.

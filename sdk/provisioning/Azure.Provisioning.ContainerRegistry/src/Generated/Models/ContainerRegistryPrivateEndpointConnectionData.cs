@@ -15,7 +15,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// model.             An object that represents a private endpoint connection
 /// for a container registry.
 /// </summary>
-public partial class ContainerRegistryPrivateEndpointConnectionData : ProvisioningConstruct
+public partial class ContainerRegistryPrivateEndpointConnectionData : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets Id.

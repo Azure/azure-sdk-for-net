@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSiteLinkedBackend.
 /// </summary>
-public partial class StaticSiteLinkedBackend : Resource
+public partial class StaticSiteLinkedBackend : ProvisionableResource
 {
     /// <summary>
     /// Name of the backend to link to the static site.
@@ -74,15 +74,15 @@ public partial class StaticSiteLinkedBackend : Resource
     /// <summary>
     /// Creates a new StaticSiteLinkedBackend.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StaticSiteLinkedBackend resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteLinkedBackend.</param>
-    public StaticSiteLinkedBackend(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/staticSites/linkedBackends", resourceVersion ?? "2024-04-01")
+    public StaticSiteLinkedBackend(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/staticSites/linkedBackends", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _backendResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "BackendResourceId", ["properties", "backendResourceId"]);
@@ -174,7 +174,7 @@ public partial class StaticSiteLinkedBackend : Resource
     /// <summary>
     /// Creates a reference to an existing StaticSiteLinkedBackend.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StaticSiteLinkedBackend resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -182,6 +182,6 @@ public partial class StaticSiteLinkedBackend : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteLinkedBackend.</param>
     /// <returns>The existing StaticSiteLinkedBackend resource.</returns>
-    public static StaticSiteLinkedBackend FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static StaticSiteLinkedBackend FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

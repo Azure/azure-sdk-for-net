@@ -11,7 +11,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// The Capacity Reservation properties.
 /// </summary>
-public partial class OperationalInsightsCapacityReservationProperties : ProvisioningConstruct
+public partial class OperationalInsightsCapacityReservationProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The last time Sku was updated.

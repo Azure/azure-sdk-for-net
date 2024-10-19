@@ -6,7 +6,7 @@ using Azure.Provisioning.Expressions;
 
 namespace Azure.Provisioning.Primitives;
 
-public class ModuleImport : NamedProvisioningConstruct
+public class ModuleImport : NamedProvisionableConstruct
 {
     private readonly BicepValue<string> _name;
     public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
@@ -19,7 +19,7 @@ public class ModuleImport : NamedProvisioningConstruct
 
     public BicepDictionary<object> Parameters { get; }
 
-    public ModuleImport(string identifierName, BicepValue<string> path) : base(identifierName)
+    public ModuleImport(string bicepIdentifier, BicepValue<string> path) : base(bicepIdentifier)
     {
         _name = BicepValue<string>.DefineProperty(this, nameof(Name), ["name"], isRequired: true);
         _path = BicepValue<string>.DefineProperty(this, nameof(Path), ["path"], defaultValue: path);
@@ -27,19 +27,19 @@ public class ModuleImport : NamedProvisioningConstruct
         Parameters = BicepDictionary<object>.DefineProperty(this, nameof(Parameters), ["params"]);
     }
 
-    protected internal override void Validate(ProvisioningContext? context = null)
+    protected internal override void Validate(ProvisioningBuildOptions? options = null)
     {
-        base.Validate(context);
+        base.Validate(options);
         ValidateProperties();
     }
 
-    protected internal override IEnumerable<Statement> Compile()
+    protected internal override IEnumerable<BicepStatement> Compile()
     {
-        List<Statement> statements = [];
-        Dictionary<string, Expression> properties = new() { { "name", _name.Compile() } };
+        List<BicepStatement> statements = [];
+        Dictionary<string, BicepExpression> properties = new() { { "name", _name.Compile() } };
         if (_scope.Kind != BicepValueKind.Unset) { properties.Add("scope", _scope.Compile()); }
         if (Parameters.Count > 0) { properties.Add("params", Parameters.Compile()); }
-        ModuleStatement module = BicepSyntax.Declare.Module(IdentifierName, _path.Compile(), BicepSyntax.Object(properties));
+        ModuleStatement module = BicepSyntax.Declare.Module(BicepIdentifier, _path.Compile(), BicepSyntax.Object(properties));
         statements.Add(module);
         return statements;
     }

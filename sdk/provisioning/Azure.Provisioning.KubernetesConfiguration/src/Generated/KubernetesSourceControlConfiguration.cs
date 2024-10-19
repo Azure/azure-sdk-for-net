@@ -16,7 +16,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// KubernetesSourceControlConfiguration.
 /// </summary>
-public partial class KubernetesSourceControlConfiguration : Resource
+public partial class KubernetesSourceControlConfiguration : ProvisionableResource
 {
     /// <summary>
     /// Name of the Source Control Configuration.
@@ -121,15 +121,15 @@ public partial class KubernetesSourceControlConfiguration : Resource
     /// <summary>
     /// Creates a new KubernetesSourceControlConfiguration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// KubernetesSourceControlConfiguration resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the KubernetesSourceControlConfiguration.</param>
-    public KubernetesSourceControlConfiguration(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.KubernetesConfiguration/sourceControlConfigurations", resourceVersion ?? "2023-05-01")
+    public KubernetesSourceControlConfiguration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/sourceControlConfigurations", resourceVersion ?? "2023-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _configurationProtectedSettings = BicepDictionary<string>.DefineProperty(this, "ConfigurationProtectedSettings", ["properties", "configurationProtectedSettings"]);
@@ -183,7 +183,7 @@ public partial class KubernetesSourceControlConfiguration : Resource
     /// <summary>
     /// Creates a reference to an existing KubernetesSourceControlConfiguration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// KubernetesSourceControlConfiguration resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -191,6 +191,6 @@ public partial class KubernetesSourceControlConfiguration : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the KubernetesSourceControlConfiguration.</param>
     /// <returns>The existing KubernetesSourceControlConfiguration resource.</returns>
-    public static KubernetesSourceControlConfiguration FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static KubernetesSourceControlConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

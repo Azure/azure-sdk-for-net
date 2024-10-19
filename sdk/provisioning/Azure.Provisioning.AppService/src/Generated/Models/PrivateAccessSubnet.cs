@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// Description of a Virtual Network subnet that is useable for private site
 /// access.
 /// </summary>
-public partial class PrivateAccessSubnet : ProvisioningConstruct
+public partial class PrivateAccessSubnet : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the subnet.

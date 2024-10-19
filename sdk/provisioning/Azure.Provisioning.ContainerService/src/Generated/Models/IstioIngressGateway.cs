@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ContainerService;
 /// ingress gateway named `aks-istio-ingressgateway-external` and one internal
 /// ingress gateway named `aks-istio-ingressgateway-internal`.
 /// </summary>
-public partial class IstioIngressGateway : ProvisioningConstruct
+public partial class IstioIngressGateway : ProvisionableConstruct
 {
     /// <summary>
     /// Mode of an ingress gateway.

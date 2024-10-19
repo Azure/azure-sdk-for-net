@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// SKU of the namespace.
 /// </summary>
-public partial class ServiceBusSku : ProvisioningConstruct
+public partial class ServiceBusSku : ProvisionableConstruct
 {
     /// <summary>
     /// Name of this SKU.

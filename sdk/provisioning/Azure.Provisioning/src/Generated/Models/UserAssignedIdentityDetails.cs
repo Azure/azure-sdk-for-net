@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// User assigned identity properties.
 /// </summary>
-public partial class UserAssignedIdentityDetails : ProvisioningConstruct
+public partial class UserAssignedIdentityDetails : ProvisionableConstruct
 {
     /// <summary>
     /// The principal ID of the assigned identity.

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Redis;
 /// maxmemory-policy,notify-keyspace-events, aof-backup-enabled,
 /// aof-storage-connection-string-0, aof-storage-connection-string-1 etc.
 /// </summary>
-public partial class RedisCommonConfiguration : ProvisioningConstruct
+public partial class RedisCommonConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Specifies whether the rdb backup is enabled.

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// An object that defines the blob inventory rule.
 /// </summary>
-public partial class BlobInventoryPolicyDefinition : ProvisioningConstruct
+public partial class BlobInventoryPolicyDefinition : ProvisionableConstruct
 {
     /// <summary>
     /// An object that defines the filter set.

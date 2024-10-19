@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Properties of the corresponding partner topic of a Channel.
 /// </summary>
-public partial class PartnerTopicInfo : ProvisioningConstruct
+public partial class PartnerTopicInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Azure subscription ID of the subscriber. The partner topic associated

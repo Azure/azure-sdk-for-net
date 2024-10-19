@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// SkuCapability indicates the capability of a certain feature.
 /// </summary>
-public partial class CognitiveServicesSkuCapability : ProvisioningConstruct
+public partial class CognitiveServicesSkuCapability : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the SkuCapability.

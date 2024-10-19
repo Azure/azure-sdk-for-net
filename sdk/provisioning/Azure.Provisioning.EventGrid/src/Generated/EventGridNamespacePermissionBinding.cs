@@ -15,7 +15,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// EventGridNamespacePermissionBinding.
 /// </summary>
-public partial class EventGridNamespacePermissionBinding : Resource
+public partial class EventGridNamespacePermissionBinding : ProvisionableResource
 {
     /// <summary>
     /// The permission binding name.
@@ -78,15 +78,15 @@ public partial class EventGridNamespacePermissionBinding : Resource
     /// <summary>
     /// Creates a new EventGridNamespacePermissionBinding.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// EventGridNamespacePermissionBinding resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespacePermissionBinding.</param>
-    public EventGridNamespacePermissionBinding(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventGrid/namespaces/permissionBindings", resourceVersion ?? "2024-06-01-preview")
+    public EventGridNamespacePermissionBinding(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/permissionBindings", resourceVersion ?? "2024-06-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _clientGroupName = BicepValue<string>.DefineProperty(this, "ClientGroupName", ["properties", "clientGroupName"]);
@@ -113,7 +113,7 @@ public partial class EventGridNamespacePermissionBinding : Resource
     /// <summary>
     /// Creates a reference to an existing EventGridNamespacePermissionBinding.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// EventGridNamespacePermissionBinding resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -121,6 +121,6 @@ public partial class EventGridNamespacePermissionBinding : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespacePermissionBinding.</param>
     /// <returns>The existing EventGridNamespacePermissionBinding resource.</returns>
-    public static EventGridNamespacePermissionBinding FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static EventGridNamespacePermissionBinding FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
