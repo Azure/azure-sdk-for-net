@@ -490,8 +490,7 @@ namespace Azure.Storage.DataMovement
             await _checkpointer.SetJobPartStatusAsync(
                 transferId: _dataTransfer.Id,
                 partNumber: PartNumber,
-                status: JobPartStatus,
-                cancellationToken: _cancellationToken).ConfigureAwait(false);
+                status: JobPartStatus).ConfigureAwait(false);
         }
 
         internal static long ParseRangeTotalLength(string range)
