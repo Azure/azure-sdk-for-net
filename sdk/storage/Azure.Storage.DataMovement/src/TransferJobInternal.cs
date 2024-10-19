@@ -281,7 +281,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns>An IEnumerable that contains the job parts</returns>
         public virtual async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync(
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+                    [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             _cancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationToken).Token;
             await OnJobStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
@@ -605,8 +605,7 @@ namespace Azure.Storage.DataMovement
         {
             await _checkpointer.SetJobTransferStatusAsync(
                 transferId: _dataTransfer.Id,
-                status: _dataTransfer.TransferStatus,
-                cancellationToken: _cancellationToken).ConfigureAwait(false);
+                status: _dataTransfer.TransferStatus).ConfigureAwait(false);
         }
 
         /// <summary>
