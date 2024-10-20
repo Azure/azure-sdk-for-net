@@ -14,7 +14,6 @@ using Moq;
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests;
 
 [TestFixture]
-[Parallelizable(ParallelScope.Self)]
 public class EntraLifecycleTests
 {
     private static string GetToken(Dictionary<string, object> claims, DateTime? expires = null)
