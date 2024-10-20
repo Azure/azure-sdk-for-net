@@ -91,6 +91,8 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.PipelineMessage CreateMessage() { throw null; }
         public void Send(System.ClientModel.Primitives.PipelineMessage message) { }
         public System.Threading.Tasks.ValueTask SendAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public bool TryProcess(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public System.Threading.Tasks.ValueTask<bool> TryProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.RequestOptions options) { throw null; }
     }
     public partial class ClientPipelineOptions
     {

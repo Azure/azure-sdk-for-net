@@ -220,6 +220,41 @@ public sealed partial class ClientPipeline
         await policies[0].ProcessAsync(message, policies, 0).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Provides a standard implementation of a client protocol method.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    public async ValueTask<bool> TryProcessAsync(PipelineMessage message, RequestOptions options)
+    {
+        message.Apply(options);
+
+        await SendAsync(message).ConfigureAwait(false);
+
+        // return false if client should throw an exception
+        return !message.Response!.IsError ||
+               (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) == ClientErrorBehaviors.NoThrow;
+    }
+
+    /// <summary>
+    /// Provides a standard implementation of a client protocol method.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    /// <exception cref="ClientResultException"></exception>
+    public bool TryProcess(PipelineMessage message, RequestOptions options)
+    {
+        message.Apply(options);
+
+        Send(message);
+
+        // return false if client should throw an exception
+        return !message.Response!.IsError ||
+               (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) == ClientErrorBehaviors.NoThrow;
+    }
+
     private IReadOnlyList<PipelinePolicy> GetProcessor(PipelineMessage message)
     {
         if (message.UseCustomRequestPipeline)
