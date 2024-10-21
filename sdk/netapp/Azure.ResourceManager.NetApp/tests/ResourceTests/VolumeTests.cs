@@ -569,6 +569,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Update the remote volume with dataProtection for Migration (external replication)
             NetAppReplicationObject replication = new()
             {
+                EndpointType = NetAppEndpointType.Destination,
                 RemotePath = new RemotePath() { ExternalHostName = "hostname1", ServerName = "server1", VolumeName = "volume1" }
             };
             NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection() { Replication = replication };
