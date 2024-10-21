@@ -100,7 +100,7 @@
   </ItemGroup>
 
   <!-- Remove packages built into the .NET 6+ runtime -->
-  <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible($(TargetFramework), 'net6.0'))">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0' OR '$(TargetFramework)' == 'net8.0'">
     <PackageReference Remove="System.Buffers" />
     <PackageReference Remove="System.Net.Http" />
     <PackageReference Remove="System.Threading.Channels" />

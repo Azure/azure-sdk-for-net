@@ -8,11 +8,17 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net472;net6.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net462;net472;net6.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
-    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net472'">net461</ApiCompatBaselineTargetFramework>
+    <!-- Remove this line when Azure.Core is released for net462  -->
+    <RunApiCompat Condition="'$(TargetFramework)' == 'net462'">false</RunApiCompat>
+    <!-- Remove this line when Azure.Core is released for net8.0  -->
+    <RunApiCompat Condition="'$(TargetFramework)' == 'net8.0'">false</RunApiCompat>
+    <!-- Remove this line when Azure.Core is released for net462  -->
+    <RunApiCompat Condition="'$(TargetFramework)' == 'net472'">false</RunApiCompat>
+    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net472'">net462</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
