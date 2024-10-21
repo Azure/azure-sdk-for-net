@@ -158,13 +158,13 @@ namespace Azure.Storage.DataMovement
         /// </param>
         /// <returns></returns>
         public virtual async IAsyncEnumerable<DataTransfer> GetTransfersAsync(
-            [EnumeratorCancellation] CancellationToken cancellationToken = default,
-            params DataTransferStatus[] filterByStatus)
+            ICollection<DataTransferStatus> filterByStatus = default,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             cancellationToken = LinkCancellation(cancellationToken);
             await SetDataTransfers(cancellationToken).ConfigureAwait(false);
             IEnumerable<DataTransfer> totalTransfers;
-            if (filterByStatus == default || filterByStatus.Length == 0)
+            if (filterByStatus == default || filterByStatus.Count == 0)
             {
                 totalTransfers = _dataTransfers.Select(d => d.Value);
             }
