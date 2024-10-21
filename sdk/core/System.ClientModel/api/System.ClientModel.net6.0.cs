@@ -312,15 +312,26 @@ namespace System.ClientModel.Primitives.TwoWayPipeline
     {
         public ServicePipelineMessage() { }
     }
-    public partial class TwoWayPipeline
+    public sealed partial class TwoWayPipeline
     {
-        public TwoWayPipeline() { }
+        internal TwoWayPipeline() { }
+        public static System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipeline Create(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineOptions options) { throw null; }
+        public static System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipeline Create(System.ReadOnlySpan<System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelinePolicy> policies) { throw null; }
+        public System.ClientModel.Primitives.TwoWayPipeline.ClientPipelineMessage CreateMessage() { throw null; }
+        public System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.TwoWayPipeline.ServicePipelineMessage> GetResponseStream() { throw null; }
+        public System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.TwoWayPipeline.ServicePipelineMessage> GetResponseStreamAsync() { throw null; }
+        public void Send(System.ClientModel.Primitives.TwoWayPipeline.ClientPipelineMessage message) { }
+        public System.Threading.Tasks.Task SendAsync(System.ClientModel.Primitives.TwoWayPipeline.ClientPipelineMessage message) { throw null; }
+    }
+    public partial class TwoWayPipelineOptions
+    {
+        public TwoWayPipelineOptions() { }
     }
     public partial class TwoWayPipelinePolicy
     {
         public TwoWayPipelinePolicy() { }
     }
-    public partial class TwoWayPipelineTransport
+    public partial class TwoWayPipelineTransport : System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelinePolicy
     {
         public TwoWayPipelineTransport() { }
     }

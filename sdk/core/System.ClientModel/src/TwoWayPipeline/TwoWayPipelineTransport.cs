@@ -8,7 +8,7 @@ using System.Text;
 namespace System.ClientModel.Primitives.TwoWayPipeline;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class TwoWayPipelineTransport
+public class TwoWayPipelineTransport : TwoWayPipelinePolicy
 {
 }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
