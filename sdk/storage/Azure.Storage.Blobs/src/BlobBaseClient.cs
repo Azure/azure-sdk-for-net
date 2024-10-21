@@ -1572,7 +1572,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientConfiguration.Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
-                    stream = stream.WithNoDispose().WithProgress(progressHandler);
+                    stream = stream.WithProgress(progressHandler);
 
                     /* Decryption handled by caller, so safe to check checksum now.
                      * Buffer response stream and ensure it matches the transactional checksum if any.
