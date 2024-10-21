@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static bool operator ==(DeferUpgradeSetting left, DeferUpgradeSetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeferUpgradeSetting"/> values are not the same. </summary>
         public static bool operator !=(DeferUpgradeSetting left, DeferUpgradeSetting right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeferUpgradeSetting"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeferUpgradeSetting"/>. </summary>
         public static implicit operator DeferUpgradeSetting(string value) => new DeferUpgradeSetting(value);
 
         /// <inheritdoc />

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// DistributedAvailabilityGroup.
 /// </summary>
-public partial class DistributedAvailabilityGroup : Resource
+public partial class DistributedAvailabilityGroup : ProvisionableResource
 {
     /// <summary>
     /// The distributed availability group name.
@@ -105,11 +105,15 @@ public partial class DistributedAvailabilityGroup : Resource
     /// <summary>
     /// Creates a new DistributedAvailabilityGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the DistributedAvailabilityGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the DistributedAvailabilityGroup
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the DistributedAvailabilityGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public DistributedAvailabilityGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/distributedAvailabilityGroups", resourceVersion, context)
+    public DistributedAvailabilityGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/distributedAvailabilityGroups", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _primaryAvailabilityGroupName = BicepValue<string>.DefineProperty(this, "PrimaryAvailabilityGroupName", ["properties", "primaryAvailabilityGroupName"]);
@@ -128,11 +132,32 @@ public partial class DistributedAvailabilityGroup : Resource
     }
 
     /// <summary>
+    /// Supported DistributedAvailabilityGroup resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing DistributedAvailabilityGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the DistributedAvailabilityGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the DistributedAvailabilityGroup
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the DistributedAvailabilityGroup.</param>
     /// <returns>The existing DistributedAvailabilityGroup resource.</returns>
-    public static DistributedAvailabilityGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static DistributedAvailabilityGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

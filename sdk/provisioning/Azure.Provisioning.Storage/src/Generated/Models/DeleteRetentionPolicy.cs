@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// The service properties for soft delete.
 /// </summary>
-public partial class DeleteRetentionPolicy : ProvisioningConstruct
+public partial class DeleteRetentionPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates whether DeleteRetentionPolicy is enabled.

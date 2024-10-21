@@ -18,7 +18,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubsNamespaceAuthorizationRule.
 /// </summary>
-public partial class EventHubsNamespaceAuthorizationRule : Resource
+public partial class EventHubsNamespaceAuthorizationRule : ProvisionableResource
 {
     /// <summary>
     /// The authorization rule name.
@@ -59,11 +59,15 @@ public partial class EventHubsNamespaceAuthorizationRule : Resource
     /// <summary>
     /// Creates a new EventHubsNamespaceAuthorizationRule.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubsNamespaceAuthorizationRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// EventHubsNamespaceAuthorizationRule resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubsNamespaceAuthorizationRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventHubsNamespaceAuthorizationRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/authorizationRules", resourceVersion, context)
+    public EventHubsNamespaceAuthorizationRule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventHub/namespaces/authorizationRules", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _rights = BicepList<EventHubsAccessRight>.DefineProperty(this, "Rights", ["properties", "rights"]);
@@ -74,13 +78,44 @@ public partial class EventHubsNamespaceAuthorizationRule : Resource
     }
 
     /// <summary>
+    /// Supported EventHubsNamespaceAuthorizationRule resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2024-01-01.
+        /// </summary>
+        public static readonly string V2024_01_01 = "2024-01-01";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2017-04-01.
+        /// </summary>
+        public static readonly string V2017_04_01 = "2017-04-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing EventHubsNamespaceAuthorizationRule.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubsNamespaceAuthorizationRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// EventHubsNamespaceAuthorizationRule resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubsNamespaceAuthorizationRule.</param>
     /// <returns>The existing EventHubsNamespaceAuthorizationRule resource.</returns>
-    public static EventHubsNamespaceAuthorizationRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EventHubsNamespaceAuthorizationRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this
@@ -97,5 +132,5 @@ public partial class EventHubsNamespaceAuthorizationRule : Resource
     /// <returns>The keys for this EventHubsNamespaceAuthorizationRule resource.</returns>
     public EventHubsAccessKeys GetKeys() =>
         EventHubsAccessKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(ResourceName), "listKeys")));
+            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
 }

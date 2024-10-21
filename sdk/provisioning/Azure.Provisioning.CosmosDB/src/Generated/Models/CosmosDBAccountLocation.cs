@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// A region in which the Azure Cosmos DB database account is deployed.
 /// </summary>
-public partial class CosmosDBAccountLocation : ProvisioningConstruct
+public partial class CosmosDBAccountLocation : ProvisionableConstruct
 {
     /// <summary>
     /// The unique identifier of the region within the database account.

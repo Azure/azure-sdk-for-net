@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ManagementGroup.
 /// </summary>
-public partial class ManagementGroup : Resource
+public partial class ManagementGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the management group. For example,
@@ -67,11 +67,15 @@ public partial class ManagementGroup : Resource
     /// <summary>
     /// Creates a new ManagementGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagementGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagementGroup resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagementGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagementGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Management/managementGroups", resourceVersion, context)
+    public ManagementGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Management/managementGroups", resourceVersion ?? "2023-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"]);
         _details = BicepValue<CreateManagementGroupDetails>.DefineProperty(this, "Details", ["properties", "details"]);
@@ -83,13 +87,59 @@ public partial class ManagementGroup : Resource
     }
 
     /// <summary>
+    /// Supported ManagementGroup resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2023-04-01.
+        /// </summary>
+        public static readonly string V2023_04_01 = "2023-04-01";
+
+        /// <summary>
+        /// 2021-04-01.
+        /// </summary>
+        public static readonly string V2021_04_01 = "2021-04-01";
+
+        /// <summary>
+        /// 2020-10-01.
+        /// </summary>
+        public static readonly string V2020_10_01 = "2020-10-01";
+
+        /// <summary>
+        /// 2020-05-01.
+        /// </summary>
+        public static readonly string V2020_05_01 = "2020-05-01";
+
+        /// <summary>
+        /// 2020-02-01.
+        /// </summary>
+        public static readonly string V2020_02_01 = "2020-02-01";
+
+        /// <summary>
+        /// 2019-11-01.
+        /// </summary>
+        public static readonly string V2019_11_01 = "2019-11-01";
+
+        /// <summary>
+        /// 2018-03-01-beta.
+        /// </summary>
+        public static readonly string V2018_03_01_beta = "2018-03-01-beta";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing ManagementGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagementGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagementGroup resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagementGroup.</param>
     /// <returns>The existing ManagementGroup resource.</returns>
-    public static ManagementGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagementGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ManagementGroup resource.

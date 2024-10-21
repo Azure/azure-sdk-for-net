@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotNetworkConfig.
 /// </summary>
-public partial class SiteSlotNetworkConfig : Resource
+public partial class SiteSlotNetworkConfig : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -65,11 +65,15 @@ public partial class SiteSlotNetworkConfig : Resource
     /// <summary>
     /// Creates a new SiteSlotNetworkConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotNetworkConfig.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteSlotNetworkConfig resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotNetworkConfig.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteSlotNetworkConfig(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/networkConfig", resourceVersion ?? "2023-12-01", context)
+    public SiteSlotNetworkConfig(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/networkConfig", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _isSwiftSupported = BicepValue<bool>.DefineProperty(this, "IsSwiftSupported", ["properties", "swiftSupported"]);
@@ -85,6 +89,11 @@ public partial class SiteSlotNetworkConfig : Resource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
         /// <summary>
         /// 2023-12-01.
         /// </summary>
@@ -204,9 +213,14 @@ public partial class SiteSlotNetworkConfig : Resource
     /// <summary>
     /// Creates a reference to an existing SiteSlotNetworkConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotNetworkConfig.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteSlotNetworkConfig resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotNetworkConfig.</param>
     /// <returns>The existing SiteSlotNetworkConfig resource.</returns>
-    public static SiteSlotNetworkConfig FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SiteSlotNetworkConfig FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

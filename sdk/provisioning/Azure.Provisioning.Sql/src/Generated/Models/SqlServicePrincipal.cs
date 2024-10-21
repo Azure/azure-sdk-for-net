@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// The managed instance&apos;s service principal configuration for a resource.
 /// </summary>
-public partial class SqlServicePrincipal : ProvisioningConstruct
+public partial class SqlServicePrincipal : ProvisionableConstruct
 {
     /// <summary>
     /// The Azure Active Directory application object id.

@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServer.
 /// </summary>
-public partial class SqlServer : Resource
+public partial class SqlServer : ProvisionableResource
 {
     /// <summary>
     /// The name of the server.
@@ -176,11 +176,15 @@ public partial class SqlServer : Resource
     /// <summary>
     /// Creates a new SqlServer.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServer.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServer resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServer.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServer(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers", resourceVersion ?? "2021-11-01", context)
+    public SqlServer(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -236,11 +240,16 @@ public partial class SqlServer : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServer.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServer.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServer resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServer.</param>
     /// <returns>The existing SqlServer resource.</returns>
-    public static SqlServer FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServer FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this SqlServer resource.
@@ -251,34 +260,36 @@ public partial class SqlServer : Resource
         new(minLength: 1, maxLength: 63, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// SqlServer.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this SqlServer.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(SqlBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{ResourceName}_{identity.ResourceName}_{SqlBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(SqlBuiltInRole role, UserAssignedIdentity identity) =>
+        new($"{BicepIdentifier}_{identity.BicepIdentifier}_{SqlBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
         };
 
     /// <summary>
-    /// Assign a role to a principal that grants access to this SqlServer.
+    /// Creates a role assignment for a principal that grants access to this
+    /// SqlServer.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="bicepIdentifierSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(SqlBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{ResourceName}_{SqlBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(SqlBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? bicepIdentifierSuffix = default) =>
+        new($"{BicepIdentifier}_{SqlBuiltInRole.GetBuiltInRoleName(role)}{(bicepIdentifierSuffix is null ? "" : "_")}{bicepIdentifierSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

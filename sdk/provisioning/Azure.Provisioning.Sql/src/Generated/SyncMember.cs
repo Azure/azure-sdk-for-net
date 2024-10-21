@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SyncMember.
 /// </summary>
-public partial class SyncMember : Resource
+public partial class SyncMember : ProvisionableResource
 {
     /// <summary>
     /// The name of the sync member.
@@ -118,11 +118,15 @@ public partial class SyncMember : Resource
     /// <summary>
     /// Creates a new SyncMember.
     /// </summary>
-    /// <param name="resourceName">Name of the SyncMember.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SyncMember resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SyncMember.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SyncMember(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/syncGroups/syncMembers", resourceVersion ?? "2021-11-01", context)
+    public SyncMember(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/syncGroups/syncMembers", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _databaseName = BicepValue<string>.DefineProperty(this, "DatabaseName", ["properties", "databaseName"]);
@@ -161,9 +165,14 @@ public partial class SyncMember : Resource
     /// <summary>
     /// Creates a reference to an existing SyncMember.
     /// </summary>
-    /// <param name="resourceName">Name of the SyncMember.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SyncMember resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SyncMember.</param>
     /// <returns>The existing SyncMember resource.</returns>
-    public static SyncMember FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SyncMember FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

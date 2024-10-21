@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// Properties to configure Encryption.
 /// </summary>
-public partial class ServiceBusEncryption : ProvisioningConstruct
+public partial class ServiceBusEncryption : ProvisionableConstruct
 {
     /// <summary>
     /// Properties of KeyVault.

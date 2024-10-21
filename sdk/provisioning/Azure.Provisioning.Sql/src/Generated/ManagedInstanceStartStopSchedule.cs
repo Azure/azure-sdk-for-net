@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceStartStopSchedule.
 /// </summary>
-public partial class ManagedInstanceStartStopSchedule : Resource
+public partial class ManagedInstanceStartStopSchedule : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -76,11 +76,15 @@ public partial class ManagedInstanceStartStopSchedule : Resource
     /// <summary>
     /// Creates a new ManagedInstanceStartStopSchedule.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceStartStopSchedule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedInstanceStartStopSchedule
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceStartStopSchedule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceStartStopSchedule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/startStopSchedules", resourceVersion ?? "2021-11-01", context)
+    public ManagedInstanceStartStopSchedule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/startStopSchedules", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
@@ -112,9 +116,14 @@ public partial class ManagedInstanceStartStopSchedule : Resource
     /// <summary>
     /// Creates a reference to an existing ManagedInstanceStartStopSchedule.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceStartStopSchedule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedInstanceStartStopSchedule
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceStartStopSchedule.</param>
     /// <returns>The existing ManagedInstanceStartStopSchedule resource.</returns>
-    public static ManagedInstanceStartStopSchedule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceStartStopSchedule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

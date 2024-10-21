@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Gallery.Models
         public static bool operator ==(GalleryExtendedLocationType left, GalleryExtendedLocationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GalleryExtendedLocationType"/> values are not the same. </summary>
         public static bool operator !=(GalleryExtendedLocationType left, GalleryExtendedLocationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GalleryExtendedLocationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GalleryExtendedLocationType"/>. </summary>
         public static implicit operator GalleryExtendedLocationType(string value) => new GalleryExtendedLocationType(value);
 
         /// <inheritdoc />

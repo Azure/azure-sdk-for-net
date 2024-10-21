@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static bool operator ==(VmNicSelection left, VmNicSelection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmNicSelection"/> values are not the same. </summary>
         public static bool operator !=(VmNicSelection left, VmNicSelection right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VmNicSelection"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VmNicSelection"/>. </summary>
         public static implicit operator VmNicSelection(string value) => new VmNicSelection(value);
 
         /// <inheritdoc />

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedTransparentDataEncryption.
 /// </summary>
-public partial class ManagedTransparentDataEncryption : Resource
+public partial class ManagedTransparentDataEncryption : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -50,11 +50,15 @@ public partial class ManagedTransparentDataEncryption : Resource
     /// <summary>
     /// Creates a new ManagedTransparentDataEncryption.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedTransparentDataEncryption.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedTransparentDataEncryption
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedTransparentDataEncryption.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedTransparentDataEncryption(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/databases/transparentDataEncryption", resourceVersion, context)
+    public ManagedTransparentDataEncryption(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/transparentDataEncryption", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<TransparentDataEncryptionState>.DefineProperty(this, "State", ["properties", "state"]);
@@ -64,11 +68,32 @@ public partial class ManagedTransparentDataEncryption : Resource
     }
 
     /// <summary>
+    /// Supported ManagedTransparentDataEncryption resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing ManagedTransparentDataEncryption.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedTransparentDataEncryption.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedTransparentDataEncryption
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedTransparentDataEncryption.</param>
     /// <returns>The existing ManagedTransparentDataEncryption resource.</returns>
-    public static ManagedTransparentDataEncryption FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedTransparentDataEncryption FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

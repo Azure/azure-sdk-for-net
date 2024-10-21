@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
@@ -17,13 +19,22 @@ public partial class BlobService
     /// Get the default value for the Name property.
     /// </summary>
     private partial BicepValue<string> GetNameDefaultValue() =>
-        new StringLiteral("default");
+        new StringLiteralExpression("default");
+
+    /// <inheritdoc/>
+    IEnumerable<ProvisioningOutput> IClientCreator.GetOutputs()
+    {
+        yield return new ProvisioningOutput($"{BicepIdentifier}_endpoint", typeof(string))
+        {
+            Value = Parent!.PrimaryEndpoints.Value!.BlobUri
+        };
+    }
 
     /// <summary>
     /// Create a <see cref="BlobServiceClient"/> after deploying a
     /// <see cref="BlobService"/> resource.
     /// </summary>
-    /// <param name="deployment">The deployment for this resource.</param>
+    /// <param name="deploymentOutputs">The deployment outputs.</param>
     /// <param name="credential">A credential to use for creating the client.</param>
     /// <param name="options">
     /// Optional <see cref="BlobClientOptions"/> to use for configuring the
@@ -34,11 +45,15 @@ public partial class BlobService
     /// <see cref="BlobService"/> resource.
     /// </returns>
     BlobServiceClient IClientCreator<BlobServiceClient, BlobClientOptions>.CreateClient(
-        ProvisioningDeployment deployment,
+        IReadOnlyDictionary<string, object?> deploymentOutputs,
         TokenCredential credential,
         BlobClientOptions? options)
     {
-        string endpoint = deployment.GetClientCreationOutput<string>(this, "endpoint");
+        // TODO: Move into a shared helper off ProvCtx's namescoping
+        string qualifiedName = $"{BicepIdentifier}_endpoint";
+        string endpoint = (deploymentOutputs.TryGetValue(qualifiedName, out object? raw) && raw is string value) ?
+            value :
+            throw new InvalidOperationException($"Could not find output value {qualifiedName} to construct {GetType().Name} resource {BicepIdentifier}.");
         return new BlobServiceClient(new Uri(endpoint), credential, options);
     }
 }

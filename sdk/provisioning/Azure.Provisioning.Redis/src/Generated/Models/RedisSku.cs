@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// SKU parameters supplied to the create Redis operation.
 /// </summary>
-public partial class RedisSku : ProvisioningConstruct
+public partial class RedisSku : ProvisionableConstruct
 {
     /// <summary>
     /// The type of Redis cache to deploy. Valid values: (Basic, Standard,

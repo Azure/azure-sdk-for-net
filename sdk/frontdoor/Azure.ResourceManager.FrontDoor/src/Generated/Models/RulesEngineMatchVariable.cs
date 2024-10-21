@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(RulesEngineMatchVariable left, RulesEngineMatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RulesEngineMatchVariable"/> values are not the same. </summary>
         public static bool operator !=(RulesEngineMatchVariable left, RulesEngineMatchVariable right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RulesEngineMatchVariable"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RulesEngineMatchVariable"/>. </summary>
         public static implicit operator RulesEngineMatchVariable(string value) => new RulesEngineMatchVariable(value);
 
         /// <inheritdoc />

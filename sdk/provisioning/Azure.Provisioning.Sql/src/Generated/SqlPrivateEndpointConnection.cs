@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlPrivateEndpointConnection.
 /// </summary>
-public partial class SqlPrivateEndpointConnection : Resource
+public partial class SqlPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The System.String to use.
@@ -69,11 +69,15 @@ public partial class SqlPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new SqlPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlPrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlPrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/privateEndpointConnections", resourceVersion, context)
+    public SqlPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/privateEndpointConnections", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<SqlPrivateLinkServiceConnectionStateProperty>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -86,11 +90,42 @@ public partial class SqlPrivateEndpointConnection : Resource
     }
 
     /// <summary>
+    /// Supported SqlPrivateEndpointConnection resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2014-04-01.
+        /// </summary>
+        public static readonly string V2014_04_01 = "2014-04-01";
+
+        /// <summary>
+        /// 2014-01-01.
+        /// </summary>
+        public static readonly string V2014_01_01 = "2014-01-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing SqlPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlPrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlPrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlPrivateEndpointConnection.</param>
     /// <returns>The existing SqlPrivateEndpointConnection resource.</returns>
-    public static SqlPrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Disk.Models
 
         void IJsonModel<EncryptionSettingsGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<EncryptionSettingsGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
             if (Optional.IsCollectionDefined(EncryptionSettings))
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.Disk.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         EncryptionSettingsGroup IJsonModel<EncryptionSettingsGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
         public async Task Get_ServerlessRuntimesGet()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "ServerlessRuntimes_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
         public async Task Get_ServerlessRuntimesGetMin()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "ServerlessRuntimes_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
         public async Task Delete_ServerlessRuntimesDelete()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "ServerlessRuntimes_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
         public async Task Update_ServerlessRuntimesUpdate()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "ServerlessRuntimes_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -198,7 +198,7 @@ Value = "uyiuegxnkgp",
         public async Task Update_ServerlessRuntimesUpdateMin()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Update_MinimumSet_Gen.json
-            // this example is just showing the usage of "ServerlessRuntimes_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -307,6 +307,38 @@ Value = "uyiuegxnkgp",
             await informaticaServerlessRuntime.StartFailedServerlessRuntimeAsync();
 
             Console.WriteLine($"Succeeded");
+        }
+
+        // ServerlessRuntimes_ServerlessResourceById
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetServerlessResourceById_ServerlessRuntimesServerlessResourceById()
+        {
+            // Generated from example definition: 2024-05-08/ServerlessRuntimes_ServerlessResourceById_MaximumSet_Gen.json
+            // this example is just showing the usage of "ServerlessRuntimes_GetServerlessResourceById" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this InformaticaServerlessRuntimeResource created on azure
+            // for more information of creating InformaticaServerlessRuntimeResource, please refer to the document of InformaticaServerlessRuntimeResource
+            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
+            string resourceGroupName = "rgopenapi";
+            string organizationName = "_RD_R";
+            string serverlessRuntimeName = "serverlessRuntimeName159";
+            ResourceIdentifier informaticaServerlessRuntimeResourceId = InformaticaServerlessRuntimeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName, serverlessRuntimeName);
+            InformaticaServerlessRuntimeResource informaticaServerlessRuntime = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
+
+            // invoke the operation
+            InformaticaServerlessRuntimeResource result = await informaticaServerlessRuntime.GetServerlessResourceByIdAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            InformaticaServerlessRuntimeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

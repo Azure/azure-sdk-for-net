@@ -17,7 +17,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// CommitmentPlan.
 /// </summary>
-public partial class CommitmentPlan : Resource
+public partial class CommitmentPlan : ProvisionableResource
 {
     /// <summary>
     /// The name of the commitmentPlan associated with the Cognitive Services
@@ -83,11 +83,15 @@ public partial class CommitmentPlan : Resource
     /// <summary>
     /// Creates a new CommitmentPlan.
     /// </summary>
-    /// <param name="resourceName">Name of the CommitmentPlan.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CommitmentPlan resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CommitmentPlan.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CommitmentPlan(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.CognitiveServices/accounts/commitmentPlans", resourceVersion, context)
+    public CommitmentPlan(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts/commitmentPlans", resourceVersion ?? "2024-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
@@ -102,11 +106,62 @@ public partial class CommitmentPlan : Resource
     }
 
     /// <summary>
+    /// Supported CommitmentPlan resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-10-01.
+        /// </summary>
+        public static readonly string V2024_10_01 = "2024-10-01";
+
+        /// <summary>
+        /// 2023-05-01.
+        /// </summary>
+        public static readonly string V2023_05_01 = "2023-05-01";
+
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+
+        /// <summary>
+        /// 2022-10-01.
+        /// </summary>
+        public static readonly string V2022_10_01 = "2022-10-01";
+
+        /// <summary>
+        /// 2022-03-01.
+        /// </summary>
+        public static readonly string V2022_03_01 = "2022-03-01";
+
+        /// <summary>
+        /// 2021-10-01.
+        /// </summary>
+        public static readonly string V2021_10_01 = "2021-10-01";
+
+        /// <summary>
+        /// 2021-04-30.
+        /// </summary>
+        public static readonly string V2021_04_30 = "2021-04-30";
+
+        /// <summary>
+        /// 2017-04-18.
+        /// </summary>
+        public static readonly string V2017_04_18 = "2017-04-18";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing CommitmentPlan.
     /// </summary>
-    /// <param name="resourceName">Name of the CommitmentPlan.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CommitmentPlan resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CommitmentPlan.</param>
     /// <returns>The existing CommitmentPlan resource.</returns>
-    public static CommitmentPlan FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CommitmentPlan FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

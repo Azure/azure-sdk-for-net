@@ -17,7 +17,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ContainerRegistryToken.
 /// </summary>
-public partial class ContainerRegistryToken : Resource
+public partial class ContainerRegistryToken : ProvisionableResource
 {
     /// <summary>
     /// The name of the token.
@@ -77,11 +77,15 @@ public partial class ContainerRegistryToken : Resource
     /// <summary>
     /// Creates a new ContainerRegistryToken.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryToken.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerRegistryToken resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryToken.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerRegistryToken(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/tokens", resourceVersion ?? "2023-07-01", context)
+    public ContainerRegistryToken(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/tokens", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _credentials = BicepValue<ContainerRegistryTokenCredentials>.DefineProperty(this, "Credentials", ["properties", "credentials"]);
@@ -118,11 +122,16 @@ public partial class ContainerRegistryToken : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerRegistryToken.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryToken.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerRegistryToken resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryToken.</param>
     /// <returns>The existing ContainerRegistryToken resource.</returns>
-    public static ContainerRegistryToken FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerRegistryToken FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ContainerRegistryToken resource.

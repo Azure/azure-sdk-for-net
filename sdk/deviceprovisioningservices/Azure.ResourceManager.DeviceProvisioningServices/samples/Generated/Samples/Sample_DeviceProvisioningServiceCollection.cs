@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             }, new DeviceProvisioningServicesSkuInfo()
             {
                 Name = DeviceProvisioningServicesSku.S1,
-                Capacity = 1,
+                Capacity = 1L,
             })
             {
                 Tags =

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppManagedEnvironmentStorage.
 /// </summary>
-public partial class ContainerAppManagedEnvironmentStorage : Resource
+public partial class ContainerAppManagedEnvironmentStorage : ProvisionableResource
 {
     /// <summary>
     /// Name of the storage.
@@ -50,11 +50,15 @@ public partial class ContainerAppManagedEnvironmentStorage : Resource
     /// <summary>
     /// Creates a new ContainerAppManagedEnvironmentStorage.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppManagedEnvironmentStorage.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ContainerAppManagedEnvironmentStorage resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentStorage.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerAppManagedEnvironmentStorage(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.App/managedEnvironments/storages", resourceVersion, context)
+    public ContainerAppManagedEnvironmentStorage(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/storages", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _managedEnvironmentStorageAzureFile = BicepValue<ContainerAppAzureFileProperties>.DefineProperty(this, "ManagedEnvironmentStorageAzureFile", ["properties", "azureFile"]);
@@ -64,12 +68,48 @@ public partial class ContainerAppManagedEnvironmentStorage : Resource
     }
 
     /// <summary>
+    /// Supported ContainerAppManagedEnvironmentStorage resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-08-02-preview.
+        /// </summary>
+        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
+
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2023-05-01.
+        /// </summary>
+        public static readonly string V2023_05_01 = "2023-05-01";
+
+        /// <summary>
+        /// 2022-10-01.
+        /// </summary>
+        public static readonly string V2022_10_01 = "2022-10-01";
+
+        /// <summary>
+        /// 2022-03-01.
+        /// </summary>
+        public static readonly string V2022_03_01 = "2022-03-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing
     /// ContainerAppManagedEnvironmentStorage.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppManagedEnvironmentStorage.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ContainerAppManagedEnvironmentStorage resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentStorage.</param>
     /// <returns>The existing ContainerAppManagedEnvironmentStorage resource.</returns>
-    public static ContainerAppManagedEnvironmentStorage FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppManagedEnvironmentStorage FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppConnectedEnvironmentDaprComponent.
 /// </summary>
-public partial class ContainerAppConnectedEnvironmentDaprComponent : Resource
+public partial class ContainerAppConnectedEnvironmentDaprComponent : ProvisionableResource
 {
     /// <summary>
     /// Name of the Dapr Component.
@@ -93,11 +93,16 @@ public partial class ContainerAppConnectedEnvironmentDaprComponent : Resource
     /// <summary>
     /// Creates a new ContainerAppConnectedEnvironmentDaprComponent.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppConnectedEnvironmentDaprComponent.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ContainerAppConnectedEnvironmentDaprComponent resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironmentDaprComponent.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerAppConnectedEnvironmentDaprComponent(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.App/connectedEnvironments/daprComponents", resourceVersion, context)
+    public ContainerAppConnectedEnvironmentDaprComponent(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/connectedEnvironments/daprComponents", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _componentType = BicepValue<string>.DefineProperty(this, "ComponentType", ["properties", "componentType"]);
@@ -114,12 +119,45 @@ public partial class ContainerAppConnectedEnvironmentDaprComponent : Resource
     }
 
     /// <summary>
+    /// Supported ContainerAppConnectedEnvironmentDaprComponent resource
+    /// versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-08-02-preview.
+        /// </summary>
+        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
+
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2023-05-01.
+        /// </summary>
+        public static readonly string V2023_05_01 = "2023-05-01";
+
+        /// <summary>
+        /// 2022-10-01.
+        /// </summary>
+        public static readonly string V2022_10_01 = "2022-10-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing
     /// ContainerAppConnectedEnvironmentDaprComponent.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppConnectedEnvironmentDaprComponent.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ContainerAppConnectedEnvironmentDaprComponent resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironmentDaprComponent.</param>
     /// <returns>The existing ContainerAppConnectedEnvironmentDaprComponent resource.</returns>
-    public static ContainerAppConnectedEnvironmentDaprComponent FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppConnectedEnvironmentDaprComponent FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Tenant.
 /// </summary>
-public partial class Tenant : Resource
+public partial class Tenant : ProvisionableResource
 {
     /// <summary>
     /// Country/region name of the address for the tenant.
@@ -83,11 +83,15 @@ public partial class Tenant : Resource
     /// <summary>
     /// Creates a new Tenant.
     /// </summary>
-    /// <param name="resourceName">Name of the Tenant.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the Tenant resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the Tenant.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public Tenant(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Resources/tenants", resourceVersion, context)
+    public Tenant(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Resources/tenants", resourceVersion ?? "2020-01-01")
     {
         _country = BicepValue<string>.DefineProperty(this, "Country", ["country"], isOutput: true);
         _countryCode = BicepValue<string>.DefineProperty(this, "CountryCode", ["countryCode"], isOutput: true);
@@ -102,6 +106,127 @@ public partial class Tenant : Resource
     }
 
     /// <summary>
+    /// Supported Tenant resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2020-01-01.
+        /// </summary>
+        public static readonly string V2020_01_01 = "2020-01-01";
+
+        /// <summary>
+        /// 2019-09-01.
+        /// </summary>
+        public static readonly string V2019_09_01 = "2019-09-01";
+
+        /// <summary>
+        /// 2019-05-01.
+        /// </summary>
+        public static readonly string V2019_05_01 = "2019-05-01";
+
+        /// <summary>
+        /// 2019-04-01.
+        /// </summary>
+        public static readonly string V2019_04_01 = "2019-04-01";
+
+        /// <summary>
+        /// 2019-03-01.
+        /// </summary>
+        public static readonly string V2019_03_01 = "2019-03-01";
+
+        /// <summary>
+        /// 2018-11-01.
+        /// </summary>
+        public static readonly string V2018_11_01 = "2018-11-01";
+
+        /// <summary>
+        /// 2018-09-01.
+        /// </summary>
+        public static readonly string V2018_09_01 = "2018-09-01";
+
+        /// <summary>
+        /// 2018-08-01.
+        /// </summary>
+        public static readonly string V2018_08_01 = "2018-08-01";
+
+        /// <summary>
+        /// 2018-07-01.
+        /// </summary>
+        public static readonly string V2018_07_01 = "2018-07-01";
+
+        /// <summary>
+        /// 2018-05-01.
+        /// </summary>
+        public static readonly string V2018_05_01 = "2018-05-01";
+
+        /// <summary>
+        /// 2018-02-01.
+        /// </summary>
+        public static readonly string V2018_02_01 = "2018-02-01";
+
+        /// <summary>
+        /// 2018-01-01.
+        /// </summary>
+        public static readonly string V2018_01_01 = "2018-01-01";
+
+        /// <summary>
+        /// 2017-08-01.
+        /// </summary>
+        public static readonly string V2017_08_01 = "2017-08-01";
+
+        /// <summary>
+        /// 2017-06-01.
+        /// </summary>
+        public static readonly string V2017_06_01 = "2017-06-01";
+
+        /// <summary>
+        /// 2017-05-10.
+        /// </summary>
+        public static readonly string V2017_05_10 = "2017-05-10";
+
+        /// <summary>
+        /// 2017-05-01.
+        /// </summary>
+        public static readonly string V2017_05_01 = "2017-05-01";
+
+        /// <summary>
+        /// 2017-03-01.
+        /// </summary>
+        public static readonly string V2017_03_01 = "2017-03-01";
+
+        /// <summary>
+        /// 2016-09-01.
+        /// </summary>
+        public static readonly string V2016_09_01 = "2016-09-01";
+
+        /// <summary>
+        /// 2016-07-01.
+        /// </summary>
+        public static readonly string V2016_07_01 = "2016-07-01";
+
+        /// <summary>
+        /// 2016-06-01.
+        /// </summary>
+        public static readonly string V2016_06_01 = "2016-06-01";
+
+        /// <summary>
+        /// 2016-02-01.
+        /// </summary>
+        public static readonly string V2016_02_01 = "2016-02-01";
+
+        /// <summary>
+        /// 2015-11-01.
+        /// </summary>
+        public static readonly string V2015_11_01 = "2015-11-01";
+
+        /// <summary>
+        /// 2015-01-01.
+        /// </summary>
+        public static readonly string V2015_01_01 = "2015-01-01";
+    }
+
+    /// <summary>
     /// Creates a new Tenant resource from a Bicep expression that evaluates to
     /// a Tenant.
     /// </summary>
@@ -110,9 +235,9 @@ public partial class Tenant : Resource
     /// </param>
     /// <returns>A Tenant resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static Tenant FromExpression(Expression expression)
+    public static Tenant FromExpression(BicepExpression expression)
     {
-        Tenant resource = new(expression.ToString());
+        Tenant resource = new(nameof(Tenant));
         resource.OverrideWithExpression(expression);
         return resource;
     }

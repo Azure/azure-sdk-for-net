@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// GenericResource.
 /// </summary>
-public partial class GenericResource : Resource
+public partial class GenericResource : ProvisionableResource
 {
     /// <summary>
     /// The name of the resource.
@@ -128,11 +128,15 @@ public partial class GenericResource : Resource
     /// <summary>
     /// Creates a new GenericResource.
     /// </summary>
-    /// <param name="resourceName">Name of the GenericResource.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the GenericResource resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the GenericResource.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public GenericResource(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "", resourceVersion, context)
+    public GenericResource(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -154,9 +158,14 @@ public partial class GenericResource : Resource
     /// <summary>
     /// Creates a reference to an existing GenericResource.
     /// </summary>
-    /// <param name="resourceName">Name of the GenericResource.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the GenericResource resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the GenericResource.</param>
     /// <returns>The existing GenericResource resource.</returns>
-    public static GenericResource FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static GenericResource FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

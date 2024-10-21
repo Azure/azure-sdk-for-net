@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-preview.50 (Unreleased)
+## 12.0.0-preview.52 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.0.0-preview.51 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.0.0-preview.50 (2024-10-08)
+
+### Features Added
+- Added support for service version 2025-01-05.
 
 ## 12.0.0-preview.49 (2024-09-18)
 

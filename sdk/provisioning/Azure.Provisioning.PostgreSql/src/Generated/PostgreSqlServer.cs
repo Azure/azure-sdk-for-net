@@ -17,7 +17,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlServer.
 /// </summary>
-public partial class PostgreSqlServer : Resource
+public partial class PostgreSqlServer : ProvisionableResource
 {
     /// <summary>
     /// The name of the server.
@@ -175,11 +175,15 @@ public partial class PostgreSqlServer : Resource
     /// <summary>
     /// Creates a new PostgreSqlServer.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlServer.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PostgreSqlServer resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlServer.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlServer(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers", resourceVersion ?? "2017-12-01", context)
+    public PostgreSqlServer(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/servers", resourceVersion ?? "2017-12-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -225,11 +229,16 @@ public partial class PostgreSqlServer : Resource
     /// <summary>
     /// Creates a reference to an existing PostgreSqlServer.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlServer.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PostgreSqlServer resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlServer.</param>
     /// <returns>The existing PostgreSqlServer resource.</returns>
-    public static PostgreSqlServer FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlServer FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this PostgreSqlServer resource.

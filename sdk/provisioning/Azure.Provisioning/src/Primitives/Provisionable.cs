@@ -21,24 +21,23 @@ public abstract class Provisionable
     /// be the object itself for everything but <see cref="Infrastructure"/>.
     /// </summary>
     /// <returns>Any resources represented by this object.</returns>
-    public virtual IEnumerable<Provisionable> GetResources() { yield return this; }
+    public virtual IEnumerable<Provisionable> GetProvisionableResources() { yield return this; }
 
     /// <summary>
     /// Resolve any resources or properties that were not explicitly specified.
     /// </summary>
-    /// <param name="context">Optional <see cref="ProvisioningContext"/>.</param>
-    protected internal virtual void Resolve(ProvisioningContext? context = default) { }
+    /// <param name="options">Optional <see cref="ProvisioningBuildOptions"/>.</param>
+    protected internal virtual void Resolve(ProvisioningBuildOptions? options = default) { }
 
     /// <summary>
     /// Validate the presence of any required members.
     /// </summary>
-    /// <param name="context">Optional <see cref="ProvisioningContext"/>.</param>
-    protected internal virtual void Validate(ProvisioningContext? context = default) { }
+    /// <param name="options">Optional <see cref="ProvisioningBuildOptions"/>.</param>
+    protected internal virtual void Validate(ProvisioningBuildOptions? options = default) { }
 
     /// <summary>
     /// Compile the resource into a set of Bicep statements.
     /// </summary>
-    /// <param name="context">Optional <see cref="ProvisioningContext"/>.</param>
     /// <returns>Bicep representation of the resource.</returns>
-    protected internal abstract IEnumerable<Statement> Compile(ProvisioningContext? context = default);
+    protected internal abstract IEnumerable<BicepStatement> Compile();
 }

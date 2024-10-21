@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSlot.
 /// </summary>
-public partial class WebSiteSlot : Resource
+public partial class WebSiteSlot : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -427,11 +427,15 @@ public partial class WebSiteSlot : Resource
     /// <summary>
     /// Creates a new WebSiteSlot.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSlot.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSiteSlot resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlot.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WebSiteSlot(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots", resourceVersion ?? "2023-12-01", context)
+    public WebSiteSlot(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -501,6 +505,11 @@ public partial class WebSiteSlot : Resource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
         /// <summary>
         /// 2023-12-01.
         /// </summary>
@@ -655,11 +664,16 @@ public partial class WebSiteSlot : Resource
     /// <summary>
     /// Creates a reference to an existing WebSiteSlot.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSlot.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSiteSlot resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlot.</param>
     /// <returns>The existing WebSiteSlot resource.</returns>
-    public static WebSiteSlot FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteSlot FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this WebSiteSlot resource.

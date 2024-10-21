@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// The JIT scheduling policies.
 /// </summary>
-public partial class JitSchedulingPolicy : ProvisioningConstruct
+public partial class JitSchedulingPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// The type of JIT schedule.

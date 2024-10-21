@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task Get_GetsAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Get.json
-            // this example is just showing the usage of "MongoClusters_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task Exists_GetsAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Get.json
-            // this example is just showing the usage of "MongoClusters_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task GetIfExists_GetsAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Get.json
-            // this example is just showing the usage of "MongoClusters_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task CreateOrUpdate_CreatesANewMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_Create.json
-            // this example is just showing the usage of "MongoClusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                     },
                     ServerVersion = "5.0",
                     HighAvailabilityTargetMode = HighAvailabilityMode.SameZone,
-                    StorageSizeGb = 128,
+                    StorageSizeGb = 128L,
                     ShardingShardCount = 1,
                     ComputeTier = "M30",
                 },
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task CreateOrUpdate_CreatesAReplicaMongoClusterResourceFromASourceResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_CreateGeoReplica.json
-            // this example is just showing the usage of "MongoClusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task CreateOrUpdate_CreatesAMongoClusterResourceFromAPointInTimeRestore()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_CreatePITR.json
-            // this example is just showing the usage of "MongoClusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MongoCluster_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ContainerRegistryPrivateEndpointConnection.
 /// </summary>
-public partial class ContainerRegistryPrivateEndpointConnection : Resource
+public partial class ContainerRegistryPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The name of the private endpoint connection.
@@ -63,11 +63,16 @@ public partial class ContainerRegistryPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new ContainerRegistryPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryPrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ContainerRegistryPrivateEndpointConnection resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerRegistryPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/privateEndpointConnections", resourceVersion ?? "2023-07-01", context)
+    public ContainerRegistryPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/privateEndpointConnections", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<ContainerRegistryPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -108,9 +113,15 @@ public partial class ContainerRegistryPrivateEndpointConnection : Resource
     /// Creates a reference to an existing
     /// ContainerRegistryPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryPrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ContainerRegistryPrivateEndpointConnection resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryPrivateEndpointConnection.</param>
     /// <returns>The existing ContainerRegistryPrivateEndpointConnection resource.</returns>
-    public static ContainerRegistryPrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerRegistryPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// Resource log category configuration of a Microsoft.SignalRService resource.
 /// </summary>
-public partial class SignalRResourceLogCategory : ProvisioningConstruct
+public partial class SignalRResourceLogCategory : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets the resource log category&apos;s name.

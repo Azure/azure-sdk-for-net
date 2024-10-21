@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ExceptionEntryValueMatchOperator left, ExceptionEntryValueMatchOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExceptionEntryValueMatchOperator"/> values are not the same. </summary>
         public static bool operator !=(ExceptionEntryValueMatchOperator left, ExceptionEntryValueMatchOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExceptionEntryValueMatchOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExceptionEntryValueMatchOperator"/>. </summary>
         public static implicit operator ExceptionEntryValueMatchOperator(string value) => new ExceptionEntryValueMatchOperator(value);
 
         /// <inheritdoc />

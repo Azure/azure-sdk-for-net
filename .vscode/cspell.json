@@ -141,6 +141,7 @@
     "referer",
     "renormalize",
     "retriable",
+    "Servfail",
     "setsas",
     "signalr",
     "signup",
@@ -252,6 +253,12 @@
         "Adou",
         "Drtm",
         "Hvci"
+      ]
+    },
+	  {
+      "filename": "**/sdk/computefleet/**/*.cs",
+      "words": [
+        "Rdma"
       ]
     },
     {
@@ -906,6 +913,14 @@
         "Posix",
         "posix",
         "POSIX"
+      ]
+    },
+    {
+      "filename": "**/sdk/maps/Azure.Maps.Weather/**/*.cs",
+      "words": [
+        "Actuals",
+        "Bangla",
+        "Hecto"
       ]
     },
     {

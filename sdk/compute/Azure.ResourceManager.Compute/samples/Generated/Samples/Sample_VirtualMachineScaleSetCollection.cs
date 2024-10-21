@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Compute.Samples
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -667,7 +667,7 @@ SuppressFailures = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -786,7 +786,7 @@ Id = new ResourceIdentifier("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -871,7 +871,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -966,7 +966,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1057,7 +1057,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1148,7 +1148,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1233,7 +1233,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1341,7 +1341,7 @@ EnableIPForwarding = false,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1446,7 +1446,7 @@ EnableAutomaticUpgrade = false,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1556,7 +1556,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_DS1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1661,7 +1661,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1767,7 +1767,7 @@ EnableIPForwarding = false,
                 {
                     Name = "Standard_DS1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 Plan = new ComputePlan()
                 {
@@ -1871,7 +1871,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -1989,7 +1989,7 @@ EnableIPForwarding = false,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2091,7 +2091,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D2s_v3",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2193,7 +2193,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2291,7 +2291,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2389,7 +2389,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_A1",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2485,7 +2485,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_DC2as_v5",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2592,7 +2592,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_DC2es_v5",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2699,7 +2699,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_A1",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2795,7 +2795,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D2s_v3",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -2898,7 +2898,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 Plan = new ComputePlan()
                 {
@@ -2998,7 +2998,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -3099,7 +3099,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -3211,7 +3211,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -3319,7 +3319,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -3418,7 +3418,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D2_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -3523,7 +3523,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_DS1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 Plan = new ComputePlan()
                 {
@@ -3628,7 +3628,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_DS1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 Plan = new ComputePlan()
                 {
@@ -3733,7 +3733,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_DS1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 Plan = new ComputePlan()
                 {
@@ -3837,7 +3837,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -3953,7 +3953,7 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -4051,7 +4051,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -4145,7 +4145,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -4239,7 +4239,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_A8m_v2",
                     Tier = "Standard",
-                    Capacity = 10,
+                    Capacity = 10L,
                 },
                 VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                 {
@@ -4338,7 +4338,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -4439,7 +4439,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
                 Sku = new ComputeSku()
                 {
                     Name = "Mix",
-                    Capacity = 10,
+                    Capacity = 10L,
                 },
                 VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                 {
@@ -4555,7 +4555,7 @@ Name = "Standard_D2s_v5",
                 {
                     Name = "Standard_A8m_v2",
                     Tier = "Standard",
-                    Capacity = 2,
+                    Capacity = 2L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -4657,7 +4657,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -4762,7 +4762,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -4864,7 +4864,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -4959,7 +4959,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_A1_v2",
                     Tier = "Standard",
-                    Capacity = 2,
+                    Capacity = 2L,
                 },
                 Zones =
 {
@@ -5068,7 +5068,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -5168,7 +5168,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_D1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {
@@ -5272,7 +5272,7 @@ EnableIPForwarding = true,
                 {
                     Name = "Standard_DS1_v2",
                     Tier = "Standard",
-                    Capacity = 3,
+                    Capacity = 3L,
                 },
                 UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                 {

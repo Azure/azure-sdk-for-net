@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(AvsPrivateCloudProvisioningState left, AvsPrivateCloudProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsPrivateCloudProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AvsPrivateCloudProvisioningState left, AvsPrivateCloudProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvsPrivateCloudProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsPrivateCloudProvisioningState"/>. </summary>
         public static implicit operator AvsPrivateCloudProvisioningState(string value) => new AvsPrivateCloudProvisioningState(value);
 
         /// <inheritdoc />

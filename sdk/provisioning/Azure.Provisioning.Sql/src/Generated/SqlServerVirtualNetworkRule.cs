@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerVirtualNetworkRule.
 /// </summary>
-public partial class SqlServerVirtualNetworkRule : Resource
+public partial class SqlServerVirtualNetworkRule : ProvisionableResource
 {
     /// <summary>
     /// The name of the virtual network rule.
@@ -63,11 +63,15 @@ public partial class SqlServerVirtualNetworkRule : Resource
     /// <summary>
     /// Creates a new SqlServerVirtualNetworkRule.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerVirtualNetworkRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerVirtualNetworkRule
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerVirtualNetworkRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerVirtualNetworkRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/virtualNetworkRules", resourceVersion ?? "2021-11-01", context)
+    public SqlServerVirtualNetworkRule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/virtualNetworkRules", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _ignoreMissingVnetServiceEndpoint = BicepValue<bool>.DefineProperty(this, "IgnoreMissingVnetServiceEndpoint", ["properties", "ignoreMissingVnetServiceEndpoint"]);
@@ -97,9 +101,14 @@ public partial class SqlServerVirtualNetworkRule : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerVirtualNetworkRule.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerVirtualNetworkRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerVirtualNetworkRule
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerVirtualNetworkRule.</param>
     /// <returns>The existing SqlServerVirtualNetworkRule resource.</returns>
-    public static SqlServerVirtualNetworkRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerVirtualNetworkRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// PartnerDestination.
 /// </summary>
-public partial class PartnerDestination : Resource
+public partial class PartnerDestination : ProvisionableResource
 {
     /// <summary>
     /// Name of the partner destination.
@@ -95,11 +95,15 @@ public partial class PartnerDestination : Resource
     /// <summary>
     /// Creates a new PartnerDestination.
     /// </summary>
-    /// <param name="resourceName">Name of the PartnerDestination.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PartnerDestination resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PartnerDestination.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PartnerDestination(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/partnerDestinations", resourceVersion ?? "2024-06-01-preview", context)
+    public PartnerDestination(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/partnerDestinations", resourceVersion ?? "2024-06-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -129,9 +133,14 @@ public partial class PartnerDestination : Resource
     /// <summary>
     /// Creates a reference to an existing PartnerDestination.
     /// </summary>
-    /// <param name="resourceName">Name of the PartnerDestination.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PartnerDestination resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PartnerDestination.</param>
     /// <returns>The existing PartnerDestination resource.</returns>
-    public static PartnerDestination FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PartnerDestination FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ApplicationGatewayWafRuleSensitivityType left, ApplicationGatewayWafRuleSensitivityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayWafRuleSensitivityType"/> values are not the same. </summary>
         public static bool operator !=(ApplicationGatewayWafRuleSensitivityType left, ApplicationGatewayWafRuleSensitivityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationGatewayWafRuleSensitivityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayWafRuleSensitivityType"/>. </summary>
         public static implicit operator ApplicationGatewayWafRuleSensitivityType(string value) => new ApplicationGatewayWafRuleSensitivityType(value);
 
         /// <inheritdoc />

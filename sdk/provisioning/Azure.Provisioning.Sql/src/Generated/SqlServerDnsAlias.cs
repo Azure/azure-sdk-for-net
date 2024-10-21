@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerDnsAlias.
 /// </summary>
-public partial class SqlServerDnsAlias : Resource
+public partial class SqlServerDnsAlias : ProvisionableResource
 {
     /// <summary>
     /// The name of the server dns alias.
@@ -50,11 +50,15 @@ public partial class SqlServerDnsAlias : Resource
     /// <summary>
     /// Creates a new SqlServerDnsAlias.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerDnsAlias.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerDnsAlias resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerDnsAlias.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerDnsAlias(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/dnsAliases", resourceVersion ?? "2021-11-01", context)
+    public SqlServerDnsAlias(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/dnsAliases", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _azureDnsRecord = BicepValue<string>.DefineProperty(this, "AzureDnsRecord", ["properties", "azureDnsRecord"], isOutput: true);
@@ -82,9 +86,14 @@ public partial class SqlServerDnsAlias : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerDnsAlias.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerDnsAlias.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerDnsAlias resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerDnsAlias.</param>
     /// <returns>The existing SqlServerDnsAlias resource.</returns>
-    public static SqlServerDnsAlias FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerDnsAlias FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

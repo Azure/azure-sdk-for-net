@@ -15,10 +15,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/40054")]
-        public async Task DocumentIntelligenceClientCanAuthenticateWithTokenCredential()
+        public async Task DocumentIntelligenceClientCanAuthenticateWithApiKey()
         {
-            var client = CreateDocumentIntelligenceClient(useTokenCredential: true);
+            var client = CreateDocumentIntelligenceClient(useApiKey: true);
 
             var content = new AnalyzeDocumentContent()
             {

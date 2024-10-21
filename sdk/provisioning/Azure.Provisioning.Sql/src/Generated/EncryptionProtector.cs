@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// EncryptionProtector.
 /// </summary>
-public partial class EncryptionProtector : Resource
+public partial class EncryptionProtector : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -94,11 +94,15 @@ public partial class EncryptionProtector : Resource
     /// <summary>
     /// Creates a new EncryptionProtector.
     /// </summary>
-    /// <param name="resourceName">Name of the EncryptionProtector.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EncryptionProtector resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EncryptionProtector.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EncryptionProtector(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/encryptionProtector", resourceVersion ?? "2021-11-01", context)
+    public EncryptionProtector(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/encryptionProtector", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _isAutoRotationEnabled = BicepValue<bool>.DefineProperty(this, "IsAutoRotationEnabled", ["properties", "autoRotationEnabled"]);
@@ -133,9 +137,14 @@ public partial class EncryptionProtector : Resource
     /// <summary>
     /// Creates a reference to an existing EncryptionProtector.
     /// </summary>
-    /// <param name="resourceName">Name of the EncryptionProtector.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EncryptionProtector resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EncryptionProtector.</param>
     /// <returns>The existing EncryptionProtector resource.</returns>
-    public static EncryptionProtector FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EncryptionProtector FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

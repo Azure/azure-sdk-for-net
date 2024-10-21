@@ -37,7 +37,7 @@ public class BicepDictionary<T> : BicepValue, IDictionary<string, BicepValue<T>>
     /// </summary>
     public BicepDictionary(IDictionary<string, BicepValue<T>>? values) : this(self: null, values) { }
 
-    private protected BicepDictionary(BicepValueReference? self, Expression expression)
+    private protected BicepDictionary(BicepValueReference? self, BicepExpression expression)
         : base(self, expression)
         => _values = new Dictionary<string, BicepValue<T>>();
 
@@ -65,11 +65,11 @@ public class BicepDictionary<T> : BicepValue, IDictionary<string, BicepValue<T>>
     }
 
     /// <summary>
-    /// Convert a BicepVariable or BicepParameter to a BicepList.
+    /// Convert a ProvisioningVariable or ProvisioningParameter to a BicepList.
     /// </summary>
     /// <param name="reference">The variable or parameter.</param>
-    public static implicit operator BicepDictionary<T>(BicepVariable reference) =>
-        new(new BicepValueReference(reference, "<value>"), BicepSyntax.Var(reference.ResourceName)) { IsSecure = reference is BicepParameter p && p.IsSecure };
+    public static implicit operator BicepDictionary<T>(ProvisioningVariable reference) =>
+        new(new BicepValueReference(reference, "<value>"), BicepSyntax.Var(reference.BicepIdentifier)) { IsSecure = reference is ProvisioningParameter p && p.IsSecure };
 
     // TODO: Make it possible to correctly reference these values (especially
     // across module boundaries)?  Currently we only allow pulling values into
@@ -136,7 +136,7 @@ public class BicepDictionary<T> : BicepValue, IDictionary<string, BicepValue<T>>
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static BicepDictionary<T> DefineProperty(
-        ProvisioningConstruct construct,
+        ProvisionableConstruct construct,
         string propertyName,
         string[]? bicepPath,
         bool isOutput = false,

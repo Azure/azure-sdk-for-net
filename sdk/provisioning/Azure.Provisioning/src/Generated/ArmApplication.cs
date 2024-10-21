@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ArmApplication.
 /// </summary>
-public partial class ArmApplication : Resource
+public partial class ArmApplication : ProvisionableResource
 {
     /// <summary>
     /// The name of the managed application.
@@ -201,11 +201,15 @@ public partial class ArmApplication : Resource
     /// <summary>
     /// Creates a new ArmApplication.
     /// </summary>
-    /// <param name="resourceName">Name of the ArmApplication.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ArmApplication resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ArmApplication.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ArmApplication(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Solutions/applications", resourceVersion ?? "2021-07-01", context)
+    public ArmApplication(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Solutions/applications", resourceVersion ?? "2021-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isRequired: true);
@@ -278,9 +282,14 @@ public partial class ArmApplication : Resource
     /// <summary>
     /// Creates a reference to an existing ArmApplication.
     /// </summary>
-    /// <param name="resourceName">Name of the ArmApplication.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ArmApplication resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ArmApplication.</param>
     /// <returns>The existing ArmApplication resource.</returns>
-    public static ArmApplication FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ArmApplication FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

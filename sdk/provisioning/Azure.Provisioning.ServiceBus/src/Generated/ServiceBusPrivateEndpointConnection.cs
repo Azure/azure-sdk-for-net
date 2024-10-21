@@ -15,7 +15,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusPrivateEndpointConnection.
 /// </summary>
-public partial class ServiceBusPrivateEndpointConnection : Resource
+public partial class ServiceBusPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The PrivateEndpointConnection name.
@@ -68,11 +68,15 @@ public partial class ServiceBusPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new ServiceBusPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusPrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ServiceBusPrivateEndpointConnection resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ServiceBusPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/privateEndpointConnections", resourceVersion ?? "2024-01-01", context)
+    public ServiceBusPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/privateEndpointConnections", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<ServiceBusPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -103,9 +107,14 @@ public partial class ServiceBusPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing ServiceBusPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusPrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ServiceBusPrivateEndpointConnection resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusPrivateEndpointConnection.</param>
     /// <returns>The existing ServiceBusPrivateEndpointConnection resource.</returns>
-    public static ServiceBusPrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

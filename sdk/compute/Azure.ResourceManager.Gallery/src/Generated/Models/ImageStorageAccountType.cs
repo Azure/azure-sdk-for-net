@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Gallery.Models
         public static bool operator ==(ImageStorageAccountType left, ImageStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageStorageAccountType"/> values are not the same. </summary>
         public static bool operator !=(ImageStorageAccountType left, ImageStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ImageStorageAccountType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ImageStorageAccountType"/>. </summary>
         public static implicit operator ImageStorageAccountType(string value) => new ImageStorageAccountType(value);
 
         /// <inheritdoc />

@@ -101,20 +101,20 @@ public readonly struct ResourceNameRequirements(
 /// https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules
 /// </see>.
 /// </remarks>
-public abstract class ResourceNamePropertyResolver : PropertyResolver
+public abstract class ResourceNamePropertyResolver : InfrastructureResolver
 {
     /// <inheritdoc />
-    public override void ResolveProperties(ProvisioningContext context, ProvisioningConstruct construct)
+    public override void ResolveProperties(ProvisionableConstruct construct, ProvisioningBuildOptions options)
     {
         // We only need to name resources
-        if (construct is not Resource resource) { return; }
+        if (construct is not ProvisionableResource resource) { return; }
 
         // We only need to create a name if one doesn't already exist
         if (resource.ProvisioningProperties.TryGetValue("Name", out BicepValue? name) &&
             name.Kind == BicepValueKind.Unset &&
             !name.IsOutput)
         {
-            BicepValue<string>? resolved = ResolveName(context, resource, resource.GetResourceNameRequirements());
+            BicepValue<string>? resolved = ResolveName(options, resource, resource.GetResourceNameRequirements());
             if (resolved is not null)
             {
                 construct.SetProvisioningProperty(name, resolved);
@@ -125,13 +125,13 @@ public abstract class ResourceNamePropertyResolver : PropertyResolver
     /// <summary>
     /// Resolve a name for the given resource.
     /// </summary>
-    /// <param name="context">The provisioning context for this resource.</param>
+    /// <param name="options">The build options for this resource.</param>
     /// <param name="resource">The resource with an unset Name property.</param>
     /// <param name="requirements">Requirements to name the resource.</param>
     /// <returns>A name for the resource, if one could be created.</returns>
     public abstract BicepValue<string>? ResolveName(
-        ProvisioningContext context,
-        Resource resource,
+        ProvisioningBuildOptions options,
+        ProvisionableResource resource,
         ResourceNameRequirements requirements);
 
     /// <summary>
@@ -180,7 +180,7 @@ public abstract class ResourceNamePropertyResolver : PropertyResolver
 
 /// <summary>
 /// Generate a unique name for a resource by combining the resource's
-/// <see cref="NamedProvisioningConstruct.ResourceName"/> as a prefix and a
+/// <see cref="NamedProvisionableConstruct.BicepIdentifier"/> as a prefix and a
 /// unique suffix based on the current resource group's ID.
 /// </summary>
 public class DynamicResourceNamePropertyResolver : ResourceNamePropertyResolver
@@ -191,32 +191,32 @@ public class DynamicResourceNamePropertyResolver : ResourceNamePropertyResolver
 
     /// <summary>
     /// Generate a unique name for a resource by combining the resource's
-    /// <see cref="NamedProvisioningConstruct.ResourceName"/> as a prefix and a
+    /// <see cref="NamedProvisionableConstruct.BicepIdentifier"/> as a prefix and a
     /// unique suffix based on the current resource group's ID.
     /// </summary>
-    /// <param name="context">The provisioning context for this resource.</param>
+    /// <param name="options">The build options for this resource.</param>
     /// <param name="resource">The resource with an unset Name property.</param>
     /// <param name="requirements">Requirements to name the resource.</param>
     /// <returns>A name for the resource.</returns>
     public override BicepValue<string>? ResolveName(
-        ProvisioningContext context,
-        Resource resource,
+        ProvisioningBuildOptions options,
+        ProvisionableResource resource,
         ResourceNameRequirements requirements)
     {
-        string prefix = SanitizeText(resource.ResourceName, requirements.ValidCharacters);
+        string prefix = SanitizeText(resource.BicepIdentifier, requirements.ValidCharacters);
         string separator =
             requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Hyphen) ? "-" :
             requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Underscore) ? "_" :
             requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Period) ? "." :
             "";
-        BicepValue<string> suffix = GetUniqueSuffix(context, resource);
+        BicepValue<string> suffix = GetUniqueSuffix(options, resource);
         return BicepFunction.Take(BicepFunction.Interpolate($"{prefix}{separator}{suffix}"), requirements.MaxLength);
     }
 
     /// <summary>
     /// Get a unique dynamic name suffix for the given resource.
     /// </summary>
-    /// <param name="context">The provisioning context for this resource.</param>
+    /// <param name="options">The build options for this resource.</param>
     /// <param name="resource">The resource with an unset Name property.</param>
     /// <returns>A unique dynamic name suffix for the resource.</returns>
     /// <remarks>
@@ -224,7 +224,7 @@ public class DynamicResourceNamePropertyResolver : ResourceNamePropertyResolver
     /// and `uniqueString(deployment().id)` for resource groups.  This can be
     /// overridden to provide a different "entropy source."
     /// </remarks>
-    protected virtual BicepValue<string> GetUniqueSuffix(ProvisioningContext context, Resource resource) =>
+    protected virtual BicepValue<string> GetUniqueSuffix(ProvisioningBuildOptions options, ProvisionableResource resource) =>
         BicepFunction.GetUniqueString(
             resource is not ResourceGroup ?
                 BicepFunction.GetResourceGroup().Id :
@@ -233,7 +233,7 @@ public class DynamicResourceNamePropertyResolver : ResourceNamePropertyResolver
 
 /// <summary>
 /// Generate a unique name for a resource by combining the resource's
-/// <see cref="NamedProvisioningConstruct.ResourceName"/> as a prefix and a
+/// <see cref="NamedProvisionableConstruct.BicepIdentifier"/> as a prefix and a
 /// randomly generated suffix of allowed characters.
 /// </summary>
 public class StaticResourceNamePropertyResolver : ResourceNamePropertyResolver
@@ -242,12 +242,12 @@ public class StaticResourceNamePropertyResolver : ResourceNamePropertyResolver
     private static readonly char[] s_upper = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     private static readonly char[] s_digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
-    public override BicepValue<string>? ResolveName(ProvisioningContext context, Resource resource, ResourceNameRequirements requirements)
+    public override BicepValue<string>? ResolveName(ProvisioningBuildOptions options, ProvisionableResource resource, ResourceNameRequirements requirements)
     {
         StringBuilder name = new(capacity: requirements.MaxLength);
 
         // Start with the sanitized resource name
-        name.Append(SanitizeText(resource.ResourceName, requirements.ValidCharacters));
+        name.Append(SanitizeText(resource.BicepIdentifier, requirements.ValidCharacters));
         if (name.Length >= requirements.MaxLength)
         {
             return name.ToString(0, requirements.MaxLength);
@@ -267,7 +267,7 @@ public class StaticResourceNamePropertyResolver : ResourceNamePropertyResolver
         if (requirements.ValidCharacters.HasFlag(ResourceNameCharacters.Numbers)) { chars.AddRange(s_digits); }
         while (name.Length < requirements.MaxLength)
         {
-            name.Append(chars[context.Random.Next(chars.Count)]);
+            name.Append(chars[options.Random.Next(chars.Count)]);
         }
 
         return name.ToString();

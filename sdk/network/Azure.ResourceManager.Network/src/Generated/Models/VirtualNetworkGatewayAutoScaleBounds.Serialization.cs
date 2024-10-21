@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Network.Models
 
         void IJsonModel<VirtualNetworkGatewayAutoScaleBounds>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayAutoScaleBounds>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleBounds)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Min))
             {
                 writer.WritePropertyName("min"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.Network.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         VirtualNetworkGatewayAutoScaleBounds IJsonModel<VirtualNetworkGatewayAutoScaleBounds>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

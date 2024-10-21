@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerDevOpsAuditingSetting.
 /// </summary>
-public partial class SqlServerDevOpsAuditingSetting : Resource
+public partial class SqlServerDevOpsAuditingSetting : ProvisionableResource
 {
     /// <summary>
     /// The name of the devops audit settings. This should always be Default.
@@ -106,11 +106,15 @@ public partial class SqlServerDevOpsAuditingSetting : Resource
     /// <summary>
     /// Creates a new SqlServerDevOpsAuditingSetting.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerDevOpsAuditingSetting.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerDevOpsAuditingSetting
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerDevOpsAuditingSetting.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerDevOpsAuditingSetting(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/devOpsAuditingSettings", resourceVersion ?? "2021-11-01", context)
+    public SqlServerDevOpsAuditingSetting(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/devOpsAuditingSettings", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _isAzureMonitorTargetEnabled = BicepValue<bool>.DefineProperty(this, "IsAzureMonitorTargetEnabled", ["properties", "isAzureMonitorTargetEnabled"]);
@@ -143,9 +147,14 @@ public partial class SqlServerDevOpsAuditingSetting : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerDevOpsAuditingSetting.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerDevOpsAuditingSetting.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerDevOpsAuditingSetting
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerDevOpsAuditingSetting.</param>
     /// <returns>The existing SqlServerDevOpsAuditingSetting resource.</returns>
-    public static SqlServerDevOpsAuditingSetting FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerDevOpsAuditingSetting FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

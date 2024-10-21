@@ -471,6 +471,47 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(actualToken1.Token, actualToken2.Token);
         }
 
+        [Test]
+        public async Task AuthorityHostConfigSupportsdStS()
+        {
+            // Configure the transport
+            var token = Guid.NewGuid().ToString();
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => token,
+                RequestValidator = req =>
+                {
+                    if (req.Uri.Path.EndsWith("/token"))
+                    {
+                        Assert.AreEqual("usnorth-passive-dsts.dsts.core.windows.net", req.Uri.Host);
+                        Assert.AreEqual($"/dstsv2/{TenantId}/oauth2/v2.0/token", req.Uri.Path);
+                    }
+                }
+            };
+            var factory = MockTokenTransportFactory(transportConfig);
+            var mockTransport = new MockTransport(factory);
+
+            var config = new CommonCredentialTestConfig()
+            {
+                TransportConfig = transportConfig,
+                Transport = mockTransport,
+                TenantId = TenantId,
+                AuthorityHost = new("https://usnorth-passive-dsts.dsts.core.windows.net/dstsv2"),
+                RedirectUri = new Uri("http://localhost:8400/")
+            };
+            var credential = GetTokenCredential(config);
+            if (!CredentialTestHelpers.IsMsalCredential(credential))
+            {
+                Assert.Ignore("AuthorityHostConfigSupportsdStS tests do not apply to the non-MSAL credentials.");
+            }
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+
+            // First call to populate the account record for confidential client creds
+            await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+            var actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate), default);
+            Assert.AreEqual(token, actualToken.Token);
+        }
+
         public class MemoryTokenCache : UnsafeTokenCacheOptions
         {
             public ReadOnlyMemory<byte> Data { get; set; } = new ReadOnlyMemory<byte>();

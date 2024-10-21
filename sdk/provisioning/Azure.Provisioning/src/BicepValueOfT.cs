@@ -29,15 +29,15 @@ public class BicepValue<T> : BicepValue
             // than just return null, we'll return a reference expression
             if (IsOutput &&
                 Kind == BicepValueKind.Unset &&
-                typeof(ProvisioningConstruct).IsAssignableFrom(typeof(T)) &&
-                Self?.Construct is NamedProvisioningConstruct)
+                typeof(ProvisionableConstruct).IsAssignableFrom(typeof(T)) &&
+                Self?.Construct is NamedProvisionableConstruct)
             {
                 // TODO: This is obviously a hack but we need to decide if we'd
                 // rather have a separate type for outputs (kind of like we
                 // do with ResourceReference<T>) or whether we want to merge
                 // this concept into BicepValue<T>.
                 T val = Activator.CreateInstance<T>();
-                (val as ProvisioningConstruct)!.OverrideWithExpression(Self.GetReference());
+                (val as ProvisionableConstruct)!.OverrideWithExpression(Self.GetReference());
                 return val;
             }
 
@@ -49,7 +49,7 @@ public class BicepValue<T> : BicepValue
     internal override object? GetLiteralValue() => Value;
 
     // Get the closest primitive to T
-    private protected override Expression GetBicepType() =>
+    private protected override BicepExpression GetBicepType() =>
         BicepSyntax.Types.Create<T>();
 
     /// <summary>
@@ -62,11 +62,11 @@ public class BicepValue<T> : BicepValue
     /// Creates a new BicepValue.
     /// </summary>
     /// <param name="expression">An expression that evaluates to the value.</param>
-    public BicepValue(Expression expression) : this(self: null, expression) { }
+    public BicepValue(BicepExpression expression) : this(self: null, expression) { }
 
     private protected BicepValue(BicepValueReference? self) : base(self) { }
     private protected BicepValue(BicepValueReference? self, T literal) : base(self, (object)literal!) { Value = literal; }
-    private protected BicepValue(BicepValueReference? self, Expression expression) : base(self, expression) { }
+    private protected BicepValue(BicepValueReference? self, BicepExpression expression) : base(self, expression) { }
 
     // Move strongly typed literal values when assigning
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -113,9 +113,9 @@ public class BicepValue<T> : BicepValue
         // Otherwise just wrap the literal
         return new(value);
     }
-    public static implicit operator BicepValue<T>(Expression expression) => new(expression);
-    public static implicit operator BicepValue<T>(BicepVariable reference) =>
-        new(new BicepValueReference(reference, "<value>"), BicepSyntax.Var(reference.ResourceName)) { IsSecure = reference is BicepParameter p && p.IsSecure };
+    public static implicit operator BicepValue<T>(BicepExpression expression) => new(expression);
+    public static implicit operator BicepValue<T>(ProvisioningVariable reference) =>
+        new(new BicepValueReference(reference, "<value>"), BicepSyntax.Var(reference.BicepIdentifier)) { IsSecure = reference is ProvisioningParameter p && p.IsSecure };
 
     // Special case conversions to string for things like Uri, AzureLocation, etc.
     public static implicit operator BicepValue<string>(BicepValue<T> value) =>
@@ -129,7 +129,7 @@ public class BicepValue<T> : BicepValue
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static BicepValue<T> DefineProperty(
-        ProvisioningConstruct construct,
+        ProvisionableConstruct construct,
         string propertyName,
         string[]? bicepPath,
         bool isOutput = false,

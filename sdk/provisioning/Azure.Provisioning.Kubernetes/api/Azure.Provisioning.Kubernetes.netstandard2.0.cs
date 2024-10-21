@@ -1,8 +1,8 @@
 namespace Azure.Provisioning.Kubernetes
 {
-    public partial class ConnectedCluster : Azure.Provisioning.Primitives.Resource
+    public partial class ConnectedCluster : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ConnectedCluster(string resourceName, string? resourceVersion = null, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Core.ResourceType), default(string), default(Azure.Provisioning.ProvisioningContext)) { }
+        public ConnectedCluster(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AgentPublicKeyCertificate { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> AgentVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kubernetes.ConnectivityStatus> ConnectivityStatus { get { throw null; } }
@@ -23,9 +23,9 @@ namespace Azure.Provisioning.Kubernetes
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> TotalCoreCount { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> TotalNodeCount { get { throw null; } }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.Kubernetes.KubernetesBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId) { throw null; }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.Kubernetes.KubernetesBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
-        public static Azure.Provisioning.Kubernetes.ConnectedCluster FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Kubernetes.KubernetesBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Kubernetes.KubernetesBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
+        public static Azure.Provisioning.Kubernetes.ConnectedCluster FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions

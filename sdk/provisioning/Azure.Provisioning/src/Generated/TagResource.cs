@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// TagResource.
 /// </summary>
-public partial class TagResource : Resource
+public partial class TagResource : ProvisionableResource
 {
     /// <summary>
     /// The name of the resource.
@@ -47,11 +47,15 @@ public partial class TagResource : Resource
     /// <summary>
     /// Creates a new TagResource.
     /// </summary>
-    /// <param name="resourceName">Name of the TagResource.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the TagResource resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TagResource.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public TagResource(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Resources/tags", resourceVersion, context)
+    public TagResource(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Resources/tags", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _tagValues = BicepDictionary<string>.DefineProperty(this, "TagValues", ["properties", "tags"]);
@@ -60,13 +64,59 @@ public partial class TagResource : Resource
     }
 
     /// <summary>
+    /// Supported TagResource resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2023-07-01.
+        /// </summary>
+        public static readonly string V2023_07_01 = "2023-07-01";
+
+        /// <summary>
+        /// 2022-09-01.
+        /// </summary>
+        public static readonly string V2022_09_01 = "2022-09-01";
+
+        /// <summary>
+        /// 2019-10-01.
+        /// </summary>
+        public static readonly string V2019_10_01 = "2019-10-01";
+
+        /// <summary>
+        /// 2019-05-01.
+        /// </summary>
+        public static readonly string V2019_05_01 = "2019-05-01";
+
+        /// <summary>
+        /// 2019-04-01.
+        /// </summary>
+        public static readonly string V2019_04_01 = "2019-04-01";
+
+        /// <summary>
+        /// 2019-03-01.
+        /// </summary>
+        public static readonly string V2019_03_01 = "2019-03-01";
+
+        /// <summary>
+        /// 2018-11-01.
+        /// </summary>
+        public static readonly string V2018_11_01 = "2018-11-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing TagResource.
     /// </summary>
-    /// <param name="resourceName">Name of the TagResource.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the TagResource resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TagResource.</param>
     /// <returns>The existing TagResource resource.</returns>
-    public static TagResource FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static TagResource FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this TagResource resource.

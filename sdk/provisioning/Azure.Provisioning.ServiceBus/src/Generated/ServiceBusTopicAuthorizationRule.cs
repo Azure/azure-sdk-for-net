@@ -18,7 +18,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusTopicAuthorizationRule.
 /// </summary>
-public partial class ServiceBusTopicAuthorizationRule : Resource
+public partial class ServiceBusTopicAuthorizationRule : ProvisionableResource
 {
     /// <summary>
     /// The authorization rule name.
@@ -59,11 +59,15 @@ public partial class ServiceBusTopicAuthorizationRule : Resource
     /// <summary>
     /// Creates a new ServiceBusTopicAuthorizationRule.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusTopicAuthorizationRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusTopicAuthorizationRule
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusTopicAuthorizationRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ServiceBusTopicAuthorizationRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/topics/authorizationRules", resourceVersion, context)
+    public ServiceBusTopicAuthorizationRule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/topics/authorizationRules", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _rights = BicepList<ServiceBusAccessRight>.DefineProperty(this, "Rights", ["properties", "rights"]);
@@ -74,13 +78,39 @@ public partial class ServiceBusTopicAuthorizationRule : Resource
     }
 
     /// <summary>
+    /// Supported ServiceBusTopicAuthorizationRule resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-01-01.
+        /// </summary>
+        public static readonly string V2024_01_01 = "2024-01-01";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2017-04-01.
+        /// </summary>
+        public static readonly string V2017_04_01 = "2017-04-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing ServiceBusTopicAuthorizationRule.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusTopicAuthorizationRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusTopicAuthorizationRule
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusTopicAuthorizationRule.</param>
     /// <returns>The existing ServiceBusTopicAuthorizationRule resource.</returns>
-    public static ServiceBusTopicAuthorizationRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusTopicAuthorizationRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ServiceBusTopicAuthorizationRule
@@ -97,5 +127,5 @@ public partial class ServiceBusTopicAuthorizationRule : Resource
     /// <returns>The keys for this ServiceBusTopicAuthorizationRule resource.</returns>
     public ServiceBusAccessKeys GetKeys() =>
         ServiceBusAccessKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(ResourceName), "listKeys")));
+            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
 }

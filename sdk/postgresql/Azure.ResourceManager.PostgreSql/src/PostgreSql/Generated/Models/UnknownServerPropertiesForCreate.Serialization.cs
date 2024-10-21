@@ -19,61 +19,22 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         void IJsonModel<PostgreSqlServerPropertiesForCreate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlServerPropertiesForCreate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForCreate)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version.Value.ToString());
-            }
-            if (Optional.IsDefined(SslEnforcement))
-            {
-                writer.WritePropertyName("sslEnforcement"u8);
-                writer.WriteStringValue(SslEnforcement.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(MinimalTlsVersion))
-            {
-                writer.WritePropertyName("minimalTlsVersion"u8);
-                writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
-            }
-            if (Optional.IsDefined(InfrastructureEncryption))
-            {
-                writer.WritePropertyName("infrastructureEncryption"u8);
-                writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
-            }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsDefined(StorageProfile))
-            {
-                writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
-            }
-            writer.WritePropertyName("createMode"u8);
-            writer.WriteStringValue(CreateMode.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         PostgreSqlServerPropertiesForCreate IJsonModel<PostgreSqlServerPropertiesForCreate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

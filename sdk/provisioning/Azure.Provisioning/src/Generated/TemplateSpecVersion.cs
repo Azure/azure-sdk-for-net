@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// TemplateSpecVersion.
 /// </summary>
-public partial class TemplateSpecVersion : Resource
+public partial class TemplateSpecVersion : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -127,11 +127,15 @@ public partial class TemplateSpecVersion : Resource
     /// <summary>
     /// Creates a new TemplateSpecVersion.
     /// </summary>
-    /// <param name="resourceName">Name of the TemplateSpecVersion.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the TemplateSpecVersion resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TemplateSpecVersion.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public TemplateSpecVersion(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Resources/templateSpecs/versions", resourceVersion, context)
+    public TemplateSpecVersion(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Resources/templateSpecs/versions", resourceVersion ?? "2022-02-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -147,11 +151,32 @@ public partial class TemplateSpecVersion : Resource
     }
 
     /// <summary>
+    /// Supported TemplateSpecVersion resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2022-02-01.
+        /// </summary>
+        public static readonly string V2022_02_01 = "2022-02-01";
+
+        /// <summary>
+        /// 2021-05-01.
+        /// </summary>
+        public static readonly string V2021_05_01 = "2021-05-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing TemplateSpecVersion.
     /// </summary>
-    /// <param name="resourceName">Name of the TemplateSpecVersion.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the TemplateSpecVersion resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TemplateSpecVersion.</param>
     /// <returns>The existing TemplateSpecVersion resource.</returns>
-    public static TemplateSpecVersion FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static TemplateSpecVersion FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Disk.Samples
                 OSType = SupportedOperatingSystemType.Windows,
                 CreationData = new DiskCreationData(DiskCreateOption.UploadPreparedSecure)
                 {
-                    UploadSizeBytes = 10737418752,
+                    UploadSizeBytes = 10737418752L,
                 },
                 SecurityProfile = new DiskSecurityProfile()
                 {
@@ -944,8 +944,8 @@ namespace Azure.ResourceManager.Disk.Samples
                 },
                 CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 200,
-                DiskIopsReadWrite = 125,
-                DiskMBpsReadWrite = 3000,
+                DiskIopsReadWrite = 125L,
+                DiskMBpsReadWrite = 3000L,
             };
             ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);
             ManagedDiskResource result = lro.Value;
@@ -1087,8 +1087,8 @@ namespace Azure.ResourceManager.Disk.Samples
                     LogicalSectorSize = 4096,
                 },
                 DiskSizeGB = 200,
-                DiskIopsReadWrite = 125,
-                DiskMBpsReadWrite = 3000,
+                DiskIopsReadWrite = 125L,
+                DiskMBpsReadWrite = 3000L,
                 Encryption = new DiskEncryption()
                 {
                     EncryptionType = DiskEncryptionType.EncryptionAtRestWithPlatformKey,
@@ -1133,7 +1133,7 @@ namespace Azure.ResourceManager.Disk.Samples
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Upload)
                 {
-                    UploadSizeBytes = 10737418752,
+                    UploadSizeBytes = 10737418752L,
                 },
             };
             ArmOperation<ManagedDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, data);

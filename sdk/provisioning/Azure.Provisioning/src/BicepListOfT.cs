@@ -34,8 +34,8 @@ public class BicepList<T> : BicepValue, IList<BicepValue<T>>
     /// </summary>
     public BicepList(IList<BicepValue<T>>? values) : this(self: null, values) { }
 
-    private BicepList(Expression expression) : base(self: null, expression) { _values = []; }
-    private protected BicepList(BicepValueReference? self, Expression expression) : base(self, expression) { _values = []; }
+    private BicepList(BicepExpression expression) : base(self: null, expression) { _values = []; }
+    private protected BicepList(BicepValueReference? self, BicepExpression expression) : base(self, expression) { _values = []; }
     private BicepList(BicepValueReference? self, IList<BicepValue<T>>? values = null)
         : base(self)
     {
@@ -60,15 +60,15 @@ public class BicepList<T> : BicepValue, IList<BicepValue<T>>
     }
 
     /// <summary>
-    /// Convert a BicepVariable or BicepParameter to a BicepList.
+    /// Convert a ProvisioningVariable or ProvisioningParameter to a BicepList.
     /// </summary>
     /// <param name="reference">The variable or parameter.</param>
-    public static implicit operator BicepList<T>(BicepVariable reference) =>
+    public static implicit operator BicepList<T>(ProvisioningVariable reference) =>
         new(
             new BicepValueReference(reference, "<value>"),
-            BicepSyntax.Var(reference.ResourceName))
+            BicepSyntax.Var(reference.BicepIdentifier))
         {
-            IsSecure = reference is BicepParameter p && p.IsSecure
+            IsSecure = reference is ProvisioningParameter p && p.IsSecure
         };
 
     // TODO: Make it possible to correctly reference these values
@@ -135,13 +135,13 @@ public class BicepList<T> : BicepValue, IList<BicepValue<T>>
     /// </param>
     /// <returns>A BicepList.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static BicepList<T> FromExpression(Func<Expression, T> referenceFactory, Expression expression) =>
+    public static BicepList<T> FromExpression(Func<BicepExpression, T> referenceFactory, BicepExpression expression) =>
         new(expression) { _referenceFactory = referenceFactory };
-    private Func<Expression, T>? _referenceFactory = null;
+    private Func<BicepExpression, T>? _referenceFactory = null;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static BicepList<T> DefineProperty(
-        ProvisioningConstruct construct,
+        ProvisionableConstruct construct,
         string propertyName,
         string[]? bicepPath,
         bool isOutput = false,

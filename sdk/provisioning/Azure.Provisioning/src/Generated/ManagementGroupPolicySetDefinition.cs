@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ManagementGroupPolicySetDefinition.
 /// </summary>
-public partial class ManagementGroupPolicySetDefinition : Resource
+public partial class ManagementGroupPolicySetDefinition : ProvisionableResource
 {
     /// <summary>
     /// The name of the policy set definition to create.
@@ -100,11 +100,15 @@ public partial class ManagementGroupPolicySetDefinition : Resource
     /// <summary>
     /// Creates a new ManagementGroupPolicySetDefinition.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagementGroupPolicySetDefinition.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagementGroupPolicySetDefinition
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagementGroupPolicySetDefinition.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagementGroupPolicySetDefinition(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Authorization/policySetDefinitions", resourceVersion ?? "2023-04-01", context)
+    public ManagementGroupPolicySetDefinition(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Authorization/policySetDefinitions", resourceVersion ?? "2023-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
@@ -177,11 +181,16 @@ public partial class ManagementGroupPolicySetDefinition : Resource
     /// <summary>
     /// Creates a reference to an existing ManagementGroupPolicySetDefinition.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagementGroupPolicySetDefinition.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagementGroupPolicySetDefinition
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagementGroupPolicySetDefinition.</param>
     /// <returns>The existing ManagementGroupPolicySetDefinition resource.</returns>
-    public static ManagementGroupPolicySetDefinition FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagementGroupPolicySetDefinition FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ManagementGroupPolicySetDefinition

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlServerAdministrator.
 /// </summary>
-public partial class PostgreSqlServerAdministrator : Resource
+public partial class PostgreSqlServerAdministrator : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -68,11 +68,15 @@ public partial class PostgreSqlServerAdministrator : Resource
     /// <summary>
     /// Creates a new PostgreSqlServerAdministrator.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlServerAdministrator.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PostgreSqlServerAdministrator
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlServerAdministrator.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlServerAdministrator(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/administrators", resourceVersion, context)
+    public PostgreSqlServerAdministrator(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/servers/administrators", resourceVersion ?? "2017-12-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _administratorType = BicepValue<PostgreSqlAdministratorType>.DefineProperty(this, "AdministratorType", ["properties", "administratorType"]);
@@ -85,11 +89,32 @@ public partial class PostgreSqlServerAdministrator : Resource
     }
 
     /// <summary>
+    /// Supported PostgreSqlServerAdministrator resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2017-12-01-preview.
+        /// </summary>
+        public static readonly string V2017_12_01_preview = "2017-12-01-preview";
+
+        /// <summary>
+        /// 2017-12-01.
+        /// </summary>
+        public static readonly string V2017_12_01 = "2017-12-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing PostgreSqlServerAdministrator.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlServerAdministrator.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PostgreSqlServerAdministrator
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlServerAdministrator.</param>
     /// <returns>The existing PostgreSqlServerAdministrator resource.</returns>
-    public static PostgreSqlServerAdministrator FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlServerAdministrator FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

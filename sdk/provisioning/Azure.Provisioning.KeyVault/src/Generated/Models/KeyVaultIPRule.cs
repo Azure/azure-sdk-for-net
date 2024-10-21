@@ -12,7 +12,7 @@ namespace Azure.Provisioning.KeyVault;
 /// A rule governing the accessibility of a vault from a specific ip address or
 /// ip range.
 /// </summary>
-public partial class KeyVaultIPRule : ProvisioningConstruct
+public partial class KeyVaultIPRule : ProvisionableConstruct
 {
     /// <summary>
     /// An IPv4 address range in CIDR notation, such as

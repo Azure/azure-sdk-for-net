@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Search;
 /// <summary>
 /// SearchService.
 /// </summary>
-public partial class SearchService : Resource
+public partial class SearchService : ProvisionableResource
 {
     /// <summary>
     /// The name of the Azure AI Search service to create or update. Search
@@ -240,11 +240,15 @@ public partial class SearchService : Resource
     /// <summary>
     /// Creates a new SearchService.
     /// </summary>
-    /// <param name="resourceName">Name of the SearchService.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SearchService resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SearchService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SearchService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Search/searchServices", resourceVersion ?? "2023-11-01", context)
+    public SearchService(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Search/searchServices", resourceVersion ?? "2023-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -346,11 +350,16 @@ public partial class SearchService : Resource
     /// <summary>
     /// Creates a reference to an existing SearchService.
     /// </summary>
-    /// <param name="resourceName">Name of the SearchService.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SearchService resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SearchService.</param>
     /// <returns>The existing SearchService resource.</returns>
-    public static SearchService FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SearchService FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this SearchService resource.
@@ -361,34 +370,36 @@ public partial class SearchService : Resource
         new(minLength: 2, maxLength: 60, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// SearchService.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this SearchService.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(SearchBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{ResourceName}_{identity.ResourceName}_{SearchBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(SearchBuiltInRole role, UserAssignedIdentity identity) =>
+        new($"{BicepIdentifier}_{identity.BicepIdentifier}_{SearchBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
         };
 
     /// <summary>
-    /// Assign a role to a principal that grants access to this SearchService.
+    /// Creates a role assignment for a principal that grants access to this
+    /// SearchService.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="bicepIdentifierSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(SearchBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{ResourceName}_{SearchBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(SearchBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? bicepIdentifierSuffix = default) =>
+        new($"{BicepIdentifier}_{SearchBuiltInRole.GetBuiltInRoleName(role)}{(bicepIdentifierSuffix is null ? "" : "_")}{bicepIdentifierSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

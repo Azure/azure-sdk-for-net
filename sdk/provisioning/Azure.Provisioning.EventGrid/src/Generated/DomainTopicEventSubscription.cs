@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// DomainTopicEventSubscription.
 /// </summary>
-public partial class DomainTopicEventSubscription : Resource
+public partial class DomainTopicEventSubscription : ProvisionableResource
 {
     /// <summary>
     /// Name of the event subscription to be created. Event subscription names
@@ -150,11 +150,15 @@ public partial class DomainTopicEventSubscription : Resource
     /// <summary>
     /// Creates a new DomainTopicEventSubscription.
     /// </summary>
-    /// <param name="resourceName">Name of the DomainTopicEventSubscription.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the DomainTopicEventSubscription
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the DomainTopicEventSubscription.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public DomainTopicEventSubscription(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/domains/topics/eventSubscriptions", resourceVersion, context)
+    public DomainTopicEventSubscription(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/domains/topics/eventSubscriptions", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _deadLetterDestination = BicepValue<DeadLetterDestination>.DefineProperty(this, "DeadLetterDestination", ["properties", "deadLetterDestination"]);
@@ -174,11 +178,47 @@ public partial class DomainTopicEventSubscription : Resource
     }
 
     /// <summary>
+    /// Supported DomainTopicEventSubscription resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-06-01-preview.
+        /// </summary>
+        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
+
+        /// <summary>
+        /// 2022-06-15.
+        /// </summary>
+        public static readonly string V2022_06_15 = "2022-06-15";
+
+        /// <summary>
+        /// 2021-12-01.
+        /// </summary>
+        public static readonly string V2021_12_01 = "2021-12-01";
+
+        /// <summary>
+        /// 2020-06-01.
+        /// </summary>
+        public static readonly string V2020_06_01 = "2020-06-01";
+
+        /// <summary>
+        /// 2019-06-01.
+        /// </summary>
+        public static readonly string V2019_06_01 = "2019-06-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing DomainTopicEventSubscription.
     /// </summary>
-    /// <param name="resourceName">Name of the DomainTopicEventSubscription.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the DomainTopicEventSubscription
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the DomainTopicEventSubscription.</param>
     /// <returns>The existing DomainTopicEventSubscription resource.</returns>
-    public static DomainTopicEventSubscription FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static DomainTopicEventSubscription FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

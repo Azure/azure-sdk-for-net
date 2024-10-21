@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         public async Task Get_StandbyVirtualMachinePoolsGet()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachinePools_Get.json
-            // this example is just showing the usage of "StandbyVirtualMachinePools_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachinePoolResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         public async Task Exists_StandbyVirtualMachinePoolsGet()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachinePools_Get.json
-            // this example is just showing the usage of "StandbyVirtualMachinePools_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachinePoolResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         public async Task GetIfExists_StandbyVirtualMachinePoolsGet()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachinePools_Get.json
-            // this example is just showing the usage of "StandbyVirtualMachinePools_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachinePoolResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         public async Task CreateOrUpdate_StandbyVirtualMachinePoolsCreateOrUpdate()
         {
             // Generated from example definition: 2024-03-01/StandbyVirtualMachinePools_CreateOrUpdate.json
-            // this example is just showing the usage of "StandbyVirtualMachinePools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StandbyVirtualMachinePoolResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             {
                 Properties = new StandbyVirtualMachinePoolProperties(StandbyVirtualMachineState.Running)
                 {
-                    ElasticityProfile = new StandbyVirtualMachinePoolElasticityProfile(304)
+                    ElasticityProfile = new StandbyVirtualMachinePoolElasticityProfile(304L)
                     {
-                        MinReadyCapacity = 300,
+                        MinReadyCapacity = 300L,
                     },
                     AttachedVirtualMachineScaleSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000009/resourceGroups/rgstandbypool/providers/Microsoft.Compute/virtualMachineScaleSets/myVmss"),
                 },

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusDisasterRecovery.
 /// </summary>
-public partial class ServiceBusDisasterRecovery : Resource
+public partial class ServiceBusDisasterRecovery : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -86,11 +86,15 @@ public partial class ServiceBusDisasterRecovery : Resource
     /// <summary>
     /// Creates a new ServiceBusDisasterRecovery.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusDisasterRecovery.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusDisasterRecovery
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusDisasterRecovery.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ServiceBusDisasterRecovery(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs", resourceVersion, context)
+    public ServiceBusDisasterRecovery(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _alternateName = BicepValue<string>.DefineProperty(this, "AlternateName", ["properties", "alternateName"]);
@@ -105,13 +109,39 @@ public partial class ServiceBusDisasterRecovery : Resource
     }
 
     /// <summary>
+    /// Supported ServiceBusDisasterRecovery resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-01-01.
+        /// </summary>
+        public static readonly string V2024_01_01 = "2024-01-01";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2017-04-01.
+        /// </summary>
+        public static readonly string V2017_04_01 = "2017-04-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing ServiceBusDisasterRecovery.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusDisasterRecovery.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusDisasterRecovery
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusDisasterRecovery.</param>
     /// <returns>The existing ServiceBusDisasterRecovery resource.</returns>
-    public static ServiceBusDisasterRecovery FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusDisasterRecovery FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ServiceBusDisasterRecovery

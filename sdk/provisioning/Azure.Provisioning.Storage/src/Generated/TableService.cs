@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// TableService.
 /// </summary>
-public partial class TableService : Resource
+public partial class TableService : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -52,11 +52,15 @@ public partial class TableService : Resource
     /// <summary>
     /// Creates a new TableService.
     /// </summary>
-    /// <param name="resourceName">Name of the TableService.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the TableService resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TableService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public TableService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/tableServices", resourceVersion ?? "2023-01-01", context)
+    public TableService(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/tableServices", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _corsRules = BicepList<StorageCorsRule>.DefineProperty(this, "CorsRules", ["properties", "cors", "corsRules"]);
@@ -184,9 +188,14 @@ public partial class TableService : Resource
     /// <summary>
     /// Creates a reference to an existing TableService.
     /// </summary>
-    /// <param name="resourceName">Name of the TableService.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the TableService resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TableService.</param>
     /// <returns>The existing TableService resource.</returns>
-    public static TableService FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static TableService FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(JsonFormatFilePattern left, JsonFormatFilePattern right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JsonFormatFilePattern"/> values are not the same. </summary>
         public static bool operator !=(JsonFormatFilePattern left, JsonFormatFilePattern right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JsonFormatFilePattern"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JsonFormatFilePattern"/>. </summary>
         public static implicit operator JsonFormatFilePattern(string value) => new JsonFormatFilePattern(value);
 
         /// <inheritdoc />

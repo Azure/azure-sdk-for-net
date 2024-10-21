@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// SubscriptionPolicyDefinition.
 /// </summary>
-public partial class SubscriptionPolicyDefinition : Resource
+public partial class SubscriptionPolicyDefinition : ProvisionableResource
 {
     /// <summary>
     /// The name of the policy definition to create.
@@ -113,11 +113,15 @@ public partial class SubscriptionPolicyDefinition : Resource
     /// <summary>
     /// Creates a new SubscriptionPolicyDefinition.
     /// </summary>
-    /// <param name="resourceName">Name of the SubscriptionPolicyDefinition.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SubscriptionPolicyDefinition
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SubscriptionPolicyDefinition.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SubscriptionPolicyDefinition(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Authorization/policyDefinitions", resourceVersion, context)
+    public SubscriptionPolicyDefinition(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Authorization/policyDefinitions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
@@ -134,11 +138,16 @@ public partial class SubscriptionPolicyDefinition : Resource
     /// <summary>
     /// Creates a reference to an existing SubscriptionPolicyDefinition.
     /// </summary>
-    /// <param name="resourceName">Name of the SubscriptionPolicyDefinition.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SubscriptionPolicyDefinition
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SubscriptionPolicyDefinition.</param>
     /// <returns>The existing SubscriptionPolicyDefinition resource.</returns>
-    public static SubscriptionPolicyDefinition FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SubscriptionPolicyDefinition FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this SubscriptionPolicyDefinition

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstance.
 /// </summary>
-public partial class ManagedInstance : Resource
+public partial class ManagedInstance : ProvisionableResource
 {
     /// <summary>
     /// The name of the managed instance.
@@ -274,11 +274,15 @@ public partial class ManagedInstance : Resource
     /// <summary>
     /// Creates a new ManagedInstance.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstance.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedInstance resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstance.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstance(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances", resourceVersion ?? "2021-11-01", context)
+    public ManagedInstance(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -337,11 +341,16 @@ public partial class ManagedInstance : Resource
     /// <summary>
     /// Creates a reference to an existing ManagedInstance.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstance.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedInstance resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstance.</param>
     /// <returns>The existing ManagedInstance resource.</returns>
-    public static ManagedInstance FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstance FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ManagedInstance resource.

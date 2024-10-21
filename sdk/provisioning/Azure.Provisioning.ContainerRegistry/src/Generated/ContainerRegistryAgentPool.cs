@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ContainerRegistryAgentPool.
 /// </summary>
-public partial class ContainerRegistryAgentPool : Resource
+public partial class ContainerRegistryAgentPool : ProvisionableResource
 {
     /// <summary>
     /// The name of the agent pool.
@@ -87,11 +87,15 @@ public partial class ContainerRegistryAgentPool : Resource
     /// <summary>
     /// Creates a new ContainerRegistryAgentPool.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryAgentPool.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerRegistryAgentPool
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryAgentPool.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerRegistryAgentPool(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/agentPools", resourceVersion ?? "2019-06-01-preview", context)
+    public ContainerRegistryAgentPool(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/agentPools", resourceVersion ?? "2019-06-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -120,9 +124,14 @@ public partial class ContainerRegistryAgentPool : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerRegistryAgentPool.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryAgentPool.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerRegistryAgentPool
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryAgentPool.</param>
     /// <returns>The existing ContainerRegistryAgentPool resource.</returns>
-    public static ContainerRegistryAgentPool FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerRegistryAgentPool FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

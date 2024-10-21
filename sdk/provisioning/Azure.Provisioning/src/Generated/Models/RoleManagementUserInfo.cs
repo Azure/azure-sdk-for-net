@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// The detail of a user.
 /// </summary>
-public partial class RoleManagementUserInfo : ProvisioningConstruct
+public partial class RoleManagementUserInfo : ProvisionableConstruct
 {
     /// <summary>
     /// The type of user.

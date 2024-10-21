@@ -13,7 +13,6 @@ using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Roles;
-using Azure.ResourceManager.Resources.Models;
 using System;
 using System.ComponentModel;
 
@@ -22,7 +21,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// ContainerServiceManagedCluster.
 /// </summary>
-public partial class ContainerServiceManagedCluster : Resource
+public partial class ContainerServiceManagedCluster : ProvisionableResource
 {
     /// <summary>
     /// The name of the managed cluster resource.
@@ -342,11 +341,15 @@ public partial class ContainerServiceManagedCluster : Resource
     /// <summary>
     /// Creates a new ContainerServiceManagedCluster.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerServiceManagedCluster.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerServiceManagedCluster
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceManagedCluster.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerServiceManagedCluster(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2023-08-01", context)
+    public ContainerServiceManagedCluster(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -403,9 +406,14 @@ public partial class ContainerServiceManagedCluster : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-07-02-preview.
+        /// 2024-08-02-preview.
         /// </summary>
-        public static readonly string V2024_07_02_preview = "2024-07-02-preview";
+        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
+
+        /// <summary>
+        /// 2024-08-01.
+        /// </summary>
+        public static readonly string V2024_08_01 = "2024-08-01";
 
         /// <summary>
         /// 2024-07-01.
@@ -656,11 +664,16 @@ public partial class ContainerServiceManagedCluster : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerServiceManagedCluster.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerServiceManagedCluster.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerServiceManagedCluster
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceManagedCluster.</param>
     /// <returns>The existing ContainerServiceManagedCluster resource.</returns>
-    public static ContainerServiceManagedCluster FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerServiceManagedCluster FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ContainerServiceManagedCluster
@@ -672,35 +685,36 @@ public partial class ContainerServiceManagedCluster : Resource
         new(minLength: 1, maxLength: 63, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore);
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// ContainerServiceManagedCluster.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this ContainerServiceManagedCluster.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(ContainerServiceBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{ResourceName}_{identity.ResourceName}_{ContainerServiceBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(ContainerServiceBuiltInRole role, UserAssignedIdentity identity) =>
+        new($"{BicepIdentifier}_{identity.BicepIdentifier}_{ContainerServiceBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
         };
 
     /// <summary>
-    /// Assign a role to a principal that grants access to this
+    /// Creates a role assignment for a principal that grants access to this
     /// ContainerServiceManagedCluster.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="bicepIdentifierSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(ContainerServiceBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{ResourceName}_{ContainerServiceBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(ContainerServiceBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? bicepIdentifierSuffix = default) =>
+        new($"{BicepIdentifier}_{ContainerServiceBuiltInRole.GetBuiltInRoleName(role)}{(bicepIdentifierSuffix is null ? "" : "_")}{bicepIdentifierSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

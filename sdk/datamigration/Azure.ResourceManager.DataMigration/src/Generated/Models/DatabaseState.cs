@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(DatabaseState left, DatabaseState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatabaseState"/> values are not the same. </summary>
         public static bool operator !=(DatabaseState left, DatabaseState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DatabaseState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DatabaseState"/>. </summary>
         public static implicit operator DatabaseState(string value) => new DatabaseState(value);
 
         /// <inheritdoc />

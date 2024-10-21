@@ -14,7 +14,7 @@ namespace Azure.Provisioning.AppService;
 /// Virtual Network route contract used to pass routing information for a
 /// Virtual Network.
 /// </summary>
-public partial class AppServiceVirtualNetworkRoute : ProvisioningConstruct
+public partial class AppServiceVirtualNetworkRoute : ProvisionableConstruct
 {
     /// <summary>
     /// The starting address for this route. This may also include a CIDR

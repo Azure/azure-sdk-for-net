@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The ExtendedCassandraKeyspaceResourceInfo.
 /// </summary>
-public partial class ExtendedCassandraKeyspaceResourceInfo : ProvisioningConstruct
+public partial class ExtendedCassandraKeyspaceResourceInfo : ProvisionableConstruct
 {
     /// <summary>
     /// A system generated property. A unique identifier.

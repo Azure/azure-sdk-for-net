@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI.VectorStores;
+#if !AZURE_OPENAI_GA
+
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 
@@ -32,4 +34,21 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
 
     protected AzureVectorStoreClient()
     { }
+
+    internal override CreateVectorStoreOperation CreateCreateVectorStoreOperation(ClientResult<VectorStore> result)
+    {
+        return new AzureCreateVectorStoreOperation(Pipeline, _endpoint, result, _apiVersion);
+    }
+
+    internal override AddFileToVectorStoreOperation CreateAddFileToVectorStoreOperation(ClientResult<VectorStoreFileAssociation> result)
+    {
+        return new AzureAddFileToVectorStoreOperation(Pipeline, _endpoint, result, _apiVersion);
+    }
+
+    internal override CreateBatchFileJobOperation CreateBatchFileJobOperation(ClientResult<VectorStoreBatchFileJob> result)
+    {
+        return new AzureCreateBatchFileJobOperation(Pipeline, _endpoint, result, _apiVersion);
+    }
 }
+
+#endif

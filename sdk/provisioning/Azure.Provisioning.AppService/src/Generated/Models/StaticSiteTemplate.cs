@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Template Options for the static site.
 /// </summary>
-public partial class StaticSiteTemplate : ProvisioningConstruct
+public partial class StaticSiteTemplate : ProvisionableConstruct
 {
     /// <summary>
     /// URL of the template repository. The newly generated repository will be

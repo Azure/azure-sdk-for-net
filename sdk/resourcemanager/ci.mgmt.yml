@@ -46,12 +46,14 @@ trigger:
     - sdk/compute/Azure.ResourceManager.Gallery
     - sdk/compute/Azure.ResourceManager.Sku
     - sdk/computefleet/Azure.ResourceManager.ComputeFleet
+    - sdk/computeschedule/Azure.ResourceManager.ComputeSchedule
     - sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger
     - sdk/confluent/Azure.ResourceManager.Confluent
     - sdk/connectedvmwarevsphere/Azure.ResourceManager.ConnectedVMwarevSphere
     - sdk/consumption/Azure.ResourceManager.Consumption
     - sdk/containerapps/Azure.ResourceManager.AppContainers
     - sdk/containerinstance/Azure.ResourceManager.ContainerInstance
+    - sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB
@@ -251,12 +253,14 @@ pr:
     - sdk/compute/Azure.ResourceManager.Gallery
     - sdk/compute/Azure.ResourceManager.Sku
     - sdk/computefleet/Azure.ResourceManager.ComputeFleet
+    - sdk/computeschedule/Azure.ResourceManager.ComputeSchedule
     - sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger
     - sdk/confluent/Azure.ResourceManager.Confluent
     - sdk/connectedvmwarevsphere/Azure.ResourceManager.ConnectedVMwarevSphere
     - sdk/consumption/Azure.ResourceManager.Consumption
     - sdk/containerapps/Azure.ResourceManager.AppContainers
     - sdk/containerinstance/Azure.ResourceManager.ContainerInstance
+    - sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB

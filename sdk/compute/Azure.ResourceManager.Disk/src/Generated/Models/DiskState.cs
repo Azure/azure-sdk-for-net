@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Disk.Models
         public static bool operator ==(DiskState left, DiskState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskState"/> values are not the same. </summary>
         public static bool operator !=(DiskState left, DiskState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiskState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskState"/>. </summary>
         public static implicit operator DiskState(string value) => new DiskState(value);
 
         /// <inheritdoc />

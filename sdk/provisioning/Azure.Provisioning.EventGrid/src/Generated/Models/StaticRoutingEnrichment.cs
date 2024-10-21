@@ -17,7 +17,7 @@ namespace Azure.Provisioning.EventGrid;
 /// include
 /// Azure.ResourceManager.EventGrid.Models.StaticStringRoutingEnrichment.
 /// </summary>
-public partial class StaticRoutingEnrichment : ProvisioningConstruct
+public partial class StaticRoutingEnrichment : ProvisionableConstruct
 {
     /// <summary>
     /// Static routing enrichment key.

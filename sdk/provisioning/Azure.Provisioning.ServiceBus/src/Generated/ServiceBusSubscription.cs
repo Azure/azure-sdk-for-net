@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusSubscription.
 /// </summary>
-public partial class ServiceBusSubscription : Resource
+public partial class ServiceBusSubscription : ProvisionableResource
 {
     /// <summary>
     /// The subscription name.
@@ -174,11 +174,15 @@ public partial class ServiceBusSubscription : Resource
     /// <summary>
     /// Creates a new ServiceBusSubscription.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusSubscription.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusSubscription resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusSubscription.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ServiceBusSubscription(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/topics/subscriptions", resourceVersion ?? "2024-01-01", context)
+    public ServiceBusSubscription(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/topics/subscriptions", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _autoDeleteOnIdle = BicepValue<TimeSpan>.DefineProperty(this, "AutoDeleteOnIdle", ["properties", "autoDeleteOnIdle"]);
@@ -230,11 +234,16 @@ public partial class ServiceBusSubscription : Resource
     /// <summary>
     /// Creates a reference to an existing ServiceBusSubscription.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusSubscription.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusSubscription resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusSubscription.</param>
     /// <returns>The existing ServiceBusSubscription resource.</returns>
-    public static ServiceBusSubscription FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusSubscription FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ServiceBusSubscription resource.

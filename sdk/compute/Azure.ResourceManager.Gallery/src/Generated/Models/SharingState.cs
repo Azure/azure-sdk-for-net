@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Gallery.Models
         public static bool operator ==(SharingState left, SharingState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SharingState"/> values are not the same. </summary>
         public static bool operator !=(SharingState left, SharingState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SharingState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SharingState"/>. </summary>
         public static implicit operator SharingState(string value) => new SharingState(value);
 
         /// <inheritdoc />

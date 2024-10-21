@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlFirewallRule.
 /// </summary>
-public partial class SqlFirewallRule : Resource
+public partial class SqlFirewallRule : ProvisionableResource
 {
     /// <summary>
     /// The name of the firewall rule.
@@ -53,11 +53,15 @@ public partial class SqlFirewallRule : Resource
     /// <summary>
     /// Creates a new SqlFirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlFirewallRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlFirewallRule resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlFirewallRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlFirewallRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/firewallRules", resourceVersion, context)
+    public SqlFirewallRule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/firewallRules", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _endIPAddress = BicepValue<string>.DefineProperty(this, "EndIPAddress", ["properties", "endIpAddress"]);
@@ -67,13 +71,44 @@ public partial class SqlFirewallRule : Resource
     }
 
     /// <summary>
+    /// Supported SqlFirewallRule resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2014-04-01.
+        /// </summary>
+        public static readonly string V2014_04_01 = "2014-04-01";
+
+        /// <summary>
+        /// 2014-01-01.
+        /// </summary>
+        public static readonly string V2014_01_01 = "2014-01-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing SqlFirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlFirewallRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlFirewallRule resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlFirewallRule.</param>
     /// <returns>The existing SqlFirewallRule resource.</returns>
-    public static SqlFirewallRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlFirewallRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this SqlFirewallRule resource.

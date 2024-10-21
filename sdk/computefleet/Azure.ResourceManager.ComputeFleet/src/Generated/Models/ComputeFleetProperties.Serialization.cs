@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         void IJsonModel<ComputeFleetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -48,6 +56,16 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(VmAttributes))
+            {
+                writer.WritePropertyName("vmAttributes"u8);
+                writer.WriteObjectValue(VmAttributes, options);
+            }
+            if (Optional.IsDefined(AdditionalLocationsProfile))
+            {
+                writer.WritePropertyName("additionalLocationsProfile"u8);
+                writer.WriteObjectValue(AdditionalLocationsProfile, options);
+            }
             writer.WritePropertyName("computeProfile"u8);
             writer.WriteObjectValue(ComputeProfile, options);
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
@@ -75,7 +93,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ComputeFleetProperties IJsonModel<ComputeFleetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -102,6 +119,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             SpotPriorityProfile spotPriorityProfile = default;
             RegularPriorityProfile regularPriorityProfile = default;
             IList<ComputeFleetVmSizeProfile> vmSizesProfile = default;
+            ComputeFleetVmAttributes vmAttributes = default;
+            AdditionalLocationsProfile additionalLocationsProfile = default;
             ComputeFleetComputeProfile computeProfile = default;
             DateTimeOffset? timeCreated = default;
             string uniqueId = default;
@@ -146,6 +165,24 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     vmSizesProfile = array;
                     continue;
                 }
+                if (property.NameEquals("vmAttributes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmAttributes = ComputeFleetVmAttributes.DeserializeComputeFleetVmAttributes(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("additionalLocationsProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    additionalLocationsProfile = AdditionalLocationsProfile.DeserializeAdditionalLocationsProfile(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("computeProfile"u8))
                 {
                     computeProfile = ComputeFleetComputeProfile.DeserializeComputeFleetComputeProfile(property.Value, options);
@@ -176,6 +213,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 spotPriorityProfile,
                 regularPriorityProfile,
                 vmSizesProfile,
+                vmAttributes,
+                additionalLocationsProfile,
                 computeProfile,
                 timeCreated,
                 uniqueId,

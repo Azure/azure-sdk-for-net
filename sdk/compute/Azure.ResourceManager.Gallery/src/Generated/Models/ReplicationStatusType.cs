@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Gallery.Models
         public static bool operator ==(ReplicationStatusType left, ReplicationStatusType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReplicationStatusType"/> values are not the same. </summary>
         public static bool operator !=(ReplicationStatusType left, ReplicationStatusType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReplicationStatusType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReplicationStatusType"/>. </summary>
         public static implicit operator ReplicationStatusType(string value) => new ReplicationStatusType(value);
 
         /// <inheritdoc />

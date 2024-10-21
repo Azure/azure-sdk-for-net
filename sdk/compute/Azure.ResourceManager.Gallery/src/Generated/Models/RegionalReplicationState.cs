@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Gallery.Models
         public static bool operator ==(RegionalReplicationState left, RegionalReplicationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RegionalReplicationState"/> values are not the same. </summary>
         public static bool operator !=(RegionalReplicationState left, RegionalReplicationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RegionalReplicationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RegionalReplicationState"/>. </summary>
         public static implicit operator RegionalReplicationState(string value) => new RegionalReplicationState(value);
 
         /// <inheritdoc />

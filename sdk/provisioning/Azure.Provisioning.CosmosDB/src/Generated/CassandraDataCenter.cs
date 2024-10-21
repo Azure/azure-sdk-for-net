@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CassandraDataCenter.
 /// </summary>
-public partial class CassandraDataCenter : Resource
+public partial class CassandraDataCenter : ProvisionableResource
 {
     /// <summary>
     /// Data center name in a managed Cassandra cluster.
@@ -51,11 +51,15 @@ public partial class CassandraDataCenter : Resource
     /// <summary>
     /// Creates a new CassandraDataCenter.
     /// </summary>
-    /// <param name="resourceName">Name of the CassandraDataCenter.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CassandraDataCenter resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CassandraDataCenter.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CassandraDataCenter(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/cassandraClusters/dataCenters", resourceVersion, context)
+    public CassandraDataCenter(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/cassandraClusters/dataCenters", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<CassandraDataCenterProperties>.DefineProperty(this, "Properties", ["properties"]);
@@ -65,11 +69,77 @@ public partial class CassandraDataCenter : Resource
     }
 
     /// <summary>
+    /// Supported CassandraDataCenter resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-09-01-preview.
+        /// </summary>
+        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
+
+        /// <summary>
+        /// 2024-08-15.
+        /// </summary>
+        public static readonly string V2024_08_15 = "2024-08-15";
+
+        /// <summary>
+        /// 2024-05-15.
+        /// </summary>
+        public static readonly string V2024_05_15 = "2024-05-15";
+
+        /// <summary>
+        /// 2023-11-15.
+        /// </summary>
+        public static readonly string V2023_11_15 = "2023-11-15";
+
+        /// <summary>
+        /// 2023-09-15.
+        /// </summary>
+        public static readonly string V2023_09_15 = "2023-09-15";
+
+        /// <summary>
+        /// 2023-04-15.
+        /// </summary>
+        public static readonly string V2023_04_15 = "2023-04-15";
+
+        /// <summary>
+        /// 2023-03-15.
+        /// </summary>
+        public static readonly string V2023_03_15 = "2023-03-15";
+
+        /// <summary>
+        /// 2022-11-15.
+        /// </summary>
+        public static readonly string V2022_11_15 = "2022-11-15";
+
+        /// <summary>
+        /// 2022-08-15.
+        /// </summary>
+        public static readonly string V2022_08_15 = "2022-08-15";
+
+        /// <summary>
+        /// 2022-05-15.
+        /// </summary>
+        public static readonly string V2022_05_15 = "2022-05-15";
+
+        /// <summary>
+        /// 2021-10-15.
+        /// </summary>
+        public static readonly string V2021_10_15 = "2021-10-15";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing CassandraDataCenter.
     /// </summary>
-    /// <param name="resourceName">Name of the CassandraDataCenter.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CassandraDataCenter resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CassandraDataCenter.</param>
     /// <returns>The existing CassandraDataCenter resource.</returns>
-    public static CassandraDataCenter FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CassandraDataCenter FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

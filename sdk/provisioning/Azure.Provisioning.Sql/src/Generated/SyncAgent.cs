@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SyncAgent.
 /// </summary>
-public partial class SyncAgent : Resource
+public partial class SyncAgent : ProvisionableResource
 {
     /// <summary>
     /// The name of the sync agent.
@@ -80,11 +80,15 @@ public partial class SyncAgent : Resource
     /// <summary>
     /// Creates a new SyncAgent.
     /// </summary>
-    /// <param name="resourceName">Name of the SyncAgent.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SyncAgent resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SyncAgent.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SyncAgent(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/syncAgents", resourceVersion ?? "2021-11-01", context)
+    public SyncAgent(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/syncAgents", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _syncDatabaseId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SyncDatabaseId", ["properties", "syncDatabaseId"]);
@@ -117,9 +121,14 @@ public partial class SyncAgent : Resource
     /// <summary>
     /// Creates a reference to an existing SyncAgent.
     /// </summary>
-    /// <param name="resourceName">Name of the SyncAgent.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SyncAgent resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SyncAgent.</param>
     /// <returns>The existing SyncAgent resource.</returns>
-    public static SyncAgent FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SyncAgent FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

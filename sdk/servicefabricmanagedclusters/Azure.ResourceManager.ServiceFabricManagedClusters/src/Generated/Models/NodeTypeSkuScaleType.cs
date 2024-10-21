@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator ==(NodeTypeSkuScaleType left, NodeTypeSkuScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeTypeSkuScaleType"/> values are not the same. </summary>
         public static bool operator !=(NodeTypeSkuScaleType left, NodeTypeSkuScaleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NodeTypeSkuScaleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NodeTypeSkuScaleType"/>. </summary>
         public static implicit operator NodeTypeSkuScaleType(string value) => new NodeTypeSkuScaleType(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Disk.Models
         public static bool operator ==(SnapshotStorageAccountType left, SnapshotStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SnapshotStorageAccountType"/> values are not the same. </summary>
         public static bool operator !=(SnapshotStorageAccountType left, SnapshotStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SnapshotStorageAccountType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SnapshotStorageAccountType"/>. </summary>
         public static implicit operator SnapshotStorageAccountType(string value) => new SnapshotStorageAccountType(value);
 
         /// <inheritdoc />

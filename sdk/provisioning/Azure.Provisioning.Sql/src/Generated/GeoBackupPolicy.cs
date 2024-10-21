@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// GeoBackupPolicy.
 /// </summary>
-public partial class GeoBackupPolicy : Resource
+public partial class GeoBackupPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -69,11 +69,15 @@ public partial class GeoBackupPolicy : Resource
     /// <summary>
     /// Creates a new GeoBackupPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the GeoBackupPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the GeoBackupPolicy resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the GeoBackupPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public GeoBackupPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/geoBackupPolicies", resourceVersion ?? "2021-11-01", context)
+    public GeoBackupPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/geoBackupPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<GeoBackupPolicyState>.DefineProperty(this, "State", ["properties", "state"], isRequired: true);
@@ -114,9 +118,14 @@ public partial class GeoBackupPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing GeoBackupPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the GeoBackupPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the GeoBackupPolicy resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the GeoBackupPolicy.</param>
     /// <returns>The existing GeoBackupPolicy resource.</returns>
-    public static GeoBackupPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static GeoBackupPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

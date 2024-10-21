@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration
     }
     public partial class KeyVaultAdministrationClientOptions : Azure.Core.ClientOptions
     {
-        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V7_6_Preview_1) { }
+        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V7_5) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -52,7 +52,6 @@ namespace Azure.Security.KeyVault.Administration
             V7_3 = 2,
             V7_4 = 3,
             V7_5 = 4,
-            V7_6_Preview_1 = 5,
         }
     }
     public static partial class KeyVaultAdministrationModelFactory
@@ -80,10 +79,6 @@ namespace Azure.Security.KeyVault.Administration
         public virtual System.Uri VaultUri { get { throw null; } }
         public virtual Azure.Security.KeyVault.Administration.KeyVaultBackupOperation StartBackup(System.Uri blobStorageUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.KeyVaultBackupOperation> StartBackupAsync(System.Uri blobStorageUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.KeyVault.Administration.KeyVaultPreBackupOperation StartPreBackup(System.Uri blobStorageUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.KeyVaultPreBackupOperation> StartPreBackupAsync(System.Uri blobStorageUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.KeyVault.Administration.KeyVaultPreRestoreOperation StartPreRestore(System.Uri folderUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.KeyVaultPreRestoreOperation> StartPreRestoreAsync(System.Uri folderUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Administration.KeyVaultRestoreOperation StartRestore(System.Uri folderUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.KeyVaultRestoreOperation> StartRestoreAsync(System.Uri folderUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Administration.KeyVaultSelectiveKeyRestoreOperation StartSelectiveKeyRestore(string keyName, System.Uri folderUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -169,38 +164,6 @@ namespace Azure.Security.KeyVault.Administration
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Administration.KeyVaultDataAction> DataActions { get { throw null; } }
         public System.Collections.Generic.IList<string> NotActions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Administration.KeyVaultDataAction> NotDataActions { get { throw null; } }
-    }
-    public partial class KeyVaultPreBackupOperation : Azure.Operation<Azure.Security.KeyVault.Administration.KeyVaultBackupResult>
-    {
-        protected KeyVaultPreBackupOperation() { }
-        public KeyVaultPreBackupOperation(Azure.Security.KeyVault.Administration.KeyVaultBackupClient client, string id) { }
-        public System.DateTimeOffset? EndTime { get { throw null; } }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
-        public override Azure.Security.KeyVault.Administration.KeyVaultBackupResult Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultBackupResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultBackupResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
-    public partial class KeyVaultPreRestoreOperation : Azure.Operation<Azure.Security.KeyVault.Administration.KeyVaultRestoreResult>
-    {
-        protected KeyVaultPreRestoreOperation() { }
-        public KeyVaultPreRestoreOperation(Azure.Security.KeyVault.Administration.KeyVaultBackupClient client, string id) { }
-        public System.DateTimeOffset? EndTime { get { throw null; } }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
-        public override Azure.Security.KeyVault.Administration.KeyVaultRestoreResult Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultRestoreResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultRestoreResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class KeyVaultRestoreOperation : Azure.Operation<Azure.Security.KeyVault.Administration.KeyVaultRestoreResult>
     {
@@ -372,15 +335,5 @@ namespace Azure.Security.KeyVault.Administration
         private readonly int _dummyPrimitive;
         public bool AsBoolean() { throw null; }
         public override string ToString() { throw null; }
-    }
-}
-namespace Azure.Security.KeyVault.Administration.Models
-{
-    public partial class PreBackupOperationParameters
-    {
-        public PreBackupOperationParameters() { }
-        public string StorageResourceUri { get { throw null; } set { } }
-        public string Token { get { throw null; } set { } }
-        public bool? UseManagedIdentity { get { throw null; } set { } }
     }
 }

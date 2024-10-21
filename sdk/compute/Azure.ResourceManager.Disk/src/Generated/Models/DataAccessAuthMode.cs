@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Disk.Models
         public static bool operator ==(DataAccessAuthMode left, DataAccessAuthMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataAccessAuthMode"/> values are not the same. </summary>
         public static bool operator !=(DataAccessAuthMode left, DataAccessAuthMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataAccessAuthMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataAccessAuthMode"/>. </summary>
         public static implicit operator DataAccessAuthMode(string value) => new DataAccessAuthMode(value);
 
         /// <inheritdoc />

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// FailoverGroup.
 /// </summary>
-public partial class FailoverGroup : Resource
+public partial class FailoverGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the failover group.
@@ -94,11 +94,15 @@ public partial class FailoverGroup : Resource
     /// <summary>
     /// Creates a new FailoverGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the FailoverGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the FailoverGroup resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the FailoverGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public FailoverGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/failoverGroups", resourceVersion ?? "2021-11-01", context)
+    public FailoverGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/failoverGroups", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _failoverDatabases = BicepList<ResourceIdentifier>.DefineProperty(this, "FailoverDatabases", ["properties", "databases"]);
@@ -133,11 +137,16 @@ public partial class FailoverGroup : Resource
     /// <summary>
     /// Creates a reference to an existing FailoverGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the FailoverGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the FailoverGroup resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the FailoverGroup.</param>
     /// <returns>The existing FailoverGroup resource.</returns>
-    public static FailoverGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static FailoverGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this FailoverGroup resource.

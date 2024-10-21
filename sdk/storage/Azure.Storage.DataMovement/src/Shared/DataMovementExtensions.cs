@@ -21,8 +21,8 @@ namespace Azure.Storage.DataMovement
                 properties: properties);
         }
 
-        public static StreamToUriJobPart ToJobPartAsync(
-            this StreamToUriTransferJob baseJob,
+        public static StreamToUriJobPart ToStreamToUriJobPartAsync(
+            this TransferJobInternal baseJob,
             Stream planFileStream,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource)
@@ -53,8 +53,8 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
-        public static ServiceToServiceJobPart ToJobPartAsync(
-            this ServiceToServiceTransferJob baseJob,
+        public static ServiceToServiceJobPart ToServiceToServiceJobPartAsync(
+            this TransferJobInternal baseJob,
             Stream planFileStream,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource)
@@ -85,8 +85,8 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
-        public static UriToStreamJobPart ToJobPartAsync(
-            this UriToStreamTransferJob baseJob,
+        public static UriToStreamJobPart ToUriToStreamJobPartAsync(
+            this TransferJobInternal baseJob,
             Stream planFileStream,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource)
@@ -117,8 +117,8 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
-        public static StreamToUriJobPart ToJobPartAsync(
-            this StreamToUriTransferJob baseJob,
+        public static StreamToUriJobPart ToStreamToUriJobPartAsync(
+            this TransferJobInternal baseJob,
             Stream planFileStream,
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource)
@@ -153,8 +153,8 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
-        public static ServiceToServiceJobPart ToJobPartAsync(
-            this ServiceToServiceTransferJob baseJob,
+        public static ServiceToServiceJobPart ToServiceToServiceJobPartAsync(
+            this TransferJobInternal baseJob,
             Stream planFileStream,
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource)
@@ -187,8 +187,8 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
-        public static UriToStreamJobPart ToJobPartAsync(
-            this UriToStreamTransferJob baseJob,
+        public static UriToStreamJobPart ToUriToStreamJobPartAsync(
+            this TransferJobInternal baseJob,
             Stream planFileStream,
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource)

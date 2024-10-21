@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Disk.Models
         public static bool operator ==(AccessLevel left, AccessLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AccessLevel"/> values are not the same. </summary>
         public static bool operator !=(AccessLevel left, AccessLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AccessLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AccessLevel"/>. </summary>
         public static implicit operator AccessLevel(string value) => new AccessLevel(value);
 
         /// <inheritdoc />

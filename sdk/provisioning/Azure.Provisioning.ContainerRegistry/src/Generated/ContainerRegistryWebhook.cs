@@ -17,7 +17,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ContainerRegistryWebhook.
 /// </summary>
-public partial class ContainerRegistryWebhook : Resource
+public partial class ContainerRegistryWebhook : ProvisionableResource
 {
     /// <summary>
     /// The name of the webhook.
@@ -100,11 +100,15 @@ public partial class ContainerRegistryWebhook : Resource
     /// <summary>
     /// Creates a new ContainerRegistryWebhook.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryWebhook.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerRegistryWebhook resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryWebhook.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerRegistryWebhook(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/webhooks", resourceVersion ?? "2023-07-01", context)
+    public ContainerRegistryWebhook(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/webhooks", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -159,11 +163,16 @@ public partial class ContainerRegistryWebhook : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerRegistryWebhook.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryWebhook.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerRegistryWebhook resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryWebhook.</param>
     /// <returns>The existing ContainerRegistryWebhook resource.</returns>
-    public static ContainerRegistryWebhook FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerRegistryWebhook FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ContainerRegistryWebhook resource.

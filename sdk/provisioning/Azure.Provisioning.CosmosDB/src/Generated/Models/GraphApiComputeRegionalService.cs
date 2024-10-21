@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Resource for a regional service location.
 /// </summary>
-public partial class GraphApiComputeRegionalService : ProvisioningConstruct
+public partial class GraphApiComputeRegionalService : ProvisionableConstruct
 {
     /// <summary>
     /// The regional endpoint for GraphAPICompute.

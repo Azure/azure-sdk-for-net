@@ -20,7 +20,7 @@ namespace Azure.Provisioning.AppConfiguration;
 /// <summary>
 /// AppConfigurationStore.
 /// </summary>
-public partial class AppConfigurationStore : Resource
+public partial class AppConfigurationStore : ProvisionableResource
 {
     /// <summary>
     /// The name of the configuration store.
@@ -131,11 +131,15 @@ public partial class AppConfigurationStore : Resource
     /// <summary>
     /// Creates a new AppConfigurationStore.
     /// </summary>
-    /// <param name="resourceName">Name of the AppConfigurationStore.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AppConfigurationStore resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppConfigurationStore.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AppConfigurationStore(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.AppConfiguration/configurationStores", resourceVersion ?? "2019-10-01", context)
+    public AppConfigurationStore(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.AppConfiguration/configurationStores", resourceVersion ?? "2024-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -190,11 +194,16 @@ public partial class AppConfigurationStore : Resource
     /// <summary>
     /// Creates a reference to an existing AppConfigurationStore.
     /// </summary>
-    /// <param name="resourceName">Name of the AppConfigurationStore.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AppConfigurationStore resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppConfigurationStore.</param>
     /// <returns>The existing AppConfigurationStore resource.</returns>
-    public static AppConfigurationStore FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static AppConfigurationStore FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this AppConfigurationStore resource.
@@ -211,38 +220,39 @@ public partial class AppConfigurationStore : Resource
     public BicepList<AppConfigurationStoreApiKey> GetKeys() =>
         BicepList<AppConfigurationStoreApiKey>.FromExpression(
             AppConfigurationStoreApiKey.FromExpression,
-            new MemberExpression(new FunctionCallExpression(new MemberExpression(new IdentifierExpression(ResourceName), "listKeys")), "keys"));
+            new MemberExpression(new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")), "keys"));
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// AppConfigurationStore.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this AppConfigurationStore.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(AppConfigurationBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{ResourceName}_{identity.ResourceName}_{AppConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(AppConfigurationBuiltInRole role, UserAssignedIdentity identity) =>
+        new($"{BicepIdentifier}_{identity.BicepIdentifier}_{AppConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
         };
 
     /// <summary>
-    /// Assign a role to a principal that grants access to this
+    /// Creates a role assignment for a principal that grants access to this
     /// AppConfigurationStore.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="bicepIdentifierSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(AppConfigurationBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{ResourceName}_{AppConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(AppConfigurationBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? bicepIdentifierSuffix = default) =>
+        new($"{BicepIdentifier}_{AppConfigurationBuiltInRole.GetBuiltInRoleName(role)}{(bicepIdentifierSuffix is null ? "" : "_")}{bicepIdentifierSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

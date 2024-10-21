@@ -7,7 +7,6 @@ using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
-using Azure.ResourceManager.Resources.Models;
 using System;
 
 namespace Azure.Provisioning.Resources;
@@ -15,7 +14,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Deployment properties with additional details.
 /// </summary>
-public partial class ArmDeploymentPropertiesExtended : ProvisioningConstruct
+public partial class ArmDeploymentPropertiesExtended : ProvisionableConstruct
 {
     /// <summary>
     /// Denotes the state of provisioning.

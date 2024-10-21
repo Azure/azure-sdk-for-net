@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Disk.Models
         public static bool operator ==(DiskPublicNetworkAccess left, DiskPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(DiskPublicNetworkAccess left, DiskPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiskPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskPublicNetworkAccess"/>. </summary>
         public static implicit operator DiskPublicNetworkAccess(string value) => new DiskPublicNetworkAccess(value);
 
         /// <inheritdoc />

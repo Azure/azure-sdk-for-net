@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceAdministrator.
 /// </summary>
-public partial class ManagedInstanceAdministrator : Resource
+public partial class ManagedInstanceAdministrator : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -68,11 +68,15 @@ public partial class ManagedInstanceAdministrator : Resource
     /// <summary>
     /// Creates a new ManagedInstanceAdministrator.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceAdministrator.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedInstanceAdministrator
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAdministrator.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceAdministrator(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/administrators", resourceVersion ?? "2021-11-01", context)
+    public ManagedInstanceAdministrator(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/administrators", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _administratorType = BicepValue<ManagedInstanceAdministratorType>.DefineProperty(this, "AdministratorType", ["properties", "administratorType"]);
@@ -103,9 +107,14 @@ public partial class ManagedInstanceAdministrator : Resource
     /// <summary>
     /// Creates a reference to an existing ManagedInstanceAdministrator.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceAdministrator.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedInstanceAdministrator
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAdministrator.</param>
     /// <returns>The existing ManagedInstanceAdministrator resource.</returns>
-    public static ManagedInstanceAdministrator FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceAdministrator FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

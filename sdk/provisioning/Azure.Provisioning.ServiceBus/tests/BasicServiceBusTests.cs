@@ -20,18 +20,22 @@ public class BasicServiceBusTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter queueName =
+                Infrastructure infra = new();
+
+                ProvisioningParameter queueName =
                     new(nameof(queueName), typeof(string))
                     {
                         Value = "orders",
                         Description = "The name of the SB queue."
                     };
+                infra.Add(queueName);
 
                 ServiceBusNamespace sb =
                     new(nameof(sb), ServiceBusNamespace.ResourceVersions.V2021_11_01)
                     {
                         Sku = new ServiceBusSku { Name = ServiceBusSkuName.Standard },
                     };
+                infra.Add(sb);
 
                 ServiceBusQueue queue =
                     new(nameof(queue), ServiceBusNamespace.ResourceVersions.V2021_11_01)
@@ -41,18 +45,21 @@ public class BasicServiceBusTests(bool async)
                         // Hack around TimeSpan not serializing ISO durations
                         // correctly using a Bicep string literal expression.
                         // TODO: Change these to regular strings when patched.
-                        LockDuration = new StringLiteral("PT5M"),
+                        LockDuration = new StringLiteralExpression("PT5M"),
                         MaxSizeInMegabytes = 1024,
                         RequiresDuplicateDetection = false,
                         RequiresSession = false,
-                        DefaultMessageTimeToLive = new StringLiteral("P10675199DT2H48M5.4775807S"),
+                        DefaultMessageTimeToLive = new StringLiteralExpression("P10675199DT2H48M5.4775807S"),
                         DeadLetteringOnMessageExpiration = false,
-                        DuplicateDetectionHistoryTimeWindow = new StringLiteral("PT10M"),
+                        DuplicateDetectionHistoryTimeWindow = new StringLiteralExpression("PT10M"),
                         MaxDeliveryCount = 10,
-                        AutoDeleteOnIdle = new StringLiteral("P10675199DT2H48M5.4775807S"),
+                        AutoDeleteOnIdle = new StringLiteralExpression("P10675199DT2H48M5.4775807S"),
                         EnablePartitioning = false,
                         EnableExpress = false
                     };
+                infra.Add(queue);
+
+                return infra;
             })
         .Compare(
             """

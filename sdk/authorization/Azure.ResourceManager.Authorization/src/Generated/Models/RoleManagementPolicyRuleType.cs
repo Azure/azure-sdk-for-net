@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Authorization.Models
         public static bool operator ==(RoleManagementPolicyRuleType left, RoleManagementPolicyRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementPolicyRuleType"/> values are not the same. </summary>
         public static bool operator !=(RoleManagementPolicyRuleType left, RoleManagementPolicyRuleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RoleManagementPolicyRuleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleManagementPolicyRuleType"/>. </summary>
         public static implicit operator RoleManagementPolicyRuleType(string value) => new RoleManagementPolicyRuleType(value);
 
         /// <inheritdoc />

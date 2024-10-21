@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// DataMaskingPolicy.
 /// </summary>
-public partial class DataMaskingPolicy : Resource
+public partial class DataMaskingPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -84,11 +84,15 @@ public partial class DataMaskingPolicy : Resource
     /// <summary>
     /// Creates a new DataMaskingPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the DataMaskingPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the DataMaskingPolicy resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the DataMaskingPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public DataMaskingPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/dataMaskingPolicies", resourceVersion ?? "2021-11-01", context)
+    public DataMaskingPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/dataMaskingPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _dataMaskingState = BicepValue<DataMaskingState>.DefineProperty(this, "DataMaskingState", ["properties", "dataMaskingState"]);
@@ -131,9 +135,14 @@ public partial class DataMaskingPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing DataMaskingPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the DataMaskingPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the DataMaskingPolicy resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the DataMaskingPolicy.</param>
     /// <returns>The existing DataMaskingPolicy resource.</returns>
-    public static DataMaskingPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static DataMaskingPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

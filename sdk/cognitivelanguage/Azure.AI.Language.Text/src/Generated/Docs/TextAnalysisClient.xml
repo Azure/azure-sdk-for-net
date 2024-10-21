@@ -1785,49 +1785,129 @@ Console.WriteLine(result.GetProperty("kind").ToString());
       <example>
 This sample shows how to call AnalyzeTextOperationStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
 ]]></code>
-This sample shows how to call AnalyzeTextOperationStatusAsync with all parameters.
+This sample shows how to call AnalyzeTextOperationStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true, top: 1234, skip: 1234);
+Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatusAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatusAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"));
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatusAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("29fe5bb0-83ae-4f86-85d6-775534dcd2d4"));
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatusAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"));
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatusAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"));
 ]]></code></example>
     </member>
     <member name="AnalyzeTextOperationStatus(Guid,bool?,int?,int?,CancellationToken)">
       <example>
 This sample shows how to call AnalyzeTextOperationStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
 ]]></code>
-This sample shows how to call AnalyzeTextOperationStatus with all parameters.
+This sample shows how to call AnalyzeTextOperationStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true, top: 1234, skip: 1234);
+Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatus.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatus.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"));
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatus.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("29fe5bb0-83ae-4f86-85d6-775534dcd2d4"));
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatus.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"));
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatus.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"));
 ]]></code></example>
     </member>
     <member name="AnalyzeTextOperationStatusAsync(Guid,bool?,int?,int?,RequestContext)">
       <example>
 This sample shows how to call AnalyzeTextOperationStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null, null, null);
+Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -1839,59 +1919,124 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
-This sample shows how to call AnalyzeTextOperationStatusAsync with all parameters and parse the result.
+This sample shows how to call AnalyzeTextOperationStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), true, 1234, 1234, null);
+Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("displayName").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("nextLink").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("statistics").GetProperty("documentsCount").ToString());
-Console.WriteLine(result.GetProperty("statistics").GetProperty("validDocumentsCount").ToString());
-Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousDocumentsCount").ToString());
-Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatusAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatusAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatusAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("29fe5bb0-83ae-4f86-85d6-775534dcd2d4"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatusAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatusAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code></example>
     </member>
     <member name="AnalyzeTextOperationStatus(Guid,bool?,int?,int?,RequestContext)">
       <example>
 This sample shows how to call AnalyzeTextOperationStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response response = client.AnalyzeTextOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null, null, null);
+Response response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -1903,171 +2048,483 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
-This sample shows how to call AnalyzeTextOperationStatus with all parameters and parse the result.
+This sample shows how to call AnalyzeTextOperationStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response response = client.AnalyzeTextOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), true, 1234, 1234, null);
+Response response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("displayName").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("nextLink").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("statistics").GetProperty("documentsCount").ToString());
-Console.WriteLine(result.GetProperty("statistics").GetProperty("validDocumentsCount").ToString());
-Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousDocumentsCount").ToString());
-Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response response = client.AnalyzeTextOperationStatus(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response response = client.AnalyzeTextOperationStatus(Guid.Parse("29fe5bb0-83ae-4f86-85d6-775534dcd2d4"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response response = client.AnalyzeTextOperationStatus(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response response = client.AnalyzeTextOperationStatus(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code></example>
     </member>
     <member name="AnalyzeTextSubmitOperationAsync(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,CancellationToken)">
       <example>
 This sample shows how to call AnalyzeTextSubmitOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-MultiLanguageTextInput textInput = new MultiLanguageTextInput();
-Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
-{
-    new CustomEntitiesOperationAction()
-});
-]]></code>
-This sample shows how to call AnalyzeTextSubmitOperationAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 MultiLanguageTextInput textInput = new MultiLanguageTextInput
 {
-    MultiLanguageInputs = {new MultiLanguageInput("<id>", "<text>")
+    MultiLanguageInputs = {new MultiLanguageInput("1", "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.")
     {
-        Language = "<language>",
+        Language = "en",
     }},
 };
 Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
 {
+    new AbstractiveSummarizationOperationAction
+    {
+        ActionContent = new AbstractiveSummarizationActionContent
+        {
+            SentenceCount = 1,
+        },
+        Name = "Document Abstractive Summarization Task 1",
+    }
+});
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+MultiLanguageTextInput textInput = new MultiLanguageTextInput
+{
+    MultiLanguageInputs = {new MultiLanguageInput("1", "I had a wonderful trip to Seattle last week.")
+    {
+        Language = "en",
+    }, new MultiLanguageInput("2", "I'm flying to NYC tomorrow. See you there.")
+    {
+        Language = "en",
+    }},
+};
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+{
+    new EntitiesOperationAction
+    {
+        ActionContent = new EntitiesActionContent
+        {
+            ModelVersion = "latest",
+        },
+        Name = "Recognize Entities",
+    },
     new CustomEntitiesOperationAction
     {
-        ActionContent = new CustomEntitiesActionContent("<projectName>", "<deploymentName>")
-        {
-            LoggingOptOut = true,
-            StringIndexType = StringIndexType.TextElementsV8,
-        },
-        Name = "<taskName>",
+        ActionContent = new CustomEntitiesActionContent("MyProject", "MyDeployment"),
+        Name = "Recognize US Regions",
     }
-}, displayName: "<displayName>", defaultLanguage: "<defaultLanguage>");
+});
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+MultiLanguageTextInput textInput = new MultiLanguageTextInput
+{
+    MultiLanguageInputs = {new MultiLanguageInput("1", "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.")
+    {
+        Language = "en",
+    }},
+};
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+{
+    new CustomAbstractiveSummarizationOperationAction(new CustomAbstractiveSummarizationActionContent("my_project", "my_deployment"))
+    {
+        Name = "Custom Document Abstractive Summarization Task 1",
+    }
+});
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+MultiLanguageTextInput textInput = new MultiLanguageTextInput
+{
+    MultiLanguageInputs = {new MultiLanguageInput("1", "Prescribed 100mg ibuprofen, taken twice daily.")
+    {
+        Language = "en",
+    }},
+};
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+{
+    new CustomHealthcareOperationAction
+    {
+        ActionContent = new CustomHealthcareActionContent("{PROJECT-NAME}", "{DEPLOYMENT-NAME}"),
+    }
+});
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+MultiLanguageTextInput textInput = new MultiLanguageTextInput
+{
+    MultiLanguageInputs = {new MultiLanguageInput("1", "The food is great. But the service is bad.")
+    {
+        Language = "en",
+    }},
+};
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+{
+    new CustomSentimentAnalysisOperationAction
+    {
+        ActionContent = new CustomSentimentAnalysisActionContent("{PROJECT-NAME}", "{DEPLOYMENT-NAME}"),
+    }
+});
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+MultiLanguageTextInput textInput = new MultiLanguageTextInput
+{
+    MultiLanguageInputs = {new MultiLanguageInput("1", "Prescribed 100mg ibuprofen, taken twice daily.")
+    {
+        Language = "en",
+    }},
+};
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+{
+    new HealthcareOperationAction
+    {
+        ActionContent = new HealthcareActionContent
+        {
+            ModelVersion = "latest",
+            FhirVersion = FhirVersion._401,
+            DocumentType = HealthcareDocumentType.DischargeSummary,
+        },
+    }
+});
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+MultiLanguageTextInput textInput = new MultiLanguageTextInput
+{
+    MultiLanguageInputs = {new MultiLanguageInput("1", "Prescribed 100mg ibuprofen, taken twice daily.")
+    {
+        Language = "en",
+    }},
+};
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+{
+    new HealthcareOperationAction
+    {
+        ActionContent = new HealthcareActionContent
+        {
+            ModelVersion = "latest",
+        },
+    }
+});
 ]]></code></example>
     </member>
     <member name="AnalyzeTextSubmitOperation(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,CancellationToken)">
       <example>
 This sample shows how to call AnalyzeTextSubmitOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-MultiLanguageTextInput textInput = new MultiLanguageTextInput();
-Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
-{
-    new CustomEntitiesOperationAction()
-});
-]]></code>
-This sample shows how to call AnalyzeTextSubmitOperation with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 MultiLanguageTextInput textInput = new MultiLanguageTextInput
 {
-    MultiLanguageInputs = {new MultiLanguageInput("<id>", "<text>")
+    MultiLanguageInputs = {new MultiLanguageInput("1", "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.")
     {
-        Language = "<language>",
+        Language = "en",
     }},
 };
 Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
 {
+    new AbstractiveSummarizationOperationAction
+    {
+        ActionContent = new AbstractiveSummarizationActionContent
+        {
+            SentenceCount = 1,
+        },
+        Name = "Document Abstractive Summarization Task 1",
+    }
+});
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperation.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+MultiLanguageTextInput textInput = new MultiLanguageTextInput
+{
+    MultiLanguageInputs = {new MultiLanguageInput("1", "I had a wonderful trip to Seattle last week.")
+    {
+        Language = "en",
+    }, new MultiLanguageInput("2", "I'm flying to NYC tomorrow. See you there.")
+    {
+        Language = "en",
+    }},
+};
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+{
+    new EntitiesOperationAction
+    {
+        ActionContent = new EntitiesActionContent
+        {
+            ModelVersion = "latest",
+        },
+        Name = "Recognize Entities",
+    },
     new CustomEntitiesOperationAction
     {
-        ActionContent = new CustomEntitiesActionContent("<projectName>", "<deploymentName>")
-        {
-            LoggingOptOut = true,
-            StringIndexType = StringIndexType.TextElementsV8,
-        },
-        Name = "<taskName>",
+        ActionContent = new CustomEntitiesActionContent("MyProject", "MyDeployment"),
+        Name = "Recognize US Regions",
     }
-}, displayName: "<displayName>", defaultLanguage: "<defaultLanguage>");
+});
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperation.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+MultiLanguageTextInput textInput = new MultiLanguageTextInput
+{
+    MultiLanguageInputs = {new MultiLanguageInput("1", "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.")
+    {
+        Language = "en",
+    }},
+};
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+{
+    new CustomAbstractiveSummarizationOperationAction(new CustomAbstractiveSummarizationActionContent("my_project", "my_deployment"))
+    {
+        Name = "Custom Document Abstractive Summarization Task 1",
+    }
+});
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperation.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+MultiLanguageTextInput textInput = new MultiLanguageTextInput
+{
+    MultiLanguageInputs = {new MultiLanguageInput("1", "Prescribed 100mg ibuprofen, taken twice daily.")
+    {
+        Language = "en",
+    }},
+};
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+{
+    new CustomHealthcareOperationAction
+    {
+        ActionContent = new CustomHealthcareActionContent("{PROJECT-NAME}", "{DEPLOYMENT-NAME}"),
+    }
+});
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperation.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+MultiLanguageTextInput textInput = new MultiLanguageTextInput
+{
+    MultiLanguageInputs = {new MultiLanguageInput("1", "The food is great. But the service is bad.")
+    {
+        Language = "en",
+    }},
+};
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+{
+    new CustomSentimentAnalysisOperationAction
+    {
+        ActionContent = new CustomSentimentAnalysisActionContent("{PROJECT-NAME}", "{DEPLOYMENT-NAME}"),
+    }
+});
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperation.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+MultiLanguageTextInput textInput = new MultiLanguageTextInput
+{
+    MultiLanguageInputs = {new MultiLanguageInput("1", "Prescribed 100mg ibuprofen, taken twice daily.")
+    {
+        Language = "en",
+    }},
+};
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+{
+    new HealthcareOperationAction
+    {
+        ActionContent = new HealthcareActionContent
+        {
+            ModelVersion = "latest",
+            FhirVersion = FhirVersion._401,
+            DocumentType = HealthcareDocumentType.DischargeSummary,
+        },
+    }
+});
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperation.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+MultiLanguageTextInput textInput = new MultiLanguageTextInput
+{
+    MultiLanguageInputs = {new MultiLanguageInput("1", "Prescribed 100mg ibuprofen, taken twice daily.")
+    {
+        Language = "en",
+    }},
+};
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+{
+    new HealthcareOperationAction
+    {
+        ActionContent = new HealthcareActionContent
+        {
+            ModelVersion = "latest",
+        },
+    }
+});
 ]]></code></example>
     </member>
     <member name="AnalyzeTextSubmitOperationAsync(WaitUntil,RequestContent,RequestContext)">
       <example>
 This sample shows how to call AnalyzeTextSubmitOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    analysisInput = new object(),
-    tasks = new object[]
-    {
-        new
-        {
-            kind = "CustomEntityRecognition",
-        }
-    },
-});
-Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
-]]></code>
-This sample shows how to call AnalyzeTextSubmitOperationAsync with all parameters and request content.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    displayName = "<displayName>",
+    displayName = "Document Abstractive Summarization Task Example",
     analysisInput = new
     {
         documents = new object[]
         {
             new
             {
-                id = "<id>",
-                text = "<text>",
-                language = "<language>",
+                id = "1",
+                language = "en",
+                text = "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.",
             }
         },
     },
@@ -2075,18 +2532,243 @@ using RequestContent content = RequestContent.Create(new
     {
         new
         {
-            kind = "CustomEntityRecognition",
+            kind = "AbstractiveSummarization",
+            taskName = "Document Abstractive Summarization Task 1",
             parameters = new
             {
-                loggingOptOut = true,
-                projectName = "<projectName>",
-                deploymentName = "<deploymentName>",
-                stringIndexType = "TextElements_v8",
+                sentenceCount = 1,
             },
-            taskName = "<taskName>",
         }
     },
-    defaultLanguage = "<defaultLanguage>",
+});
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    displayName = "Extracting Location & US Region",
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                id = "1",
+                language = "en",
+                text = "I had a wonderful trip to Seattle last week.",
+            },
+            new
+            {
+                id = "2",
+                language = "en",
+                text = "I'm flying to NYC tomorrow. See you there.",
+            }
+        },
+    },
+    tasks = new object[]
+    {
+        new
+        {
+            kind = "EntityRecognition",
+            taskName = "Recognize Entities",
+            parameters = new
+            {
+                modelVersion = "latest",
+            },
+        },
+        new
+        {
+            kind = "CustomEntityRecognition",
+            taskName = "Recognize US Regions",
+            parameters = new
+            {
+                projectName = "MyProject",
+                deploymentName = "MyDeployment",
+            },
+        }
+    },
+});
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    displayName = "Document Custom Abstractive Summarization Task Example",
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                id = "1",
+                language = "en",
+                text = "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.",
+            }
+        },
+    },
+    tasks = new object[]
+    {
+        new
+        {
+            kind = "CustomAbstractiveSummarization",
+            taskName = "Custom Document Abstractive Summarization Task 1",
+            parameters = new
+            {
+                projectName = "my_project",
+                deploymentName = "my_deployment",
+            },
+        }
+    },
+});
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                text = "Prescribed 100mg ibuprofen, taken twice daily.",
+                id = "1",
+                language = "en",
+            }
+        },
+    },
+    tasks = new object[]
+    {
+        new
+        {
+            kind = "CustomHealthcare",
+            parameters = new
+            {
+                projectName = "{PROJECT-NAME}",
+                deploymentName = "{DEPLOYMENT-NAME}",
+            },
+        }
+    },
+});
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                text = "The food is great. But the service is bad.",
+                id = "1",
+                language = "en",
+            }
+        },
+    },
+    tasks = new object[]
+    {
+        new
+        {
+            kind = "CustomSentimentAnalysis",
+            parameters = new
+            {
+                projectName = "{PROJECT-NAME}",
+                deploymentName = "{DEPLOYMENT-NAME}",
+            },
+        }
+    },
+});
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                text = "Prescribed 100mg ibuprofen, taken twice daily.",
+                id = "1",
+                language = "en",
+            }
+        },
+    },
+    tasks = new object[]
+    {
+        new
+        {
+            kind = "Healthcare",
+            parameters = new
+            {
+                modelVersion = "latest",
+                fhirVersion = "4.0.1",
+                documentType = "DischargeSummary",
+            },
+        }
+    },
+});
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                text = "Prescribed 100mg ibuprofen, taken twice daily.",
+                id = "1",
+                language = "en",
+            }
+        },
+    },
+    tasks = new object[]
+    {
+        new
+        {
+            kind = "Healthcare",
+            parameters = new
+            {
+                modelVersion = "latest",
+            },
+        }
+    },
 });
 Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
 ]]></code></example>
@@ -2095,41 +2777,22 @@ Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Com
       <example>
 This sample shows how to call AnalyzeTextSubmitOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    analysisInput = new object(),
-    tasks = new object[]
-    {
-        new
-        {
-            kind = "CustomEntityRecognition",
-        }
-    },
-});
-Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
-]]></code>
-This sample shows how to call AnalyzeTextSubmitOperation with all parameters and request content.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    displayName = "<displayName>",
+    displayName = "Document Abstractive Summarization Task Example",
     analysisInput = new
     {
         documents = new object[]
         {
             new
             {
-                id = "<id>",
-                text = "<text>",
-                language = "<language>",
+                id = "1",
+                language = "en",
+                text = "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.",
             }
         },
     },
@@ -2137,18 +2800,243 @@ using RequestContent content = RequestContent.Create(new
     {
         new
         {
-            kind = "CustomEntityRecognition",
+            kind = "AbstractiveSummarization",
+            taskName = "Document Abstractive Summarization Task 1",
             parameters = new
             {
-                loggingOptOut = true,
-                projectName = "<projectName>",
-                deploymentName = "<deploymentName>",
-                stringIndexType = "TextElements_v8",
+                sentenceCount = 1,
             },
-            taskName = "<taskName>",
         }
     },
-    defaultLanguage = "<defaultLanguage>",
+});
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperation.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    displayName = "Extracting Location & US Region",
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                id = "1",
+                language = "en",
+                text = "I had a wonderful trip to Seattle last week.",
+            },
+            new
+            {
+                id = "2",
+                language = "en",
+                text = "I'm flying to NYC tomorrow. See you there.",
+            }
+        },
+    },
+    tasks = new object[]
+    {
+        new
+        {
+            kind = "EntityRecognition",
+            taskName = "Recognize Entities",
+            parameters = new
+            {
+                modelVersion = "latest",
+            },
+        },
+        new
+        {
+            kind = "CustomEntityRecognition",
+            taskName = "Recognize US Regions",
+            parameters = new
+            {
+                projectName = "MyProject",
+                deploymentName = "MyDeployment",
+            },
+        }
+    },
+});
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperation.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    displayName = "Document Custom Abstractive Summarization Task Example",
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                id = "1",
+                language = "en",
+                text = "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.",
+            }
+        },
+    },
+    tasks = new object[]
+    {
+        new
+        {
+            kind = "CustomAbstractiveSummarization",
+            taskName = "Custom Document Abstractive Summarization Task 1",
+            parameters = new
+            {
+                projectName = "my_project",
+                deploymentName = "my_deployment",
+            },
+        }
+    },
+});
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperation.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                text = "Prescribed 100mg ibuprofen, taken twice daily.",
+                id = "1",
+                language = "en",
+            }
+        },
+    },
+    tasks = new object[]
+    {
+        new
+        {
+            kind = "CustomHealthcare",
+            parameters = new
+            {
+                projectName = "{PROJECT-NAME}",
+                deploymentName = "{DEPLOYMENT-NAME}",
+            },
+        }
+    },
+});
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperation.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                text = "The food is great. But the service is bad.",
+                id = "1",
+                language = "en",
+            }
+        },
+    },
+    tasks = new object[]
+    {
+        new
+        {
+            kind = "CustomSentimentAnalysis",
+            parameters = new
+            {
+                projectName = "{PROJECT-NAME}",
+                deploymentName = "{DEPLOYMENT-NAME}",
+            },
+        }
+    },
+});
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperation.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                text = "Prescribed 100mg ibuprofen, taken twice daily.",
+                id = "1",
+                language = "en",
+            }
+        },
+    },
+    tasks = new object[]
+    {
+        new
+        {
+            kind = "Healthcare",
+            parameters = new
+            {
+                modelVersion = "latest",
+                fhirVersion = "4.0.1",
+                documentType = "DischargeSummary",
+            },
+        }
+    },
+});
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitOperation.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                text = "Prescribed 100mg ibuprofen, taken twice daily.",
+                id = "1",
+                language = "en",
+            }
+        },
+    },
+    tasks = new object[]
+    {
+        new
+        {
+            kind = "Healthcare",
+            parameters = new
+            {
+                modelVersion = "latest",
+            },
+        }
+    },
 });
 Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
 ]]></code></example>
@@ -2157,38 +3045,22 @@ Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, con
       <example>
 This sample shows how to call AnalyzeTextCancelOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Operation operation = await client.AnalyzeTextCancelOperationAsync(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-]]></code>
-This sample shows how to call AnalyzeTextCancelOperationAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-Operation operation = await client.AnalyzeTextCancelOperationAsync(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Operation operation = await client.AnalyzeTextCancelOperationAsync(WaitUntil.Completed, Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
 ]]></code></example>
     </member>
     <member name="AnalyzeTextCancelOperation(WaitUntil,Guid,RequestContext)">
       <example>
 This sample shows how to call AnalyzeTextCancelOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Operation operation = client.AnalyzeTextCancelOperation(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
-]]></code>
-This sample shows how to call AnalyzeTextCancelOperation with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-Operation operation = client.AnalyzeTextCancelOperation(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Operation operation = client.AnalyzeTextCancelOperation(WaitUntil.Completed, Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
 ]]></code></example>
     </member>
   </members>

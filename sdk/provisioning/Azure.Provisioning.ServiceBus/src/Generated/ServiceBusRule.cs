@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusRule.
 /// </summary>
-public partial class ServiceBusRule : Resource
+public partial class ServiceBusRule : ProvisionableResource
 {
     /// <summary>
     /// The rule name.
@@ -76,11 +76,15 @@ public partial class ServiceBusRule : Resource
     /// <summary>
     /// Creates a new ServiceBusRule.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusRule resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ServiceBusRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/topics/subscriptions/rules", resourceVersion ?? "2024-01-01", context)
+    public ServiceBusRule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/topics/subscriptions/rules", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _action = BicepValue<ServiceBusFilterAction>.DefineProperty(this, "Action", ["properties", "action"]);
@@ -117,9 +121,14 @@ public partial class ServiceBusRule : Resource
     /// <summary>
     /// Creates a reference to an existing ServiceBusRule.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusRule resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusRule.</param>
     /// <returns>The existing ServiceBusRule resource.</returns>
-    public static ServiceBusRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

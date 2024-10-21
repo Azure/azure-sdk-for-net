@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// The policy definition reference.
 /// </summary>
-public partial class PolicyDefinitionReference : ProvisioningConstruct
+public partial class PolicyDefinitionReference : ProvisionableConstruct
 {
     /// <summary>
     /// The ID of the policy definition or policy set definition.

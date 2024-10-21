@@ -11,7 +11,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// Migration status.
 /// </summary>
-public partial class PostgreSqlMigrationStatus : ProvisioningConstruct
+public partial class PostgreSqlMigrationStatus : ProvisionableConstruct
 {
     /// <summary>
     /// State of migration.

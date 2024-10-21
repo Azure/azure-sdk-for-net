@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// RedisFirewallRule.
 /// </summary>
-public partial class RedisFirewallRule : Resource
+public partial class RedisFirewallRule : ProvisionableResource
 {
     /// <summary>
     /// The name of the firewall rule.
@@ -58,11 +58,15 @@ public partial class RedisFirewallRule : Resource
     /// <summary>
     /// Creates a new RedisFirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the RedisFirewallRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the RedisFirewallRule resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RedisFirewallRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public RedisFirewallRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Cache/redis/firewallRules", resourceVersion, context)
+    public RedisFirewallRule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Cache/redis/firewallRules", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _endIP = BicepValue<IPAddress>.DefineProperty(this, "EndIP", ["properties", "endIP"], isRequired: true);
@@ -73,13 +77,109 @@ public partial class RedisFirewallRule : Resource
     }
 
     /// <summary>
+    /// Supported RedisFirewallRule resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-04-01-preview.
+        /// </summary>
+        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
+
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
+        /// <summary>
+        /// 2023-04-01.
+        /// </summary>
+        public static readonly string V2023_04_01 = "2023-04-01";
+
+        /// <summary>
+        /// 2022-06-01.
+        /// </summary>
+        public static readonly string V2022_06_01 = "2022-06-01";
+
+        /// <summary>
+        /// 2022-05-01.
+        /// </summary>
+        public static readonly string V2022_05_01 = "2022-05-01";
+
+        /// <summary>
+        /// 2021-06-01.
+        /// </summary>
+        public static readonly string V2021_06_01 = "2021-06-01";
+
+        /// <summary>
+        /// 2020-12-01.
+        /// </summary>
+        public static readonly string V2020_12_01 = "2020-12-01";
+
+        /// <summary>
+        /// 2020-06-01.
+        /// </summary>
+        public static readonly string V2020_06_01 = "2020-06-01";
+
+        /// <summary>
+        /// 2019-07-01.
+        /// </summary>
+        public static readonly string V2019_07_01 = "2019-07-01";
+
+        /// <summary>
+        /// 2018-03-01.
+        /// </summary>
+        public static readonly string V2018_03_01 = "2018-03-01";
+
+        /// <summary>
+        /// 2017-10-01.
+        /// </summary>
+        public static readonly string V2017_10_01 = "2017-10-01";
+
+        /// <summary>
+        /// 2017-02-01.
+        /// </summary>
+        public static readonly string V2017_02_01 = "2017-02-01";
+
+        /// <summary>
+        /// 2016-04-01.
+        /// </summary>
+        public static readonly string V2016_04_01 = "2016-04-01";
+
+        /// <summary>
+        /// 2015-08-01.
+        /// </summary>
+        public static readonly string V2015_08_01 = "2015-08-01";
+
+        /// <summary>
+        /// 2015-03-01.
+        /// </summary>
+        public static readonly string V2015_03_01 = "2015-03-01";
+
+        /// <summary>
+        /// 2014-04-01.
+        /// </summary>
+        public static readonly string V2014_04_01 = "2014-04-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing RedisFirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the RedisFirewallRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the RedisFirewallRule resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RedisFirewallRule.</param>
     /// <returns>The existing RedisFirewallRule resource.</returns>
-    public static RedisFirewallRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static RedisFirewallRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this RedisFirewallRule resource.

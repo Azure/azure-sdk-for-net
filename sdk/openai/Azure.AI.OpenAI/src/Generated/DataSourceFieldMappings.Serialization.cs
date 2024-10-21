@@ -31,10 +31,10 @@ namespace Azure.AI.OpenAI.Chat
                 writer.WritePropertyName("url_field"u8);
                 writer.WriteStringValue(UrlFieldName);
             }
-            if (SerializedAdditionalRawData?.ContainsKey("filepath_field") != true && Optional.IsDefined(FilepathFieldName))
+            if (SerializedAdditionalRawData?.ContainsKey("filepath_field") != true && Optional.IsDefined(FilePathFieldName))
             {
                 writer.WritePropertyName("filepath_field"u8);
-                writer.WriteStringValue(FilepathFieldName);
+                writer.WriteStringValue(FilePathFieldName);
             }
             if (SerializedAdditionalRawData?.ContainsKey("content_fields") != true && Optional.IsCollectionDefined(ContentFieldNames))
             {

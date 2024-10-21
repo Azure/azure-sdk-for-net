@@ -16,7 +16,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlVirtualNetworkRule.
 /// </summary>
-public partial class PostgreSqlVirtualNetworkRule : Resource
+public partial class PostgreSqlVirtualNetworkRule : ProvisionableResource
 {
     /// <summary>
     /// The name of the virtual network rule.
@@ -64,11 +64,15 @@ public partial class PostgreSqlVirtualNetworkRule : Resource
     /// <summary>
     /// Creates a new PostgreSqlVirtualNetworkRule.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlVirtualNetworkRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PostgreSqlVirtualNetworkRule
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlVirtualNetworkRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlVirtualNetworkRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/virtualNetworkRules", resourceVersion ?? "2017-12-01", context)
+    public PostgreSqlVirtualNetworkRule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/servers/virtualNetworkRules", resourceVersion ?? "2017-12-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _ignoreMissingVnetServiceEndpoint = BicepValue<bool>.DefineProperty(this, "IgnoreMissingVnetServiceEndpoint", ["properties", "ignoreMissingVnetServiceEndpoint"]);
@@ -98,11 +102,16 @@ public partial class PostgreSqlVirtualNetworkRule : Resource
     /// <summary>
     /// Creates a reference to an existing PostgreSqlVirtualNetworkRule.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlVirtualNetworkRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PostgreSqlVirtualNetworkRule
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlVirtualNetworkRule.</param>
     /// <returns>The existing PostgreSqlVirtualNetworkRule resource.</returns>
-    public static PostgreSqlVirtualNetworkRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlVirtualNetworkRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this PostgreSqlVirtualNetworkRule

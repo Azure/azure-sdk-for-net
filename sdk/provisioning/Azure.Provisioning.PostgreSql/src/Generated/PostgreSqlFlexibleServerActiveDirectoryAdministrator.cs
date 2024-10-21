@@ -15,7 +15,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlFlexibleServerActiveDirectoryAdministrator.
 /// </summary>
-public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Resource
+public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : ProvisionableResource
 {
     /// <summary>
     /// Gets or sets the Name.
@@ -69,11 +69,16 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Reso
     /// <summary>
     /// Creates a new PostgreSqlFlexibleServerActiveDirectoryAdministrator.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// PostgreSqlFlexibleServerActiveDirectoryAdministrator resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlFlexibleServerActiveDirectoryAdministrator(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/administrators", resourceVersion, context)
+    public PostgreSqlFlexibleServerActiveDirectoryAdministrator(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/administrators", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _objectId = BicepValue<string>.DefineProperty(this, "ObjectId", ["properties", "objectId"], isOutput: true);
@@ -86,12 +91,40 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Reso
     }
 
     /// <summary>
+    /// Supported PostgreSqlFlexibleServerActiveDirectoryAdministrator resource
+    /// versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-08-01.
+        /// </summary>
+        public static readonly string V2024_08_01 = "2024-08-01";
+
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+
+        /// <summary>
+        /// 2021-06-01.
+        /// </summary>
+        public static readonly string V2021_06_01 = "2021-06-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing
     /// PostgreSqlFlexibleServerActiveDirectoryAdministrator.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// PostgreSqlFlexibleServerActiveDirectoryAdministrator resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
     /// <returns>The existing PostgreSqlFlexibleServerActiveDirectoryAdministrator resource.</returns>
-    public static PostgreSqlFlexibleServerActiveDirectoryAdministrator FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlFlexibleServerActiveDirectoryAdministrator FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

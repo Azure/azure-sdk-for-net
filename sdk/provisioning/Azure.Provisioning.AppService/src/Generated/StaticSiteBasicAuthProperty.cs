@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSiteBasicAuthProperty.
 /// </summary>
-public partial class StaticSiteBasicAuthProperty : Resource
+public partial class StaticSiteBasicAuthProperty : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -83,11 +83,15 @@ public partial class StaticSiteBasicAuthProperty : Resource
     /// <summary>
     /// Creates a new StaticSiteBasicAuthProperty.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteBasicAuthProperty.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the StaticSiteBasicAuthProperty
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteBasicAuthProperty.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StaticSiteBasicAuthProperty(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/staticSites/basicAuth", resourceVersion, context)
+    public StaticSiteBasicAuthProperty(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/staticSites/basicAuth", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _applicableEnvironmentsMode = BicepValue<string>.DefineProperty(this, "ApplicableEnvironmentsMode", ["properties", "applicableEnvironmentsMode"]);
@@ -102,11 +106,92 @@ public partial class StaticSiteBasicAuthProperty : Resource
     }
 
     /// <summary>
+    /// Supported StaticSiteBasicAuthProperty resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
+        /// <summary>
+        /// 2023-12-01.
+        /// </summary>
+        public static readonly string V2023_12_01 = "2023-12-01";
+
+        /// <summary>
+        /// 2023-01-01.
+        /// </summary>
+        public static readonly string V2023_01_01 = "2023-01-01";
+
+        /// <summary>
+        /// 2022-09-01.
+        /// </summary>
+        public static readonly string V2022_09_01 = "2022-09-01";
+
+        /// <summary>
+        /// 2022-03-01.
+        /// </summary>
+        public static readonly string V2022_03_01 = "2022-03-01";
+
+        /// <summary>
+        /// 2021-03-01.
+        /// </summary>
+        public static readonly string V2021_03_01 = "2021-03-01";
+
+        /// <summary>
+        /// 2021-02-01.
+        /// </summary>
+        public static readonly string V2021_02_01 = "2021-02-01";
+
+        /// <summary>
+        /// 2021-01-15.
+        /// </summary>
+        public static readonly string V2021_01_15 = "2021-01-15";
+
+        /// <summary>
+        /// 2021-01-01.
+        /// </summary>
+        public static readonly string V2021_01_01 = "2021-01-01";
+
+        /// <summary>
+        /// 2020-12-01.
+        /// </summary>
+        public static readonly string V2020_12_01 = "2020-12-01";
+
+        /// <summary>
+        /// 2020-10-01.
+        /// </summary>
+        public static readonly string V2020_10_01 = "2020-10-01";
+
+        /// <summary>
+        /// 2020-09-01.
+        /// </summary>
+        public static readonly string V2020_09_01 = "2020-09-01";
+
+        /// <summary>
+        /// 2020-06-01.
+        /// </summary>
+        public static readonly string V2020_06_01 = "2020-06-01";
+
+        /// <summary>
+        /// 2019-08-01.
+        /// </summary>
+        public static readonly string V2019_08_01 = "2019-08-01";
+    }
+
+    /// <summary>
     /// Creates a reference to an existing StaticSiteBasicAuthProperty.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteBasicAuthProperty.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the StaticSiteBasicAuthProperty
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteBasicAuthProperty.</param>
     /// <returns>The existing StaticSiteBasicAuthProperty resource.</returns>
-    public static StaticSiteBasicAuthProperty FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StaticSiteBasicAuthProperty FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

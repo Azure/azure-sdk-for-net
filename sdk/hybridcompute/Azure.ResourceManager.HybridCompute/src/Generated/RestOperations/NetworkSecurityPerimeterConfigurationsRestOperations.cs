@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-20-preview";
+            _apiVersion = apiVersion ?? "2024-07-10";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -229,6 +229,100 @@ namespace Azure.ResourceManager.HybridCompute
                         value = NetworkSecurityPerimeterConfigurationListResult.DeserializeNetworkSecurityPerimeterConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateReconcileForPrivateLinkScopeRequestUri(string subscriptionId, string resourceGroupName, string scopeName, string perimeterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridCompute/privateLinkScopes/", false);
+            uri.AppendPath(scopeName, true);
+            uri.AppendPath("/networkSecurityPerimeterConfigurations/", false);
+            uri.AppendPath(perimeterName, true);
+            uri.AppendPath("/reconcile", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateReconcileForPrivateLinkScopeRequest(string subscriptionId, string resourceGroupName, string scopeName, string perimeterName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridCompute/privateLinkScopes/", false);
+            uri.AppendPath(scopeName, true);
+            uri.AppendPath("/networkSecurityPerimeterConfigurations/", false);
+            uri.AppendPath(perimeterName, true);
+            uri.AppendPath("/reconcile", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Forces the network security perimeter configuration to refresh for a private link scope. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
+        /// <param name="perimeterName"> The name, in the format {perimeterGuid}.{associationName}, of the Network Security Perimeter resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/> or <paramref name="perimeterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/> or <paramref name="perimeterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ReconcileForPrivateLinkScopeAsync(string subscriptionId, string resourceGroupName, string scopeName, string perimeterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
+            Argument.AssertNotNullOrEmpty(perimeterName, nameof(perimeterName));
+
+            using var message = CreateReconcileForPrivateLinkScopeRequest(subscriptionId, resourceGroupName, scopeName, perimeterName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Forces the network security perimeter configuration to refresh for a private link scope. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
+        /// <param name="perimeterName"> The name, in the format {perimeterGuid}.{associationName}, of the Network Security Perimeter resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/> or <paramref name="perimeterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/> or <paramref name="perimeterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ReconcileForPrivateLinkScope(string subscriptionId, string resourceGroupName, string scopeName, string perimeterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
+            Argument.AssertNotNullOrEmpty(perimeterName, nameof(perimeterName));
+
+            using var message = CreateReconcileForPrivateLinkScopeRequest(subscriptionId, resourceGroupName, scopeName, perimeterName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static bool operator ==(StorageInsightState left, StorageInsightState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageInsightState"/> values are not the same. </summary>
         public static bool operator !=(StorageInsightState left, StorageInsightState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageInsightState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageInsightState"/>. </summary>
         public static implicit operator StorageInsightState(string value) => new StorageInsightState(value);
 
         /// <inheritdoc />

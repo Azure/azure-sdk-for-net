@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ApplicationInsights;
 /// <summary>
 /// ApplicationInsightsWorkbookTemplate.
 /// </summary>
-public partial class ApplicationInsightsWorkbookTemplate : Resource
+public partial class ApplicationInsightsWorkbookTemplate : ProvisionableResource
 {
     /// <summary>
     /// The name of the Application Insights component resource.
@@ -96,11 +96,15 @@ public partial class ApplicationInsightsWorkbookTemplate : Resource
     /// <summary>
     /// Creates a new ApplicationInsightsWorkbookTemplate.
     /// </summary>
-    /// <param name="resourceName">Name of the ApplicationInsightsWorkbookTemplate.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ApplicationInsightsWorkbookTemplate resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsWorkbookTemplate.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ApplicationInsightsWorkbookTemplate(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Insights/workbooktemplates", resourceVersion ?? "2020-11-20", context)
+    public ApplicationInsightsWorkbookTemplate(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Insights/workbooktemplates", resourceVersion ?? "2020-11-20")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -128,9 +132,14 @@ public partial class ApplicationInsightsWorkbookTemplate : Resource
     /// <summary>
     /// Creates a reference to an existing ApplicationInsightsWorkbookTemplate.
     /// </summary>
-    /// <param name="resourceName">Name of the ApplicationInsightsWorkbookTemplate.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ApplicationInsightsWorkbookTemplate resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsWorkbookTemplate.</param>
     /// <returns>The existing ApplicationInsightsWorkbookTemplate resource.</returns>
-    public static ApplicationInsightsWorkbookTemplate FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ApplicationInsightsWorkbookTemplate FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

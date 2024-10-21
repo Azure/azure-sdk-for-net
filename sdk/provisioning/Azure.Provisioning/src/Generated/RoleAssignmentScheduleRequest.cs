@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// RoleAssignmentScheduleRequest.
 /// </summary>
-public partial class RoleAssignmentScheduleRequest : Resource
+public partial class RoleAssignmentScheduleRequest : ProvisionableResource
 {
     /// <summary>
     /// A GUID for the role assignment to create. The name must be unique and
@@ -170,11 +170,15 @@ public partial class RoleAssignmentScheduleRequest : Resource
     /// <summary>
     /// Creates a new RoleAssignmentScheduleRequest.
     /// </summary>
-    /// <param name="resourceName">Name of the RoleAssignmentScheduleRequest.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the RoleAssignmentScheduleRequest
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RoleAssignmentScheduleRequest.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public RoleAssignmentScheduleRequest(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Authorization/roleAssignmentScheduleRequests", resourceVersion ?? "2020-10-01", context)
+    public RoleAssignmentScheduleRequest(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Authorization/roleAssignmentScheduleRequests", resourceVersion ?? "2020-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _condition = BicepValue<string>.DefineProperty(this, "Condition", ["properties", "condition"]);
@@ -221,9 +225,14 @@ public partial class RoleAssignmentScheduleRequest : Resource
     /// <summary>
     /// Creates a reference to an existing RoleAssignmentScheduleRequest.
     /// </summary>
-    /// <param name="resourceName">Name of the RoleAssignmentScheduleRequest.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the RoleAssignmentScheduleRequest
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RoleAssignmentScheduleRequest.</param>
     /// <returns>The existing RoleAssignmentScheduleRequest resource.</returns>
-    public static RoleAssignmentScheduleRequest FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static RoleAssignmentScheduleRequest FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

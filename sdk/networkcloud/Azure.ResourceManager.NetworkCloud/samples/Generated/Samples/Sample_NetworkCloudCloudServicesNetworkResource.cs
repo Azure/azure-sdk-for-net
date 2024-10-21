@@ -141,7 +141,7 @@ new EgressEndpoint("azure-resource-management",new EndpointDependency[]
 {
 new EndpointDependency("https://storageaccountex.blob.core.windows.net")
 {
-Port = 443,
+Port = 443L,
 }
 })
 },

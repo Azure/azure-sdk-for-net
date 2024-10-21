@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Gallery.Models
         public static bool operator ==(EdgeZoneStorageAccountType left, EdgeZoneStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeZoneStorageAccountType"/> values are not the same. </summary>
         public static bool operator !=(EdgeZoneStorageAccountType left, EdgeZoneStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EdgeZoneStorageAccountType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeZoneStorageAccountType"/>. </summary>
         public static implicit operator EdgeZoneStorageAccountType(string value) => new EdgeZoneStorageAccountType(value);
 
         /// <inheritdoc />

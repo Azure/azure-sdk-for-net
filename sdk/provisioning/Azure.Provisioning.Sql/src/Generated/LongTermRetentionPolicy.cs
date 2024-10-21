@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// LongTermRetentionPolicy.
 /// </summary>
-public partial class LongTermRetentionPolicy : Resource
+public partial class LongTermRetentionPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -80,11 +80,15 @@ public partial class LongTermRetentionPolicy : Resource
     /// <summary>
     /// Creates a new LongTermRetentionPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the LongTermRetentionPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the LongTermRetentionPolicy resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the LongTermRetentionPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public LongTermRetentionPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/backupLongTermRetentionPolicies", resourceVersion ?? "2021-11-01", context)
+    public LongTermRetentionPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/backupLongTermRetentionPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _backupStorageAccessTier = BicepValue<SqlBackupStorageAccessTier>.DefineProperty(this, "BackupStorageAccessTier", ["properties", "backupStorageAccessTier"]);
@@ -117,9 +121,14 @@ public partial class LongTermRetentionPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing LongTermRetentionPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the LongTermRetentionPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the LongTermRetentionPolicy resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the LongTermRetentionPolicy.</param>
     /// <returns>The existing LongTermRetentionPolicy resource.</returns>
-    public static LongTermRetentionPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static LongTermRetentionPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
