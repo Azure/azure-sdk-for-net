@@ -77,8 +77,6 @@ namespace Azure.Storage.DataMovement
             PathScanner scanner = new PathScanner(_uri.LocalPath);
             foreach (FileSystemInfo fileSystemInfo in scanner.Scan(false))
             {
-                CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-
                 if (fileSystemInfo.Attributes.HasFlag(FileAttributes.Directory))
                 {
                     // Directory - but check for the case where it returns the directory you're currently listing
