@@ -24,7 +24,10 @@ namespace Azure.AI.ContentSafety.Tests
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             ContentSafetyClient client;
-            var options = InstrumentClientOptions(new ContentSafetyClientOptions());
+            var options = InstrumentClientOptions(new ContentSafetyClientOptions
+            {
+                AuthorizationScopes = new[] { "https://cognitiveservices.azure.com/.default" }
+            });
 
             if (useTokenCredential)
             {
