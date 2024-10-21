@@ -96,11 +96,6 @@ public partial class EventGridDomainPrivateEndpointConnection : ProvisionableRes
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
-
-        /// <summary>
         /// 2022-06-15.
         /// </summary>
         public static readonly string V2022_06_15 = "2022-06-15";

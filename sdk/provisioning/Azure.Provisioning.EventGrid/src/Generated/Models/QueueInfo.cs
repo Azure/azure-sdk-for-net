@@ -80,6 +80,6 @@ public partial class QueueInfo : ProvisionableConstruct
         _receiveLockDurationInSeconds = BicepValue<int>.DefineProperty(this, "ReceiveLockDurationInSeconds", ["receiveLockDurationInSeconds"]);
         _maxDeliveryCount = BicepValue<int>.DefineProperty(this, "MaxDeliveryCount", ["maxDeliveryCount"]);
         _deadLetterDestinationWithResourceIdentity = BicepValue<DeadLetterWithResourceIdentity>.DefineProperty(this, "DeadLetterDestinationWithResourceIdentity", ["deadLetterDestinationWithResourceIdentity"]);
-        _eventTimeToLive = BicepValue<TimeSpan>.DefineProperty(this, "EventTimeToLive", ["eventTimeToLive"]);
+        _eventTimeToLive = BicepValue<TimeSpan>.DefineProperty(this, "EventTimeToLive", ["eventTimeToLive"], format: "P");
     }
 }

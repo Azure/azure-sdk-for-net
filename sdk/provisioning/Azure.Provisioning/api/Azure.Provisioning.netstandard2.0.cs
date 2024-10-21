@@ -82,7 +82,7 @@ namespace Azure.Provisioning
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Assign(Azure.Provisioning.BicepValue<T> source) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.BicepValue<T> DefineProperty(Azure.Provisioning.Primitives.ProvisionableConstruct construct, string propertyName, string[]? bicepPath, bool isOutput = false, bool isRequired = false, bool isSecure = false, Azure.Provisioning.BicepValue<T>? defaultValue = null) { throw null; }
+        public static Azure.Provisioning.BicepValue<T> DefineProperty(Azure.Provisioning.Primitives.ProvisionableConstruct construct, string propertyName, string[]? bicepPath, bool isOutput = false, bool isRequired = false, bool isSecure = false, Azure.Provisioning.BicepValue<T>? defaultValue = null, string? format = null) { throw null; }
         public static implicit operator Azure.Provisioning.BicepValue<System.String> (Azure.Provisioning.BicepValue<T> value) { throw null; }
         public static implicit operator Azure.Provisioning.BicepValue<T> (Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
         public static implicit operator Azure.Provisioning.BicepValue<T> (Azure.Provisioning.ProvisioningVariable reference) { throw null; }
@@ -166,7 +166,6 @@ namespace Azure.Provisioning.Authorization
             public static readonly string V2017_09_01;
             public static readonly string V2018_07_01;
             public static readonly string V2022_04_01;
-            public static readonly string V2023_07_01_preview;
         }
     }
     public enum AuthorizationRoleType
@@ -261,7 +260,6 @@ namespace Azure.Provisioning.Authorization
         public static partial class ResourceVersions
         {
             public static readonly string V2020_10_01;
-            public static readonly string V2022_04_01_preview;
         }
     }
     public partial class RoleAssignmentScheduleTicketInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -308,7 +306,6 @@ namespace Azure.Provisioning.Authorization
         public static partial class ResourceVersions
         {
             public static readonly string V2020_10_01;
-            public static readonly string V2022_04_01_preview;
         }
     }
     public partial class RoleEligibilityScheduleRequestPropertiesTicketInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -382,7 +379,6 @@ namespace Azure.Provisioning.Authorization
         public static partial class ResourceVersions
         {
             public static readonly string V2020_10_01;
-            public static readonly string V2024_09_01_preview;
         }
     }
     public partial class RoleManagementPolicyAuthenticationContextRule : Azure.Provisioning.Authorization.RoleManagementPolicyRule
@@ -776,24 +772,11 @@ namespace Azure.Provisioning.Primitives
         public string PropertyName { get { throw null; } }
         public override string ToString() { throw null; }
     }
-    public partial class ClientCreatorOutputResolver : Azure.Provisioning.Primitives.InfrastructureResolver
-    {
-        public ClientCreatorOutputResolver() { }
-        public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> ResolveResources(System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> resources, Azure.Provisioning.ProvisioningBuildOptions options) { throw null; }
-    }
     public partial class DynamicResourceNamePropertyResolver : Azure.Provisioning.Primitives.ResourceNamePropertyResolver
     {
         public DynamicResourceNamePropertyResolver() { }
         protected virtual Azure.Provisioning.BicepValue<string> GetUniqueSuffix(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Primitives.ProvisionableResource resource) { throw null; }
         public override Azure.Provisioning.BicepValue<string>? ResolveName(Azure.Provisioning.ProvisioningBuildOptions options, Azure.Provisioning.Primitives.ProvisionableResource resource, Azure.Provisioning.Primitives.ResourceNameRequirements requirements) { throw null; }
-    }
-    public partial interface IClientCreator
-    {
-        System.Collections.Generic.IEnumerable<Azure.Provisioning.ProvisioningOutput> GetOutputs();
-    }
-    public partial interface IClientCreator<TClient, TOptions> : Azure.Provisioning.Primitives.IClientCreator where TOptions : Azure.Core.ClientOptions
-    {
-        TClient CreateClient(System.Collections.Generic.IReadOnlyDictionary<string, object?> deploymentOutputs, Azure.Core.TokenCredential credential, TOptions? options = null);
     }
     public abstract partial class InfrastructureResolver
     {
@@ -1886,7 +1869,6 @@ namespace Azure.Provisioning.Resources
             public static readonly string V2022_09_01;
             public static readonly string V2022_12_01;
             public static readonly string V2023_07_01;
-            public static readonly string V2023_07_01_preview;
         }
     }
     public partial class ResourceProviderData : Azure.Provisioning.Primitives.ProvisionableConstruct

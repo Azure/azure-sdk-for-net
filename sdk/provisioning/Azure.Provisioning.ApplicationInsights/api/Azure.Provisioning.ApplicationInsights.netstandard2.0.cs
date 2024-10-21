@@ -78,7 +78,6 @@ namespace Azure.Provisioning.ApplicationInsights
             public static readonly string V2014_08_01;
             public static readonly string V2015_05_01;
             public static readonly string V2020_02_02;
-            public static readonly string V2020_02_02_preview;
         }
     }
     public enum ApplicationInsightsPublicNetworkAccessType

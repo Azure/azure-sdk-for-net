@@ -19,7 +19,14 @@ public class BasicStorageTests(bool async)
     public async Task CreateDefault()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(StorageResources.CreateAccount("storage"))
+        await test.Define(
+            new StorageAccount("storage", StorageAccount.ResourceVersions.V2023_01_01)
+            {
+                Kind = StorageKind.StorageV2,
+                Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                IsHnsEnabled = true,
+                AllowBlobPublicAccess = false
+            })
         .Compare(
             """
             @description('The location for the resource(s) to be deployed.')
@@ -51,7 +58,14 @@ public class BasicStorageTests(bool async)
             {
                 Infrastructure infra = new();
 
-                StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                StorageAccount storage =
+                    new(nameof(storage), StorageAccount.ResourceVersions.V2023_01_01)
+                    {
+                        Kind = StorageKind.StorageV2,
+                        Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                        IsHnsEnabled = true,
+                        AllowBlobPublicAccess = false
+                    };
                 infra.Add(storage);
 
                 BlobService blobs = new(nameof(blobs)) { Parent = storage, DependsOn = { storage } };
@@ -98,7 +112,14 @@ public class BasicStorageTests(bool async)
             {
                 Infrastructure infra = new();
 
-                StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                StorageAccount storage =
+                    new(nameof(storage), StorageAccount.ResourceVersions.V2023_01_01)
+                    {
+                        Kind = StorageKind.StorageV2,
+                        Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                        IsHnsEnabled = true,
+                        AllowBlobPublicAccess = false
+                    };
                 infra.Add(storage);
 
                 UserAssignedIdentity id = new(nameof(id));
@@ -155,7 +176,14 @@ public class BasicStorageTests(bool async)
             {
                 Infrastructure infra = new();
 
-                StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                StorageAccount storage =
+                    new(nameof(storage), StorageAccount.ResourceVersions.V2023_01_01)
+                    {
+                        Kind = StorageKind.StorageV2,
+                        Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                        IsHnsEnabled = true,
+                        AllowBlobPublicAccess = false
+                    };
                 infra.Add(storage);
 
                 UserAssignedIdentity id = new(nameof(id));
@@ -226,7 +254,14 @@ public class BasicStorageTests(bool async)
             {
                 Infrastructure infra = new();
 
-                StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                StorageAccount storage =
+                    new(nameof(storage), StorageAccount.ResourceVersions.V2023_01_01)
+                    {
+                        Kind = StorageKind.StorageV2,
+                        Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                        IsHnsEnabled = true,
+                        AllowBlobPublicAccess = false
+                    };
                 infra.Add(storage);
 
                 BlobService blobs = new(nameof(blobs)) { Parent = storage };

@@ -47,6 +47,6 @@ public partial class ArmApplicationJitAccessPolicy : ProvisionableConstruct
         _jitAccessEnabled = BicepValue<bool>.DefineProperty(this, "JitAccessEnabled", ["jitAccessEnabled"]);
         _jitApprovalMode = BicepValue<JitApprovalMode>.DefineProperty(this, "JitApprovalMode", ["jitApprovalMode"]);
         _jitApprovers = BicepList<JitApprover>.DefineProperty(this, "JitApprovers", ["jitApprovers"]);
-        _maximumJitAccessDuration = BicepValue<TimeSpan>.DefineProperty(this, "MaximumJitAccessDuration", ["maximumJitAccessDuration"]);
+        _maximumJitAccessDuration = BicepValue<TimeSpan>.DefineProperty(this, "MaximumJitAccessDuration", ["maximumJitAccessDuration"], format: "P");
     }
 }

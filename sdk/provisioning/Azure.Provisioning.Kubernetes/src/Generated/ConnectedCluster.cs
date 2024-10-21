@@ -189,11 +189,6 @@ public partial class ConnectedCluster : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-07-15-preview.
-        /// </summary>
-        public static readonly string V2024_07_15_preview = "2024-07-15-preview";
-
-        /// <summary>
         /// 2024-01-01.
         /// </summary>
         public static readonly string V2024_01_01 = "2024-01-01";

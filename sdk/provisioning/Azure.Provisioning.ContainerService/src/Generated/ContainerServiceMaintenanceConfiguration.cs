@@ -90,11 +90,6 @@ public partial class ContainerServiceMaintenanceConfiguration : ProvisionableRes
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
-        /// <summary>
         /// 2024-08-01.
         /// </summary>
         public static readonly string V2024_08_01 = "2024-08-01";

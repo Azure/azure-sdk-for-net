@@ -107,7 +107,7 @@ public partial class EventGridNamespaceClientResource : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespaceClientResource.</param>
     public EventGridNamespaceClientResource(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/clients", resourceVersion ?? "2024-06-01-preview")
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/clients", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _attributes = BicepDictionary<BinaryData>.DefineProperty(this, "Attributes", ["properties", "attributes"]);
@@ -126,12 +126,7 @@ public partial class EventGridNamespaceClientResource : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
     }
-
     /// <summary>
     /// Creates a reference to an existing EventGridNamespaceClientResource.
     /// </summary>

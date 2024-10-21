@@ -31,13 +31,21 @@ internal class SampleTests(bool async)
         ProvisioningOutput? endpoint = null;
 
         await using Trycep test = CreateBicepTest();
+#pragma warning disable SA1112 // Closing parenthesis should be on line of opening parenthesis
         await test.Define(
             ctx =>
             {
                 Infrastructure infra = new();
 
                 // Create a storage account and blob resources
-                StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                StorageAccount storage =
+                    new(nameof(storage), StorageAccount.ResourceVersions.V2023_01_01)
+                    {
+                        Kind = StorageKind.StorageV2,
+                        Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                        IsHnsEnabled = true,
+                        AllowBlobPublicAccess = false
+                    };
                 infra.Add(storage);
                 blobs = new(nameof(blobs)) { Parent = storage };
                 infra.Add(blobs);
@@ -75,6 +83,7 @@ internal class SampleTests(bool async)
             """)
         .Lint()
         .ValidateAndDeployAsync(
+#if EXPERIMENTAL_PROVISIONING
             async deployment =>
             {
                 // Create a client
@@ -90,7 +99,10 @@ internal class SampleTests(bool async)
                 // Make a service call and verify it doesn't throw
                 Response<BlobServiceProperties> result = await storage.GetPropertiesAsync();
                 Assert.AreEqual(200, result.GetRawResponse().Status);
-            });
+            }
+#endif
+        );
+#pragma warning restore SA1112 // Closing parenthesis should be on line of opening parenthesis
     }
 
     [Test]

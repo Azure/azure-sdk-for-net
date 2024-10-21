@@ -60,7 +60,6 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2022_10_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public enum ContainerAppAccessMode
@@ -112,7 +111,6 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2022_10_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public partial class ContainerAppAuthPlatform : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -228,7 +226,6 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2022_10_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public partial class ContainerAppConnectedEnvironmentCertificate : Azure.Provisioning.Primitives.ProvisionableResource
@@ -247,7 +244,6 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2022_10_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public partial class ContainerAppConnectedEnvironmentDaprComponent : Azure.Provisioning.Primitives.ProvisionableResource
@@ -271,7 +267,6 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2022_10_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public enum ContainerAppConnectedEnvironmentProvisioningState
@@ -299,7 +294,6 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2022_10_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public partial class ContainerAppContainer : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -632,7 +626,6 @@ namespace Azure.Provisioning.AppContainers
         {
             public static readonly string V2023_05_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public partial class ContainerAppJobConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -733,7 +726,6 @@ namespace Azure.Provisioning.AppContainers
         {
             public static readonly string V2023_05_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public partial class ContainerAppManagedEnvironment : Azure.Provisioning.Primitives.ProvisionableResource
@@ -771,7 +763,6 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2022_10_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public partial class ContainerAppManagedEnvironmentCertificate : Azure.Provisioning.Primitives.ProvisionableResource
@@ -791,7 +782,6 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2022_10_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public partial class ContainerAppManagedEnvironmentDaprComponent : Azure.Provisioning.Primitives.ProvisionableResource
@@ -816,7 +806,6 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2022_10_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public enum ContainerAppManagedEnvironmentOutBoundType
@@ -839,7 +828,6 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2022_10_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public partial class ContainerAppOpenIdConnectClientCredential : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -990,7 +978,6 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2022_10_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public enum ContainerAppSourceControlOperationState

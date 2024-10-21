@@ -22,7 +22,12 @@ namespace Azure.Provisioning.ContainerRegistry
         public static Azure.Provisioning.ContainerRegistry.ContainerRegistryAgentPool FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2019_06_01_preview;
+            public static readonly string V2017_03_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2019_05_01;
+            public static readonly string V2021_09_01;
+            public static readonly string V2022_12_01;
+            public static readonly string V2023_07_01;
         }
     }
     public partial class ContainerRegistryBaseImageDependency : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -291,7 +296,6 @@ namespace Azure.Provisioning.ContainerRegistry
             public static readonly string V2021_09_01;
             public static readonly string V2022_12_01;
             public static readonly string V2023_07_01;
-            public static readonly string V2023_11_01_preview;
         }
     }
     public partial class ContainerRegistryPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -355,7 +359,6 @@ namespace Azure.Provisioning.ContainerRegistry
             public static readonly string V2021_09_01;
             public static readonly string V2022_12_01;
             public static readonly string V2023_07_01;
-            public static readonly string V2023_11_01_preview;
         }
     }
     public partial class ContainerRegistryResourceStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -482,7 +485,6 @@ namespace Azure.Provisioning.ContainerRegistry
             public static readonly string V2021_09_01;
             public static readonly string V2022_12_01;
             public static readonly string V2023_07_01;
-            public static readonly string V2023_11_01_preview;
         }
     }
     public partial class ContainerRegistrySku : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -560,7 +562,6 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             public static readonly string V2018_09_01;
             public static readonly string V2019_04_01;
-            public static readonly string V2019_06_01_preview;
         }
     }
     public partial class ContainerRegistryTaskOverridableValue : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -586,7 +587,12 @@ namespace Azure.Provisioning.ContainerRegistry
         public static Azure.Provisioning.ContainerRegistry.ContainerRegistryTaskRun FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2019_06_01_preview;
+            public static readonly string V2017_03_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2019_05_01;
+            public static readonly string V2021_09_01;
+            public static readonly string V2022_12_01;
+            public static readonly string V2023_07_01;
         }
     }
     public partial class ContainerRegistryTaskRunContent : Azure.Provisioning.ContainerRegistry.ContainerRegistryRunContent
@@ -639,7 +645,6 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             public static readonly string V2022_12_01;
             public static readonly string V2023_07_01;
-            public static readonly string V2023_11_01_preview;
         }
     }
     public partial class ContainerRegistryTokenCertificate : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -737,7 +742,6 @@ namespace Azure.Provisioning.ContainerRegistry
             public static readonly string V2021_09_01;
             public static readonly string V2022_12_01;
             public static readonly string V2023_07_01;
-            public static readonly string V2023_11_01_preview;
         }
     }
     public enum ContainerRegistryWebhookAction
@@ -791,7 +795,6 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             public static readonly string V2022_12_01;
             public static readonly string V2023_07_01;
-            public static readonly string V2023_11_01_preview;
         }
     }
     public partial class SourceCodeRepoAuthInfo : Azure.Provisioning.Primitives.ProvisionableConstruct

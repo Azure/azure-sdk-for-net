@@ -132,7 +132,7 @@ public partial class EventGridNamespace : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespace.</param>
     public EventGridNamespace(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces", resourceVersion ?? "2024-06-01-preview")
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -149,17 +149,6 @@ public partial class EventGridNamespace : ProvisionableResource
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _provisioningState = BicepValue<NamespaceProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-    }
-
-    /// <summary>
-    /// Supported EventGridNamespace resource versions.
-    /// </summary>
-    public static class ResourceVersions
-    {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
     }
 
     /// <summary>
