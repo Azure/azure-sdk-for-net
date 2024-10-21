@@ -302,3 +302,30 @@ namespace System.ClientModel.Primitives
         public void SetHeader(string name, string value) { }
     }
 }
+namespace System.ClientModel.Primitives.TwoWayPipeline
+{
+    public partial class ClientPipelineMessage
+    {
+        public ClientPipelineMessage() { }
+    }
+    public partial class ServicePipelineMessage
+    {
+        public ServicePipelineMessage() { }
+    }
+    public partial class TwoWayPipeline
+    {
+        public TwoWayPipeline() { }
+    }
+    public partial class TwoWayPipelinePolicy
+    {
+        public TwoWayPipelinePolicy() { }
+    }
+    public partial class TwoWayPipelineTransport
+    {
+        public TwoWayPipelineTransport() { }
+    }
+    public partial class WebSocketTwoWayPipelineTransport
+    {
+        public WebSocketTwoWayPipelineTransport() { }
+    }
+}
