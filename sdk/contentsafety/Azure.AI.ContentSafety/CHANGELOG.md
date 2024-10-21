@@ -3,7 +3,8 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
-
+- The library now directly supports custom authentication audiences. This can be specified by providing an appropriate value to the `ContentSafetyClientOptions.AuthorizationScopes` property when creating a client. See the client configuration section of the README for more details.
+- The library now supports serialization and deserialization for `ImageCategoriesAnalysis` and `TextCategoriesAnalysis`.
 ### Breaking Changes
 
 ### Bugs Fixed
