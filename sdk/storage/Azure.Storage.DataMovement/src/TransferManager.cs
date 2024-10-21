@@ -104,7 +104,7 @@ namespace Azure.Storage.DataMovement
         {
             cancellationToken = LinkCancellation(cancellationToken);
 
-            await foreach (JobPartInternal partItem in job.ProcessJobToJobPartAsync(cancellationToken).ConfigureAwait(false))
+            await foreach (JobPartInternal partItem in job.ProcessJobToJobPartAsync().ConfigureAwait(false))
             {
                 job.IncrementJobParts();
                 await _partsProcessor.QueueAsync(partItem, cancellationToken).ConfigureAwait(false);
@@ -115,7 +115,7 @@ namespace Azure.Storage.DataMovement
             cancellationToken = LinkCancellation(cancellationToken);
 
             part.SetQueueChunkDelegate(_chunksProcessor.QueueAsync);
-            await part.ProcessPartToChunkAsync(cancellationToken).ConfigureAwait(false);
+            await part.ProcessPartToChunkAsync().ConfigureAwait(false);
         }
 
         #region Transfer Job Management

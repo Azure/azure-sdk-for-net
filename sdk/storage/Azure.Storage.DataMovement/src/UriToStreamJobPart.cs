@@ -192,10 +192,8 @@ namespace Azure.Storage.DataMovement
         /// content length.
         /// </summary>
         /// <returns>The task that's queueing up the chunks</returns>
-        public override async Task ProcessPartToChunkAsync(
-            CancellationToken cancellationToken = default)
+        public override async Task ProcessPartToChunkAsync()
         {
-            _cancellationToken = CancellationTokenSource.CreateLinkedTokenSource(_cancellationToken, cancellationToken).Token;
             // we can default the length to 0 because we know the destination is local and
             // does not require a length to be created.
             await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);

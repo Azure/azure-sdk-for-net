@@ -280,10 +280,8 @@ namespace Azure.Storage.DataMovement
         /// Processes the job to job parts
         /// </summary>
         /// <returns>An IEnumerable that contains the job parts</returns>
-        public virtual async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync(
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        public virtual async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync()
         {
-            _cancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationToken).Token;
             await OnJobStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
             int partNumber = 0;
 

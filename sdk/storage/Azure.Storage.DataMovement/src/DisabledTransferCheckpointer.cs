@@ -13,19 +13,16 @@ namespace Azure.Storage.DataMovement
     {
         public Task AddNewJobAsync(string transferId, StorageResource source, StorageResource destination, CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             return Task.CompletedTask;
         }
 
         public Task AddNewJobPartAsync(string transferId, int partNumber, Stream headerStream, CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             return Task.CompletedTask;
         }
 
         public Task<int> GetCurrentJobPartCountAsync(string transferId, CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             return Task.FromResult(0);
         }
 
@@ -56,13 +53,11 @@ namespace Azure.Storage.DataMovement
 
         public Task SetEnumerationCompleteAsync(string transferId, CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             return Task.CompletedTask;
         }
 
         public Task SetJobPartStatusAsync(string transferId, int partNumber, DataTransferStatus status, CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             return Task.CompletedTask;
         }
 

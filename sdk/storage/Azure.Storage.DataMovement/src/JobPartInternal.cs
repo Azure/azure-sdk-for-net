@@ -237,7 +237,7 @@ namespace Azure.Storage.DataMovement
         /// Processes the job to job parts
         /// </summary>
         /// <returns>An IEnumerable that contains the job chunks</returns>
-        public abstract Task ProcessPartToChunkAsync(CancellationToken cancellationToken = default);
+        public abstract Task ProcessPartToChunkAsync();
 
         /// <summary>
         /// Triggers the cancellation for the Job Part.
