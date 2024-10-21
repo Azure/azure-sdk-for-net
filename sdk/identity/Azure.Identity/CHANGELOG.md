@@ -14,6 +14,10 @@
 
 ## 1.13.0 (2024-10-14)
 
+### Breaking Changes
+- Previously, if a clientID or ResourceID was specified for Cloud Shell managed identity, which is not supported, the clientID or resourceID would be silently ignored. Now, an exception will be thrown if a clientID or resourceID is specified for Cloud Shell managed identity.
+- Previously, if a clientID or ResourceID was specified for Service Fabric managed identity, which is not supported, the clientID or resourceID would be silently ignored. Now, an exception will be thrown if a clientID or resourceID is specified for Service Fabric managed identity.
+
 ### Features Added
 - `ManagedIdentityCredential` now supports specifying a user-assigned managed identity by object ID.
 
