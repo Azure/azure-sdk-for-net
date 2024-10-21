@@ -19,7 +19,6 @@ namespace Azure.Storage.DataMovement
             StorageResource destination,
             CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             return Task.CompletedTask;
         }
 
@@ -29,19 +28,16 @@ namespace Azure.Storage.DataMovement
             Stream headerStream,
             CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             return Task.CompletedTask;
         }
 
         public override Task<int> CurrentJobPartCountAsync(string transferId, CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             return Task.FromResult(0);
         }
 
         public override Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             return Task.FromResult(new List<string>());
         }
 
@@ -52,7 +48,6 @@ namespace Azure.Storage.DataMovement
             int length,
             CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             throw Errors.CheckpointerDisabled("ReadJobPartPlanFileAsync");
         }
 
@@ -62,7 +57,6 @@ namespace Azure.Storage.DataMovement
             int length,
             CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             throw Errors.CheckpointerDisabled("ReadJobPlanFileAsync");
         }
 
@@ -72,7 +66,6 @@ namespace Azure.Storage.DataMovement
             DataTransferStatus status,
             CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             return Task.CompletedTask;
         }
 
@@ -81,13 +74,11 @@ namespace Azure.Storage.DataMovement
             DataTransferStatus status,
             CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             return Task.CompletedTask;
         }
 
         public override Task<bool> TryRemoveStoredTransferAsync(string transferId, CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             return Task.FromResult(false);
         }
 
@@ -99,7 +90,6 @@ namespace Azure.Storage.DataMovement
             int length,
             CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             return Task.CompletedTask;
         }
     }

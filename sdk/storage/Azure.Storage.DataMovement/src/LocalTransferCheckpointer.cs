@@ -278,7 +278,6 @@ namespace Azure.Storage.DataMovement
             bool result = true;
             foreach (string file in filesToDelete)
             {
-                CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                 try
                 {
                     File.Delete(file);
@@ -304,7 +303,6 @@ namespace Azure.Storage.DataMovement
 
         public override Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             return Task.FromResult(_transferStates.Keys.ToList());
         }
 

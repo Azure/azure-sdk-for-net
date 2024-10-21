@@ -94,23 +94,19 @@ namespace Azure.Storage.DataMovement
         /// Creates the local file.
         /// </summary>
         /// <param name="overwrite"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        internal Task CreateAsync(bool overwrite,
-            CancellationToken cancellationToken = default)
+        internal void Create(bool overwrite)
         {
             if (overwrite || !File.Exists(_uri.LocalPath))
             {
                 Directory.CreateDirectory(System.IO.Path.GetDirectoryName(_uri.LocalPath));
-                using (var fileStream = File.Create(_uri.LocalPath))
-                {
-                    CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-                }
+                File.Create(_uri.LocalPath).Close();
                 FileAttributes attributes = File.GetAttributes(_uri.LocalPath);
                 File.SetAttributes(_uri.LocalPath, attributes | FileAttributes.Temporary);
-                return Task.CompletedTask;
             }
-            throw Errors.LocalFileAlreadyExists(_uri.LocalPath);
+            else
+            {
+                throw Errors.LocalFileAlreadyExists(_uri.LocalPath);
+            }
         }
 
         /// <summary>
@@ -142,7 +138,7 @@ namespace Azure.Storage.DataMovement
             long position = options?.Position != default ? options.Position.Value : 0;
             if (position == 0)
             {
-                await CreateAsync(overwrite, cancellationToken).ConfigureAwait(false);
+                Create(overwrite);
             }
             if (streamLength > 0)
             {
@@ -221,8 +217,6 @@ namespace Azure.Storage.DataMovement
         /// <returns>Returns the properties of the Local File Storage Resource. See <see cref="StorageResourceItemProperties"/></returns>
         protected internal override Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-
             FileInfo fileInfo = new FileInfo(_uri.LocalPath);
             if (fileInfo.Exists)
             {
@@ -258,8 +252,6 @@ namespace Azure.Storage.DataMovement
             StorageResourceCompleteTransferOptions completeTransferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-
             if (File.Exists(_uri.LocalPath))
             {
                 // Make file visible
@@ -282,8 +274,6 @@ namespace Azure.Storage.DataMovement
         /// </returns>
         protected internal override Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-
             if (File.Exists(_uri.LocalPath))
             {
                 File.Delete(_uri.LocalPath);
