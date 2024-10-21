@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Client
 {
-    /// <summary> Client options for TestReporting library clients. </summary>
+    /// <summary> Client options for TestReportingClient. </summary>
     public partial class TestReportingClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_05_20_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_09_01_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2024-05-20-preview". </summary>
-            V2024_05_20_Preview = 1,
+            /// <summary> Service version "2024-09-01-preview". </summary>
+            V2024_09_01_Preview = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Client
         {
             Version = version switch
             {
-                ServiceVersion.V2024_05_20_Preview => "2024-05-20-preview",
+                ServiceVersion.V2024_09_01_Preview => "2024-09-01-preview",
                 _ => throw new NotSupportedException()
             };
         }

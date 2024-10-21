@@ -3,18 +3,27 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
 {
     internal class ReporterUtils
     {
+        private readonly ILogger _logger;
+        public ReporterUtils(ILogger? logger = null)
+        {
+            _logger = logger ?? new Logger();
+        }
         internal static string GetRunId(CIInfo cIInfo)
         {
-            if (cIInfo.Provider == Constants.DEFAULT)
+            if (cIInfo.Provider == CIConstants.s_dEFAULT)
             {
                 return Guid.NewGuid().ToString();
             }
@@ -37,7 +46,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
             string GIT_REV_PARSE = "git rev-parse --is-inside-work-tree";
             string GIT_COMMIT_MESSAGE_COMMAND = "git log -1 --pretty=%B";
 
-            if (ciInfo.Provider == Constants.GITHUB_ACTIONS &&
+            if (ciInfo.Provider == CIConstants.s_gITHUB_ACTIONS &&
             Environment.GetEnvironmentVariable("GITHUB_EVENT_NAME") == "pull_request")
             {
                 var prNumber = Environment.GetEnvironmentVariable("GITHUB_REF_NAME")?.Split('/')[0];
@@ -92,6 +101,101 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
                 }
                 process.WaitForExit();
                 return result;
+            }
+        }
+
+        internal static string GetCurrentOS()
+        {
+            PlatformID platform = Environment.OSVersion.Platform;
+            if (platform == PlatformID.Unix)
+                return OSConstants.s_lINUX;
+            else if (platform == PlatformID.MacOSX)
+                return OSConstants.s_mACOS;
+            else
+                return OSConstants.s_wINDOWS;
+        }
+
+        internal TokenDetails ParseWorkspaceIdFromAccessToken(JsonWebTokenHandler? jsonWebTokenHandler, string? accessToken)
+        {
+            if (jsonWebTokenHandler == null)
+            {
+                jsonWebTokenHandler = new JsonWebTokenHandler();
+            }
+            TokenDetails tokenDetails = new();
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                throw new ArgumentNullException(nameof(accessToken), "AccessToken is null or empty");
+            }
+            try
+            {
+                JsonWebToken inputToken = (JsonWebToken)jsonWebTokenHandler.ReadToken(accessToken);
+                var aid = inputToken.Claims.FirstOrDefault(c => c.Type == "aid")?.Value ?? string.Empty;
+
+                if (!string.IsNullOrEmpty(aid)) // Custom Token
+                {
+                    _logger.Info("Custom Token parsing");
+                    tokenDetails.aid = aid;
+                    tokenDetails.oid = inputToken.Claims.FirstOrDefault(c => c.Type == "oid")?.Value ?? string.Empty;
+                    tokenDetails.id = inputToken.Claims.FirstOrDefault(c => c.Type == "id")?.Value ?? string.Empty;
+                    tokenDetails.userName = inputToken.Claims.FirstOrDefault(c => c.Type == "name")?.Value ?? string.Empty;
+                }
+                else // Entra Token
+                {
+                    _logger.Info("Entra Token parsing");
+                    tokenDetails.aid = Environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_WORKSPACE_ID) ?? string.Empty;
+                    tokenDetails.oid = inputToken.Claims.FirstOrDefault(c => c.Type == "oid")?.Value ?? string.Empty;
+                    tokenDetails.id = string.Empty;
+                    tokenDetails.userName = inputToken.Claims.FirstOrDefault(c => c.Type == "name")?.Value ?? string.Empty;
+                    // TODO add back suport for old claims https://devdiv.visualstudio.com/OnlineServices/_git/PlaywrightService?path=/src/Common/Authorization/JwtSecurityTokenValidator.cs&version=GBmain&line=200&lineEnd=200&lineStartColumn=30&lineEndColumn=52&lineStyle=plain&_a=contents
+                }
+
+                return tokenDetails;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        internal bool IsTimeGreaterThanCurrentPlus10Minutes(string sasUri)
+        {
+            try
+            {
+                // Parse the SAS URI
+                Uri url = new Uri(sasUri);
+                string query = url.Query;
+                var queryParams = System.Web.HttpUtility.ParseQueryString(query);
+                string expiryTime = queryParams["se"]; // 'se' is the query parameter for the expiry time
+
+                if (!string.IsNullOrEmpty(expiryTime))
+                {
+                    // Convert expiry time to a timestamp
+                    DateTime expiryDateTime = DateTime.Parse(expiryTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
+                    long timestampFromIsoString = ((DateTimeOffset)expiryDateTime).ToUnixTimeMilliseconds();
+
+                    // Get current time + 10 minutes in milliseconds
+                    long currentTimestampPlus10Minutes = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + (10 * 60 * 1000);
+
+                    bool isSasValidityGreaterThanCurrentTimePlus10Minutes = timestampFromIsoString > currentTimestampPlus10Minutes;
+
+                    if (!isSasValidityGreaterThanCurrentTimePlus10Minutes)
+                    {
+                        // Log if SAS is close to expiry
+                        _logger.Info(
+                            $"Sas rotation required because close to expiry, SasUriValidTillTime: {timestampFromIsoString}, CurrentTime: {currentTimestampPlus10Minutes}"
+                        );
+                    }
+
+                    return isSasValidityGreaterThanCurrentTimePlus10Minutes;
+                }
+
+                _logger.Info("Sas rotation required because expiry param not found.");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _logger.Info($"Sas rotation required because of {ex.Message}.");
+                return false;
             }
         }
     }
