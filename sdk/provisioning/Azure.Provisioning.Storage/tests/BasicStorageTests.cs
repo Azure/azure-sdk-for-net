@@ -270,11 +270,12 @@ public class BasicStorageTests(bool async)
                 infra.Add(new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri });
 
                 // Manually compute the public Azure endpoint
+                string? nothing = null;
                 BicepValue<string> computed =
                     new BicepStringBuilder()
                     .Append("https://")
                     .Append($"{storage.Name}")
-                    .Append(".blob.core.windows.net");
+                    .Append($".blob.core.windows.net{nothing}");
                 infra.Add(new ProvisioningOutput("computed_endpoint", typeof(string)) { Value = computed });
 
                 return infra;

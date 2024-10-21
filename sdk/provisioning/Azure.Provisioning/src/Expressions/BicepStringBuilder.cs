@@ -102,10 +102,11 @@ public ref struct BicepInterpolatedStringHandler(int literalLength, int formatte
         }
         else
         {
-            _expressions.Add(
-                t is null ?
-                    BicepSyntax.Null() :
-                    BicepSyntax.Value(t.ToString() ?? ""));
+            string? s = t?.ToString();
+            if (s is not null)
+            {
+                _expressions.Add(BicepSyntax.Value(s));
+            }
         }
     }
 
