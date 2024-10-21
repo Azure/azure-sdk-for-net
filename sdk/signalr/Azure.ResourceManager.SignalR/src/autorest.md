@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: SignalR
 namespace: Azure.ResourceManager.SignalR
-require: https://github.com/Azure/azure-rest-api-specs/blob/34ba022add0034e30462b76e1548ce5a7e053e33/specification/signalr/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/241ece1979c147dae8f9275b864afaab5fa4a142/specification/signalr/resource-manager/readme.md
 #tag: package-2022-02-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -41,6 +41,7 @@ rename-mapping:
   Sku.resourceType: -|resource-type
   SignalRUsage.id: -|arm-id
   SharedPrivateLinkResource.properties.privateLinkResourceId: -|arm-id
+  ClientConnectionCountRule.type: RuleType
 
 prepend-rp-prefix:
   - CustomDomain

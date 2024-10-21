@@ -141,6 +141,11 @@ namespace Azure.ResourceManager.SignalR
                 writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors, options);
             }
+            if (Optional.IsDefined(Serverless))
+            {
+                writer.WritePropertyName("serverless"u8);
+                writer.WriteObjectValue(Serverless, options);
+            }
             if (Optional.IsDefined(Upstream))
             {
                 writer.WritePropertyName("upstream"u8);
@@ -150,6 +155,11 @@ namespace Azure.ResourceManager.SignalR
             {
                 writer.WritePropertyName("networkACLs"u8);
                 writer.WriteObjectValue(NetworkACLs, options);
+            }
+            if (Optional.IsDefined(ApplicationFirewall))
+            {
+                writer.WritePropertyName("applicationFirewall"u8);
+                writer.WriteObjectValue(ApplicationFirewall, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -165,6 +175,16 @@ namespace Azure.ResourceManager.SignalR
             {
                 writer.WritePropertyName("disableAadAuth"u8);
                 writer.WriteBooleanValue(DisableAadAuth.Value);
+            }
+            if (Optional.IsDefined(RegionEndpointEnabled))
+            {
+                writer.WritePropertyName("regionEndpointEnabled"u8);
+                writer.WriteStringValue(RegionEndpointEnabled);
+            }
+            if (Optional.IsDefined(ResourceStopped))
+            {
+                writer.WritePropertyName("resourceStopped"u8);
+                writer.WriteStringValue(ResourceStopped);
             }
             writer.WriteEndObject();
         }
@@ -212,11 +232,15 @@ namespace Azure.ResourceManager.SignalR
             SignalRLiveTraceConfiguration liveTraceConfiguration = default;
             SignalRResourceLogCategoryListResult resourceLogConfiguration = default;
             SignalRCorsSettings cors = default;
+            ServerlessSettings serverless = default;
             ServerlessUpstreamSettings upstream = default;
             SignalRNetworkAcls networkACLs = default;
+            ApplicationFirewallSettings applicationFirewall = default;
             string publicNetworkAccess = default;
             bool? disableLocalAuth = default;
             bool? disableAadAuth = default;
+            string regionEndpointEnabled = default;
+            string resourceStopped = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -425,6 +449,15 @@ namespace Azure.ResourceManager.SignalR
                             cors = SignalRCorsSettings.DeserializeSignalRCorsSettings(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("serverless"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serverless = ServerlessSettings.DeserializeServerlessSettings(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("upstream"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -441,6 +474,15 @@ namespace Azure.ResourceManager.SignalR
                                 continue;
                             }
                             networkACLs = SignalRNetworkAcls.DeserializeSignalRNetworkAcls(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("applicationFirewall"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            applicationFirewall = ApplicationFirewallSettings.DeserializeApplicationFirewallSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -464,6 +506,16 @@ namespace Azure.ResourceManager.SignalR
                                 continue;
                             }
                             disableAadAuth = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("regionEndpointEnabled"u8))
+                        {
+                            regionEndpointEnabled = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("resourceStopped"u8))
+                        {
+                            resourceStopped = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -499,11 +551,15 @@ namespace Azure.ResourceManager.SignalR
                 liveTraceConfiguration,
                 resourceLogConfiguration,
                 cors,
+                serverless,
                 upstream,
                 networkACLs,
+                applicationFirewall,
                 publicNetworkAccess,
                 disableLocalAuth,
                 disableAadAuth,
+                regionEndpointEnabled,
+                resourceStopped,
                 serializedAdditionalRawData);
         }
 
@@ -948,6 +1004,26 @@ namespace Azure.ResourceManager.SignalR
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ServerlessConnectionTimeoutInSeconds", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serverless: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      serverless: {");
+                builder.Append("        connectionTimeoutInSeconds: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Serverless))
+                {
+                    builder.Append("    serverless: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Serverless, options, 4, false, "    serverless: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("UpstreamTemplates", out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -980,6 +1056,26 @@ namespace Azure.ResourceManager.SignalR
                 {
                     builder.Append("    networkACLs: ");
                     BicepSerializationHelpers.AppendChildObject(builder, NetworkACLs, options, 4, false, "    networkACLs: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ApplicationFirewallClientConnectionCountRules", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    applicationFirewall: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      applicationFirewall: {");
+                builder.Append("        clientConnectionCountRules: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationFirewall))
+                {
+                    builder.Append("    applicationFirewall: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ApplicationFirewall, options, 4, false, "    applicationFirewall: ");
                 }
             }
 
@@ -1035,6 +1131,52 @@ namespace Azure.ResourceManager.SignalR
                     builder.Append("    disableAadAuth: ");
                     var boolValue = DisableAadAuth.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegionEndpointEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    regionEndpointEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RegionEndpointEnabled))
+                {
+                    builder.Append("    regionEndpointEnabled: ");
+                    if (RegionEndpointEnabled.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RegionEndpointEnabled}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RegionEndpointEnabled}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceStopped), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    resourceStopped: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceStopped))
+                {
+                    builder.Append("    resourceStopped: ");
+                    if (ResourceStopped.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceStopped}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceStopped}'");
+                    }
                 }
             }
 

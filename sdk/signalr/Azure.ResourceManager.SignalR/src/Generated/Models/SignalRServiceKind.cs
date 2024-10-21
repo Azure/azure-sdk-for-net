@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    /// <summary> The kind of the service, it can be SignalR or RawWebSockets. </summary>
+    /// <summary> The kind of the service. </summary>
     public readonly partial struct SignalRServiceKind : IEquatable<SignalRServiceKind>
     {
         private readonly string _value;

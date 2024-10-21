@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2024-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2024-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2024-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2024-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2024-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.SignalR
             try
             {
                 var response = await _signalRSharedPrivateLinkResourceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SignalRArmOperation<SignalRSharedPrivateLinkResource>(new SignalRSharedPrivateLinkResourceOperationSource(Client), _signalRSharedPrivateLinkResourceClientDiagnostics, Pipeline, _signalRSharedPrivateLinkResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SignalRArmOperation<SignalRSharedPrivateLinkResource>(new SignalRSharedPrivateLinkResourceOperationSource(Client), _signalRSharedPrivateLinkResourceClientDiagnostics, Pipeline, _signalRSharedPrivateLinkResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2024-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.SignalR
             try
             {
                 var response = _signalRSharedPrivateLinkResourceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SignalRArmOperation<SignalRSharedPrivateLinkResource>(new SignalRSharedPrivateLinkResourceOperationSource(Client), _signalRSharedPrivateLinkResourceClientDiagnostics, Pipeline, _signalRSharedPrivateLinkResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SignalRArmOperation<SignalRSharedPrivateLinkResource>(new SignalRSharedPrivateLinkResourceOperationSource(Client), _signalRSharedPrivateLinkResourceClientDiagnostics, Pipeline, _signalRSharedPrivateLinkResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
