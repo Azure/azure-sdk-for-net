@@ -245,14 +245,14 @@ public class ConfigurePipelineTests
             (sp, sco) =>
             {
                 SimpleClientOptions options = sp.GetRequiredService<IOptions<SimpleClientOptions>>().Value;
-                return new CustomHttpLoggingPolicy(options.Logging);
+                return new CustomHttpLoggingPolicy(options);
             });
 
         services.AddKeyedSingleton<MessageLoggingPolicy, CustomHttpLoggingPolicy>(typeof(MapsClientOptions),
             (sp, mco) =>
             {
                 MapsClientOptions options = sp.GetRequiredService<IOptions<MapsClientOptions>>().Value;
-                return new CustomHttpLoggingPolicy(options.Logging);
+                return new CustomHttpLoggingPolicy(options);
             });
 
         // Add the two clients

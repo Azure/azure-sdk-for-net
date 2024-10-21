@@ -187,8 +187,8 @@ public class LoggingOptionsTests
         // Add custom logging policy to service collection
         services.AddSingleton<MessageLoggingPolicy, CustomHttpLoggingPolicy>(sp =>
         {
-            ClientLoggingOptions options = new();
-            options.AllowedHeaderNames.Add("x-custom-allowed");
+            ClientPipelineOptions options = new();
+            options.Logging.AllowedHeaderNames.Add("x-custom-allowed");
             return new CustomHttpLoggingPolicy(options);
         });
 
@@ -223,9 +223,9 @@ public class LoggingOptionsTests
     {
         private readonly ClientLoggingOptions _options;
 
-        public CustomHttpLoggingPolicy(ClientLoggingOptions options) : base(options)
+        public CustomHttpLoggingPolicy(ClientPipelineOptions options) : base(options)
         {
-            _options = options;
+            _options = options.Logging;
         }
 
         // public for tests

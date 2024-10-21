@@ -67,9 +67,9 @@ public class RetryOptionsTests
     {
         private readonly ClientRetryOptions _options;
 
-        public CustomRetryPolicy(ClientRetryOptions options) : base(options)
+        public CustomRetryPolicy(ClientPipelineOptions options) : base(options)
         {
-            _options = options;
+            _options = options.Retries;
         }
 
         // public for tests

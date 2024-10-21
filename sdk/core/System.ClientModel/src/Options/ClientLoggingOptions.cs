@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 
@@ -14,23 +15,34 @@ public class ClientLoggingOptions
 
     private bool? _enableLogging;
 
+    private ChangeTrackingStringList _allowedHeaderNames;
+    private ChangeTrackingStringList _allowedQueryParameters;
+
     public ClientLoggingOptions()
     {
-        AllowedHeaderNames = new List<string>()
+        _allowedHeaderNames = new ChangeTrackingStringList
         {
-            "Content-Length",
-            "Content-Type"
+            "Content-Type",
+            "Content-Length"
         };
+        _allowedHeaderNames.StartTracking();
 
-        AllowedQueryParameters = new List<string>()
+        _allowedQueryParameters = new ChangeTrackingStringList
         {
-            "api-version"
+            "api-verstion"
         };
+        _allowedQueryParameters.StartTracking();
     }
 
-    public IList<string> AllowedHeaderNames { get; }
+    public IList<string> AllowedHeaderNames
+    {
+        get => _allowedHeaderNames;
+    }
 
-    public IList<string> AllowedQueryParameters { get; }
+    public IList<string> AllowedQueryParameters
+    {
+        get => _allowedQueryParameters;
+    }
 
     // Client-scope logging
     public bool? EnableLogging
@@ -62,6 +74,17 @@ public class ClientLoggingOptions
         {
             throw new InvalidOperationException("Cannot change a ClientObservabilityOptions instance after ClientPipeline has been created.");
         }
+    }
+
+    internal bool IsDefault()
+    {
+        return EnableLogging is null &&
+            EnableMessageLogging is null &&
+            EnableMessageContentLogging is null &&
+            MessageContentSizeLimit is null &&
+            LoggerFactory is null &&
+            !_allowedHeaderNames.HasChanged &&
+            !_allowedQueryParameters.HasChanged;
     }
 }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
