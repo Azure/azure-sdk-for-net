@@ -158,8 +158,8 @@ namespace Azure.Storage.DataMovement
         /// </param>
         /// <returns></returns>
         public virtual async IAsyncEnumerable<DataTransfer> GetTransfersAsync(
-            DataTransferStatus[] filterByStatus = default,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            [EnumeratorCancellation] CancellationToken cancellationToken = default,
+            params DataTransferStatus[] filterByStatus)
         {
             cancellationToken = LinkCancellation(cancellationToken);
             await SetDataTransfers(cancellationToken).ConfigureAwait(false);
