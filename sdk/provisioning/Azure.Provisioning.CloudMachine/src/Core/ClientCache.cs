@@ -16,7 +16,7 @@ public class ClientCache
         var client = (typeof(T), id);
         lock (_clients)
         {
-            if (_clients.TryGetValue(client, out object cached))
+            if (_clients.TryGetValue(client, out object? cached))
             {
                 return (T)cached;
             }

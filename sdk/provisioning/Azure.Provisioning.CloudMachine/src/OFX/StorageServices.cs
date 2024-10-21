@@ -31,7 +31,7 @@ public readonly struct StorageServices
 
     private BlobContainerClient GetContainer(string containerName)
     {
-        string blobContainerClientId = typeof(BlobContainerClient).FullName;
+        string? blobContainerClientId = typeof(BlobContainerClient).FullName;
         CloudMachineClient cm = _cm;
         BlobContainerClient container = cm.Subclients.Get(() =>
         {
@@ -85,16 +85,16 @@ public readonly struct StorageServices
 
     private static string ConvertPathToBlobPath(string path, BlobContainerClient container)
     {
-        if (Uri.TryCreate(path, UriKind.Absolute, out Uri blobUri))
+        if (Uri.TryCreate(path, UriKind.Absolute, out Uri? blobUri))
         {
             if (blobUri.Host == container.Uri.Host)
                 return blobUri.AbsoluteUri.Substring(container.Uri.AbsoluteUri.Length);
             if (!string.IsNullOrEmpty(blobUri.LocalPath))
             {
-                return blobUri.LocalPath.Substring(Path.GetPathRoot(path).Length).Replace('\\', '/');
+                return blobUri.LocalPath.Substring(Path.GetPathRoot(path)?.Length ?? 0).Replace('\\', '/');
             }
         }
-        return path.Substring(Path.GetPathRoot(path).Length).Replace('\\', '/');
+        return path.Substring(Path.GetPathRoot(path)?.Length ?? 0).Replace('\\', '/');
     }
 
     public void WhenBlobUploaded(Action<StorageFile> function)

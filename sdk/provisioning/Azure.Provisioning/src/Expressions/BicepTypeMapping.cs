@@ -147,8 +147,12 @@ internal static class BicepTypeMapping
     private static string GetEnumValue(Enum value)
     {
         Type type = value.GetType();
-        string name = Enum.GetName(type, value);
-        DataMemberAttribute? member = type.GetField(name)?.GetCustomAttribute<DataMemberAttribute>();
-        return member?.Name ?? value.ToString();
+        string? name = Enum.GetName(type, value);
+        if (name != null)
+        {
+            DataMemberAttribute? member = type.GetField(name)?.GetCustomAttribute<DataMemberAttribute>();
+            return member?.Name ?? value.ToString();
+        }
+        return value.ToString();
     }
 }

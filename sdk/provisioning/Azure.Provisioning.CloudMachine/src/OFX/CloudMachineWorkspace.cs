@@ -47,7 +47,7 @@ public class CloudMachineWorkspace : ClientWorkspace
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override ClientConnectionOptions GetConnectionOptions(Type clientType, string? instanceId = default)
     {
-        string clientId = clientType.FullName;
+        string? clientId = clientType.FullName;
         switch (clientId)
         {
             case "Azure.Security.KeyVault.Secrets.SecretClient":
