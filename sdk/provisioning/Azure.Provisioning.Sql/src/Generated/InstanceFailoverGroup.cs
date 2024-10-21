@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// InstanceFailoverGroup.
 /// </summary>
-public partial class InstanceFailoverGroup : Resource
+public partial class InstanceFailoverGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the failover group.
@@ -82,15 +82,15 @@ public partial class InstanceFailoverGroup : Resource
     /// <summary>
     /// Creates a new InstanceFailoverGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the InstanceFailoverGroup resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the InstanceFailoverGroup.</param>
-    public InstanceFailoverGroup(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/locations/instanceFailoverGroups", resourceVersion ?? "2021-11-01")
+    public InstanceFailoverGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/locations/instanceFailoverGroups", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _managedInstancePairs = BicepList<ManagedInstancePairInfo>.DefineProperty(this, "ManagedInstancePairs", ["properties", "managedInstancePairs"]);
@@ -123,7 +123,7 @@ public partial class InstanceFailoverGroup : Resource
     /// <summary>
     /// Creates a reference to an existing InstanceFailoverGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the InstanceFailoverGroup resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -131,6 +131,6 @@ public partial class InstanceFailoverGroup : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the InstanceFailoverGroup.</param>
     /// <returns>The existing InstanceFailoverGroup resource.</returns>
-    public static InstanceFailoverGroup FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static InstanceFailoverGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

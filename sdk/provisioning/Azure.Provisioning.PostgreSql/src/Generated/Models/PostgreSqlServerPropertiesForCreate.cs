@@ -21,7 +21,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// and
 /// Azure.ResourceManager.PostgreSql.Models.PostgreSqlServerPropertiesForReplica.
 /// </summary>
-public partial class PostgreSqlServerPropertiesForCreate : ProvisioningConstruct
+public partial class PostgreSqlServerPropertiesForCreate : ProvisionableConstruct
 {
     /// <summary>
     /// Server version.

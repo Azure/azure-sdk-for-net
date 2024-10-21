@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Parameters to reconcile to the Bucket source kind type.
 /// </summary>
-public partial class KubernetesBucket : ProvisioningConstruct
+public partial class KubernetesBucket : ProvisionableConstruct
 {
     /// <summary>
     /// The URL to sync for the flux configuration S3 bucket.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// The name of the entity last modified it.
 /// </summary>
-public partial class RoleManagementPrincipal : ProvisioningConstruct
+public partial class RoleManagementPrincipal : ProvisionableConstruct
 {
     /// <summary>
     /// The id of the principal made changes.

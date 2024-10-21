@@ -11,7 +11,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// The PostgreSqlPrivateLinkServiceConnectionStateProperty.
 /// </summary>
-public partial class PostgreSqlPrivateLinkServiceConnectionStateProperty : ProvisioningConstruct
+public partial class PostgreSqlPrivateLinkServiceConnectionStateProperty : ProvisionableConstruct
 {
     /// <summary>
     /// The private link service connection status.

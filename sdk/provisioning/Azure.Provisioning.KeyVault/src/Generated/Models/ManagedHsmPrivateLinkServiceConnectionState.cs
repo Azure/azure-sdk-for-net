@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// An object that represents the approval state of the private link connection.
 /// </summary>
-public partial class ManagedHsmPrivateLinkServiceConnectionState : ProvisioningConstruct
+public partial class ManagedHsmPrivateLinkServiceConnectionState : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates whether the connection has been approved, rejected or removed

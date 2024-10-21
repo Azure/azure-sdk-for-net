@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// The blob service properties for change feed events.
 /// </summary>
-public partial class BlobServiceChangeFeed : ProvisioningConstruct
+public partial class BlobServiceChangeFeed : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates whether change feed event logging is enabled for the Blob

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// The private link scope resource reference.
 /// </summary>
-public partial class OperationalInsightsPrivateLinkScopedResourceInfo : ProvisioningConstruct
+public partial class OperationalInsightsPrivateLinkScopedResourceInfo : ProvisionableConstruct
 {
     /// <summary>
     /// The full resource Id of the private link scope resource.

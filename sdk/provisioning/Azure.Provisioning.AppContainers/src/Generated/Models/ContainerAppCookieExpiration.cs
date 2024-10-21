@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the session cookie&apos;s expiration.
 /// </summary>
-public partial class ContainerAppCookieExpiration : ProvisioningConstruct
+public partial class ContainerAppCookieExpiration : ProvisionableConstruct
 {
     /// <summary>
     /// The convention used when determining the session cookie&apos;s

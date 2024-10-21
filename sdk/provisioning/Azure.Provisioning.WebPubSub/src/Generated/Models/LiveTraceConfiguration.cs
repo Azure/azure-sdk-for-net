@@ -12,7 +12,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// Live trace configuration of a Microsoft.SignalRService resource.
 /// </summary>
-public partial class LiveTraceConfiguration : ProvisioningConstruct
+public partial class LiveTraceConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates whether or not enable live trace.

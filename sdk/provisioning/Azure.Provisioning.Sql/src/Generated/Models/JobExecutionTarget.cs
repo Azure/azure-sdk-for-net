@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// The target that a job execution is executed on.
 /// </summary>
-public partial class JobExecutionTarget : ProvisioningConstruct
+public partial class JobExecutionTarget : ProvisionableConstruct
 {
     /// <summary>
     /// The type of the target.

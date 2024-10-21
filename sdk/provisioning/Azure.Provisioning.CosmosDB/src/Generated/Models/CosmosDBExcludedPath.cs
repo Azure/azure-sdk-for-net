@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The CosmosDBExcludedPath.
 /// </summary>
-public partial class CosmosDBExcludedPath : ProvisioningConstruct
+public partial class CosmosDBExcludedPath : ProvisionableConstruct
 {
     /// <summary>
     /// The path for which the indexing behavior applies to. Index paths

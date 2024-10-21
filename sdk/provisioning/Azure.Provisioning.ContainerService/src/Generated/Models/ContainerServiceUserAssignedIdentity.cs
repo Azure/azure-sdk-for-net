@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Details about a user assigned identity.
 /// </summary>
-public partial class ContainerServiceUserAssignedIdentity : ProvisioningConstruct
+public partial class ContainerServiceUserAssignedIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// The resource ID of the user assigned identity.

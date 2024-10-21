@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Static Site Database Connection overview.
 /// </summary>
-public partial class StaticSiteDatabaseConnectionOverview : ProvisioningConstruct
+public partial class StaticSiteDatabaseConnectionOverview : ProvisionableConstruct
 {
     /// <summary>
     /// The resource id of the database.

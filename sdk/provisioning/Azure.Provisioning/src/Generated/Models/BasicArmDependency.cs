@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Deployment dependency information.
 /// </summary>
-public partial class BasicArmDependency : ProvisioningConstruct
+public partial class BasicArmDependency : ProvisionableConstruct
 {
     /// <summary>
     /// The ID of the dependency.

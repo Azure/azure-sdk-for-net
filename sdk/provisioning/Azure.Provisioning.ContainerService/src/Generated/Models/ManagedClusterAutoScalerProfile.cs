@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Parameters to be applied to the cluster-autoscaler when enabled.
 /// </summary>
-public partial class ManagedClusterAutoScalerProfile : ProvisioningConstruct
+public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Valid values are &apos;true&apos; and &apos;false&apos;.

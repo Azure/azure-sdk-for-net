@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Custom JWT authentication settings for namespace resource.
 /// </summary>
-public partial class CustomJwtAuthenticationSettings : ProvisioningConstruct
+public partial class CustomJwtAuthenticationSettings : ProvisionableConstruct
 {
     /// <summary>
     /// Expected JWT token issuer.

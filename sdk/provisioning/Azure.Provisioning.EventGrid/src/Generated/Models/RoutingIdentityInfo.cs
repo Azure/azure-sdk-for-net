@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Routing identity info for topic spaces configuration.
 /// </summary>
-public partial class RoutingIdentityInfo : ProvisioningConstruct
+public partial class RoutingIdentityInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Routing identity type for topic spaces configuration.

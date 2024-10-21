@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Container App container environment variable.
 /// </summary>
-public partial class ContainerAppEnvironmentVariable : ProvisioningConstruct
+public partial class ContainerAppEnvironmentVariable : ProvisionableConstruct
 {
     /// <summary>
     /// Environment variable name.

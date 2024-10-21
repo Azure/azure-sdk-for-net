@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ResourceProviderData.
 /// </summary>
-public partial class ResourceProviderData : ProvisioningConstruct
+public partial class ResourceProviderData : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the Id.

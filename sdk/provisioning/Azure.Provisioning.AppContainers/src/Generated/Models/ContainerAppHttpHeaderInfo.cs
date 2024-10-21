@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// HTTPHeader describes a custom header to be used in HTTP probes.
 /// </summary>
-public partial class ContainerAppHttpHeaderInfo : ProvisioningConstruct
+public partial class ContainerAppHttpHeaderInfo : ProvisionableConstruct
 {
     /// <summary>
     /// The header field name.

@@ -10,7 +10,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// SKU details.
 /// </summary>
-public partial class KeyVaultSku : ProvisioningConstruct
+public partial class KeyVaultSku : ProvisionableConstruct
 {
     /// <summary>
     /// SKU family name.

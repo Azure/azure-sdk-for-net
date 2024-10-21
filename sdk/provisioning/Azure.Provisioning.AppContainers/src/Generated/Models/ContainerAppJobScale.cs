@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Scaling configurations for event driven jobs.
 /// </summary>
-public partial class ContainerAppJobScale : ProvisioningConstruct
+public partial class ContainerAppJobScale : ProvisionableConstruct
 {
     /// <summary>
     /// Interval to check each event source in seconds. Defaults to 30s.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Azure File Properties.
 /// </summary>
-public partial class ContainerAppAzureFileProperties : ProvisioningConstruct
+public partial class ContainerAppAzureFileProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Storage account name for azure file.

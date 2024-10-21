@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The properties of a certificate used for authenticating a token.
 /// </summary>
-public partial class ContainerRegistryTokenCertificate : ProvisioningConstruct
+public partial class ContainerRegistryTokenCertificate : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets the name.

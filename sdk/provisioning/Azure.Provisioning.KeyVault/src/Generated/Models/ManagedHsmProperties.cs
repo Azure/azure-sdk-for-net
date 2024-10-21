@@ -14,7 +14,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// Properties of the managed HSM Pool.
 /// </summary>
-public partial class ManagedHsmProperties : ProvisioningConstruct
+public partial class ManagedHsmProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The Azure Active Directory tenant ID that should be used for

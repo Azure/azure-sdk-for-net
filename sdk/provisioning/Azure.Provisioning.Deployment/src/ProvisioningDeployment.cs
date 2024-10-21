@@ -26,7 +26,7 @@ public class ProvisioningDeployment
     /// <summary>
     /// Gets the provisioning context that was used to deploy the resources.
     /// </summary>
-    internal ProvisioningContext Context { get; }
+    internal ProvisioningBuildOptions BuildOptions { get; }
 
     /// <summary>
     /// Gets the options that were used to deploy the resources.
@@ -81,7 +81,7 @@ public class ProvisioningDeployment
     /// </exception>
     internal ProvisioningDeployment(ProvisioningPlan plan, ProvisioningDeploymentOptions options, ArmDeploymentResource deployment, IReadOnlyDictionary<string, object?> outputs)
     {
-        Context = plan.ProvisioningContext;
+        BuildOptions = plan.BuildOptions;
         DeploymentOptions = options;
         Deployment = deployment.HasData ? deployment :
             throw new ArgumentException($"The {nameof(deployment)} must have its {nameof(ArmDeploymentResource.Data)} property set.", nameof(deployment));

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// Capture storage details for capture description.
 /// </summary>
-public partial class EventHubDestination : ProvisioningConstruct
+public partial class EventHubDestination : ProvisionableConstruct
 {
     /// <summary>
     /// Name for capture destination.

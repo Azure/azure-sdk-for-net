@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ApplicationInsights;
 /// <summary>
 /// The collection of content validation properties.
 /// </summary>
-public partial class WebTestContentValidation : ProvisioningConstruct
+public partial class WebTestContentValidation : ProvisionableConstruct
 {
     /// <summary>
     /// Content to look for in the return of the WebTest.  Must not be null or

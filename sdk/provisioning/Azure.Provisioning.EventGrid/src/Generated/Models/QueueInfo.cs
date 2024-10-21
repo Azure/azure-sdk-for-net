@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Properties of the Queue info for event subscription.
 /// </summary>
-public partial class QueueInfo : ProvisioningConstruct
+public partial class QueueInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Maximum period in seconds in which once the message is in received (by

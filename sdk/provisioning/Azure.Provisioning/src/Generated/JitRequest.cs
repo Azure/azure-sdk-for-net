@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// JitRequest.
 /// </summary>
-public partial class JitRequest : Resource
+public partial class JitRequest : ProvisionableResource
 {
     /// <summary>
     /// The name of the JIT request.
@@ -98,15 +98,15 @@ public partial class JitRequest : Resource
     /// <summary>
     /// Creates a new JitRequest.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the JitRequest resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the JitRequest.</param>
-    public JitRequest(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Solutions/jitRequests", resourceVersion ?? "2021-07-01")
+    public JitRequest(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Solutions/jitRequests", resourceVersion ?? "2021-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -142,7 +142,7 @@ public partial class JitRequest : Resource
     /// <summary>
     /// Creates a reference to an existing JitRequest.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the JitRequest resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -150,6 +150,6 @@ public partial class JitRequest : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the JitRequest.</param>
     /// <returns>The existing JitRequest resource.</returns>
-    public static JitRequest FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static JitRequest FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

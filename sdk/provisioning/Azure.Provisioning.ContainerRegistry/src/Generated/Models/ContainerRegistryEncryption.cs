@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The ContainerRegistryEncryption.
 /// </summary>
-public partial class ContainerRegistryEncryption : ProvisioningConstruct
+public partial class ContainerRegistryEncryption : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates whether or not the encryption is enabled for container

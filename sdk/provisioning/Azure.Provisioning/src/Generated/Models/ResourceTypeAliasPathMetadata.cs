@@ -10,7 +10,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ResourceTypeAliasPathMetadata.
 /// </summary>
-public partial class ResourceTypeAliasPathMetadata : ProvisioningConstruct
+public partial class ResourceTypeAliasPathMetadata : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the TokenType.
