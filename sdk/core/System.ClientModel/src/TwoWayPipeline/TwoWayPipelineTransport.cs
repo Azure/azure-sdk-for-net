@@ -10,12 +10,12 @@ namespace System.ClientModel.Primitives.TwoWayPipeline;
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public abstract class TwoWayPipelineTransport : TwoWayPipelinePolicy
 {
+    protected TwoWayPipelineTransport() { }
+
     public TwoWayPipelineClientMessage CreateMessage()
     {
         return CreateMessageCore();
     }
-
-    protected abstract TwoWayPipelineClientMessage CreateMessageCore();
 
     public void Process(TwoWayPipelineClientMessage clientMessage)
     {
@@ -37,25 +37,15 @@ public abstract class TwoWayPipelineTransport : TwoWayPipelinePolicy
         return ProcessCoreAsync(serviceMessage);
     }
 
-    protected void ProcessCore(TwoWayPipelineClientMessage clientMessage)
-    {
-        throw new NotImplementedException();
-    }
+    protected abstract TwoWayPipelineClientMessage CreateMessageCore();
 
-    protected ValueTask ProcessCoreAsync(TwoWayPipelineClientMessage clientMessage)
-    {
-        throw new NotImplementedException();
-    }
+    protected abstract void ProcessCore(TwoWayPipelineClientMessage clientMessage);
 
-    protected void ProcessCore(TwoWayPipelineServiceMessage serviceMessage)
-    {
-        throw new NotImplementedException();
-    }
+    protected abstract ValueTask ProcessCoreAsync(TwoWayPipelineClientMessage clientMessage);
 
-    protected ValueTask ProcessCoreAsync(TwoWayPipelineServiceMessage serviceMessage)
-    {
-        throw new NotImplementedException();
-    }
+    protected abstract void ProcessCore(TwoWayPipelineServiceMessage serviceMessage);
+
+    protected abstract ValueTask ProcessCoreAsync(TwoWayPipelineServiceMessage serviceMessage);
 
     #region TwoWayPipelinePolicy.Process overrides
     public sealed override void Process(TwoWayPipelineClientMessage clientMessage, IReadOnlyList<TwoWayPipelinePolicy> pipeline, int currentIndex)

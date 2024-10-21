@@ -356,13 +356,21 @@ namespace System.ClientModel.Primitives.TwoWayPipeline
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineClientMessage clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelinePolicy> pipeline, int currentIndex) { throw null; }
         public System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage serviceMessage) { throw null; }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelinePolicy> pipeline, int currentIndex) { throw null; }
-        protected void ProcessCore(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineClientMessage clientMessage) { }
-        protected void ProcessCore(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage serviceMessage) { }
-        protected System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineClientMessage clientMessage) { throw null; }
-        protected System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage serviceMessage) { throw null; }
+        protected abstract void ProcessCore(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineClientMessage clientMessage);
+        protected abstract void ProcessCore(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage serviceMessage);
+        protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineClientMessage clientMessage);
+        protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage serviceMessage);
     }
-    public partial class WebSocketTwoWayPipelineTransport
+    public partial class WebSocketTwoWayPipelineTransport : System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineTransport, System.IAsyncDisposable, System.IDisposable
     {
         public WebSocketTwoWayPipelineTransport() { }
+        protected override System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineClientMessage CreateMessageCore() { throw null; }
+        public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        protected override void ProcessCore(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineClientMessage clientMessage) { }
+        protected override void ProcessCore(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage serviceMessage) { }
+        protected override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineClientMessage clientMessage) { throw null; }
+        protected override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage serviceMessage) { throw null; }
     }
 }
