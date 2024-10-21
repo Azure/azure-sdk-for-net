@@ -103,8 +103,11 @@ class PackageProps
                 $content = Get-Content -Raw -Path $ymlPath | CompatibleConvertFrom-Yaml
                 if ($content) {
                     $artifacts = $this.GetValueSafely($content, @("extends", "parameters", "Artifacts"))
+                    $artifactForCurrentPackage = $null
 
-                    $artifactForCurrentPackage = $artifacts | Where-Object { $_["name"] -eq $this.ArtifactName -or $_["name"] -eq $this.Name }
+                    if ($artifacts) {
+                        $artifactForCurrentPackage = $artifacts | Where-Object { $_["name"] -eq $this.ArtifactName -or $_["name"] -eq $this.Name }
+                    }
 
                     if ($artifactForCurrentPackage) {
                         return [HashTable]$artifactForCurrentPackage

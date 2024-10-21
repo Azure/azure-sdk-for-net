@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
 
         [TestCase]
         [RecordedTest]
-        [Ignore("This test case will cause errors in the pipeline. After fixing the problem, restore this test")]
         public async Task SentinelOnboardingStateApiTests()
         {
             //1.CreateorUpdate

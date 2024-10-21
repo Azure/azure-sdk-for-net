@@ -228,7 +228,7 @@ public class PlaywrightServiceTests
     }
 
     [Test]
-    public void Initialize_WhenFailsToFetchEntraIdAccessToken_DoesNotSetUpRotationHandler()
+    public void Initialize_WhenFailsToFetchEntraIdAccessToken_ThrowsException()
     {
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
@@ -237,13 +237,12 @@ public class PlaywrightServiceTests
             .ThrowsAsync(new Exception());
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object);
-        service.InitializeAsync().Wait();
-        defaultAzureCredentialMock.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
-        Assert.That(service.RotationTimer, Is.Null);
+        Exception? ex = Assert.ThrowsAsync<Exception>(async () => await service.InitializeAsync());
+        Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_auth_error));
     }
 
     [Test]
-    public void Initialize_WhenEntraIdAccessTokenFailsAndMptPatIsSet_DoesNotSetUpRotationHandler()
+    public void Initialize_WhenEntraIdAccessTokenFailsAndMptPatIsSet_ThrowsException()
     {
         var token = GetToken(new Dictionary<string, object>
         {
@@ -256,12 +255,12 @@ public class PlaywrightServiceTests
             .ThrowsAsync(new Exception());
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler());
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler());
-        service.InitializeAsync().Wait();
-        Assert.That(service.RotationTimer, Is.Null);
+        Exception? ex = Assert.ThrowsAsync<Exception>(async () => await service.InitializeAsync());
+        Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_auth_error));
     }
 
     [Test]
-    public void Initialize_WhenEntraIdAccessTokenFailsAndMptPatIsNotSet_DoesNotSetUpRotationHandler()
+    public void Initialize_WhenEntraIdAccessTokenFailsAndMptPatIsNotSet_ThrowsException()
     {
         var token = GetToken(new Dictionary<string, object>
         {
@@ -273,8 +272,8 @@ public class PlaywrightServiceTests
             .ThrowsAsync(new Exception());
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler());
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler());
-        service.InitializeAsync().Wait();
-        Assert.That(service.RotationTimer, Is.Null);
+        Exception? ex = Assert.ThrowsAsync<Exception>(async () => await service.InitializeAsync());
+        Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_auth_error));
     }
 
     [Test]
@@ -334,9 +333,17 @@ public class PlaywrightServiceTests
     {
         var token = GetToken(new Dictionary<string, object>
         {
-            {"aid", "account-id-guid"},
+            {"aid", "eastus_bd830e63-6120-40cb-8cd7-f0739502d888"},
         });
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, token);
+        var testRubric = new Dictionary<string, string>
+        {
+            { "url", "wss://eastus.api.playwright.microsoft.com/accounts/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers" },
+            { "workspaceId", "eastus_bd830e63-6120-40cb-8cd7-f0739502d888" },
+            { "region", "eastus" },
+            { "domain", "playwright.microsoft.com" }
+        };
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, $"{testRubric["url"]}");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler());
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler(), serviceAuth: ServiceAuthType.AccessToken);
