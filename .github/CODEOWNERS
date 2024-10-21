@@ -516,10 +516,10 @@
 # ServiceOwners:                                                   @serkantkaraca @sjkwak
 
 # PRLabel: %Extension - WCF
-/sdk/extension-wcf/                                                @mconnew @subhra231
+/sdk/extension-wcf/                                                @mconnew
 
 # ServiceLabel: %Extension - WCF
-# ServiceOwners:                                                   @mconnew @subhra231
+# ServiceOwners:                                                   @mconnew
 
 # ServiceLabel: %Functions
 # AzureSdkOwners:                                                  @JoshLove-msft
