@@ -335,7 +335,7 @@ internal class SampleTests(bool async)
             {
                 // Create a new infra group scoped to our subscription and add
                 // the resource group
-                Infrastructure infra = new() { TargetScope = "subscription" };
+                Infrastructure infra = new() { TargetScope = DeploymentScope.Subscription };
 
                 ResourceGroup rg = new("rg_test", "2024-03-01");
                 infra.Add(rg);

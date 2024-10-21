@@ -92,7 +92,7 @@ namespace Azure.Provisioning
     {
         public Infrastructure(string bicepName = "main") { }
         public string BicepName { get { throw null; } }
-        public string? TargetScope { get { throw null; } set { } }
+        public Azure.Provisioning.Primitives.DeploymentScope? TargetScope { get { throw null; } set { } }
         public virtual void Add(Azure.Provisioning.Primitives.Provisionable resource) { }
         public virtual Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningBuildOptions? options = null) { throw null; }
         protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
@@ -771,6 +771,13 @@ namespace Azure.Provisioning.Primitives
         public Azure.Provisioning.Primitives.ProvisionableConstruct Construct { get { throw null; } }
         public string PropertyName { get { throw null; } }
         public override string ToString() { throw null; }
+    }
+    public enum DeploymentScope
+    {
+        ResourceGroup = 0,
+        Subscription = 1,
+        ManagementGroup = 2,
+        Tenant = 3,
     }
     public partial class DynamicResourceNamePropertyResolver : Azure.Provisioning.Primitives.ResourceNamePropertyResolver
     {
