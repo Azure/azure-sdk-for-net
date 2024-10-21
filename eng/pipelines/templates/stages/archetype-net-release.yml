@@ -164,6 +164,10 @@ stages:
                               BuildToolsRepositoryPath: $(Pipeline.Workspace)/azure-sdk-build-tools
                               PackagesPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
                               StagingDirectory: $(Build.ArtifactStagingDirectory)/symbols
+                          - task: 1ES.PublishPipelineArtifact@1
+                            inputs:
+                              targetPath: $(Build.ArtifactStagingDirectory)/symbols
+                              artifactName: ${{parameters.ArtifactName}}-release-symbols
                           - template: /eng/common/pipelines/templates/steps/create-apireview.yml
                             parameters:
                               ArtifactPath: $(Pipeline.Workspace)/packages
