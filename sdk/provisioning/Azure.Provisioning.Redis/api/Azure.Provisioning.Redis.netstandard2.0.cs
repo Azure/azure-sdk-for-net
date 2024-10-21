@@ -79,7 +79,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class RedisCacheAccessPolicyAssignment : Azure.Provisioning.Primitives.ProvisionableResource
@@ -112,7 +111,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class RedisCommonConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -181,7 +179,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class RedisInstanceDetails : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -231,7 +228,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class RedisPatchSchedule : Azure.Provisioning.Primitives.ProvisionableResource
@@ -262,7 +258,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public enum RedisPatchScheduleDefaultName
@@ -299,7 +294,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class RedisPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -409,7 +403,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class RedisSku : Azure.Provisioning.Primitives.ProvisionableConstruct

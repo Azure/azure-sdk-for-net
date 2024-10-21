@@ -138,6 +138,7 @@ public class Resource(Specification spec, Type armType)
                             if (property.IsReadOnly) { writer.Write($", isOutput: true"); }
                             if (property.IsSecure) { writer.Write($", isSecure: true"); }
                             if (property.GenerateDefaultValue) { writer.Write($", defaultValue: Get{property.Name}DefaultValue()"); }
+                            if (property.Format is not null) { writer.Write($", format: \"{property.Format}\""); }
                             writer.WriteLine($");");
                         }
                         if (ParentResource is not null)

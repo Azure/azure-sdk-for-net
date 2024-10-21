@@ -1,11 +1,3 @@
-namespace Azure.Provisioning
-{
-    public partial class StorageResources
-    {
-        public StorageResources() { }
-        public static Azure.Provisioning.Storage.StorageAccount CreateAccount(string resourceName, int? infrastructureVersion = 2) { throw null; }
-    }
-}
 namespace Azure.Provisioning.Storage
 {
     public partial class AccountImmutabilityPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -216,7 +208,7 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<string> RestoreId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.BlobRestoreProgressStatus> Status { get { throw null; } }
     }
-    public partial class BlobService : Azure.Provisioning.Primitives.ProvisionableResource, Azure.Provisioning.Primitives.IClientCreator, Azure.Provisioning.Primitives.IClientCreator<Azure.Storage.Blobs.BlobServiceClient, Azure.Storage.Blobs.BlobClientOptions>
+    public partial class BlobService : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public BlobService(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.BlobServiceChangeFeed> ChangeFeed { get { throw null; } set { } }
@@ -232,8 +224,6 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.RestorePolicy> RestorePolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageSku> Sku { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        System.Collections.Generic.IEnumerable<Azure.Provisioning.ProvisioningOutput> Azure.Provisioning.Primitives.IClientCreator.GetOutputs() { throw null; }
-        Azure.Storage.Blobs.BlobServiceClient Azure.Provisioning.Primitives.IClientCreator<Azure.Storage.Blobs.BlobServiceClient, Azure.Storage.Blobs.BlobClientOptions>.CreateClient(System.Collections.Generic.IReadOnlyDictionary<string, object?> deploymentOutputs, Azure.Core.TokenCredential credential, Azure.Storage.Blobs.BlobClientOptions? options) { throw null; }
         public static Azure.Provisioning.Storage.BlobService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {

@@ -185,11 +185,6 @@ public partial class ContainerRegistryTask : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2019-06-01-preview.
-        /// </summary>
-        public static readonly string V2019_06_01_preview = "2019-06-01-preview";
-
-        /// <summary>
         /// 2019-04-01.
         /// </summary>
         public static readonly string V2019_04_01 = "2019-04-01";

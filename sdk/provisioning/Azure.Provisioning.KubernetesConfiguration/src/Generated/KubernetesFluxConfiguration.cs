@@ -191,11 +191,6 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
-        /// <summary>
         /// 2023-05-01.
         /// </summary>
         public static readonly string V2023_05_01 = "2023-05-01";

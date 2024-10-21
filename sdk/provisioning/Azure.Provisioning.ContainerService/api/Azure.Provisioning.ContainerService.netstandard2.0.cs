@@ -74,7 +74,6 @@ namespace Azure.Provisioning.ContainerService
             public static readonly string V2024_06_01;
             public static readonly string V2024_07_01;
             public static readonly string V2024_08_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public enum AgentPoolType
@@ -204,7 +203,6 @@ namespace Azure.Provisioning.ContainerService
             public static readonly string V2024_06_01;
             public static readonly string V2024_07_01;
             public static readonly string V2024_08_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -327,7 +325,6 @@ namespace Azure.Provisioning.ContainerService
             public static readonly string V2024_06_01;
             public static readonly string V2024_07_01;
             public static readonly string V2024_08_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public partial class ContainerServiceMaintenanceRelativeMonthlySchedule : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -476,7 +473,6 @@ namespace Azure.Provisioning.ContainerService
             public static readonly string V2024_06_01;
             public static readonly string V2024_07_01;
             public static readonly string V2024_08_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public enum ContainerServiceNetworkMode
@@ -621,7 +617,6 @@ namespace Azure.Provisioning.ContainerService
             public static readonly string V2024_06_01;
             public static readonly string V2024_07_01;
             public static readonly string V2024_08_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public enum ContainerServicePrivateEndpointConnectionProvisioningState
@@ -745,7 +740,6 @@ namespace Azure.Provisioning.ContainerService
             public static readonly string V2024_06_01;
             public static readonly string V2024_07_01;
             public static readonly string V2024_08_01;
-            public static readonly string V2024_08_02_preview;
         }
     }
     public enum ContainerServiceTrustedAccessRoleBindingProvisioningState

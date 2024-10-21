@@ -297,36 +297,8 @@ public static class BicepFunction
     /// Convert a formattable string with literal text, C# expressions, and
     /// Bicep expressions into an interpolated Bicep string.
     /// </summary>
-    /// <param name="text">The formattable string.</param>
+    /// <param name="handler">A bicep interpolated string handler.</param>
     /// <returns>An interpolated string.</returns>
-    public static BicepValue<string> Interpolate(FormattableString text)
-    {
-        // TODO: Use the more efficient interpolated string handler rather than FormattableString
-
-        if (text == null) { return BicepSyntax.Null(); }
-
-        // Turn everything into BicepValues
-        BicepValue<object>[] values = new BicepValue<object>[text.ArgumentCount];
-        for (int i = 0; i < text.ArgumentCount; i++)
-        {
-            values[i] =
-                text.GetArgument(i) switch
-                {
-                    BicepValue v => v,
-                    ProvisioningVariable v => BicepSyntax.Var(v.BicepIdentifier),
-                    var a => new BicepValue<object>(a?.ToString() ?? "")
-                };
-        };
-
-        // Create an interpolated string expression
-        BicepValue<string> result = BicepSyntax.Interpolate(
-            text.Format,
-            [.. values.Select(v => v.Compile())]);
-
-        // Make the entire expression "secure" if any of the values are
-        result.IsSecure = values.Any(v => v.IsSecure);
-        // TODO: Link values to result to validate anything crossing module boundaries?
-
-        return result;
-    }
+    public static BicepValue<string> Interpolate(BicepInterpolatedStringHandler handler) =>
+        handler.Build();
 }

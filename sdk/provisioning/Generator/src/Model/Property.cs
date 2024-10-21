@@ -29,6 +29,7 @@ public class Property(TypeModel parent, ModelBase propertyType, PropertyInfo? ar
     public bool IsReadOnly { get; set; } = false;
     public bool IsRequired { get; set; } = false;
     public bool IsSecure { get; set; } = false;
+    public string? Format { get; set; } = null;
 
     public bool GenerateDefaultValue { get; set; } = false;
     public bool HideAccessors { get; set; } = false;

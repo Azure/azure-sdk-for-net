@@ -98,7 +98,6 @@ namespace Azure.Provisioning.WebPubSub
             public static readonly string V2021_10_01;
             public static readonly string V2023_02_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class WebPubSubHubProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -142,7 +141,6 @@ namespace Azure.Provisioning.WebPubSub
             public static readonly string V2021_10_01;
             public static readonly string V2023_02_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class WebPubSubPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -228,7 +226,6 @@ namespace Azure.Provisioning.WebPubSub
             public static readonly string V2021_10_01;
             public static readonly string V2023_02_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class WebPubSubSharedPrivateLink : Azure.Provisioning.Primitives.ProvisionableResource
@@ -250,7 +247,6 @@ namespace Azure.Provisioning.WebPubSub
             public static readonly string V2021_10_01;
             public static readonly string V2023_02_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class WebPubSubSharedPrivateLinkData : Azure.Provisioning.Primitives.ProvisionableConstruct

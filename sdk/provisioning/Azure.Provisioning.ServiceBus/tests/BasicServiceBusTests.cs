@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Provisioning.Expressions;
@@ -42,18 +43,15 @@ public class BasicServiceBusTests(bool async)
                     {
                         Parent = sb,
                         Name = queueName,
-                        // Hack around TimeSpan not serializing ISO durations
-                        // correctly using a Bicep string literal expression.
-                        // TODO: Change these to regular strings when patched.
-                        LockDuration = new StringLiteralExpression("PT5M"),
+                        LockDuration = TimeSpan.FromMinutes(5),
                         MaxSizeInMegabytes = 1024,
                         RequiresDuplicateDetection = false,
                         RequiresSession = false,
-                        DefaultMessageTimeToLive = new StringLiteralExpression("P10675199DT2H48M5.4775807S"),
+                        DefaultMessageTimeToLive = TimeSpan.MaxValue,
                         DeadLetteringOnMessageExpiration = false,
-                        DuplicateDetectionHistoryTimeWindow = new StringLiteralExpression("PT10M"),
+                        DuplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(10),
                         MaxDeliveryCount = 10,
-                        AutoDeleteOnIdle = new StringLiteralExpression("P10675199DT2H48M5.4775807S"),
+                        AutoDeleteOnIdle = TimeSpan.MaxValue,
                         EnablePartitioning = false,
                         EnableExpress = false
                     };

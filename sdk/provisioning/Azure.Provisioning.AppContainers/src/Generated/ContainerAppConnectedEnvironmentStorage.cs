@@ -73,11 +73,6 @@ public partial class ContainerAppConnectedEnvironmentStorage : ProvisionableReso
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
-        /// <summary>
         /// 2024-03-01.
         /// </summary>
         public static readonly string V2024_03_01 = "2024-03-01";

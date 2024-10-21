@@ -19,7 +19,14 @@ public class BasicStorageTests(bool async)
     public async Task CreateDefault()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(StorageResources.CreateAccount("storage"))
+        await test.Define(
+            new StorageAccount("storage", StorageAccount.ResourceVersions.V2023_01_01)
+            {
+                Kind = StorageKind.StorageV2,
+                Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                IsHnsEnabled = true,
+                AllowBlobPublicAccess = false
+            })
         .Compare(
             """
             @description('The location for the resource(s) to be deployed.')
@@ -51,7 +58,14 @@ public class BasicStorageTests(bool async)
             {
                 Infrastructure infra = new();
 
-                StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                StorageAccount storage =
+                    new(nameof(storage), StorageAccount.ResourceVersions.V2023_01_01)
+                    {
+                        Kind = StorageKind.StorageV2,
+                        Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                        IsHnsEnabled = true,
+                        AllowBlobPublicAccess = false
+                    };
                 infra.Add(storage);
 
                 BlobService blobs = new(nameof(blobs)) { Parent = storage, DependsOn = { storage } };
@@ -98,7 +112,14 @@ public class BasicStorageTests(bool async)
             {
                 Infrastructure infra = new();
 
-                StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                StorageAccount storage =
+                    new(nameof(storage), StorageAccount.ResourceVersions.V2023_01_01)
+                    {
+                        Kind = StorageKind.StorageV2,
+                        Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                        IsHnsEnabled = true,
+                        AllowBlobPublicAccess = false
+                    };
                 infra.Add(storage);
 
                 UserAssignedIdentity id = new(nameof(id));
@@ -155,7 +176,14 @@ public class BasicStorageTests(bool async)
             {
                 Infrastructure infra = new();
 
-                StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                StorageAccount storage =
+                    new(nameof(storage), StorageAccount.ResourceVersions.V2023_01_01)
+                    {
+                        Kind = StorageKind.StorageV2,
+                        Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                        IsHnsEnabled = true,
+                        AllowBlobPublicAccess = false
+                    };
                 infra.Add(storage);
 
                 UserAssignedIdentity id = new(nameof(id));
@@ -226,7 +254,79 @@ public class BasicStorageTests(bool async)
             {
                 Infrastructure infra = new();
 
-                StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                StorageAccount storage =
+                    new(nameof(storage), StorageAccount.ResourceVersions.V2023_01_01)
+                    {
+                        Kind = StorageKind.StorageV2,
+                        Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                        IsHnsEnabled = true,
+                        AllowBlobPublicAccess = false
+                    };
+                infra.Add(storage);
+
+                BlobService blobs = new(nameof(blobs)) { Parent = storage };
+                infra.Add(blobs);
+
+                infra.Add(new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri });
+
+                // Manually compute the public Azure endpoint
+                BicepValue<string> computed =
+                    new BicepStringBuilder()
+                    .Append("https://")
+                    .Append($"{storage.Name}")
+                    .Append(".blob.core.windows.net");
+                infra.Add(new ProvisioningOutput("computed_endpoint", typeof(string)) { Value = computed });
+
+                return infra;
+            })
+        .Compare(
+            """
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
+              name: take('storage${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                allowBlobPublicAccess: false
+                isHnsEnabled: true
+              }
+            }
+
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
+              name: 'default'
+              parent: storage
+            }
+
+            output blobs_endpoint string = storage.properties.primaryEndpoints.blob
+
+            output computed_endpoint string = 'https://${storage.name}.blob.core.windows.net'
+            """)
+        .Lint()
+        .ValidateAndDeployAsync();
+    }
+
+    [Test]
+    public async Task SimpleConnStr()
+    {
+        await using Trycep test = CreateBicepTest();
+        await test.Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+
+                StorageAccount storage =
+                    new(nameof(storage), StorageAccount.ResourceVersions.V2023_01_01)
+                    {
+                        Kind = StorageKind.StorageV2,
+                        Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                        IsHnsEnabled = true,
+                        AllowBlobPublicAccess = false
+                    };
                 infra.Add(storage);
 
                 BlobService blobs = new(nameof(blobs)) { Parent = storage };

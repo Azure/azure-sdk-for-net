@@ -176,7 +176,7 @@ public partial class RoleEligibilityScheduleRequest : ProvisionableResource
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _condition = BicepValue<string>.DefineProperty(this, "Condition", ["properties", "condition"]);
         _conditionVersion = BicepValue<string>.DefineProperty(this, "ConditionVersion", ["properties", "conditionVersion"]);
-        _duration = BicepValue<TimeSpan>.DefineProperty(this, "Duration", ["properties", "duration"]);
+        _duration = BicepValue<TimeSpan>.DefineProperty(this, "Duration", ["properties", "duration"], format: "P");
         _endOn = BicepValue<DateTimeOffset>.DefineProperty(this, "EndOn", ["properties", "endDateTime"]);
         _expirationType = BicepValue<RoleManagementScheduleExpirationType>.DefineProperty(this, "ExpirationType", ["properties", "type"]);
         _justification = BicepValue<string>.DefineProperty(this, "Justification", ["properties", "justification"]);
@@ -203,11 +203,6 @@ public partial class RoleEligibilityScheduleRequest : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2022-04-01-preview.
-        /// </summary>
-        public static readonly string V2022_04_01_preview = "2022-04-01-preview";
-
         /// <summary>
         /// 2020-10-01.
         /// </summary>

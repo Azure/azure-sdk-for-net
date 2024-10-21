@@ -95,7 +95,7 @@ public partial class ContainerRegistryAgentPool : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryAgentPool.</param>
     public ContainerRegistryAgentPool(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/agentPools", resourceVersion ?? "2019-06-01-preview")
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/agentPools", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -116,9 +116,34 @@ public partial class ContainerRegistryAgentPool : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2019-06-01-preview.
+        /// 2023-07-01.
         /// </summary>
-        public static readonly string V2019_06_01_preview = "2019-06-01-preview";
+        public static readonly string V2023_07_01 = "2023-07-01";
+
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+
+        /// <summary>
+        /// 2021-09-01.
+        /// </summary>
+        public static readonly string V2021_09_01 = "2021-09-01";
+
+        /// <summary>
+        /// 2019-05-01.
+        /// </summary>
+        public static readonly string V2019_05_01 = "2019-05-01";
+
+        /// <summary>
+        /// 2017-10-01.
+        /// </summary>
+        public static readonly string V2017_10_01 = "2017-10-01";
+
+        /// <summary>
+        /// 2017-03-01.
+        /// </summary>
+        public static readonly string V2017_03_01 = "2017-03-01";
     }
 
     /// <summary>
