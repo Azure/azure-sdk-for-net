@@ -173,7 +173,7 @@ namespace Azure.Identity
             => message.Request.Uri.Host == s_imdsEndpoint.Host &&
                 message.Request.Uri.Path == s_imdsEndpoint.AbsolutePath &&
                 !message.Request.Headers.TryGetValue(metadataHeaderName, out _) &&
-                !(message.Response.Content?.ToString().Contains("Identity not found") ?? false);
+                (message.Response.Content?.ToString().IndexOf("Identity not found", StringComparison.InvariantCulture) < 0);
 
         private class ImdsRequestFailedDetailsParser : RequestFailedDetailsParser
         {
