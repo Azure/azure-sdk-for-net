@@ -7,7 +7,7 @@ parameters:
   SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
   ServiceConnection: not-specified
   ResourceType: test
-  UseFederatedAuth: false
+  UseFederatedAuth: true
   PersistOidcToken: false
 
 # SubscriptionConfiguration will be splatted into the parameters of the test
