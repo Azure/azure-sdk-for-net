@@ -584,6 +584,11 @@ namespace Azure.ResourceManager.NetApp.Tests
             {
                 "0.0.0.1","0.0.0.2","0.0.0.3","0.0.0.4","0.0.0.5","0.0.0.6"
             });
+
+            //ArmOperation<ClusterPeerCommandResult> lro = await volumeResource2.PeerExternalClusterAsync(WaitUntil.Completed, peerClusterRequest);
+            //ClusterPeerCommandResult result = lro.Value;
+            //Assert.NotNull(result);
+
             RequestFailedException peerException = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource2.PeerExternalClusterAsync(WaitUntil.Completed, peerClusterRequest); });
             //Assert.AreEqual(409, peerException.Status);
 
