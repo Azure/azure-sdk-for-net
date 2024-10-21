@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Storage;
 /// Filters limit rule actions to a subset of blobs within the storage account.
 /// If multiple filters are defined, a logical AND is performed on all filters.
 /// </summary>
-public partial class ManagementPolicyFilter : ProvisioningConstruct
+public partial class ManagementPolicyFilter : ProvisionableConstruct
 {
     /// <summary>
     /// An array of strings for prefixes to be match.

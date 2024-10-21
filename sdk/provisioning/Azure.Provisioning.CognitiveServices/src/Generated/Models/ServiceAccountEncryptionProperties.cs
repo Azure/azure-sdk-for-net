@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// Properties to configure Encryption.
 /// </summary>
-public partial class ServiceAccountEncryptionProperties : ProvisioningConstruct
+public partial class ServiceAccountEncryptionProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Properties of KeyVault.

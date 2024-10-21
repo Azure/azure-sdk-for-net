@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The set of roles permitted through this Role Definition.
 /// </summary>
-public partial class MongoDBRole : ProvisioningConstruct
+public partial class MongoDBRole : ProvisionableConstruct
 {
     /// <summary>
     /// The database name the role is applied.

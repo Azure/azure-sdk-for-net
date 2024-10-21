@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// The multiregion settings Cognitive Services account.
 /// </summary>
-public partial class CognitiveServicesMultiRegionSettings : ProvisioningConstruct
+public partial class CognitiveServicesMultiRegionSettings : ProvisionableConstruct
 {
     /// <summary>
     /// Multiregion routing methods.

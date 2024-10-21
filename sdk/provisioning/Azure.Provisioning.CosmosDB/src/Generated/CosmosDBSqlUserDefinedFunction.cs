@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBSqlUserDefinedFunction.
 /// </summary>
-public partial class CosmosDBSqlUserDefinedFunction : Resource
+public partial class CosmosDBSqlUserDefinedFunction : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB userDefinedFunction name.
@@ -76,15 +76,15 @@ public partial class CosmosDBSqlUserDefinedFunction : Resource
     /// <summary>
     /// Creates a new CosmosDBSqlUserDefinedFunction.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CosmosDBSqlUserDefinedFunction
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlUserDefinedFunction.</param>
-    public CosmosDBSqlUserDefinedFunction(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/userDefinedFunctions", resourceVersion ?? "2024-08-15")
+    public CosmosDBSqlUserDefinedFunction(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/userDefinedFunctions", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -236,7 +236,7 @@ public partial class CosmosDBSqlUserDefinedFunction : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBSqlUserDefinedFunction.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CosmosDBSqlUserDefinedFunction
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -244,6 +244,6 @@ public partial class CosmosDBSqlUserDefinedFunction : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlUserDefinedFunction.</param>
     /// <returns>The existing CosmosDBSqlUserDefinedFunction resource.</returns>
-    public static CosmosDBSqlUserDefinedFunction FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBSqlUserDefinedFunction FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

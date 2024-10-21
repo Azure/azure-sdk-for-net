@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Settings properties for Active Directory (AD).
 /// </summary>
-public partial class StorageActiveDirectoryProperties : ProvisioningConstruct
+public partial class StorageActiveDirectoryProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Specifies the primary domain that the AD DNS server is authoritative

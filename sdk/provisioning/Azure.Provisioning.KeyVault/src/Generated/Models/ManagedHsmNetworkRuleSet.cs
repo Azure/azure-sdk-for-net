@@ -13,7 +13,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// A set of rules governing the network accessibility of a managed hsm pool.
 /// </summary>
-public partial class ManagedHsmNetworkRuleSet : ProvisioningConstruct
+public partial class ManagedHsmNetworkRuleSet : ProvisionableConstruct
 {
     /// <summary>
     /// Tells what traffic can bypass network rules. This can be

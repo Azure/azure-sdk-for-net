@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// Properties of Cognitive Services account commitment plan.
 /// </summary>
-public partial class CommitmentPlanProperties : ProvisioningConstruct
+public partial class CommitmentPlanProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the status of the resource at the time the operation was called.

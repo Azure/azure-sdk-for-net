@@ -14,7 +14,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteDeployment.
 /// </summary>
-public partial class SiteDeployment : Resource
+public partial class SiteDeployment : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -98,15 +98,15 @@ public partial class SiteDeployment : Resource
     /// <summary>
     /// Creates a new SiteDeployment.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteDeployment resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SiteDeployment.</param>
-    public SiteDeployment(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/deployments", resourceVersion ?? "2024-04-01")
+    public SiteDeployment(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/deployments", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _author = BicepValue<string>.DefineProperty(this, "Author", ["properties", "author"]);
@@ -287,7 +287,7 @@ public partial class SiteDeployment : Resource
     /// <summary>
     /// Creates a reference to an existing SiteDeployment.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteDeployment resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -295,6 +295,6 @@ public partial class SiteDeployment : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteDeployment.</param>
     /// <returns>The existing SiteDeployment resource.</returns>
-    public static SiteDeployment FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SiteDeployment FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// Represents key wrap metadata that a key wrapping provider can use to
 /// wrap/unwrap a client encryption key.
 /// </summary>
-public partial class CosmosDBKeyWrapMetadata : ProvisioningConstruct
+public partial class CosmosDBKeyWrapMetadata : ProvisionableConstruct
 {
     /// <summary>
     /// The name of associated KeyEncryptionKey (aka CustomerManagedKey).

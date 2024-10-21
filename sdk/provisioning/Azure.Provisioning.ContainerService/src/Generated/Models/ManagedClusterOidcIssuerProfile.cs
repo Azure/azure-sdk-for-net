@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// The OIDC issuer profile of the Managed Cluster.
 /// </summary>
-public partial class ManagedClusterOidcIssuerProfile : ProvisioningConstruct
+public partial class ManagedClusterOidcIssuerProfile : ProvisionableConstruct
 {
     /// <summary>
     /// The OIDC issuer url of the Managed Cluster.

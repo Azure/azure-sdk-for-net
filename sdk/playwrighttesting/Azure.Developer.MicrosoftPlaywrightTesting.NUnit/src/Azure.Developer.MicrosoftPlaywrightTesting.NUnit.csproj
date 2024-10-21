@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageTags>Azure, Cloud, Playwright, Playwright Service, Reporting, Playwright Testing</PackageTags>
     <Description>
@@ -12,8 +12,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference
-			Include="..\..\Azure.Developer.MicrosoftPlaywrightTesting.TestLogger\src\Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.csproj" />
+    <ProjectReference Include="..\..\Azure.Developer.MicrosoftPlaywrightTesting.TestLogger\src\Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.csproj" />
     <PackageReference Include="NUnit" />
   </ItemGroup>
 </Project>

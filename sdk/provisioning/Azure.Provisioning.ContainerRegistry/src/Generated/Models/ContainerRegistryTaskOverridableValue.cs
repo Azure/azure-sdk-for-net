@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The properties of a overridable value that can be passed to a task template.
 /// </summary>
-public partial class ContainerRegistryTaskOverridableValue : ProvisioningConstruct
+public partial class ContainerRegistryTaskOverridableValue : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the overridable value.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// The CertificateOrderContact.
 /// </summary>
-public partial class CertificateOrderContact : ProvisioningConstruct
+public partial class CertificateOrderContact : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the email.

@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Storage;
 /// An object that wraps the blob inventory rule. Each rule is uniquely defined
 /// by name.
 /// </summary>
-public partial class BlobInventoryPolicyRule : ProvisioningConstruct
+public partial class BlobInventoryPolicyRule : ProvisionableConstruct
 {
     /// <summary>
     /// Rule is enabled when set to true.

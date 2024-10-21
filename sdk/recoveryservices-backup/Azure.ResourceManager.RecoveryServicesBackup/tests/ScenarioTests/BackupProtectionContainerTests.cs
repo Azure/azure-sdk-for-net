@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Tests
         }
 
         [RecordedTest]
-        [Ignore("This test case will cause errors in the pipeline. After fixing the problem, restore this test")]
         public async Task CreateTest()
         {
             var sub = await Client.GetDefaultSubscriptionAsync();

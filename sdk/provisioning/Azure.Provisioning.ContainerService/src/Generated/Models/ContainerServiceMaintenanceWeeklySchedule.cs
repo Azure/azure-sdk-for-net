@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerService;
 /// For schedules like: &apos;recur every Monday&apos; or &apos;recur every 3
 /// weeks on Wednesday&apos;.
 /// </summary>
-public partial class ContainerServiceMaintenanceWeeklySchedule : ProvisioningConstruct
+public partial class ContainerServiceMaintenanceWeeklySchedule : ProvisionableConstruct
 {
     /// <summary>
     /// Specifies the number of weeks between each set of occurrences.

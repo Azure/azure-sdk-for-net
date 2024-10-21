@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppConfiguration;
 /// <summary>
 /// A reference to a related private endpoint connection.
 /// </summary>
-public partial class AppConfigurationPrivateEndpointConnectionReference : ProvisioningConstruct
+public partial class AppConfigurationPrivateEndpointConnectionReference : ProvisionableConstruct
 {
     /// <summary>
     /// The provisioning status of the private endpoint connection.

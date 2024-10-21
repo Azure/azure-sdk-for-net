@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// The event type information for Channels.
 /// </summary>
-public partial class PartnerTopicEventTypeInfo : ProvisioningConstruct
+public partial class PartnerTopicEventTypeInfo : ProvisionableConstruct
 {
     /// <summary>
     /// The kind of event type used.

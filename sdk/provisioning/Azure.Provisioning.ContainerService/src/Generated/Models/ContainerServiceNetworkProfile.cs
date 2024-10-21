@@ -15,7 +15,7 @@ namespace Azure.Provisioning.ContainerService;
 /// Profile of network configuration.             Serialized Name:
 /// ContainerServiceNetworkProfile
 /// </summary>
-public partial class ContainerServiceNetworkProfile : ProvisioningConstruct
+public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Network plugin used for building the Kubernetes network.

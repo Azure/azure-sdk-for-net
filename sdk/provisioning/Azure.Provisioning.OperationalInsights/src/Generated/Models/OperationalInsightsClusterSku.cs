@@ -10,7 +10,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// The cluster sku definition.
 /// </summary>
-public partial class OperationalInsightsClusterSku : ProvisioningConstruct
+public partial class OperationalInsightsClusterSku : ProvisionableConstruct
 {
     /// <summary>
     /// The capacity value.

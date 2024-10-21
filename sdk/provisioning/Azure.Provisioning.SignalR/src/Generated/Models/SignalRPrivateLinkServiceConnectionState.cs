@@ -11,7 +11,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// Connection state of the private endpoint connection.
 /// </summary>
-public partial class SignalRPrivateLinkServiceConnectionState : ProvisioningConstruct
+public partial class SignalRPrivateLinkServiceConnectionState : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates whether the connection has been Approved/Rejected/Removed by

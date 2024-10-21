@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// The source reference for the GitRepository object.
 /// </summary>
-public partial class KubernetesGitRepositoryRef : ProvisioningConstruct
+public partial class KubernetesGitRepositoryRef : ProvisionableConstruct
 {
     /// <summary>
     /// The git repository branch name to checkout.

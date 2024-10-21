@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Contains information about SSH certificate public key data.
 /// </summary>
-public partial class ContainerServiceSshPublicKey : ProvisioningConstruct
+public partial class ContainerServiceSshPublicKey : ProvisionableConstruct
 {
     /// <summary>
     /// Certificate public key used to authenticate with VMs through SSH. The

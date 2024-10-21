@@ -15,7 +15,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlServerKey.
 /// </summary>
-public partial class PostgreSqlServerKey : Resource
+public partial class PostgreSqlServerKey : ProvisionableResource
 {
     /// <summary>
     /// The name of the PostgreSQL Server key to be operated on (updated or
@@ -69,15 +69,15 @@ public partial class PostgreSqlServerKey : Resource
     /// <summary>
     /// Creates a new PostgreSqlServerKey.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PostgreSqlServerKey resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlServerKey.</param>
-    public PostgreSqlServerKey(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DBforPostgreSQL/servers/keys", resourceVersion ?? "2020-01-01")
+    public PostgreSqlServerKey(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/servers/keys", resourceVersion ?? "2020-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _serverKeyType = BicepValue<PostgreSqlServerKeyType>.DefineProperty(this, "ServerKeyType", ["properties", "serverKeyType"]);
@@ -108,7 +108,7 @@ public partial class PostgreSqlServerKey : Resource
     /// <summary>
     /// Creates a reference to an existing PostgreSqlServerKey.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PostgreSqlServerKey resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -116,6 +116,6 @@ public partial class PostgreSqlServerKey : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlServerKey.</param>
     /// <returns>The existing PostgreSqlServerKey resource.</returns>
-    public static PostgreSqlServerKey FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlServerKey FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Deployment properties with additional details.
 /// </summary>
-public partial class ArmDeploymentPropertiesExtended : ProvisioningConstruct
+public partial class ArmDeploymentPropertiesExtended : ProvisionableConstruct
 {
     /// <summary>
     /// Denotes the state of provisioning.

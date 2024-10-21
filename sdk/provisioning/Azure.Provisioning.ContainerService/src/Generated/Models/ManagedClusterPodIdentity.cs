@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Details about the pod identity assigned to the Managed Cluster.
 /// </summary>
-public partial class ManagedClusterPodIdentity : ProvisioningConstruct
+public partial class ManagedClusterPodIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the pod identity.

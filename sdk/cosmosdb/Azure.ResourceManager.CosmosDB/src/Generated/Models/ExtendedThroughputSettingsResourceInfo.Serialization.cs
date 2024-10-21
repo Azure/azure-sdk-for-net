@@ -20,13 +20,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<ExtendedThroughputSettingsResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ExtendedThroughputSettingsResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExtendedThroughputSettingsResourceInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Rid))
             {
                 writer.WritePropertyName("_rid"u8);
@@ -42,52 +51,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("_etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Throughput))
-            {
-                writer.WritePropertyName("throughput"u8);
-                writer.WriteNumberValue(Throughput.Value);
-            }
-            if (Optional.IsDefined(AutoscaleSettings))
-            {
-                writer.WritePropertyName("autoscaleSettings"u8);
-                writer.WriteObjectValue(AutoscaleSettings, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MinimumThroughput))
-            {
-                writer.WritePropertyName("minimumThroughput"u8);
-                writer.WriteStringValue(MinimumThroughput);
-            }
-            if (options.Format != "W" && Optional.IsDefined(OfferReplacePending))
-            {
-                writer.WritePropertyName("offerReplacePending"u8);
-                writer.WriteStringValue(OfferReplacePending);
-            }
-            if (options.Format != "W" && Optional.IsDefined(InstantMaximumThroughput))
-            {
-                writer.WritePropertyName("instantMaximumThroughput"u8);
-                writer.WriteStringValue(InstantMaximumThroughput);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SoftAllowedMaximumThroughput))
-            {
-                writer.WritePropertyName("softAllowedMaximumThroughput"u8);
-                writer.WriteStringValue(SoftAllowedMaximumThroughput);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         ExtendedThroughputSettingsResourceInfo IJsonModel<ExtendedThroughputSettingsResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

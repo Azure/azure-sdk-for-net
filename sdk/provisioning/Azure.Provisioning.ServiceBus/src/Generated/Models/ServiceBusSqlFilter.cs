@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// Represents a filter which is a composition of an expression and an action
 /// that is executed in the pub/sub pipeline.
 /// </summary>
-public partial class ServiceBusSqlFilter : ProvisioningConstruct
+public partial class ServiceBusSqlFilter : ProvisionableConstruct
 {
     /// <summary>
     /// The SQL expression. e.g. MyProperty=&apos;ABC&apos;.
