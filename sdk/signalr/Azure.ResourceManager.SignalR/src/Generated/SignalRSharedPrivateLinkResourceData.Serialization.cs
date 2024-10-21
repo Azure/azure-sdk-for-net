@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.SignalR
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (Optional.IsCollectionDefined(Fqdns))
+            if (Optional.IsCollectionDefined(FullyQualifiedDomainNames))
             {
                 writer.WritePropertyName("fqdns"u8);
                 writer.WriteStartArray();
-                foreach (var item in Fqdns)
+                foreach (var item in FullyQualifiedDomainNames)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.SignalR
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Fqdns), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FullyQualifiedDomainNames), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    fqdns: ");
@@ -370,13 +370,13 @@ namespace Azure.ResourceManager.SignalR
             }
             else
             {
-                if (Optional.IsCollectionDefined(Fqdns))
+                if (Optional.IsCollectionDefined(FullyQualifiedDomainNames))
                 {
-                    if (Fqdns.Any())
+                    if (FullyQualifiedDomainNames.Any())
                     {
                         builder.Append("    fqdns: ");
                         builder.AppendLine("[");
-                        foreach (var item in Fqdns)
+                        foreach (var item in FullyQualifiedDomainNames)
                         {
                             if (item == null)
                             {

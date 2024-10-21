@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SignalR
         /// <summary> Initializes a new instance of <see cref="SignalRSharedPrivateLinkResourceData"/>. </summary>
         public SignalRSharedPrivateLinkResourceData()
         {
-            Fqdns = new ChangeTrackingList<string>();
+            FullyQualifiedDomainNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalRSharedPrivateLinkResourceData"/>. </summary>
@@ -66,16 +66,16 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="privateLinkResourceId"> The resource id of the resource the shared private link resource is for. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
-        /// <param name="fqdns"> A list of FQDNs for third party private link service. </param>
+        /// <param name="fullyQualifiedDomainNames"> A list of FQDNs for third party private link service. </param>
         /// <param name="status"> Status of the shared private link resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRSharedPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, ResourceIdentifier privateLinkResourceId, SignalRProvisioningState? provisioningState, string requestMessage, IList<string> fqdns, SignalRSharedPrivateLinkResourceStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SignalRSharedPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, ResourceIdentifier privateLinkResourceId, SignalRProvisioningState? provisioningState, string requestMessage, IList<string> fullyQualifiedDomainNames, SignalRSharedPrivateLinkResourceStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             PrivateLinkResourceId = privateLinkResourceId;
             ProvisioningState = provisioningState;
             RequestMessage = requestMessage;
-            Fqdns = fqdns;
+            FullyQualifiedDomainNames = fullyQualifiedDomainNames;
             Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SignalR
         public string RequestMessage { get; set; }
         /// <summary> A list of FQDNs for third party private link service. </summary>
         [WirePath("properties.fqdns")]
-        public IList<string> Fqdns { get; }
+        public IList<string> FullyQualifiedDomainNames { get; }
         /// <summary> Status of the shared private link resource. </summary>
         [WirePath("properties.status")]
         public SignalRSharedPrivateLinkResourceStatus? Status { get; }
