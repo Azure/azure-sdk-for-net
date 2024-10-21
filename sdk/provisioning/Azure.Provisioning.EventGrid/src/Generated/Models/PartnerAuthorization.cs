@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// The partner authorization details.
 /// </summary>
-public partial class PartnerAuthorization : ProvisioningConstruct
+public partial class PartnerAuthorization : ProvisionableConstruct
 {
     /// <summary>
     /// Time used to validate the authorization expiration time for each

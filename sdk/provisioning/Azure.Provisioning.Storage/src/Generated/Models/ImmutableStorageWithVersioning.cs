@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Object level immutability properties of the container.
 /// </summary>
-public partial class ImmutableStorageWithVersioning : ProvisioningConstruct
+public partial class ImmutableStorageWithVersioning : ProvisionableConstruct
 {
     /// <summary>
     /// This is an immutable property, when set to true it enables object level

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceAzureADOnlyAuthentication.
 /// </summary>
-public partial class ManagedInstanceAzureADOnlyAuthentication : Resource
+public partial class ManagedInstanceAzureADOnlyAuthentication : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -50,7 +50,7 @@ public partial class ManagedInstanceAzureADOnlyAuthentication : Resource
     /// <summary>
     /// Creates a new ManagedInstanceAzureADOnlyAuthentication.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ManagedInstanceAzureADOnlyAuthentication resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -58,8 +58,8 @@ public partial class ManagedInstanceAzureADOnlyAuthentication : Resource
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAzureADOnlyAuthentication.</param>
-    public ManagedInstanceAzureADOnlyAuthentication(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/managedInstances/azureADOnlyAuthentications", resourceVersion ?? "2021-11-01")
+    public ManagedInstanceAzureADOnlyAuthentication(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/azureADOnlyAuthentications", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _isAzureADOnlyAuthenticationEnabled = BicepValue<bool>.DefineProperty(this, "IsAzureADOnlyAuthenticationEnabled", ["properties", "azureADOnlyAuthentication"]);
@@ -88,7 +88,7 @@ public partial class ManagedInstanceAzureADOnlyAuthentication : Resource
     /// Creates a reference to an existing
     /// ManagedInstanceAzureADOnlyAuthentication.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ManagedInstanceAzureADOnlyAuthentication resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -97,6 +97,6 @@ public partial class ManagedInstanceAzureADOnlyAuthentication : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAzureADOnlyAuthentication.</param>
     /// <returns>The existing ManagedInstanceAzureADOnlyAuthentication resource.</returns>
-    public static ManagedInstanceAzureADOnlyAuthentication FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceAzureADOnlyAuthentication FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

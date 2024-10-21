@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// A value that indicates whether capture description is enabled.
 /// </summary>
-public partial class EventHubsCaptureIdentity : ProvisioningConstruct
+public partial class EventHubsCaptureIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// Type of Azure Active Directory Managed Identity.

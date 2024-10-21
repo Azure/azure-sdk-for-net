@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// Pairs of Managed Instances in the failover group.
 /// </summary>
-public partial class ManagedInstancePairInfo : ProvisioningConstruct
+public partial class ManagedInstancePairInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Id of Primary Managed Instance in pair.

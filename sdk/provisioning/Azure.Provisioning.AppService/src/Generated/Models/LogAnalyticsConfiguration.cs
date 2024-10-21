@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// The LogAnalyticsConfiguration.
 /// </summary>
-public partial class LogAnalyticsConfiguration : ProvisioningConstruct
+public partial class LogAnalyticsConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets the customer id.

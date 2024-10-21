@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// RedisCacheAccessPolicy.
 /// </summary>
-public partial class RedisCacheAccessPolicy : Resource
+public partial class RedisCacheAccessPolicy : ProvisionableResource
 {
     /// <summary>
     /// The name of the access policy that is being added to the Redis cache.
@@ -63,15 +63,15 @@ public partial class RedisCacheAccessPolicy : Resource
     /// <summary>
     /// Creates a new RedisCacheAccessPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the RedisCacheAccessPolicy resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the RedisCacheAccessPolicy.</param>
-    public RedisCacheAccessPolicy(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Cache/redis/accessPolicies", resourceVersion ?? "2024-03-01")
+    public RedisCacheAccessPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Cache/redis/accessPolicies", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _permissions = BicepValue<string>.DefineProperty(this, "Permissions", ["properties", "permissions"]);
@@ -176,7 +176,7 @@ public partial class RedisCacheAccessPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing RedisCacheAccessPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the RedisCacheAccessPolicy resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -184,6 +184,6 @@ public partial class RedisCacheAccessPolicy : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the RedisCacheAccessPolicy.</param>
     /// <returns>The existing RedisCacheAccessPolicy resource.</returns>
-    public static RedisCacheAccessPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static RedisCacheAccessPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The properties of a trigger.
 /// </summary>
-public partial class ContainerRegistryTriggerProperties : ProvisioningConstruct
+public partial class ContainerRegistryTriggerProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The collection of timer triggers.

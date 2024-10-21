@@ -14,7 +14,7 @@ namespace Azure.Provisioning.EventHubs;
 /// A class representing the EventHubsPrivateEndpointConnection data model.
 /// Properties of the PrivateEndpointConnection.
 /// </summary>
-public partial class EventHubsPrivateEndpointConnectionData : ProvisioningConstruct
+public partial class EventHubsPrivateEndpointConnectionData : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets Id.

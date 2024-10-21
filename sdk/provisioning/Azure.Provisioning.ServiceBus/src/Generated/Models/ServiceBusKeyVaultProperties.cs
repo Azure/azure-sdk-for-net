@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// Properties to configure keyVault Properties.
 /// </summary>
-public partial class ServiceBusKeyVaultProperties : ProvisioningConstruct
+public partial class ServiceBusKeyVaultProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the Key from KeyVault.

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// SystemTopicEventSubscription.
 /// </summary>
-public partial class SystemTopicEventSubscription : Resource
+public partial class SystemTopicEventSubscription : ProvisionableResource
 {
     /// <summary>
     /// Name of the event subscription to be created. Event subscription names
@@ -150,15 +150,15 @@ public partial class SystemTopicEventSubscription : Resource
     /// <summary>
     /// Creates a new SystemTopicEventSubscription.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SystemTopicEventSubscription
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SystemTopicEventSubscription.</param>
-    public SystemTopicEventSubscription(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventGrid/systemTopics/eventSubscriptions", resourceVersion ?? "2022-06-15")
+    public SystemTopicEventSubscription(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/systemTopics/eventSubscriptions", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _deadLetterDestination = BicepValue<DeadLetterDestination>.DefineProperty(this, "DeadLetterDestination", ["properties", "deadLetterDestination"]);
@@ -201,7 +201,7 @@ public partial class SystemTopicEventSubscription : Resource
     /// <summary>
     /// Creates a reference to an existing SystemTopicEventSubscription.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SystemTopicEventSubscription
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -209,6 +209,6 @@ public partial class SystemTopicEventSubscription : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SystemTopicEventSubscription.</param>
     /// <returns>The existing SystemTopicEventSubscription resource.</returns>
-    public static SystemTopicEventSubscription FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SystemTopicEventSubscription FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

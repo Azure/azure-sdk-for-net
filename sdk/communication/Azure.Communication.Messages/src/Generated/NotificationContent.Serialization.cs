@@ -67,26 +67,6 @@ namespace Azure.Communication.Messages
             return DeserializeNotificationContent(document.RootElement, options);
         }
 
-        internal static NotificationContent DeserializeNotificationContent(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "image": return MediaNotificationContent.DeserializeMediaNotificationContent(element, options);
-                    case "template": return TemplateNotificationContent.DeserializeTemplateNotificationContent(element, options);
-                    case "text": return TextNotificationContent.DeserializeTextNotificationContent(element, options);
-                }
-            }
-            return UnknownNotificationContent.DeserializeUnknownNotificationContent(element, options);
-        }
-
         BinaryData IPersistableModel<NotificationContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;

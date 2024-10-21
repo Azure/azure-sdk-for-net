@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Resource Access Rule.
 /// </summary>
-public partial class StorageAccountResourceAccessRule : ProvisioningConstruct
+public partial class StorageAccountResourceAccessRule : ProvisionableConstruct
 {
     /// <summary>
     /// Tenant Id.

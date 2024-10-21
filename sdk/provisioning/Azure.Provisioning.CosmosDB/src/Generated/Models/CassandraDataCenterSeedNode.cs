@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The CassandraDataCenterSeedNode.
 /// </summary>
-public partial class CassandraDataCenterSeedNode : ProvisioningConstruct
+public partial class CassandraDataCenterSeedNode : ProvisionableConstruct
 {
     /// <summary>
     /// IP address of this seed node.

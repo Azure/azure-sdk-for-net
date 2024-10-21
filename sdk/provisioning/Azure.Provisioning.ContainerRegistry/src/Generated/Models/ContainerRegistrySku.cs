@@ -10,7 +10,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The SKU of a container registry.
 /// </summary>
-public partial class ContainerRegistrySku : ProvisioningConstruct
+public partial class ContainerRegistrySku : ProvisionableConstruct
 {
     /// <summary>
     /// The SKU name of the container registry. Required for registry creation.

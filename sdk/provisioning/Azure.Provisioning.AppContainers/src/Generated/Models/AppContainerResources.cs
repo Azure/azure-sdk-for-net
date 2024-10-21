@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Container App container resource requirements.
 /// </summary>
-public partial class AppContainerResources : ProvisioningConstruct
+public partial class AppContainerResources : ProvisionableConstruct
 {
     /// <summary>
     /// Required CPU in cores, e.g. 0.5.

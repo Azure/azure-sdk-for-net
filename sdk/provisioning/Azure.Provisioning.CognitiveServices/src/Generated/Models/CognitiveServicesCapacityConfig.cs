@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// The capacity configuration.
 /// </summary>
-public partial class CognitiveServicesCapacityConfig : ProvisioningConstruct
+public partial class CognitiveServicesCapacityConfig : ProvisionableConstruct
 {
     /// <summary>
     /// The minimum capacity.

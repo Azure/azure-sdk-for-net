@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Object to set Table Access Policy.
 /// </summary>
-public partial class StorageTableSignedIdentifier : ProvisioningConstruct
+public partial class StorageTableSignedIdentifier : ProvisionableConstruct
 {
     /// <summary>
     /// unique-64-character-value of the stored access policy.
