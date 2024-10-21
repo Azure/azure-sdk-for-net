@@ -19,13 +19,21 @@ namespace Azure.AI.Inference
 
         void IJsonModel<StreamingChatChoiceUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StreamingChatChoiceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StreamingChatChoiceUpdate)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("index"u8);
             writer.WriteNumberValue(Index);
             if (FinishReason != null)
@@ -54,7 +62,6 @@ namespace Azure.AI.Inference
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StreamingChatChoiceUpdate IJsonModel<StreamingChatChoiceUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
