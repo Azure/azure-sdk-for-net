@@ -402,7 +402,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             mockLog.Verify(m => m.GetCheckpointStart(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0"));
-            mockLog.Verify(m => m.GetCheckpointComplete(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", clientIdentifier, It.IsAny<DateTimeOffset>()));
+            mockLog.Verify(m => m.GetCheckpointComplete(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", clientIdentifier, It.IsAny<string>()));
         }
 
         /// <summary>
