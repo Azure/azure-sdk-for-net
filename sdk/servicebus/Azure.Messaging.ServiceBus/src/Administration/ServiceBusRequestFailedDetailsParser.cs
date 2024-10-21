@@ -22,10 +22,10 @@ namespace Azure.Core.Pipeline
                 {
                     response.ContentStream.Position = 0;
                     var errorContentXml = XElement.Load(response.ContentStream);
-                    XElement detail = errorContentXml.Element("Detail");
+                    XElement? detail = errorContentXml.Element("Detail");
 
                     var message = detail?.Value ?? response.Content.ToString();
-                    Match? match = Regex.Match(detail?.Value, "SubCode=(\\d+)\\.");
+                    Match? match = Regex.Match(message, "SubCode=(\\d+)\\.");
 
                     string? errorCode = null;
                     if (match.Success)

@@ -347,7 +347,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             var link = default(ReceivingAmqpLink);
-            CancellationTokenRegistration registration;
 
             ThrowIfSessionLockLost();
 
@@ -418,10 +417,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     .Throw();
 
                 throw; // will never be reached
-            }
-            finally
-            {
-                registration.Dispose();
             }
         }
 

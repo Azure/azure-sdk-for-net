@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net6.0;net8.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK ServiceBus Extension</Description>
     <Version>5.17.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
@@ -11,6 +11,8 @@
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <InheritDocTrimLevel>internal</InheritDocTrimLevel>
+    <!-- Remove this line when Microsoft.Azure.WebJobs.Extensions.ServiceBus.csproj is released for net8.0  -->
+    <RunApiCompat Condition="'$(TargetFramework)' == 'net8.0'">false</RunApiCompat>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,14 +22,14 @@
     <PackageReference Include="Azure.Messaging.ServiceBus" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0' OR '$(TargetFramework)' == 'net8.0'">
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Rpc" />
     <PackageReference Include="Grpc.Tools" />
     <PackageReference Include="Google.Protobuf" />
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Condition="'$(TargetFramework)' == 'net6.0'" Include="Grpc\Proto\settlement.proto" GrpcServices="service" Access="internal" />
+    <Protobuf Condition="'$(TargetFramework)' == 'net6.0' OR '$(TargetFramework)' == 'net8.0'" Include="Grpc\Proto\settlement.proto" GrpcServices="service" Access="internal" />
   </ItemGroup>
 
   <ItemGroup>
