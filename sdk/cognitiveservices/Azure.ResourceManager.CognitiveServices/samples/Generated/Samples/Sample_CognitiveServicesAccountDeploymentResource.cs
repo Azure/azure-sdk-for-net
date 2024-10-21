@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             CognitiveServicesAccountDeploymentResource cognitiveServicesAccountDeployment = client.GetCognitiveServicesAccountDeploymentResource(cognitiveServicesAccountDeploymentResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (SkuResource item in cognitiveServicesAccountDeployment.GetSkusAsync())
+            await foreach (SkuInfo item in cognitiveServicesAccountDeployment.GetSkusAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

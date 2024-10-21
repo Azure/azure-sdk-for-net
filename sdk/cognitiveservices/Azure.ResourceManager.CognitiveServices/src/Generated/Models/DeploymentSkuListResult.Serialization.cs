@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<SkuResource> value = default;
+            IReadOnlyList<SkuInfo> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<SkuResource> array = new List<SkuResource>();
+                    List<SkuInfo> array = new List<SkuInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuResource.DeserializeSkuResource(item, options));
+                        array.Add(SkuInfo.DeserializeSkuInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeploymentSkuListResult(nextLink, value ?? new ChangeTrackingList<SkuResource>(), serializedAdditionalRawData);
+            return new DeploymentSkuListResult(nextLink, value ?? new ChangeTrackingList<SkuInfo>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -91,6 +91,7 @@ rename-mapping:
   CapacityConfig: CognitiveServicesCapacityConfig
   CalculateModelCapacityParameter: CalculateModelCapacityPatch
   RaiBlocklistItemBulkRequest: RaiBlocklistItemBulkContent
+  SkuResource: SkuInfo
 
 prepend-rp-prefix:
   - Account

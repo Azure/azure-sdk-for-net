@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties of Cognitive Services account resource sku resource properties. </summary>
-    public partial class SkuResource
+    public partial class SkuInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SkuResource"/>. </summary>
-        internal SkuResource()
+        /// <summary> Initializes a new instance of <see cref="SkuInfo"/>. </summary>
+        internal SkuInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkuResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuInfo"/>. </summary>
         /// <param name="resourceType"> The resource type name. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="capacity"> The capacity configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SkuResource(string resourceType, CognitiveServicesSku sku, CognitiveServicesCapacityConfig capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SkuInfo(string resourceType, CognitiveServicesSku sku, CognitiveServicesCapacityConfig capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Sku = sku;
