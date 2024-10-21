@@ -5,6 +5,7 @@ using System;
 using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace System.ClientModel.Primitives.TwoWayPipeline;
 
@@ -18,6 +19,9 @@ public abstract class TwoWayPipelineClientMessage
 
     // TODO: Do we need to support the WS text/binary switch here?
     public BinaryData? Content { get; set; }
+
+    // TODO: settable here? Or better to use a RequestOptions.Apply paradigm?
+    public CancellationToken CancellationToken { get; set; }
 
     public void SetProperty(Type key, object? value) =>
         PropertyBag.Set((ulong)key.TypeHandle.Value, value);

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace System.ClientModel.Primitives.TwoWayPipeline;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public class WebSocketTwoWayPipelineTransport : TwoWayPipelineTransport,
+public partial class WebSocketTwoWayPipelineTransport : TwoWayPipelineTransport,
     IDisposable, IAsyncDisposable
 {
     private ClientWebSocket? _webSocket;
@@ -24,7 +24,7 @@ public class WebSocketTwoWayPipelineTransport : TwoWayPipelineTransport,
 
     protected override TwoWayPipelineClientMessage CreateMessageCore()
     {
-        throw new NotImplementedException();
+        return new WebSocketTransportClientMessage();
     }
 
     protected override void ProcessCore(TwoWayPipelineClientMessage clientMessage)
@@ -32,9 +32,28 @@ public class WebSocketTwoWayPipelineTransport : TwoWayPipelineTransport,
         throw new NotImplementedException();
     }
 
-    protected override ValueTask ProcessCoreAsync(TwoWayPipelineClientMessage clientMessage)
+    protected override async ValueTask ProcessCoreAsync(TwoWayPipelineClientMessage clientMessage)
     {
-        throw new NotImplementedException();
+        // Send the message over the WebSocket.
+
+        AssertNotDisposed();
+
+        // TODO: assert that message has content?
+        // TODO: text vs. binary?
+        // TODO: end of message?
+
+#if NET6_0_OR_GREATER
+        await _webSocket!.SendAsync((clientMessage.Content!).ToMemory(),
+            WebSocketMessageType.Text,
+            endOfMessage: true,
+            clientMessage.CancellationToken).ConfigureAwait(false);
+#else
+        // TODO: perf for netstandard2.0?
+        await _webSocket!.SendAsync(new ArraySegment<byte>(clientMessage.Content!.ToArray()),
+            WebSocketMessageType.Text,
+            endOfMessage: true,
+            clientMessage.CancellationToken).ConfigureAwait(false);
+#endif
     }
 
     protected override void ProcessCore(TwoWayPipelineServiceMessage serviceMessage)
@@ -72,6 +91,14 @@ public class WebSocketTwoWayPipelineTransport : TwoWayPipelineTransport,
         // TODO: refresh on how to implement this; if we need it
 
         throw new NotImplementedException();
+    }
+
+    private void AssertNotDisposed()
+    {
+        if (_disposed || _webSocket is null)
+        {
+            throw new ObjectDisposedException(nameof(_webSocket));
+        }
     }
 }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

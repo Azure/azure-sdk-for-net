@@ -316,6 +316,7 @@ namespace System.ClientModel.Primitives.TwoWayPipeline
     public abstract partial class TwoWayPipelineClientMessage
     {
         protected TwoWayPipelineClientMessage() { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public System.BinaryData? Content { get { throw null; } set { } }
         public void SetProperty(System.Type key, object? value) { }
         public bool TryGetProperty(System.Type key, out object? value) { throw null; }

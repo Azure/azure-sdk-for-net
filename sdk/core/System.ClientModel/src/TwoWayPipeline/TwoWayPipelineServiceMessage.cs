@@ -23,6 +23,9 @@ public abstract class TwoWayPipelineServiceMessage
     // TODO: Do we need to support the WS text/binary switch here?
     public BinaryData? Content { get; set; }
 
+    // TODO: would it make sense to have CancellationToken on this message at all?
+    // TODO: what governs cancellation when a response is received?
+
     public void SetProperty(Type key, object? value) =>
         PropertyBag.Set((ulong)key.TypeHandle.Value, value);
 
