@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute.Samples
             CapacityReservationData data = new CapacityReservationData(new AzureLocation("westus"), new ComputeSku()
             {
                 Name = "Standard_DS1_v2",
-                Capacity = 4,
+                Capacity = 4L,
             })
             {
                 Zones =

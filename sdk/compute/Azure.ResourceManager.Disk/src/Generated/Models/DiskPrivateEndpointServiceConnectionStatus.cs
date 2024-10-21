@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Disk.Models
         public static bool operator ==(DiskPrivateEndpointServiceConnectionStatus left, DiskPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(DiskPrivateEndpointServiceConnectionStatus left, DiskPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiskPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskPrivateEndpointServiceConnectionStatus"/>. </summary>
         public static implicit operator DiskPrivateEndpointServiceConnectionStatus(string value) => new DiskPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc />

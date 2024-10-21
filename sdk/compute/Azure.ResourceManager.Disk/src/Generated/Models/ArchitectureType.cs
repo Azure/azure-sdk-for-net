@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Disk.Models
         public static bool operator ==(ArchitectureType left, ArchitectureType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArchitectureType"/> values are not the same. </summary>
         public static bool operator !=(ArchitectureType left, ArchitectureType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ArchitectureType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ArchitectureType"/>. </summary>
         public static implicit operator ArchitectureType(string value) => new ArchitectureType(value);
 
         /// <inheritdoc />

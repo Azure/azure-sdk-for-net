@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sku.Models
         public static bool operator ==(ExtendedLocationType left, ExtendedLocationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExtendedLocationType"/> values are not the same. </summary>
         public static bool operator !=(ExtendedLocationType left, ExtendedLocationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExtendedLocationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExtendedLocationType"/>. </summary>
         public static implicit operator ExtendedLocationType(string value) => new ExtendedLocationType(value);
 
         /// <inheritdoc />
