@@ -11,8 +11,6 @@
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <InheritDocTrimLevel>internal</InheritDocTrimLevel>
-    <!-- Remove this line when Microsoft.Azure.WebJobs.Extensions.ServiceBus.csproj is released for net8.0  -->
-    <RunApiCompat Condition="'$(TargetFramework)' == 'net8.0'">false</RunApiCompat>
   </PropertyGroup>
 
   <ItemGroup>

@@ -9,8 +9,6 @@
     <PackageTags>Microsoft Azure SDK Newtonsoft Json</PackageTags>
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-		<!-- Remove this line when Microsoft.Azure.Newtonsoft.Json is released for net8.0  -->
-		<RunApiCompat Condition="'$(TargetFramework)' == 'net8.0'">false</RunApiCompat>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
   </PropertyGroup>
 

@@ -14,8 +14,6 @@
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
     <!-- Remove this line when Azure.Core is released for net462  -->
     <RunApiCompat Condition="'$(TargetFramework)' == 'net462'">false</RunApiCompat>
-    <!-- Remove this line when Azure.Core is released for net8.0  -->
-    <RunApiCompat Condition="'$(TargetFramework)' == 'net8.0'">false</RunApiCompat>
     <!-- Remove this line when Azure.Core is released for net462  -->
     <RunApiCompat Condition="'$(TargetFramework)' == 'net472'">false</RunApiCompat>
     <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net472'">net462</ApiCompatBaselineTargetFramework>

@@ -7,8 +7,6 @@
     <ApiCompatVersion>1.2.1</ApiCompatVersion>
     <Nullable>enable</Nullable>
     <TargetFrameworks>netstandard2.0;net6.0;net8.0</TargetFrameworks>
-    <!-- Remove this line when System.ClientModel is released for net8.0  -->
-    <RunApiCompat Condition="'$(TargetFramework)' == 'net8.0'">false</RunApiCompat>
     <PackageIcon>DotNetPackageIcon.png</PackageIcon>
     <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
   </PropertyGroup>

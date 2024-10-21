@@ -10,8 +10,6 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <PackageTags>Microsoft Azure Communication CallAutomation Service;Microsoft;Azure;Azure Communication Service;Azure Communication CallAutomation Service;Calling;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <!-- Remove this line when Azure.Communication.CallAutomation is released for net8.0  -->
-    <RunApiCompat Condition="'$(TargetFramework)' == 'net8.0'">false</RunApiCompat>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 

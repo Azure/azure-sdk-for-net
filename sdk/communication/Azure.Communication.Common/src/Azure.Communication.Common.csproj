@@ -10,8 +10,6 @@
     <ApiCompatVersion>1.3.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Communication Service;Microsoft;Azure;Azure Communication Service;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <!-- Remove this line when Azure.Communication.Common is released for net8.0  -->
-    <RunApiCompat Condition="'$(TargetFramework)' == 'net8.0'">false</RunApiCompat>
     <RootNamespace>Azure.Communication</RootNamespace>
   </PropertyGroup>
   <ItemGroup>

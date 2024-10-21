@@ -6,8 +6,6 @@
     <ApiCompatVersion>7.18.2</ApiCompatVersion>
     <PackageTags>Azure;Service Bus;ServiceBus;.NET;AMQP;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <!-- Remove this line when Azure.Messaging.ServiceBus is released for net8.0  -->
-    <RunApiCompat Condition="'$(TargetFramework)' == 'net8.0'">false</RunApiCompat>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
     <NoWarn>
       <!-- TODO: Investigate and remove suppressions https://github.com/Azure/azure-sdk-for-net/issues/17154 -->
