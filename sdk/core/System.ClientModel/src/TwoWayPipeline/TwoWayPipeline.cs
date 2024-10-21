@@ -32,28 +32,28 @@ public sealed class TwoWayPipeline
         throw new NotImplementedException();
     }
 
-    public ClientPipelineMessage CreateMessage()
+    public TwoWayPipelineClientMessage CreateMessage()
     {
         throw new NotImplementedException();
     }
 
-    public void Send(ClientPipelineMessage message)
+    public void Send(TwoWayPipelineClientMessage message)
     {
         throw new NotImplementedException();
     }
 
-    public Task SendAsync(ClientPipelineMessage message)
+    public Task SendAsync(TwoWayPipelineClientMessage message)
     {
         throw new NotImplementedException();
     }
 
     // TODO: What is sync story for recieve - does this work?
-    public IEnumerable<ServicePipelineMessage> GetResponseStream()
+    public IEnumerable<TwoWayPipelineServiceMessage> GetResponseStream()
     {
         throw new NotImplementedException();
     }
 
-    public IAsyncEnumerable<ServicePipelineMessage> GetResponseStreamAsync()
+    public IAsyncEnumerable<TwoWayPipelineServiceMessage> GetResponseStreamAsync()
     {
         throw new NotImplementedException();
     }
