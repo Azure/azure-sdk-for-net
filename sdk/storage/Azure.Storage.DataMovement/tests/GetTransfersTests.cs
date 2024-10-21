@@ -123,11 +123,11 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act
-            DataTransferStatus[] status = { new DataTransferStatus(state, hasFailedItems, hasSkippedItems) };
-            IList<DataTransfer> result = await manager.GetTransfersAsync(status).ToListAsync();
+            DataTransferStatus status = new DataTransferStatus(state, hasFailedItems, hasSkippedItems);
+            IList<DataTransfer> result = await manager.GetTransfersAsync(filterByStatus: status).ToListAsync();
 
             // Assert
-            AssertListTransfersEquals(storedTransfers.Where(d => d.TransferStatus == status.First()).ToList(), result);
+            AssertListTransfersEquals(storedTransfers.Where(d => d.TransferStatus == status).ToList(), result);
         }
 
         [Test]
@@ -161,7 +161,7 @@ namespace Azure.Storage.DataMovement.Tests
                 SuccessfulCompletedStatus,
                 FailedCompletedStatus,
                 SkippedCompletedStatus };
-            IList<DataTransfer> result = await manager.GetTransfersAsync(statuses).ToListAsync();
+            IList<DataTransfer> result = await manager.GetTransfersAsync(filterByStatus: statuses).ToListAsync();
 
             // Assert
             AssertListTransfersEquals(storedTransfers.Where(d => statuses.Contains(d.TransferStatus)).ToList(), result);
@@ -194,7 +194,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act - With a transfer status not in the above stored transfers
             DataTransferStatus[] statuses = new DataTransferStatus[] { new DataTransferStatus(DataTransferState.Stopping, true, false) };
-            IList<DataTransfer> result = await manager.GetTransfersAsync(statuses).ToListAsync();
+            IList<DataTransfer> result = await manager.GetTransfersAsync(filterByStatus: statuses).ToListAsync();
 
             // Assert
             Assert.IsEmpty(result);
