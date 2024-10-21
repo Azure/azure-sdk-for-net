@@ -210,7 +210,7 @@ namespace Azure.Communication
             public void Dispose()
                 => _timer.Dispose();
 
-            private void OnTimerTick(object _)
+            private void OnTimerTick(object? _)
             {
                 try
                 {
