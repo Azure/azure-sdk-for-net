@@ -544,11 +544,20 @@ namespace Azure.Provisioning.Expressions
         public static Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> GetSubscriptionResourceId(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.Resources.Tenant GetTenant() { throw null; }
         public static Azure.Provisioning.BicepValue<string> GetUniqueString(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
-        public static Azure.Provisioning.BicepValue<string> Interpolate(System.FormattableString text) { throw null; }
+        public static Azure.Provisioning.BicepValue<string> Interpolate(Azure.Provisioning.Expressions.BicepInterpolatedStringHandler handler) { throw null; }
         public static Azure.Provisioning.BicepValue<object> ParseJson(Azure.Provisioning.BicepValue<object> value) { throw null; }
         public static Azure.Provisioning.BicepValue<string> Take(Azure.Provisioning.BicepValue<string> text, Azure.Provisioning.BicepValue<int> size) { throw null; }
         public static Azure.Provisioning.BicepValue<string> ToLower(Azure.Provisioning.BicepValue<object> value) { throw null; }
         public static Azure.Provisioning.BicepValue<string> ToUpper(Azure.Provisioning.BicepValue<object> value) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public ref partial struct BicepInterpolatedStringHandler
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public BicepInterpolatedStringHandler(int literalLength, int formattedCount) { throw null; }
+        public void AppendFormatted<T>(T t) { }
+        public void AppendLiteral(string text) { }
     }
     public partial class BicepProgram
     {
@@ -562,6 +571,15 @@ namespace Azure.Provisioning.Expressions
         protected BicepStatement() { }
         public override string ToString() { throw null; }
         internal abstract Azure.Provisioning.Expressions.BicepWriter Write(Azure.Provisioning.Expressions.BicepWriter writer);
+    }
+    public partial class BicepStringBuilder
+    {
+        public BicepStringBuilder() { }
+        public Azure.Provisioning.Expressions.BicepStringBuilder Append(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
+        public Azure.Provisioning.Expressions.BicepStringBuilder Append(Azure.Provisioning.Expressions.BicepInterpolatedStringHandler handler) { throw null; }
+        public Azure.Provisioning.Expressions.BicepStringBuilder Append(string text) { throw null; }
+        public Azure.Provisioning.BicepValue<string> Build() { throw null; }
+        public static implicit operator Azure.Provisioning.BicepValue<string> (Azure.Provisioning.Expressions.BicepStringBuilder value) { throw null; }
     }
     public enum BinaryBicepOperator
     {
@@ -635,8 +653,7 @@ namespace Azure.Provisioning.Expressions
     }
     public partial class InterpolatedStringExpression : Azure.Provisioning.Expressions.BicepExpression
     {
-        public InterpolatedStringExpression(string format, Azure.Provisioning.Expressions.BicepExpression[] values) { }
-        public string Format { get { throw null; } }
+        public InterpolatedStringExpression(Azure.Provisioning.Expressions.BicepExpression[] values) { }
         public Azure.Provisioning.Expressions.BicepExpression[] Values { get { throw null; } }
     }
     public partial class IntLiteralExpression : Azure.Provisioning.Expressions.LiteralExpression
@@ -758,9 +775,9 @@ namespace Azure.Provisioning.Expressions
 }
 namespace Azure.Provisioning.Primitives
 {
-    public partial class BicepLiteral : Azure.Provisioning.Primitives.NamedProvisionableConstruct
+    public partial class BicepLiteral : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public BicepLiteral(string bicepIdentifier, params Azure.Provisioning.Expressions.BicepStatement[] statements) : base (default(string)) { }
+        public BicepLiteral(params Azure.Provisioning.Expressions.BicepStatement[] statements) { }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.BicepStatement> Statements { get { throw null; } }
         protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
     }

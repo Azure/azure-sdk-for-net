@@ -187,7 +187,7 @@ internal class SampleTests(bool async)
                 // Hack in the Aspire Dashboard as a literal since there's no
                 // management plane library support for dotNetComponents yet
                 BicepLiteral aspireDashboard =
-                    new("aspireDashboard",
+                    new(
                         new ResourceStatement(
                             "aspireDashboard",
                             new StringLiteralExpression("Microsoft.App/managedEnvironments/dotNetComponents@2024-02-02-preview"),

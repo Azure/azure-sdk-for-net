@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Azure.Provisioning.Expressions;
 
@@ -61,37 +60,24 @@ public class StringLiteralExpression(string value) : LiteralExpression(value)
             writer.Append('\'').AppendEscaped(Value).Append('\'');
 }
 
-public class InterpolatedStringExpression(string format, BicepExpression[] values) : BicepExpression
+public class InterpolatedStringExpression(BicepExpression[] values) : BicepExpression
 {
-    public string Format { get; } = format;
     public BicepExpression[] Values { get; } = values;
-    private static readonly Regex s_formatArgument = new("(\\{\\d+\\})", RegexOptions.Compiled);
     internal override BicepWriter Write(BicepWriter writer)
     {
         writer.Append('\'');
-        foreach (string segment in s_formatArgument.Split(Format))
+        foreach (BicepExpression value in Values)
         {
-            if (string.IsNullOrEmpty(segment)) { continue; }
-
-            if (s_formatArgument.IsMatch(segment))
+            if (value is StringLiteralExpression lit)
             {
-                BicepExpression value = Values[int.Parse(segment.TrimStart('{').TrimEnd('}'))];
-                if (value is StringLiteralExpression lit)
-                {
-                    writer.AppendEscaped(lit.Value);
-                }
-                else
-                {
-                    writer.Append("${").Append(value).Append('}');
-                }
+                writer = writer.AppendEscaped(lit.Value);
             }
             else
             {
-                writer.AppendEscaped(segment);
+                writer = writer.Append("${").Append(value).Append('}');
             }
         }
-        writer.Append('\'');
-        return writer;
+        return writer.Append('\'');
     }
 }
 
