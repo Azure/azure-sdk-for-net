@@ -4,7 +4,7 @@ parameters:
   DeleteAfterHours: 8
   Location: ''
   EnvVars: {}
-  SubscriptionConfiguration: {}
+  SubscriptionConfiguration: '{}'
   ServiceConnection: not-specified
   ResourceType: test
   UseFederatedAuth: true

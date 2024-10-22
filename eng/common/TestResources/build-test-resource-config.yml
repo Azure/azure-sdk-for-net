@@ -1,7 +1,7 @@
 parameters:
   - name: SubscriptionConfiguration
     type: string
-    default: {}
+    default: '{}'
   - name: SubscriptionConfigurations
     type: object
     default: null
