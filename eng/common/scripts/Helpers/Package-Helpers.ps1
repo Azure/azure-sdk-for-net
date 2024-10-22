@@ -91,3 +91,89 @@ function CompatibleConvertFrom-Yaml {
       return ConvertFrom-Yaml $content
   }
 }
+
+<#
+.SYNOPSIS
+Common function that will verify that the YmlFile being loaded exists, load the raw file and
+return the results of CompatibleConvertFrom-Yaml or report an exception and return null if
+there's a problem loading the yml file. The return is the PowerShell HashTable object.
+
+.DESCRIPTION
+Common function that will verify that the YmlFile being loaded exists, load the raw file and
+return the results of CompatibleConvertFrom-Yaml or report an exception and return null if
+there's a problem loading the yml file. This is just to save anyone needing to load yml from
+having to deal with checking the file's existence and ensure that the CompatibleConvertFrom-Yaml
+is made within a try/catch. The return is the PowerShell HashTable object from the
+CompatibleConvertFrom-Yaml call or $null if there was an issue with the convert.
+
+.PARAMETER YmlFile
+The full path of the yml file to load.
+
+.EXAMPLE
+CompatibleLoadAndConvertFrom-Yaml -YmlFile path/to/file.yml
+#>
+function LoadAndCompatibleConvertFrom-Yaml {
+  param(
+    [Parameter(Mandatory=$true)]
+    [string]$YmlFile
+  )
+  if (Test-Path -Path $YmlFile) {
+    try {
+      return Get-Content -Raw -Path $YmlFile | CompatibleConvertFrom-Yaml
+    }
+    catch {
+      Write-Host "CompatibleLoadAndConvertFrom-Yaml::Exception while parsing yml file $($YmlFile): $_"
+    }
+  }
+  else {
+    Write-Host "CompatibleLoadAndConvertFrom-Yaml::YmlFile '$YmlFile' does not exist."
+  }
+  return $null
+}
+
+<#
+.SYNOPSIS
+Given the Hashtable contents of a Yml file and an array of strings representing the keys
+return the value if it exist or null if it doesn't.
+
+.DESCRIPTION
+The Yaml file needs to be loaded via CompatibleConvertFrom-Yaml which returns the file as
+as hashtable. The Keys are basically the path in the yaml file whose value to return, or
+null if it doesn't exist. This function does is safely traverses the path, outputting an
+error if there's an issue or returning the object representing the result if successful.
+This function loops through the Keys safely trying to get values, checking each piece of
+the path to ensure it exists. Normally one would just do
+$Yml["extends"]["parameters"]["artifacts"]
+but if something was off it would throw. Doing it this way allows more succinct error
+reporting if a piece of the path didn't exist
+
+.PARAMETER YamlContentAsHashtable
+The hashtable representing the yaml file contents loaded through LoadAndCompatibleConvertFrom-Yaml
+or CompatibleConvertFrom-Yaml, which is what LoadAndCompatibleConvertFrom-Yaml calls.
+
+.PARAMETER Keys
+String array representation of the path in the yaml file whose value we're trying to retrieve.
+
+.EXAMPLE
+GetValueSafelyFrom-Yaml -YamlContentAsHashtable $YmlFileContent -Keys @("extends", "parameters", "Artifacts")
+#>
+function GetValueSafelyFrom-Yaml {
+  param(
+    [Parameter(Mandatory=$true)]
+    $YamlContentAsHashtable,
+    [Parameter(Mandatory=$true)]
+    [string[]]$Keys
+  )
+  $current = $YamlContentAsHashtable
+  foreach ($key in $Keys) {
+      if ($current.ContainsKey($key) -or $current[$key]) {
+        $current = $current[$key]
+      }
+      else {
+        Write-Host "The '$key' part of the path $($Keys -join "/") doesn't exist or is null."
+        return $null
+      }
+  }
+
+  return [object]$current
+}
