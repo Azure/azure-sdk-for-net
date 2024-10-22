@@ -36,10 +36,10 @@ namespace Azure.AI.Client
                 writer.WritePropertyName("file_search"u8);
                 writer.WriteObjectValue(FileSearch, options);
             }
-            if (Optional.IsDefined(BingSearch))
+            if (Optional.IsDefined(BingGrounding))
             {
-                writer.WritePropertyName("bing_search"u8);
-                writer.WriteObjectValue(BingSearch, options);
+                writer.WritePropertyName("bing_grounding"u8);
+                writer.WriteObjectValue(BingGrounding, options);
             }
             if (Optional.IsDefined(MicrosoftFabric))
             {
@@ -96,7 +96,7 @@ namespace Azure.AI.Client
             }
             CodeInterpreterToolResource codeInterpreter = default;
             FileSearchToolResource fileSearch = default;
-            ConnectionListResource bingSearch = default;
+            ConnectionListResource bingGrounding = default;
             ConnectionListResource microsoftFabric = default;
             ConnectionListResource sharepoint = default;
             AzureAISearchResource azureAiSearch = default;
@@ -122,13 +122,13 @@ namespace Azure.AI.Client
                     fileSearch = FileSearchToolResource.DeserializeFileSearchToolResource(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("bing_search"u8))
+                if (property.NameEquals("bing_grounding"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bingSearch = ConnectionListResource.DeserializeConnectionListResource(property.Value, options);
+                    bingGrounding = ConnectionListResource.DeserializeConnectionListResource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("microsoft_fabric"u8))
@@ -167,7 +167,7 @@ namespace Azure.AI.Client
             return new ToolResources(
                 codeInterpreter,
                 fileSearch,
-                bingSearch,
+                bingGrounding,
                 microsoftFabric,
                 sharepoint,
                 azureAiSearch,

@@ -18,7 +18,7 @@ namespace Azure.AI.Client
         /// <param name="credentials"> Credentials will only be present for authType=ApiKey. </param>
         /// <param name="target"> The connection URL to be used for this service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> or <paramref name="target"/> is null. </exception>
-        internal ConnectionPropertiesApiKeyAuth(EndpointType category, CredentialsApiKeyAuth credentials, string target)
+        internal ConnectionPropertiesApiKeyAuth(ConnectionType category, CredentialsApiKeyAuth credentials, string target)
         {
             Argument.AssertNotNull(credentials, nameof(credentials));
             Argument.AssertNotNull(target, nameof(target));
@@ -35,7 +35,7 @@ namespace Azure.AI.Client
         /// <param name="category"> Category of the connection. </param>
         /// <param name="credentials"> Credentials will only be present for authType=ApiKey. </param>
         /// <param name="target"> The connection URL to be used for this service. </param>
-        internal ConnectionPropertiesApiKeyAuth(AuthenticationType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, EndpointType category, CredentialsApiKeyAuth credentials, string target) : base(authType, serializedAdditionalRawData)
+        internal ConnectionPropertiesApiKeyAuth(AuthenticationType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, ConnectionType category, CredentialsApiKeyAuth credentials, string target) : base(authType, serializedAdditionalRawData)
         {
             Category = category;
             Credentials = credentials;
@@ -48,7 +48,7 @@ namespace Azure.AI.Client
         }
 
         /// <summary> Category of the connection. </summary>
-        public EndpointType Category { get; }
+        public ConnectionType Category { get; }
         /// <summary> Credentials will only be present for authType=ApiKey. </summary>
         public CredentialsApiKeyAuth Credentials { get; }
         /// <summary> The connection URL to be used for this service. </summary>

@@ -26,7 +26,7 @@ namespace Azure.AI.Client
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("Uri"u8);
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -68,15 +68,15 @@ namespace Azure.AI.Client
             {
                 return null;
             }
-            string uri = default;
+            string id = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Uri"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    uri = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -90,7 +90,7 @@ namespace Azure.AI.Client
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Dataset(type, serializedAdditionalRawData, uri);
+            return new Dataset(type, serializedAdditionalRawData, id);
         }
 
         BinaryData IPersistableModel<Dataset>.Write(ModelReaderWriterOptions options)

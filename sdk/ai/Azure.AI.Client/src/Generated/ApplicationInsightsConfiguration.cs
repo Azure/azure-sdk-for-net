@@ -10,15 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Client
 {
-    /// <summary> Data Source for Application Insight. </summary>
-    public partial class AppInsightsConfiguration : InputData
+    /// <summary> Data Source for Application Insights. </summary>
+    public partial class ApplicationInsightsConfiguration : InputData
     {
-        /// <summary> Initializes a new instance of <see cref="AppInsightsConfiguration"/>. </summary>
-        /// <param name="resourceId"> LogAnalytic Workspace resourceID associated with AppInsights. </param>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsConfiguration"/>. </summary>
+        /// <param name="resourceId"> LogAnalytic Workspace resourceID associated with ApplicationInsights. </param>
         /// <param name="query"> Query to fetch the data. </param>
         /// <param name="serviceName"> Service name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="query"/> or <paramref name="serviceName"/> is null. </exception>
-        public AppInsightsConfiguration(string resourceId, string query, string serviceName)
+        public ApplicationInsightsConfiguration(string resourceId, string query, string serviceName)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNull(query, nameof(query));
@@ -30,29 +30,33 @@ namespace Azure.AI.Client
             ServiceName = serviceName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppInsightsConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsConfiguration"/>. </summary>
         /// <param name="type"> Type of the data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="resourceId"> LogAnalytic Workspace resourceID associated with AppInsights. </param>
+        /// <param name="resourceId"> LogAnalytic Workspace resourceID associated with ApplicationInsights. </param>
         /// <param name="query"> Query to fetch the data. </param>
         /// <param name="serviceName"> Service name. </param>
-        internal AppInsightsConfiguration(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceId, string query, string serviceName) : base(type, serializedAdditionalRawData)
+        /// <param name="connectionString"> Connection String to connect to ApplicationInsights. </param>
+        internal ApplicationInsightsConfiguration(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceId, string query, string serviceName, string connectionString) : base(type, serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             Query = query;
             ServiceName = serviceName;
+            ConnectionString = connectionString;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppInsightsConfiguration"/> for deserialization. </summary>
-        internal AppInsightsConfiguration()
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsConfiguration"/> for deserialization. </summary>
+        internal ApplicationInsightsConfiguration()
         {
         }
 
-        /// <summary> LogAnalytic Workspace resourceID associated with AppInsights. </summary>
+        /// <summary> LogAnalytic Workspace resourceID associated with ApplicationInsights. </summary>
         public string ResourceId { get; set; }
         /// <summary> Query to fetch the data. </summary>
         public string Query { get; set; }
         /// <summary> Service name. </summary>
         public string ServiceName { get; set; }
+        /// <summary> Connection String to connect to ApplicationInsights. </summary>
+        public string ConnectionString { get; set; }
     }
 }

@@ -13,22 +13,22 @@ using Azure.Core;
 
 namespace Azure.AI.Client
 {
-    public partial class RunStepBingSearchToolCall : IUtf8JsonSerializable, IJsonModel<RunStepBingSearchToolCall>
+    public partial class RunStepBingGroundingToolCall : IUtf8JsonSerializable, IJsonModel<RunStepBingGroundingToolCall>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepBingSearchToolCall>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepBingGroundingToolCall>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RunStepBingSearchToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RunStepBingGroundingToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RunStepBingSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepBingGroundingToolCall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunStepBingSearchToolCall)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepBingGroundingToolCall)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("bing_search"u8);
+            writer.WritePropertyName("bing_grounding"u8);
             writer.WriteStartObject();
-            foreach (var item in BingSearch)
+            foreach (var item in BingGrounding)
             {
                 writer.WritePropertyName(item.Key);
                 writer.WriteStringValue(item.Value);
@@ -56,19 +56,19 @@ namespace Azure.AI.Client
             writer.WriteEndObject();
         }
 
-        RunStepBingSearchToolCall IJsonModel<RunStepBingSearchToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RunStepBingGroundingToolCall IJsonModel<RunStepBingGroundingToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RunStepBingSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepBingGroundingToolCall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunStepBingSearchToolCall)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepBingGroundingToolCall)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRunStepBingSearchToolCall(document.RootElement, options);
+            return DeserializeRunStepBingGroundingToolCall(document.RootElement, options);
         }
 
-        internal static RunStepBingSearchToolCall DeserializeRunStepBingSearchToolCall(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RunStepBingGroundingToolCall DeserializeRunStepBingGroundingToolCall(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -76,21 +76,21 @@ namespace Azure.AI.Client
             {
                 return null;
             }
-            IReadOnlyDictionary<string, string> bingSearch = default;
+            IReadOnlyDictionary<string, string> bingGrounding = default;
             string type = default;
             string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bing_search"u8))
+                if (property.NameEquals("bing_grounding"u8))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
-                    bingSearch = dictionary;
+                    bingGrounding = dictionary;
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -109,46 +109,46 @@ namespace Azure.AI.Client
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RunStepBingSearchToolCall(type, id, serializedAdditionalRawData, bingSearch);
+            return new RunStepBingGroundingToolCall(type, id, serializedAdditionalRawData, bingGrounding);
         }
 
-        BinaryData IPersistableModel<RunStepBingSearchToolCall>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RunStepBingGroundingToolCall>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RunStepBingSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepBingGroundingToolCall>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RunStepBingSearchToolCall)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepBingGroundingToolCall)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RunStepBingSearchToolCall IPersistableModel<RunStepBingSearchToolCall>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RunStepBingGroundingToolCall IPersistableModel<RunStepBingGroundingToolCall>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RunStepBingSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepBingGroundingToolCall>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRunStepBingSearchToolCall(document.RootElement, options);
+                        return DeserializeRunStepBingGroundingToolCall(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStepBingSearchToolCall)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepBingGroundingToolCall)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RunStepBingSearchToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RunStepBingGroundingToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new RunStepBingSearchToolCall FromResponse(Response response)
+        internal static new RunStepBingGroundingToolCall FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeRunStepBingSearchToolCall(document.RootElement);
+            return DeserializeRunStepBingGroundingToolCall(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -13,7 +13,7 @@ namespace Azure.AI.Client
     /// <summary>
     /// Abstract data class for input data configuration.
     /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AppInsightsConfiguration"/> and <see cref="Dataset"/>.
+    /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
     /// </summary>
     public abstract partial class InputData
     {

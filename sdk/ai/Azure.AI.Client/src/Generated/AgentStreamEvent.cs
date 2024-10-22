@@ -88,7 +88,7 @@ namespace Azure.AI.Client
         public static AgentStreamEvent ThreadRunStepCreated { get; } = new AgentStreamEvent(ThreadRunStepCreatedValue);
         /// <summary> Event sent when a run step moves to `in_progress` status. The data of this event is of type RunStep. </summary>
         public static AgentStreamEvent ThreadRunStepInProgress { get; } = new AgentStreamEvent(ThreadRunStepInProgressValue);
-        /// <summary> Event sent when a run stepis being streamed. The data of this event is of type RunStepDeltaChunk. </summary>
+        /// <summary> Event sent when a run step is being streamed. The data of this event is of type RunStepDeltaChunk. </summary>
         public static AgentStreamEvent ThreadRunStepDelta { get; } = new AgentStreamEvent(ThreadRunStepDeltaValue);
         /// <summary> Event sent when a run step is completed. The data of this event is of type RunStep. </summary>
         public static AgentStreamEvent ThreadRunStepCompleted { get; } = new AgentStreamEvent(ThreadRunStepCompletedValue);

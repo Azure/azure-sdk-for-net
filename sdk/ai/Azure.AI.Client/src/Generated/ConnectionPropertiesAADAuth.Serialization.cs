@@ -70,7 +70,7 @@ namespace Azure.AI.Client
             {
                 return null;
             }
-            EndpointType category = default;
+            ConnectionType category = default;
             string target = default;
             AuthenticationType authType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -79,7 +79,7 @@ namespace Azure.AI.Client
             {
                 if (property.NameEquals("category"u8))
                 {
-                    category = property.Value.GetString().ToEndpointType();
+                    category = property.Value.GetString().ToConnectionType();
                     continue;
                 }
                 if (property.NameEquals("target"u8))

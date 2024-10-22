@@ -8,11 +8,15 @@
 namespace Azure.AI.Client
 {
     /// <summary> The Type (or category) of the connection. </summary>
-    public enum EndpointType
+    public enum ConnectionType
     {
         /// <summary> Azure OpenAI service. </summary>
         AzureOpenAI,
         /// <summary> Serverless API service. </summary>
-        Serverless
+        Serverless,
+        /// <summary> Azure Blob Storage. </summary>
+        AzureBlobStorage,
+        /// <summary> Azure AI Services. </summary>
+        AIServices
     }
 }

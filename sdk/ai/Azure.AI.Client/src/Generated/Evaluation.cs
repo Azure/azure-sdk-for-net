@@ -49,7 +49,7 @@ namespace Azure.AI.Client
         /// <param name="data">
         /// Data for evaluation.
         /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppInsightsConfiguration"/> and <see cref="Dataset"/>.
+        /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
         /// </param>
         /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> or <paramref name="evaluators"/> is null. </exception>
@@ -69,7 +69,7 @@ namespace Azure.AI.Client
         /// <param name="data">
         /// Data for evaluation.
         /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppInsightsConfiguration"/> and <see cref="Dataset"/>.
+        /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
         /// </param>
         /// <param name="displayName"> Display Name for evaluation. It helps to find evaluation easily in AI Studio. It does not need to be unique. </param>
         /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
@@ -103,7 +103,7 @@ namespace Azure.AI.Client
         /// <summary>
         /// Data for evaluation.
         /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppInsightsConfiguration"/> and <see cref="Dataset"/>.
+        /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
         /// </summary>
         public InputData Data { get; set; }
         /// <summary> Display Name for evaluation. It helps to find evaluation easily in AI Studio. It does not need to be unique. </summary>

@@ -26,6 +26,8 @@ namespace Azure.AI.Client
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
@@ -68,12 +70,18 @@ namespace Azure.AI.Client
             {
                 return null;
             }
+            string id = default;
             string name = default;
             ConnectionProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -90,7 +98,7 @@ namespace Azure.AI.Client
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectionsListSecretsResponse(name, properties, serializedAdditionalRawData);
+            return new ConnectionsListSecretsResponse(id, name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionsListSecretsResponse>.Write(ModelReaderWriterOptions options)

@@ -40,20 +40,26 @@ namespace Azure.AI.Client
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("weekDays"u8);
-            writer.WriteStartArray();
-            foreach (var item in WeekDays)
+            if (Optional.IsCollectionDefined(WeekDays))
             {
-                writer.WriteStringValue(item.ToString());
+                writer.WritePropertyName("weekDays"u8);
+                writer.WriteStartArray();
+                foreach (var item in WeekDays)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("monthDays"u8);
-            writer.WriteStartArray();
-            foreach (var item in MonthDays)
+            if (Optional.IsCollectionDefined(MonthDays))
             {
-                writer.WriteNumberValue(item);
+                writer.WritePropertyName("monthDays"u8);
+                writer.WriteStartArray();
+                foreach (var item in MonthDays)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -122,6 +128,10 @@ namespace Azure.AI.Client
                 }
                 if (property.NameEquals("weekDays"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<WeekDays> array = new List<WeekDays>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -132,6 +142,10 @@ namespace Azure.AI.Client
                 }
                 if (property.NameEquals("monthDays"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<int> array = new List<int>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -146,7 +160,7 @@ namespace Azure.AI.Client
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RecurrenceSchedule(hours, minutes, weekDays, monthDays, serializedAdditionalRawData);
+            return new RecurrenceSchedule(hours, minutes, weekDays ?? new ChangeTrackingList<WeekDays>(), monthDays ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecurrenceSchedule>.Write(ModelReaderWriterOptions options)

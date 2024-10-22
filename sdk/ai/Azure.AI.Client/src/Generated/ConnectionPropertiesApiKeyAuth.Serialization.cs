@@ -72,7 +72,7 @@ namespace Azure.AI.Client
             {
                 return null;
             }
-            EndpointType category = default;
+            ConnectionType category = default;
             CredentialsApiKeyAuth credentials = default;
             string target = default;
             AuthenticationType authType = default;
@@ -82,7 +82,7 @@ namespace Azure.AI.Client
             {
                 if (property.NameEquals("category"u8))
                 {
-                    category = property.Value.GetString().ToEndpointType();
+                    category = property.Value.GetString().ToConnectionType();
                     continue;
                 }
                 if (property.NameEquals("credentials"u8))

@@ -13,7 +13,7 @@ namespace Azure.AI.Client
     /// <summary>
     /// An abstract representation of a detailed tool call as recorded within a run step for an existing run.
     /// Please note <see cref="RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="RunStepAzureAISearchToolCall"/>, <see cref="RunStepBingSearchToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="RunStepMicrosoftFabricToolCall"/> and <see cref="RunStepSharepointToolCall"/>.
+    /// The available derived classes include <see cref="RunStepAzureAISearchToolCall"/>, <see cref="RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="RunStepMicrosoftFabricToolCall"/> and <see cref="RunStepSharepointToolCall"/>.
     /// </summary>
     public abstract partial class RunStepToolCall
     {

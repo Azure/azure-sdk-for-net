@@ -71,7 +71,7 @@ namespace Azure.AI.Client
                 switch (discriminator.GetString())
                 {
                     case "azure_ai_search": return AzureAISearchToolDefinition.DeserializeAzureAISearchToolDefinition(element, options);
-                    case "bing_search": return BingSearchToolDefinition.DeserializeBingSearchToolDefinition(element, options);
+                    case "bing_grounding": return BingGroundingToolDefinition.DeserializeBingGroundingToolDefinition(element, options);
                     case "code_interpreter": return CodeInterpreterToolDefinition.DeserializeCodeInterpreterToolDefinition(element, options);
                     case "file_search": return FileSearchToolDefinition.DeserializeFileSearchToolDefinition(element, options);
                     case "function": return FunctionToolDefinition.DeserializeFunctionToolDefinition(element, options);

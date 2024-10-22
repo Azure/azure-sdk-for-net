@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Client
 {
-    public partial class AppInsightsConfiguration : IUtf8JsonSerializable, IJsonModel<AppInsightsConfiguration>
+    public partial class ApplicationInsightsConfiguration : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppInsightsConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AppInsightsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApplicationInsightsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppInsightsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInsightsConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,6 +32,11 @@ namespace Azure.AI.Client
             writer.WriteStringValue(Query);
             writer.WritePropertyName("serviceName"u8);
             writer.WriteStringValue(ServiceName);
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString"u8);
+                writer.WriteStringValue(ConnectionString);
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -52,19 +57,19 @@ namespace Azure.AI.Client
             writer.WriteEndObject();
         }
 
-        AppInsightsConfiguration IJsonModel<AppInsightsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApplicationInsightsConfiguration IJsonModel<ApplicationInsightsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppInsightsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInsightsConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppInsightsConfiguration(document.RootElement, options);
+            return DeserializeApplicationInsightsConfiguration(document.RootElement, options);
         }
 
-        internal static AppInsightsConfiguration DeserializeAppInsightsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApplicationInsightsConfiguration DeserializeApplicationInsightsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -75,6 +80,7 @@ namespace Azure.AI.Client
             string resourceId = default;
             string query = default;
             string serviceName = default;
+            string connectionString = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -95,6 +101,11 @@ namespace Azure.AI.Client
                     serviceName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("connectionString"u8))
+                {
+                    connectionString = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
@@ -106,46 +117,52 @@ namespace Azure.AI.Client
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AppInsightsConfiguration(type, serializedAdditionalRawData, resourceId, query, serviceName);
+            return new ApplicationInsightsConfiguration(
+                type,
+                serializedAdditionalRawData,
+                resourceId,
+                query,
+                serviceName,
+                connectionString);
         }
 
-        BinaryData IPersistableModel<AppInsightsConfiguration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApplicationInsightsConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppInsightsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppInsightsConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AppInsightsConfiguration IPersistableModel<AppInsightsConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApplicationInsightsConfiguration IPersistableModel<ApplicationInsightsConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppInsightsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAppInsightsConfiguration(document.RootElement, options);
+                        return DeserializeApplicationInsightsConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppInsightsConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AppInsightsConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApplicationInsightsConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new AppInsightsConfiguration FromResponse(Response response)
+        internal static new ApplicationInsightsConfiguration FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAppInsightsConfiguration(document.RootElement);
+            return DeserializeApplicationInsightsConfiguration(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

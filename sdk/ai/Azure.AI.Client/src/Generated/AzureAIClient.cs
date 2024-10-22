@@ -83,14 +83,14 @@ namespace Azure.AI.Client
             return new AgentClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
         }
 
-        /// <summary> Initializes a new instance of EndpointClient. </summary>
+        /// <summary> Initializes a new instance of ConnectionClient. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual EndpointClient GetEndpointClient(string apiVersion = "2024-07-01-preview")
+        public virtual ConnectionClient GetConnectionClient(string apiVersion = "2024-07-01-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new EndpointClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
+            return new ConnectionClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
         }
 
         /// <summary> Initializes a new instance of EvaluationClient. </summary>

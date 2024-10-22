@@ -64,6 +64,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetEvaluationAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<Evaluation>> GetEvaluationAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -78,6 +79,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetEvaluation(string,CancellationToken)']/*" />
         public virtual Response<Evaluation> GetEvaluation(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -108,6 +110,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetEvaluationAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetEvaluationAsync(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -147,6 +150,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetEvaluation(string,RequestContext)']/*" />
         public virtual Response GetEvaluation(string id, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -169,6 +173,7 @@ namespace Azure.AI.Client
         /// <param name="evaluation"> Evaluation to run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='CreateAsync(Evaluation,CancellationToken)']/*" />
         public virtual async Task<Response<Evaluation>> CreateAsync(Evaluation evaluation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(evaluation, nameof(evaluation));
@@ -183,6 +188,7 @@ namespace Azure.AI.Client
         /// <param name="evaluation"> Evaluation to run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='Create(Evaluation,CancellationToken)']/*" />
         public virtual Response<Evaluation> Create(Evaluation evaluation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(evaluation, nameof(evaluation));
@@ -213,6 +219,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='CreateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -251,6 +258,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='Create(RequestContent,RequestContext)']/*" />
         public virtual Response Create(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -286,6 +294,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='UpdateAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAsync(string id, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -322,6 +331,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='Update(string,RequestContent,RequestContext)']/*" />
         public virtual Response Update(string id, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -342,30 +352,32 @@ namespace Azure.AI.Client
         }
 
         /// <summary> Resource read operation template. </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<EvaluationSchedule>> GetScheduleAsync(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetScheduleAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<EvaluationSchedule>> GetScheduleAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetScheduleAsync(id, context).ConfigureAwait(false);
+            Response response = await GetScheduleAsync(name, context).ConfigureAwait(false);
             return Response.FromValue(EvaluationSchedule.FromResponse(response), response);
         }
 
         /// <summary> Resource read operation template. </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<EvaluationSchedule> GetSchedule(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetSchedule(string,CancellationToken)']/*" />
+        public virtual Response<EvaluationSchedule> GetSchedule(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSchedule(id, context);
+            Response response = GetSchedule(name, context);
             return Response.FromValue(EvaluationSchedule.FromResponse(response), response);
         }
 
@@ -384,21 +396,22 @@ namespace Azure.AI.Client
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetScheduleAsync(string id, RequestContext context)
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetScheduleAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetScheduleAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = ClientDiagnostics.CreateScope("EvaluationClient.GetSchedule");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetScheduleRequest(id, context);
+                using HttpMessage message = CreateGetScheduleRequest(name, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -423,21 +436,22 @@ namespace Azure.AI.Client
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetSchedule(string id, RequestContext context)
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetSchedule(string,RequestContext)']/*" />
+        public virtual Response GetSchedule(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = ClientDiagnostics.CreateScope("EvaluationClient.GetSchedule");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetScheduleRequest(id, context);
+                using HttpMessage message = CreateGetScheduleRequest(name, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -448,36 +462,38 @@ namespace Azure.AI.Client
         }
 
         /// <summary> Create or replace operation template. </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
         /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="resource"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<EvaluationSchedule>> CreateOrReplaceScheduleAsync(string id, EvaluationSchedule resource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='CreateOrReplaceScheduleAsync(string,EvaluationSchedule,CancellationToken)']/*" />
+        public virtual async Task<Response<EvaluationSchedule>> CreateOrReplaceScheduleAsync(string name, EvaluationSchedule resource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(resource, nameof(resource));
 
             using RequestContent content = resource.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateOrReplaceScheduleAsync(id, content, context).ConfigureAwait(false);
+            Response response = await CreateOrReplaceScheduleAsync(name, content, context).ConfigureAwait(false);
             return Response.FromValue(EvaluationSchedule.FromResponse(response), response);
         }
 
         /// <summary> Create or replace operation template. </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
         /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="resource"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<EvaluationSchedule> CreateOrReplaceSchedule(string id, EvaluationSchedule resource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='CreateOrReplaceSchedule(string,EvaluationSchedule,CancellationToken)']/*" />
+        public virtual Response<EvaluationSchedule> CreateOrReplaceSchedule(string name, EvaluationSchedule resource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(resource, nameof(resource));
 
             using RequestContent content = resource.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateOrReplaceSchedule(id, content, context);
+            Response response = CreateOrReplaceSchedule(name, content, context);
             return Response.FromValue(EvaluationSchedule.FromResponse(response), response);
         }
 
@@ -496,23 +512,24 @@ namespace Azure.AI.Client
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrReplaceScheduleAsync(string id, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='CreateOrReplaceScheduleAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrReplaceScheduleAsync(string name, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EvaluationClient.CreateOrReplaceSchedule");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrReplaceScheduleRequest(id, content, context);
+                using HttpMessage message = CreateCreateOrReplaceScheduleRequest(name, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -537,23 +554,24 @@ namespace Azure.AI.Client
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateOrReplaceSchedule(string id, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='CreateOrReplaceSchedule(string,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateOrReplaceSchedule(string name, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("EvaluationClient.CreateOrReplaceSchedule");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrReplaceScheduleRequest(id, content, context);
+                using HttpMessage message = CreateCreateOrReplaceScheduleRequest(name, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -574,21 +592,22 @@ namespace Azure.AI.Client
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteScheduleAsync(string id, RequestContext context = null)
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='DeleteScheduleAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteScheduleAsync(string name, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = ClientDiagnostics.CreateScope("EvaluationClient.DeleteSchedule");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteScheduleRequest(id, context);
+                using HttpMessage message = CreateDeleteScheduleRequest(name, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -609,21 +628,22 @@ namespace Azure.AI.Client
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteSchedule(string id, RequestContext context = null)
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='DeleteSchedule(string,RequestContext)']/*" />
+        public virtual Response DeleteSchedule(string name, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = ClientDiagnostics.CreateScope("EvaluationClient.DeleteSchedule");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteScheduleRequest(id, context);
+                using HttpMessage message = CreateDeleteScheduleRequest(name, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -638,6 +658,7 @@ namespace Azure.AI.Client
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetEvaluationsAsync(int?,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<Evaluation> GetEvaluationsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -651,6 +672,7 @@ namespace Azure.AI.Client
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetEvaluations(int?,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<Evaluation> GetEvaluations(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -680,6 +702,7 @@ namespace Azure.AI.Client
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetEvaluationsAsync(int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEvaluationsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(maxCount, skip, maxpagesize, context);
@@ -708,6 +731,7 @@ namespace Azure.AI.Client
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetEvaluations(int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEvaluations(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(maxCount, skip, maxpagesize, context);
@@ -720,6 +744,7 @@ namespace Azure.AI.Client
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetSchedulesAsync(int?,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<EvaluationSchedule> GetSchedulesAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -733,6 +758,7 @@ namespace Azure.AI.Client
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetSchedules(int?,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<EvaluationSchedule> GetSchedules(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -762,6 +788,7 @@ namespace Azure.AI.Client
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetSchedulesAsync(int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSchedulesAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(maxCount, skip, maxpagesize, context);
@@ -790,6 +817,7 @@ namespace Azure.AI.Client
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/EvaluationClient.xml" path="doc/members/member[@name='GetSchedules(int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSchedules(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(maxCount, skip, maxpagesize, context);
@@ -895,7 +923,7 @@ namespace Azure.AI.Client
             return message;
         }
 
-        internal HttpMessage CreateGetScheduleRequest(string id, RequestContext context)
+        internal HttpMessage CreateGetScheduleRequest(string name, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -909,14 +937,14 @@ namespace Azure.AI.Client
             uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendRaw(_projectName, true);
             uri.AppendPath("/evaluations/schedules/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateCreateOrReplaceScheduleRequest(string id, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrReplaceScheduleRequest(string name, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
@@ -930,7 +958,7 @@ namespace Azure.AI.Client
             uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendRaw(_projectName, true);
             uri.AppendPath("/evaluations/schedules/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -971,7 +999,7 @@ namespace Azure.AI.Client
             return message;
         }
 
-        internal HttpMessage CreateDeleteScheduleRequest(string id, RequestContext context)
+        internal HttpMessage CreateDeleteScheduleRequest(string name, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -985,7 +1013,7 @@ namespace Azure.AI.Client
             uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
             uri.AppendRaw(_projectName, true);
             uri.AppendPath("/evaluations/schedules/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

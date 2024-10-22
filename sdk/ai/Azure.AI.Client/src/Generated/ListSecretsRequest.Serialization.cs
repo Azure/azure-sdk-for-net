@@ -26,16 +26,8 @@ namespace Azure.AI.Client
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionName"u8);
-            writer.WriteStringValue(ConnectionName);
-            writer.WritePropertyName("subscriptionId"u8);
-            writer.WriteStringValue(SubscriptionId);
-            writer.WritePropertyName("resourceGroupName"u8);
-            writer.WriteStringValue(ResourceGroupName);
-            writer.WritePropertyName("workspaceName"u8);
-            writer.WriteStringValue(WorkspaceName);
-            writer.WritePropertyName("apiVersionInBody"u8);
-            writer.WriteStringValue(ApiVersionInBody);
+            writer.WritePropertyName("ignored"u8);
+            writer.WriteStringValue(Ignored);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -74,38 +66,14 @@ namespace Azure.AI.Client
             {
                 return null;
             }
-            string connectionName = default;
-            string subscriptionId = default;
-            string resourceGroupName = default;
-            string workspaceName = default;
-            string apiVersionInBody = default;
+            string ignored = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionName"u8))
+                if (property.NameEquals("ignored"u8))
                 {
-                    connectionName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("subscriptionId"u8))
-                {
-                    subscriptionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceGroupName"u8))
-                {
-                    resourceGroupName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("workspaceName"u8))
-                {
-                    workspaceName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("apiVersionInBody"u8))
-                {
-                    apiVersionInBody = property.Value.GetString();
+                    ignored = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,13 +82,7 @@ namespace Azure.AI.Client
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ListSecretsRequest(
-                connectionName,
-                subscriptionId,
-                resourceGroupName,
-                workspaceName,
-                apiVersionInBody,
-                serializedAdditionalRawData);
+            return new ListSecretsRequest(ignored, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListSecretsRequest>.Write(ModelReaderWriterOptions options)

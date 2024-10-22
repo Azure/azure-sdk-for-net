@@ -70,7 +70,7 @@ namespace Azure.AI.Client
             {
                 switch (discriminator.GetString())
                 {
-                    case "app_insights": return AppInsightsConfiguration.DeserializeAppInsightsConfiguration(element, options);
+                    case "app_insights": return ApplicationInsightsConfiguration.DeserializeApplicationInsightsConfiguration(element, options);
                     case "dataset": return Dataset.DeserializeDataset(element, options);
                 }
             }

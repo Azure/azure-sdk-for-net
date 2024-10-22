@@ -49,20 +49,16 @@ namespace Azure.AI.Client
         /// <summary> Initializes a new instance of <see cref="RecurrenceSchedule"/>. </summary>
         /// <param name="hours"> List of hours for the schedule. </param>
         /// <param name="minutes"> List of minutes for the schedule. </param>
-        /// <param name="weekDays"> List of days for the schedule. </param>
-        /// <param name="monthDays"> List of month days for the schedule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hours"/>, <paramref name="minutes"/>, <paramref name="weekDays"/> or <paramref name="monthDays"/> is null. </exception>
-        public RecurrenceSchedule(IEnumerable<int> hours, IEnumerable<int> minutes, IEnumerable<WeekDays> weekDays, IEnumerable<int> monthDays)
+        /// <exception cref="ArgumentNullException"> <paramref name="hours"/> or <paramref name="minutes"/> is null. </exception>
+        public RecurrenceSchedule(IEnumerable<int> hours, IEnumerable<int> minutes)
         {
             Argument.AssertNotNull(hours, nameof(hours));
             Argument.AssertNotNull(minutes, nameof(minutes));
-            Argument.AssertNotNull(weekDays, nameof(weekDays));
-            Argument.AssertNotNull(monthDays, nameof(monthDays));
 
             Hours = hours.ToList();
             Minutes = minutes.ToList();
-            WeekDays = weekDays.ToList();
-            MonthDays = monthDays.ToList();
+            WeekDays = new ChangeTrackingList<WeekDays>();
+            MonthDays = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RecurrenceSchedule"/>. </summary>

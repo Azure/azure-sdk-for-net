@@ -46,41 +46,21 @@ namespace Azure.AI.Client
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ListSecretsRequest"/>. </summary>
-        /// <param name="connectionName"> Connection Name (should be the same as the connection name in the URL path). </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the Resource Group. </param>
-        /// <param name="workspaceName"> The name of the workspace (Azure AI Studio hub). </param>
-        /// <param name="apiVersionInBody"> The api version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="apiVersionInBody"/> is null. </exception>
-        internal ListSecretsRequest(string connectionName, string subscriptionId, string resourceGroupName, string workspaceName, string apiVersionInBody)
+        /// <param name="ignored"> The body is ignored. TODO: Can we remove this?. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ignored"/> is null. </exception>
+        internal ListSecretsRequest(string ignored)
         {
-            Argument.AssertNotNull(connectionName, nameof(connectionName));
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(apiVersionInBody, nameof(apiVersionInBody));
+            Argument.AssertNotNull(ignored, nameof(ignored));
 
-            ConnectionName = connectionName;
-            SubscriptionId = subscriptionId;
-            ResourceGroupName = resourceGroupName;
-            WorkspaceName = workspaceName;
-            ApiVersionInBody = apiVersionInBody;
+            Ignored = ignored;
         }
 
         /// <summary> Initializes a new instance of <see cref="ListSecretsRequest"/>. </summary>
-        /// <param name="connectionName"> Connection Name (should be the same as the connection name in the URL path). </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the Resource Group. </param>
-        /// <param name="workspaceName"> The name of the workspace (Azure AI Studio hub). </param>
-        /// <param name="apiVersionInBody"> The api version. </param>
+        /// <param name="ignored"> The body is ignored. TODO: Can we remove this?. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListSecretsRequest(string connectionName, string subscriptionId, string resourceGroupName, string workspaceName, string apiVersionInBody, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListSecretsRequest(string ignored, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ConnectionName = connectionName;
-            SubscriptionId = subscriptionId;
-            ResourceGroupName = resourceGroupName;
-            WorkspaceName = workspaceName;
-            ApiVersionInBody = apiVersionInBody;
+            Ignored = ignored;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -89,15 +69,7 @@ namespace Azure.AI.Client
         {
         }
 
-        /// <summary> Connection Name (should be the same as the connection name in the URL path). </summary>
-        public string ConnectionName { get; }
-        /// <summary> The ID of the target subscription. </summary>
-        public string SubscriptionId { get; }
-        /// <summary> The name of the Resource Group. </summary>
-        public string ResourceGroupName { get; }
-        /// <summary> The name of the workspace (Azure AI Studio hub). </summary>
-        public string WorkspaceName { get; }
-        /// <summary> The api version. </summary>
-        public string ApiVersionInBody { get; }
+        /// <summary> The body is ignored. TODO: Can we remove this?. </summary>
+        public string Ignored { get; }
     }
 }

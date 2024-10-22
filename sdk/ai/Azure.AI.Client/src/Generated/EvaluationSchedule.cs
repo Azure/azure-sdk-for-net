@@ -46,11 +46,7 @@ namespace Azure.AI.Client
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EvaluationSchedule"/>. </summary>
-        /// <param name="data">
-        /// Data for evaluation.
-        /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppInsightsConfiguration"/> and <see cref="Dataset"/>.
-        /// </param>
+        /// <param name="data"> Data for evaluation. </param>
         /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
         /// <param name="trigger">
         /// Trigger for the evaluation.
@@ -59,7 +55,7 @@ namespace Azure.AI.Client
         /// </param>
         /// <param name="samplingStrategy"> Sampling strategy for the evaluation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/>, <paramref name="evaluators"/>, <paramref name="trigger"/> or <paramref name="samplingStrategy"/> is null. </exception>
-        public EvaluationSchedule(InputData data, IDictionary<string, EvaluatorConfiguration> evaluators, Trigger trigger, SamplingStrategy samplingStrategy)
+        public EvaluationSchedule(ApplicationInsightsConfiguration data, IDictionary<string, EvaluatorConfiguration> evaluators, Trigger trigger, SamplingStrategy samplingStrategy)
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(evaluators, nameof(evaluators));
@@ -75,13 +71,8 @@ namespace Azure.AI.Client
         }
 
         /// <summary> Initializes a new instance of <see cref="EvaluationSchedule"/>. </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
-        /// <param name="data">
-        /// Data for evaluation.
-        /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppInsightsConfiguration"/> and <see cref="Dataset"/>.
-        /// </param>
-        /// <param name="displayName"> Display Name for evaluation. It helps to find evaluation easily in AI Studio. It does not need to be unique. </param>
+        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
+        /// <param name="data"> Data for evaluation. </param>
         /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
         /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningStatus"> Status of the evaluation. It is set by service and is read-only. </param>
@@ -95,11 +86,10 @@ namespace Azure.AI.Client
         /// </param>
         /// <param name="samplingStrategy"> Sampling strategy for the evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationSchedule(string id, InputData data, string displayName, string description, SystemData systemData, string provisioningStatus, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, EvaluatorConfiguration> evaluators, Trigger trigger, SamplingStrategy samplingStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EvaluationSchedule(string name, ApplicationInsightsConfiguration data, string description, SystemData systemData, string provisioningStatus, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, EvaluatorConfiguration> evaluators, Trigger trigger, SamplingStrategy samplingStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
+            Name = name;
             Data = data;
-            DisplayName = displayName;
             Description = description;
             SystemData = systemData;
             ProvisioningStatus = provisioningStatus;
@@ -116,16 +106,10 @@ namespace Azure.AI.Client
         {
         }
 
-        /// <summary> Identifier of the evaluation. </summary>
-        public string Id { get; }
-        /// <summary>
-        /// Data for evaluation.
-        /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppInsightsConfiguration"/> and <see cref="Dataset"/>.
-        /// </summary>
-        public InputData Data { get; set; }
-        /// <summary> Display Name for evaluation. It helps to find evaluation easily in AI Studio. It does not need to be unique. </summary>
-        public string DisplayName { get; set; }
+        /// <summary> Name of the schedule, which also serves as the unique identifier for the evaluation. </summary>
+        public string Name { get; }
+        /// <summary> Data for evaluation. </summary>
+        public ApplicationInsightsConfiguration Data { get; set; }
         /// <summary> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </summary>
         public string Description { get; set; }
         /// <summary> Metadata containing createdBy and modifiedBy information. </summary>

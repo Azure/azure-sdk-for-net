@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Client
 {
-    /// <summary> A set of connection resources currently used by either the `bing_search`, `microsoft_fabric`, or `sharepoint` tools. </summary>
+    /// <summary> A set of connection resources currently used by either the `bing_grounding`, `microsoft_fabric`, or `sharepoint` tools. </summary>
     public partial class ConnectionListResource
     {
         /// <summary>

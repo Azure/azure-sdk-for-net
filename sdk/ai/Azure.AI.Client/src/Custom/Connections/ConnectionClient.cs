@@ -10,15 +10,15 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Client
 {
     /// <summary> The Endpoints sub-client. </summary>
-    [CodeGenClient("Endpoints")]
-    public partial class EndpointClient
+    [CodeGenClient("Connections")]
+    public partial class ConnectionClient
     {
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
         /// <param name="connectionString">The Azure AI Studio project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionString"/> </exception>
-        public EndpointClient(string connectionString, TokenCredential credential) : this(connectionString, credential, new AzureAIClientOptions())
+        public ConnectionClient(string connectionString, TokenCredential credential) : this(connectionString, credential, new AzureAIClientOptions())
         {
         }
 
@@ -30,7 +30,7 @@ namespace Azure.AI.Client
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionString"/> is an empty string. </exception>
-        public EndpointClient(string connectionString, TokenCredential credential, AzureAIClientOptions options)
+        public ConnectionClient(string connectionString, TokenCredential credential, AzureAIClientOptions options)
              : this(new Uri(ClientHelper.ParseConnectionString(connectionString, "endpoint")),
                   ClientHelper.ParseConnectionString(connectionString, "subscriptionId"),
                   ClientHelper.ParseConnectionString(connectionString, "ResourceGroupName"),
@@ -48,7 +48,7 @@ namespace Azure.AI.Client
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public EndpointClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential) : this(endpoint, subscriptionId, resourceGroupName, projectName, credential, new AzureAIClientOptions())
+        public ConnectionClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential) : this(endpoint, subscriptionId, resourceGroupName, projectName, credential, new AzureAIClientOptions())
         {
         }
 
@@ -61,7 +61,7 @@ namespace Azure.AI.Client
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public EndpointClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential, AzureAIClientOptions options)
+        public ConnectionClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential, AzureAIClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

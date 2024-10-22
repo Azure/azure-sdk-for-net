@@ -46,23 +46,27 @@ namespace Azure.AI.Client
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnectionsListSecretsResponse"/>. </summary>
+        /// <param name="id"> A unique identifier for the connection. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="properties">
         /// The properties of the resource
         /// Please note <see cref="ConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ConnectionPropertiesAADAuth"/>, <see cref="ConnectionPropertiesApiKeyAuth"/> and <see cref="ConnectionPropertiesSASAuth"/>.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        internal ConnectionsListSecretsResponse(string name, ConnectionProperties properties)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
+        internal ConnectionsListSecretsResponse(string id, string name, ConnectionProperties properties)
         {
+            Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(properties, nameof(properties));
 
+            Id = id;
             Name = name;
             Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionsListSecretsResponse"/>. </summary>
+        /// <param name="id"> A unique identifier for the connection. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="properties">
         /// The properties of the resource
@@ -70,8 +74,9 @@ namespace Azure.AI.Client
         /// The available derived classes include <see cref="ConnectionPropertiesAADAuth"/>, <see cref="ConnectionPropertiesApiKeyAuth"/> and <see cref="ConnectionPropertiesSASAuth"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionsListSecretsResponse(string name, ConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectionsListSecretsResponse(string id, string name, ConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Id = id;
             Name = name;
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -82,6 +87,8 @@ namespace Azure.AI.Client
         {
         }
 
+        /// <summary> A unique identifier for the connection. </summary>
+        public string Id { get; }
         /// <summary> The name of the resource. </summary>
         public string Name { get; }
         /// <summary>

@@ -28,16 +28,11 @@ namespace Azure.AI.Client
             writer.WriteStartObject();
             if (options.Format != "W")
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("data"u8);
             writer.WriteObjectValue(Data, options);
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -125,9 +120,8 @@ namespace Azure.AI.Client
             {
                 return null;
             }
-            string id = default;
-            InputData data = default;
-            string displayName = default;
+            string name = default;
+            ApplicationInsightsConfiguration data = default;
             string description = default;
             SystemData systemData = default;
             string provisioningStatus = default;
@@ -140,19 +134,14 @@ namespace Azure.AI.Client
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    id = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    data = InputData.DeserializeInputData(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("displayName"u8))
-                {
-                    displayName = property.Value.GetString();
+                    data = ApplicationInsightsConfiguration.DeserializeApplicationInsightsConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -229,9 +218,8 @@ namespace Azure.AI.Client
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new EvaluationSchedule(
-                id,
+                name,
                 data,
-                displayName,
                 description,
                 systemData,
                 provisioningStatus,

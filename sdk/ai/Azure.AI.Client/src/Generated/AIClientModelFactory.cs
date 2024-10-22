@@ -19,7 +19,7 @@ namespace Azure.AI.Client
         /// <param name="data">
         /// Data for evaluation.
         /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppInsightsConfiguration"/> and <see cref="Dataset"/>.
+        /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
         /// </param>
         /// <param name="displayName"> Display Name for evaluation. It helps to find evaluation easily in AI Studio. It does not need to be unique. </param>
         /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
@@ -60,13 +60,8 @@ namespace Azure.AI.Client
         }
 
         /// <summary> Initializes a new instance of <see cref="Client.EvaluationSchedule"/>. </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
-        /// <param name="data">
-        /// Data for evaluation.
-        /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppInsightsConfiguration"/> and <see cref="Dataset"/>.
-        /// </param>
-        /// <param name="displayName"> Display Name for evaluation. It helps to find evaluation easily in AI Studio. It does not need to be unique. </param>
+        /// <param name="name"> Name of the schedule, which also serves as the unique identifier for the evaluation. </param>
+        /// <param name="data"> Data for evaluation. </param>
         /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
         /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningStatus"> Status of the evaluation. It is set by service and is read-only. </param>
@@ -80,16 +75,15 @@ namespace Azure.AI.Client
         /// </param>
         /// <param name="samplingStrategy"> Sampling strategy for the evaluation. </param>
         /// <returns> A new <see cref="Client.EvaluationSchedule"/> instance for mocking. </returns>
-        public static EvaluationSchedule EvaluationSchedule(string id = null, InputData data = null, string displayName = null, string description = null, SystemData systemData = null, string provisioningStatus = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, IDictionary<string, EvaluatorConfiguration> evaluators = null, Trigger trigger = null, SamplingStrategy samplingStrategy = null)
+        public static EvaluationSchedule EvaluationSchedule(string name = null, ApplicationInsightsConfiguration data = null, string description = null, SystemData systemData = null, string provisioningStatus = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, IDictionary<string, EvaluatorConfiguration> evaluators = null, Trigger trigger = null, SamplingStrategy samplingStrategy = null)
         {
             tags ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
             evaluators ??= new Dictionary<string, EvaluatorConfiguration>();
 
             return new EvaluationSchedule(
-                id,
+                name,
                 data,
-                displayName,
                 description,
                 systemData,
                 provisioningStatus,
@@ -171,7 +165,7 @@ namespace Azure.AI.Client
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="Client.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Client.RunStepAzureAISearchToolCall"/>, <see cref="Client.RunStepBingSearchToolCall"/>, <see cref="Client.RunStepCodeInterpreterToolCall"/>, <see cref="Client.RunStepFileSearchToolCall"/>, <see cref="Client.RunStepFunctionToolCall"/>, <see cref="Client.RunStepMicrosoftFabricToolCall"/> and <see cref="Client.RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="Client.RunStepAzureAISearchToolCall"/>, <see cref="Client.RunStepBingGroundingToolCall"/>, <see cref="Client.RunStepCodeInterpreterToolCall"/>, <see cref="Client.RunStepFileSearchToolCall"/>, <see cref="Client.RunStepFunctionToolCall"/>, <see cref="Client.RunStepMicrosoftFabricToolCall"/> and <see cref="Client.RunStepSharepointToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Client.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
@@ -225,15 +219,15 @@ namespace Azure.AI.Client
             return new RunStepFileSearchToolCall("file_search", id, serializedAdditionalRawData: null, fileSearch);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Client.RunStepBingSearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Client.RunStepBingGroundingToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="bingSearch"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Client.RunStepBingSearchToolCall"/> instance for mocking. </returns>
-        public static RunStepBingSearchToolCall RunStepBingSearchToolCall(string id = null, IReadOnlyDictionary<string, string> bingSearch = null)
+        /// <param name="bingGrounding"> Reserved for future use. </param>
+        /// <returns> A new <see cref="Client.RunStepBingGroundingToolCall"/> instance for mocking. </returns>
+        public static RunStepBingGroundingToolCall RunStepBingGroundingToolCall(string id = null, IReadOnlyDictionary<string, string> bingGrounding = null)
         {
-            bingSearch ??= new Dictionary<string, string>();
+            bingGrounding ??= new Dictionary<string, string>();
 
-            return new RunStepBingSearchToolCall("bing_search", id, serializedAdditionalRawData: null, bingSearch);
+            return new RunStepBingGroundingToolCall("bing_grounding", id, serializedAdditionalRawData: null, bingGrounding);
         }
 
         /// <summary> Initializes a new instance of <see cref="Client.RunStepAzureAISearchToolCall"/>. </summary>

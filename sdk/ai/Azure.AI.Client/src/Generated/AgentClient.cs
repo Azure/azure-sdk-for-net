@@ -85,6 +85,7 @@ namespace Azure.AI.Client
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateAgentAsync(string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual async Task<Response<Agent>> CreateAgentAsync(string model, string name = null, string description = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, ToolResources toolResources = null, float? temperature = null, float? topP = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(model, nameof(model));
@@ -130,6 +131,7 @@ namespace Azure.AI.Client
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateAgent(string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual Response<Agent> CreateAgent(string model, string name = null, string description = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, ToolResources toolResources = null, float? temperature = null, float? topP = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(model, nameof(model));
@@ -171,6 +173,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateAgentAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateAgentAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -209,6 +212,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateAgent(RequestContent,RequestContext)']/*" />
         public virtual Response CreateAgent(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -334,6 +338,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetAgentAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<Agent>> GetAgentAsync(string assistantId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -348,6 +353,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetAgent(string,CancellationToken)']/*" />
         public virtual Response<Agent> GetAgent(string assistantId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -378,6 +384,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetAgentAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetAgentAsync(string assistantId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -417,6 +424,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetAgent(string,RequestContext)']/*" />
         public virtual Response GetAgent(string assistantId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -461,6 +469,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateAgentAsync(string,string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual async Task<Response<Agent>> UpdateAgentAsync(string assistantId, string model = null, string name = null, string description = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, ToolResources toolResources = null, float? temperature = null, float? topP = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -508,6 +517,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateAgent(string,string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual Response<Agent> UpdateAgent(string assistantId, string model = null, string name = null, string description = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, ToolResources toolResources = null, float? temperature = null, float? topP = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -551,6 +561,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateAgentAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAgentAsync(string assistantId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -592,6 +603,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateAgent(string,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateAgent(string assistantId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -726,6 +738,7 @@ namespace Azure.AI.Client
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateThreadAsync(IEnumerable{ThreadMessageOptions},ToolResources,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual async Task<Response<AgentThread>> CreateThreadAsync(IEnumerable<ThreadMessageOptions> messages = null, ToolResources toolResources = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             CreateThreadRequest createThreadRequest = new CreateThreadRequest(messages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(), toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), null);
@@ -743,6 +756,7 @@ namespace Azure.AI.Client
         /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateThread(IEnumerable{ThreadMessageOptions},ToolResources,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual Response<AgentThread> CreateThread(IEnumerable<ThreadMessageOptions> messages = null, ToolResources toolResources = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             CreateThreadRequest createThreadRequest = new CreateThreadRequest(messages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(), toolResources, metadata ?? new ChangeTrackingDictionary<string, string>(), null);
@@ -771,6 +785,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateThreadAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateThreadAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -809,6 +824,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateThread(RequestContent,RequestContext)']/*" />
         public virtual Response CreateThread(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -832,6 +848,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetThreadAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AgentThread>> GetThreadAsync(string threadId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -846,6 +863,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetThread(string,CancellationToken)']/*" />
         public virtual Response<AgentThread> GetThread(string threadId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -876,6 +894,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetThreadAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetThreadAsync(string threadId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -915,6 +934,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetThread(string,RequestContext)']/*" />
         public virtual Response GetThread(string threadId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -944,6 +964,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateThreadAsync(string,ToolResources,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual async Task<Response<AgentThread>> UpdateThreadAsync(string threadId, ToolResources toolResources = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -965,6 +986,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateThread(string,ToolResources,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual Response<AgentThread> UpdateThread(string threadId, ToolResources toolResources = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -997,6 +1019,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateThreadAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateThreadAsync(string threadId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1038,6 +1061,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateThread(string,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateThread(string threadId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1180,6 +1204,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateMessageAsync(string,MessageRole,string,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual async Task<Response<ThreadMessage>> CreateMessageAsync(string threadId, MessageRole role, string content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1208,6 +1233,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateMessage(string,MessageRole,string,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual Response<ThreadMessage> CreateMessage(string threadId, MessageRole role, string content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1241,6 +1267,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateMessageAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateMessageAsync(string threadId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1282,6 +1309,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateMessage(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateMessage(string threadId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1433,6 +1461,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetMessageAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<ThreadMessage>> GetMessageAsync(string threadId, string messageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1449,6 +1478,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetMessage(string,string,CancellationToken)']/*" />
         public virtual Response<ThreadMessage> GetMessage(string threadId, string messageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1481,6 +1511,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetMessageAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetMessageAsync(string threadId, string messageId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1522,6 +1553,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetMessage(string,string,RequestContext)']/*" />
         public virtual Response GetMessage(string threadId, string messageId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1548,6 +1580,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateMessageAsync(string,string,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual async Task<Response<ThreadMessage>> UpdateMessageAsync(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1566,6 +1599,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateMessage(string,string,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual Response<ThreadMessage> UpdateMessage(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1600,6 +1634,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateMessageAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateMessageAsync(string threadId, string messageId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1643,6 +1678,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateMessage(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateMessage(string threadId, string messageId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1706,6 +1742,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateRunAsync(string,string,string,string,string,IEnumerable{ThreadMessage},IEnumerable{ToolDefinition},bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual async Task<Response<ThreadRun>> CreateRunAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessage> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1776,6 +1813,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateRun(string,string,string,string,string,IEnumerable{ThreadMessage},IEnumerable{ToolDefinition},bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual Response<ThreadRun> CreateRun(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessage> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1825,6 +1863,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateRunAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateRunAsync(string threadId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1866,6 +1905,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateRun(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateRun(string threadId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2013,6 +2053,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetRunAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<ThreadRun>> GetRunAsync(string threadId, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2029,6 +2070,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetRun(string,string,CancellationToken)']/*" />
         public virtual Response<ThreadRun> GetRun(string threadId, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2061,6 +2103,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetRunAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetRunAsync(string threadId, string runId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2102,6 +2145,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetRun(string,string,RequestContext)']/*" />
         public virtual Response GetRun(string threadId, string runId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2128,6 +2172,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateRunAsync(string,string,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual async Task<Response<ThreadRun>> UpdateRunAsync(string threadId, string runId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2146,6 +2191,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateRun(string,string,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual Response<ThreadRun> UpdateRun(string threadId, string runId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2180,6 +2226,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateRunAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateRunAsync(string threadId, string runId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2223,6 +2270,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UpdateRun(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateRun(string threadId, string runId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2251,6 +2299,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="toolOutputs"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='SubmitToolOutputsToRunAsync(string,string,IEnumerable{ToolOutput},bool?,CancellationToken)']/*" />
         public virtual async Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, bool? stream = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2271,6 +2320,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="toolOutputs"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='SubmitToolOutputsToRun(string,string,IEnumerable{ToolOutput},bool?,CancellationToken)']/*" />
         public virtual Response<ThreadRun> SubmitToolOutputsToRun(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, bool? stream = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2306,6 +2356,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='SubmitToolOutputsToRunAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> SubmitToolOutputsToRunAsync(string threadId, string runId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2349,6 +2400,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='SubmitToolOutputsToRun(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response SubmitToolOutputsToRun(string threadId, string runId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2375,6 +2427,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CancelRunAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<ThreadRun>> CancelRunAsync(string threadId, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2391,6 +2444,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CancelRun(string,string,CancellationToken)']/*" />
         public virtual Response<ThreadRun> CancelRun(string threadId, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2423,6 +2477,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CancelRunAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> CancelRunAsync(string threadId, string runId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2464,6 +2519,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CancelRun(string,string,RequestContext)']/*" />
         public virtual Response CancelRun(string threadId, string runId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2521,6 +2577,7 @@ namespace Azure.AI.Client
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateThreadAndRunAsync(string,AgentThreadCreationOptions,string,string,IEnumerable{ToolDefinition},UpdateToolResourcesOptions,bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(string assistantId, AgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(assistantId, nameof(assistantId));
@@ -2585,6 +2642,7 @@ namespace Azure.AI.Client
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateThreadAndRun(string,AgentThreadCreationOptions,string,string,IEnumerable{ToolDefinition},UpdateToolResourcesOptions,bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual Response<ThreadRun> CreateThreadAndRun(string assistantId, AgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(assistantId, nameof(assistantId));
@@ -2631,6 +2689,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateThreadAndRunAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateThreadAndRunAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -2669,6 +2728,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateThreadAndRun(RequestContent,RequestContext)']/*" />
         public virtual Response CreateThreadAndRun(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -2694,6 +2754,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetRunStepAsync(string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<RunStep>> GetRunStepAsync(string threadId, string runId, string stepId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2712,6 +2773,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetRunStep(string,string,string,CancellationToken)']/*" />
         public virtual Response<RunStep> GetRunStep(string threadId, string runId, string stepId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2746,6 +2808,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetRunStepAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetRunStepAsync(string threadId, string runId, string stepId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2789,6 +2852,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetRunStep(string,string,string,RequestContext)']/*" />
         public virtual Response GetRunStep(string threadId, string runId, string stepId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -3050,6 +3114,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UploadFileAsync(RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> UploadFileAsync(RequestContent content, string contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -3089,6 +3154,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='UploadFile(RequestContent,string,RequestContext)']/*" />
         public virtual Response UploadFile(RequestContent content, string contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -3218,6 +3284,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetFileAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<OpenAIFile>> GetFileAsync(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -3232,6 +3299,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetFile(string,CancellationToken)']/*" />
         public virtual Response<OpenAIFile> GetFile(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -3262,6 +3330,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetFileAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetFileAsync(string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -3301,6 +3370,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetFile(string,RequestContext)']/*" />
         public virtual Response GetFile(string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -3324,6 +3394,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetFileContentAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<FileContentResponse>> GetFileContentAsync(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -3338,6 +3409,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetFileContent(string,CancellationToken)']/*" />
         public virtual Response<FileContentResponse> GetFileContent(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -3368,6 +3440,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetFileContentAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetFileContentAsync(string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -3407,6 +3480,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetFileContent(string,RequestContext)']/*" />
         public virtual Response GetFileContent(string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -3431,6 +3505,7 @@ namespace Azure.AI.Client
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoresAsync(int?,ListSortOrder?,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<OpenAIPageableListOfVectorStore>> GetVectorStoresAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -3444,6 +3519,7 @@ namespace Azure.AI.Client
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStores(int?,ListSortOrder?,string,string,CancellationToken)']/*" />
         public virtual Response<OpenAIPageableListOfVectorStore> GetVectorStores(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -3473,6 +3549,7 @@ namespace Azure.AI.Client
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoresAsync(int?,string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetVectorStoresAsync(int? limit, string order, string after, string before, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("AgentClient.GetVectorStores");
@@ -3511,6 +3588,7 @@ namespace Azure.AI.Client
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStores(int?,string,string,string,RequestContext)']/*" />
         public virtual Response GetVectorStores(int? limit, string order, string after, string before, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("AgentClient.GetVectorStores");
@@ -3534,6 +3612,7 @@ namespace Azure.AI.Client
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. Only applicable if file_ids is non-empty. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateVectorStoreAsync(IEnumerable{string},string,VectorStoreExpirationPolicy,VectorStoreChunkingStrategyRequest,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual async Task<Response<VectorStore>> CreateVectorStoreAsync(IEnumerable<string> fileIds = null, string name = null, VectorStoreExpirationPolicy expiresAfter = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             CreateVectorStoreRequest createVectorStoreRequest = new CreateVectorStoreRequest(
@@ -3555,6 +3634,7 @@ namespace Azure.AI.Client
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. Only applicable if file_ids is non-empty. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateVectorStore(IEnumerable{string},string,VectorStoreExpirationPolicy,VectorStoreChunkingStrategyRequest,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual Response<VectorStore> CreateVectorStore(IEnumerable<string> fileIds = null, string name = null, VectorStoreExpirationPolicy expiresAfter = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             CreateVectorStoreRequest createVectorStoreRequest = new CreateVectorStoreRequest(
@@ -3589,6 +3669,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateVectorStoreAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateVectorStoreAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -3627,6 +3708,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateVectorStore(RequestContent,RequestContext)']/*" />
         public virtual Response CreateVectorStore(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -3650,6 +3732,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<VectorStore>> GetVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -3664,6 +3747,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStore(string,CancellationToken)']/*" />
         public virtual Response<VectorStore> GetVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -3694,6 +3778,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetVectorStoreAsync(string vectorStoreId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -3733,6 +3818,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStore(string,RequestContext)']/*" />
         public virtual Response GetVectorStore(string vectorStoreId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -3759,6 +3845,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='ModifyVectorStoreAsync(string,string,VectorStoreExpirationPolicy,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual async Task<Response<VectorStore>> ModifyVectorStoreAsync(string vectorStoreId, string name = null, VectorStoreExpirationPolicy expiresAfter = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -3777,6 +3864,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='ModifyVectorStore(string,string,VectorStoreExpirationPolicy,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual Response<VectorStore> ModifyVectorStore(string vectorStoreId, string name = null, VectorStoreExpirationPolicy expiresAfter = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -3809,6 +3897,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='ModifyVectorStoreAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> ModifyVectorStoreAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -3850,6 +3939,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='ModifyVectorStore(string,RequestContent,RequestContext)']/*" />
         public virtual Response ModifyVectorStore(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -3874,6 +3964,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='DeleteVectorStoreAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<VectorStoreDeletionStatus>> DeleteVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -3888,6 +3979,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='DeleteVectorStore(string,CancellationToken)']/*" />
         public virtual Response<VectorStoreDeletionStatus> DeleteVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -3918,6 +4010,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='DeleteVectorStoreAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteVectorStoreAsync(string vectorStoreId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -3957,6 +4050,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='DeleteVectorStore(string,RequestContext)']/*" />
         public virtual Response DeleteVectorStore(string vectorStoreId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -3985,6 +4079,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFilesAsync(string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<OpenAIPageableListOfVectorStoreFile>> GetVectorStoreFilesAsync(string vectorStoreId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4004,6 +4099,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFiles(string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)']/*" />
         public virtual Response<OpenAIPageableListOfVectorStoreFile> GetVectorStoreFiles(string vectorStoreId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4039,6 +4135,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFilesAsync(string,string,int?,string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetVectorStoreFilesAsync(string vectorStoreId, string filter, int? limit, string order, string after, string before, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4083,6 +4180,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFiles(string,string,int?,string,string,string,RequestContext)']/*" />
         public virtual Response GetVectorStoreFiles(string vectorStoreId, string filter, int? limit, string order, string after, string before, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4108,6 +4206,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateVectorStoreFileAsync(string,string,VectorStoreChunkingStrategyRequest,CancellationToken)']/*" />
         public virtual async Task<Response<VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4126,6 +4225,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateVectorStoreFile(string,string,VectorStoreChunkingStrategyRequest,CancellationToken)']/*" />
         public virtual Response<VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4159,6 +4259,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateVectorStoreFileAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateVectorStoreFileAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4200,6 +4301,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateVectorStoreFile(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateVectorStoreFile(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4225,6 +4327,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFileAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<VectorStoreFile>> GetVectorStoreFileAsync(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4241,6 +4344,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFile(string,string,CancellationToken)']/*" />
         public virtual Response<VectorStoreFile> GetVectorStoreFile(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4273,6 +4377,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFileAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetVectorStoreFileAsync(string vectorStoreId, string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4314,6 +4419,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFile(string,string,RequestContext)']/*" />
         public virtual Response GetVectorStoreFile(string vectorStoreId, string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4342,6 +4448,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='DeleteVectorStoreFileAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<VectorStoreFileDeletionStatus>> DeleteVectorStoreFileAsync(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4361,6 +4468,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='DeleteVectorStoreFile(string,string,CancellationToken)']/*" />
         public virtual Response<VectorStoreFileDeletionStatus> DeleteVectorStoreFile(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4394,6 +4502,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='DeleteVectorStoreFileAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteVectorStoreFileAsync(string vectorStoreId, string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4436,6 +4545,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='DeleteVectorStoreFile(string,string,RequestContext)']/*" />
         public virtual Response DeleteVectorStoreFile(string vectorStoreId, string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4462,6 +4572,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileIds"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateVectorStoreFileBatchAsync(string,IEnumerable{string},VectorStoreChunkingStrategyRequest,CancellationToken)']/*" />
         public virtual async Task<Response<VectorStoreFileBatch>> CreateVectorStoreFileBatchAsync(string vectorStoreId, IEnumerable<string> fileIds, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4480,6 +4591,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileIds"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateVectorStoreFileBatch(string,IEnumerable{string},VectorStoreChunkingStrategyRequest,CancellationToken)']/*" />
         public virtual Response<VectorStoreFileBatch> CreateVectorStoreFileBatch(string vectorStoreId, IEnumerable<string> fileIds, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4513,6 +4625,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateVectorStoreFileBatchAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateVectorStoreFileBatchAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4554,6 +4667,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CreateVectorStoreFileBatch(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateVectorStoreFileBatch(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4579,6 +4693,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFileBatchAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<VectorStoreFileBatch>> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4595,6 +4710,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFileBatch(string,string,CancellationToken)']/*" />
         public virtual Response<VectorStoreFileBatch> GetVectorStoreFileBatch(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4627,6 +4743,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFileBatchAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4668,6 +4785,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFileBatch(string,string,RequestContext)']/*" />
         public virtual Response GetVectorStoreFileBatch(string vectorStoreId, string batchId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4693,6 +4811,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CancelVectorStoreFileBatchAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<VectorStoreFileBatch>> CancelVectorStoreFileBatchAsync(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4709,6 +4828,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CancelVectorStoreFileBatch(string,string,CancellationToken)']/*" />
         public virtual Response<VectorStoreFileBatch> CancelVectorStoreFileBatch(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4741,6 +4861,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CancelVectorStoreFileBatchAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> CancelVectorStoreFileBatchAsync(string vectorStoreId, string batchId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4782,6 +4903,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='CancelVectorStoreFileBatch(string,string,RequestContext)']/*" />
         public virtual Response CancelVectorStoreFileBatch(string vectorStoreId, string batchId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4812,6 +4934,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFileBatchFilesAsync(string,string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<OpenAIPageableListOfVectorStoreFile>> GetVectorStoreFileBatchFilesAsync(string vectorStoreId, string batchId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4833,6 +4956,7 @@ namespace Azure.AI.Client
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFileBatchFiles(string,string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)']/*" />
         public virtual Response<OpenAIPageableListOfVectorStoreFile> GetVectorStoreFileBatchFiles(string vectorStoreId, string batchId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4870,6 +4994,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFileBatchFilesAsync(string,string,string,int?,string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetVectorStoreFileBatchFilesAsync(string vectorStoreId, string batchId, string filter, int? limit, string order, string after, string before, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -4916,6 +5041,7 @@ namespace Azure.AI.Client
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentClient.xml" path="doc/members/member[@name='GetVectorStoreFileBatchFiles(string,string,string,int?,string,string,string,RequestContext)']/*" />
         public virtual Response GetVectorStoreFileBatchFiles(string vectorStoreId, string batchId, string filter, int? limit, string order, string after, string before, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Client
 {
-    /// <summary> The credentials neede for Shared Access Signatures (SAS) authentication. </summary>
+    /// <summary> The credentials needed for Shared Access Signatures (SAS) authentication. </summary>
     internal partial class CredentialsSASAuth
     {
         /// <summary>

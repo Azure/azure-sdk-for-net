@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Client
 {
-    public partial class BingSearchToolDefinition : IUtf8JsonSerializable, IJsonModel<BingSearchToolDefinition>
+    public partial class BingGroundingToolDefinition : IUtf8JsonSerializable, IJsonModel<BingGroundingToolDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BingSearchToolDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BingGroundingToolDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BingSearchToolDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BingGroundingToolDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BingSearchToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BingGroundingToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BingSearchToolDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BingGroundingToolDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,19 +46,19 @@ namespace Azure.AI.Client
             writer.WriteEndObject();
         }
 
-        BingSearchToolDefinition IJsonModel<BingSearchToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BingGroundingToolDefinition IJsonModel<BingGroundingToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BingSearchToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BingGroundingToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BingSearchToolDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BingGroundingToolDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBingSearchToolDefinition(document.RootElement, options);
+            return DeserializeBingGroundingToolDefinition(document.RootElement, options);
         }
 
-        internal static BingSearchToolDefinition DeserializeBingSearchToolDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BingGroundingToolDefinition DeserializeBingGroundingToolDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,46 +82,46 @@ namespace Azure.AI.Client
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BingSearchToolDefinition(type, serializedAdditionalRawData);
+            return new BingGroundingToolDefinition(type, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BingSearchToolDefinition>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BingGroundingToolDefinition>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BingSearchToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BingGroundingToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BingSearchToolDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BingGroundingToolDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BingSearchToolDefinition IPersistableModel<BingSearchToolDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BingGroundingToolDefinition IPersistableModel<BingGroundingToolDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BingSearchToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BingGroundingToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeBingSearchToolDefinition(document.RootElement, options);
+                        return DeserializeBingGroundingToolDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BingSearchToolDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BingGroundingToolDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BingSearchToolDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BingGroundingToolDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new BingSearchToolDefinition FromResponse(Response response)
+        internal static new BingGroundingToolDefinition FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeBingSearchToolDefinition(document.RootElement);
+            return DeserializeBingGroundingToolDefinition(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
