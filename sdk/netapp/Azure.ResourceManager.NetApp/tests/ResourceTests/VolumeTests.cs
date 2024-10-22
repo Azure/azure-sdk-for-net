@@ -592,13 +592,13 @@ namespace Azure.ResourceManager.NetApp.Tests
             InvalidOperationException peerException = Assert.ThrowsAsync<InvalidOperationException>(async () => { await volumeResource2.PeerExternalClusterAsync(WaitUntil.Completed, peerClusterRequest); });
             //Assert.AreEqual(409, peerException.Status);
 
-            InvalidOperationException authorizeException = Assert.ThrowsAsync<InvalidOperationException>(async () => { await volumeResource2.AuthorizeExternalReplicationAsync(WaitUntil.Completed); });
+            RequestFailedException authorizeException = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource2.AuthorizeExternalReplicationAsync(WaitUntil.Completed); });
             //Assert.AreEqual(400, authorizeException.Status);
 
-            InvalidOperationException performException = Assert.ThrowsAsync<InvalidOperationException>(async () => { await volumeResource2.PerformReplicationTransferAsync(WaitUntil.Completed); });
+            RequestFailedException performException = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource2.PerformReplicationTransferAsync(WaitUntil.Completed); });
             //Assert.AreEqual(400, performException.Status);
 
-            InvalidOperationException finalizeException = Assert.ThrowsAsync<InvalidOperationException>(async () => { await volumeResource2.FinalizeExternalReplicationAsync(WaitUntil.Completed); });
+            RequestFailedException finalizeException = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource2.FinalizeExternalReplicationAsync(WaitUntil.Completed); });
             //Assert.AreEqual(409, finalizeException.Status);
         }
 
