@@ -65,7 +65,7 @@ public partial class ManagedLedgerDigestUpload : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedLedgerDigestUpload.</param>
     public ManagedLedgerDigestUpload(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/ledgerDigestUploads", resourceVersion ?? "2024-05-01-preview")
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/ledgerDigestUploads", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _digestStorageEndpoint = BicepValue<string>.DefineProperty(this, "DigestStorageEndpoint", ["properties", "digestStorageEndpoint"]);
@@ -81,9 +81,9 @@ public partial class ManagedLedgerDigestUpload : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
+        /// 2021-11-01.
         /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+        public static readonly string V2021_11_01 = "2021-11-01";
     }
 
     /// <summary>

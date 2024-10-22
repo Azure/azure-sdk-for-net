@@ -22,7 +22,6 @@ namespace Azure.Provisioning.Communication
         {
             public static readonly string V2023_03_31;
             public static readonly string V2023_04_01;
-            public static readonly string V2023_06_01_preview;
         }
     }
     public partial class CommunicationService : Azure.Provisioning.Primitives.ProvisionableResource
@@ -50,7 +49,6 @@ namespace Azure.Provisioning.Communication
             public static readonly string V2020_08_20;
             public static readonly string V2023_03_31;
             public static readonly string V2023_04_01;
-            public static readonly string V2023_06_01_preview;
         }
     }
     public partial class CommunicationServiceKeys : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -153,7 +151,6 @@ namespace Azure.Provisioning.Communication
         {
             public static readonly string V2023_03_31;
             public static readonly string V2023_04_01;
-            public static readonly string V2023_06_01_preview;
         }
     }
     public enum EmailServicesProvisioningState
@@ -184,7 +181,6 @@ namespace Azure.Provisioning.Communication
         {
             public static readonly string V2023_03_31;
             public static readonly string V2023_04_01;
-            public static readonly string V2023_06_01_preview;
         }
     }
     public enum UserEngagementTracking

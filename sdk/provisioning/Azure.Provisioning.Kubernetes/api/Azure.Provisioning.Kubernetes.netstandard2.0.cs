@@ -33,7 +33,6 @@ namespace Azure.Provisioning.Kubernetes
             public static readonly string V2021_03_01;
             public static readonly string V2021_10_01;
             public static readonly string V2024_01_01;
-            public static readonly string V2024_07_15_preview;
         }
     }
     public enum ConnectivityStatus

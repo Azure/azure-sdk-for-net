@@ -185,17 +185,17 @@ public partial class ServiceBusSubscription : ProvisionableResource
         : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/topics/subscriptions", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _autoDeleteOnIdle = BicepValue<TimeSpan>.DefineProperty(this, "AutoDeleteOnIdle", ["properties", "autoDeleteOnIdle"]);
+        _autoDeleteOnIdle = BicepValue<TimeSpan>.DefineProperty(this, "AutoDeleteOnIdle", ["properties", "autoDeleteOnIdle"], format: "P");
         _clientAffineProperties = BicepValue<ServiceBusClientAffineProperties>.DefineProperty(this, "ClientAffineProperties", ["properties", "clientAffineProperties"]);
         _deadLetteringOnFilterEvaluationExceptions = BicepValue<bool>.DefineProperty(this, "DeadLetteringOnFilterEvaluationExceptions", ["properties", "deadLetteringOnFilterEvaluationExceptions"]);
         _deadLetteringOnMessageExpiration = BicepValue<bool>.DefineProperty(this, "DeadLetteringOnMessageExpiration", ["properties", "deadLetteringOnMessageExpiration"]);
-        _defaultMessageTimeToLive = BicepValue<TimeSpan>.DefineProperty(this, "DefaultMessageTimeToLive", ["properties", "defaultMessageTimeToLive"]);
-        _duplicateDetectionHistoryTimeWindow = BicepValue<TimeSpan>.DefineProperty(this, "DuplicateDetectionHistoryTimeWindow", ["properties", "duplicateDetectionHistoryTimeWindow"]);
+        _defaultMessageTimeToLive = BicepValue<TimeSpan>.DefineProperty(this, "DefaultMessageTimeToLive", ["properties", "defaultMessageTimeToLive"], format: "P");
+        _duplicateDetectionHistoryTimeWindow = BicepValue<TimeSpan>.DefineProperty(this, "DuplicateDetectionHistoryTimeWindow", ["properties", "duplicateDetectionHistoryTimeWindow"], format: "P");
         _enableBatchedOperations = BicepValue<bool>.DefineProperty(this, "EnableBatchedOperations", ["properties", "enableBatchedOperations"]);
         _forwardDeadLetteredMessagesTo = BicepValue<string>.DefineProperty(this, "ForwardDeadLetteredMessagesTo", ["properties", "forwardDeadLetteredMessagesTo"]);
         _forwardTo = BicepValue<string>.DefineProperty(this, "ForwardTo", ["properties", "forwardTo"]);
         _isClientAffine = BicepValue<bool>.DefineProperty(this, "IsClientAffine", ["properties", "isClientAffine"]);
-        _lockDuration = BicepValue<TimeSpan>.DefineProperty(this, "LockDuration", ["properties", "lockDuration"]);
+        _lockDuration = BicepValue<TimeSpan>.DefineProperty(this, "LockDuration", ["properties", "lockDuration"], format: "P");
         _maxDeliveryCount = BicepValue<int>.DefineProperty(this, "MaxDeliveryCount", ["properties", "maxDeliveryCount"]);
         _requiresSession = BicepValue<bool>.DefineProperty(this, "RequiresSession", ["properties", "requiresSession"]);
         _status = BicepValue<ServiceBusMessagingEntityStatus>.DefineProperty(this, "Status", ["properties", "status"]);

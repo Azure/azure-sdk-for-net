@@ -53,6 +53,6 @@ public partial class SqlServerJobSchedule : ProvisionableConstruct
         _endOn = BicepValue<DateTimeOffset>.DefineProperty(this, "EndOn", ["endTime"]);
         _scheduleType = BicepValue<SqlServerJobScheduleType>.DefineProperty(this, "ScheduleType", ["type"]);
         _isEnabled = BicepValue<bool>.DefineProperty(this, "IsEnabled", ["enabled"]);
-        _interval = BicepValue<TimeSpan>.DefineProperty(this, "Interval", ["interval"]);
+        _interval = BicepValue<TimeSpan>.DefineProperty(this, "Interval", ["interval"], format: "P");
     }
 }

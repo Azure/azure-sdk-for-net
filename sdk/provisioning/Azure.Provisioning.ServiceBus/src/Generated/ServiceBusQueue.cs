@@ -210,16 +210,16 @@ public partial class ServiceBusQueue : ProvisionableResource
         : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/queues", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _autoDeleteOnIdle = BicepValue<TimeSpan>.DefineProperty(this, "AutoDeleteOnIdle", ["properties", "autoDeleteOnIdle"]);
+        _autoDeleteOnIdle = BicepValue<TimeSpan>.DefineProperty(this, "AutoDeleteOnIdle", ["properties", "autoDeleteOnIdle"], format: "P");
         _deadLetteringOnMessageExpiration = BicepValue<bool>.DefineProperty(this, "DeadLetteringOnMessageExpiration", ["properties", "deadLetteringOnMessageExpiration"]);
-        _defaultMessageTimeToLive = BicepValue<TimeSpan>.DefineProperty(this, "DefaultMessageTimeToLive", ["properties", "defaultMessageTimeToLive"]);
-        _duplicateDetectionHistoryTimeWindow = BicepValue<TimeSpan>.DefineProperty(this, "DuplicateDetectionHistoryTimeWindow", ["properties", "duplicateDetectionHistoryTimeWindow"]);
+        _defaultMessageTimeToLive = BicepValue<TimeSpan>.DefineProperty(this, "DefaultMessageTimeToLive", ["properties", "defaultMessageTimeToLive"], format: "P");
+        _duplicateDetectionHistoryTimeWindow = BicepValue<TimeSpan>.DefineProperty(this, "DuplicateDetectionHistoryTimeWindow", ["properties", "duplicateDetectionHistoryTimeWindow"], format: "P");
         _enableBatchedOperations = BicepValue<bool>.DefineProperty(this, "EnableBatchedOperations", ["properties", "enableBatchedOperations"]);
         _enableExpress = BicepValue<bool>.DefineProperty(this, "EnableExpress", ["properties", "enableExpress"]);
         _enablePartitioning = BicepValue<bool>.DefineProperty(this, "EnablePartitioning", ["properties", "enablePartitioning"]);
         _forwardDeadLetteredMessagesTo = BicepValue<string>.DefineProperty(this, "ForwardDeadLetteredMessagesTo", ["properties", "forwardDeadLetteredMessagesTo"]);
         _forwardTo = BicepValue<string>.DefineProperty(this, "ForwardTo", ["properties", "forwardTo"]);
-        _lockDuration = BicepValue<TimeSpan>.DefineProperty(this, "LockDuration", ["properties", "lockDuration"]);
+        _lockDuration = BicepValue<TimeSpan>.DefineProperty(this, "LockDuration", ["properties", "lockDuration"], format: "P");
         _maxDeliveryCount = BicepValue<int>.DefineProperty(this, "MaxDeliveryCount", ["properties", "maxDeliveryCount"]);
         _maxMessageSizeInKilobytes = BicepValue<long>.DefineProperty(this, "MaxMessageSizeInKilobytes", ["properties", "maxMessageSizeInKilobytes"]);
         _maxSizeInMegabytes = BicepValue<int>.DefineProperty(this, "MaxSizeInMegabytes", ["properties", "maxSizeInMegabytes"]);

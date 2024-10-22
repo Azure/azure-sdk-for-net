@@ -146,7 +146,7 @@ public partial class ArmDeploymentPropertiesExtended : ProvisionableConstruct
         _provisioningState = BicepValue<ResourcesProvisioningState>.DefineProperty(this, "ProvisioningState", ["provisioningState"], isOutput: true);
         _correlationId = BicepValue<string>.DefineProperty(this, "CorrelationId", ["correlationId"], isOutput: true);
         _timestamp = BicepValue<DateTimeOffset>.DefineProperty(this, "Timestamp", ["timestamp"], isOutput: true);
-        _duration = BicepValue<TimeSpan>.DefineProperty(this, "Duration", ["duration"], isOutput: true);
+        _duration = BicepValue<TimeSpan>.DefineProperty(this, "Duration", ["duration"], isOutput: true, format: "P");
         _outputs = BicepValue<BinaryData>.DefineProperty(this, "Outputs", ["outputs"], isOutput: true);
         _providers = BicepList<ResourceProviderData>.DefineProperty(this, "Providers", ["providers"], isOutput: true);
         _dependencies = BicepList<ArmDependency>.DefineProperty(this, "Dependencies", ["dependencies"], isOutput: true);

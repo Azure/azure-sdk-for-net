@@ -77,7 +77,7 @@ public partial class CosmosDBThroughputPoolAccount : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBThroughputPoolAccount.</param>
     public CosmosDBThroughputPoolAccount(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DocumentDB/throughputPools/throughputPoolAccounts", resourceVersion ?? "2024-02-15-preview")
+        : base(bicepIdentifier, "Microsoft.DocumentDB/throughputPools/throughputPoolAccounts", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _accountLocation = BicepValue<AzureLocation>.DefineProperty(this, "AccountLocation", ["properties", "accountLocation"]);
@@ -94,12 +94,7 @@ public partial class CosmosDBThroughputPoolAccount : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-02-15-preview.
-        /// </summary>
-        public static readonly string V2024_02_15_preview = "2024-02-15-preview";
     }
-
     /// <summary>
     /// Creates a reference to an existing CosmosDBThroughputPoolAccount.
     /// </summary>

@@ -95,11 +95,6 @@ public partial class PostgreSqlServerKey : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2020-01-01-privatepreview.
-        /// </summary>
-        public static readonly string V2020_01_01_privatepreview = "2020-01-01-privatepreview";
-
-        /// <summary>
         /// 2020-01-01.
         /// </summary>
         public static readonly string V2020_01_01 = "2020-01-01";

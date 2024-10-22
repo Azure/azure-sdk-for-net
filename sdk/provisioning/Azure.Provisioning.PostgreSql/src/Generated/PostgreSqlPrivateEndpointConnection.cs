@@ -87,11 +87,6 @@ public partial class PostgreSqlPrivateEndpointConnection : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2018-06-01-privatepreview.
-        /// </summary>
-        public static readonly string V2018_06_01_privatepreview = "2018-06-01-privatepreview";
-
-        /// <summary>
         /// 2018-06-01.
         /// </summary>
         public static readonly string V2018_06_01 = "2018-06-01";

@@ -195,11 +195,6 @@ public partial class ContainerRegistryService : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2023-11-01-preview.
-        /// </summary>
-        public static readonly string V2023_11_01_preview = "2023-11-01-preview";
-
-        /// <summary>
         /// 2023-07-01.
         /// </summary>
         public static readonly string V2023_07_01 = "2023-07-01";

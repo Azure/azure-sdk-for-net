@@ -123,7 +123,7 @@ public class BicepValue<T> : BicepValue
         {
             BicepValueKind.Unset => new(value.Self),
             BicepValueKind.Expression => new(value.Self, value.Expression!),
-            BicepValueKind.Literal => new(value.Self, BicepTypeMapping.ToLiteralString(value.Value!)),
+            BicepValueKind.Literal => new(value.Self, BicepTypeMapping.ToLiteralString(value.Value!, value.Format)),
             _ => throw new InvalidOperationException($"Unknown {nameof(BicepValueKind)}!")
         };
 
@@ -135,14 +135,16 @@ public class BicepValue<T> : BicepValue
         bool isOutput = false,
         bool isRequired = false,
         bool isSecure = false,
-        BicepValue<T>? defaultValue = null)
+        BicepValue<T>? defaultValue = null,
+        string? format = null)
     {
         BicepValue<T> val =
             new(new BicepValueReference(construct, propertyName, bicepPath))
             {
                 IsOutput = isOutput,
                 IsRequired = isRequired,
-                IsSecure = isSecure
+                IsSecure = isSecure,
+                Format = format
             };
         if (defaultValue is not null) { val.Assign(defaultValue); }
         construct.ProvisioningProperties[propertyName] = val;

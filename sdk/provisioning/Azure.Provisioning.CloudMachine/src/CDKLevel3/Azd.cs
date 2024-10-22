@@ -37,7 +37,7 @@ internal static class Azd
 
         Infrastructure mainBicep = new("main")
         {
-            TargetScope = "subscription"
+            TargetScope = DeploymentScope.Subscription
         };
         ModuleImport import = new("cm", $"cm.bicep")
         {

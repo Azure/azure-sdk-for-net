@@ -209,7 +209,6 @@ namespace Azure.Provisioning.KubernetesConfiguration
             public static readonly string V2022_07_01;
             public static readonly string V2022_11_01;
             public static readonly string V2023_05_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class KubernetesGitRepository : Azure.Provisioning.Primitives.ProvisionableConstruct

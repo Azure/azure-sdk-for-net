@@ -88,6 +88,7 @@ public class ProvisioningDeployment
         Outputs = outputs;
     }
 
+#if EXPERIMENTAL_PROVISIONING
     /// <summary>
     /// Create a data-plane client for a specific Azure resource.
     /// </summary>
@@ -120,4 +121,5 @@ public class ProvisioningDeployment
         if (options is not null) { DeploymentOptions.ConfigureClientOptionsCallback?.Invoke(options); }
         return resource.CreateClient(Outputs, credential, options);
     }
+#endif
 }

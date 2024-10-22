@@ -95,11 +95,6 @@ public partial class SqlServerCommunicationLink : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2014-04-01-preview.
-        /// </summary>
-        public static readonly string V2014_04_01_preview = "2014-04-01-preview";
-
-        /// <summary>
         /// 2014-04-01.
         /// </summary>
         public static readonly string V2014_04_01 = "2014-04-01";
