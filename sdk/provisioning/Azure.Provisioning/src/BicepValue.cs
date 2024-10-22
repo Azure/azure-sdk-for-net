@@ -48,6 +48,9 @@ public abstract class BicepValue
     // and test sanitization.
     internal bool IsSecure { get; set; } = false;
 
+    // Optional format defining how values should be serialized
+    internal string? Format { get; set; } = null;
+
     // Indicate whether this value is empty or should be included in output
     internal virtual bool IsEmpty => Kind == BicepValueKind.Unset;
 
@@ -97,7 +100,7 @@ public abstract class BicepValue
             _ =>                      $"<{nameof(BicepValue)}: {Compile()}>",
         };
 
-    public BicepExpression Compile() => BicepTypeMapping.ToBicep(this);
+    public BicepExpression Compile() => BicepTypeMapping.ToBicep(this, Format);
 }
 
 /// <summary>

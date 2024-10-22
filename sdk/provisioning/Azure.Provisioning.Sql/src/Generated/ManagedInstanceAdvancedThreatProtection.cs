@@ -66,7 +66,7 @@ public partial class ManagedInstanceAdvancedThreatProtection : ProvisionableReso
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAdvancedThreatProtection.</param>
     public ManagedInstanceAdvancedThreatProtection(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/advancedThreatProtectionSettings", resourceVersion ?? "2024-05-01-preview")
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/advancedThreatProtectionSettings", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<AdvancedThreatProtectionState>.DefineProperty(this, "State", ["properties", "state"]);
@@ -82,9 +82,9 @@ public partial class ManagedInstanceAdvancedThreatProtection : ProvisionableReso
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
+        /// 2021-11-01.
         /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+        public static readonly string V2021_11_01 = "2021-11-01";
     }
 
     /// <summary>

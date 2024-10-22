@@ -55,10 +55,10 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Client
 {
     public partial class TestReportingClientOptions : Azure.Core.ClientOptions
     {
-        public TestReportingClientOptions(Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Client.TestReportingClientOptions.ServiceVersion version = Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Client.TestReportingClientOptions.ServiceVersion.V2024_05_20_Preview) { }
+        public TestReportingClientOptions(Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Client.TestReportingClientOptions.ServiceVersion version = Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Client.TestReportingClientOptions.ServiceVersion.V2024_09_01_Preview) { }
         public enum ServiceVersion
         {
-            V2024_05_20_Preview = 1,
+            V2024_09_01_Preview = 1,
         }
     }
 }

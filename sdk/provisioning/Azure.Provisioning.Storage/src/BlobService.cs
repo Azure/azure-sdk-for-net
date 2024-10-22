@@ -13,7 +13,9 @@ namespace Azure.Provisioning.Storage;
 
 // Customize the generated BlobService resource.
 public partial class BlobService
+#if EXPERIMENTAL_PROVISIONING
     : IClientCreator<BlobServiceClient, BlobClientOptions>
+#endif
 {
     /// <summary>
     /// Get the default value for the Name property.
@@ -21,6 +23,7 @@ public partial class BlobService
     private partial BicepValue<string> GetNameDefaultValue() =>
         new StringLiteralExpression("default");
 
+#if EXPERIMENTAL_PROVISIONING
     /// <inheritdoc/>
     IEnumerable<ProvisioningOutput> IClientCreator.GetOutputs()
     {
@@ -56,4 +59,5 @@ public partial class BlobService
             throw new InvalidOperationException($"Could not find output value {qualifiedName} to construct {GetType().Name} resource {BicepIdentifier}.");
         return new BlobServiceClient(new Uri(endpoint), credential, options);
     }
+#endif
 }
