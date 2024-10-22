@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Communication;
 /// <summary>
 /// EmailService.
 /// </summary>
-public partial class EmailService : Resource
+public partial class EmailService : ProvisionableResource
 {
     /// <summary>
     /// The name of the EmailService resource.
@@ -63,15 +63,15 @@ public partial class EmailService : Resource
     /// <summary>
     /// Creates a new EmailService.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EmailService resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the EmailService.</param>
-    public EmailService(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Communication/emailServices", resourceVersion ?? "2023-04-01")
+    public EmailService(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Communication/emailServices", resourceVersion ?? "2023-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -88,11 +88,6 @@ public partial class EmailService : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2023-06-01-preview.
-        /// </summary>
-        public static readonly string V2023_06_01_preview = "2023-06-01-preview";
-
-        /// <summary>
         /// 2023-04-01.
         /// </summary>
         public static readonly string V2023_04_01 = "2023-04-01";
@@ -106,7 +101,7 @@ public partial class EmailService : Resource
     /// <summary>
     /// Creates a reference to an existing EmailService.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EmailService resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -114,6 +109,6 @@ public partial class EmailService : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the EmailService.</param>
     /// <returns>The existing EmailService resource.</returns>
-    public static EmailService FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static EmailService FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

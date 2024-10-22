@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// DataMaskingPolicy.
 /// </summary>
-public partial class DataMaskingPolicy : Resource
+public partial class DataMaskingPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -84,15 +84,15 @@ public partial class DataMaskingPolicy : Resource
     /// <summary>
     /// Creates a new DataMaskingPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the DataMaskingPolicy resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the DataMaskingPolicy.</param>
-    public DataMaskingPolicy(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/databases/dataMaskingPolicies", resourceVersion ?? "2021-11-01")
+    public DataMaskingPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/dataMaskingPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _dataMaskingState = BicepValue<DataMaskingState>.DefineProperty(this, "DataMaskingState", ["properties", "dataMaskingState"]);
@@ -112,11 +112,6 @@ public partial class DataMaskingPolicy : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
@@ -135,7 +130,7 @@ public partial class DataMaskingPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing DataMaskingPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the DataMaskingPolicy resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -143,6 +138,6 @@ public partial class DataMaskingPolicy : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the DataMaskingPolicy.</param>
     /// <returns>The existing DataMaskingPolicy resource.</returns>
-    public static DataMaskingPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static DataMaskingPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

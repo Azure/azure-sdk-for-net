@@ -16,7 +16,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlDatabase.
 /// </summary>
-public partial class PostgreSqlDatabase : Resource
+public partial class PostgreSqlDatabase : ProvisionableResource
 {
     /// <summary>
     /// The name of the database.
@@ -57,15 +57,15 @@ public partial class PostgreSqlDatabase : Resource
     /// <summary>
     /// Creates a new PostgreSqlDatabase.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PostgreSqlDatabase resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlDatabase.</param>
-    public PostgreSqlDatabase(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DBforPostgreSQL/servers/databases", resourceVersion ?? "2017-12-01")
+    public PostgreSqlDatabase(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/servers/databases", resourceVersion ?? "2017-12-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _charset = BicepValue<string>.DefineProperty(this, "Charset", ["properties", "charset"]);
@@ -81,11 +81,6 @@ public partial class PostgreSqlDatabase : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2017-12-01-preview.
-        /// </summary>
-        public static readonly string V2017_12_01_preview = "2017-12-01-preview";
-
-        /// <summary>
         /// 2017-12-01.
         /// </summary>
         public static readonly string V2017_12_01 = "2017-12-01";
@@ -94,7 +89,7 @@ public partial class PostgreSqlDatabase : Resource
     /// <summary>
     /// Creates a reference to an existing PostgreSqlDatabase.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PostgreSqlDatabase resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -102,8 +97,8 @@ public partial class PostgreSqlDatabase : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlDatabase.</param>
     /// <returns>The existing PostgreSqlDatabase resource.</returns>
-    public static PostgreSqlDatabase FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlDatabase FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this PostgreSqlDatabase resource.

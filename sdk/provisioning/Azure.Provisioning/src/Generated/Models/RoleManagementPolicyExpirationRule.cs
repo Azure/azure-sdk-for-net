@@ -32,6 +32,6 @@ public partial class RoleManagementPolicyExpirationRule : RoleManagementPolicyRu
     {
         BicepValue<string>.DefineProperty(this, "ruleType", ["ruleType"], defaultValue: "RoleManagementPolicyExpirationRule");
         _isExpirationRequired = BicepValue<bool>.DefineProperty(this, "IsExpirationRequired", ["isExpirationRequired"]);
-        _maximumDuration = BicepValue<TimeSpan>.DefineProperty(this, "MaximumDuration", ["maximumDuration"]);
+        _maximumDuration = BicepValue<TimeSpan>.DefineProperty(this, "MaximumDuration", ["maximumDuration"], format: "P");
     }
 }

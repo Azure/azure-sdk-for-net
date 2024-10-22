@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Identity for the resource.
 /// </summary>
-public partial class ArmApplicationManagedIdentity : ProvisioningConstruct
+public partial class ArmApplicationManagedIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// The principal ID of resource identity.

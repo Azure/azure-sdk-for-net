@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteContainer.
 /// </summary>
-public partial class SiteContainer : Resource
+public partial class SiteContainer : ProvisionableResource
 {
     /// <summary>
     /// Site Container Name.
@@ -124,15 +124,15 @@ public partial class SiteContainer : Resource
     /// <summary>
     /// Creates a new SiteContainer.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteContainer resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SiteContainer.</param>
-    public SiteContainer(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/sitecontainers", resourceVersion ?? "2024-04-01")
+    public SiteContainer(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/sitecontainers", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _authType = BicepValue<SiteContainerAuthType>.DefineProperty(this, "AuthType", ["properties", "authType"]);
@@ -317,7 +317,7 @@ public partial class SiteContainer : Resource
     /// <summary>
     /// Creates a reference to an existing SiteContainer.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteContainer resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -325,6 +325,6 @@ public partial class SiteContainer : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteContainer.</param>
     /// <returns>The existing SiteContainer resource.</returns>
-    public static SiteContainer FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SiteContainer FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

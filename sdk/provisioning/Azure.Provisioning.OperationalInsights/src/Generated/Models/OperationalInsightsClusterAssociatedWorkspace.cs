@@ -12,7 +12,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// The list of Log Analytics workspaces associated with the cluster.
 /// </summary>
-public partial class OperationalInsightsClusterAssociatedWorkspace : ProvisioningConstruct
+public partial class OperationalInsightsClusterAssociatedWorkspace : ProvisionableConstruct
 {
     /// <summary>
     /// The id of the assigned workspace.

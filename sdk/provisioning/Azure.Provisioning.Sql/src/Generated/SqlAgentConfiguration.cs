@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlAgentConfiguration.
 /// </summary>
-public partial class SqlAgentConfiguration : Resource
+public partial class SqlAgentConfiguration : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -50,15 +50,15 @@ public partial class SqlAgentConfiguration : Resource
     /// <summary>
     /// Creates a new SqlAgentConfiguration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlAgentConfiguration resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SqlAgentConfiguration.</param>
-    public SqlAgentConfiguration(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/managedInstances/sqlAgent", resourceVersion ?? "2021-11-01")
+    public SqlAgentConfiguration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/sqlAgent", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<SqlAgentConfigurationPropertiesState>.DefineProperty(this, "State", ["properties", "state"]);
@@ -73,11 +73,6 @@ public partial class SqlAgentConfiguration : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
@@ -91,7 +86,7 @@ public partial class SqlAgentConfiguration : Resource
     /// <summary>
     /// Creates a reference to an existing SqlAgentConfiguration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlAgentConfiguration resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -99,6 +94,6 @@ public partial class SqlAgentConfiguration : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlAgentConfiguration.</param>
     /// <returns>The existing SqlAgentConfiguration resource.</returns>
-    public static SqlAgentConfiguration FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SqlAgentConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

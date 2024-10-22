@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// The status of the last successful slot swap operation.
 /// </summary>
-public partial class SlotSwapStatus : ProvisioningConstruct
+public partial class SlotSwapStatus : ProvisionableConstruct
 {
     /// <summary>
     /// The time the last successful slot swap completed.

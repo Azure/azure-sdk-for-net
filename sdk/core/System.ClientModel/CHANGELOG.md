@@ -10,6 +10,14 @@
 
 ### Other Changes
 
+- Use `BinaryData.Empty` for `PipelineResponse.Content` when HTTP message has no content ([#46669](https://github.com/Azure/azure-sdk-for-net/pull/46669)).
+
+## 1.2.1 (2024-10-09)
+
+### Bugs Fixed
+
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix ([#46134](https://github.com/Azure/azure-sdk-for-net/pull/46508)).
+
 ## 1.2.0 (2024-10-03)
 
 ### Other Changes

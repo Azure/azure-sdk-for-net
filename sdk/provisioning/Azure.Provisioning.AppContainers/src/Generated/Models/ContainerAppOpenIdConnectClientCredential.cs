@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// The authentication client credentials of the custom Open ID Connect
 /// provider.
 /// </summary>
-public partial class ContainerAppOpenIdConnectClientCredential : ProvisioningConstruct
+public partial class ContainerAppOpenIdConnectClientCredential : ProvisionableConstruct
 {
     /// <summary>
     /// The method that should be used to authenticate the user.

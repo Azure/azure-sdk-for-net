@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_FleetsGet()
         {
-            // Generated from example definition: 2024-05-01-preview/Fleets_Get.json
-            // this example is just showing the usage of "Fleets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Fleets_Get.json
+            // this example is just showing the usage of "Fleet_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_FleetsGet()
         {
-            // Generated from example definition: 2024-05-01-preview/Fleets_Get.json
-            // this example is just showing the usage of "Fleets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Fleets_Get.json
+            // this example is just showing the usage of "Fleet_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_FleetsGet()
         {
-            // Generated from example definition: 2024-05-01-preview/Fleets_Get.json
-            // this example is just showing the usage of "Fleets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Fleets_Get.json
+            // this example is just showing the usage of "Fleet_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -129,8 +129,8 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_FleetsCreateOrUpdate()
         {
-            // Generated from example definition: 2024-05-01-preview/Fleets_CreateOrUpdate.json
-            // this example is just showing the usage of "Fleets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Fleets_CreateOrUpdate.json
+            // this example is just showing the usage of "Fleet_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -302,8 +302,8 @@ SecurityEncryptionType = ComputeFleetSecurityEncryptionType.VmGuestStateOnly,
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}"),
 },
 },
-DiskIopsReadWrite = 27,
-DiskMbpsReadWrite = 2,
+DiskIopsReadWrite = 27L,
+DiskMbpsReadWrite = 2L,
 DeleteOption = ComputeFleetDiskDeleteOptionType.Delete,
 }
             },
@@ -510,7 +510,7 @@ IsAutomaticUpgradeEnabled = true,
                     {
                         Capacity = 20,
                         MinCapacity = 10,
-                        MaxPricePerVm = (float)0.00865,
+                        MaxPricePerVm = 0.00865F,
                         EvictionPolicy = ComputeFleetEvictionPolicy.Delete,
                         AllocationStrategy = SpotAllocationStrategy.PriceCapacityOptimized,
                         IsMaintainEnabled = true,
@@ -558,8 +558,8 @@ IsAutomaticUpgradeEnabled = true,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_FleetsCreateOrUpdateMinimumSet()
         {
-            // Generated from example definition: 2024-05-01-preview/Fleets_CreateOrUpdate_MinimumSet.json
-            // this example is just showing the usage of "Fleets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/Fleets_CreateOrUpdate_MinimumSet.json
+            // this example is just showing the usage of "Fleet_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -687,7 +687,7 @@ IsIPForwardingEnabled = true,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_FleetsListByResourceGroup()
         {
-            // Generated from example definition: 2024-05-01-preview/Fleets_ListByResourceGroup.json
+            // Generated from example definition: 2024-11-01/Fleets_ListByResourceGroup.json
             // this example is just showing the usage of "Fleet_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

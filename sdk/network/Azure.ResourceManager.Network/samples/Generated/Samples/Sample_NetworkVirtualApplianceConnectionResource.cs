@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkVirtualApplianceConnectionData data = new NetworkVirtualApplianceConnectionData()
             {
                 NamePropertiesName = "connection1",
-                Asn = 64512,
-                TunnelIdentifier = 0,
+                Asn = 64512L,
+                TunnelIdentifier = 0L,
                 BgpPeerAddress =
 {
 "169.254.16.13","169.254.16.14"

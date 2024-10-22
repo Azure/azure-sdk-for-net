@@ -15,7 +15,7 @@ namespace Azure.Provisioning.ContainerService;
 /// Identity for the managed cluster.             Serialized Name:
 /// ManagedClusterIdentity
 /// </summary>
-public partial class ManagedClusterIdentity : ProvisioningConstruct
+public partial class ManagedClusterIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// The principal id of the system assigned identity which is used by

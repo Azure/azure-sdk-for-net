@@ -16,7 +16,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// LogAnalyticsQueryPack.
 /// </summary>
-public partial class LogAnalyticsQueryPack : Resource
+public partial class LogAnalyticsQueryPack : ProvisionableResource
 {
     /// <summary>
     /// The name of the Log Analytics QueryPack resource.
@@ -78,15 +78,15 @@ public partial class LogAnalyticsQueryPack : Resource
     /// <summary>
     /// Creates a new LogAnalyticsQueryPack.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the LogAnalyticsQueryPack resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the LogAnalyticsQueryPack.</param>
-    public LogAnalyticsQueryPack(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.OperationalInsights/queryPacks", resourceVersion ?? "2023-09-01")
+    public LogAnalyticsQueryPack(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.OperationalInsights/queryPacks", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -118,7 +118,7 @@ public partial class LogAnalyticsQueryPack : Resource
     /// <summary>
     /// Creates a reference to an existing LogAnalyticsQueryPack.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the LogAnalyticsQueryPack resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -126,6 +126,6 @@ public partial class LogAnalyticsQueryPack : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the LogAnalyticsQueryPack.</param>
     /// <returns>The existing LogAnalyticsQueryPack resource.</returns>
-    public static LogAnalyticsQueryPack FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static LogAnalyticsQueryPack FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// Table&apos;s schema.
 /// </summary>
-public partial class OperationalInsightsSchema : ProvisioningConstruct
+public partial class OperationalInsightsSchema : ProvisionableConstruct
 {
     /// <summary>
     /// Table name.

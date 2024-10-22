@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// A path element of a management group ancestors.
 /// </summary>
-public partial class ManagementGroupPathElement : ProvisioningConstruct
+public partial class ManagementGroupPathElement : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the group.

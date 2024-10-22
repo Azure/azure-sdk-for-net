@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ContainerRegistryTaskRun.
 /// </summary>
-public partial class ContainerRegistryTaskRun : Resource
+public partial class ContainerRegistryTaskRun : ProvisionableResource
 {
     /// <summary>
     /// The name of the task run.
@@ -92,15 +92,15 @@ public partial class ContainerRegistryTaskRun : Resource
     /// <summary>
     /// Creates a new ContainerRegistryTaskRun.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerRegistryTaskRun resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryTaskRun.</param>
-    public ContainerRegistryTaskRun(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.ContainerRegistry/registries/taskRuns", resourceVersion ?? "2019-06-01-preview")
+    public ContainerRegistryTaskRun(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/taskRuns", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _forceUpdateTag = BicepValue<string>.DefineProperty(this, "ForceUpdateTag", ["properties", "forceUpdateTag"]);
@@ -120,15 +120,40 @@ public partial class ContainerRegistryTaskRun : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2019-06-01-preview.
+        /// 2023-07-01.
         /// </summary>
-        public static readonly string V2019_06_01_preview = "2019-06-01-preview";
+        public static readonly string V2023_07_01 = "2023-07-01";
+
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+
+        /// <summary>
+        /// 2021-09-01.
+        /// </summary>
+        public static readonly string V2021_09_01 = "2021-09-01";
+
+        /// <summary>
+        /// 2019-05-01.
+        /// </summary>
+        public static readonly string V2019_05_01 = "2019-05-01";
+
+        /// <summary>
+        /// 2017-10-01.
+        /// </summary>
+        public static readonly string V2017_10_01 = "2017-10-01";
+
+        /// <summary>
+        /// 2017-03-01.
+        /// </summary>
+        public static readonly string V2017_03_01 = "2017-03-01";
     }
 
     /// <summary>
     /// Creates a reference to an existing ContainerRegistryTaskRun.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerRegistryTaskRun resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -136,6 +161,6 @@ public partial class ContainerRegistryTaskRun : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryTaskRun.</param>
     /// <returns>The existing ContainerRegistryTaskRun resource.</returns>
-    public static ContainerRegistryTaskRun FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ContainerRegistryTaskRun FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

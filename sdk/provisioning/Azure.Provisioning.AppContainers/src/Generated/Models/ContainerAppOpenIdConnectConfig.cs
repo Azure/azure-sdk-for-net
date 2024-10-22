@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// The configuration settings of the endpoints used for the custom Open ID
 /// Connect provider.
 /// </summary>
-public partial class ContainerAppOpenIdConnectConfig : ProvisioningConstruct
+public partial class ContainerAppOpenIdConnectConfig : ProvisionableConstruct
 {
     /// <summary>
     /// The endpoint to be used to make an authorization request.

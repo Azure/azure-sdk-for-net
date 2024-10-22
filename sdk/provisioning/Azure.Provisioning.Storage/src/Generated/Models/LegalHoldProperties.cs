@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// The LegalHold property of a blob container.
 /// </summary>
-public partial class LegalHoldProperties : ProvisioningConstruct
+public partial class LegalHoldProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The hasLegalHold public property is set to true by SRP if there are at

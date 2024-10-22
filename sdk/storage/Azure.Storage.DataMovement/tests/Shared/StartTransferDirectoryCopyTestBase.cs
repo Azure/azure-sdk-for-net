@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Storage.Common;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -276,7 +275,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(0, 10)]
         [TestCase(DataMovementTestConstants.KB / 2, 10)]
         [TestCase(DataMovementTestConstants.KB, 10)]
@@ -357,7 +355,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DirectoryToDirectory_EmptyFolder()
         {
             // Arrange
@@ -398,7 +395,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DirectoryToDirectory_SingleFile()
         {
             // Arrange
@@ -423,7 +419,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DirectoryToDirectory_ManySubDirectories()
         {
             // Arrange
@@ -458,7 +453,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
@@ -493,7 +487,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DirectoryToDirectory_OverwriteExists()
         {
             // Arrange
@@ -543,7 +536,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DirectoryToDirectory_OverwriteNotExists()
         {
             // Arrange
@@ -589,7 +581,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public virtual async Task DirectoryToDirectory_OAuth()
         {
             // Arrange
@@ -698,7 +689,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_AwaitCompletion()
         {
             // Arrange
@@ -729,7 +719,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/46717
         public async Task StartTransfer_AwaitCompletion_Failed()
         {
             // Arrange
@@ -767,7 +757,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_AwaitCompletion_Skipped()
         {
             // Arrange
@@ -805,7 +794,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_EnsureCompleted()
         {
             // Arrange
@@ -837,7 +825,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/46717
         public async Task StartTransfer_EnsureCompleted_Failed()
         {
             // Arrange
@@ -875,7 +863,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_EnsureCompleted_Skipped()
         {
             // Arrange
@@ -913,7 +900,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/46717
         public async Task StartTransfer_EnsureCompleted_Failed_SmallChunks()
         {
             // Arrange
@@ -1025,7 +1012,6 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase((int) TransferPropertiesTestType.Preserve)]
         [TestCase((int) TransferPropertiesTestType.NoPreserve)]
         [TestCase((int) TransferPropertiesTestType.NewProperties)]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task CopyRemoteObjects_VerifyProperties(int propertiesType)
         {
             // Arrange

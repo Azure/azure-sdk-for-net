@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The SpatialSpec.
 /// </summary>
-public partial class SpatialSpec : ProvisioningConstruct
+public partial class SpatialSpec : ProvisionableConstruct
 {
     /// <summary>
     /// The path for which the indexing behavior applies to. Index paths

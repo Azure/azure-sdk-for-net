@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB Cassandra table resource object.
 /// </summary>
-public partial class CassandraTableResourceInfo : ProvisioningConstruct
+public partial class CassandraTableResourceInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the Cosmos DB Cassandra table.

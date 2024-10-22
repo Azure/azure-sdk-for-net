@@ -247,19 +247,40 @@ function Remove-WormStorageAccounts() {
         if (!$hasContainers) { continue }
 
         $ctx = New-AzStorageContext -StorageAccountName $account.StorageAccountName
+        $containers = $ctx | Get-AzStorageContainer
+        $blobs = $containers | Get-AzStorageBlob
 
-        $immutableBlobs = $ctx `
-        | Get-AzStorageContainer `
+        $immutableBlobs = $containers `
         | Where-Object { $_.BlobContainerProperties.HasImmutableStorageWithVersioning } `
         | Get-AzStorageBlob
         try {
           foreach ($blob in $immutableBlobs) {
-            Write-Host "Removing legal hold - blob: $($blob.Name), account: $($account.StorageAccountName), group: $($group.ResourceGroupName)"
-            $blob | Set-AzStorageBlobLegalHold -DisableLegalHold | Out-Null
+            # We can't edit blobs with customer encryption without using that key
+            # so just try to delete them fully instead. It is unlikely they
+            # will also have a legal hold enabled.
+            if (($blob | Get-Member 'ListBlobProperties') `
+                -and $blob.ListBlobProperties.Properties.CustomerProvidedKeySha256) {
+              Write-Host "Removing customer encrypted blob: $($blob.Name), account: $($account.StorageAccountName), group: $($group.ResourceGroupName)"
+              $blob | Remove-AzStorageBlob -Force
+              continue
+            }
+
+            if (!($blob | Get-Member 'BlobProperties')) {
+              continue
+            }
+
+            if ($blob.BlobProperties.LeaseState -eq 'Leased') {
+              Write-Host "Breaking blob lease: $($blob.Name), account: $($account.StorageAccountName), group: $($group.ResourceGroupName)"
+              $blob.ICloudBlob.BreakLease()
+            }
+
+            if ($blob.BlobProperties.HasLegalHold) {
+              Write-Host "Removing legal hold - blob: $($blob.Name), account: $($account.StorageAccountName), group: $($group.ResourceGroupName)"
+              $blob | Set-AzStorageBlobLegalHold -DisableLegalHold | Out-Null
+            }
           }
-        }
-        catch {
-          Write-Warning "User must have 'Storage Blob Data Owner' RBAC permission on subscription or resource group"
+        } catch {
+          Write-Warning "Ensure user has 'Storage Blob Data Owner' RBAC permission on subscription or resource group"
           Write-Error $_
           throw
         }
@@ -273,13 +294,19 @@ function Remove-WormStorageAccounts() {
           }
 
           try {
-            Write-Host "Removing immutability policies - account: $($ctx.StorageAccountName), group: $($group.ResourceGroupName)"
-            $null = $ctx | Get-AzStorageContainer | Get-AzStorageBlob | Remove-AzStorageBlobImmutabilityPolicy
+            foreach ($blob in $blobs) {
+              if ($blob.BlobProperties.ImmutabilityPolicy.PolicyMode) {
+                Write-Host "Removing immutability policy - blob: $($blob.Name), account: $($ctx.StorageAccountName), group: $($group.ResourceGroupName)"
+                $null = $blob | Remove-AzStorageBlobImmutabilityPolicy
+              }
+            }
           }
           catch {}
 
           try {
-            $ctx | Get-AzStorageContainer | Get-AzStorageBlob | Remove-AzStorageBlob -Force
+            foreach ($blob in $blobs) {
+              $blob | Remove-AzStorageBlob -Force
+            }
             $succeeded = $true
           }
           catch {
@@ -290,9 +317,8 @@ function Remove-WormStorageAccounts() {
 
         try {
           # Use AzRm cmdlet as deletion will only work through ARM with the immutability policies defined on the blobs
-          $ctx | Get-AzStorageContainer | ForEach-Object { Remove-AzRmStorageContainer -Name $_.Name -StorageAccountName $ctx.StorageAccountName -ResourceGroupName $group.ResourceGroupName -Force }
-        }
-        catch {
+          $containers | ForEach-Object { Remove-AzRmStorageContainer -Name $_.Name -StorageAccountName $ctx.StorageAccountName -ResourceGroupName $group.ResourceGroupName -Force }
+        } catch {
           Write-Warning "Container removal failed. Ignoring the error and trying to delete the storage account."
           Write-Warning $_
         }

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CassandraCluster.
 /// </summary>
-public partial class CassandraCluster : Resource
+public partial class CassandraCluster : ProvisionableResource
 {
     /// <summary>
     /// Managed Cassandra cluster name.
@@ -64,15 +64,15 @@ public partial class CassandraCluster : Resource
     /// <summary>
     /// Creates a new CassandraCluster.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CassandraCluster resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CassandraCluster.</param>
-    public CassandraCluster(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/cassandraClusters", resourceVersion ?? "2024-08-15")
+    public CassandraCluster(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/cassandraClusters", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -88,11 +88,6 @@ public partial class CassandraCluster : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -147,7 +142,7 @@ public partial class CassandraCluster : Resource
     /// <summary>
     /// Creates a reference to an existing CassandraCluster.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CassandraCluster resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -155,6 +150,6 @@ public partial class CassandraCluster : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CassandraCluster.</param>
     /// <returns>The existing CassandraCluster resource.</returns>
-    public static CassandraCluster FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CassandraCluster FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

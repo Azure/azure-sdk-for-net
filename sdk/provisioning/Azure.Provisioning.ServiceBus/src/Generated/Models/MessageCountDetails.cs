@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// Message Count Details.
 /// </summary>
-public partial class MessageCountDetails : ProvisioningConstruct
+public partial class MessageCountDetails : ProvisionableConstruct
 {
     /// <summary>
     /// Number of active messages in the queue, topic, or subscription.

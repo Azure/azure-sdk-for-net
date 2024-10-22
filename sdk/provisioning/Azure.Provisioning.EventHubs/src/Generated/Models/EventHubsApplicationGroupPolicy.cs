@@ -17,7 +17,7 @@ namespace Azure.Provisioning.EventHubs;
 /// classes include
 /// Azure.ResourceManager.EventHubs.Models.EventHubsThrottlingPolicy.
 /// </summary>
-public partial class EventHubsApplicationGroupPolicy : ProvisioningConstruct
+public partial class EventHubsApplicationGroupPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// The Name of this policy.

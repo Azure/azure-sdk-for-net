@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotDomainOwnershipIdentifier.
 /// </summary>
-public partial class SiteSlotDomainOwnershipIdentifier : Resource
+public partial class SiteSlotDomainOwnershipIdentifier : ProvisionableResource
 {
     /// <summary>
     /// Name of domain ownership identifier.
@@ -56,15 +56,15 @@ public partial class SiteSlotDomainOwnershipIdentifier : Resource
     /// <summary>
     /// Creates a new SiteSlotDomainOwnershipIdentifier.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteSlotDomainOwnershipIdentifier
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotDomainOwnershipIdentifier.</param>
-    public SiteSlotDomainOwnershipIdentifier(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/slots/domainOwnershipIdentifiers", resourceVersion ?? "2024-04-01")
+    public SiteSlotDomainOwnershipIdentifier(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/domainOwnershipIdentifiers", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
@@ -238,7 +238,7 @@ public partial class SiteSlotDomainOwnershipIdentifier : Resource
     /// <summary>
     /// Creates a reference to an existing SiteSlotDomainOwnershipIdentifier.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteSlotDomainOwnershipIdentifier
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -246,6 +246,6 @@ public partial class SiteSlotDomainOwnershipIdentifier : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotDomainOwnershipIdentifier.</param>
     /// <returns>The existing SiteSlotDomainOwnershipIdentifier resource.</returns>
-    public static SiteSlotDomainOwnershipIdentifier FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SiteSlotDomainOwnershipIdentifier FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

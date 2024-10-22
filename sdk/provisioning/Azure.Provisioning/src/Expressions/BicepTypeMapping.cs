@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Xml;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
 
@@ -27,6 +28,7 @@ internal static class BicepTypeMapping
     public static string? GetBicepTypeName(Type type) =>
         type == typeof(bool) ? "bool" :
         type == typeof(int) ? "int" :
+        type == typeof(long) ? "int" :
         type == typeof(string) ? "string" :
         type == typeof(object) ? "object" :
         type == typeof(Uri) ? "string" :
@@ -47,19 +49,22 @@ internal static class BicepTypeMapping
     /// Convert a .NET object into a literal Bicep string.
     /// </summary>
     /// <param name="value">The .NET value.</param>
+    /// <param name="format">Optional format.</param>
     /// <returns>The corresponding Bicep literal string.</returns>
     /// <exception cref="InvalidOperationException">
     /// Thrown when we cannot convert a value to a literal Bicep string.
     /// </exception>
-    public static string ToLiteralString(object value) =>
+    public static string ToLiteralString(object value, string? format) =>
         value switch
         {
             bool b => b.ToString(),
             int i => i.ToString(),
+            long i => i.ToString(),
             string s => s,
             Uri u => u.AbsoluteUri,
             DateTimeOffset d => d.ToString("o"),
-            TimeSpan t => t.ToString(), // This eventually needs to carry along a format in BicepValue
+            TimeSpan t when format == "P" => XmlConvert.ToString(t),
+            TimeSpan t => t.ToString(),
             Guid g => g.ToString(),
             IPAddress a => a.ToString(),
             ETag e => e.ToString(),
@@ -75,62 +80,64 @@ internal static class BicepTypeMapping
     /// Convert a .NET object into a Bicep expression.
     /// </summary>
     /// <param name="value">The .NET value.</param>
+    /// <param name="format">Optional format.</param>
     /// <returns>The corresponding Bicep expression.</returns>
     /// <exception cref="InvalidOperationException">
     /// Thrown when we cannot convert a value to a Bicep expression.
     /// </exception>
-    public static Expression ToBicep(object? value)
+    public static BicepExpression ToBicep(object? value, string? format)
     {
-        // Note: Not explicitly fetching context from the provider and letting
-        // any potential nested constructs fetch it themselves if needed.
-
         return value switch
         {
             null => BicepSyntax.Null(),
             bool b => BicepSyntax.Value(b),
             int i => BicepSyntax.Value(i),
+            // Note: below cast is valid because bicep limits to int.Min/MaxValue
+            // in bicep source and you need to use a parameter file for larger
+            // values
+            long i => BicepSyntax.Value((int)i),
             string s => BicepSyntax.Value(s),
-            Uri u => BicepSyntax.Value(ToLiteralString(u)),
-            DateTimeOffset d => BicepSyntax.Value(ToLiteralString(d)),
-            TimeSpan t => BicepSyntax.Value(ToLiteralString(t)),
-            Guid g => BicepSyntax.Value(ToLiteralString(g)),
-            IPAddress a => BicepSyntax.Value(ToLiteralString(a)),
-            ETag e => BicepSyntax.Value(ToLiteralString(e)),
-            ResourceIdentifier i => BicepSyntax.Value(ToLiteralString(i)),
-            Enum e => BicepSyntax.Value(ToLiteralString(e)),
-            ProvisioningConstruct c => CompileNestedConstruct(c),
+            Uri u => BicepSyntax.Value(ToLiteralString(u, format)),
+            DateTimeOffset d => BicepSyntax.Value(ToLiteralString(d, format)),
+            TimeSpan t => BicepSyntax.Value(ToLiteralString(t, format)),
+            Guid g => BicepSyntax.Value(ToLiteralString(g, format)),
+            IPAddress a => BicepSyntax.Value(ToLiteralString(a, format)),
+            ETag e => BicepSyntax.Value(ToLiteralString(e, format)),
+            ResourceIdentifier i => BicepSyntax.Value(ToLiteralString(i, format)),
+            Enum e => BicepSyntax.Value(ToLiteralString(e, format)),
+            ProvisionableConstruct c => CompileNestedConstruct(c),
             IDictionary<string, BicepValue> d =>
                 d is BicepValue b && b.Kind == BicepValueKind.Expression ? b.Expression! : ToObject(d),
             IEnumerable seq =>
                 seq is BicepValue b && b.Kind == BicepValueKind.Expression ? b.Expression! : ToArray(seq.OfType<object>()),
             // Extensible enums like Azure.Location
-            ValueType ee => BicepSyntax.Value(ToLiteralString(ee)),
+            ValueType ee => BicepSyntax.Value(ToLiteralString(ee, format)),
             // Unwrap BicepValue after collections so it doesn't loop forever
             BicepValue v when (v.Kind == BicepValueKind.Expression) => v.Expression!,
             BicepValue v when (v.Source is not null) => v.Source.GetReference(),
-            BicepValue v when (v.Kind == BicepValueKind.Literal) => ToBicep(v.GetLiteralValue()),
+            BicepValue v when (v.Kind == BicepValueKind.Literal) => ToBicep(v.GetLiteralValue(), format),
             BicepValue v when (v.Self is not null) => v.Self.GetReference(),
             BicepValue v when (v.Kind == BicepValueKind.Unset) => BicepSyntax.Null(),
             _ => throw new InvalidOperationException($"Cannot convert {value} to a Bicep expression.")
         };
 
         ArrayExpression ToArray(IEnumerable<object> seq) =>
-            BicepSyntax.Array([.. seq.Select(ToBicep)]);
+            BicepSyntax.Array([.. seq.Select(v => ToBicep(v, v is BicepValue b ? b.Format : null))]);
 
         ObjectExpression ToObject(IDictionary<string, BicepValue> dict)
         {
-            Dictionary<string, Expression> values = [];
+            Dictionary<string, BicepExpression> values = [];
             foreach (KeyValuePair<string, BicepValue> pair in dict)
             {
-                values[pair.Key] = ToBicep(pair.Value);
+                values[pair.Key] = ToBicep(pair.Value, pair.Value.Format);
             }
             return BicepSyntax.Object(values);
         }
 
-        Expression CompileNestedConstruct(ProvisioningConstruct construct)
+        BicepExpression CompileNestedConstruct(ProvisionableConstruct construct)
         {
-            IList<Statement> statements = [.. construct.Compile()];
-            if (statements.Count != 1 || statements[0] is not ExprStatement expr)
+            IList<BicepStatement> statements = [.. construct.Compile()];
+            if (statements.Count != 1 || statements[0] is not ExpressionStatement expr)
             {
                 throw statements.Count == 1 ?
                     new InvalidOperationException($"Cannot convert {construct} into a Bicep expression because it compiles to {statements[0]} instead.") :

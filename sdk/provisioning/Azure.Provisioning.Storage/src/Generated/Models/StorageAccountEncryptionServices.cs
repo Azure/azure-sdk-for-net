@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// A list of services that support encryption.
 /// </summary>
-public partial class StorageAccountEncryptionServices : ProvisioningConstruct
+public partial class StorageAccountEncryptionServices : ProvisionableConstruct
 {
     /// <summary>
     /// The encryption function of the blob storage service.

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// A class representing the AseV3NetworkingConfiguration data model.
 /// Full view of networking configuration for an ASE.
 /// </summary>
-public partial class AseV3NetworkingConfigurationData : ProvisioningConstruct
+public partial class AseV3NetworkingConfigurationData : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the windows outbound ip addresses.
