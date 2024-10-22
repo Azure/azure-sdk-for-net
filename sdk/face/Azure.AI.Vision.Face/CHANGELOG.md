@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2024-10-23)
 
 - Added support for the Large Face List and Large Person Group:
   - Added client `LargeFaceListClient` and `LargePersonGroupClient`.
