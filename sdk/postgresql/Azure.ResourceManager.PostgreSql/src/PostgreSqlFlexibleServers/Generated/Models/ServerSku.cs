@@ -46,31 +46,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ServerSku"/>. </summary>
-        /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </param>
-        /// <param name="tier"> The tier of the particular SKU, e.g. Burstable. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal ServerSku(string name, PostgreSqlFlexibleServerSkuTier tier)
+        internal ServerSku()
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
-            Tier = tier;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerSku"/>. </summary>
         /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </param>
         /// <param name="tier"> The tier of the particular SKU, e.g. Burstable. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerSku(string name, PostgreSqlFlexibleServerSkuTier tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerSku(string name, PostgreSqlFlexibleServerSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServerSku"/> for deserialization. </summary>
-        internal ServerSku()
-        {
         }
 
         /// <summary> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </summary>
@@ -78,6 +66,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public string Name { get; }
         /// <summary> The tier of the particular SKU, e.g. Burstable. </summary>
         [WirePath("tier")]
-        public PostgreSqlFlexibleServerSkuTier Tier { get; }
+        public PostgreSqlFlexibleServerSkuTier? Tier { get; }
     }
 }

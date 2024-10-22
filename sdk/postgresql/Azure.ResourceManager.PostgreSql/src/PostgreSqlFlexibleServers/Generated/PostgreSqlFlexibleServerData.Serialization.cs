@@ -141,10 +141,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WritePropertyName("replicaCapacity"u8);
                 writer.WriteNumberValue(ReplicaCapacity.Value);
             }
+            if (Optional.IsDefined(Replica))
+            {
+                writer.WritePropertyName("replica"u8);
+                writer.WriteObjectValue(Replica, options);
+            }
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -195,7 +210,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             string availabilityZone = default;
             PostgreSqlFlexibleServerReplicationRole? replicationRole = default;
             int? replicaCapacity = default;
+            Replica replica = default;
             PostgreSqlFlexibleServerCreateMode? createMode = default;
+            IReadOnlyList<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -412,6 +429,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             replicaCapacity = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("replica"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            replica = Replica.DeserializeReplica(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("createMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -419,6 +445,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                                 continue;
                             }
                             createMode = new PostgreSqlFlexibleServerCreateMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("privateEndpointConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<PostgreSqlFlexibleServersPrivateEndpointConnectionData> array = new List<PostgreSqlFlexibleServersPrivateEndpointConnectionData>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(PostgreSqlFlexibleServersPrivateEndpointConnectionData.DeserializePostgreSqlFlexibleServersPrivateEndpointConnectionData(item, options));
+                            }
+                            privateEndpointConnections = array;
                             continue;
                         }
                     }
@@ -457,7 +497,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 availabilityZone,
                 replicationRole,
                 replicaCapacity,
+                replica,
                 createMode,
+                privateEndpointConnections ?? new ChangeTrackingList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>(),
                 serializedAdditionalRawData);
         }
 
@@ -917,6 +959,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Replica), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    replica: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Replica))
+                {
+                    builder.Append("    replica: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Replica, options, 4, false, "    replica: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreateMode), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -929,6 +986,29 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     builder.Append("    createMode: ");
                     builder.AppendLine($"'{CreateMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateEndpointConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    if (PrivateEndpointConnections.Any())
+                    {
+                        builder.Append("    privateEndpointConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateEndpointConnections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
                 }
             }
 

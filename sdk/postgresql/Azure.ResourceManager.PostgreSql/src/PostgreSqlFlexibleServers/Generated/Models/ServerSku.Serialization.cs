@@ -35,10 +35,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 throw new FormatException($"The model {nameof(ServerSku)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("tier"u8);
-            writer.WriteStringValue(Tier.ToString());
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Tier))
+            {
+                writer.WritePropertyName("tier"u8);
+                writer.WriteStringValue(Tier.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,7 +83,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             string name = default;
-            PostgreSqlFlexibleServerSkuTier tier = default;
+            PostgreSqlFlexibleServerSkuTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,6 +95,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (property.NameEquals("tier"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     tier = new PostgreSqlFlexibleServerSkuTier(property.Value.GetString());
                     continue;
                 }
@@ -143,8 +153,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             else
             {
-                builder.Append("  tier: ");
-                builder.AppendLine($"'{Tier.ToString()}'");
+                if (Optional.IsDefined(Tier))
+                {
+                    builder.Append("  tier: ");
+                    builder.AppendLine($"'{Tier.Value.ToString()}'");
+                }
             }
 
             builder.AppendLine("}");
