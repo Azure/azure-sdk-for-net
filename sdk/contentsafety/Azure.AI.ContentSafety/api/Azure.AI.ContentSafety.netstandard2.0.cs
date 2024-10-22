@@ -165,6 +165,7 @@ namespace Azure.AI.ContentSafety
     public partial class ContentSafetyClientOptions : Azure.Core.ClientOptions
     {
         public ContentSafetyClientOptions(Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion version = Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion.V2023_10_01) { }
+        public string[] AuthorizationScopes { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2023_10_01 = 1,

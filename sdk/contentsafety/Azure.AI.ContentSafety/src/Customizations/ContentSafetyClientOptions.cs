@@ -12,13 +12,6 @@ namespace Azure.AI.ContentSafety
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_10_01;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2023-10-01". </summary>
-            V2023_10_01 = 1,
-        }
-
         internal string Version { get; }
 
         private string[] _authorizationScopes;
@@ -30,7 +23,7 @@ namespace Azure.AI.ContentSafety
         }
 
         /// <summary> Initializes new instance of ContentSafetyClientOptions. </summary>
-        public ContentSafetyClientOptions(ServiceVersion version = LatestVersion)
+        public ContentSafetyClientOptions(ServiceVersion version = LatestVersion) : base()
         {
             Version = version switch
             {
