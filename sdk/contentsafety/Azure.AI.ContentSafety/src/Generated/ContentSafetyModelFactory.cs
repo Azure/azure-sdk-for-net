@@ -57,15 +57,6 @@ namespace Azure.AI.ContentSafety
             return new TextBlocklistMatch(blocklistName, blocklistItemId, blocklistItemText, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.TextCategoriesAnalysis"/>. </summary>
-        /// <param name="category"> The text analysis category. </param>
-        /// <param name="severity"> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’ or ‘EightSeverity Levels’, and the output value can be 0, 2, 4, 6 or 0, 1, 2, 3, 4, 5, 6, or 7. </param>
-        /// <returns> A new <see cref="ContentSafety.TextCategoriesAnalysis"/> instance for mocking. </returns>
-        public static TextCategoriesAnalysis TextCategoriesAnalysis(TextCategory category = default, int? severity = null)
-        {
-            return new TextCategoriesAnalysis(category, severity, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeImageOptions"/>. </summary>
         /// <param name="image"> The image needs to be analyzed. </param>
         /// <param name="categories"> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </param>
@@ -86,15 +77,6 @@ namespace Azure.AI.ContentSafety
             categoriesAnalysis ??= new List<ImageCategoriesAnalysis>();
 
             return new AnalyzeImageResult(categoriesAnalysis?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.ImageCategoriesAnalysis"/>. </summary>
-        /// <param name="category"> The image analysis category. </param>
-        /// <param name="severity"> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’, and the output value can be 0, 2, 4, 6. </param>
-        /// <returns> A new <see cref="ContentSafety.ImageCategoriesAnalysis"/> instance for mocking. </returns>
-        public static ImageCategoriesAnalysis ImageCategoriesAnalysis(ImageCategory category = default, int? severity = null)
-        {
-            return new ImageCategoriesAnalysis(category, severity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentSafety.TextBlocklistItem"/>. </summary>

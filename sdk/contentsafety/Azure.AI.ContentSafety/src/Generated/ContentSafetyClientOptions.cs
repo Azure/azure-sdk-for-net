@@ -24,17 +24,7 @@ namespace Azure.AI.ContentSafety
 
         internal string Version { get; }
 
-        private string[] _authorizationScopes;
-
-        /// <summary> Gets or sets the authorization scopes. </summary>
-        public string[] AuthorizationScopes
-        {
-            get => _authorizationScopes;
-            set => _authorizationScopes = value ?? new string[] { "https://cognitiveservices.azure.com/.default" };
-        }
-
-        /// <summary> Initializes a new instance of ContentSafetyClientOptions. </summary>
-        /// <param name="version">The version of the service to use.</param>
+        /// <summary> Initializes new instance of ContentSafetyClientOptions. </summary>
         public ContentSafetyClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
