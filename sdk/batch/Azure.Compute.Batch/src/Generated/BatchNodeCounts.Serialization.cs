@@ -19,13 +19,21 @@ namespace Azure.Compute.Batch
 
         void IJsonModel<BatchNodeCounts>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BatchNodeCounts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchNodeCounts)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("creating"u8);
             writer.WriteNumberValue(Creating);
             writer.WritePropertyName("idle"u8);
@@ -52,6 +60,10 @@ namespace Azure.Compute.Batch
             writer.WriteNumberValue(Unusable);
             writer.WritePropertyName("waitingForStartTask"u8);
             writer.WriteNumberValue(WaitingForStartTask);
+            writer.WritePropertyName("deallocated"u8);
+            writer.WriteNumberValue(Deallocated);
+            writer.WritePropertyName("deallocating"u8);
+            writer.WriteNumberValue(Deallocating);
             writer.WritePropertyName("total"u8);
             writer.WriteNumberValue(Total);
             writer.WritePropertyName("upgradingOS"u8);
@@ -71,7 +83,6 @@ namespace Azure.Compute.Batch
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BatchNodeCounts IJsonModel<BatchNodeCounts>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -107,6 +118,8 @@ namespace Azure.Compute.Batch
             int unknown = default;
             int unusable = default;
             int waitingForStartTask = default;
+            int deallocated = default;
+            int deallocating = default;
             int total = default;
             int upgradingOS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -178,6 +191,16 @@ namespace Azure.Compute.Batch
                     waitingForStartTask = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("deallocated"u8))
+                {
+                    deallocated = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("deallocating"u8))
+                {
+                    deallocating = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("total"u8))
                 {
                     total = property.Value.GetInt32();
@@ -208,6 +231,8 @@ namespace Azure.Compute.Batch
                 unknown,
                 unusable,
                 waitingForStartTask,
+                deallocated,
+                deallocating,
                 total,
                 upgradingOS,
                 serializedAdditionalRawData);

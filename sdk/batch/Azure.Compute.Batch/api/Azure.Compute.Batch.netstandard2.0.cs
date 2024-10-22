@@ -21,6 +21,7 @@ namespace Azure.Compute.Batch
     {
         public AffinityInfo(string affinityId) { }
         public string AffinityId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AffinityInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AffinityInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AffinityInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AffinityInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.AffinityInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -50,6 +51,7 @@ namespace Azure.Compute.Batch
     {
         public AuthenticationTokenSettings() { }
         public System.Collections.Generic.IList<Azure.Compute.Batch.AccessScope> Access { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AuthenticationTokenSettings System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AuthenticationTokenSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AuthenticationTokenSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AuthenticationTokenSettings System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.AuthenticationTokenSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -63,6 +65,7 @@ namespace Azure.Compute.Batch
         public bool? EnableAutomaticOsUpgrade { get { throw null; } set { } }
         public bool? OsRollingUpgradeDeferral { get { throw null; } set { } }
         public bool? UseRollingUpgradePolicy { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AutomaticOsUpgradePolicy System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AutomaticOsUpgradePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AutomaticOsUpgradePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AutomaticOsUpgradePolicy System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.AutomaticOsUpgradePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -75,6 +78,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.AutoScaleRunError Error { get { throw null; } }
         public string Results { get { throw null; } }
         public System.DateTimeOffset Timestamp { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AutoScaleRun System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AutoScaleRun>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AutoScaleRun>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AutoScaleRun System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.AutoScaleRun>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -87,6 +91,7 @@ namespace Azure.Compute.Batch
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Compute.Batch.NameValuePair> Values { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AutoScaleRunError System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AutoScaleRunError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AutoScaleRunError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AutoScaleRunError System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.AutoScaleRunError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -116,6 +121,7 @@ namespace Azure.Compute.Batch
         public AutoUserSpecification() { }
         public Azure.Compute.Batch.ElevationLevel? ElevationLevel { get { throw null; } set { } }
         public Azure.Compute.Batch.AutoUserScope? Scope { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AutoUserSpecification System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AutoUserSpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AutoUserSpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AutoUserSpecification System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.AutoUserSpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -132,6 +138,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchNodeIdentityReference IdentityReference { get { throw null; } set { } }
         public string RelativeMountPath { get { throw null; } set { } }
         public string SasKey { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AzureBlobFileSystemConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AzureBlobFileSystemConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AzureBlobFileSystemConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AzureBlobFileSystemConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.AzureBlobFileSystemConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -146,6 +153,7 @@ namespace Azure.Compute.Batch
         public string AzureFileUrl { get { throw null; } set { } }
         public string MountOptions { get { throw null; } set { } }
         public string RelativeMountPath { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AzureFileShareConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AzureFileShareConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AzureFileShareConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.AzureFileShareConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.AzureFileShareConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -158,6 +166,7 @@ namespace Azure.Compute.Batch
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Versions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchApplication System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchApplication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchApplication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchApplication System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchApplication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -169,6 +178,7 @@ namespace Azure.Compute.Batch
         public BatchApplicationPackageReference(string applicationId) { }
         public string ApplicationId { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchApplicationPackageReference System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchApplicationPackageReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchApplicationPackageReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchApplicationPackageReference System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchApplicationPackageReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -182,6 +192,7 @@ namespace Azure.Compute.Batch
         public bool? KeepAlive { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchPoolSpecification Pool { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchPoolLifetimeOption PoolLifetimeOption { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchAutoPoolSpecification System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchAutoPoolSpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchAutoPoolSpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchAutoPoolSpecification System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchAutoPoolSpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -220,10 +231,14 @@ namespace Azure.Compute.Batch
         public virtual Azure.Response CreateTaskCollection(string jobId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Compute.Batch.BatchTaskAddCollectionResult>> CreateTaskCollectionAsync(string jobId, Azure.Compute.Batch.BatchTaskGroup taskCollection, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateTaskCollectionAsync(string jobId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response DeleteJob(string jobId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteJobAsync(string jobId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response DeleteJobSchedule(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeallocateNode(string poolId, string nodeId, Azure.Compute.Batch.BatchNodeDeallocateContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeallocateNode(string poolId, string nodeId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeallocateNodeAsync(string poolId, string nodeId, Azure.Compute.Batch.BatchNodeDeallocateContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeallocateNodeAsync(string poolId, string nodeId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteJob(string jobId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteJobAsync(string jobId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteJobSchedule(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteNodeFile(string poolId, string nodeId, string filePath, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? recursive = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteNodeFileAsync(string poolId, string nodeId, string filePath, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? recursive = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteNodeUser(string poolId, string nodeId, string userName, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
@@ -338,10 +353,10 @@ namespace Azure.Compute.Batch
         public virtual Azure.Pageable<Azure.Compute.Batch.BatchPool> GetPools(int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), int? maxresults = default(int?), string filter = null, System.Collections.Generic.IEnumerable<string> select = null, System.Collections.Generic.IEnumerable<string> expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetPoolsAsync(int? timeOutInSeconds, System.DateTimeOffset? ocpdate, int? maxresults, string filter, System.Collections.Generic.IEnumerable<string> select, System.Collections.Generic.IEnumerable<string> expand, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Compute.Batch.BatchPool> GetPoolsAsync(int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), int? maxresults = default(int?), string filter = null, System.Collections.Generic.IEnumerable<string> select = null, System.Collections.Generic.IEnumerable<string> expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetPoolUsageMetrics(int? timeOutInSeconds, System.DateTimeOffset? ocpdate, int? maxresults, System.DateTimeOffset? starttime, System.DateTimeOffset? endtime, string filter, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Compute.Batch.BatchPoolUsageMetrics> GetPoolUsageMetrics(int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), int? maxresults = default(int?), System.DateTimeOffset? starttime = default(System.DateTimeOffset?), System.DateTimeOffset? endtime = default(System.DateTimeOffset?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetPoolUsageMetricsAsync(int? timeOutInSeconds, System.DateTimeOffset? ocpdate, int? maxresults, System.DateTimeOffset? starttime, System.DateTimeOffset? endtime, string filter, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Compute.Batch.BatchPoolUsageMetrics> GetPoolUsageMetricsAsync(int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), int? maxresults = default(int?), System.DateTimeOffset? starttime = default(System.DateTimeOffset?), System.DateTimeOffset? endtime = default(System.DateTimeOffset?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetPoolUsageMetrics(int? timeOutInSeconds, System.DateTimeOffset? ocpdate, int? maxresults, System.DateTimeOffset? startTime, System.DateTimeOffset? endtime, string filter, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Compute.Batch.BatchPoolUsageMetrics> GetPoolUsageMetrics(int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), int? maxresults = default(int?), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endtime = default(System.DateTimeOffset?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetPoolUsageMetricsAsync(int? timeOutInSeconds, System.DateTimeOffset? ocpdate, int? maxresults, System.DateTimeOffset? startTime, System.DateTimeOffset? endtime, string filter, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Compute.Batch.BatchPoolUsageMetrics> GetPoolUsageMetricsAsync(int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), int? maxresults = default(int?), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endtime = default(System.DateTimeOffset?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetSubTasks(string jobId, string taskId, int? timeOutInSeconds, System.DateTimeOffset? ocpdate, System.Collections.Generic.IEnumerable<string> select, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<Azure.Compute.Batch.BatchSubtask> GetSubTasks(string jobId, string taskId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetSubTasksAsync(string jobId, string taskId, int? timeOutInSeconds, System.DateTimeOffset? ocpdate, System.Collections.Generic.IEnumerable<string> select, Azure.RequestContext context) { throw null; }
@@ -378,6 +393,10 @@ namespace Azure.Compute.Batch
         public virtual Azure.Response RebootNode(string poolId, string nodeId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RebootNodeAsync(string poolId, string nodeId, Azure.Compute.Batch.BatchNodeRebootContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RebootNodeAsync(string poolId, string nodeId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response ReimageNode(string poolId, string nodeId, Azure.Compute.Batch.BatchNodeReimageContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response ReimageNode(string poolId, string nodeId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ReimageNodeAsync(string poolId, string nodeId, Azure.Compute.Batch.BatchNodeReimageContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ReimageNodeAsync(string poolId, string nodeId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveNodes(string poolId, Azure.Compute.Batch.BatchNodeRemoveContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RemoveNodes(string poolId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveNodesAsync(string poolId, Azure.Compute.Batch.BatchNodeRemoveContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -406,14 +425,16 @@ namespace Azure.Compute.Batch
         public virtual Azure.Response ResizePool(string poolId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ResizePoolAsync(string poolId, Azure.Compute.Batch.BatchPoolResizeContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ResizePoolAsync(string poolId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response StartNode(string poolId, string nodeId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> StartNodeAsync(string poolId, string nodeId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response StopPoolResize(string poolId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopPoolResizeAsync(string poolId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response TerminateJob(string jobId, Azure.Compute.Batch.BatchJobTerminateContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response TerminateJob(string jobId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> TerminateJobAsync(string jobId, Azure.Compute.Batch.BatchJobTerminateContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> TerminateJobAsync(string jobId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response TerminateJobSchedule(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> TerminateJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response TerminateJob(string jobId, Azure.Compute.Batch.BatchJobTerminateContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response TerminateJob(string jobId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> TerminateJobAsync(string jobId, Azure.Compute.Batch.BatchJobTerminateContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> TerminateJobAsync(string jobId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response TerminateJobSchedule(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> TerminateJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response TerminateTask(string jobId, string taskId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> TerminateTaskAsync(string jobId, string taskId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UpdateJob(string jobId, Azure.Compute.Batch.BatchJobUpdateContent job, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -435,10 +456,10 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchClientOptions : Azure.Core.ClientOptions
     {
-        public BatchClientOptions(Azure.Compute.Batch.BatchClientOptions.ServiceVersion version = Azure.Compute.Batch.BatchClientOptions.ServiceVersion.V2024_02_01_19_0) { }
+        public BatchClientOptions(Azure.Compute.Batch.BatchClientOptions.ServiceVersion version = Azure.Compute.Batch.BatchClientOptions.ServiceVersion.V2024_07_01_20_0) { }
         public enum ServiceVersion
         {
-            V2024_02_01_19_0 = 1,
+            V2024_07_01_20_0 = 1,
         }
     }
     public partial class BatchError : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchError>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchError>
@@ -447,6 +468,7 @@ namespace Azure.Compute.Batch
         public string Code { get { throw null; } }
         public Azure.Compute.Batch.BatchErrorMessage Message { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Compute.Batch.BatchErrorDetail> Values { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchError System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchError System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -458,6 +480,7 @@ namespace Azure.Compute.Batch
         internal BatchErrorDetail() { }
         public string Key { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchErrorDetail System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchErrorDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchErrorDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchErrorDetail System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchErrorDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -469,6 +492,7 @@ namespace Azure.Compute.Batch
         internal BatchErrorMessage() { }
         public string Lang { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchErrorMessage System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchErrorMessage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchErrorMessage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchErrorMessage System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchErrorMessage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -512,6 +536,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchJobStatistics Stats { get { throw null; } }
         public string Url { get { throw null; } }
         public bool? UsesTaskDependencies { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJob System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJob>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJob>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJob System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJob>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -542,6 +567,7 @@ namespace Azure.Compute.Batch
         public BatchJobConstraints() { }
         public int? MaxTaskRetryCount { get { throw null; } set { } }
         public System.TimeSpan? MaxWallClockTime { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobConstraints System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobConstraints>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobConstraints>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobConstraints System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobConstraints>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -567,6 +593,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchPoolInfo PoolInfo { get { throw null; } }
         public int? Priority { get { throw null; } set { } }
         public bool? UsesTaskDependencies { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobCreateContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobCreateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobCreateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobCreateContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobCreateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -577,6 +604,7 @@ namespace Azure.Compute.Batch
     {
         public BatchJobDisableContent(Azure.Compute.Batch.DisableBatchJobOption disableTasks) { }
         public Azure.Compute.Batch.DisableBatchJobOption DisableTasks { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobDisableContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobDisableContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobDisableContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobDisableContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobDisableContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -591,6 +619,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchJobSchedulingError SchedulingError { get { throw null; } }
         public System.DateTimeOffset StartTime { get { throw null; } }
         public string TerminationReason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobExecutionInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobExecutionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobExecutionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobExecutionInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobExecutionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -615,6 +644,7 @@ namespace Azure.Compute.Batch
         public System.Collections.Generic.IList<Azure.Compute.Batch.ResourceFile> ResourceFiles { get { throw null; } }
         public bool? RunExclusive { get { throw null; } set { } }
         public Azure.Compute.Batch.UserIdentity UserIdentity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobManagerTask System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobManagerTask>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobManagerTask>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobManagerTask System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobManagerTask>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -623,8 +653,10 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchJobNetworkConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobNetworkConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobNetworkConfiguration>
     {
-        public BatchJobNetworkConfiguration(string subnetId) { }
+        public BatchJobNetworkConfiguration(string subnetId, bool skipWithdrawFromVNet) { }
+        public bool SkipWithdrawFromVNet { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobNetworkConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobNetworkConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobNetworkConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobNetworkConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobNetworkConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -639,6 +671,7 @@ namespace Azure.Compute.Batch
         public string NodeId { get { throw null; } }
         public string NodeUrl { get { throw null; } }
         public string PoolId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobPreparationAndReleaseTaskStatus System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobPreparationAndReleaseTaskStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobPreparationAndReleaseTaskStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobPreparationAndReleaseTaskStatus System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobPreparationAndReleaseTaskStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -657,6 +690,7 @@ namespace Azure.Compute.Batch
         public System.Collections.Generic.IList<Azure.Compute.Batch.ResourceFile> ResourceFiles { get { throw null; } }
         public Azure.Compute.Batch.UserIdentity UserIdentity { get { throw null; } set { } }
         public bool? WaitForSuccess { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobPreparationTask System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobPreparationTask>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobPreparationTask>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobPreparationTask System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobPreparationTask>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -677,6 +711,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchJobPreparationTaskState State { get { throw null; } }
         public string TaskRootDirectory { get { throw null; } }
         public string TaskRootDirectoryUrl { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobPreparationTaskExecutionInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobPreparationTaskExecutionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobPreparationTaskExecutionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobPreparationTaskExecutionInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobPreparationTaskExecutionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -712,6 +747,7 @@ namespace Azure.Compute.Batch
         public System.Collections.Generic.IList<Azure.Compute.Batch.ResourceFile> ResourceFiles { get { throw null; } }
         public System.TimeSpan? RetentionTime { get { throw null; } set { } }
         public Azure.Compute.Batch.UserIdentity UserIdentity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobReleaseTask System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobReleaseTask>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobReleaseTask>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobReleaseTask System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobReleaseTask>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -730,6 +766,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchJobReleaseTaskState State { get { throw null; } }
         public string TaskRootDirectory { get { throw null; } }
         public string TaskRootDirectoryUrl { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobReleaseTaskExecutionInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobReleaseTaskExecutionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobReleaseTaskExecutionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobReleaseTaskExecutionInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobReleaseTaskExecutionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -772,6 +809,7 @@ namespace Azure.Compute.Batch
         public System.DateTimeOffset? StateTransitionTime { get { throw null; } }
         public Azure.Compute.Batch.BatchJobScheduleStatistics Stats { get { throw null; } }
         public string Url { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobSchedule System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobSchedule System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -785,6 +823,7 @@ namespace Azure.Compute.Batch
         public System.DateTimeOffset? DoNotRunUntil { get { throw null; } set { } }
         public System.TimeSpan? RecurrenceInterval { get { throw null; } set { } }
         public System.TimeSpan? StartWindow { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobScheduleConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobScheduleConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobScheduleConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -799,6 +838,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchJobSpecification JobSpecification { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Compute.Batch.MetadataItem> Metadata { get { throw null; } }
         public Azure.Compute.Batch.BatchJobScheduleConfiguration Schedule { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobScheduleCreateContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleCreateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleCreateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobScheduleCreateContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobScheduleCreateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -811,6 +851,7 @@ namespace Azure.Compute.Batch
         public System.DateTimeOffset? EndTime { get { throw null; } }
         public System.DateTimeOffset? NextRunTime { get { throw null; } }
         public Azure.Compute.Batch.RecentBatchJob RecentJob { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobScheduleExecutionInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleExecutionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleExecutionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobScheduleExecutionInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobScheduleExecutionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -855,6 +896,7 @@ namespace Azure.Compute.Batch
         public System.TimeSpan WallClockTime { get { throw null; } }
         public float WriteIOGiB { get { throw null; } }
         public long WriteIOps { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobScheduleStatistics System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobScheduleStatistics System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobScheduleStatistics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -867,6 +909,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchJobSpecification JobSpecification { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Compute.Batch.MetadataItem> Metadata { get { throw null; } }
         public Azure.Compute.Batch.BatchJobScheduleConfiguration Schedule { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobScheduleUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobScheduleUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobScheduleUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -880,6 +923,7 @@ namespace Azure.Compute.Batch
         public string Code { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Compute.Batch.NameValuePair> Details { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobSchedulingError System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobSchedulingError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobSchedulingError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobSchedulingError System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobSchedulingError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -904,6 +948,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchPoolInfo PoolInfo { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
         public bool? UsesTaskDependencies { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobSpecification System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobSpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobSpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobSpecification System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobSpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -950,6 +995,7 @@ namespace Azure.Compute.Batch
         public System.TimeSpan WallClockTime { get { throw null; } }
         public float WriteIOGiB { get { throw null; } }
         public long WriteIOps { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobStatistics System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobStatistics System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobStatistics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -960,6 +1006,7 @@ namespace Azure.Compute.Batch
     {
         public BatchJobTerminateContent() { }
         public string TerminationReason { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobTerminateContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobTerminateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobTerminateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobTerminateContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobTerminateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -973,9 +1020,11 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchJobConstraints Constraints { get { throw null; } set { } }
         public int? MaxParallelTasks { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Compute.Batch.MetadataItem> Metadata { get { throw null; } }
+        public Azure.Compute.Batch.BatchJobNetworkConfiguration NetworkConfiguration { get { throw null; } set { } }
         public Azure.Compute.Batch.OnAllBatchTasksComplete? OnAllTasksComplete { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchPoolInfo PoolInfo { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1007,6 +1056,7 @@ namespace Azure.Compute.Batch
         public string Url { get { throw null; } }
         public Azure.Compute.Batch.VirtualMachineInfo VirtualMachineInfo { get { throw null; } }
         public string VmSize { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNode System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNode>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNode>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNode System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNode>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1018,6 +1068,7 @@ namespace Azure.Compute.Batch
         internal BatchNodeAgentInfo() { }
         public System.DateTimeOffset LastUpdateTime { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeAgentInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeAgentInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeAgentInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeAgentInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeAgentInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1047,6 +1098,8 @@ namespace Azure.Compute.Batch
     {
         internal BatchNodeCounts() { }
         public int Creating { get { throw null; } }
+        public int Deallocated { get { throw null; } }
+        public int Deallocating { get { throw null; } }
         public int Idle { get { throw null; } }
         public int LeavingPool { get { throw null; } }
         public int Offline { get { throw null; } }
@@ -1061,11 +1114,43 @@ namespace Azure.Compute.Batch
         public int Unusable { get { throw null; } }
         public int UpgradingOs { get { throw null; } }
         public int WaitingForStartTask { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeCounts System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeCounts>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeCounts>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeCounts System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeCounts>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeCounts>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeCounts>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BatchNodeDeallocateContent : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeDeallocateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeDeallocateContent>
+    {
+        public BatchNodeDeallocateContent() { }
+        public Azure.Compute.Batch.BatchNodeDeallocateOption? NodeDeallocateOption { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Compute.Batch.BatchNodeDeallocateContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeDeallocateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeDeallocateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Compute.Batch.BatchNodeDeallocateContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeDeallocateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeDeallocateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeDeallocateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchNodeDeallocateOption : System.IEquatable<Azure.Compute.Batch.BatchNodeDeallocateOption>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchNodeDeallocateOption(string value) { throw null; }
+        public static Azure.Compute.Batch.BatchNodeDeallocateOption Requeue { get { throw null; } }
+        public static Azure.Compute.Batch.BatchNodeDeallocateOption RetainedData { get { throw null; } }
+        public static Azure.Compute.Batch.BatchNodeDeallocateOption TaskCompletion { get { throw null; } }
+        public static Azure.Compute.Batch.BatchNodeDeallocateOption Terminate { get { throw null; } }
+        public bool Equals(Azure.Compute.Batch.BatchNodeDeallocateOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Compute.Batch.BatchNodeDeallocateOption left, Azure.Compute.Batch.BatchNodeDeallocateOption right) { throw null; }
+        public static implicit operator Azure.Compute.Batch.BatchNodeDeallocateOption (string value) { throw null; }
+        public static bool operator !=(Azure.Compute.Batch.BatchNodeDeallocateOption left, Azure.Compute.Batch.BatchNodeDeallocateOption right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BatchNodeDeallocationOption : System.IEquatable<Azure.Compute.Batch.BatchNodeDeallocationOption>
@@ -1091,6 +1176,7 @@ namespace Azure.Compute.Batch
     {
         public BatchNodeDisableSchedulingContent() { }
         public Azure.Compute.Batch.BatchNodeDisableSchedulingOption? NodeDisableSchedulingOption { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeDisableSchedulingContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeDisableSchedulingContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeDisableSchedulingContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeDisableSchedulingContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeDisableSchedulingContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1120,6 +1206,7 @@ namespace Azure.Compute.Batch
     {
         internal BatchNodeEndpointConfiguration() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Compute.Batch.InboundEndpoint> InboundEndpoints { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeEndpointConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeEndpointConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeEndpointConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeEndpointConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeEndpointConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1132,6 +1219,7 @@ namespace Azure.Compute.Batch
         public string Code { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Compute.Batch.NameValuePair> ErrorDetails { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeError System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeError System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1145,6 +1233,7 @@ namespace Azure.Compute.Batch
         public string Name { get { throw null; } }
         public Azure.Compute.Batch.FileProperties Properties { get { throw null; } }
         public string Url { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeFile System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeFile System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1173,6 +1262,7 @@ namespace Azure.Compute.Batch
     {
         public BatchNodeIdentityReference() { }
         public string ResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeIdentityReference System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeIdentityReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeIdentityReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeIdentityReference System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeIdentityReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1188,6 +1278,7 @@ namespace Azure.Compute.Batch
         public string PoolId { get { throw null; } }
         public string TaskRootDirectory { get { throw null; } }
         public string TaskRootDirectoryUrl { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1198,6 +1289,7 @@ namespace Azure.Compute.Batch
     {
         public BatchNodePlacementConfiguration() { }
         public Azure.Compute.Batch.BatchNodePlacementPolicyType? Policy { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodePlacementConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodePlacementConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodePlacementConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodePlacementConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodePlacementConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1226,6 +1318,7 @@ namespace Azure.Compute.Batch
     {
         public BatchNodeRebootContent() { }
         public Azure.Compute.Batch.BatchNodeRebootOption? NodeRebootOption { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeRebootContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeRebootContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeRebootContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeRebootContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeRebootContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1252,11 +1345,43 @@ namespace Azure.Compute.Batch
         public static bool operator !=(Azure.Compute.Batch.BatchNodeRebootOption left, Azure.Compute.Batch.BatchNodeRebootOption right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class BatchNodeReimageContent : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeReimageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeReimageContent>
+    {
+        public BatchNodeReimageContent() { }
+        public Azure.Compute.Batch.BatchNodeReimageOption? NodeReimageOption { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Compute.Batch.BatchNodeReimageContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeReimageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeReimageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Compute.Batch.BatchNodeReimageContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeReimageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeReimageContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeReimageContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchNodeReimageOption : System.IEquatable<Azure.Compute.Batch.BatchNodeReimageOption>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchNodeReimageOption(string value) { throw null; }
+        public static Azure.Compute.Batch.BatchNodeReimageOption Requeue { get { throw null; } }
+        public static Azure.Compute.Batch.BatchNodeReimageOption RetainedData { get { throw null; } }
+        public static Azure.Compute.Batch.BatchNodeReimageOption TaskCompletion { get { throw null; } }
+        public static Azure.Compute.Batch.BatchNodeReimageOption Terminate { get { throw null; } }
+        public bool Equals(Azure.Compute.Batch.BatchNodeReimageOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Compute.Batch.BatchNodeReimageOption left, Azure.Compute.Batch.BatchNodeReimageOption right) { throw null; }
+        public static implicit operator Azure.Compute.Batch.BatchNodeReimageOption (string value) { throw null; }
+        public static bool operator !=(Azure.Compute.Batch.BatchNodeReimageOption left, Azure.Compute.Batch.BatchNodeReimageOption right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class BatchNodeRemoteLoginSettings : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeRemoteLoginSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeRemoteLoginSettings>
     {
         internal BatchNodeRemoteLoginSettings() { }
         public string RemoteLoginIpAddress { get { throw null; } }
         public int RemoteLoginPort { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeRemoteLoginSettings System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeRemoteLoginSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeRemoteLoginSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeRemoteLoginSettings System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeRemoteLoginSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1269,6 +1394,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchNodeDeallocationOption? NodeDeallocationOption { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> NodeList { get { throw null; } }
         public System.TimeSpan? ResizeTimeout { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeRemoveContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeRemoveContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeRemoveContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeRemoveContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeRemoveContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1282,6 +1408,8 @@ namespace Azure.Compute.Batch
         private readonly int _dummyPrimitive;
         public BatchNodeState(string value) { throw null; }
         public static Azure.Compute.Batch.BatchNodeState Creating { get { throw null; } }
+        public static Azure.Compute.Batch.BatchNodeState Deallocated { get { throw null; } }
+        public static Azure.Compute.Batch.BatchNodeState Deallocating { get { throw null; } }
         public static Azure.Compute.Batch.BatchNodeState Idle { get { throw null; } }
         public static Azure.Compute.Batch.BatchNodeState LeavingPool { get { throw null; } }
         public static Azure.Compute.Batch.BatchNodeState Offline { get { throw null; } }
@@ -1313,6 +1441,7 @@ namespace Azure.Compute.Batch
         public string Name { get { throw null; } }
         public string Password { get { throw null; } set { } }
         public string SshPublicKey { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeUserCreateContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeUserCreateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeUserCreateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeUserCreateContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeUserCreateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1325,6 +1454,7 @@ namespace Azure.Compute.Batch
         public System.DateTimeOffset? ExpiryTime { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public string SshPublicKey { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeUserUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeUserUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeUserUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeUserUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeUserUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1337,6 +1467,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.VMExtensionInstanceView InstanceView { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Compute.Batch.VMExtension VmExtension { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeVMExtension System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeVMExtension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeVMExtension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeVMExtension System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeVMExtension>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1383,6 +1514,7 @@ namespace Azure.Compute.Batch
         public System.Collections.Generic.IReadOnlyList<Azure.Compute.Batch.UserAccount> UserAccounts { get { throw null; } }
         public Azure.Compute.Batch.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } }
         public string VmSize { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPool System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPool System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1414,6 +1546,7 @@ namespace Azure.Compute.Batch
         public System.Collections.Generic.IList<Azure.Compute.Batch.UserAccount> UserAccounts { get { throw null; } }
         public Azure.Compute.Batch.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
         public string VmSize { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolCreateContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolCreateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolCreateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolCreateContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolCreateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1425,6 +1558,7 @@ namespace Azure.Compute.Batch
         public BatchPoolEnableAutoScaleContent() { }
         public System.TimeSpan? AutoScaleEvaluationInterval { get { throw null; } set { } }
         public string AutoScaleFormula { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolEnableAutoScaleContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolEnableAutoScaleContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolEnableAutoScaleContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolEnableAutoScaleContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolEnableAutoScaleContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1435,6 +1569,7 @@ namespace Azure.Compute.Batch
     {
         public BatchPoolEndpointConfiguration(System.Collections.Generic.IEnumerable<Azure.Compute.Batch.InboundNatPool> inboundNatPools) { }
         public System.Collections.Generic.IList<Azure.Compute.Batch.InboundNatPool> InboundNatPools { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolEndpointConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolEndpointConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolEndpointConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolEndpointConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolEndpointConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1445,6 +1580,7 @@ namespace Azure.Compute.Batch
     {
         public BatchPoolEvaluateAutoScaleContent(string autoScaleFormula) { }
         public string AutoScaleFormula { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolEvaluateAutoScaleContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolEvaluateAutoScaleContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolEvaluateAutoScaleContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolEvaluateAutoScaleContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolEvaluateAutoScaleContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1456,6 +1592,7 @@ namespace Azure.Compute.Batch
         internal BatchPoolIdentity() { }
         public Azure.Compute.Batch.BatchPoolIdentityType Type { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Compute.Batch.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolIdentity System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolIdentity System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1485,6 +1622,7 @@ namespace Azure.Compute.Batch
         public BatchPoolInfo() { }
         public Azure.Compute.Batch.BatchAutoPoolSpecification AutoPoolSpecification { get { throw null; } set { } }
         public string PoolId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1515,6 +1653,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchNodeCounts Dedicated { get { throw null; } }
         public Azure.Compute.Batch.BatchNodeCounts LowPriority { get { throw null; } }
         public string PoolId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolNodeCounts System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolNodeCounts>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolNodeCounts>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolNodeCounts System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolNodeCounts>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1529,6 +1668,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchStartTask StartTask { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchNodeCommunicationMode? TargetNodeCommunicationMode { get { throw null; } set { } }
         void global::System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolReplaceContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolReplaceContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolReplaceContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Compute.Batch.BatchPoolReplaceContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolReplaceContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolReplaceContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1541,6 +1681,7 @@ namespace Azure.Compute.Batch
         public System.TimeSpan? ResizeTimeout { get { throw null; } set { } }
         public int? TargetDedicatedNodes { get { throw null; } set { } }
         public int? TargetLowPriorityNodes { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolResizeContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolResizeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolResizeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolResizeContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolResizeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1563,6 +1704,7 @@ namespace Azure.Compute.Batch
         public float PeakDiskGiB { get { throw null; } }
         public float PeakMemoryGiB { get { throw null; } }
         public System.DateTimeOffset StartTime { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolResourceStatistics System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolResourceStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolResourceStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolResourceStatistics System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolResourceStatistics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1593,6 +1735,7 @@ namespace Azure.Compute.Batch
         public System.Collections.Generic.IList<Azure.Compute.Batch.UserAccount> UserAccounts { get { throw null; } }
         public Azure.Compute.Batch.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
         public string VmSize { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolSpecification System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolSpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolSpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolSpecification System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolSpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1625,6 +1768,7 @@ namespace Azure.Compute.Batch
         public System.DateTimeOffset StartTime { get { throw null; } }
         public string Url { get { throw null; } }
         public Azure.Compute.Batch.BatchPoolUsageStatistics UsageStats { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolStatistics System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolStatistics System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolStatistics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1635,9 +1779,21 @@ namespace Azure.Compute.Batch
     {
         public BatchPoolUpdateContent() { }
         public System.Collections.Generic.IList<Azure.Compute.Batch.BatchApplicationPackageReference> ApplicationPackageReferences { get { throw null; } }
+        public string DisplayName { get { throw null; } set { } }
+        public bool? EnableInterNodeCommunication { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Compute.Batch.MetadataItem> Metadata { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Compute.Batch.MountConfiguration> MountConfiguration { get { throw null; } }
+        public Azure.Compute.Batch.NetworkConfiguration NetworkConfiguration { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> ResourceTags { get { throw null; } }
         public Azure.Compute.Batch.BatchStartTask StartTask { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchNodeCommunicationMode? TargetNodeCommunicationMode { get { throw null; } set { } }
+        public Azure.Compute.Batch.BatchTaskSchedulingPolicy TaskSchedulingPolicy { get { throw null; } set { } }
+        public int? TaskSlotsPerNode { get { throw null; } set { } }
+        public Azure.Compute.Batch.UpgradePolicy UpgradePolicy { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Compute.Batch.UserAccount> UserAccounts { get { throw null; } }
+        public Azure.Compute.Batch.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
+        public string VmSize { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1652,6 +1808,7 @@ namespace Azure.Compute.Batch
         public System.DateTimeOffset StartTime { get { throw null; } }
         public float TotalCoreHours { get { throw null; } }
         public string VmSize { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolUsageMetrics System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolUsageMetrics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolUsageMetrics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolUsageMetrics System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolUsageMetrics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1664,6 +1821,7 @@ namespace Azure.Compute.Batch
         public System.TimeSpan DedicatedCoreTime { get { throw null; } }
         public System.DateTimeOffset LastUpdateTime { get { throw null; } }
         public System.DateTimeOffset StartTime { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolUsageStatistics System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolUsageStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolUsageStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolUsageStatistics System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolUsageStatistics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1680,6 +1838,7 @@ namespace Azure.Compute.Batch
         public System.Collections.Generic.IList<Azure.Compute.Batch.ResourceFile> ResourceFiles { get { throw null; } }
         public Azure.Compute.Batch.UserIdentity UserIdentity { get { throw null; } set { } }
         public bool? WaitForSuccess { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchStartTask System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchStartTask>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchStartTask>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchStartTask System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchStartTask>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1698,6 +1857,7 @@ namespace Azure.Compute.Batch
         public int RetryCount { get { throw null; } }
         public System.DateTimeOffset StartTime { get { throw null; } }
         public Azure.Compute.Batch.BatchStartTaskState State { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchStartTaskInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchStartTaskInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchStartTaskInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchStartTaskInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchStartTaskInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1737,6 +1897,7 @@ namespace Azure.Compute.Batch
         public System.DateTimeOffset? StartTime { get { throw null; } }
         public Azure.Compute.Batch.BatchSubtaskState? State { get { throw null; } }
         public System.DateTimeOffset? StateTransitionTime { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchSubtask System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchSubtask>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchSubtask>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchSubtask System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchSubtask>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1771,6 +1932,7 @@ namespace Azure.Compute.Batch
         public string NodeAgentSkuId { get { throw null; } }
         public Azure.Compute.Batch.OSType OsType { get { throw null; } }
         public Azure.Compute.Batch.ImageVerificationType VerificationType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchSupportedImage System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchSupportedImage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchSupportedImage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchSupportedImage System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchSupportedImage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1807,6 +1969,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchTaskStatistics Stats { get { throw null; } }
         public string Url { get { throw null; } }
         public Azure.Compute.Batch.UserIdentity UserIdentity { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTask System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTask>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTask>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTask System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTask>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1817,6 +1980,7 @@ namespace Azure.Compute.Batch
     {
         internal BatchTaskAddCollectionResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Compute.Batch.BatchTaskAddResult> Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskAddCollectionResult System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskAddCollectionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskAddCollectionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskAddCollectionResult System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskAddCollectionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1832,6 +1996,7 @@ namespace Azure.Compute.Batch
         public string Location { get { throw null; } }
         public Azure.Compute.Batch.BatchTaskAddStatus Status { get { throw null; } }
         public string TaskId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskAddResult System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskAddResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskAddResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskAddResult System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskAddResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1863,6 +2028,7 @@ namespace Azure.Compute.Batch
         public int? MaxTaskRetryCount { get { throw null; } set { } }
         public System.TimeSpan? MaxWallClockTime { get { throw null; } set { } }
         public System.TimeSpan? RetentionTime { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskConstraints System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskConstraints>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskConstraints>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskConstraints System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskConstraints>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1875,6 +2041,7 @@ namespace Azure.Compute.Batch
         public string ContainerId { get { throw null; } }
         public string Error { get { throw null; } }
         public string State { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskContainerExecutionInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskContainerExecutionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskContainerExecutionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskContainerExecutionInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskContainerExecutionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1884,10 +2051,12 @@ namespace Azure.Compute.Batch
     public partial class BatchTaskContainerSettings : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskContainerSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskContainerSettings>
     {
         public BatchTaskContainerSettings(string imageName) { }
+        public System.Collections.Generic.IList<Azure.Compute.Batch.ContainerHostBatchBindMountEntry> ContainerHostBatchBindMounts { get { throw null; } }
         public string ContainerRunOptions { get { throw null; } set { } }
         public string ImageName { get { throw null; } set { } }
         public Azure.Compute.Batch.ContainerRegistryReference Registry { get { throw null; } set { } }
         public Azure.Compute.Batch.ContainerWorkingDirectory? WorkingDirectory { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskContainerSettings System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskContainerSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskContainerSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskContainerSettings System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskContainerSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1902,6 +2071,7 @@ namespace Azure.Compute.Batch
         public int Failed { get { throw null; } }
         public int Running { get { throw null; } }
         public int Succeeded { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskCounts System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskCounts>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskCounts>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskCounts System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskCounts>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1913,6 +2083,7 @@ namespace Azure.Compute.Batch
         internal BatchTaskCountsResult() { }
         public Azure.Compute.Batch.BatchTaskCounts TaskCounts { get { throw null; } }
         public Azure.Compute.Batch.BatchTaskSlotCounts TaskSlotCounts { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskCountsResult System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskCountsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskCountsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskCountsResult System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskCountsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1938,6 +2109,7 @@ namespace Azure.Compute.Batch
         public int? RequiredSlots { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Compute.Batch.ResourceFile> ResourceFiles { get { throw null; } }
         public Azure.Compute.Batch.UserIdentity UserIdentity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskCreateContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskCreateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskCreateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskCreateContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskCreateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1949,6 +2121,7 @@ namespace Azure.Compute.Batch
         public BatchTaskDependencies() { }
         public System.Collections.Generic.IList<Azure.Compute.Batch.BatchTaskIdRange> TaskIdRanges { get { throw null; } }
         public System.Collections.Generic.IList<string> TaskIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskDependencies System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskDependencies>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskDependencies>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskDependencies System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskDependencies>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1968,6 +2141,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchTaskExecutionResult? Result { get { throw null; } }
         public int RetryCount { get { throw null; } }
         public System.DateTimeOffset? StartTime { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskExecutionInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskExecutionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskExecutionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskExecutionInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskExecutionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1999,6 +2173,7 @@ namespace Azure.Compute.Batch
         public string Code { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Compute.Batch.NameValuePair> Details { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskFailureInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskFailureInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskFailureInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskFailureInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskFailureInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2009,6 +2184,7 @@ namespace Azure.Compute.Batch
     {
         public BatchTaskGroup(System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchTaskCreateContent> value) { }
         public System.Collections.Generic.IList<Azure.Compute.Batch.BatchTaskCreateContent> Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskGroup System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskGroup System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2020,6 +2196,7 @@ namespace Azure.Compute.Batch
         public BatchTaskIdRange(int start, int end) { }
         public int End { get { throw null; } set { } }
         public int Start { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskIdRange System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskIdRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskIdRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskIdRange System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskIdRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2035,6 +2212,7 @@ namespace Azure.Compute.Batch
         public string TaskId { get { throw null; } }
         public Azure.Compute.Batch.BatchTaskState TaskState { get { throw null; } }
         public string TaskUrl { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2045,6 +2223,7 @@ namespace Azure.Compute.Batch
     {
         public BatchTaskSchedulingPolicy(Azure.Compute.Batch.BatchNodeFillType nodeFillType) { }
         public Azure.Compute.Batch.BatchNodeFillType NodeFillType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskSchedulingPolicy System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskSchedulingPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskSchedulingPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskSchedulingPolicy System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskSchedulingPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2059,6 +2238,7 @@ namespace Azure.Compute.Batch
         public int Failed { get { throw null; } }
         public int Running { get { throw null; } }
         public int Succeeded { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskSlotCounts System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskSlotCounts>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskSlotCounts>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskSlotCounts System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskSlotCounts>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2099,6 +2279,7 @@ namespace Azure.Compute.Batch
         public System.TimeSpan WallClockTime { get { throw null; } }
         public float WriteIOGiB { get { throw null; } }
         public long WriteIOps { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskStatistics System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskStatistics System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskStatistics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2132,6 +2313,7 @@ namespace Azure.Compute.Batch
         public string RelativeMountPath { get { throw null; } set { } }
         public string Source { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.CifsMountConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.CifsMountConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.CifsMountConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.CifsMountConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.CifsMountConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2160,7 +2342,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchJobStatistics BatchJobStatistics(string url = null, System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdateTime = default(System.DateTimeOffset), System.TimeSpan userCpuTime = default(System.TimeSpan), System.TimeSpan kernelCpuTime = default(System.TimeSpan), System.TimeSpan wallClockTime = default(System.TimeSpan), long readIOps = (long)0, long writeIOps = (long)0, float readIOGiB = 0f, float writeIOGiB = 0f, long numSucceededTasks = (long)0, long numFailedTasks = (long)0, long numTaskRetries = (long)0, System.TimeSpan waitTime = default(System.TimeSpan)) { throw null; }
         public static Azure.Compute.Batch.BatchNode BatchNode(string id = null, string url = null, Azure.Compute.Batch.BatchNodeState? state = default(Azure.Compute.Batch.BatchNodeState?), Azure.Compute.Batch.SchedulingState? schedulingState = default(Azure.Compute.Batch.SchedulingState?), System.DateTimeOffset? stateTransitionTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastBootTime = default(System.DateTimeOffset?), System.DateTimeOffset? allocationTime = default(System.DateTimeOffset?), string ipAddress = null, string affinityId = null, string vmSize = null, int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? runningTaskSlotsCount = default(int?), int? totalTasksSucceeded = default(int?), System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchTaskInfo> recentTasks = null, Azure.Compute.Batch.BatchStartTask startTask = null, Azure.Compute.Batch.BatchStartTaskInfo startTaskInfo = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchNodeError> errors = null, bool? isDedicated = default(bool?), Azure.Compute.Batch.BatchNodeEndpointConfiguration endpointConfiguration = null, Azure.Compute.Batch.BatchNodeAgentInfo nodeAgentInfo = null, Azure.Compute.Batch.VirtualMachineInfo virtualMachineInfo = null) { throw null; }
         public static Azure.Compute.Batch.BatchNodeAgentInfo BatchNodeAgentInfo(string version = null, System.DateTimeOffset lastUpdateTime = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.Compute.Batch.BatchNodeCounts BatchNodeCounts(int creating = 0, int idle = 0, int offline = 0, int preempted = 0, int rebooting = 0, int reimaging = 0, int running = 0, int starting = 0, int startTaskFailed = 0, int leavingPool = 0, int unknown = 0, int unusable = 0, int waitingForStartTask = 0, int total = 0, int upgradingOs = 0) { throw null; }
+        public static Azure.Compute.Batch.BatchNodeCounts BatchNodeCounts(int creating = 0, int idle = 0, int offline = 0, int preempted = 0, int rebooting = 0, int reimaging = 0, int running = 0, int starting = 0, int startTaskFailed = 0, int leavingPool = 0, int unknown = 0, int unusable = 0, int waitingForStartTask = 0, int deallocated = 0, int deallocating = 0, int total = 0, int upgradingOs = 0) { throw null; }
         public static Azure.Compute.Batch.BatchNodeEndpointConfiguration BatchNodeEndpointConfiguration(System.Collections.Generic.IEnumerable<Azure.Compute.Batch.InboundEndpoint> inboundEndpoints = null) { throw null; }
         public static Azure.Compute.Batch.BatchNodeError BatchNodeError(string code = null, string message = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.NameValuePair> errorDetails = null) { throw null; }
         public static Azure.Compute.Batch.BatchNodeFile BatchNodeFile(string name = null, string url = null, bool? isDirectory = default(bool?), Azure.Compute.Batch.FileProperties properties = null) { throw null; }
@@ -2191,8 +2373,8 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchTaskInfo BatchTaskInfo(string taskUrl = null, string jobId = null, string taskId = null, int? subtaskId = default(int?), Azure.Compute.Batch.BatchTaskState taskState = default(Azure.Compute.Batch.BatchTaskState), Azure.Compute.Batch.BatchTaskExecutionInfo executionInfo = null) { throw null; }
         public static Azure.Compute.Batch.BatchTaskSlotCounts BatchTaskSlotCounts(int active = 0, int running = 0, int completed = 0, int succeeded = 0, int failed = 0) { throw null; }
         public static Azure.Compute.Batch.BatchTaskStatistics BatchTaskStatistics(string url = null, System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdateTime = default(System.DateTimeOffset), System.TimeSpan userCpuTime = default(System.TimeSpan), System.TimeSpan kernelCpuTime = default(System.TimeSpan), System.TimeSpan wallClockTime = default(System.TimeSpan), long readIOps = (long)0, long writeIOps = (long)0, float readIOGiB = 0f, float writeIOGiB = 0f, System.TimeSpan waitTime = default(System.TimeSpan)) { throw null; }
-        public static Azure.Compute.Batch.FileProperties FileProperties(System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), System.DateTimeOffset lastModified = default(System.DateTimeOffset), long contentLength = (long)0, string contentType = null, string fileMode = null) { throw null; }
-        public static Azure.Compute.Batch.ImageReference ImageReference(string publisher = null, string offer = null, string sku = null, string version = null, string virtualMachineImageId = null, string exactVersion = null) { throw null; }
+        public static Azure.Compute.Batch.FileProperties FileProperties(System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), System.DateTimeOffset lastModified = default(System.DateTimeOffset), string contentLength = null, string contentType = null, string fileMode = null) { throw null; }
+        public static Azure.Compute.Batch.ImageReference ImageReference(string publisher = null, string offer = null, string sku = null, string version = null, string virtualMachineImageId = null, string exactVersion = null, string sharedGalleryImageId = null, string communityGalleryImageId = null) { throw null; }
         public static Azure.Compute.Batch.InboundEndpoint InboundEndpoint(string name = null, Azure.Compute.Batch.InboundEndpointProtocol protocol = default(Azure.Compute.Batch.InboundEndpointProtocol), string publicIpAddress = null, string publicFQDN = null, int frontendPort = 0, int backendPort = 0) { throw null; }
         public static Azure.Compute.Batch.InstanceViewStatus InstanceViewStatus(string code = null, string displayStatus = null, Azure.Compute.Batch.StatusLevelTypes? level = default(Azure.Compute.Batch.StatusLevelTypes?), string message = null, System.DateTimeOffset? time = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Compute.Batch.NameValuePair NameValuePair(string name = null, string value = null) { throw null; }
@@ -2210,11 +2392,46 @@ namespace Azure.Compute.Batch
         public System.Collections.Generic.IList<string> ContainerImageNames { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Compute.Batch.ContainerRegistryReference> ContainerRegistries { get { throw null; } }
         public Azure.Compute.Batch.ContainerType Type { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ContainerConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ContainerConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ContainerConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ContainerConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContainerHostBatchBindMountEntry : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ContainerHostBatchBindMountEntry>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerHostBatchBindMountEntry>
+    {
+        public ContainerHostBatchBindMountEntry() { }
+        public bool? IsReadOnly { get { throw null; } set { } }
+        public Azure.Compute.Batch.ContainerHostDataPath? Source { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Compute.Batch.ContainerHostBatchBindMountEntry System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ContainerHostBatchBindMountEntry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ContainerHostBatchBindMountEntry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Compute.Batch.ContainerHostBatchBindMountEntry System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerHostBatchBindMountEntry>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerHostBatchBindMountEntry>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerHostBatchBindMountEntry>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerHostDataPath : System.IEquatable<Azure.Compute.Batch.ContainerHostDataPath>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerHostDataPath(string value) { throw null; }
+        public static Azure.Compute.Batch.ContainerHostDataPath Applications { get { throw null; } }
+        public static Azure.Compute.Batch.ContainerHostDataPath JobPrep { get { throw null; } }
+        public static Azure.Compute.Batch.ContainerHostDataPath Shared { get { throw null; } }
+        public static Azure.Compute.Batch.ContainerHostDataPath Startup { get { throw null; } }
+        public static Azure.Compute.Batch.ContainerHostDataPath Task { get { throw null; } }
+        public static Azure.Compute.Batch.ContainerHostDataPath VfsMounts { get { throw null; } }
+        public bool Equals(Azure.Compute.Batch.ContainerHostDataPath other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Compute.Batch.ContainerHostDataPath left, Azure.Compute.Batch.ContainerHostDataPath right) { throw null; }
+        public static implicit operator Azure.Compute.Batch.ContainerHostDataPath (string value) { throw null; }
+        public static bool operator !=(Azure.Compute.Batch.ContainerHostDataPath left, Azure.Compute.Batch.ContainerHostDataPath right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ContainerRegistryReference : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ContainerRegistryReference>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerRegistryReference>
     {
@@ -2223,6 +2440,7 @@ namespace Azure.Compute.Batch
         public string Password { get { throw null; } set { } }
         public string RegistryServer { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ContainerRegistryReference System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ContainerRegistryReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ContainerRegistryReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ContainerRegistryReference System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerRegistryReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2272,6 +2490,7 @@ namespace Azure.Compute.Batch
         public int DiskSizeGb { get { throw null; } set { } }
         public int LogicalUnitNumber { get { throw null; } set { } }
         public Azure.Compute.Batch.StorageAccountType? StorageAccountType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.DataDisk System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.DataDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.DataDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.DataDisk System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.DataDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2317,6 +2536,7 @@ namespace Azure.Compute.Batch
     {
         public DiffDiskSettings() { }
         public Azure.Compute.Batch.DiffDiskPlacement? Placement { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.DiffDiskSettings System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.DiffDiskSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.DiffDiskSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.DiffDiskSettings System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.DiffDiskSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2346,6 +2566,7 @@ namespace Azure.Compute.Batch
     {
         public DiskEncryptionConfiguration() { }
         public System.Collections.Generic.IList<Azure.Compute.Batch.DiskEncryptionTarget> Targets { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.DiskEncryptionConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.DiskEncryptionConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.DiskEncryptionConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.DiskEncryptionConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.DiskEncryptionConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2411,6 +2632,7 @@ namespace Azure.Compute.Batch
         public EnvironmentSetting(string name) { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.EnvironmentSetting System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.EnvironmentSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.EnvironmentSetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.EnvironmentSetting System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.EnvironmentSetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2440,6 +2662,7 @@ namespace Azure.Compute.Batch
         public ExitCodeMapping(int code, Azure.Compute.Batch.ExitOptions exitOptions) { }
         public int Code { get { throw null; } set { } }
         public Azure.Compute.Batch.ExitOptions ExitOptions { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ExitCodeMapping System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ExitCodeMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ExitCodeMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ExitCodeMapping System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ExitCodeMapping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2452,6 +2675,7 @@ namespace Azure.Compute.Batch
         public int End { get { throw null; } set { } }
         public Azure.Compute.Batch.ExitOptions ExitOptions { get { throw null; } set { } }
         public int Start { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ExitCodeRangeMapping System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ExitCodeRangeMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ExitCodeRangeMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ExitCodeRangeMapping System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ExitCodeRangeMapping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2466,6 +2690,7 @@ namespace Azure.Compute.Batch
         public System.Collections.Generic.IList<Azure.Compute.Batch.ExitCodeMapping> ExitCodes { get { throw null; } }
         public Azure.Compute.Batch.ExitOptions FileUploadError { get { throw null; } set { } }
         public Azure.Compute.Batch.ExitOptions PreProcessingError { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ExitConditions System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ExitConditions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ExitConditions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ExitConditions System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ExitConditions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2477,6 +2702,7 @@ namespace Azure.Compute.Batch
         public ExitOptions() { }
         public Azure.Compute.Batch.DependencyAction? DependencyAction { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchJobAction? JobAction { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ExitOptions System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ExitOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ExitOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ExitOptions System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ExitOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2486,11 +2712,12 @@ namespace Azure.Compute.Batch
     public partial class FileProperties : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.FileProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.FileProperties>
     {
         internal FileProperties() { }
-        public long ContentLength { get { throw null; } }
+        public string ContentLength { get { throw null; } }
         public string ContentType { get { throw null; } }
         public System.DateTimeOffset? CreationTime { get { throw null; } }
         public string FileMode { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.FileProperties System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.FileProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.FileProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.FileProperties System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.FileProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2502,6 +2729,7 @@ namespace Azure.Compute.Batch
         public HttpHeader(string name) { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.HttpHeader System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.HttpHeader>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.HttpHeader>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.HttpHeader System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.HttpHeader>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2511,12 +2739,15 @@ namespace Azure.Compute.Batch
     public partial class ImageReference : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ImageReference>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ImageReference>
     {
         public ImageReference() { }
+        public string CommunityGalleryImageId { get { throw null; } set { } }
         public string ExactVersion { get { throw null; } }
         public string Offer { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
+        public string SharedGalleryImageId { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
         public string VirtualMachineImageId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ImageReference System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ImageReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ImageReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ImageReference System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ImageReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2550,6 +2781,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.InboundEndpointProtocol Protocol { get { throw null; } }
         public string PublicFQDN { get { throw null; } }
         public string PublicIpAddress { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.InboundEndpoint System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.InboundEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.InboundEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.InboundEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.InboundEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2583,6 +2815,7 @@ namespace Azure.Compute.Batch
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Compute.Batch.NetworkSecurityGroupRule> NetworkSecurityGroupRules { get { throw null; } }
         public Azure.Compute.Batch.InboundEndpointProtocol Protocol { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.InboundNatPool System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.InboundNatPool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.InboundNatPool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.InboundNatPool System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.InboundNatPool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2597,6 +2830,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.StatusLevelTypes? Level { get { throw null; } }
         public string Message { get { throw null; } }
         public System.DateTimeOffset? Time { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.InstanceViewStatus System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.InstanceViewStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.InstanceViewStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.InstanceViewStatus System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.InstanceViewStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2628,6 +2862,7 @@ namespace Azure.Compute.Batch
         public int? Gid { get { throw null; } set { } }
         public string SshPrivateKey { get { throw null; } set { } }
         public int? Uid { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.LinuxUserConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.LinuxUserConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.LinuxUserConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.LinuxUserConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.LinuxUserConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2654,8 +2889,10 @@ namespace Azure.Compute.Batch
     }
     public partial class ManagedDisk : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ManagedDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ManagedDisk>
     {
-        public ManagedDisk(Azure.Compute.Batch.StorageAccountType storageAccountType) { }
-        public Azure.Compute.Batch.StorageAccountType StorageAccountType { get { throw null; } set { } }
+        public ManagedDisk() { }
+        public Azure.Compute.Batch.VMDiskSecurityProfile SecurityProfile { get { throw null; } set { } }
+        public Azure.Compute.Batch.StorageAccountType? StorageAccountType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ManagedDisk System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ManagedDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ManagedDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ManagedDisk System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ManagedDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2667,6 +2904,7 @@ namespace Azure.Compute.Batch
         public MetadataItem(string name, string value) { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.MetadataItem System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.MetadataItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.MetadataItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.MetadataItem System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.MetadataItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2680,6 +2918,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.AzureFileShareConfiguration AzureFileShareConfiguration { get { throw null; } set { } }
         public Azure.Compute.Batch.CifsMountConfiguration CifsMountConfiguration { get { throw null; } set { } }
         public Azure.Compute.Batch.NfsMountConfiguration NfsMountConfiguration { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.MountConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.MountConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.MountConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.MountConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.MountConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2692,6 +2931,7 @@ namespace Azure.Compute.Batch
         public System.Collections.Generic.IList<Azure.Compute.Batch.ResourceFile> CommonResourceFiles { get { throw null; } }
         public string CoordinationCommandLine { get { throw null; } set { } }
         public int? NumberOfInstances { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.MultiInstanceSettings System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.MultiInstanceSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.MultiInstanceSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.MultiInstanceSettings System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.MultiInstanceSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2703,6 +2943,7 @@ namespace Azure.Compute.Batch
         internal NameValuePair() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.NameValuePair System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.NameValuePair>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.NameValuePair>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.NameValuePair System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.NameValuePair>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2717,6 +2958,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchPoolEndpointConfiguration EndpointConfiguration { get { throw null; } set { } }
         public Azure.Compute.Batch.PublicIpAddressConfiguration PublicIpAddressConfiguration { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.NetworkConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.NetworkConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.NetworkConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.NetworkConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.NetworkConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2730,6 +2972,7 @@ namespace Azure.Compute.Batch
         public int Priority { get { throw null; } set { } }
         public string SourceAddressPrefix { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SourcePortRanges { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.NetworkSecurityGroupRule System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.NetworkSecurityGroupRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.NetworkSecurityGroupRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.NetworkSecurityGroupRule System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.NetworkSecurityGroupRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2760,6 +3003,7 @@ namespace Azure.Compute.Batch
         public string MountOptions { get { throw null; } set { } }
         public string RelativeMountPath { get { throw null; } set { } }
         public string Source { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.NfsMountConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.NfsMountConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.NfsMountConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.NfsMountConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.NfsMountConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2810,6 +3054,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.DiffDiskSettings EphemeralOSDiskSettings { get { throw null; } set { } }
         public Azure.Compute.Batch.ManagedDisk ManagedDisk { get { throw null; } set { } }
         public bool? WriteAcceleratorEnabled { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.OSDisk System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.OSDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.OSDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.OSDisk System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.OSDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2840,6 +3085,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.OutputFileDestination Destination { get { throw null; } set { } }
         public string FilePattern { get { throw null; } set { } }
         public Azure.Compute.Batch.OutputFileUploadConfig UploadOptions { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.OutputFile System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.OutputFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.OutputFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.OutputFile System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.OutputFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2853,6 +3099,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchNodeIdentityReference IdentityReference { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Compute.Batch.HttpHeader> UploadHeaders { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.OutputFileBlobContainerDestination System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.OutputFileBlobContainerDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.OutputFileBlobContainerDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.OutputFileBlobContainerDestination System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.OutputFileBlobContainerDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2863,6 +3110,7 @@ namespace Azure.Compute.Batch
     {
         public OutputFileDestination() { }
         public Azure.Compute.Batch.OutputFileBlobContainerDestination Container { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.OutputFileDestination System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.OutputFileDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.OutputFileDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.OutputFileDestination System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.OutputFileDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2892,6 +3140,7 @@ namespace Azure.Compute.Batch
     {
         public OutputFileUploadConfig(Azure.Compute.Batch.OutputFileUploadCondition uploadCondition) { }
         public Azure.Compute.Batch.OutputFileUploadCondition UploadCondition { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.OutputFileUploadConfig System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.OutputFileUploadConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.OutputFileUploadConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.OutputFileUploadConfig System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.OutputFileUploadConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2903,6 +3152,7 @@ namespace Azure.Compute.Batch
         public PublicIpAddressConfiguration() { }
         public System.Collections.Generic.IList<string> IpAddressIds { get { throw null; } }
         public Azure.Compute.Batch.IpAddressProvisioningType? IpAddressProvisioningType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.PublicIpAddressConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.PublicIpAddressConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.PublicIpAddressConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.PublicIpAddressConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.PublicIpAddressConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2914,6 +3164,7 @@ namespace Azure.Compute.Batch
         internal RecentBatchJob() { }
         public string Id { get { throw null; } }
         public string Url { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.RecentBatchJob System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.RecentBatchJob>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.RecentBatchJob>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.RecentBatchJob System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.RecentBatchJob>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2926,6 +3177,7 @@ namespace Azure.Compute.Batch
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Compute.Batch.NameValuePair> Values { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ResizeError System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ResizeError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ResizeError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ResizeError System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ResizeError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2942,6 +3194,7 @@ namespace Azure.Compute.Batch
         public string HttpUrl { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchNodeIdentityReference IdentityReference { get { throw null; } set { } }
         public string StorageContainerUrl { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ResourceFile System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ResourceFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ResourceFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ResourceFile System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ResourceFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2958,6 +3211,7 @@ namespace Azure.Compute.Batch
         public System.TimeSpan? PauseTimeBetweenBatches { get { throw null; } set { } }
         public bool? PrioritizeUnhealthyInstances { get { throw null; } set { } }
         public bool? RollbackFailedInstancesOnPolicyBreach { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.RollingUpgradePolicy System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.RollingUpgradePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.RollingUpgradePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.RollingUpgradePolicy System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.RollingUpgradePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2982,12 +3236,31 @@ namespace Azure.Compute.Batch
         public static bool operator !=(Azure.Compute.Batch.SchedulingState left, Azure.Compute.Batch.SchedulingState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityEncryptionTypes : System.IEquatable<Azure.Compute.Batch.SecurityEncryptionTypes>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityEncryptionTypes(string value) { throw null; }
+        public static Azure.Compute.Batch.SecurityEncryptionTypes NonPersistedTPM { get { throw null; } }
+        public static Azure.Compute.Batch.SecurityEncryptionTypes VMGuestStateOnly { get { throw null; } }
+        public bool Equals(Azure.Compute.Batch.SecurityEncryptionTypes other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Compute.Batch.SecurityEncryptionTypes left, Azure.Compute.Batch.SecurityEncryptionTypes right) { throw null; }
+        public static implicit operator Azure.Compute.Batch.SecurityEncryptionTypes (string value) { throw null; }
+        public static bool operator !=(Azure.Compute.Batch.SecurityEncryptionTypes left, Azure.Compute.Batch.SecurityEncryptionTypes right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.SecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.SecurityProfile>
     {
         public SecurityProfile(bool encryptionAtHost, Azure.Compute.Batch.SecurityTypes securityType, Azure.Compute.Batch.UefiSettings uefiSettings) { }
         public bool EncryptionAtHost { get { throw null; } set { } }
         public Azure.Compute.Batch.SecurityTypes SecurityType { get { throw null; } set { } }
         public Azure.Compute.Batch.UefiSettings UefiSettings { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.SecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.SecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.SecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.SecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.SecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3000,6 +3273,7 @@ namespace Azure.Compute.Batch
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SecurityTypes(string value) { throw null; }
+        public static Azure.Compute.Batch.SecurityTypes ConfidentialVM { get { throw null; } }
         public static Azure.Compute.Batch.SecurityTypes TrustedLaunch { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.SecurityTypes other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -3015,6 +3289,7 @@ namespace Azure.Compute.Batch
     {
         public ServiceArtifactReference(string id) { }
         public string Id { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ServiceArtifactReference System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ServiceArtifactReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ServiceArtifactReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ServiceArtifactReference System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ServiceArtifactReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3064,6 +3339,7 @@ namespace Azure.Compute.Batch
         public UefiSettings() { }
         public bool? SecureBootEnabled { get { throw null; } set { } }
         public bool? VTpmEnabled { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.UefiSettings System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UefiSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UefiSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.UefiSettings System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.UefiSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3095,6 +3371,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.AutomaticOsUpgradePolicy AutomaticOsUpgradePolicy { get { throw null; } set { } }
         public Azure.Compute.Batch.UpgradeMode Mode { get { throw null; } set { } }
         public Azure.Compute.Batch.RollingUpgradePolicy RollingUpgradePolicy { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.UpgradePolicy System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UpgradePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UpgradePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.UpgradePolicy System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.UpgradePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3108,6 +3385,7 @@ namespace Azure.Compute.Batch
         public System.DateTimeOffset? EndTime { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchNodeIdentityReference IdentityReference { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.UploadBatchServiceLogsContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UploadBatchServiceLogsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UploadBatchServiceLogsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.UploadBatchServiceLogsContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.UploadBatchServiceLogsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3119,6 +3397,7 @@ namespace Azure.Compute.Batch
         internal UploadBatchServiceLogsResult() { }
         public int NumberOfFilesUploaded { get { throw null; } }
         public string VirtualDirectoryName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.UploadBatchServiceLogsResult System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UploadBatchServiceLogsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UploadBatchServiceLogsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.UploadBatchServiceLogsResult System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.UploadBatchServiceLogsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3133,6 +3412,7 @@ namespace Azure.Compute.Batch
         public string Name { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public Azure.Compute.Batch.WindowsUserConfiguration WindowsUserConfiguration { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.UserAccount System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UserAccount>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UserAccount>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.UserAccount System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.UserAccount>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3145,6 +3425,7 @@ namespace Azure.Compute.Batch
         public string ClientId { get { throw null; } }
         public string PrincipalId { get { throw null; } }
         public string ResourceId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.UserAssignedIdentity System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UserAssignedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UserAssignedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.UserAssignedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.UserAssignedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3156,6 +3437,7 @@ namespace Azure.Compute.Batch
         public UserIdentity() { }
         public Azure.Compute.Batch.AutoUserSpecification AutoUser { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.UserIdentity System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UserIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UserIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.UserIdentity System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.UserIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3177,6 +3459,7 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.SecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.Compute.Batch.ServiceArtifactReference ServiceArtifactReference { get { throw null; } set { } }
         public Azure.Compute.Batch.WindowsConfiguration WindowsConfiguration { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.VirtualMachineConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VirtualMachineConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VirtualMachineConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.VirtualMachineConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VirtualMachineConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3188,11 +3471,23 @@ namespace Azure.Compute.Batch
         internal VirtualMachineInfo() { }
         public Azure.Compute.Batch.ImageReference ImageReference { get { throw null; } }
         public string ScaleSetVmResourceId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.VirtualMachineInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VirtualMachineInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VirtualMachineInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.VirtualMachineInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VirtualMachineInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VirtualMachineInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VirtualMachineInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VMDiskSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VMDiskSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VMDiskSecurityProfile>
+    {
+        public VMDiskSecurityProfile() { }
+        public Azure.Compute.Batch.SecurityEncryptionTypes? SecurityEncryptionType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Compute.Batch.VMDiskSecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VMDiskSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VMDiskSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Compute.Batch.VMDiskSecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VMDiskSecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VMDiskSecurityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VMDiskSecurityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VMExtension : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VMExtension>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VMExtension>
     {
@@ -3206,6 +3501,7 @@ namespace Azure.Compute.Batch
         public System.Collections.Generic.IDictionary<string, string> Settings { get { throw null; } }
         public string Type { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.VMExtension System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VMExtension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VMExtension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.VMExtension System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VMExtension>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3218,6 +3514,7 @@ namespace Azure.Compute.Batch
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Compute.Batch.InstanceViewStatus> Statuses { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Compute.Batch.InstanceViewStatus> SubStatuses { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.VMExtensionInstanceView System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VMExtensionInstanceView>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VMExtensionInstanceView>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.VMExtensionInstanceView System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VMExtensionInstanceView>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3228,6 +3525,7 @@ namespace Azure.Compute.Batch
     {
         public WindowsConfiguration() { }
         public bool? EnableAutomaticUpdates { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.WindowsConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.WindowsConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.WindowsConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.WindowsConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.WindowsConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3238,6 +3536,7 @@ namespace Azure.Compute.Batch
     {
         public WindowsUserConfiguration() { }
         public Azure.Compute.Batch.LoginMode? LoginMode { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.WindowsUserConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.WindowsUserConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.WindowsUserConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.WindowsUserConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.WindowsUserConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
