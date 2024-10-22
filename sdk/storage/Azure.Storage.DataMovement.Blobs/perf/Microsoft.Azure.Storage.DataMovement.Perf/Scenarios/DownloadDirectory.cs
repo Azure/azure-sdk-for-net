@@ -8,26 +8,26 @@ using Microsoft.Azure.Storage.Blob;
 
 namespace Microsoft.Azure.Storage.DataMovement.Perf
 {
-    public class UploadDirectory : DirectoryTransferTest<DirectoryTransferOptions>
+    public class DownloadDirectory : DirectoryTransferTest<DirectoryTransferOptions>
     {
-        private string _sourceDirectory;
-        private CloudBlobContainer _destinationContainer;
+        private CloudBlobContainer _sourceContainer;
+        private string _destinationDirectory;
 
-        public UploadDirectory(DirectoryTransferOptions options) : base(options)
+        public DownloadDirectory(DirectoryTransferOptions options) : base(options)
         {
         }
 
         public override async Task GlobalSetupAsync()
         {
             await base.GlobalSetupAsync();
-            _sourceDirectory = CreateLocalDirectory(populate: true);
-            _destinationContainer = await CreateBlobContainerAsync();
+            _sourceContainer = await CreateBlobContainerAsync(populate: true);
+            _destinationDirectory = CreateLocalDirectory();
         }
 
         public override async Task GlobalCleanupAsync()
         {
-            System.IO.Directory.Delete(_sourceDirectory, true);
-            await _destinationContainer.DeleteIfExistsAsync();
+            await _sourceContainer.DeleteIfExistsAsync();
+            System.IO.Directory.Delete(_destinationDirectory, true);
             await base.GlobalCleanupAsync();
         }
 
@@ -38,10 +38,10 @@ namespace Microsoft.Azure.Storage.DataMovement.Perf
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            TransferStatus transfer = await TransferManager.UploadDirectoryAsync(
-                _sourceDirectory,
-                _destinationContainer.GetDirectoryReference(string.Empty),
-                options: null,
+            TransferStatus transfer = await TransferManager.DownloadDirectoryAsync(
+                _sourceContainer.GetDirectoryReference(string.Empty),
+                _destinationDirectory,
+                null,
                 DefaultTransferContext,
                 cancellationToken);
             AssertTransferStatus(transfer);

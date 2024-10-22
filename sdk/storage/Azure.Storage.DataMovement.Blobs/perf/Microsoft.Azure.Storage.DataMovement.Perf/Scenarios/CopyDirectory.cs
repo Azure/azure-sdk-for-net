@@ -8,25 +8,25 @@ using Microsoft.Azure.Storage.Blob;
 
 namespace Microsoft.Azure.Storage.DataMovement.Perf
 {
-    public class UploadDirectory : DirectoryTransferTest<DirectoryTransferOptions>
+    public class CopyDirectory : DirectoryTransferTest<DirectoryTransferOptions>
     {
-        private string _sourceDirectory;
+        private CloudBlobContainer _sourceContainer;
         private CloudBlobContainer _destinationContainer;
 
-        public UploadDirectory(DirectoryTransferOptions options) : base(options)
+        public CopyDirectory(DirectoryTransferOptions options) : base(options)
         {
         }
 
         public override async Task GlobalSetupAsync()
         {
             await base.GlobalSetupAsync();
-            _sourceDirectory = CreateLocalDirectory(populate: true);
+            _sourceContainer = await CreateBlobContainerAsync(populate: true);
             _destinationContainer = await CreateBlobContainerAsync();
         }
 
         public override async Task GlobalCleanupAsync()
         {
-            System.IO.Directory.Delete(_sourceDirectory, true);
+            await _sourceContainer.DeleteIfExistsAsync();
             await _destinationContainer.DeleteIfExistsAsync();
             await base.GlobalCleanupAsync();
         }
@@ -38,9 +38,10 @@ namespace Microsoft.Azure.Storage.DataMovement.Perf
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            TransferStatus transfer = await TransferManager.UploadDirectoryAsync(
-                _sourceDirectory,
+            TransferStatus transfer = await TransferManager.CopyDirectoryAsync(
+                _sourceContainer.GetDirectoryReference(string.Empty),
                 _destinationContainer.GetDirectoryReference(string.Empty),
+                CopyMethod.ServiceSideSyncCopy,
                 options: null,
                 DefaultTransferContext,
                 cancellationToken);
