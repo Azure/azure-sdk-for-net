@@ -10,7 +10,7 @@ namespace Azure.Core.Serialization
     /// <summary>
     /// A collection of extension methods for Utf8JsonWriter. More complex objects will written by calling the extension methods
     /// for simpler objects. For example, a Polygon will be output to the writer by outputting the LineStrings which compose its
-    /// rings. In turn, a LineString will be outbut to the writer by outputting its GeographyPoints
+    /// rings. In turn, a LineString will be output to the writer by outputting its GeographyPoints
     /// </summary>
     internal static class Utf8JsonWriterExtensions
     {

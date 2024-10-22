@@ -56,11 +56,12 @@ namespace Azure.Communication.CallAutomation
             // Try remove the item - if successful, return it as keyValuePair
             if (matchingKvp.Key != default && _eventBacklog.TryRemove(matchingKvp.Key, out var returnedValue))
             {
-                matchingEvent = new KeyValuePair<string, CallAutomationEventBase>(matchingEvent.Key, returnedValue.Item1);
+                matchingEvent = new KeyValuePair<string, CallAutomationEventBase>(matchingKvp.Key, returnedValue.Item1);
                 return true;
             }
             else
             {
+                matchingEvent = default;
                 return false;
             }
         }
