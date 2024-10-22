@@ -3,7 +3,7 @@
 
 parameters:
   ServiceDirectory: ''
-  SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+  SubscriptionConfiguration: $(SubscriptionConfiguration)
   ServiceConnection: not-specified
   ResourceType: test
   EnvVars: {}
