@@ -11,7 +11,6 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Utility
 {
     [TestFixture]
-    [Parallelizable(ParallelScope.Self)]
     public class CiInfoProviderTests
     {
         private Dictionary<string, string> _originalEnvironmentVariables = new();

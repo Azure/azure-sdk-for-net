@@ -44,7 +44,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
         {
             string GIT_VERSION_COMMAND = "git --version";
             string GIT_REV_PARSE = "git rev-parse --is-inside-work-tree";
-            string GIT_COMMIT_MESSAGE_COMMAND = "git log -1 --pretty=%B";
+            string GIT_COMMIT_MESSAGE_COMMAND = "git log -1 --pretty=format:\"%s\"";
 
             if (ciInfo.Provider == CIConstants.s_gITHUB_ACTIONS &&
             Environment.GetEnvironmentVariable("GITHUB_EVENT_NAME") == "pull_request")
