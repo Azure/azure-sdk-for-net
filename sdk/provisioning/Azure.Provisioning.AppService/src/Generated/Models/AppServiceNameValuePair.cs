@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Name value pair.
 /// </summary>
-public partial class AppServiceNameValuePair : ProvisioningConstruct
+public partial class AppServiceNameValuePair : ProvisionableConstruct
 {
     /// <summary>
     /// Pair name.

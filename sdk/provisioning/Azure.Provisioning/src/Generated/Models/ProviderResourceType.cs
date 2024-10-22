@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ProviderResourceType.
 /// </summary>
-public partial class ProviderResourceType : ProvisioningConstruct
+public partial class ProviderResourceType : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the ResourceType.

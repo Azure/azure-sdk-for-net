@@ -15,7 +15,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// A class representing the ContainerRegistryRun data model.             Run
 /// resource properties
 /// </summary>
-public partial class ContainerRegistryRunData : ProvisioningConstruct
+public partial class ContainerRegistryRunData : ProvisionableConstruct
 {
     /// <summary>
     /// The unique identifier for the run.

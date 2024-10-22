@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// Permissions the identity has for keys, secrets, certificates and storage.
 /// </summary>
-public partial class IdentityAccessPermissions : ProvisioningConstruct
+public partial class IdentityAccessPermissions : ProvisionableConstruct
 {
     /// <summary>
     /// Permissions to keys.

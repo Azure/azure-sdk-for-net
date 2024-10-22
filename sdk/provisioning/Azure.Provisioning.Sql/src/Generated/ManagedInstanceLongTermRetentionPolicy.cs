@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceLongTermRetentionPolicy.
 /// </summary>
-public partial class ManagedInstanceLongTermRetentionPolicy : Resource
+public partial class ManagedInstanceLongTermRetentionPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -68,15 +68,15 @@ public partial class ManagedInstanceLongTermRetentionPolicy : Resource
     /// <summary>
     /// Creates a new ManagedInstanceLongTermRetentionPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ManagedInstanceLongTermRetentionPolicy resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceLongTermRetentionPolicy.</param>
-    public ManagedInstanceLongTermRetentionPolicy(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies", resourceVersion ?? "2021-11-01")
+    public ManagedInstanceLongTermRetentionPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _monthlyRetention = BicepValue<string>.DefineProperty(this, "MonthlyRetention", ["properties", "monthlyRetention"]);
@@ -94,11 +94,6 @@ public partial class ManagedInstanceLongTermRetentionPolicy : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
@@ -108,7 +103,7 @@ public partial class ManagedInstanceLongTermRetentionPolicy : Resource
     /// Creates a reference to an existing
     /// ManagedInstanceLongTermRetentionPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ManagedInstanceLongTermRetentionPolicy resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -116,6 +111,6 @@ public partial class ManagedInstanceLongTermRetentionPolicy : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceLongTermRetentionPolicy.</param>
     /// <returns>The existing ManagedInstanceLongTermRetentionPolicy resource.</returns>
-    public static ManagedInstanceLongTermRetentionPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceLongTermRetentionPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

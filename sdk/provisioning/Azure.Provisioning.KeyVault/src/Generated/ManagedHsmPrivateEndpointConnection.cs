@@ -17,7 +17,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// ManagedHsmPrivateEndpointConnection.
 /// </summary>
-public partial class ManagedHsmPrivateEndpointConnection : Resource
+public partial class ManagedHsmPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// Name of the private endpoint connection associated with the managed hsm
@@ -90,15 +90,15 @@ public partial class ManagedHsmPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new ManagedHsmPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ManagedHsmPrivateEndpointConnection resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedHsmPrivateEndpointConnection.</param>
-    public ManagedHsmPrivateEndpointConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.KeyVault/managedHSMs/privateEndpointConnections", resourceVersion ?? "2023-07-01")
+    public ManagedHsmPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.KeyVault/managedHSMs/privateEndpointConnections", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -118,11 +118,6 @@ public partial class ManagedHsmPrivateEndpointConnection : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2023-08-01-PREVIEW.
         /// </summary>
@@ -157,7 +152,7 @@ public partial class ManagedHsmPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing ManagedHsmPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ManagedHsmPrivateEndpointConnection resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -165,6 +160,6 @@ public partial class ManagedHsmPrivateEndpointConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedHsmPrivateEndpointConnection.</param>
     /// <returns>The existing ManagedHsmPrivateEndpointConnection resource.</returns>
-    public static ManagedHsmPrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ManagedHsmPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBThroughputPoolAccount.
 /// </summary>
-public partial class CosmosDBThroughputPoolAccount : Resource
+public partial class CosmosDBThroughputPoolAccount : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB global database account in a Throughput Pool.
@@ -69,15 +69,15 @@ public partial class CosmosDBThroughputPoolAccount : Resource
     /// <summary>
     /// Creates a new CosmosDBThroughputPoolAccount.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CosmosDBThroughputPoolAccount
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBThroughputPoolAccount.</param>
-    public CosmosDBThroughputPoolAccount(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/throughputPools/throughputPoolAccounts", resourceVersion ?? "2024-02-15-preview")
+    public CosmosDBThroughputPoolAccount(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/throughputPools/throughputPoolAccounts", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _accountLocation = BicepValue<AzureLocation>.DefineProperty(this, "AccountLocation", ["properties", "accountLocation"]);
@@ -94,16 +94,11 @@ public partial class CosmosDBThroughputPoolAccount : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-02-15-preview.
-        /// </summary>
-        public static readonly string V2024_02_15_preview = "2024-02-15-preview";
     }
-
     /// <summary>
     /// Creates a reference to an existing CosmosDBThroughputPoolAccount.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CosmosDBThroughputPoolAccount
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -111,6 +106,6 @@ public partial class CosmosDBThroughputPoolAccount : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBThroughputPoolAccount.</param>
     /// <returns>The existing CosmosDBThroughputPoolAccount resource.</returns>
-    public static CosmosDBThroughputPoolAccount FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBThroughputPoolAccount FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlPrivateEndpointConnection.
 /// </summary>
-public partial class PostgreSqlPrivateEndpointConnection : Resource
+public partial class PostgreSqlPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The System.String to use.
@@ -62,15 +62,15 @@ public partial class PostgreSqlPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new PostgreSqlPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// PostgreSqlPrivateEndpointConnection resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlPrivateEndpointConnection.</param>
-    public PostgreSqlPrivateEndpointConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DBforPostgreSQL/servers/privateEndpointConnections", resourceVersion ?? "2018-06-01")
+    public PostgreSqlPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/servers/privateEndpointConnections", resourceVersion ?? "2018-06-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<PostgreSqlPrivateLinkServiceConnectionStateProperty>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -87,11 +87,6 @@ public partial class PostgreSqlPrivateEndpointConnection : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2018-06-01-privatepreview.
-        /// </summary>
-        public static readonly string V2018_06_01_privatepreview = "2018-06-01-privatepreview";
-
-        /// <summary>
         /// 2018-06-01.
         /// </summary>
         public static readonly string V2018_06_01 = "2018-06-01";
@@ -100,7 +95,7 @@ public partial class PostgreSqlPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing PostgreSqlPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// PostgreSqlPrivateEndpointConnection resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -108,6 +103,6 @@ public partial class PostgreSqlPrivateEndpointConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlPrivateEndpointConnection.</param>
     /// <returns>The existing PostgreSqlPrivateEndpointConnection resource.</returns>
-    public static PostgreSqlPrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// GraphResourceGetResult.
 /// </summary>
-public partial class GraphResourceGetResult : Resource
+public partial class GraphResourceGetResult : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB graph resource name.
@@ -76,15 +76,15 @@ public partial class GraphResourceGetResult : Resource
     /// <summary>
     /// Creates a new GraphResourceGetResult.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the GraphResourceGetResult resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the GraphResourceGetResult.</param>
-    public GraphResourceGetResult(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/graphs", resourceVersion ?? "2024-08-15")
+    public GraphResourceGetResult(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/graphs", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -102,11 +102,6 @@ public partial class GraphResourceGetResult : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -236,7 +231,7 @@ public partial class GraphResourceGetResult : Resource
     /// <summary>
     /// Creates a reference to an existing GraphResourceGetResult.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the GraphResourceGetResult resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -244,6 +239,6 @@ public partial class GraphResourceGetResult : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the GraphResourceGetResult.</param>
     /// <returns>The existing GraphResourceGetResult resource.</returns>
-    public static GraphResourceGetResult FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static GraphResourceGetResult FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

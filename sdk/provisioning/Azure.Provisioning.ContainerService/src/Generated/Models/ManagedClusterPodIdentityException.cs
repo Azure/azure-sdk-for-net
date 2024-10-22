@@ -14,7 +14,7 @@ namespace Azure.Provisioning.ContainerService;
 /// Pod/Application](https://azure.github.io/aad-pod-identity/docs/configure/application_exception/)
 /// for more details.
 /// </summary>
-public partial class ManagedClusterPodIdentityException : ProvisioningConstruct
+public partial class ManagedClusterPodIdentityException : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the pod identity exception.

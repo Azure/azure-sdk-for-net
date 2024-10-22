@@ -11,7 +11,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// Live trace category configuration of a Microsoft.SignalRService resource.
 /// </summary>
-public partial class LiveTraceCategory : ProvisioningConstruct
+public partial class LiveTraceCategory : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets the live trace category&apos;s name.             Available

@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Profile for the container service agent pool.
 /// </summary>
-public partial class ManagedClusterAgentPoolProfile : ProvisioningConstruct
+public partial class ManagedClusterAgentPoolProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Windows agent pool names must be 6 characters or less.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The properties of the source code repository.
 /// </summary>
-public partial class SourceCodeRepoProperties : ProvisioningConstruct
+public partial class SourceCodeRepoProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The type of source control service.

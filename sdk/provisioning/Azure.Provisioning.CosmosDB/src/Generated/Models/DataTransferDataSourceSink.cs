@@ -21,7 +21,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// and
 /// Azure.ResourceManager.CosmosDB.Models.CosmosSqlDataTransferDataSourceSink.
 /// </summary>
-public partial class DataTransferDataSourceSink : ProvisioningConstruct
+public partial class DataTransferDataSourceSink : ProvisionableConstruct
 {
     /// <summary>
     /// Creates a new DataTransferDataSourceSink.

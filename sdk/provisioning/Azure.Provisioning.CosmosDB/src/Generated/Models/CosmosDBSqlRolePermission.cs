@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The set of data plane operations permitted through this Role Definition.
 /// </summary>
-public partial class CosmosDBSqlRolePermission : ProvisioningConstruct
+public partial class CosmosDBSqlRolePermission : ProvisionableConstruct
 {
     /// <summary>
     /// An array of data actions that are allowed.

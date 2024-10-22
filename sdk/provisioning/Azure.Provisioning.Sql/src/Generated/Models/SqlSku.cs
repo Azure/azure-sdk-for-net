@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// An ARM Resource SKU.
 /// </summary>
-public partial class SqlSku : ProvisioningConstruct
+public partial class SqlSku : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the SKU, typically, a letter + Number code, e.g. P3.

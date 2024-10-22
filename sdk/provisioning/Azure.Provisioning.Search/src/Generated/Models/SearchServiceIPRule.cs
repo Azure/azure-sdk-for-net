@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Search;
 /// <summary>
 /// The IP restriction rule of the Azure AI Search service.
 /// </summary>
-public partial class SearchServiceIPRule : ProvisioningConstruct
+public partial class SearchServiceIPRule : ProvisionableConstruct
 {
     /// <summary>
     /// Value corresponding to a single IPv4 address (eg., 123.1.2.3) or an IP

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// Properties of Cognitive Services account deployment model.
 /// </summary>
-public partial class CognitiveServicesAccountDeploymentModel : ProvisioningConstruct
+public partial class CognitiveServicesAccountDeploymentModel : ProvisionableConstruct
 {
     /// <summary>
     /// Deployment model format.

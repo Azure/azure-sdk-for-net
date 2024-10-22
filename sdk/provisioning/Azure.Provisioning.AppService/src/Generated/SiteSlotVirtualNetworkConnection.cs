@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotVirtualNetworkConnection.
 /// </summary>
-public partial class SiteSlotVirtualNetworkConnection : Resource
+public partial class SiteSlotVirtualNetworkConnection : ProvisionableResource
 {
     /// <summary>
     /// Name of an existing Virtual Network.
@@ -96,15 +96,15 @@ public partial class SiteSlotVirtualNetworkConnection : Resource
     /// <summary>
     /// Creates a new SiteSlotVirtualNetworkConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteSlotVirtualNetworkConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotVirtualNetworkConnection.</param>
-    public SiteSlotVirtualNetworkConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/slots/virtualNetworkConnections", resourceVersion ?? "2024-04-01")
+    public SiteSlotVirtualNetworkConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/virtualNetworkConnections", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _certBlob = BicepValue<string>.DefineProperty(this, "CertBlob", ["properties", "certBlob"]);
@@ -284,7 +284,7 @@ public partial class SiteSlotVirtualNetworkConnection : Resource
     /// <summary>
     /// Creates a reference to an existing SiteSlotVirtualNetworkConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteSlotVirtualNetworkConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -292,6 +292,6 @@ public partial class SiteSlotVirtualNetworkConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotVirtualNetworkConnection.</param>
     /// <returns>The existing SiteSlotVirtualNetworkConnection resource.</returns>
-    public static SiteSlotVirtualNetworkConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SiteSlotVirtualNetworkConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

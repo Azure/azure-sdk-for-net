@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The network rule set for a container registry.
 /// </summary>
-public partial class ContainerRegistryNetworkRuleSet : ProvisioningConstruct
+public partial class ContainerRegistryNetworkRuleSet : ProvisionableConstruct
 {
     /// <summary>
     /// The default action of allow or deny when no other rules match.

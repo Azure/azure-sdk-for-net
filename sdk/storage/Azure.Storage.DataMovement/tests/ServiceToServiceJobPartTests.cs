@@ -145,10 +145,12 @@ namespace Azure.Storage.DataMovement.Tests
 
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = GetPartQueueChunkTask();
 
-            ServiceToServiceTransferJob job = new(
+            TransferJobInternal job = new(
                 new DataTransfer(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
+                ServiceToServiceJobPart.CreateJobPartAsync,
+                ServiceToServiceJobPart.CreateJobPartAsync,
                 new DataTransferOptions(),
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
@@ -156,7 +158,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new ClientDiagnostics(ClientOptions.Default));
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job,
-                1);
+                1) as ServiceToServiceJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
             // Act
@@ -212,10 +214,12 @@ namespace Azure.Storage.DataMovement.Tests
 
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = GetPartQueueChunkTask();
 
-            ServiceToServiceTransferJob job = new(
+            TransferJobInternal job = new(
                 new DataTransfer(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
+                ServiceToServiceJobPart.CreateJobPartAsync,
+                ServiceToServiceJobPart.CreateJobPartAsync,
                 new DataTransferOptions(),
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
@@ -223,7 +227,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new ClientDiagnostics(ClientOptions.Default));
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job,
-                1);
+                1) as ServiceToServiceJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
             await jobPart.ProcessPartToChunkAsync();

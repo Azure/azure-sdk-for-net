@@ -77,7 +77,14 @@ public class CloudMachineInfrastructure
             UserAssignedIdentities = { { BicepFunction.Interpolate($"{Identity.Id}").Compile().ToString(), new UserAssignedIdentityDetails() } }
         };
 
-        _storage = StorageResources.CreateAccount("cm_storage");
+        _storage =
+            new StorageAccount("cm_storage", StorageAccount.ResourceVersions.V2023_01_01)
+            {
+                Kind = StorageKind.StorageV2,
+                Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                IsHnsEnabled = true,
+                AllowBlobPublicAccess = false
+            };
         _storage.Identity = managedServiceIdentity;
         _storage.Name = _cmid;
 
@@ -110,7 +117,7 @@ public class CloudMachineInfrastructure
             Name = "cm_servicebus_topic_private",
             Parent = _serviceBusNamespace,
             MaxMessageSizeInKilobytes = 256,
-            DefaultMessageTimeToLive = new StringLiteral("P14D"),
+            DefaultMessageTimeToLive = TimeSpan.FromDays(14),
             RequiresDuplicateDetection = false,
             EnableBatchedOperations = true,
             SupportOrdering = true,
@@ -121,9 +128,9 @@ public class CloudMachineInfrastructure
             Name = SB_PRIVATE_SUB,
             Parent = _serviceBusTopic_private,
             IsClientAffine = false,
-            LockDuration = new StringLiteral("PT30S"),
+            LockDuration = TimeSpan.FromSeconds(30),
             RequiresSession = false,
-            DefaultMessageTimeToLive = new StringLiteral("P14D"),
+            DefaultMessageTimeToLive = TimeSpan.FromDays(14),
             DeadLetteringOnFilterEvaluationExceptions = true,
             DeadLetteringOnMessageExpiration = true,
             MaxDeliveryCount = 10,
@@ -135,7 +142,7 @@ public class CloudMachineInfrastructure
             Name = "cm_servicebus_default_topic",
             Parent = _serviceBusNamespace,
             MaxMessageSizeInKilobytes = 256,
-            DefaultMessageTimeToLive = new StringLiteral("P14D"),
+            DefaultMessageTimeToLive = TimeSpan.FromDays(14),
             RequiresDuplicateDetection = false,
             EnableBatchedOperations = true,
             SupportOrdering = true,
@@ -146,9 +153,9 @@ public class CloudMachineInfrastructure
             Name = "cm_servicebus_subscription_default",
             Parent = _serviceBusTopic_default,
             IsClientAffine = false,
-            LockDuration = new StringLiteral("PT30S"),
+            LockDuration = TimeSpan.FromSeconds(30),
             RequiresSession = false,
-            DefaultMessageTimeToLive = new StringLiteral("P14D"),
+            DefaultMessageTimeToLive = TimeSpan.FromDays(14),
             DeadLetteringOnFilterEvaluationExceptions = true,
             DeadLetteringOnMessageExpiration = true,
             MaxDeliveryCount = 10,
@@ -197,7 +204,7 @@ public class CloudMachineInfrastructure
         };
     }
 
-    public void AddResource(NamedProvisioningConstruct resource)
+    public void AddResource(NamedProvisionableConstruct resource)
     {
         _resources.Add(resource);
     }
@@ -206,7 +213,7 @@ public class CloudMachineInfrastructure
         resource.AddTo(this);
     }
 
-    public ProvisioningPlan Build(ProvisioningContext? context = null)
+    public ProvisioningPlan Build(ProvisioningBuildOptions? context = null)
     {
         // Always add a default location parameter.
         // azd assumes there will be a location parameter for every module.
@@ -239,7 +246,7 @@ public class CloudMachineInfrastructure
         var role = ServiceBusBuiltInRole.AzureServiceBusDataSender;
         RoleAssignment roleAssignment = new RoleAssignment("cm_servicebus_role");
         roleAssignment.Name = BicepFunction.CreateGuid(_serviceBusNamespace.Id, Identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()));
-        roleAssignment.Scope = new IdentifierExpression(_serviceBusNamespace.IdentifierName);
+        roleAssignment.Scope = new IdentifierExpression(_serviceBusNamespace.BicepIdentifier);
         roleAssignment.PrincipalType = RoleManagementPrincipalType.ServicePrincipal;
         roleAssignment.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString());
         roleAssignment.PrincipalId = Identity.PrincipalId;

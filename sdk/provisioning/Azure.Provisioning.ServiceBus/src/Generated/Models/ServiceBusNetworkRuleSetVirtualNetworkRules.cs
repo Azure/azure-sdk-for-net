@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// Description of VirtualNetworkRules - NetworkRules resource.
 /// </summary>
-public partial class ServiceBusNetworkRuleSetVirtualNetworkRules : ProvisioningConstruct
+public partial class ServiceBusNetworkRuleSetVirtualNetworkRules : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets Id.

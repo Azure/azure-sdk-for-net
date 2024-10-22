@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Settings for overrides when upgrading a cluster.
 /// </summary>
-public partial class UpgradeOverrideSettings : ProvisioningConstruct
+public partial class UpgradeOverrideSettings : ProvisionableConstruct
 {
     /// <summary>
     /// Whether to force upgrade the cluster. Note that this option instructs

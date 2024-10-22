@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// The password that will be used for authenticating the token of a container
 /// registry.
 /// </summary>
-public partial class ContainerRegistryTokenPassword : ProvisioningConstruct
+public partial class ContainerRegistryTokenPassword : ProvisionableConstruct
 {
     /// <summary>
     /// The creation datetime of the password.

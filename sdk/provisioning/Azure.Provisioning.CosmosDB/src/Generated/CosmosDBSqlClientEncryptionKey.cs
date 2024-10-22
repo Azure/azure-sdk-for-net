@@ -15,7 +15,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBSqlClientEncryptionKey.
 /// </summary>
-public partial class CosmosDBSqlClientEncryptionKey : Resource
+public partial class CosmosDBSqlClientEncryptionKey : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB ClientEncryptionKey name.
@@ -50,15 +50,15 @@ public partial class CosmosDBSqlClientEncryptionKey : Resource
     /// <summary>
     /// Creates a new CosmosDBSqlClientEncryptionKey.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CosmosDBSqlClientEncryptionKey
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlClientEncryptionKey.</param>
-    public CosmosDBSqlClientEncryptionKey(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/clientEncryptionKeys", resourceVersion ?? "2024-08-15")
+    public CosmosDBSqlClientEncryptionKey(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/clientEncryptionKeys", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _resource = BicepValue<CosmosDBSqlClientEncryptionKeyResourceInfo>.DefineProperty(this, "Resource", ["properties", "resource"], isRequired: true);
@@ -72,11 +72,6 @@ public partial class CosmosDBSqlClientEncryptionKey : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -206,7 +201,7 @@ public partial class CosmosDBSqlClientEncryptionKey : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBSqlClientEncryptionKey.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CosmosDBSqlClientEncryptionKey
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -214,6 +209,6 @@ public partial class CosmosDBSqlClientEncryptionKey : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlClientEncryptionKey.</param>
     /// <returns>The existing CosmosDBSqlClientEncryptionKey resource.</returns>
-    public static CosmosDBSqlClientEncryptionKey FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBSqlClientEncryptionKey FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

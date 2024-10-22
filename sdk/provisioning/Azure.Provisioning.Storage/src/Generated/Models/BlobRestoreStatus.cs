@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Blob restore status.
 /// </summary>
-public partial class BlobRestoreStatus : ProvisioningConstruct
+public partial class BlobRestoreStatus : ProvisionableConstruct
 {
     /// <summary>
     /// The status of blob restore progress. Possible values are: - InProgress:

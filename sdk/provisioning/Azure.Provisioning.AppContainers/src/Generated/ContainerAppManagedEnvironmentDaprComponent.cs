@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppManagedEnvironmentDaprComponent.
 /// </summary>
-public partial class ContainerAppManagedEnvironmentDaprComponent : Resource
+public partial class ContainerAppManagedEnvironmentDaprComponent : ProvisionableResource
 {
     /// <summary>
     /// Name of the Dapr Component.
@@ -93,7 +93,7 @@ public partial class ContainerAppManagedEnvironmentDaprComponent : Resource
     /// <summary>
     /// Creates a new ContainerAppManagedEnvironmentDaprComponent.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ContainerAppManagedEnvironmentDaprComponent resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
@@ -101,8 +101,8 @@ public partial class ContainerAppManagedEnvironmentDaprComponent : Resource
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentDaprComponent.</param>
-    public ContainerAppManagedEnvironmentDaprComponent(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.App/managedEnvironments/daprComponents", resourceVersion ?? "2024-03-01")
+    public ContainerAppManagedEnvironmentDaprComponent(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/daprComponents", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _componentType = BicepValue<string>.DefineProperty(this, "ComponentType", ["properties", "componentType"]);
@@ -123,11 +123,6 @@ public partial class ContainerAppManagedEnvironmentDaprComponent : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -153,7 +148,7 @@ public partial class ContainerAppManagedEnvironmentDaprComponent : Resource
     /// Creates a reference to an existing
     /// ContainerAppManagedEnvironmentDaprComponent.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ContainerAppManagedEnvironmentDaprComponent resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
@@ -162,6 +157,6 @@ public partial class ContainerAppManagedEnvironmentDaprComponent : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentDaprComponent.</param>
     /// <returns>The existing ContainerAppManagedEnvironmentDaprComponent resource.</returns>
-    public static ContainerAppManagedEnvironmentDaprComponent FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppManagedEnvironmentDaprComponent FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

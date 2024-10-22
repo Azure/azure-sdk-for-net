@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Search;
 /// Describes the properties of an existing Shared Private Link Resource
 /// managed by the search service.
 /// </summary>
-public partial class SharedSearchServicePrivateLinkResourceProperties : ProvisioningConstruct
+public partial class SharedSearchServicePrivateLinkResourceProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Status of the shared private link resource. Valid values are Pending,

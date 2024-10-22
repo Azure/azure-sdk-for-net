@@ -12,7 +12,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// Feature of a resource, which controls the runtime behavior.
 /// </summary>
-public partial class SignalRFeature : ProvisioningConstruct
+public partial class SignalRFeature : ProvisionableConstruct
 {
     /// <summary>
     /// FeatureFlags is the supported features of Azure SignalR service.

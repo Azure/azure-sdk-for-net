@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ContainerService;
 /// helping to reduce attack surface area. Here are settings for the security
 /// profile.
 /// </summary>
-public partial class ManagedClusterSecurityProfileImageCleaner : ProvisioningConstruct
+public partial class ManagedClusterSecurityProfileImageCleaner : ProvisionableConstruct
 {
     /// <summary>
     /// Whether to enable Image Cleaner on AKS cluster.

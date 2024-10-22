@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Properties of the Queue info for event subscription.
 /// </summary>
-public partial class QueueInfo : ProvisioningConstruct
+public partial class QueueInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Maximum period in seconds in which once the message is in received (by
@@ -80,6 +80,6 @@ public partial class QueueInfo : ProvisioningConstruct
         _receiveLockDurationInSeconds = BicepValue<int>.DefineProperty(this, "ReceiveLockDurationInSeconds", ["receiveLockDurationInSeconds"]);
         _maxDeliveryCount = BicepValue<int>.DefineProperty(this, "MaxDeliveryCount", ["maxDeliveryCount"]);
         _deadLetterDestinationWithResourceIdentity = BicepValue<DeadLetterWithResourceIdentity>.DefineProperty(this, "DeadLetterDestinationWithResourceIdentity", ["deadLetterDestinationWithResourceIdentity"]);
-        _eventTimeToLive = BicepValue<TimeSpan>.DefineProperty(this, "EventTimeToLive", ["eventTimeToLive"]);
+        _eventTimeToLive = BicepValue<TimeSpan>.DefineProperty(this, "EventTimeToLive", ["eventTimeToLive"], format: "P");
     }
 }

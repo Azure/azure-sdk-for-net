@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Azure Files or Blob Storage access information value for dictionary storage.
 /// </summary>
-public partial class AppServiceStorageAccessInfo : ProvisioningConstruct
+public partial class AppServiceStorageAccessInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Type of storage.

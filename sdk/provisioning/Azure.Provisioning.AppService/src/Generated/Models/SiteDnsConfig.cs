@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// The SiteDnsConfig.
 /// </summary>
-public partial class SiteDnsConfig : ProvisioningConstruct
+public partial class SiteDnsConfig : ProvisionableConstruct
 {
     /// <summary>
     /// List of custom DNS servers to be used by an app for lookups. Maximum 5

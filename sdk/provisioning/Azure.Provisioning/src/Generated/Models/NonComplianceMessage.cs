@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Resources;
 /// This is shown in &apos;deny&apos; error messages and on resource&apos;s
 /// non-compliant compliance results.
 /// </summary>
-public partial class NonComplianceMessage : ProvisioningConstruct
+public partial class NonComplianceMessage : ProvisionableConstruct
 {
     /// <summary>
     /// A message that describes why a resource is non-compliant with the

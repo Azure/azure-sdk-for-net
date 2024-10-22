@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHub.
 /// </summary>
-public partial class EventHub : Resource
+public partial class EventHub : ProvisionableResource
 {
     /// <summary>
     /// The Event Hub name.
@@ -94,15 +94,15 @@ public partial class EventHub : Resource
     /// <summary>
     /// Creates a new EventHub.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventHub resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the EventHub.</param>
-    public EventHub(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventHub/namespaces/eventhubs", resourceVersion ?? "2024-01-01")
+    public EventHub(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventHub/namespaces/eventhubs", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _captureDescription = BicepValue<CaptureDescription>.DefineProperty(this, "CaptureDescription", ["properties", "captureDescription"]);
@@ -124,11 +124,6 @@ public partial class EventHub : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2024-01-01.
         /// </summary>
         public static readonly string V2024_01_01 = "2024-01-01";
@@ -147,7 +142,7 @@ public partial class EventHub : Resource
     /// <summary>
     /// Creates a reference to an existing EventHub.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventHub resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -155,6 +150,6 @@ public partial class EventHub : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the EventHub.</param>
     /// <returns>The existing EventHub resource.</returns>
-    public static EventHub FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static EventHub FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
