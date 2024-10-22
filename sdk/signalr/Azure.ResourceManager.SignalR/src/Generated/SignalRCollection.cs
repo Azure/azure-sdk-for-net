@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2022-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SignalR
             try
             {
                 var response = await _signalRRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SignalRArmOperation<SignalRResource>(new SignalROperationSource(Client), _signalRClientDiagnostics, Pipeline, _signalRRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SignalRArmOperation<SignalRResource>(new SignalROperationSource(Client), _signalRClientDiagnostics, Pipeline, _signalRRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2022-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SignalR
             try
             {
                 var response = _signalRRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
-                var operation = new SignalRArmOperation<SignalRResource>(new SignalROperationSource(Client), _signalRClientDiagnostics, Pipeline, _signalRRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SignalRArmOperation<SignalRResource>(new SignalROperationSource(Client), _signalRClientDiagnostics, Pipeline, _signalRRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2022-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2022-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2022-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2022-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2022-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2022-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2022-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2022-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

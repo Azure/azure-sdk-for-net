@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The billing information of the resource. </param>
-        /// <param name="kind"> The kind of the service. </param>
+        /// <param name="kind"> The kind of the service, it can be SignalR or RawWebSockets. </param>
         /// <param name="identity"> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
@@ -85,10 +84,8 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
         /// <param name="resourceLogCategories"> Resource log configuration of a Microsoft.SignalRService resource. </param>
         /// <param name="corsAllowedOrigins"> Cross-Origin Resource Sharing (CORS) settings. </param>
-        /// <param name="serverlessConnectionTimeoutInSeconds"> Serverless settings. </param>
         /// <param name="upstreamTemplates"> The settings for the Upstream when the service is in server-less mode. </param>
         /// <param name="networkACLs"> Network ACLs for the resource. </param>
-        /// <param name="applicationFirewallClientConnectionCountRules"> Application firewall settings for the resource. </param>
         /// <param name="publicNetworkAccess">
         /// Enable or disable public network access. Default to "Enabled".
         /// When it's Enabled, network ACLs still apply.
@@ -104,18 +101,8 @@ namespace Azure.ResourceManager.SignalR.Models
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won't work.
         /// </param>
-        /// <param name="regionEndpointEnabled">
-        /// Enable or disable the regional endpoint. Default to "Enabled".
-        /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
-        /// This property is replica specific. Disable the regional endpoint without replica is not allowed.
-        /// </param>
-        /// <param name="resourceStopped">
-        /// Stop or start the resource.  Default to "False".
-        /// When it's true, the data plane of the resource is shutdown.
-        /// When it's false, the data plane of the resource is started.
-        /// </param>
         /// <returns> A new <see cref="SignalR.SignalRData"/> instance for mocking. </returns>
-        public static SignalRData SignalRData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SignalRResourceSku sku = null, SignalRServiceKind? kind = null, ManagedServiceIdentity identity = null, SignalRProvisioningState? provisioningState = null, string externalIP = null, string hostName = null, int? publicPort = null, int? serverPort = null, string version = null, IEnumerable<SignalRPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources = null, bool? isClientCertEnabled = null, string hostNamePrefix = null, IEnumerable<SignalRFeature> features = null, SignalRLiveTraceConfiguration liveTraceConfiguration = null, IEnumerable<SignalRResourceLogCategory> resourceLogCategories = null, IEnumerable<string> corsAllowedOrigins = null, int? serverlessConnectionTimeoutInSeconds = null, IEnumerable<SignalRUpstreamTemplate> upstreamTemplates = null, SignalRNetworkAcls networkACLs = null, IEnumerable<ClientConnectionCountRule> applicationFirewallClientConnectionCountRules = null, string publicNetworkAccess = null, bool? disableLocalAuth = null, bool? disableAadAuth = null, string regionEndpointEnabled = null, string resourceStopped = null)
+        public static SignalRData SignalRData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SignalRResourceSku sku = null, SignalRServiceKind? kind = null, ManagedServiceIdentity identity = null, SignalRProvisioningState? provisioningState = null, string externalIP = null, string hostName = null, int? publicPort = null, int? serverPort = null, string version = null, IEnumerable<SignalRPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources = null, bool? isClientCertEnabled = null, string hostNamePrefix = null, IEnumerable<SignalRFeature> features = null, SignalRLiveTraceConfiguration liveTraceConfiguration = null, IEnumerable<SignalRResourceLogCategory> resourceLogCategories = null, IEnumerable<string> corsAllowedOrigins = null, IEnumerable<SignalRUpstreamTemplate> upstreamTemplates = null, SignalRNetworkAcls networkACLs = null, string publicNetworkAccess = null, bool? disableLocalAuth = null, bool? disableAadAuth = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<SignalRPrivateEndpointConnectionData>();
@@ -124,7 +111,6 @@ namespace Azure.ResourceManager.SignalR.Models
             resourceLogCategories ??= new List<SignalRResourceLogCategory>();
             corsAllowedOrigins ??= new List<string>();
             upstreamTemplates ??= new List<SignalRUpstreamTemplate>();
-            applicationFirewallClientConnectionCountRules ??= new List<ClientConnectionCountRule>();
 
             return new SignalRData(
                 id,
@@ -150,15 +136,11 @@ namespace Azure.ResourceManager.SignalR.Models
                 liveTraceConfiguration,
                 resourceLogCategories != null ? new SignalRResourceLogCategoryListResult(resourceLogCategories?.ToList(), serializedAdditionalRawData: null) : null,
                 corsAllowedOrigins != null ? new SignalRCorsSettings(corsAllowedOrigins?.ToList(), serializedAdditionalRawData: null) : null,
-                serverlessConnectionTimeoutInSeconds != null ? new ServerlessSettings(serverlessConnectionTimeoutInSeconds, serializedAdditionalRawData: null) : null,
                 upstreamTemplates != null ? new ServerlessUpstreamSettings(upstreamTemplates?.ToList(), serializedAdditionalRawData: null) : null,
                 networkACLs,
-                applicationFirewallClientConnectionCountRules != null ? new ApplicationFirewallSettings(applicationFirewallClientConnectionCountRules?.ToList(), serializedAdditionalRawData: null) : null,
                 publicNetworkAccess,
                 disableLocalAuth,
                 disableAadAuth,
-                regionEndpointEnabled,
-                resourceStopped,
                 serializedAdditionalRawData: null);
         }
 
@@ -166,7 +148,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="name">
         /// The name of the SKU. Required.
         ///
-        /// Allowed values: Standard_S1, Free_F1, Premium_P1, Premium_P2
+        /// Allowed values: Standard_S1, Free_F1
         /// </param>
         /// <param name="tier">
         /// Optional tier of this particular SKU. 'Standard' or 'Free'.
@@ -176,14 +158,11 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="size"> Not used. Retained for future use. </param>
         /// <param name="family"> Not used. Retained for future use. </param>
         /// <param name="capacity">
-        /// Optional, integer. The unit count of the resource.
-        /// 1 for Free_F1/Standard_S1/Premium_P1, 100 for Premium_P2 by default.
+        /// Optional, integer. The unit count of the resource. 1 by default.
         ///
         /// If present, following values are allowed:
-        ///     Free_F1: 1;
-        ///     Standard_S1: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
-        ///     Premium_P1:  1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
-        ///     Premium_P2:  100,200,300,400,500,600,700,800,900,1000;
+        ///     Free: 1
+        ///     Standard: 1,2,5,10,20,50,100
         /// </param>
         /// <returns> A new <see cref="Models.SignalRResourceSku"/> instance for mocking. </returns>
         public static SignalRResourceSku SignalRResourceSku(string name = null, SignalRSkuTier? tier = null, string size = null, string family = null, int? capacity = null)
@@ -232,13 +211,10 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="privateLinkResourceId"> The resource id of the resource the shared private link resource is for. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
-        /// <param name="fqdns"> A list of FQDNs for third party private link service. </param>
         /// <param name="status"> Status of the shared private link resource. </param>
         /// <returns> A new <see cref="SignalR.SignalRSharedPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static SignalRSharedPrivateLinkResourceData SignalRSharedPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, ResourceIdentifier privateLinkResourceId = null, SignalRProvisioningState? provisioningState = null, string requestMessage = null, IEnumerable<string> fqdns = null, SignalRSharedPrivateLinkResourceStatus? status = null)
+        public static SignalRSharedPrivateLinkResourceData SignalRSharedPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, ResourceIdentifier privateLinkResourceId = null, SignalRProvisioningState? provisioningState = null, string requestMessage = null, SignalRSharedPrivateLinkResourceStatus? status = null)
         {
-            fqdns ??= new List<string>();
-
             return new SignalRSharedPrivateLinkResourceData(
                 id,
                 name,
@@ -248,7 +224,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 privateLinkResourceId,
                 provisioningState,
                 requestMessage,
-                fqdns?.ToList(),
                 status,
                 serializedAdditionalRawData: null);
         }
@@ -338,43 +313,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SignalR.ReplicaData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="sku"> The billing information of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="regionEndpointEnabled">
-        /// Enable or disable the regional endpoint. Default to "Enabled".
-        /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
-        /// </param>
-        /// <param name="resourceStopped">
-        /// Stop or start the resource.  Default to "false".
-        /// When it's true, the data plane of the resource is shutdown.
-        /// When it's false, the data plane of the resource is started.
-        /// </param>
-        /// <returns> A new <see cref="SignalR.ReplicaData"/> instance for mocking. </returns>
-        public static ReplicaData ReplicaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SignalRResourceSku sku = null, SignalRProvisioningState? provisioningState = null, string regionEndpointEnabled = null, string resourceStopped = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ReplicaData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                sku,
-                provisioningState,
-                regionEndpointEnabled,
-                resourceStopped,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.SignalRSku"/>. </summary>
         /// <param name="resourceType"> The resource type that this object applies to. </param>
         /// <param name="sku"> The billing information of the resource. </param>
@@ -403,77 +341,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 allowedValues?.ToList(),
                 scaleType,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SignalR.SignalRData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="sku"> The billing information of the resource. </param>
-        /// <param name="kind"> The kind of the service, it can be SignalR or RawWebSockets. </param>
-        /// <param name="identity"> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
-        /// <param name="hostName"> FQDN of the service instance. </param>
-        /// <param name="publicPort"> The publicly accessible port of the resource which is designed for browser/client side usage. </param>
-        /// <param name="serverPort"> The publicly accessible port of the resource which is designed for customer server side usage. </param>
-        /// <param name="version"> Version of the resource. Probably you need the same or higher version of client SDKs. </param>
-        /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
-        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources. </param>
-        /// <param name="isClientCertEnabled"> TLS settings for the resource. </param>
-        /// <param name="hostNamePrefix"> Deprecated. </param>
-        /// <param name="features">
-        /// List of the featureFlags.
-        /// FeatureFlags that are not included in the parameters for the update operation will not be modified.
-        /// And the response will only include featureFlags that are explicitly set.
-        /// When a featureFlag is not explicitly set, its globally default value will be used
-        /// But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
-        /// </param>
-        /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
-        /// <param name="resourceLogCategories"> Resource log configuration of a Microsoft.SignalRService resource. </param>
-        /// <param name="corsAllowedOrigins"> Cross-Origin Resource Sharing (CORS) settings. </param>
-        /// <param name="upstreamTemplates"> The settings for the Upstream when the service is in server-less mode. </param>
-        /// <param name="networkACLs"> Network ACLs for the resource. </param>
-        /// <param name="publicNetworkAccess">
-        /// Enable or disable public network access. Default to "Enabled".
-        /// When it's Enabled, network ACLs still apply.
-        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
-        /// </param>
-        /// <param name="disableLocalAuth">
-        /// DisableLocalAuth
-        /// Enable or disable local auth with AccessKey
-        /// When set as true, connection with AccessKey=xxx won't work.
-        /// </param>
-        /// <param name="disableAadAuth">
-        /// DisableLocalAuth
-        /// Enable or disable aad auth
-        /// When set as true, connection with AuthType=aad won't work.
-        /// </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.SignalR.SignalRData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SignalRData SignalRData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SignalRResourceSku sku, SignalRServiceKind? kind, ManagedServiceIdentity identity, SignalRProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IEnumerable<SignalRPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources, bool? isClientCertEnabled, string hostNamePrefix, IEnumerable<SignalRFeature> features, SignalRLiveTraceConfiguration liveTraceConfiguration, IEnumerable<SignalRResourceLogCategory> resourceLogCategories, IEnumerable<string> corsAllowedOrigins, IEnumerable<SignalRUpstreamTemplate> upstreamTemplates, SignalRNetworkAcls networkACLs, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth)
-        {
-            return SignalRData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, kind: kind, identity: identity, provisioningState: provisioningState, externalIP: externalIP, hostName: hostName, publicPort: publicPort, serverPort: serverPort, version: version, privateEndpointConnections: privateEndpointConnections, sharedPrivateLinkResources: sharedPrivateLinkResources, isClientCertEnabled: isClientCertEnabled, hostNamePrefix: hostNamePrefix, features: features, liveTraceConfiguration: liveTraceConfiguration, resourceLogCategories: resourceLogCategories, corsAllowedOrigins: corsAllowedOrigins, serverlessConnectionTimeoutInSeconds: default, upstreamTemplates: upstreamTemplates, networkACLs: networkACLs, applicationFirewallClientConnectionCountRules: default, publicNetworkAccess: publicNetworkAccess, disableLocalAuth: disableLocalAuth, disableAadAuth: disableAadAuth, regionEndpointEnabled: default, resourceStopped: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResourceData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
-        /// <param name="privateLinkResourceId"> The resource id of the resource the shared private link resource is for. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
-        /// <param name="status"> Status of the shared private link resource. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResourceData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SignalRSharedPrivateLinkResourceData SignalRSharedPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, ResourceIdentifier privateLinkResourceId, SignalRProvisioningState? provisioningState, string requestMessage, SignalRSharedPrivateLinkResourceStatus? status)
-        {
-            return SignalRSharedPrivateLinkResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, groupId: groupId, privateLinkResourceId: privateLinkResourceId, provisioningState: provisioningState, requestMessage: requestMessage, fqdns: default, status: status);
         }
     }
 }

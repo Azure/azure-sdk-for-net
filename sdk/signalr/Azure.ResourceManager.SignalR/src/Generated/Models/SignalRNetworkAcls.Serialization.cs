@@ -56,16 +56,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPRules))
-            {
-                writer.WritePropertyName("ipRules"u8);
-                writer.WriteStartArray();
-                foreach (var item in IPRules)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -106,7 +96,6 @@ namespace Azure.ResourceManager.SignalR.Models
             SignalRNetworkAclAction? defaultAction = default;
             SignalRNetworkAcl publicNetwork = default;
             IList<SignalRPrivateEndpointAcl> privateEndpoints = default;
-            IList<IPRule> ipRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,27 +132,13 @@ namespace Azure.ResourceManager.SignalR.Models
                     privateEndpoints = array;
                     continue;
                 }
-                if (property.NameEquals("ipRules"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<IPRule> array = new List<IPRule>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(IPRule.DeserializeIPRule(item, options));
-                    }
-                    ipRules = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SignalRNetworkAcls(defaultAction, publicNetwork, privateEndpoints ?? new ChangeTrackingList<SignalRPrivateEndpointAcl>(), ipRules ?? new ChangeTrackingList<IPRule>(), serializedAdditionalRawData);
+            return new SignalRNetworkAcls(defaultAction, publicNetwork, privateEndpoints ?? new ChangeTrackingList<SignalRPrivateEndpointAcl>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -224,29 +199,6 @@ namespace Azure.ResourceManager.SignalR.Models
                         foreach (var item in PrivateEndpoints)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  privateEndpoints: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPRules), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ipRules: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(IPRules))
-                {
-                    if (IPRules.Any())
-                    {
-                        builder.Append("  ipRules: ");
-                        builder.AppendLine("[");
-                        foreach (var item in IPRules)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ipRules: ");
                         }
                         builder.AppendLine("  ]");
                     }

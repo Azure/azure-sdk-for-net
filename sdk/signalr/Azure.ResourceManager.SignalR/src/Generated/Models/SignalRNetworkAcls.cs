@@ -49,21 +49,18 @@ namespace Azure.ResourceManager.SignalR.Models
         public SignalRNetworkAcls()
         {
             PrivateEndpoints = new ChangeTrackingList<SignalRPrivateEndpointAcl>();
-            IPRules = new ChangeTrackingList<IPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalRNetworkAcls"/>. </summary>
         /// <param name="defaultAction"> Azure Networking ACL Action. </param>
         /// <param name="publicNetwork"> Network ACL. </param>
         /// <param name="privateEndpoints"> ACLs for requests from private endpoints. </param>
-        /// <param name="ipRules"> IP rules for filtering public traffic. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRNetworkAcls(SignalRNetworkAclAction? defaultAction, SignalRNetworkAcl publicNetwork, IList<SignalRPrivateEndpointAcl> privateEndpoints, IList<IPRule> ipRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SignalRNetworkAcls(SignalRNetworkAclAction? defaultAction, SignalRNetworkAcl publicNetwork, IList<SignalRPrivateEndpointAcl> privateEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefaultAction = defaultAction;
             PublicNetwork = publicNetwork;
             PrivateEndpoints = privateEndpoints;
-            IPRules = ipRules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,8 +73,5 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> ACLs for requests from private endpoints. </summary>
         [WirePath("privateEndpoints")]
         public IList<SignalRPrivateEndpointAcl> PrivateEndpoints { get; }
-        /// <summary> IP rules for filtering public traffic. </summary>
-        [WirePath("ipRules")]
-        public IList<IPRule> IPRules { get; }
     }
 }

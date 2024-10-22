@@ -83,30 +83,6 @@ namespace Azure.ResourceManager.SignalR.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ReplicaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicaResource.CreateResourceIdentifier" /> to create a <see cref="ReplicaResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicaResource"/> object. </returns>
-        public virtual ReplicaResource GetReplicaResource(ResourceIdentifier id)
-        {
-            ReplicaResource.ValidateResourceId(id);
-            return new ReplicaResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SignalRReplicaSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SignalRReplicaSharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SignalRReplicaSharedPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SignalRReplicaSharedPrivateLinkResource"/> object. </returns>
-        public virtual SignalRReplicaSharedPrivateLinkResource GetSignalRReplicaSharedPrivateLinkResource(ResourceIdentifier id)
-        {
-            SignalRReplicaSharedPrivateLinkResource.ValidateResourceId(id);
-            return new SignalRReplicaSharedPrivateLinkResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SignalRSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SignalRSharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SignalRSharedPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

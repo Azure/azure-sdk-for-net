@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -61,16 +60,6 @@ namespace Azure.ResourceManager.SignalR
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (Optional.IsCollectionDefined(Fqdns))
-            {
-                writer.WritePropertyName("fqdns"u8);
-                writer.WriteStartArray();
-                foreach (var item in Fqdns)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -107,7 +96,6 @@ namespace Azure.ResourceManager.SignalR
             ResourceIdentifier privateLinkResourceId = default;
             SignalRProvisioningState? provisioningState = default;
             string requestMessage = default;
-            IList<string> fqdns = default;
             SignalRSharedPrivateLinkResourceStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -174,20 +162,6 @@ namespace Azure.ResourceManager.SignalR
                             requestMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("fqdns"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            fqdns = array;
-                            continue;
-                        }
                         if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -215,7 +189,6 @@ namespace Azure.ResourceManager.SignalR
                 privateLinkResourceId,
                 provisioningState,
                 requestMessage,
-                fqdns ?? new ChangeTrackingList<string>(),
                 status,
                 serializedAdditionalRawData);
         }
@@ -358,42 +331,6 @@ namespace Azure.ResourceManager.SignalR
                     else
                     {
                         builder.AppendLine($"'{RequestMessage}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Fqdns), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    fqdns: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Fqdns))
-                {
-                    if (Fqdns.Any())
-                    {
-                        builder.Append("    fqdns: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Fqdns)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
                     }
                 }
             }
