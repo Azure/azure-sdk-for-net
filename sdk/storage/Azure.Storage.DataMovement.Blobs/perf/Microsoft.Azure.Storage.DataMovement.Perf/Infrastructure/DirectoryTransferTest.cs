@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Storage.DataMovement.Perf
     public abstract class DirectoryTransferTest<TOptions> : PerfTest<TOptions> where TOptions : DirectoryTransferOptions
     {
         protected CloudBlobClient BlobClient;
-        private TimeSpan _transferTimeout;
 
         protected static DirectoryTransferContext DefaultTransferContext => new()
         {
@@ -29,7 +28,6 @@ namespace Microsoft.Azure.Storage.DataMovement.Perf
 
             CloudStorageAccount account = new(credentials, PerfTestEnvironment.Instance.StorageEndpointSuffix, useHttps: true);
             BlobClient = account.CreateCloudBlobClient();
-            _transferTimeout = TimeSpan.FromSeconds(5 + (Options.Count * Options.Size) / (1 * 1024 * 1024));
 
             if (Options.ChunkSize.HasValue)
             {
