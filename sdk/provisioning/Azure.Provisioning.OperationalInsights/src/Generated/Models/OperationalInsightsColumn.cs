@@ -11,7 +11,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// Table column.
 /// </summary>
-public partial class OperationalInsightsColumn : ProvisioningConstruct
+public partial class OperationalInsightsColumn : ProvisionableConstruct
 {
     /// <summary>
     /// Column name.

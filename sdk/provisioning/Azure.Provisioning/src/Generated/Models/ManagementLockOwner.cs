@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Lock owner properties.
 /// </summary>
-public partial class ManagementLockOwner : ProvisioningConstruct
+public partial class ManagementLockOwner : ProvisionableConstruct
 {
     /// <summary>
     /// The application ID of the lock owner.

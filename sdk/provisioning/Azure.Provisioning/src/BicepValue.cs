@@ -24,7 +24,7 @@ public abstract class BicepValue
     /// </summary>
     public BicepValueKind Kind { get; set; } = BicepValueKind.Unset;
 
-    public Expression? Expression { get; set; } = null;
+    public BicepExpression? Expression { get; set; } = null;
     // TODO: Lock down setter?  At a minimum we should force Kind to stay in
     // sync, but I'm hoping to change both at once.
 
@@ -48,18 +48,21 @@ public abstract class BicepValue
     // and test sanitization.
     internal bool IsSecure { get; set; } = false;
 
+    // Optional format defining how values should be serialized
+    internal string? Format { get; set; } = null;
+
     // Indicate whether this value is empty or should be included in output
     internal virtual bool IsEmpty => Kind == BicepValueKind.Unset;
 
     // Naive Bicep type of the value.  We don't support complex object types so
     // this is mostly to help map primitives.
-    private protected virtual Expression GetBicepType() => BicepSyntax.Types.Object;
+    private protected virtual BicepExpression GetBicepType() => BicepSyntax.Types.Object;
 
     // TODO: Clean these up when pulling richer objects out of BicepValue<T>
     private protected BicepValue(BicepValueReference? self) => Self = self;
     private protected BicepValue(BicepValueReference? self, /* unused but forces literal */ object literal)
         : this(self) { Kind = BicepValueKind.Literal; }
-    private protected BicepValue(BicepValueReference? self, Expression expression)
+    private protected BicepValue(BicepValueReference? self, BicepExpression expression)
         : this(self) { Kind = BicepValueKind.Expression; Expression = expression; }
 
     // Assign a value to this property.
@@ -97,7 +100,7 @@ public abstract class BicepValue
             _ =>                      $"<{nameof(BicepValue)}: {Compile()}>",
         };
 
-    public Expression Compile() => BicepTypeMapping.ToBicep(this);
+    public BicepExpression Compile() => BicepTypeMapping.ToBicep(this, Format);
 }
 
 /// <summary>

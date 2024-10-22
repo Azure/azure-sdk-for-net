@@ -11,7 +11,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// Maintenance window properties of a server.
 /// </summary>
-public partial class PostgreSqlFlexibleServerMaintenanceWindow : ProvisioningConstruct
+public partial class PostgreSqlFlexibleServerMaintenanceWindow : ProvisionableConstruct
 {
     /// <summary>
     /// indicates whether custom window is enabled or disabled.

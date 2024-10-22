@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// Sets the number of &apos;Always Ready&apos; instances for a function group
 /// or a specific function.
 /// </summary>
-public partial class FunctionAppAlwaysReadyConfig : ProvisioningConstruct
+public partial class FunctionAppAlwaysReadyConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Either a function group or a function name is required. For additional

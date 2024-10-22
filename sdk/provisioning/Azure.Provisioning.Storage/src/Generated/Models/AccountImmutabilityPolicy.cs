@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// This defines account-level immutability policy properties.
 /// </summary>
-public partial class AccountImmutabilityPolicy : ProvisioningConstruct
+public partial class AccountImmutabilityPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// The immutability period for the blobs in the container since the policy

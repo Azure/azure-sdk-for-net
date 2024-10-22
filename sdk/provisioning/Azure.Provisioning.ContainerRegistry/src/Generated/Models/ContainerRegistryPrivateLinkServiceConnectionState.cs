@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The state of a private link service connection.
 /// </summary>
-public partial class ContainerRegistryPrivateLinkServiceConnectionState : ProvisioningConstruct
+public partial class ContainerRegistryPrivateLinkServiceConnectionState : ProvisionableConstruct
 {
     /// <summary>
     /// The private link service connection status.

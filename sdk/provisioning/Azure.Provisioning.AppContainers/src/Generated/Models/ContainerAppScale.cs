@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Container App scaling configurations.
 /// </summary>
-public partial class ContainerAppScale : ProvisioningConstruct
+public partial class ContainerAppScale : ProvisionableConstruct
 {
     /// <summary>
     /// Optional. Minimum number of container replicas.

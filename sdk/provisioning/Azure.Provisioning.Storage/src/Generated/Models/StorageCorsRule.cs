@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Specifies a CORS rule for the Blob service.
 /// </summary>
-public partial class StorageCorsRule : ProvisioningConstruct
+public partial class StorageCorsRule : ProvisionableConstruct
 {
     /// <summary>
     /// Required if CorsRule element is present. A list of origin domains that

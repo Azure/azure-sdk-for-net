@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// Cognitive Services account commitment period.
 /// </summary>
-public partial class CommitmentPeriod : ProvisioningConstruct
+public partial class CommitmentPeriod : ProvisionableConstruct
 {
     /// <summary>
     /// Commitment period commitment tier.

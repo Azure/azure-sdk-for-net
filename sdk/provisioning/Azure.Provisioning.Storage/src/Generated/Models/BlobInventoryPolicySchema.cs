@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// The storage account blob inventory policy rules.
 /// </summary>
-public partial class BlobInventoryPolicySchema : ProvisioningConstruct
+public partial class BlobInventoryPolicySchema : ProvisionableConstruct
 {
     /// <summary>
     /// Policy is enabled if set to true.

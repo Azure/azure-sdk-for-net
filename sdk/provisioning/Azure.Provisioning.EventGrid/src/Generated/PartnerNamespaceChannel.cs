@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// PartnerNamespaceChannel.
 /// </summary>
-public partial class PartnerNamespaceChannel : Resource
+public partial class PartnerNamespaceChannel : ProvisionableResource
 {
     /// <summary>
     /// Name of the channel.
@@ -101,15 +101,15 @@ public partial class PartnerNamespaceChannel : Resource
     /// <summary>
     /// Creates a new PartnerNamespaceChannel.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PartnerNamespaceChannel resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the PartnerNamespaceChannel.</param>
-    public PartnerNamespaceChannel(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventGrid/partnerNamespaces/channels", resourceVersion ?? "2022-06-15")
+    public PartnerNamespaceChannel(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/partnerNamespaces/channels", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _channelType = BicepValue<PartnerNamespaceChannelType>.DefineProperty(this, "ChannelType", ["properties", "channelType"]);
@@ -130,11 +130,6 @@ public partial class PartnerNamespaceChannel : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
-
-        /// <summary>
         /// 2022-06-15.
         /// </summary>
         public static readonly string V2022_06_15 = "2022-06-15";
@@ -143,7 +138,7 @@ public partial class PartnerNamespaceChannel : Resource
     /// <summary>
     /// Creates a reference to an existing PartnerNamespaceChannel.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PartnerNamespaceChannel resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -151,6 +146,6 @@ public partial class PartnerNamespaceChannel : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the PartnerNamespaceChannel.</param>
     /// <returns>The existing PartnerNamespaceChannel resource.</returns>
-    public static PartnerNamespaceChannel FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static PartnerNamespaceChannel FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

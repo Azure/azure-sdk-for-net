@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the token store.
 /// </summary>
-public partial class ContainerAppTokenStore : ProvisioningConstruct
+public partial class ContainerAppTokenStore : ProvisionableConstruct
 {
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Storage;
 /// be set, also it cannot be used in conjunction with
 /// daysAfterLastAccessTimeGreaterThan or daysAfterCreationGreaterThan.
 /// </summary>
-public partial class DateAfterModification : ProvisioningConstruct
+public partial class DateAfterModification : ProvisionableConstruct
 {
     /// <summary>
     /// Value indicating the age in days after last modification.

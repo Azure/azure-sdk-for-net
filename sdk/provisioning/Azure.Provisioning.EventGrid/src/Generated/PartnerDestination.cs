@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// PartnerDestination.
 /// </summary>
-public partial class PartnerDestination : Resource
+public partial class PartnerDestination : ProvisionableResource
 {
     /// <summary>
     /// Name of the partner destination.
@@ -95,15 +95,15 @@ public partial class PartnerDestination : Resource
     /// <summary>
     /// Creates a new PartnerDestination.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PartnerDestination resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the PartnerDestination.</param>
-    public PartnerDestination(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventGrid/partnerDestinations", resourceVersion ?? "2024-06-01-preview")
+    public PartnerDestination(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/partnerDestinations", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -120,20 +120,9 @@ public partial class PartnerDestination : Resource
     }
 
     /// <summary>
-    /// Supported PartnerDestination resource versions.
-    /// </summary>
-    public static class ResourceVersions
-    {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
-    }
-
-    /// <summary>
     /// Creates a reference to an existing PartnerDestination.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PartnerDestination resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -141,6 +130,6 @@ public partial class PartnerDestination : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the PartnerDestination.</param>
     /// <returns>The existing PartnerDestination resource.</returns>
-    public static PartnerDestination FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static PartnerDestination FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

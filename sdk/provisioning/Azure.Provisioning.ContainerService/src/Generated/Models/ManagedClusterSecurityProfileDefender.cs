@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Microsoft Defender settings for the security profile.
 /// </summary>
-public partial class ManagedClusterSecurityProfileDefender : ProvisioningConstruct
+public partial class ManagedClusterSecurityProfileDefender : ProvisionableConstruct
 {
     /// <summary>
     /// Resource ID of the Log Analytics workspace to be associated with

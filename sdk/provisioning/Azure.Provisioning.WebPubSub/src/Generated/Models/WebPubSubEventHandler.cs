@@ -12,7 +12,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// Properties of event handler.
 /// </summary>
-public partial class WebPubSubEventHandler : ProvisioningConstruct
+public partial class WebPubSubEventHandler : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets the EventHandler URL template. You can use a predefined

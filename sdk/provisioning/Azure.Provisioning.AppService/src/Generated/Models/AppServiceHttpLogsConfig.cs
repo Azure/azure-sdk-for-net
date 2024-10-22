@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Http logs configuration.
 /// </summary>
-public partial class AppServiceHttpLogsConfig : ProvisioningConstruct
+public partial class AppServiceHttpLogsConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Http logs to file system configuration.

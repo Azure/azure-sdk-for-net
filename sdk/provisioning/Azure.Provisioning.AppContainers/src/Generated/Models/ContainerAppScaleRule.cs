@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Container App container scaling rule.
 /// </summary>
-public partial class ContainerAppScaleRule : ProvisioningConstruct
+public partial class ContainerAppScaleRule : ProvisionableConstruct
 {
     /// <summary>
     /// Scale Rule Name.

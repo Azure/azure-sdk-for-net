@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// Properties to configure keyVault Properties.
 /// </summary>
-public partial class EventHubsKeyVaultProperties : ProvisioningConstruct
+public partial class EventHubsKeyVaultProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the Key from KeyVault.

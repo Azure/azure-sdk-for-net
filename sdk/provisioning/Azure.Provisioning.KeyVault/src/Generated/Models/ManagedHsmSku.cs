@@ -10,7 +10,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// SKU details.
 /// </summary>
-public partial class ManagedHsmSku : ProvisioningConstruct
+public partial class ManagedHsmSku : ProvisionableConstruct
 {
     /// <summary>
     /// SKU Family of the managed HSM Pool.

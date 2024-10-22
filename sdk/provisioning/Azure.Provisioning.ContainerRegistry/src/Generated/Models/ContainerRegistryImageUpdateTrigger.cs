@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The image update trigger that caused a build.
 /// </summary>
-public partial class ContainerRegistryImageUpdateTrigger : ProvisioningConstruct
+public partial class ContainerRegistryImageUpdateTrigger : ProvisionableConstruct
 {
     /// <summary>
     /// The unique ID of the trigger.

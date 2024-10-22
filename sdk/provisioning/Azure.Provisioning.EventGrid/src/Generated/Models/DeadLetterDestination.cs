@@ -20,7 +20,7 @@ namespace Azure.Provisioning.EventGrid;
 /// include
 /// Azure.ResourceManager.EventGrid.Models.StorageBlobDeadLetterDestination.
 /// </summary>
-public partial class DeadLetterDestination : ProvisioningConstruct
+public partial class DeadLetterDestination : ProvisionableConstruct
 {
     /// <summary>
     /// Creates a new DeadLetterDestination.

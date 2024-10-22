@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Storage;
 /// The URIs that are used to perform a retrieval of a public blob, file, web
 /// or dfs object via a internet routing endpoint.
 /// </summary>
-public partial class StorageAccountInternetEndpoints : ProvisioningConstruct
+public partial class StorageAccountInternetEndpoints : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the blob endpoint.

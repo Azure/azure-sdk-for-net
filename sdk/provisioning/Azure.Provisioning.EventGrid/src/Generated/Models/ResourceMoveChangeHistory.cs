@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// The change history of the resource move.
 /// </summary>
-public partial class ResourceMoveChangeHistory : ProvisioningConstruct
+public partial class ResourceMoveChangeHistory : ProvisionableConstruct
 {
     /// <summary>
     /// Azure subscription ID of the resource.

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}"
         /// </param>
         /// <param name="operationStatus"> This represents the operationStatus of the VMSS in response to the last operation that was performed on it by Azure Fleet resource. </param>
-        internal ComputeFleetVmss(string id, ComputeFleetProvisioningState operationStatus)
+        internal ComputeFleetVmss(ResourceIdentifier id, ComputeFleetProvisioningState operationStatus)
         {
             Id = id;
             OperationStatus = operationStatus;
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="operationStatus"> This represents the operationStatus of the VMSS in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error Information when `operationStatus` is `Failed`. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmss(string id, string type, ComputeFleetProvisioningState operationStatus, ComputeFleetApiError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeFleetVmss(ResourceIdentifier id, string type, ComputeFleetProvisioningState operationStatus, ComputeFleetApiError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Type = type;
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// The compute RP resource id of the virtualMachineScaleSet
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}"
         /// </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Type of the virtualMachineScaleSet. </summary>
         public string Type { get; }
         /// <summary> This represents the operationStatus of the VMSS in response to the last operation that was performed on it by Azure Fleet resource. </summary>

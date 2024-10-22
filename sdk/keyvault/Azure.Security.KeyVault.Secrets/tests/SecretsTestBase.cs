@@ -14,7 +14,6 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Secrets.Tests
 {
     [ClientTestFixture(
-        SecretClientOptions.ServiceVersion.V7_6_Preview_1,
         SecretClientOptions.ServiceVersion.V7_5,
         SecretClientOptions.ServiceVersion.V7_4,
         SecretClientOptions.ServiceVersion.V7_3,

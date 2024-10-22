@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Specification for a Kubernetes Environment to use for this resource.
 /// </summary>
-public partial class KubeEnvironmentProfile : ProvisioningConstruct
+public partial class KubeEnvironmentProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Resource ID of the Kubernetes Environment.
