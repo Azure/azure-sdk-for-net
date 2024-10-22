@@ -11,8 +11,6 @@
   - Added properties `EnableSessionImage ` and `LivenessSingleModalModel` to model `CreateLivenessSessionContent`.
   - Added model `CreateLivenessWithVerifySessionContent`.
 
-### Features Added
-
 ### Breaking Changes
 
 - Changed the parameter of `CreateLivenessWithVerifySession` from model `CreateLivenessSessionContent` to `CreateLivenessWithVerifySessionContent`.
