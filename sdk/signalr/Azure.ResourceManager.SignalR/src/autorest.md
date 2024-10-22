@@ -42,7 +42,6 @@ rename-mapping:
   SignalRUsage.id: -|arm-id
   SharedPrivateLinkResource.properties.privateLinkResourceId: -|arm-id
   ClientConnectionCountRule.type: RuleType
-  SharedPrivateLinkResource.properties.fqdns: FullyQualifiedDomainNames
 
 prepend-rp-prefix:
   - CustomDomain

@@ -232,12 +232,12 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="privateLinkResourceId"> The resource id of the resource the shared private link resource is for. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
-        /// <param name="fullyQualifiedDomainNames"> A list of FQDNs for third party private link service. </param>
+        /// <param name="fqdns"> A list of FQDNs for third party private link service. </param>
         /// <param name="status"> Status of the shared private link resource. </param>
         /// <returns> A new <see cref="SignalR.SignalRSharedPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static SignalRSharedPrivateLinkResourceData SignalRSharedPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, ResourceIdentifier privateLinkResourceId = null, SignalRProvisioningState? provisioningState = null, string requestMessage = null, IEnumerable<string> fullyQualifiedDomainNames = null, SignalRSharedPrivateLinkResourceStatus? status = null)
+        public static SignalRSharedPrivateLinkResourceData SignalRSharedPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, ResourceIdentifier privateLinkResourceId = null, SignalRProvisioningState? provisioningState = null, string requestMessage = null, IEnumerable<string> fqdns = null, SignalRSharedPrivateLinkResourceStatus? status = null)
         {
-            fullyQualifiedDomainNames ??= new List<string>();
+            fqdns ??= new List<string>();
 
             return new SignalRSharedPrivateLinkResourceData(
                 id,
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 privateLinkResourceId,
                 provisioningState,
                 requestMessage,
-                fullyQualifiedDomainNames?.ToList(),
+                fqdns?.ToList(),
                 status,
                 serializedAdditionalRawData: null);
         }
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.SignalR.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SignalRSharedPrivateLinkResourceData SignalRSharedPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, ResourceIdentifier privateLinkResourceId, SignalRProvisioningState? provisioningState, string requestMessage, SignalRSharedPrivateLinkResourceStatus? status)
         {
-            return SignalRSharedPrivateLinkResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, groupId: groupId, privateLinkResourceId: privateLinkResourceId, provisioningState: provisioningState, requestMessage: requestMessage, fullyQualifiedDomainNames: default, status: status);
+            return SignalRSharedPrivateLinkResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, groupId: groupId, privateLinkResourceId: privateLinkResourceId, provisioningState: provisioningState, requestMessage: requestMessage, fqdns: default, status: status);
         }
     }
 }
