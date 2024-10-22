@@ -45,7 +45,7 @@ namespace Azure.AI.ContentSafety
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentSafety.AnalyzeImageOutputType left, Azure.AI.ContentSafety.AnalyzeImageOutputType right) { throw null; }
-        public static implicit operator Azure.AI.ContentSafety.AnalyzeImageOutputType (string value) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.AnalyzeImageOutputType(string value) { throw null; }
         public static bool operator !=(Azure.AI.ContentSafety.AnalyzeImageOutputType left, Azure.AI.ContentSafety.AnalyzeImageOutputType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -87,7 +87,7 @@ namespace Azure.AI.ContentSafety
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentSafety.AnalyzeTextOutputType left, Azure.AI.ContentSafety.AnalyzeTextOutputType right) { throw null; }
-        public static implicit operator Azure.AI.ContentSafety.AnalyzeTextOutputType (string value) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.AnalyzeTextOutputType(string value) { throw null; }
         public static bool operator !=(Azure.AI.ContentSafety.AnalyzeTextOutputType left, Azure.AI.ContentSafety.AnalyzeTextOutputType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -221,7 +221,7 @@ namespace Azure.AI.ContentSafety
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentSafety.ImageCategory left, Azure.AI.ContentSafety.ImageCategory right) { throw null; }
-        public static implicit operator Azure.AI.ContentSafety.ImageCategory (string value) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.ImageCategory(string value) { throw null; }
         public static bool operator !=(Azure.AI.ContentSafety.ImageCategory left, Azure.AI.ContentSafety.ImageCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -299,7 +299,7 @@ namespace Azure.AI.ContentSafety
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.ContentSafety.TextCategory left, Azure.AI.ContentSafety.TextCategory right) { throw null; }
-        public static implicit operator Azure.AI.ContentSafety.TextCategory (string value) { throw null; }
+        public static implicit operator Azure.AI.ContentSafety.TextCategory(string value) { throw null; }
         public static bool operator !=(Azure.AI.ContentSafety.TextCategory left, Azure.AI.ContentSafety.TextCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
