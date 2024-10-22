@@ -76,7 +76,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 availabilityZone,
                 replicationRole,
                 replicaCapacity,
+                default,
                 createMode,
+                default,
                 serializedAdditionalRawData: null);
         }
 
@@ -264,7 +266,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 default,
                 default,
                 supportedIops,
+                default,
                 storageSizeInMB,
+                default,
+                default,
+                default,
                 default,
                 supportedUpgradableTierList.ToList());
         }
