@@ -43,7 +43,7 @@ parameters:
   default: false
 
 # Whether to regenerate sdk clients using the new emitter.
-- name: ShouldRegenrate
+- name: ShouldRegenerate
   type: boolean
   default: false
 
@@ -210,7 +210,7 @@ extends:
 
     # Regenerate stage
     # Responsible for regenerating the SDK code using the emitter package and the generation matrix.
-    - ${{ if and(parameters.ShouldPublish, parameters.ShouldRegenrate) }}:
+    - ${{ if and(parameters.ShouldPublish, parameters.ShouldRegenerate) }}:
       - stage: Regenerate
         dependsOn:
         - Build
