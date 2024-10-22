@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -302,351 +302,6 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetCommitmentPlans().Get(commitmentPlanName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EncryptionScopeResources in the CognitiveServicesAccount. </summary>
-        /// <returns> An object representing collection of EncryptionScopeResources and their operations over a EncryptionScopeResource. </returns>
-        public virtual EncryptionScopeCollection GetEncryptionScopes()
-        {
-            return GetCachedClient(client => new EncryptionScopeCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified EncryptionScope associated with the Cognitive Services account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/encryptionScopes/{encryptionScopeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EncryptionScopes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EncryptionScopeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="encryptionScopeName"> The name of the encryptionScope associated with the Cognitive Services Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EncryptionScopeResource>> GetEncryptionScopeAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
-        {
-            return await GetEncryptionScopes().GetAsync(encryptionScopeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified EncryptionScope associated with the Cognitive Services account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/encryptionScopes/{encryptionScopeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EncryptionScopes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EncryptionScopeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="encryptionScopeName"> The name of the encryptionScope associated with the Cognitive Services Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EncryptionScopeResource> GetEncryptionScope(string encryptionScopeName, CancellationToken cancellationToken = default)
-        {
-            return GetEncryptionScopes().Get(encryptionScopeName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RaiPolicyResources in the CognitiveServicesAccount. </summary>
-        /// <returns> An object representing collection of RaiPolicyResources and their operations over a RaiPolicyResource. </returns>
-        public virtual RaiPolicyCollection GetRaiPolicies()
-        {
-            return GetCachedClient(client => new RaiPolicyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified Content Filters associated with the Azure OpenAI account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiPolicies/{raiPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="raiPolicyName"> The name of the RaiPolicy associated with the Cognitive Services Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="raiPolicyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="raiPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RaiPolicyResource>> GetRaiPolicyAsync(string raiPolicyName, CancellationToken cancellationToken = default)
-        {
-            return await GetRaiPolicies().GetAsync(raiPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified Content Filters associated with the Azure OpenAI account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiPolicies/{raiPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="raiPolicyName"> The name of the RaiPolicy associated with the Cognitive Services Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="raiPolicyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="raiPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RaiPolicyResource> GetRaiPolicy(string raiPolicyName, CancellationToken cancellationToken = default)
-        {
-            return GetRaiPolicies().Get(raiPolicyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RaiBlocklistResources in the CognitiveServicesAccount. </summary>
-        /// <returns> An object representing collection of RaiBlocklistResources and their operations over a RaiBlocklistResource. </returns>
-        public virtual RaiBlocklistCollection GetRaiBlocklists()
-        {
-            return GetCachedClient(client => new RaiBlocklistCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified custom blocklist associated with the Azure OpenAI account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklists_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="raiBlocklistName"> The name of the RaiBlocklist associated with the Cognitive Services Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="raiBlocklistName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RaiBlocklistResource>> GetRaiBlocklistAsync(string raiBlocklistName, CancellationToken cancellationToken = default)
-        {
-            return await GetRaiBlocklists().GetAsync(raiBlocklistName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified custom blocklist associated with the Azure OpenAI account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/raiBlocklists/{raiBlocklistName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiBlocklists_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiBlocklistResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="raiBlocklistName"> The name of the RaiBlocklist associated with the Cognitive Services Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="raiBlocklistName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RaiBlocklistResource> GetRaiBlocklist(string raiBlocklistName, CancellationToken cancellationToken = default)
-        {
-            return GetRaiBlocklists().Get(raiBlocklistName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkSecurityPerimeterConfigurationResources in the CognitiveServicesAccount. </summary>
-        /// <returns> An object representing collection of NetworkSecurityPerimeterConfigurationResources and their operations over a NetworkSecurityPerimeterConfigurationResource. </returns>
-        public virtual NetworkSecurityPerimeterConfigurationCollection GetNetworkSecurityPerimeterConfigurations()
-        {
-            return GetCachedClient(client => new NetworkSecurityPerimeterConfigurationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified NSP configurations for an account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/networkSecurityPerimeterConfigurations/{nspConfigurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="nspConfigurationName"> The name of the NSP Configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nspConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nspConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkSecurityPerimeterConfigurationResource>> GetNetworkSecurityPerimeterConfigurationAsync(string nspConfigurationName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkSecurityPerimeterConfigurations().GetAsync(nspConfigurationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified NSP configurations for an account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/networkSecurityPerimeterConfigurations/{nspConfigurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="nspConfigurationName"> The name of the NSP Configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nspConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nspConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkSecurityPerimeterConfigurationResource> GetNetworkSecurityPerimeterConfiguration(string nspConfigurationName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkSecurityPerimeterConfigurations().Get(nspConfigurationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DefenderForAISettingResources in the CognitiveServicesAccount. </summary>
-        /// <returns> An object representing collection of DefenderForAISettingResources and their operations over a DefenderForAISettingResource. </returns>
-        public virtual DefenderForAISettingCollection GetDefenderForAISettings()
-        {
-            return GetCachedClient(client => new DefenderForAISettingCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified Defender for AI setting by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForAISettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForAISettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="defenderForAISettingName"> The name of the defender for AI setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="defenderForAISettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DefenderForAISettingResource>> GetDefenderForAISettingAsync(string defenderForAISettingName, CancellationToken cancellationToken = default)
-        {
-            return await GetDefenderForAISettings().GetAsync(defenderForAISettingName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified Defender for AI setting by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForAISettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForAISettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="defenderForAISettingName"> The name of the defender for AI setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="defenderForAISettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DefenderForAISettingResource> GetDefenderForAISetting(string defenderForAISettingName, CancellationToken cancellationToken = default)
-        {
-            return GetDefenderForAISettings().Get(defenderForAISettingName, cancellationToken);
-        }
-
         /// <summary>
         /// Returns a Cognitive Services account specified by the parameters.
         /// <list type="bullet">
@@ -660,7 +315,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -700,7 +355,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -740,7 +395,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -782,7 +437,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -824,7 +479,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -870,7 +525,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -916,7 +571,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -954,7 +609,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -992,7 +647,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1034,7 +689,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1076,7 +731,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1105,7 +760,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1134,7 +789,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1164,7 +819,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1194,7 +849,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1224,7 +879,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1254,7 +909,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1279,7 +934,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1304,7 +959,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1366,7 +1021,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1428,7 +1083,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1485,7 +1140,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1542,7 +1197,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1602,7 +1257,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

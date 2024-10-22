@@ -96,11 +96,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AmlWorkspace))
-            {
-                writer.WritePropertyName("amlWorkspace"u8);
-                writer.WriteObjectValue(AmlWorkspace, options);
-            }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
@@ -207,11 +202,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("abusePenalty"u8);
                 writer.WriteObjectValue(AbusePenalty, options);
             }
-            if (Optional.IsDefined(RaiMonitorConfig))
-            {
-                writer.WritePropertyName("raiMonitorConfig"u8);
-                writer.WriteObjectValue(RaiMonitorConfig, options);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -259,7 +249,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CognitiveServicesNetworkRuleSet networkAcls = default;
             ServiceAccountEncryptionProperties encryption = default;
             IList<ServiceAccountUserOwnedStorage> userOwnedStorage = default;
-            UserOwnedAmlWorkspace amlWorkspace = default;
             IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
             ServiceAccountPublicNetworkAccess? publicNetworkAccess = default;
             ServiceAccountApiProperties apiProperties = default;
@@ -277,7 +266,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CognitiveServicesMultiRegionSettings locations = default;
             IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations = default;
             AbusePenalty abusePenalty = default;
-            RaiMonitorConfig raiMonitorConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -368,15 +356,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         array.Add(ServiceAccountUserOwnedStorage.DeserializeServiceAccountUserOwnedStorage(item, options));
                     }
                     userOwnedStorage = array;
-                    continue;
-                }
-                if (property.NameEquals("amlWorkspace"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    amlWorkspace = UserOwnedAmlWorkspace.DeserializeUserOwnedAmlWorkspace(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"u8))
@@ -548,15 +527,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     abusePenalty = AbusePenalty.DeserializeAbusePenalty(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("raiMonitorConfig"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    raiMonitorConfig = RaiMonitorConfig.DeserializeRaiMonitorConfig(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -574,7 +544,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 networkAcls,
                 encryption,
                 userOwnedStorage ?? new ChangeTrackingList<ServiceAccountUserOwnedStorage>(),
-                amlWorkspace,
                 privateEndpointConnections ?? new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>(),
                 publicNetworkAccess,
                 apiProperties,
@@ -592,7 +561,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 locations,
                 commitmentPlanAssociations ?? new ChangeTrackingList<CommitmentPlanAssociation>(),
                 abusePenalty,
-                raiMonitorConfig,
                 serializedAdditionalRawData);
         }
 
@@ -795,21 +763,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         }
                         builder.AppendLine("  ]");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AmlWorkspace), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  amlWorkspace: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AmlWorkspace))
-                {
-                    builder.Append("  amlWorkspace: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AmlWorkspace, options, 2, false, "  amlWorkspace: ");
                 }
             }
 
@@ -1138,21 +1091,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     builder.Append("  abusePenalty: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AbusePenalty, options, 2, false, "  abusePenalty: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RaiMonitorConfig), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  raiMonitorConfig: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RaiMonitorConfig))
-                {
-                    builder.Append("  raiMonitorConfig: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RaiMonitorConfig, options, 2, false, "  raiMonitorConfig: ");
                 }
             }
 

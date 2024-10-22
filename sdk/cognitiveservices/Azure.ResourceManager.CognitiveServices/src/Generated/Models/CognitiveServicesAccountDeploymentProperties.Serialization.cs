@@ -87,26 +87,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("versionUpgradeOption"u8);
                 writer.WriteStringValue(VersionUpgradeOption.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DynamicThrottlingEnabled))
-            {
-                writer.WritePropertyName("dynamicThrottlingEnabled"u8);
-                writer.WriteBooleanValue(DynamicThrottlingEnabled.Value);
-            }
-            if (Optional.IsDefined(CurrentCapacity))
-            {
-                writer.WritePropertyName("currentCapacity"u8);
-                writer.WriteNumberValue(CurrentCapacity.Value);
-            }
-            if (Optional.IsDefined(CapacitySettings))
-            {
-                writer.WritePropertyName("capacitySettings"u8);
-                writer.WriteObjectValue(CapacitySettings, options);
-            }
-            if (Optional.IsDefined(ParentDeploymentName))
-            {
-                writer.WritePropertyName("parentDeploymentName"u8);
-                writer.WriteStringValue(ParentDeploymentName);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -152,10 +132,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             ServiceAccountCallRateLimit callRateLimit = default;
             IReadOnlyList<ServiceAccountThrottlingRule> rateLimits = default;
             DeploymentModelVersionUpgradeOption? versionUpgradeOption = default;
-            bool? dynamicThrottlingEnabled = default;
-            int? currentCapacity = default;
-            DeploymentCapacitySettings capacitySettings = default;
-            string parentDeploymentName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,38 +214,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     versionUpgradeOption = new DeploymentModelVersionUpgradeOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dynamicThrottlingEnabled"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dynamicThrottlingEnabled = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("currentCapacity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    currentCapacity = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("capacitySettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    capacitySettings = DeploymentCapacitySettings.DeserializeDeploymentCapacitySettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("parentDeploymentName"u8))
-                {
-                    parentDeploymentName = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -285,10 +229,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 callRateLimit,
                 rateLimits ?? new ChangeTrackingList<ServiceAccountThrottlingRule>(),
                 versionUpgradeOption,
-                dynamicThrottlingEnabled,
-                currentCapacity,
-                capacitySettings,
-                parentDeploymentName,
                 serializedAdditionalRawData);
         }
 
@@ -458,75 +398,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     builder.Append("  versionUpgradeOption: ");
                     builder.AppendLine($"'{VersionUpgradeOption.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DynamicThrottlingEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dynamicThrottlingEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DynamicThrottlingEnabled))
-                {
-                    builder.Append("  dynamicThrottlingEnabled: ");
-                    var boolValue = DynamicThrottlingEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentCapacity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  currentCapacity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CurrentCapacity))
-                {
-                    builder.Append("  currentCapacity: ");
-                    builder.AppendLine($"{CurrentCapacity.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapacitySettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  capacitySettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CapacitySettings))
-                {
-                    builder.Append("  capacitySettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CapacitySettings, options, 2, false, "  capacitySettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParentDeploymentName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  parentDeploymentName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ParentDeploymentName))
-                {
-                    builder.Append("  parentDeploymentName: ");
-                    if (ParentDeploymentName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ParentDeploymentName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ParentDeploymentName}'");
-                    }
                 }
             }
 

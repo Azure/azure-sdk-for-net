@@ -51,31 +51,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesModel"/>. </summary>
-        /// <param name="model"> Cognitive Services account Model. </param>
-        /// <param name="kind"> The kind (type) of cognitive service account. </param>
-        /// <param name="skuName"> The name of SKU. </param>
-        /// <param name="description"> The description of the model. </param>
+        /// <param name="model"> Model Metadata. </param>
+        /// <param name="kind"> The Kind of the Model. </param>
+        /// <param name="skuName"> The SKU of the Model. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesModel(CognitiveServicesAccountModel model, string kind, string skuName, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CognitiveServicesModel(CognitiveServicesAccountModel model, string kind, string skuName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Model = model;
             Kind = kind;
             SkuName = skuName;
-            Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Cognitive Services account Model. </summary>
+        /// <summary> Model Metadata. </summary>
         [WirePath("model")]
         public CognitiveServicesAccountModel Model { get; }
-        /// <summary> The kind (type) of cognitive service account. </summary>
+        /// <summary> The Kind of the Model. </summary>
         [WirePath("kind")]
         public string Kind { get; }
-        /// <summary> The name of SKU. </summary>
+        /// <summary> The SKU of the Model. </summary>
         [WirePath("skuName")]
         public string SkuName { get; }
-        /// <summary> The description of the model. </summary>
-        [WirePath("description")]
-        public string Description { get; }
     }
 }

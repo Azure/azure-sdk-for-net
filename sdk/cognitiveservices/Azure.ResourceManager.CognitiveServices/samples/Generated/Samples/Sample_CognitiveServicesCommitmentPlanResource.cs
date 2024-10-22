@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateCommitmentPlan()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/UpdateSharedCommitmentPlan.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2023-05-01/examples/UpdateSharedCommitmentPlan.json
             // this example is just showing the usage of "CommitmentPlans_UpdatePlan" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             CognitiveServicesCommitmentPlanResource cognitiveServicesCommitmentPlan = client.GetCognitiveServicesCommitmentPlanResource(cognitiveServicesCommitmentPlanResourceId);
 
             // invoke the operation
-            PatchResourceTagsAndSku commitmentPlan = new PatchResourceTagsAndSku()
+            CognitiveServicesCommitmentPlanPatch patch = new CognitiveServicesCommitmentPlanPatch()
             {
                 Tags =
 {
 ["name"] = "value",
 },
             };
-            ArmOperation<CognitiveServicesCommitmentPlanResource> lro = await cognitiveServicesCommitmentPlan.UpdateAsync(WaitUntil.Completed, commitmentPlan);
+            ArmOperation<CognitiveServicesCommitmentPlanResource> lro = await cognitiveServicesCommitmentPlan.UpdateAsync(WaitUntil.Completed, patch);
             CognitiveServicesCommitmentPlanResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteCommitmentPlan()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/DeleteSharedCommitmentPlan.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2023-05-01/examples/DeleteSharedCommitmentPlan.json
             // this example is just showing the usage of "CommitmentPlans_DeletePlan" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCommitmentPlan()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/GetSharedCommitmentPlan.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2023-05-01/examples/GetSharedCommitmentPlan.json
             // this example is just showing the usage of "CommitmentPlans_GetPlan" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetCognitiveServicesCommitmentPlans_ListAccountsBySubscription()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/ListSharedCommitmentPlansBySubscription.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2023-05-01/examples/ListSharedCommitmentPlansBySubscription.json
             // this example is just showing the usage of "CommitmentPlans_ListPlansBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

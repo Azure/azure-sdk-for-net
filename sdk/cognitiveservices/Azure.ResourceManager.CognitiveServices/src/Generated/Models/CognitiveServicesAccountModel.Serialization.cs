@@ -131,12 +131,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             ServiceAccountModelDeprecationInfo deprecation = default;
             ModelLifecycleStatus? lifecycleStatus = default;
             SystemData systemData = default;
-            string publisher = default;
             string format = default;
             string name = default;
             string version = default;
             string source = default;
-            ResourceIdentifier sourceAccount = default;
             ServiceAccountCallRateLimit callRateLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -238,11 +236,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("publisher"u8))
-                {
-                    publisher = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("format"u8))
                 {
                     format = property.Value.GetString();
@@ -263,15 +256,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     source = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceAccount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceAccount = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("callRateLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -288,12 +272,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new CognitiveServicesAccountModel(
-                publisher,
                 format,
                 name,
                 version,
                 source,
-                sourceAccount,
                 callRateLimit,
                 serializedAdditionalRawData,
                 baseModel,
@@ -506,29 +488,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Publisher), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  publisher: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Publisher))
-                {
-                    builder.Append("  publisher: ");
-                    if (Publisher.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Publisher}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Publisher}'");
-                    }
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Format), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -618,21 +577,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         builder.AppendLine($"'{Source}'");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceAccount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sourceAccount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SourceAccount))
-                {
-                    builder.Append("  sourceAccount: ");
-                    builder.AppendLine($"'{SourceAccount.ToString()}'");
                 }
             }
 
