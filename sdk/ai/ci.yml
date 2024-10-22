@@ -29,5 +29,5 @@ extends:
     Artifacts:
     - name: Azure.AI.Inference
       safeName: AzureAIInference
-    - name: Azure.AI.Client
-      safeName: AzureAIClient
+    - name: Azure.AI.Project
+      safeName: AzureAIProject
