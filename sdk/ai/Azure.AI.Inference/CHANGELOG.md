@@ -14,6 +14,7 @@
 - `ChatCompletionsToolSelectionPreset` has been replaced with `ChatCompletionsToolChoicePreset`.
 - `ChatCompletionsNamedFunctionToolSelection` has been replaced with `ChatCompletionsNamedToolChoice`.
 - `ChatCompletionsFunctionToolSelection` has been replaced with `ChatCompletionsNamedToolChoiceFunction`.
+- `StreamingChatCompletionsUpdate.AuthorName` has been removed
 
 ### Bugs Fixed
 - Fixed support for chat completions streaming while using tools.
