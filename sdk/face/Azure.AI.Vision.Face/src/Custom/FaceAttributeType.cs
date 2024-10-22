@@ -24,8 +24,6 @@ namespace Azure.AI.Vision.Face
             public static FaceAttributeType Exposure { get; } = FaceAttributeType.Exposure;
             /// <summary> Noise level of face pixels. Level returns 'Low', 'Medium' and 'High'. Value returns a number between [0,1], the larger the noisier. </summary>
             public static FaceAttributeType Noise { get; } = FaceAttributeType.Noise;
-            /// <summary> Whether each face is wearing a mask. Mask type returns 'noMask', 'faceMask', 'otherMaskOrOcclusion', or 'uncertain'. Value returns a boolean 'noseAndMouthCovered' indicating whether nose and mouth are covered. </summary>
-            public static FaceAttributeType Mask { get; } = FaceAttributeType.Mask;
         }
 
         /// <summary> Available attributes for detection03 model. </summary>
