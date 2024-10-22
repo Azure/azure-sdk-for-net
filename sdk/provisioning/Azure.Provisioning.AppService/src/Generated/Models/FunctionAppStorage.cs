@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Storage for deployed package used by the function app.
 /// </summary>
-public partial class FunctionAppStorage : ProvisioningConstruct
+public partial class FunctionAppStorage : ProvisionableConstruct
 {
     /// <summary>
     /// Property to select Azure Storage type. Available options: blobContainer.

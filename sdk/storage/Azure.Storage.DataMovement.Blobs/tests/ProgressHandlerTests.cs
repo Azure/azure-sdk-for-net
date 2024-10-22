@@ -8,15 +8,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Storage.Blobs.Tests;
-using Azure.Storage.DataMovement.Blobs.Tests;
+using Azure.Storage.DataMovement.Tests;
 using BaseBlobs::Azure.Storage.Blobs;
-using BaseBlobs::Azure.Storage.Blobs.Models;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
 
-namespace Azure.Storage.DataMovement.Tests
+namespace Azure.Storage.DataMovement.Blobs.Tests
 {
     public class ProgressHandlerTests : DataMovementBlobTestBase
     {
@@ -144,7 +141,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task ProgressHandler_DownloadDirectory()
         {
             // Arrange
@@ -167,7 +163,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task ProgressHandler_DirectoryUpload()
         {
             // Arrange
@@ -190,7 +185,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task ProgressHandler_Copy()
         {
             // Arrange
@@ -214,7 +208,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(StorageResourceCreationPreference.SkipIfExists)]
         [TestCase(StorageResourceCreationPreference.FailIfExists)]
         public async Task ProgressHandler_Conflict(StorageResourceCreationPreference createMode)
@@ -246,7 +239,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -308,7 +300,6 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35558")]
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         [TestCase(0)]
         [TestCase(150)]
         public async Task ProgressHandler_PauseResume(int delayInMs)

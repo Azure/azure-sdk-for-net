@@ -13,7 +13,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// Information describing the identities associated with this application.
 /// </summary>
-public partial class PostgreSqlFlexibleServerUserAssignedIdentity : ProvisioningConstruct
+public partial class PostgreSqlFlexibleServerUserAssignedIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// represents user assigned identities map.

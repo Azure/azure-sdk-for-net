@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Specific Gremlin Databases to restore.
 /// </summary>
-public partial class GremlinDatabaseRestoreResourceInfo : ProvisioningConstruct
+public partial class GremlinDatabaseRestoreResourceInfo : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the gremlin database available for restore.

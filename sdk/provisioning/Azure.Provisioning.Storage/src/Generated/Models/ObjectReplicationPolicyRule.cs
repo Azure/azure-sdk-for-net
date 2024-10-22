@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// The replication policy rule between two containers.
 /// </summary>
-public partial class ObjectReplicationPolicyRule : ProvisioningConstruct
+public partial class ObjectReplicationPolicyRule : ProvisionableConstruct
 {
     /// <summary>
     /// Rule Id is auto-generated for each new rule on destination account. It

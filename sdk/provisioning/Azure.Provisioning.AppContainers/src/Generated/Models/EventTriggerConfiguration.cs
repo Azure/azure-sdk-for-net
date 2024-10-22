@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Trigger configuration of an event driven job.
 /// </summary>
-public partial class EventTriggerConfiguration : ProvisioningConstruct
+public partial class EventTriggerConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Minimum number of successful replica completions before overall job

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The properties of a DataTransfer Job.
 /// </summary>
-public partial class DataTransferJobProperties : ProvisioningConstruct
+public partial class DataTransferJobProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Job Name.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The CORS policy for the Cosmos DB database account.
 /// </summary>
-public partial class CosmosDBAccountCorsPolicy : ProvisioningConstruct
+public partial class CosmosDBAccountCorsPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// The origin domains that are permitted to make a request against the

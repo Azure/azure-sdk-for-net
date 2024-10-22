@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppContainers;
 /// The configuration settings that determines the validation flow of users
 /// using ContainerApp Service Authentication/Authorization.
 /// </summary>
-public partial class ContainerAppGlobalValidation : ProvisioningConstruct
+public partial class ContainerAppGlobalValidation : ProvisionableConstruct
 {
     /// <summary>
     /// The action to take when an unauthenticated client attempts to access

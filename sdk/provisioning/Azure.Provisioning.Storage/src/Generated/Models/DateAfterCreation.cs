@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Object to define snapshot and version action conditions.
 /// </summary>
-public partial class DateAfterCreation : ProvisioningConstruct
+public partial class DateAfterCreation : ProvisionableConstruct
 {
     /// <summary>
     /// Value indicating the age in days after creation.

@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("This test case will cause errors in the pipeline. After fixing the problem, restore this test")]
         public async Task CRUD()
         {
             await SetCollectionsAsync();

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the nonce used in the login flow.
 /// </summary>
-public partial class ContainerAppLoginNonce : ProvisioningConstruct
+public partial class ContainerAppLoginNonce : ProvisionableConstruct
 {
     /// <summary>
     /// &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated

@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// Redis cache access keys.
 /// </summary>
-public partial class RedisAccessKeys : ProvisioningConstruct
+public partial class RedisAccessKeys : ProvisionableConstruct
 {
     /// <summary>
     /// The current primary key that clients can use to authenticate with Redis
@@ -47,7 +47,7 @@ public partial class RedisAccessKeys : ProvisioningConstruct
     /// </param>
     /// <returns>A RedisAccessKeys resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static RedisAccessKeys FromExpression(Expression expression)
+    public static RedisAccessKeys FromExpression(BicepExpression expression)
     {
         RedisAccessKeys resource = new();
         resource.OverrideWithExpression(expression);

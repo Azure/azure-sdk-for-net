@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Storage;
 /// The custom domain assigned to this storage account. This can be set via
 /// Update.
 /// </summary>
-public partial class StorageCustomDomain : ProvisioningConstruct
+public partial class StorageCustomDomain : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets the custom domain name assigned to the storage account.

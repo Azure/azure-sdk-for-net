@@ -1,5 +1,16 @@
 # Release History
 
+## 1.14.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+- Fixed an issue that prevented ManagedIdentityCredential from attempting to detect if Workload Identity is enabled in the current environment. [#46653](https://github.com/Azure/azure-sdk-for-net/issues/46653)
+
+### Other Changes
+
 ## 1.13.0 (2024-10-14)
 
 ### Features Added

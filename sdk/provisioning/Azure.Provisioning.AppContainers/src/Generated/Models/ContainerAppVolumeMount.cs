@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Volume mount for the Container App.
 /// </summary>
-public partial class ContainerAppVolumeMount : ProvisioningConstruct
+public partial class ContainerAppVolumeMount : ProvisionableConstruct
 {
     /// <summary>
     /// This must match the Name of a Volume.

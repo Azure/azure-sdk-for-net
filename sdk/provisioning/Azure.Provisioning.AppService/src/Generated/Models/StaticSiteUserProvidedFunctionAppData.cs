@@ -14,7 +14,7 @@ namespace Azure.Provisioning.AppService;
 /// A class representing the StaticSiteUserProvidedFunctionApp data model.
 /// Static Site User Provided Function App ARM resource.
 /// </summary>
-public partial class StaticSiteUserProvidedFunctionAppData : ProvisioningConstruct
+public partial class StaticSiteUserProvidedFunctionAppData : ProvisionableConstruct
 {
     /// <summary>
     /// The resource id of the function app registered with the static site.

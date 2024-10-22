@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// A Kubernetes add-on profile for a managed cluster.
 /// </summary>
-public partial class ManagedClusterAddonProfile : ProvisioningConstruct
+public partial class ManagedClusterAddonProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Whether the add-on is enabled or not.

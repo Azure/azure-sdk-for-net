@@ -14,7 +14,7 @@ namespace Azure.Provisioning.ContainerService;
 /// Azure Monitor Workspace and configure additional scraping for custom
 /// targets. See aka.ms/AzureManagedPrometheus for an overview.
 /// </summary>
-public partial class ManagedClusterMonitorProfileMetrics : ProvisioningConstruct
+public partial class ManagedClusterMonitorProfileMetrics : ProvisionableConstruct
 {
     /// <summary>
     /// Whether to enable or disable the Azure Managed Prometheus addon for

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Setting for SMB protocol.
 /// </summary>
-public partial class SmbSetting : ProvisioningConstruct
+public partial class SmbSetting : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates whether multichannel is enabled.

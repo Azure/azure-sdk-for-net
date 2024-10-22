@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Key Vault container for a certificate that is purchased through Azure.
 /// </summary>
-public partial class AppServiceCertificateProperties : ProvisioningConstruct
+public partial class AppServiceCertificateProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Key Vault resource Id.

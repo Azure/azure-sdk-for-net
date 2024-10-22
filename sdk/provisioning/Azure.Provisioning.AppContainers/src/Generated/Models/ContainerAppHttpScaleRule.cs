@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Container App container Http scaling rule.
 /// </summary>
-public partial class ContainerAppHttpScaleRule : ProvisioningConstruct
+public partial class ContainerAppHttpScaleRule : ProvisionableConstruct
 {
     /// <summary>
     /// Metadata properties to describe http scale rule.

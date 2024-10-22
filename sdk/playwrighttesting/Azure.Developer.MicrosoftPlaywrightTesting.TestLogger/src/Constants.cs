@@ -199,6 +199,8 @@ internal class Constants
     internal static readonly string s_invalid_mpt_pat_error = "The Access Token provided in the environment variable is invalid.";
     internal static readonly string s_expired_mpt_pat_error = "The Access Token you are using is expired. Create a new token.";
     internal static readonly string s_invalid_os_error = "Invalid operating system, supported values are 'linux' and 'windows'.";
+    internal static readonly string s_workspace_mismatch_error = "The provided access token does not match the specified workspace URL. Please verify that both values are correct.";
+    internal static readonly string s_invalid_service_endpoint_error_message = "The service endpoint provided is invalid. Please verify the endpoint URL and try again.";
 
     internal static readonly string s_playwright_service_disable_scalable_execution_environment_variable = "PLAYWRIGHT_SERVICE_DISABLE_SCALABLE_EXECUTION";
     internal static readonly string s_playwright_service_reporting_url_environment_variable = "PLAYWRIGHT_SERVICE_REPORTING_URL";

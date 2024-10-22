@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// An access key for the storage account.
 /// </summary>
-public partial class StorageAccountKey : ProvisioningConstruct
+public partial class StorageAccountKey : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the key.
@@ -59,7 +59,7 @@ public partial class StorageAccountKey : ProvisioningConstruct
     /// </param>
     /// <returns>A StorageAccountKey resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static StorageAccountKey FromExpression(Expression expression)
+    public static StorageAccountKey FromExpression(BicepExpression expression)
     {
         StorageAccountKey resource = new();
         resource.OverrideWithExpression(expression);

@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Messaging.ServiceBus;
+using Azure.Provisioning.CloudMachine;
 
 namespace Azure.CloudMachine;
 
@@ -13,7 +16,7 @@ public readonly struct MessagingServices
 
     public void SendMessage(object serializable)
     {
-        ServiceBusSender sender = GetSender();
+        ServiceBusSender sender = GetServiceBusSender();
 
         BinaryData serialized = BinaryData.FromObjectAsJson(serializable);
         ServiceBusMessage message = new(serialized);
@@ -22,30 +25,69 @@ public readonly struct MessagingServices
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
     }
 
-    private ServiceBusSender GetSender()
+    public void WhenMessageReceived(Action<string> received)
     {
-        string senderClientId = typeof(ServiceBusSender).FullName;
-        CloudMachineClient cm = _cm;
-        ServiceBusSender sender = _cm.Subclients.Get(senderClientId, () =>
-        {
-            string serviceBusClientId = typeof(ServiceBusClient).FullName;
-            ServiceBusClient sb = cm.Subclients.Get(serviceBusClientId, () =>
-            {
-                string sbNamespace = cm.GetConfiguration(serviceBusClientId)!.Value.Endpoint;
-                ServiceBusClient sb = new(sbNamespace, cm.Credential);
-                return sb;
-            });
+        var processor = _cm.Messaging.GetServiceBusProcessor();
+        var cm = _cm;
 
-            string ServiceBusSenderId = typeof(ServiceBusClient).FullName;
-            string defaultTopic = cm.GetConfiguration(ServiceBusSenderId)!.Value.Endpoint;
-            ServiceBusSender sender = sb.CreateSender(defaultTopic);
-            return sender;
-        });
+        // TODO: How to unsubscribe?
+        // TODO: Use a subscription filter to ignore Event Grid system events
+        processor.ProcessMessageAsync += async (args) =>
+        {
+            received(args.Message.Body.ToString());
+            await args.CompleteMessageAsync(args.Message).ConfigureAwait(false);
+            await Task.CompletedTask.ConfigureAwait(false);
+        };
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+        processor.StartProcessingAsync().GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+    }
+
+    private ServiceBusClient GetServiceBusClient()
+    {
+        MessagingServices messagingServices = this;
+        ServiceBusClient client = _cm.Subclients.Get(() => messagingServices.CreateClient());
+        return client;
+    }
+
+    private ServiceBusSender GetServiceBusSender()
+    {
+        MessagingServices messagingServices = this;
+        ServiceBusSender sender = _cm.Subclients.Get(() => messagingServices.CreateSender());
         return sender;
     }
 
-    public void WhenMessageReceived(Action<string> received)
+    internal ServiceBusProcessor GetServiceBusProcessor()
     {
-        throw new NotImplementedException();
+        MessagingServices messagingServices = this;
+        ServiceBusProcessor sender = _cm.Subclients.Get(() => messagingServices.CreateProcessor());
+        return sender;
+    }
+
+    private ServiceBusSender CreateSender()
+    {
+        ServiceBusClient client = GetServiceBusClient();
+
+        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusClient));
+        ServiceBusSender sender = client.CreateSender(connection.Id);
+        return sender;
+    }
+    private ServiceBusClient CreateClient()
+    {
+        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusClient));
+        ServiceBusClient client = new(connection.Endpoint!.AbsoluteUri, connection.TokenCredential);
+        return client;
+    }
+    private ServiceBusProcessor CreateProcessor()
+    {
+        ServiceBusClient client = GetServiceBusClient();
+
+        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusSender));
+        ServiceBusProcessor processor = client.CreateProcessor(
+            connection.Id,
+            CloudMachineInfrastructure.SB_PRIVATE_SUB,
+            new() { ReceiveMode = ServiceBusReceiveMode.PeekLock, MaxConcurrentCalls = 5 });
+        processor.ProcessErrorAsync += (args) => throw new Exception("error processing event", args.Exception);
+        return processor;
     }
 }

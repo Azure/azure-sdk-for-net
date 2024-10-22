@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the registration for the Apple provider.
 /// </summary>
-public partial class ContainerAppAppleRegistrationConfiguration : ProvisioningConstruct
+public partial class ContainerAppAppleRegistrationConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// The Client ID of the app used for login.

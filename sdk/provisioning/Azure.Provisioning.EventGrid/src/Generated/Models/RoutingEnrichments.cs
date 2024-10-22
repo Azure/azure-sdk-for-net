@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// The RoutingEnrichments.
 /// </summary>
-public partial class RoutingEnrichments : ProvisioningConstruct
+public partial class RoutingEnrichments : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the static             Please note

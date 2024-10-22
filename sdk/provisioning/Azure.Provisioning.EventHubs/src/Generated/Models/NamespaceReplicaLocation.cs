@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// Namespace replication properties.
 /// </summary>
-public partial class NamespaceReplicaLocation : ProvisioningConstruct
+public partial class NamespaceReplicaLocation : ProvisionableConstruct
 {
     /// <summary>
     /// Azure regions where a replica of the namespace is maintained.

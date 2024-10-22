@@ -52,9 +52,9 @@ public class KeyVaultFeature : CloudMachineFeature
         infrastructure.AddResource(ra);
 
         // necessary until ResourceName is settable via AssignRole.
-        RoleAssignment kvMiRoleAssignment = new RoleAssignment(keyVaultResource.IdentifierName + "_" + infrastructure.Identity.IdentifierName + "_" + KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator));
+        RoleAssignment kvMiRoleAssignment = new RoleAssignment(keyVaultResource.BicepIdentifier + "_" + infrastructure.Identity.BicepIdentifier + "_" + KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator));
         kvMiRoleAssignment.Name = BicepFunction.CreateGuid(keyVaultResource.Id, infrastructure.Identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", KeyVaultBuiltInRole.KeyVaultAdministrator.ToString()));
-        kvMiRoleAssignment.Scope = new IdentifierExpression(keyVaultResource.IdentifierName);
+        kvMiRoleAssignment.Scope = new IdentifierExpression(keyVaultResource.BicepIdentifier);
         kvMiRoleAssignment.PrincipalType = RoleManagementPrincipalType.ServicePrincipal;
         kvMiRoleAssignment.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", KeyVaultBuiltInRole.KeyVaultAdministrator.ToString());
         kvMiRoleAssignment.PrincipalId = infrastructure.Identity.PrincipalId;
@@ -64,19 +64,13 @@ public class KeyVaultFeature : CloudMachineFeature
 
 public static class KeyVaultExtensions
 {
-    public static SecretClient GetKeyVaultSecretsClient(this WorkspaceClient workspace)
+    public static SecretClient GetKeyVaultSecretsClient(this ClientWorkspace workspace)
     {
-        ClientConfiguration? connectionMaybe = workspace.GetConfiguration(typeof(SecretClient).FullName);
-        if (connectionMaybe == null)
+        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(SecretClient));
+        if (connection.ConnectionKind == ClientConnectionKind.EntraId)
         {
-            throw new Exception("Connection not found");
+            return new(connection.Endpoint, connection.TokenCredential);
         }
-
-        ClientConfiguration connection = connectionMaybe.Value;
-        if (connection.CredentialType == CredentialType.EntraId)
-        {
-            return new(new Uri(connection.Endpoint), workspace.Credential);
-        }
-        throw new Exception("ApiKey not supported");
+        throw new Exception("API key not supported");
     }
 }

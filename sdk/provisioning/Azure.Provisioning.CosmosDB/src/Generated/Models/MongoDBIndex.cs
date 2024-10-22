@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB MongoDB collection index key.
 /// </summary>
-public partial class MongoDBIndex : ProvisioningConstruct
+public partial class MongoDBIndex : ProvisionableConstruct
 {
     /// <summary>
     /// List of keys for each MongoDB collection in the Azure Cosmos DB service.

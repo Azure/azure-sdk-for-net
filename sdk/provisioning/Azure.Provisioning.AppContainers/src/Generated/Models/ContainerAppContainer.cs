@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Container App container definition.
 /// </summary>
-public partial class ContainerAppContainer : ProvisioningConstruct
+public partial class ContainerAppContainer : ProvisionableConstruct
 {
     /// <summary>
     /// List of probes for the container.

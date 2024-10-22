@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// The selector expression.
 /// </summary>
-public partial class ResourceSelectorExpression : ProvisioningConstruct
+public partial class ResourceSelectorExpression : ProvisionableConstruct
 {
     /// <summary>
     /// The selector kind.

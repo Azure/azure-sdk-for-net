@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// The execution options of a job step.
 /// </summary>
-public partial class JobStepExecutionOptions : ProvisioningConstruct
+public partial class JobStepExecutionOptions : ProvisionableConstruct
 {
     /// <summary>
     /// Execution timeout for the job step.

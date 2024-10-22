@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// CommitmentPlanAccountAssociation.
 /// </summary>
-public partial class CommitmentPlanAccountAssociation : Resource
+public partial class CommitmentPlanAccountAssociation : ProvisionableResource
 {
     /// <summary>
     /// The name of the commitment plan association with the Cognitive Services
@@ -58,15 +58,15 @@ public partial class CommitmentPlanAccountAssociation : Resource
     /// <summary>
     /// Creates a new CommitmentPlanAccountAssociation.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CommitmentPlanAccountAssociation
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CommitmentPlanAccountAssociation.</param>
-    public CommitmentPlanAccountAssociation(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.CognitiveServices/commitmentPlans/accountAssociations", resourceVersion ?? "2024-10-01")
+    public CommitmentPlanAccountAssociation(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.CognitiveServices/commitmentPlans/accountAssociations", resourceVersion ?? "2024-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _accountId = BicepValue<string>.DefineProperty(this, "AccountId", ["properties", "accountId"]);
@@ -100,7 +100,7 @@ public partial class CommitmentPlanAccountAssociation : Resource
     /// <summary>
     /// Creates a reference to an existing CommitmentPlanAccountAssociation.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CommitmentPlanAccountAssociation
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -108,6 +108,6 @@ public partial class CommitmentPlanAccountAssociation : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CommitmentPlanAccountAssociation.</param>
     /// <returns>The existing CommitmentPlanAccountAssociation resource.</returns>
-    public static CommitmentPlanAccountAssociation FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CommitmentPlanAccountAssociation FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSlotSourceControl.
 /// </summary>
-public partial class WebSiteSlotSourceControl : Resource
+public partial class WebSiteSlotSourceControl : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -96,15 +96,15 @@ public partial class WebSiteSlotSourceControl : Resource
     /// <summary>
     /// Creates a new WebSiteSlotSourceControl.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WebSiteSlotSourceControl resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotSourceControl.</param>
-    public WebSiteSlotSourceControl(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/slots/sourcecontrols", resourceVersion ?? "2024-04-01")
+    public WebSiteSlotSourceControl(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/sourcecontrols", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _branch = BicepValue<string>.DefineProperty(this, "Branch", ["properties", "branch"]);
@@ -284,7 +284,7 @@ public partial class WebSiteSlotSourceControl : Resource
     /// <summary>
     /// Creates a reference to an existing WebSiteSlotSourceControl.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WebSiteSlotSourceControl resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -292,6 +292,6 @@ public partial class WebSiteSlotSourceControl : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotSourceControl.</param>
     /// <returns>The existing WebSiteSlotSourceControl resource.</returns>
-    public static WebSiteSlotSourceControl FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteSlotSourceControl FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

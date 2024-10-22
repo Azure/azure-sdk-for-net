@@ -18,7 +18,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// include Azure.ResourceManager.CosmosDB.Models.ContinuousModeBackupPolicy
 /// and Azure.ResourceManager.CosmosDB.Models.PeriodicModeBackupPolicy.
 /// </summary>
-public partial class CosmosDBAccountBackupPolicy : ProvisioningConstruct
+public partial class CosmosDBAccountBackupPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// The object representing the state of the migration between the backup
