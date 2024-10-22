@@ -17,6 +17,9 @@ namespace Microsoft.Azure.Storage.DataMovement.Perf
         [Option("chunk-size", HelpText = "The chunk/block size to use during transfers (in bytes)")]
         public long? ChunkSize { get; set; }
 
+        [Option("concurrency", HelpText = "The max concurrency to use during each transfer.")]
+        public int? Concurrency { get; set; }
+
         // Override warmup to set default to 0
         [Option('w', "warmup", Default = 0, HelpText = "Duration of warmup in seconds")]
         public new int Warmup { get; set; }

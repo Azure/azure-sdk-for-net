@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Storage.DataMovement.Perf
 
         protected static DirectoryTransferContext DefaultTransferContext => new()
         {
-            ShouldOverwriteCallbackAsync = (_, _) => { return Task.FromResult(true); }
+            ShouldOverwriteCallbackAsync = DirectoryTransferContext.ForceOverwrite
         };
 
         public DirectoryTransferTest(TOptions options) : base(options)
@@ -33,7 +33,11 @@ namespace Microsoft.Azure.Storage.DataMovement.Perf
 
             if (Options.ChunkSize.HasValue)
             {
-                TransferManager.Configurations.BlockSize = (int)Options.ChunkSize;
+                TransferManager.Configurations.BlockSize = (int)Options.ChunkSize.Value;
+            }
+            if (Options.Concurrency.HasValue)
+            {
+                TransferManager.Configurations.ParallelOperations = Options.Concurrency.Value;
             }
         }
 

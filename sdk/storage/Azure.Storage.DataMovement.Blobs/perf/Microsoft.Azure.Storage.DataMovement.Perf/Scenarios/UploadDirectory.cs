@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Storage.DataMovement.Perf
                 _destinationContainer.GetDirectoryReference(string.Empty),
                 options: null,
                 DefaultTransferContext,
-                cancellationToken);
+                CancellationToken.None);  // Don't pass cancellation token to let ransfer finish gracefully
             AssertTransferStatus(transfer);
         }
     }

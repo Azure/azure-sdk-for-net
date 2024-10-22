@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Storage.DataMovement.Perf
                 CopyMethod.ServiceSideSyncCopy,
                 options: null,
                 DefaultTransferContext,
-                cancellationToken);
+                CancellationToken.None);  // Don't pass cancellation token to let ransfer finish gracefully
             AssertTransferStatus(transfer);
         }
     }
