@@ -621,6 +621,7 @@ namespace Azure.ResourceManager.CosmosDB
         public string DatabaseName { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string Region { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.CosmosDBChaosFaultResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4930,6 +4931,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public System.Uri ConnectionStringKeyVaultUri { get { throw null; } set { } }
         public string DatabaseName { get { throw null; } set { } }
         public string HostName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
