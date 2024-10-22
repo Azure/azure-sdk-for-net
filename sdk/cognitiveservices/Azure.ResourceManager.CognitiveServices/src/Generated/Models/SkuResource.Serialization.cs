@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class SkuInfo : IUtf8JsonSerializable, IJsonModel<SkuInfo>
+    public partial class SkuResource : IUtf8JsonSerializable, IJsonModel<SkuResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SkuInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SkuResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SkuResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuResource)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(ResourceType))
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
         }
 
-        SkuInfo IJsonModel<SkuInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SkuResource IJsonModel<SkuResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SkuResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSkuInfo(document.RootElement, options);
+            return DeserializeSkuResource(document.RootElement, options);
         }
 
-        internal static SkuInfo DeserializeSkuInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SkuResource DeserializeSkuResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SkuInfo(resourceType, sku, capacity, serializedAdditionalRawData);
+            return new SkuResource(resourceType, sku, capacity, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<SkuInfo>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SkuResource>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SkuResource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -205,26 +205,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SkuInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuResource)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SkuInfo IPersistableModel<SkuInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SkuResource IPersistableModel<SkuResource>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SkuResource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSkuInfo(document.RootElement, options);
+                        return DeserializeSkuResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuResource)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SkuInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SkuResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

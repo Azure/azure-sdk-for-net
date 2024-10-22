@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="DeploymentSkuListResult"/>. </summary>
         internal DeploymentSkuListResult()
         {
-            Value = new ChangeTrackingList<SkuInfo>();
+            Value = new ChangeTrackingList<SkuResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentSkuListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of deployment skus. </param>
         /// <param name="value"> Gets the list of Cognitive Services accounts deployment skus. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSkuListResult(string nextLink, IReadOnlyList<SkuInfo> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentSkuListResult(string nextLink, IReadOnlyList<SkuResource> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> The link used to get the next page of deployment skus. </summary>
         public string NextLink { get; }
         /// <summary> Gets the list of Cognitive Services accounts deployment skus. </summary>
-        public IReadOnlyList<SkuInfo> Value { get; }
+        public IReadOnlyList<SkuResource> Value { get; }
     }
 }

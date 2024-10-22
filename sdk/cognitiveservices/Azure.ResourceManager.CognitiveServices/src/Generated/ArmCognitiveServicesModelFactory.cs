@@ -674,14 +674,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountDeploymentScaleSettings(scaleType, capacity, activeCapacity, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SkuInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SkuResource"/>. </summary>
         /// <param name="resourceType"> The resource type name. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="capacity"> The capacity configuration. </param>
-        /// <returns> A new <see cref="Models.SkuInfo"/> instance for mocking. </returns>
-        public static SkuInfo SkuInfo(string resourceType = null, CognitiveServicesSku sku = null, CognitiveServicesCapacityConfig capacity = null)
+        /// <returns> A new <see cref="Models.SkuResource"/> instance for mocking. </returns>
+        public static SkuResource SkuResource(string resourceType = null, CognitiveServicesSku sku = null, CognitiveServicesCapacityConfig capacity = null)
         {
-            return new SkuInfo(resourceType, sku, capacity, serializedAdditionalRawData: null);
+            return new SkuResource(resourceType, sku, capacity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.CommitmentPlanData"/>. </summary>
