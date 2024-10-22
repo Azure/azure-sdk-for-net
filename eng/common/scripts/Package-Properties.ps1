@@ -86,7 +86,7 @@ class PackageProps
 
     hidden [HashTable]ParseYmlForArtifact([string]$ymlPath) {
 
-        $content = LoadAndCompatibleConvertFrom-Yaml $ymlPath
+        $content = LoadFrom-Yaml $ymlPath
         if ($content) {
             $artifacts = GetValueSafelyFrom-Yaml $content @("extends", "parameters", "Artifacts")
             $artifactForCurrentPackage = $null

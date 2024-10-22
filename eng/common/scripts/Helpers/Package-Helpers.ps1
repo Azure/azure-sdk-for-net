@@ -110,9 +110,9 @@ CompatibleConvertFrom-Yaml call or $null if there was an issue with the convert.
 The full path of the yml file to load.
 
 .EXAMPLE
-CompatibleLoadAndConvertFrom-Yaml -YmlFile path/to/file.yml
+LoadFrom-Yaml -YmlFile path/to/file.yml
 #>
-function LoadAndCompatibleConvertFrom-Yaml {
+function LoadFrom-Yaml {
   param(
     [Parameter(Mandatory=$true)]
     [string]$YmlFile
@@ -122,11 +122,11 @@ function LoadAndCompatibleConvertFrom-Yaml {
       return Get-Content -Raw -Path $YmlFile | CompatibleConvertFrom-Yaml
     }
     catch {
-      Write-Host "CompatibleLoadAndConvertFrom-Yaml::Exception while parsing yml file $($YmlFile): $_"
+      Write-Host "LoadFrom-Yaml::Exception while parsing yml file $($YmlFile): $_"
     }
   }
   else {
-    Write-Host "CompatibleLoadAndConvertFrom-Yaml::YmlFile '$YmlFile' does not exist."
+    Write-Host "LoadFrom-Yaml::YmlFile '$YmlFile' does not exist."
   }
   return $null
 }
@@ -139,17 +139,17 @@ return the value if it exist or null if it doesn't.
 .DESCRIPTION
 The Yaml file needs to be loaded via CompatibleConvertFrom-Yaml which returns the file as
 as hashtable. The Keys are basically the path in the yaml file whose value to return, or
-null if it doesn't exist. This function does is safely traverses the path, outputting an
-error if there's an issue or returning the object representing the result if successful.
-This function loops through the Keys safely trying to get values, checking each piece of
-the path to ensure it exists. Normally one would just do
+null if it doesn't exist. This function safely traverses the path, outputting an error
+if there's an issue or returning the object representing the result if successful. This
+function loops through the Keys safely trying to get values, checking each piece of the
+path to ensure it exists. Normally one would just do
 $Yml["extends"]["parameters"]["artifacts"]
 but if something was off it would throw. Doing it this way allows more succinct error
 reporting if a piece of the path didn't exist
 
 .PARAMETER YamlContentAsHashtable
-The hashtable representing the yaml file contents loaded through LoadAndCompatibleConvertFrom-Yaml
-or CompatibleConvertFrom-Yaml, which is what LoadAndCompatibleConvertFrom-Yaml calls.
+The hashtable representing the yaml file contents loaded through LoadFrom-Yaml
+or CompatibleConvertFrom-Yaml, which is what LoadFrom-Yaml calls.
 
 .PARAMETER Keys
 String array representation of the path in the yaml file whose value we're trying to retrieve.
