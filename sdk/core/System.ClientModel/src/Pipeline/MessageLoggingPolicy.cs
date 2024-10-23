@@ -40,16 +40,6 @@ public class MessageLoggingPolicy : PipelinePolicy
     /// <summary>
     /// Creates a new instance of the <see cref="MessageLoggingPolicy"/> class.
     /// </summary>
-    /// <param name="clientAssembly">The assembly name to include with each entry.</param>
-    /// <param name="options">The user-provided logging options object.</param>
-    internal protected MessageLoggingPolicy(string clientAssembly, ClientPipelineOptions? options = default) : this(options)
-    {
-        _clientAssembly = clientAssembly;
-    }
-
-    /// <summary>
-    /// Creates a new instance of the <see cref="MessageLoggingPolicy"/> class.
-    /// </summary>
     /// <param name="options">The user-provided logging options object.</param>
     public MessageLoggingPolicy(ClientPipelineOptions? options = default)
     {

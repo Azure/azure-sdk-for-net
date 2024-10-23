@@ -168,7 +168,6 @@ namespace System.ClientModel.Primitives
     public partial class MessageLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         public MessageLoggingPolicy(System.ClientModel.Primitives.ClientPipelineOptions? options = null) { }
-        protected internal MessageLoggingPolicy(string clientAssembly, System.ClientModel.Primitives.ClientPipelineOptions? options = null) { }
         public static System.ClientModel.Primitives.MessageLoggingPolicy Default { get { throw null; } }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
