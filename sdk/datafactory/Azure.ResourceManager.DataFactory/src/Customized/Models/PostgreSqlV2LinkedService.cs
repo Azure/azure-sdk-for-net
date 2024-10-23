@@ -16,22 +16,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="server"> Server name for connection. Type: string. </param>
         /// <param name="username"> Username for authentication. Type: string. </param>
         /// <param name="database"> Database name for connection. Type: string. </param>
-        /// <param name="authenticationType"> The authentication type to use. Type: string. </param>
         /// <param name="sslMode"> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="server"/>, <paramref name="username"/>, <paramref name="database"/>, <paramref name="authenticationType"/> or <paramref name="sslMode"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="server"/>, <paramref name="username"/>, <paramref name="database"/> or <paramref name="sslMode"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public PostgreSqlV2LinkedService(DataFactoryElement<string> server, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<string> authenticationType, DataFactoryElement<int> sslMode)
+        public PostgreSqlV2LinkedService(DataFactoryElement<string> server, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode)
         {
             Argument.AssertNotNull(server, nameof(server));
             Argument.AssertNotNull(username, nameof(username));
             Argument.AssertNotNull(database, nameof(database));
-            Argument.AssertNotNull(authenticationType, nameof(authenticationType));
             Argument.AssertNotNull(sslMode, nameof(sslMode));
 
             Server = server;
             Username = username;
             Database = database;
-            AuthenticationType = authenticationType;
             SslMode = sslMode;
             LinkedServiceType = "PostgreSqlV2";
         }
