@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure Developer Signing client library for usage with the trusted signing service to sign artifacts.</Description>
+    <AssemblyTitle>Azure Developer Signing Data Plane Library</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.Developer.Signing</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+</Project>

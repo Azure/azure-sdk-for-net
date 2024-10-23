@@ -180,6 +180,12 @@
 # ServiceLabel: %Bot Service
 # ServiceOwners:                                                   @sgellock
 
+#PRLabel %Code Signing
+/sdk/trustedsigning/                                               @jaxelr
+
+# ServiceLabel: %Code Signing
+# ServiceOwners:                                                   @jaxelr
+
 # PRLabel: %Cognitive - Language
 /sdk/cognitivelanguage/                                            @quentinRobinson @bidisha-c
 
