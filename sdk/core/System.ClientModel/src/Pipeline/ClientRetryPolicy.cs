@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace System.ClientModel.Primitives;
 
@@ -32,7 +33,8 @@ public class ClientRetryPolicy : PipelinePolicy
     /// Creates a new instance of the <see cref="ClientRetryPolicy"/> class.
     /// </summary>
     /// <param name="maxRetries">The maximum number of retries to attempt.</param>
-    public ClientRetryPolicy(int maxRetries = DefaultMaxRetries)
+    /// <param name="loggerFactory">TBD</param>
+    public ClientRetryPolicy(int maxRetries = DefaultMaxRetries, ILoggerFactory? loggerFactory = default)
     {
         _maxRetries = maxRetries;
         _initialDelay = DefaultInitialDelay;
