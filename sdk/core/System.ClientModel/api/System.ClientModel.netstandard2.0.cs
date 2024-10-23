@@ -95,6 +95,7 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
+        public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
@@ -105,6 +106,7 @@ namespace System.ClientModel.Primitives
     public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         public ClientRetryPolicy(int maxRetries = 3) { }
+        public ClientRetryPolicy(int maxRetries, Microsoft.Extensions.Logging.ILoggerFactory? loggerFactory) { }
         public static System.ClientModel.Primitives.ClientRetryPolicy Default { get { throw null; } }
         protected virtual System.TimeSpan GetNextDelay(System.ClientModel.Primitives.PipelineMessage message, int tryCount) { throw null; }
         protected virtual void OnRequestSent(System.ClientModel.Primitives.PipelineMessage message) { }
@@ -156,6 +158,12 @@ namespace System.ClientModel.Primitives
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
         public override System.ClientModel.Primitives.IJsonModel<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
+    }
+    public partial class MessageLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public MessageLoggingPolicy() { }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
     public static partial class ModelReaderWriter
     {

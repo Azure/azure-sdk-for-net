@@ -29,7 +29,7 @@ public class ClientRetryPolicy : PipelinePolicy
     private readonly int _maxRetries;
     private readonly TimeSpan _initialDelay;
 
-    private readonly ClientPipelineLogger _logger;
+    private readonly PipelineRetryLogger _logger;
 
     /// <summary>
     /// Creates a new instance of the <see cref="ClientRetryPolicy"/> class.
@@ -50,7 +50,7 @@ public class ClientRetryPolicy : PipelinePolicy
         _maxRetries = maxRetries;
         _initialDelay = DefaultInitialDelay;
 
-        _logger = new ClientPipelineLogger(loggerFactory);
+        _logger = new PipelineRetryLogger(loggerFactory);
     }
 
     /// <inheritdoc/>
@@ -135,7 +135,7 @@ public class ClientRetryPolicy : PipelinePolicy
                 message.RetryCount++;
                 OnTryComplete(message);
 
-                _logger?.LogRequestRetrying(message.Request.ClientRequestId ?? string.Empty, message.RetryCount, elapsed);
+                _logger.LogRequestRetrying(message.Request.ClientRequestId ?? string.Empty, message.RetryCount, elapsed);
 
                 continue;
             }
