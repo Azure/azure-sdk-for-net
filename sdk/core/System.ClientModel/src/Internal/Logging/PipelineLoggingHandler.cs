@@ -10,6 +10,14 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Internal;
 
+/// <summary>
+/// An abstraction over ILogger and EventSource that handles logging for any components or policy in the pipeline
+/// that writes logs. It determines whether logs should be written to EventSource or ILogger upon creation, and
+/// then writes logs appropriately.
+/// </summary>
+/// <remarks>
+/// ClientModelLogMessages and ClientModelEventSource should never be used directly outside of this class.
+/// </remarks>
 internal class PipelineLoggingHandler
 {
     private readonly ILogger _logger;
@@ -173,18 +181,5 @@ internal class PipelineLoggingHandler
         {
             ClientModelEventSource.Log.ExceptionResponse(requestId, exception.ToString());
         }
-    }
-
-    private string FormatHeaders(IEnumerable<KeyValuePair<string, string>> headers)
-    {
-        var stringBuilder = new StringBuilder();
-        foreach (var header in headers)
-        {
-            stringBuilder.Append(header.Key);
-            stringBuilder.Append(':');
-            stringBuilder.Append(_sanitizer.SanitizeHeader(header.Key, header.Value));
-            stringBuilder.Append(Environment.NewLine);
-        }
-        return stringBuilder.ToString();
     }
 }
