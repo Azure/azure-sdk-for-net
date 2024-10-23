@@ -156,6 +156,7 @@
     <PackageReference Update="Microsoft.Identity.Client" Version="4.66.1" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.66.1" />
     <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.66.1" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using Microsoft.Extensions.Logging;
 
 namespace System.ClientModel.Primitives;
 
@@ -80,6 +81,11 @@ public class ClientPipelineOptions
             _timeout = value;
         }
     }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    public ILoggerFactory? LoggerFactory { get; set; }
 
     #endregion
 
