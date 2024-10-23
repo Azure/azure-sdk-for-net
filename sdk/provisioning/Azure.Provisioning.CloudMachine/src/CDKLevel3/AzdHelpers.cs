@@ -13,7 +13,7 @@ using System;
 
 namespace Azure.CloudMachine;
 
-internal static class Azd
+internal static class AzdHelpers
 {
     private const string MainBicepName = "main";
     private const string ResourceGroupVersion = "2024-03-01";
@@ -115,18 +115,29 @@ internal static class Azd
             return cmid;
         }
         else
-        { // add CM configuration to existing file
-            JsonNode? root = JsonValue.Parse(appsettings);
-            if (root is null)
-                throw new NotImplementedException();
-
-            if (root is not JsonObject obj)
-                throw new NotImplementedException();
+        {   // add CM configuration to existing file
+            json.Seek(0, SeekOrigin.Begin);
+            JsonNode? root = JsonNode.Parse(json);
+            json.Close();
+            if (root is null || root is not JsonObject obj) throw new InvalidOperationException("Existing appsettings.json is not a valid JSON object");
 
             var cmProperties = new JsonObject();
             cmid = GenerateCloudMachineId();
             cmProperties.Add("ID", cmid);
             obj.Add("CloudMachine", cmProperties);
+
+            using FileStream file = File.OpenWrite(appsettings);
+            JsonWriterOptions writerOptions = new()
+            {
+                Indented = true,
+            };
+            Utf8JsonWriter writer = new(file, writerOptions);
+            JsonSerializerOptions options = new()
+            {
+                WriteIndented = true,
+            };
+            root.WriteTo(writer, options);
+            writer.Flush();
         }
 
         return cmid;

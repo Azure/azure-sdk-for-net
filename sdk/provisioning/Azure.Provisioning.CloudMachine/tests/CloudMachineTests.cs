@@ -4,6 +4,8 @@
 #nullable enable
 
 using System;
+using System.IO;
+using System.Reflection.Metadata;
 using System.Threading;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CloudMachine.KeyVault;
