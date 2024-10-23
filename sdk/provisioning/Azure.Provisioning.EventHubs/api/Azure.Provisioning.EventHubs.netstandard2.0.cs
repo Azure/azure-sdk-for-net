@@ -42,7 +42,6 @@ namespace Azure.Provisioning.EventHubs
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public partial class EventHubAuthorizationRule : Azure.Provisioning.Primitives.ProvisionableResource
@@ -63,7 +62,6 @@ namespace Azure.Provisioning.EventHubs
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public partial class EventHubDestination : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -124,7 +122,6 @@ namespace Azure.Provisioning.EventHubs
         public static partial class ResourceVersions
         {
             public static readonly string V2024_01_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public partial class EventHubsApplicationGroupPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -190,7 +187,6 @@ namespace Azure.Provisioning.EventHubs
         {
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum EventHubsClusterProvisioningState
@@ -233,7 +229,6 @@ namespace Azure.Provisioning.EventHubs
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public partial class EventHubsDisasterRecovery : Azure.Provisioning.Primitives.ProvisionableResource
@@ -257,7 +252,6 @@ namespace Azure.Provisioning.EventHubs
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum EventHubsDisasterRecoveryProvisioningState
@@ -339,7 +333,6 @@ namespace Azure.Provisioning.EventHubs
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public partial class EventHubsNamespaceAuthorizationRule : Azure.Provisioning.Primitives.ProvisionableResource
@@ -360,7 +353,6 @@ namespace Azure.Provisioning.EventHubs
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum EventHubsNetworkRuleIPAction
@@ -386,7 +378,6 @@ namespace Azure.Provisioning.EventHubs
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum EventHubsNetworkRuleSetDefaultAction
@@ -422,7 +413,6 @@ namespace Azure.Provisioning.EventHubs
         {
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public partial class EventHubsPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -498,7 +488,6 @@ namespace Azure.Provisioning.EventHubs
             public static readonly string V2017_04_01;
             public static readonly string V2021_11_01;
             public static readonly string V2024_01_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum EventHubsSchemaType

@@ -85,7 +85,7 @@ public partial class NamespaceTopicEventSubscription : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the NamespaceTopicEventSubscription.</param>
     public NamespaceTopicEventSubscription(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/topics/eventSubscriptions", resourceVersion ?? "2024-06-01-preview")
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/topics/eventSubscriptions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _deliveryConfiguration = BicepValue<DeliveryConfiguration>.DefineProperty(this, "DeliveryConfiguration", ["properties", "deliveryConfiguration"]);
@@ -96,17 +96,6 @@ public partial class NamespaceTopicEventSubscription : ProvisionableResource
         _provisioningState = BicepValue<SubscriptionProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<NamespaceTopic>.DefineResource(this, "Parent", ["parent"], isRequired: true);
-    }
-
-    /// <summary>
-    /// Supported NamespaceTopicEventSubscription resource versions.
-    /// </summary>
-    public static class ResourceVersions
-    {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
     }
 
     /// <summary>

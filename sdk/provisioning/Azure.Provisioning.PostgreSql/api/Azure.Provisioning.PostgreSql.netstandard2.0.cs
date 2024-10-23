@@ -21,7 +21,6 @@ namespace Azure.Provisioning.PostgreSql
         public static partial class ResourceVersions
         {
             public static readonly string V2017_12_01;
-            public static readonly string V2017_12_01_preview;
         }
     }
     public partial class PostgreSqlDatabase : Azure.Provisioning.Primitives.ProvisionableResource
@@ -39,7 +38,6 @@ namespace Azure.Provisioning.PostgreSql
         public static partial class ResourceVersions
         {
             public static readonly string V2017_12_01;
-            public static readonly string V2017_12_01_preview;
         }
     }
     public partial class PostgreSqlFirewallRule : Azure.Provisioning.Primitives.ProvisionableResource
@@ -57,7 +55,6 @@ namespace Azure.Provisioning.PostgreSql
         public static partial class ResourceVersions
         {
             public static readonly string V2017_12_01;
-            public static readonly string V2017_12_01_preview;
         }
     }
     public partial class PostgreSqlFlexibleServer : Azure.Provisioning.Primitives.ProvisionableResource
@@ -522,7 +519,6 @@ namespace Azure.Provisioning.PostgreSql
         public static partial class ResourceVersions
         {
             public static readonly string V2018_06_01;
-            public static readonly string V2018_06_01_privatepreview;
         }
     }
     public enum PostgreSqlPrivateEndpointProvisioningState
@@ -592,7 +588,6 @@ namespace Azure.Provisioning.PostgreSql
         public static partial class ResourceVersions
         {
             public static readonly string V2017_12_01;
-            public static readonly string V2017_12_01_preview;
         }
     }
     public partial class PostgreSqlServerAdministrator : Azure.Provisioning.Primitives.ProvisionableResource
@@ -610,7 +605,6 @@ namespace Azure.Provisioning.PostgreSql
         public static partial class ResourceVersions
         {
             public static readonly string V2017_12_01;
-            public static readonly string V2017_12_01_preview;
         }
     }
     public partial class PostgreSqlServerKey : Azure.Provisioning.Primitives.ProvisionableResource
@@ -628,7 +622,6 @@ namespace Azure.Provisioning.PostgreSql
         public static partial class ResourceVersions
         {
             public static readonly string V2020_01_01;
-            public static readonly string V2020_01_01_privatepreview;
         }
     }
     public enum PostgreSqlServerKeyType
@@ -713,7 +706,6 @@ namespace Azure.Provisioning.PostgreSql
         public static partial class ResourceVersions
         {
             public static readonly string V2017_12_01;
-            public static readonly string V2017_12_01_preview;
         }
     }
     public enum PostgreSqlServerSecurityAlertPolicyState
@@ -792,7 +784,6 @@ namespace Azure.Provisioning.PostgreSql
         public static partial class ResourceVersions
         {
             public static readonly string V2017_12_01;
-            public static readonly string V2017_12_01_preview;
         }
     }
     public enum PostgreSqlVirtualNetworkRuleState

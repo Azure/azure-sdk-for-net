@@ -51,7 +51,6 @@ namespace Azure.Provisioning.SignalR
             public static readonly string V2022_02_01;
             public static readonly string V2023_02_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class SignalRCustomDomain : Azure.Provisioning.Primitives.ProvisionableResource
@@ -72,7 +71,6 @@ namespace Azure.Provisioning.SignalR
             public static readonly string V2022_02_01;
             public static readonly string V2023_02_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class SignalRFeature : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -154,7 +152,6 @@ namespace Azure.Provisioning.SignalR
             public static readonly string V2022_02_01;
             public static readonly string V2023_02_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class SignalRPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -254,7 +251,6 @@ namespace Azure.Provisioning.SignalR
             public static readonly string V2022_02_01;
             public static readonly string V2023_02_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public enum SignalRServiceKind
@@ -283,7 +279,6 @@ namespace Azure.Provisioning.SignalR
             public static readonly string V2022_02_01;
             public static readonly string V2023_02_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class SignalRSharedPrivateLinkResourceData : Azure.Provisioning.Primitives.ProvisionableConstruct

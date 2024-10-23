@@ -38,6 +38,6 @@ public partial class RedisPatchScheduleSetting : ProvisionableConstruct
     {
         _dayOfWeek = BicepValue<RedisDayOfWeek>.DefineProperty(this, "DayOfWeek", ["dayOfWeek"]);
         _startHourUtc = BicepValue<int>.DefineProperty(this, "StartHourUtc", ["startHourUtc"]);
-        _maintenanceWindow = BicepValue<TimeSpan>.DefineProperty(this, "MaintenanceWindow", ["maintenanceWindow"]);
+        _maintenanceWindow = BicepValue<TimeSpan>.DefineProperty(this, "MaintenanceWindow", ["maintenanceWindow"], format: "P");
     }
 }

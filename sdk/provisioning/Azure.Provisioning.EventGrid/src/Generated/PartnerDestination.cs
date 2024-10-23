@@ -103,7 +103,7 @@ public partial class PartnerDestination : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the PartnerDestination.</param>
     public PartnerDestination(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/partnerDestinations", resourceVersion ?? "2024-06-01-preview")
+        : base(bicepIdentifier, "Microsoft.EventGrid/partnerDestinations", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -117,17 +117,6 @@ public partial class PartnerDestination : ProvisionableResource
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _provisioningState = BicepValue<PartnerDestinationProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-    }
-
-    /// <summary>
-    /// Supported PartnerDestination resource versions.
-    /// </summary>
-    public static class ResourceVersions
-    {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
     }
 
     /// <summary>

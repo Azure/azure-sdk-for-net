@@ -3,6 +3,7 @@
 
 using Microsoft.Generator.CSharp;
 using Microsoft.Generator.CSharp.ClientModel;
+using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Input;
 using Microsoft.Generator.CSharp.Primitives;
 using Microsoft.Generator.CSharp.Providers;
@@ -28,7 +29,10 @@ namespace Azure.Generator.Tests.TestHelpers
             Func<IReadOnlyList<string>>? apiVersions = null,
             Func<IReadOnlyList<InputEnumType>>? inputEnums = null,
             Func<IReadOnlyList<InputModelType>>? inputModels = null,
-            Func<IReadOnlyList<InputClient>>? clients = null)
+            Func<IReadOnlyList<InputClient>>? clients = null,
+            ClientResponseApi? clientResponseApi = null,
+            ClientPipelineApi? clientPipelineApi = null,
+            HttpMessageApi? httpMessageApi = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputEnumType> inputNsEnums = inputEnums?.Invoke() ?? [];

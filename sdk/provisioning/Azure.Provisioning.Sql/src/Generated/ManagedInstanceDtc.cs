@@ -102,11 +102,6 @@ public partial class ManagedInstanceDtc : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";

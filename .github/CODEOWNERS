@@ -261,10 +261,10 @@
 # ServiceOwners:                                                   @quentinRobinson @bidisha-c
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                                                  @mikeymcz @cpoulain @joseharriaga
+/sdk/translation/                                                  @mikeymcz @joseharriaga @vikaspalaskar
 
 # ServiceLabel: %Cognitive - Translator
-# ServiceOwners:                                                   @swmachan @mikeymcz @cpoulain
+# ServiceOwners:                                                   @swmachan @mikeymcz @vikaspalaskar
 
 # ServiceLabel: %Cognitive - Speech
 # ServiceOwners:                                                   @robch
@@ -354,10 +354,10 @@
 # ServiceOwners:                                                   @TravisCragg-MSFT @hilaryw29
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/                                           @christothes @PallabPaul
+/sdk/confidentialledger/                                           @christothes @PallabPaul @amruthashree18
 
 # ServiceLabel: %Confidential Ledger
-# ServiceOwners:                                                   @PallabPaul
+# ServiceOwners:                                                   @PallabPaul @amruthashree18
 
 # ServiceLabel: %Consumption - Billing
 # ServiceOwners:                                                   @ccmbpxpcrew
@@ -516,10 +516,10 @@
 # ServiceOwners:                                                   @serkantkaraca @sjkwak
 
 # PRLabel: %Extension - WCF
-/sdk/extension-wcf/                                                @mconnew @subhra231
+/sdk/extension-wcf/                                                @mconnew
 
 # ServiceLabel: %Extension - WCF
-# ServiceOwners:                                                   @mconnew @subhra231
+# ServiceOwners:                                                   @mconnew
 
 # ServiceLabel: %Functions
 # AzureSdkOwners:                                                  @JoshLove-msft

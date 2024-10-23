@@ -89,11 +89,6 @@ public partial class ManagedHsm : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
-        /// <summary>
         /// 2023-08-01-PREVIEW.
         /// </summary>
         public static readonly string V2023_08_01_PREVIEW = "2023-08-01-PREVIEW";

@@ -37,7 +37,7 @@ public partial class JitSchedulingPolicy : ProvisionableConstruct
     public JitSchedulingPolicy()
     {
         _schedulingType = BicepValue<JitSchedulingType>.DefineProperty(this, "SchedulingType", ["type"], isOutput: true);
-        _duration = BicepValue<TimeSpan>.DefineProperty(this, "Duration", ["duration"]);
+        _duration = BicepValue<TimeSpan>.DefineProperty(this, "Duration", ["duration"], format: "P");
         _startOn = BicepValue<DateTimeOffset>.DefineProperty(this, "StartOn", ["startTime"]);
     }
 }

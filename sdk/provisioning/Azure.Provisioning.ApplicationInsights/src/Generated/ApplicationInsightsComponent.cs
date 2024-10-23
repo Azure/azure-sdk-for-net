@@ -290,11 +290,6 @@ public partial class ApplicationInsightsComponent : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2020-02-02-preview.
-        /// </summary>
-        public static readonly string V2020_02_02_preview = "2020-02-02-preview";
-
-        /// <summary>
         /// 2020-02-02.
         /// </summary>
         public static readonly string V2020_02_02 = "2020-02-02";

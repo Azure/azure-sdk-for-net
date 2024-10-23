@@ -108,11 +108,6 @@ public partial class RoleManagementPolicyAssignment : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
-        /// <summary>
         /// 2020-10-01.
         /// </summary>
         public static readonly string V2020_10_01 = "2020-10-01";
