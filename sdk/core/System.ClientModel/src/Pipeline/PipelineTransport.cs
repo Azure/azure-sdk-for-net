@@ -16,6 +16,24 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public abstract class PipelineTransport : PipelinePolicy
 {
+    /// <summary>
+    /// TBD
+    /// </summary>
+    protected PipelineTransport()
+    {
+    }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="pipelineOptions"></param>
+    /// <param name="transportOptions"></param>
+    protected PipelineTransport(PipelineTransportOptions transportOptions, ClientPipelineOptions pipelineOptions)
+        : base(pipelineOptions)
+    {
+        // TODO: use options
+    }
+
     #region CreateMessage
 
     /// <summary>

@@ -8,7 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Maps;
+namespace ClientModel.ReferenceClients.MapsClient;
 
 public class MapsClient
 {
@@ -16,6 +16,9 @@ public class MapsClient
     private readonly ApiKeyCredential _credential;
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
+
+    // Added for test visibility
+    private readonly MapsClientOptions _options;
 
     public MapsClient(Uri endpoint, ApiKeyCredential credential, MapsClientOptions? options = default)
     {
@@ -35,7 +38,12 @@ public class MapsClient
             perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
             perTryPolicies: new PipelinePolicy[] { authenticationPolicy },
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+
+        _options = options;
     }
+
+    // public for test purposes
+    public MapsClientOptions Options => _options;
 
     public virtual async Task<ClientResult<IPAddressCountryPair>> GetCountryCodeAsync(IPAddress ipAddress)
     {

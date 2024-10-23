@@ -20,6 +20,17 @@ namespace System.ClientModel.Primitives;
 public abstract class PipelinePolicy
 {
     /// <summary>
+    /// TBD.
+    /// </summary>
+    protected PipelinePolicy() { }
+
+    /// <summary>
+    /// TBD: preferred constructor
+    /// </summary>
+    /// <param name="options"></param>
+    protected PipelinePolicy(ClientPipelineOptions options) { }
+
+    /// <summary>
     /// Process the provided <see cref="PipelineMessage"/> according to the
     /// intended purpose of this <see cref="PipelinePolicy"/>instance.
     /// Derived types must pass control to the next

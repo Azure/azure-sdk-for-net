@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 using System.Net;
 using System.Text.Json;
 
-namespace Maps;
+namespace ClientModel.ReferenceClients.MapsClient;
 
 public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
 {
