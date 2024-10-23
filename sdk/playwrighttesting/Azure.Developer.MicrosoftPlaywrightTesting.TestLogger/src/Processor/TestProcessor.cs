@@ -95,6 +95,8 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             try
             {
                 TestResult testResultSource = e.Result;
+                TestResults? testResult = _dataProcessor.GetTestCaseResultData(testResultSource);
+                RawTestResult rawResult = DataProcessor.GetRawResultObject(testResultSource);
 
                 // TODO - Send error to blob
                 _cloudRunErrorParser.HandleScalableRunErrorMessage(testResultSource.ErrorMessage);
@@ -103,9 +105,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 {
                     return;
                 }
-
-                TestResults? testResult = _dataProcessor.GetTestCaseResultData(testResultSource);
-                RawTestResult rawResult = DataProcessor.GetRawResultObject(testResultSource);
 
                 // TODO move rawResult upload here same as JS
                 RawTestResultsMap.TryAdd(testResult.TestExecutionId, rawResult);
