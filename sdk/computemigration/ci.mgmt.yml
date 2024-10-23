@@ -10,13 +10,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/compute/ci.mgmt.yml
-    - sdk/compute/Azure.ResourceManager.Compute/
+    - sdk/computemigration/ci.mgmt.yml
+    - sdk/computemigration/Azure.ResourceManager.Compute/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: compute
+    ServiceDirectory: computemigration
     BuildSnippets: false
     LimitForPullRequest: true
     Artifacts:
