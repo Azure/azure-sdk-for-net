@@ -5,12 +5,22 @@ using Microsoft.Extensions.Logging;
 
 namespace System.ClientModel.Internal;
 
-internal class ClientPipelineLogger
+internal partial class ClientPipelineLogger
 {
-    private readonly ILoggerFactory? _loggerFactory;
-
-    public ClientPipelineLogger(ILoggerFactory? loggerFactory)
+    public static ClientRetryLogger GetRetryLogger(ILoggerFactory? loggerFactory)
     {
-        _loggerFactory = loggerFactory;
+        throw new NotImplementedException();
     }
+
+    public static PipelineMessageLogger GetMessageLogger(ILoggerFactory? loggerFactory)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static PipelineTransportLogger GetTransportLogger(ILoggerFactory? loggerFactory)
+    {
+        throw new NotImplementedException();
+    }
+
+
 }

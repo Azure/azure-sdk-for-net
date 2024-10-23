@@ -29,15 +29,28 @@ public class ClientRetryPolicy : PipelinePolicy
     private readonly int _maxRetries;
     private readonly TimeSpan _initialDelay;
 
+    private readonly ClientPipelineLogger _logger;
+
+    /// <summary>
+    /// Creates a new instance of the <see cref="ClientRetryPolicy"/> class.
+    /// </summary>
+    /// <param name="maxRetries">The maximum number of retries to attempt.</param>
+    public ClientRetryPolicy(int maxRetries = DefaultMaxRetries)
+        : this(maxRetries, default)
+    {
+    }
+
     /// <summary>
     /// Creates a new instance of the <see cref="ClientRetryPolicy"/> class.
     /// </summary>
     /// <param name="maxRetries">The maximum number of retries to attempt.</param>
     /// <param name="loggerFactory">TBD</param>
-    public ClientRetryPolicy(int maxRetries = DefaultMaxRetries, ILoggerFactory? loggerFactory = default)
+    public ClientRetryPolicy(int maxRetries, ILoggerFactory? loggerFactory)
     {
         _maxRetries = maxRetries;
         _initialDelay = DefaultInitialDelay;
+
+        _logger = new ClientPipelineLogger(loggerFactory);
     }
 
     /// <inheritdoc/>
@@ -55,6 +68,7 @@ public class ClientRetryPolicy : PipelinePolicy
         while (true)
         {
             Exception? thisTryException = null;
+            long before = Stopwatch.GetTimestamp();
 
             if (async)
             {
@@ -93,6 +107,9 @@ public class ClientRetryPolicy : PipelinePolicy
                 OnRequestSent(message);
             }
 
+            long after = Stopwatch.GetTimestamp();
+            double elapsed = (after - before) / (double)Stopwatch.Frequency;
+
             bool shouldRetry = async ?
                 await ShouldRetryInternalAsync(message, thisTryException).ConfigureAwait(false) :
                 ShouldRetryInternal(message, thisTryException);
@@ -117,6 +134,8 @@ public class ClientRetryPolicy : PipelinePolicy
 
                 message.RetryCount++;
                 OnTryComplete(message);
+
+                _logger?.LogRequestRetrying(message.Request.ClientRequestId ?? string.Empty, message.RetryCount, elapsed);
 
                 continue;
             }
