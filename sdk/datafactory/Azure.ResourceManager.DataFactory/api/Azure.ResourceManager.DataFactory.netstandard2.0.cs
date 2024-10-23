@@ -9261,6 +9261,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public PostgreSqlV2LinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> server, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> username, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> database, Azure.Core.Expressions.DataFactory.DataFactoryElement<int> sslMode) { }
+        public PostgreSqlV2LinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> server, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> username, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> database, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> authenticationType, Azure.Core.Expressions.DataFactory.DataFactoryElement<int> sslMode) { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> AuthenticationType { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> CommandTimeout { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> ConnectionTimeout { get { throw null; } set { } }
