@@ -8,5 +8,6 @@
   "shared-source-folders": [
     "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Generator.Shared",
     "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Azure.Core.Shared"
-  ]
+  ],
+  "use-write-core": true
 }
