@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         /// <summary> 16. </summary>
         [CodeGenMember("Sixteen")]
-        public static PostgreSqlFlexibleServerVersion Ver16 { get; } = new PostgreSqlFlexibleServerVersion(SixteenValue);
+        public static PostgreSqlFlexibleServerVersion Ver16 { get; } = new PostgreSqlFlexibleServerVersion(Sixteen);
         /// <summary> 15. </summary>
         [CodeGenMember("Fifteen")]
         public static PostgreSqlFlexibleServerVersion Ver15 { get; } = new PostgreSqlFlexibleServerVersion(Ver15Value);
