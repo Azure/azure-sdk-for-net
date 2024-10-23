@@ -61,9 +61,4 @@ internal class TrackingList<T> : List<T>, IList<T>
         }
         base.RemoveAt(index);
     }
-
-    public void AcceptChanges()
-    {
-        HasChanged = false;
-    }
 }
