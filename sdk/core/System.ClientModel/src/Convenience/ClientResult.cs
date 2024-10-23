@@ -11,7 +11,20 @@ namespace System.ClientModel;
 /// </summary>
 public class ClientResult
 {
-    private readonly PipelineResponse _response;
+    private readonly ServiceResponse _response;
+
+    /// <summary>
+    /// Creates a new instance of <see cref="ClientResult"/> from a service
+    /// response.
+    /// </summary>
+    /// <param name="response">The <see cref="ServiceResponse"/> received
+    /// from the service.</param>
+    protected ClientResult(ServiceResponse response)
+    {
+        Argument.AssertNotNull(response, nameof(response));
+
+        _response = response;
+    }
 
     /// <summary>
     /// Creates a new instance of <see cref="ClientResult"/> from a service
@@ -31,9 +44,29 @@ public class ClientResult
     /// </summary>
     /// <returns>The <see cref="PipelineResponse"/> received from the service.
     /// </returns>
-    public PipelineResponse GetRawResponse() => _response;
+    public PipelineResponse GetRawResponse() => _response as PipelineResponse ??
+        throw new NotSupportedException();
+
+    /// <summary>
+    /// Gets the <see cref="PipelineResponse"/> received from the service.
+    /// </summary>
+    /// <returns>The <see cref="PipelineResponse"/> received from the service.
+    /// </returns>
+    public ServiceResponse GetServiceResponse() => _response;
 
     #region Factory methods for ClientResult and subtypes
+
+    /// <summary>
+    /// TBD
+    /// </summary>
+    /// <param name="response"></param>
+    /// <returns></returns>
+    public static ClientResult FromResponse(ServiceResponse response)
+    {
+        Argument.AssertNotNull(response, nameof(response));
+
+        return new ClientResult(response);
+    }
 
     /// <summary>
     /// Creates a new instance of <see cref="ClientResult"/> that holds the

@@ -26,10 +26,13 @@ namespace System.ClientModel
     public partial class ClientResult
     {
         protected ClientResult(System.ClientModel.Primitives.PipelineResponse response) { }
+        protected ClientResult(System.ClientModel.Primitives.ServiceResponse response) { }
         public static System.ClientModel.ClientResult<T?> FromOptionalValue<T>(T? value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public static System.ClientModel.ClientResult FromResponse(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public static System.ClientModel.ClientResult FromResponse(System.ClientModel.Primitives.ServiceResponse response) { throw null; }
         public static System.ClientModel.ClientResult<T> FromValue<T>(T value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public System.ClientModel.Primitives.PipelineResponse GetRawResponse() { throw null; }
+        public System.ClientModel.Primitives.ServiceResponse GetServiceResponse() { throw null; }
     }
     public partial class ClientResultException : System.Exception
     {
@@ -41,7 +44,7 @@ namespace System.ClientModel
     }
     public partial class ClientResult<T> : System.ClientModel.ClientResult
     {
-        protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.ServiceResponse)) { }
         public virtual T Value { get { throw null; } }
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
@@ -251,17 +254,13 @@ namespace System.ClientModel.Primitives
         public abstract bool TryGetValue(string name, out string? value);
         public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
-    public abstract partial class PipelineResponse : System.IDisposable
+    public abstract partial class PipelineResponse : System.ClientModel.Primitives.ServiceResponse, System.IDisposable
     {
         protected PipelineResponse() { }
-        public abstract System.BinaryData Content { get; }
         public abstract System.IO.Stream? ContentStream { get; set; }
         public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }
         protected abstract System.ClientModel.Primitives.PipelineResponseHeaders HeadersCore { get; }
-        public virtual bool IsError { get { throw null; } }
-        protected internal virtual bool IsErrorCore { get { throw null; } set { } }
         public abstract string ReasonPhrase { get; }
-        public abstract int Status { get; }
         public abstract System.BinaryData BufferContent(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.ValueTask<System.BinaryData> BufferContentAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract void Dispose();
@@ -298,6 +297,14 @@ namespace System.ClientModel.Primitives
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
         public void SetHeader(string name, string value) { }
+    }
+    public abstract partial class ServiceResponse
+    {
+        protected ServiceResponse() { }
+        public abstract System.BinaryData Content { get; }
+        public virtual bool IsError { get { throw null; } }
+        protected internal virtual bool IsErrorCore { get { throw null; } set { } }
+        public abstract int Status { get; }
     }
 }
 namespace System.ClientModel.Primitives.TwoWayPipeline
