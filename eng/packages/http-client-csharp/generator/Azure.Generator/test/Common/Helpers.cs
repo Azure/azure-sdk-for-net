@@ -12,7 +12,7 @@ namespace Azure.Generator.Tests.Common
 
         public static string GetExpectedFromFile(string? parameters = null)
         {
-            return File.ReadAllText(GetAssetFileOrDirectoryPath(true, parameters));
+            return File.ReadAllText(GetAssetFileOrDirectoryPath(true, parameters)).Replace("\r\n", "\n");
         }
 
         private static string GetAssetFileOrDirectoryPath(bool isFile, string? parameters = null)
