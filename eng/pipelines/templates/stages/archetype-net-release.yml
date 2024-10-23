@@ -132,11 +132,6 @@ stages:
                       packageParentPath: '$(Pipeline.Workspace)'
                       packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                       publishVstsFeed: ${{ parameters.DevOpsFeedID }}
-                    - ${{if ne(artifact.skipSymbolsUpload, 'true')}}:
-                      - output: pipelineArtifact
-                        displayName: 'Store converted symbols in ${{parameters.ArtifactName}}-windows-symbols artifact'
-                        targetPath: $(Build.ArtifactStagingDirectory)/symbols
-                        artifactName: ${{parameters.ArtifactName}}-windows-symbols
 
                 strategy:
                   runOnce:
@@ -155,6 +150,14 @@ stages:
                     name: azsdk-pool-mms-win-2022-general
                     image: azsdk-pool-mms-win-2022-1espt
                     os: windows
+
+                  templateContext:
+                    outputs:
+                      - ${{if ne(artifact.skipSymbolsUpload, 'true')}}:
+                        - output: pipelineArtifact
+                          displayName: 'Store converted symbols in ${{parameters.ArtifactName}}-symbols artifact'
+                          targetPath: $(Build.ArtifactStagingDirectory)/symbols
+                          artifactName: ${{parameters.ArtifactName}}-symbols
 
                   strategy:
                     runOnce:
