@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class RemoveTextBlocklistItemsOptions : IUtf8JsonSerializable, IJsonModel<RemoveTextBlocklistItemsOptions>
+    public partial class ShieldPromptOptions : IUtf8JsonSerializable, IJsonModel<ShieldPromptOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemoveTextBlocklistItemsOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShieldPromptOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RemoveTextBlocklistItemsOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ShieldPromptOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,19 +28,27 @@ namespace Azure.AI.ContentSafety
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RemoveTextBlocklistItemsOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ShieldPromptOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RemoveTextBlocklistItemsOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ShieldPromptOptions)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("blocklistItemIds"u8);
-            writer.WriteStartArray();
-            foreach (var item in BlocklistItemIds)
+            if (Optional.IsDefined(UserPrompt))
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("userPrompt"u8);
+                writer.WriteStringValue(UserPrompt);
             }
-            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(Documents))
+            {
+                writer.WritePropertyName("documents"u8);
+                writer.WriteStartArray();
+                foreach (var item in Documents)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -58,19 +66,19 @@ namespace Azure.AI.ContentSafety
             }
         }
 
-        RemoveTextBlocklistItemsOptions IJsonModel<RemoveTextBlocklistItemsOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ShieldPromptOptions IJsonModel<ShieldPromptOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RemoveTextBlocklistItemsOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ShieldPromptOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RemoveTextBlocklistItemsOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ShieldPromptOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRemoveTextBlocklistItemsOptions(document.RootElement, options);
+            return DeserializeShieldPromptOptions(document.RootElement, options);
         }
 
-        internal static RemoveTextBlocklistItemsOptions DeserializeRemoveTextBlocklistItemsOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ShieldPromptOptions DeserializeShieldPromptOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,19 +86,29 @@ namespace Azure.AI.ContentSafety
             {
                 return null;
             }
-            IList<string> blocklistItemIds = default;
+            string userPrompt = default;
+            IList<string> documents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blocklistItemIds"u8))
+                if (property.NameEquals("userPrompt"u8))
                 {
+                    userPrompt = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("documents"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(item.GetString());
                     }
-                    blocklistItemIds = array;
+                    documents = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,46 +117,46 @@ namespace Azure.AI.ContentSafety
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RemoveTextBlocklistItemsOptions(blocklistItemIds, serializedAdditionalRawData);
+            return new ShieldPromptOptions(userPrompt, documents ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RemoveTextBlocklistItemsOptions>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ShieldPromptOptions>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RemoveTextBlocklistItemsOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ShieldPromptOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RemoveTextBlocklistItemsOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShieldPromptOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RemoveTextBlocklistItemsOptions IPersistableModel<RemoveTextBlocklistItemsOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ShieldPromptOptions IPersistableModel<ShieldPromptOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RemoveTextBlocklistItemsOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ShieldPromptOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRemoveTextBlocklistItemsOptions(document.RootElement, options);
+                        return DeserializeShieldPromptOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RemoveTextBlocklistItemsOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShieldPromptOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RemoveTextBlocklistItemsOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ShieldPromptOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static RemoveTextBlocklistItemsOptions FromResponse(Response response)
+        internal static ShieldPromptOptions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeRemoveTextBlocklistItemsOptions(document.RootElement);
+            return DeserializeShieldPromptOptions(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -19,13 +19,21 @@ namespace Azure.AI.ContentSafety
 
         void IJsonModel<TextBlocklistItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TextBlocklistItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TextBlocklistItem)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W")
             {
                 writer.WritePropertyName("blocklistItemId"u8);
@@ -38,6 +46,11 @@ namespace Azure.AI.ContentSafety
             }
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
+            if (Optional.IsDefined(IsRegex))
+            {
+                writer.WritePropertyName("isRegex"u8);
+                writer.WriteBooleanValue(IsRegex.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -53,7 +66,6 @@ namespace Azure.AI.ContentSafety
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TextBlocklistItem IJsonModel<TextBlocklistItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -79,6 +91,7 @@ namespace Azure.AI.ContentSafety
             string blocklistItemId = default;
             string description = default;
             string text = default;
+            bool? isRegex = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,13 +111,22 @@ namespace Azure.AI.ContentSafety
                     text = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("isRegex"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isRegex = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TextBlocklistItem(blocklistItemId, description, text, serializedAdditionalRawData);
+            return new TextBlocklistItem(blocklistItemId, description, text, isRegex, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TextBlocklistItem>.Write(ModelReaderWriterOptions options)

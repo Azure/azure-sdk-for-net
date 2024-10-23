@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class AnalyzeImageResult : IUtf8JsonSerializable, IJsonModel<AnalyzeImageResult>
+    public partial class DetectTextProtectedMaterialOptions : IUtf8JsonSerializable, IJsonModel<DetectTextProtectedMaterialOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeImageResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetectTextProtectedMaterialOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AnalyzeImageResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DetectTextProtectedMaterialOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,19 +28,14 @@ namespace Azure.AI.ContentSafety
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeImageResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DetectTextProtectedMaterialOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeImageResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DetectTextProtectedMaterialOptions)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("categoriesAnalysis"u8);
-            writer.WriteStartArray();
-            foreach (var item in CategoriesAnalysis)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
+            writer.WritePropertyName("text"u8);
+            writer.WriteStringValue(Text);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -58,19 +53,19 @@ namespace Azure.AI.ContentSafety
             }
         }
 
-        AnalyzeImageResult IJsonModel<AnalyzeImageResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DetectTextProtectedMaterialOptions IJsonModel<DetectTextProtectedMaterialOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeImageResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DetectTextProtectedMaterialOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeImageResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DetectTextProtectedMaterialOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnalyzeImageResult(document.RootElement, options);
+            return DeserializeDetectTextProtectedMaterialOptions(document.RootElement, options);
         }
 
-        internal static AnalyzeImageResult DeserializeAnalyzeImageResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DetectTextProtectedMaterialOptions DeserializeDetectTextProtectedMaterialOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,19 +73,14 @@ namespace Azure.AI.ContentSafety
             {
                 return null;
             }
-            IReadOnlyList<ImageCategoriesAnalysis> categoriesAnalysis = default;
+            string text = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("categoriesAnalysis"u8))
+                if (property.NameEquals("text"u8))
                 {
-                    List<ImageCategoriesAnalysis> array = new List<ImageCategoriesAnalysis>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ImageCategoriesAnalysis.DeserializeImageCategoriesAnalysis(item, options));
-                    }
-                    categoriesAnalysis = array;
+                    text = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,46 +89,46 @@ namespace Azure.AI.ContentSafety
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AnalyzeImageResult(categoriesAnalysis, serializedAdditionalRawData);
+            return new DetectTextProtectedMaterialOptions(text, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AnalyzeImageResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DetectTextProtectedMaterialOptions>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeImageResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DetectTextProtectedMaterialOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeImageResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DetectTextProtectedMaterialOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AnalyzeImageResult IPersistableModel<AnalyzeImageResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DetectTextProtectedMaterialOptions IPersistableModel<DetectTextProtectedMaterialOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeImageResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DetectTextProtectedMaterialOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAnalyzeImageResult(document.RootElement, options);
+                        return DeserializeDetectTextProtectedMaterialOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeImageResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DetectTextProtectedMaterialOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AnalyzeImageResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DetectTextProtectedMaterialOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AnalyzeImageResult FromResponse(Response response)
+        internal static DetectTextProtectedMaterialOptions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAnalyzeImageResult(document.RootElement);
+            return DeserializeDetectTextProtectedMaterialOptions(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

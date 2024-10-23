@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class AnalyzeTextResult : IUtf8JsonSerializable, IJsonModel<AnalyzeTextResult>
+    public partial class ShieldPromptResult : IUtf8JsonSerializable, IJsonModel<ShieldPromptResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeTextResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShieldPromptResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AnalyzeTextResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ShieldPromptResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,29 +28,27 @@ namespace Azure.AI.ContentSafety
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ShieldPromptResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ShieldPromptResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(BlocklistsMatch))
+            if (Optional.IsDefined(UserPromptAnalysis))
             {
-                writer.WritePropertyName("blocklistsMatch"u8);
+                writer.WritePropertyName("userPromptAnalysis"u8);
+                writer.WriteObjectValue(UserPromptAnalysis, options);
+            }
+            if (Optional.IsCollectionDefined(DocumentsAnalysis))
+            {
+                writer.WritePropertyName("documentsAnalysis"u8);
                 writer.WriteStartArray();
-                foreach (var item in BlocklistsMatch)
+                foreach (var item in DocumentsAnalysis)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("categoriesAnalysis"u8);
-            writer.WriteStartArray();
-            foreach (var item in CategoriesAnalysis)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -68,19 +66,19 @@ namespace Azure.AI.ContentSafety
             }
         }
 
-        AnalyzeTextResult IJsonModel<AnalyzeTextResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ShieldPromptResult IJsonModel<ShieldPromptResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ShieldPromptResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ShieldPromptResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnalyzeTextResult(document.RootElement, options);
+            return DeserializeShieldPromptResult(document.RootElement, options);
         }
 
-        internal static AnalyzeTextResult DeserializeAnalyzeTextResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ShieldPromptResult DeserializeShieldPromptResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -88,34 +86,33 @@ namespace Azure.AI.ContentSafety
             {
                 return null;
             }
-            IReadOnlyList<TextBlocklistMatch> blocklistsMatch = default;
-            IReadOnlyList<TextCategoriesAnalysis> categoriesAnalysis = default;
+            UserPromptInjectionAnalysisResult userPromptAnalysis = default;
+            IReadOnlyList<DocumentInjectionAnalysisResult> documentsAnalysis = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blocklistsMatch"u8))
+                if (property.NameEquals("userPromptAnalysis"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<TextBlocklistMatch> array = new List<TextBlocklistMatch>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(TextBlocklistMatch.DeserializeTextBlocklistMatch(item, options));
-                    }
-                    blocklistsMatch = array;
+                    userPromptAnalysis = UserPromptInjectionAnalysisResult.DeserializeUserPromptInjectionAnalysisResult(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("categoriesAnalysis"u8))
+                if (property.NameEquals("documentsAnalysis"u8))
                 {
-                    List<TextCategoriesAnalysis> array = new List<TextCategoriesAnalysis>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DocumentInjectionAnalysisResult> array = new List<DocumentInjectionAnalysisResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextCategoriesAnalysis.DeserializeTextCategoriesAnalysis(item, options));
+                        array.Add(DocumentInjectionAnalysisResult.DeserializeDocumentInjectionAnalysisResult(item, options));
                     }
-                    categoriesAnalysis = array;
+                    documentsAnalysis = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -124,46 +121,46 @@ namespace Azure.AI.ContentSafety
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AnalyzeTextResult(blocklistsMatch ?? new ChangeTrackingList<TextBlocklistMatch>(), categoriesAnalysis, serializedAdditionalRawData);
+            return new ShieldPromptResult(userPromptAnalysis, documentsAnalysis ?? new ChangeTrackingList<DocumentInjectionAnalysisResult>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AnalyzeTextResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ShieldPromptResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ShieldPromptResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShieldPromptResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AnalyzeTextResult IPersistableModel<AnalyzeTextResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ShieldPromptResult IPersistableModel<ShieldPromptResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ShieldPromptResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAnalyzeTextResult(document.RootElement, options);
+                        return DeserializeShieldPromptResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShieldPromptResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AnalyzeTextResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ShieldPromptResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AnalyzeTextResult FromResponse(Response response)
+        internal static ShieldPromptResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAnalyzeTextResult(document.RootElement);
+            return DeserializeShieldPromptResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
