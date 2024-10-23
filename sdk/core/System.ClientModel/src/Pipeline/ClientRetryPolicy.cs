@@ -38,6 +38,8 @@ public class ClientRetryPolicy : PipelinePolicy
         _initialDelay = DefaultInitialDelay;
     }
 
+    internal ClientLogging? ClientLog { get; set; } = null;
+
     /// <inheritdoc/>
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         => ProcessSyncOrAsync(message, pipeline, currentIndex, async: false).EnsureCompleted();
@@ -53,6 +55,7 @@ public class ClientRetryPolicy : PipelinePolicy
         while (true)
         {
             Exception? thisTryException = null;
+            var before = Stopwatch.GetTimestamp();
 
             if (async)
             {
@@ -91,6 +94,9 @@ public class ClientRetryPolicy : PipelinePolicy
                 OnRequestSent(message);
             }
 
+            var after = Stopwatch.GetTimestamp();
+            double elapsed = (after-before) / (double)Stopwatch.Frequency;
+
             bool shouldRetry = async ?
                 await ShouldRetryInternalAsync(message, thisTryException).ConfigureAwait(false) :
                 ShouldRetryInternal(message, thisTryException);
@@ -115,6 +121,8 @@ public class ClientRetryPolicy : PipelinePolicy
 
                 message.RetryCount++;
                 OnTryComplete(message);
+
+                ClientLog?.LogRetry(message, elapsed);
 
                 continue;
             }

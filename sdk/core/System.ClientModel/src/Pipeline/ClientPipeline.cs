@@ -5,7 +5,10 @@ using System.ClientModel.Internal;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Primitives;
 
@@ -102,6 +105,19 @@ public sealed partial class ClientPipeline
 
         options.Freeze();
 
+        // Set up logging
+
+        PipelineMessageSanitizer? sanitizer = null;
+        ClientLogging? clientLogging = null;
+        HttpMessageLogging? messageLogging = null;
+
+        if (!options.LoggingOptions.DisableLogging)
+        {
+            sanitizer = new(options.LoggingOptions.AllowedQueryParameters.ToArray(), options.LoggingOptions.AllowedHeaderNames.ToArray());
+            clientLogging = new(sanitizer, options.LoggingOptions);
+            messageLogging = !options.LoggingOptions.DisableHttpLogging ? new(options.LoggingOptions) : null;
+        }
+
         // Add length of client-specific policies.
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
 
@@ -132,6 +148,11 @@ public sealed partial class ClientPipeline
         // Add retry policy.
         policies[index++] = options.RetryPolicy ?? ClientRetryPolicy.Default;
 
+        if (policies[index] is ClientRetryPolicy retryPolicy)
+        {
+            retryPolicy.ClientLog = clientLogging;
+        }
+
         // Per try policies come after the retry policy.
         perTryPolicies.CopyTo(policies.AsSpan(index));
         index += perTryPolicies.Length;
@@ -156,8 +177,11 @@ public sealed partial class ClientPipeline
 
         int beforeTransportIndex = index;
 
+        PipelineTransport transport = options.Transport ?? HttpClientPipelineTransport.Shared;
+        transport.HttpMessageLogging = messageLogging;
+
         // Add the transport.
-        policies[index++] = options.Transport ?? HttpClientPipelineTransport.Shared;
+        policies[index++] = transport;
 
         return new ClientPipeline(policies,
             options.NetworkTimeout ?? DefaultNetworkTimeout,

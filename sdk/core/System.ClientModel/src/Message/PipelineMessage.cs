@@ -157,6 +157,8 @@ public class PipelineMessage : IDisposable
 
     internal int RetryCount { get; set; }
 
+    internal string LoggingCorrelationId { get; } = Guid.NewGuid().ToString();
+
     /// <summary>
     /// Gets or sets the value indicating whether the response should be buffered
     /// in-memory by the pipeline. Defaults to true.

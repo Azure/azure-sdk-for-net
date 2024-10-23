@@ -159,6 +159,10 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
             => options.NetworkTimeout = TimeSpan.MinValue);
         Assert.Throws<InvalidOperationException>(()
             => options.AddPolicy(new ObservablePolicy("A"), PipelinePosition.PerCall));
+        Assert.Throws<InvalidOperationException>(()
+            => options.LoggingOptions = new LoggingOptions());
+        Assert.Throws<InvalidOperationException>(()
+            => options.LoggingOptions.DisableHttpLogging = true);
     }
 
     [Test]
@@ -175,6 +179,10 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
             => options.NetworkTimeout = TimeSpan.MinValue);
         Assert.Throws<InvalidOperationException>(()
             => options.AddPolicy(new ObservablePolicy("A"), PipelinePosition.PerCall));
+        Assert.Throws<InvalidOperationException>(()
+            => options.LoggingOptions = new LoggingOptions());
+        Assert.Throws<InvalidOperationException>(()
+            => options.LoggingOptions.DisableHttpLogging = true);
     }
 
     #region Helpers

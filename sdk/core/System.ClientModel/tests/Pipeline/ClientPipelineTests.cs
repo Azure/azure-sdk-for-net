@@ -246,7 +246,7 @@ public class ClientPipelineTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(27, observations.Count);
+        Assert.AreEqual(29, observations.Count);
 
         Assert.AreEqual("Request:ClientPerCallPolicyA", observations[index++]);
         Assert.AreEqual("Request:ClientPerCallPolicyB", observations[index++]);
@@ -262,6 +262,8 @@ public class ClientPipelineTests : SyncAsyncTestBase
         Assert.AreEqual("Request:UserPerTryPolicyA", observations[index++]);
         Assert.AreEqual("Request:UserPerTryPolicyB", observations[index++]);
 
+        Assert.AreEqual("Request:LoggingPolicy", observations[index++]);
+
         Assert.AreEqual("Request:ClientBeforeTransportPolicyA", observations[index++]);
         Assert.AreEqual("Request:ClientBeforeTransportPolicyB", observations[index++]);
 
@@ -275,6 +277,8 @@ public class ClientPipelineTests : SyncAsyncTestBase
 
         Assert.AreEqual("Response:ClientBeforeTransportPolicyB", observations[index++]);
         Assert.AreEqual("Response:ClientBeforeTransportPolicyA", observations[index++]);
+
+        Assert.AreEqual("Response:LoggingPolicy", observations[index++]);
 
         Assert.AreEqual("Response:UserPerTryPolicyB", observations[index++]);
         Assert.AreEqual("Response:UserPerTryPolicyA", observations[index++]);
@@ -312,13 +316,15 @@ public class ClientPipelineTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(9, observations.Count);
+        Assert.AreEqual(11, observations.Count);
         Assert.AreEqual("Request:A", observations[index++]);
         Assert.AreEqual("Request:RetryPolicy", observations[index++]);
         Assert.AreEqual("Request:B", observations[index++]);
+        Assert.AreEqual("Request:LoggingPolicy", observations[index++]);
         Assert.AreEqual("Request:C", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Response:C", observations[index++]);
+        Assert.AreEqual("Response:LoggingPolicy", observations[index++]);
         Assert.AreEqual("Response:B", observations[index++]);
         Assert.AreEqual("Response:RetryPolicy", observations[index++]);
         Assert.AreEqual("Response:A", observations[index++]);
