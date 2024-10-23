@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
-                Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
+                Version = PostgreSqlFlexibleServerVersion.Ver16,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null, null, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
             });
             var sourcePublicServer = sourcePublicServerOperation.Value;
@@ -165,8 +165,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
-                Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
+                Version = PostgreSqlFlexibleServerVersion.Ver16,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null, null, null),
                 Network = new PostgreSqlFlexibleServerNetwork()
                 {
                     DelegatedSubnetResourceId = subnetID,
@@ -251,8 +251,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
-                Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
+                Version = PostgreSqlFlexibleServerVersion.Ver16,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null, null, null),
                 Backup = new PostgreSqlFlexibleServerBackupProperties()
                 {
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
@@ -312,8 +312,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
-                Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
+                Version = PostgreSqlFlexibleServerVersion.Ver16,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null, null, null),
                 Backup = new PostgreSqlFlexibleServerBackupProperties()
                 {
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
@@ -469,8 +469,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
-                Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
+                Version = PostgreSqlFlexibleServerVersion.Ver16,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null, null, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
             };
             if (vnetEnabled)
@@ -590,9 +590,18 @@ namespace Azure.ResourceManager.PostgreSql.Tests
         [TestCase("11", "12")]
         [TestCase("11", "13")]
         [TestCase("11", "14")]
+        [TestCase("11", "15")]
+        [TestCase("11", "16")]
         [TestCase("12", "13")]
         [TestCase("12", "14")]
+        [TestCase("12", "15")]
+        [TestCase("12", "16")]
         [TestCase("13", "14")]
+        [TestCase("13", "15")]
+        [TestCase("13", "16")]
+        [TestCase("14", "15")]
+        [TestCase("14", "16")]
+        [TestCase("15", "16")]
         [RecordedTest]
         public async Task MajorVersionUpgrade(string source, string dest)
         {
@@ -610,7 +619,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = sourceVersion,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null, null, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
             });
             var server = serverOperation.Value;
@@ -640,8 +649,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
-                Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
+                Version = PostgreSqlFlexibleServerVersion.Ver16,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null, null, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
             });
             var server = serverOperation.Value;
@@ -693,8 +702,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
-                Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
+                Version = PostgreSqlFlexibleServerVersion.Ver16,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null, null, null),
                 Identity = new PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType.UserAssigned)
                 {
                     UserAssignedIdentities = { { identity.Id, new UserAssignedIdentity() } },
@@ -816,8 +825,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
-                Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
+                Version = PostgreSqlFlexibleServerVersion.Ver16,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null, null, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
                 AuthConfig = new PostgreSqlFlexibleServerAuthConfig()
                 {
@@ -922,8 +931,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var sourcePublicServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, sourcePublicServerName, new PostgreSqlFlexibleServerData(rg.Data.Location)
             {
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
-                Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, StorageAutoGrow.Disabled, null, null, null),
+                Version = PostgreSqlFlexibleServerVersion.Ver16,
+                Storage = new PostgreSqlFlexibleServerStorage(128, StorageAutoGrow.Disabled, null, null, null, null, null),
                 Backup = new PostgreSqlFlexibleServerBackupProperties()
                 {
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
@@ -1150,8 +1159,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D2ds_v4", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
-                Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, StorageAutoGrow.Disabled, null, null, null),
+                Version = PostgreSqlFlexibleServerVersion.Ver16,
+                Storage = new PostgreSqlFlexibleServerStorage(128, StorageAutoGrow.Disabled, null, null, null, null, null),
                 Backup = new PostgreSqlFlexibleServerBackupProperties()
                 {
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
@@ -1177,8 +1186,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
-                Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
+                Version = PostgreSqlFlexibleServerVersion.Ver16,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null, null, null),
                 Backup = new PostgreSqlFlexibleServerBackupProperties()
                 {
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled,

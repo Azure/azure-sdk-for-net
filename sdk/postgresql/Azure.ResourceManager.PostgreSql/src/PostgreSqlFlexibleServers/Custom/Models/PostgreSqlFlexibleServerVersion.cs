@@ -12,6 +12,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> The version of a server. </summary>
     public readonly partial struct PostgreSqlFlexibleServerVersion : IEquatable<PostgreSqlFlexibleServerVersion>
     {
+        /// <summary> 16. </summary>
+        [CodeGenMember("Sixteen")]
+        public static PostgreSqlFlexibleServerVersion Ver16 { get; } = new PostgreSqlFlexibleServerVersion(SixteenValue);
         /// <summary> 15. </summary>
         [CodeGenMember("Fifteen")]
         public static PostgreSqlFlexibleServerVersion Ver15 { get; } = new PostgreSqlFlexibleServerVersion(Ver15Value);
