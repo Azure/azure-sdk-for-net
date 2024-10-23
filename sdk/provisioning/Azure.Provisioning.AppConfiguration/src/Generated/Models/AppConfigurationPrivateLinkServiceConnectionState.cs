@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppConfiguration;
 /// <summary>
 /// The state of a private link service connection.
 /// </summary>
-public partial class AppConfigurationPrivateLinkServiceConnectionState : ProvisioningConstruct
+public partial class AppConfigurationPrivateLinkServiceConnectionState : ProvisionableConstruct
 {
     /// <summary>
     /// The private link service connection status.

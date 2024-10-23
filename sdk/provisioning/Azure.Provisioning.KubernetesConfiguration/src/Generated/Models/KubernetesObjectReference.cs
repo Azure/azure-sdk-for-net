@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Object reference to a Kubernetes object on a cluster.
 /// </summary>
-public partial class KubernetesObjectReference : ProvisioningConstruct
+public partial class KubernetesObjectReference : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the object.

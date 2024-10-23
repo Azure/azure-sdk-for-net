@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Container App container Tcp scaling rule.
 /// </summary>
-public partial class ContainerAppTcpScaleRule : ProvisioningConstruct
+public partial class ContainerAppTcpScaleRule : ProvisionableConstruct
 {
     /// <summary>
     /// Metadata properties to describe tcp scale rule.

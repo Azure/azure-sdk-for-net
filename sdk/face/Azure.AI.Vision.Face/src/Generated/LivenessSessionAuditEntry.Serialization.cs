@@ -42,6 +42,16 @@ namespace Azure.AI.Vision.Face
             writer.WriteObjectValue(Response, options);
             writer.WritePropertyName("digest"u8);
             writer.WriteStringValue(Digest);
+            if (Optional.IsDefined(SessionImageId))
+            {
+                writer.WritePropertyName("sessionImageId"u8);
+                writer.WriteStringValue(SessionImageId);
+            }
+            if (Optional.IsDefined(VerifyImageHash))
+            {
+                writer.WritePropertyName("verifyImageHash"u8);
+                writer.WriteStringValue(VerifyImageHash);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,6 +98,8 @@ namespace Azure.AI.Vision.Face
             AuditRequestInfo request = default;
             AuditLivenessResponseInfo response = default;
             string digest = default;
+            string sessionImageId = default;
+            string verifyImageHash = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,6 +144,16 @@ namespace Azure.AI.Vision.Face
                     digest = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("sessionImageId"u8))
+                {
+                    sessionImageId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("verifyImageHash"u8))
+                {
+                    verifyImageHash = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -147,6 +169,8 @@ namespace Azure.AI.Vision.Face
                 request,
                 response,
                 digest,
+                sessionImageId,
+                verifyImageHash,
                 serializedAdditionalRawData);
         }
 

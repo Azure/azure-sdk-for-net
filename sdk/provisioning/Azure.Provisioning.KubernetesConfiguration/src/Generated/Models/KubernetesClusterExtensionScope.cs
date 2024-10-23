@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Scope of the extension. It can be either Cluster or Namespace; but not both.
 /// </summary>
-public partial class KubernetesClusterExtensionScope : ProvisioningConstruct
+public partial class KubernetesClusterExtensionScope : ProvisionableConstruct
 {
     /// <summary>
     /// Namespace where the extension Release must be placed, for a Cluster

@@ -14,7 +14,7 @@ namespace Azure.Provisioning.SignalR;
 /// event, the hub or the category of the incoming request that matches
 /// current URL template.
 /// </summary>
-public partial class SignalRUpstreamTemplate : ProvisioningConstruct
+public partial class SignalRUpstreamTemplate : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets the matching pattern for hub names. If not set, it matches

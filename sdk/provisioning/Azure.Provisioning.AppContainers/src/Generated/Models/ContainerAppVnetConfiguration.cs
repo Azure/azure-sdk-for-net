@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Configuration properties for apps environment to join a Virtual Network.
 /// </summary>
-public partial class ContainerAppVnetConfiguration : ProvisioningConstruct
+public partial class ContainerAppVnetConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Boolean indicating the environment only has an internal load balancer.

@@ -13,25 +13,29 @@ namespace Azure.Provisioning;
 /// <summary>
 /// Collect resources and other constructs like parameters together.
 /// </summary>
-/// <param name="name"></param>
-public class Infrastructure(string name = "main") : Provisionable
+/// <param name="bicepName">
+/// A friendly name that can also be used as a file name if compiling to a
+/// module.
+/// </param>
+public class Infrastructure(string bicepName = "main") : Provisionable
 {
     /// <summary>
-    /// A friendly name that can also be used if compiling to a module.
+    /// A friendly name that can also be used as a file name if compiling to a
+    /// module.
     /// </summary>
-    public string Name { get; private set; } = name;
+    public string BicepName { get; private set; } = bicepName;
 
     /// <summary>
     /// Optional target scope for the infrastructure.  If left empty, then
-    /// <c>resourcegroup</c> is assumed.
+    /// <see cref="DeploymentScope.ResourceGroup"/> is assumed.
     /// </summary>
-    public string? TargetScope { get; set; }
+    public DeploymentScope? TargetScope { get; set; }
 
     // Placeholder until we get module splitting handled
     private Infrastructure? _parent = null;
 
     /// <inheritdoc/>
-    public override IEnumerable<Provisionable> GetResources() => _resources;
+    public override IEnumerable<Provisionable> GetProvisionableResources() => _resources;
     private readonly List<Provisionable> _resources = [];
 
     /// <summary>
@@ -44,7 +48,7 @@ public class Infrastructure(string name = "main") : Provisionable
     /// </remarks>
     public virtual void Add(Provisionable resource)
     {
-        if (resource is ProvisioningConstruct construct &&
+        if (resource is ProvisionableConstruct construct &&
             construct.ParentInfrastructure != this)
         {
             // Don't parent expression references
@@ -70,7 +74,7 @@ public class Infrastructure(string name = "main") : Provisionable
 
         // Ensure all cases are covered
         Debug.Assert(
-            resource is ProvisioningConstruct || resource is Infrastructure,
+            resource is ProvisionableConstruct || resource is Infrastructure,
             $"{nameof(Infrastructure)} needs to be updated if you add a new fork in the hierarchy derived from {nameof(Provisionable)}!");
     }
 
@@ -80,7 +84,7 @@ public class Infrastructure(string name = "main") : Provisionable
     /// <param name="resource">The provisionable construct to remove.</param>
     public virtual void Remove(Provisionable resource)
     {
-        if (resource is ProvisioningConstruct construct &&
+        if (resource is ProvisionableConstruct construct &&
             construct.ParentInfrastructure == this)
         {
             construct.ParentInfrastructure = null;
@@ -103,13 +107,13 @@ public class Infrastructure(string name = "main") : Provisionable
     /// Checks whether an name is a valid bicep identifier name comprised of
     /// letters, digits, and underscores.
     /// </summary>
-    /// <param name="identifierName">The proposed identifier name.</param>
-    /// <returns>Whether the name is a valid bicep identifier name.</returns>
-    public static bool IsValidIdentifierName(string? identifierName)
+    /// <param name="bicepIdentifier">The proposed identifier.</param>
+    /// <returns>Whether the name is a valid bicep identifier.</returns>
+    public static bool IsValidBicepIdentifier(string? bicepIdentifier)
     {
-        if (string.IsNullOrEmpty(identifierName)) { return false; }
-        if (char.IsDigit(identifierName![0])) { return false; }
-        foreach (char ch in identifierName)
+        if (string.IsNullOrEmpty(bicepIdentifier)) { return false; }
+        if (char.IsDigit(bicepIdentifier![0])) { return false; }
+        foreach (char ch in bicepIdentifier)
         {
             if (!IsAsciiLetterOrDigit(ch) && ch != '_')
             {
@@ -123,31 +127,31 @@ public class Infrastructure(string name = "main") : Provisionable
     /// Validates whether a given bicep identifier name is correctly formed of
     /// letters, numbers, and underscores.
     /// </summary>
-    /// <param name="identifierName">The proposed bicep identifier name.</param>
+    /// <param name="bicepIdentifier">The proposed bicep identifier.</param>
     /// <param name="paramName">Optional parameter name to use for exceptions.</param>
     /// <exception cref="ArgumentNullException">Throws if null.</exception>
     /// <exception cref="ArgumentException">Throws if empty or invalid.</exception>
-    public static void ValidateIdentifierName(string? identifierName, string? paramName = default)
+    public static void ValidateBicepIdentifier(string? bicepIdentifier, string? paramName = default)
     {
-        paramName ??= nameof(identifierName);
-        if (identifierName is null)
+        paramName ??= nameof(bicepIdentifier);
+        if (bicepIdentifier is null)
         {
             throw new ArgumentNullException(paramName, $"{paramName} cannot be null.");
         }
-        else if (identifierName.Length == 0)
+        else if (bicepIdentifier.Length == 0)
         {
             throw new ArgumentException($"{paramName} cannot be empty.", paramName);
         }
-        else if (char.IsDigit(identifierName[0]))
+        else if (char.IsDigit(bicepIdentifier[0]))
         {
-            throw new ArgumentException($"{paramName} cannot start with a number: \"{identifierName}\"", paramName);
+            throw new ArgumentException($"{paramName} cannot start with a number: \"{bicepIdentifier}\"", paramName);
         }
 
-        foreach (var ch in identifierName)
+        foreach (var ch in bicepIdentifier)
         {
             if (!IsAsciiLetterOrDigit(ch) && ch != '_')
             {
-                throw new ArgumentException($"{paramName} should only contain letters, numbers, and underscores: \"{identifierName}\"", paramName);
+                throw new ArgumentException($"{paramName} should only contain letters, numbers, and underscores: \"{bicepIdentifier}\"", paramName);
             }
         }
     }
@@ -156,38 +160,38 @@ public class Infrastructure(string name = "main") : Provisionable
     /// Normalizes a proposed bicep identifier name.  Any invalid characters
     /// will be replaced with underscores.
     /// </summary>
-    /// <param name="identifierName">The proposed bicep identifier name.</param>
+    /// <param name="bicepIdentifier">The proposed bicep identifier.</param>
     /// <returns>A valid bicep identifier name.</returns>
     /// <exception cref="ArgumentNullException">Throws if null.</exception>
     /// <exception cref="ArgumentException">Throws if empty.</exception>
-    public static string NormalizeIdentifierName(string? identifierName)
+    public static string NormalizeBicepIdentifier(string? bicepIdentifier)
     {
-        if (IsValidIdentifierName(identifierName))
+        if (IsValidBicepIdentifier(bicepIdentifier))
         {
-            return identifierName!;
+            return bicepIdentifier!;
         }
 
-        if (identifierName is null)
+        if (bicepIdentifier is null)
         {
             // TODO: This may be relaxed in the future to generate an automatic
             // name rather than throwing
-            throw new ArgumentNullException(nameof(identifierName), $"{nameof(identifierName)} cannot be null.");
+            throw new ArgumentNullException(nameof(bicepIdentifier), $"{nameof(bicepIdentifier)} cannot be null.");
         }
-        else if (identifierName.Length == 0)
+        else if (bicepIdentifier.Length == 0)
         {
-            throw new ArgumentException($"{nameof(identifierName)} cannot be empty.", nameof(identifierName));
+            throw new ArgumentException($"{nameof(bicepIdentifier)} cannot be empty.", nameof(bicepIdentifier));
         }
 
-        StringBuilder builder = new(identifierName.Length);
+        StringBuilder builder = new(bicepIdentifier.Length);
 
         // Digits are not allowed as the first character, so prepend an
-        // underscore if the identifierName starts with a digit
-        if (char.IsDigit(identifierName[0]))
+        // underscore if the bicepIdentifier starts with a digit
+        if (char.IsDigit(bicepIdentifier[0]))
         {
             builder.Append('_');
         }
 
-        foreach (char ch in identifierName)
+        foreach (char ch in bicepIdentifier)
         {
             // TODO: Consider opening this up to other naming strategies if
             // someone can do something more intelligent for their usage/domain
@@ -198,86 +202,92 @@ public class Infrastructure(string name = "main") : Provisionable
     }
 
     /// <inheritdoc/>
-    protected internal override void Validate(ProvisioningContext? context = null)
+    protected internal override void Validate(ProvisioningBuildOptions? options = null)
     {
-        context ??= new();
-        base.Validate(context);
-        foreach (Provisionable resource in GetResources()) { resource.Validate(context); }
+        options ??= new();
+        base.Validate(options);
+        foreach (Provisionable resource in GetProvisionableResources()) { resource.Validate(options); }
     }
 
     /// <inheritdoc/>
-    protected internal override void Resolve(ProvisioningContext? context = default)
+    protected internal override void Resolve(ProvisioningBuildOptions? options = default)
     {
-        context ??= new();
-        base.Resolve(context);
+        options ??= new();
+        base.Resolve(options);
 
-        Provisionable[] cached = [.. GetResources()]; // Copy so Resolve can mutate
-        foreach (Provisionable resource in cached) { resource.Resolve(context); }
+        Provisionable[] cached = [.. GetProvisionableResources()]; // Copy so Resolve can mutate
+        foreach (Provisionable resource in cached) { resource.Resolve(options); }
 
-        foreach (InfrastructureResolver resolver in context.InfrastructureResolvers)
+        foreach (InfrastructureResolver resolver in options.InfrastructureResolvers)
         {
-            resolver.ResolveInfrastructure(context, this);
+            resolver.ResolveInfrastructure(this, options);
         }
     }
 
     /// <inheritdoc/>
-    protected internal override IEnumerable<Statement> Compile() =>
-        // TODO: For now I'm letting this through in case someone calls Compile
-        // before Build while debugging.  We could also make it a little less
-        // friendly and more predictable by throwing here.
-        CompileInternal(context: null);
+    protected internal override IEnumerable<BicepStatement> Compile() =>
+        CompileInternal(options: null);
 
     /// <summary>
     /// Compile this infrastructure into a set of bicep modules.
     /// </summary>
-    /// <param name="context">Provisioning context.</param>
+    /// <param name="options">Provisioning options.</param>
     /// <returns>Dictionary mapping module names to module definitions.</returns>
-    protected internal IDictionary<string, IEnumerable<Statement>> CompileModules(ProvisioningContext? context = default)
+    protected internal IDictionary<string, IEnumerable<BicepStatement>> CompileModules(ProvisioningBuildOptions? options = default)
     {
         // This API shape will eventually help us grow into compiling multiple
         // modules at once and automatically splitting resources across them.
-        context ??= new();
-        Dictionary<string, IEnumerable<Statement>> modules = [];
-        modules.Add(Name, CompileInternal(context));
+        options ??= new();
+        Dictionary<string, IEnumerable<BicepStatement>> modules = [];
+        modules.Add(BicepName, CompileInternal(options));
 
         // Optionally add any nested modules
         List<Infrastructure> nested = [];
-        foreach (InfrastructureResolver resolver in context.InfrastructureResolvers)
+        foreach (InfrastructureResolver resolver in options.InfrastructureResolvers)
         {
-            nested.AddRange(resolver.GetNestedInfrastructure(context, this));
+            nested.AddRange(resolver.GetNestedInfrastructure(this, options));
         }
         foreach (Infrastructure infra in nested)
         {
-            modules.Add(infra.Name, infra.CompileInternal(context));
+            modules.Add(infra.BicepName, infra.CompileInternal(options));
         }
 
         return modules;
     }
 
     /// <inheritdoc/>
-    private List<Statement> CompileInternal(ProvisioningContext? context)
+    private List<BicepStatement> CompileInternal(ProvisioningBuildOptions? options)
     {
-        List<Statement> statements = [];
+        List<BicepStatement> statements = [];
         if (TargetScope is not null)
         {
-            statements.Add(new TargetScopeStatement(TargetScope));
+            statements.Add(
+                new TargetScopeStatement(
+                    TargetScope switch
+                    {
+                        DeploymentScope.ResourceGroup => "resourceGroup",
+                        DeploymentScope.Subscription => "subscription",
+                        DeploymentScope.ManagementGroup => "managementGroup",
+                        DeploymentScope.Tenant => "tenant",
+                        _ => throw new InvalidOperationException($"Unknown deployment scope: {TargetScope}")
+                    }));
         }
 
-        IEnumerable<Provisionable> resources = GetResources();
+        IEnumerable<Provisionable> resources = GetProvisionableResources();
 
         // Optionally customize the resources with the extensibility hooks on
-        // ProvisioningContext.
-        if (context is not null)
+        // ProvisioningBuildOptions.
+        if (options is not null)
         {
-            foreach (InfrastructureResolver resolver in context.InfrastructureResolvers)
+            foreach (InfrastructureResolver resolver in options.InfrastructureResolvers)
             {
-                resources = resolver.ResolveResources(context, resources);
+                resources = resolver.ResolveResources(resources, options);
             }
         }
 
         foreach (Provisionable resource in resources)
         {
-            if (resource is ProvisioningConstruct construct)
+            if (resource is ProvisionableConstruct construct)
             {
                 statements.AddRange(construct.Compile());
             }
@@ -298,18 +308,18 @@ public class Infrastructure(string name = "main") : Provisionable
     /// Compose all the resources into a concrete <see cref="ProvisioningPlan"/>
     /// that can be compiled into Bicep, deployed, etc.
     /// </summary>
-    /// <param name="context">
-    /// The provisioning context to use for composing resources.
+    /// <param name="options">
+    /// The build options to use for composing resources.
     /// </param>
     /// <returns>
     /// A <see cref="ProvisioningPlan"/> that can be compiled into Bicep,
     /// deployed, etc.
     /// </returns>
-    public virtual ProvisioningPlan Build(ProvisioningContext? context = default)
+    public virtual ProvisioningPlan Build(ProvisioningBuildOptions? options = default)
     {
-        context ??= new();
-        Resolve(context);
-        Validate(context);
-        return new ProvisioningPlan(this, context);
+        options ??= new();
+        Resolve(options);
+        Validate(options);
+        return new ProvisioningPlan(this, options);
     }
 }

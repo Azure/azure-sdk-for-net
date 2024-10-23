@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// A service that allows server-side encryption to be used.
 /// </summary>
-public partial class StorageEncryptionService : ProvisioningConstruct
+public partial class StorageEncryptionService : ProvisionableConstruct
 {
     /// <summary>
     /// A boolean indicating whether or not the service encrypts the data as it

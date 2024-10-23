@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Secret to be added to volume.
 /// </summary>
-public partial class SecretVolumeItem : ProvisioningConstruct
+public partial class SecretVolumeItem : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the Container App secret from which to pull the secret value.

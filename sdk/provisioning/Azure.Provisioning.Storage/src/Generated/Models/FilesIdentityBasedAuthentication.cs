@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Settings for Azure Files identity based authentication.
 /// </summary>
-public partial class FilesIdentityBasedAuthentication : ProvisioningConstruct
+public partial class FilesIdentityBasedAuthentication : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates the directory service used. Note that this enum may be

@@ -7,10 +7,16 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue that prevented `ManagedIdentityCredential` from attempting to detect if Workload Identity is enabled in the current environment. [#46653](https://github.com/Azure/azure-sdk-for-net/issues/46653)
+- Fixed an issue that prevented `DefaultAzureCredential` from progressing past `ManagedIdentityCredential` in some scenarios where the identity was not available. [#46709](https://github.com/Azure/azure-sdk-for-net/issues/46709)
 
 ### Other Changes
 
 ## 1.13.0 (2024-10-14)
+
+### Breaking Changes
+- Previously, if a clientID or ResourceID was specified for Cloud Shell managed identity, which is not supported, the clientID or resourceID would be silently ignored. Now, an exception will be thrown if a clientID or resourceID is specified for Cloud Shell managed identity.
+- Previously, if a clientID or ResourceID was specified for Service Fabric managed identity, which is not supported, the clientID or resourceID would be silently ignored. Now, an exception will be thrown if a clientID or resourceID is specified for Service Fabric managed identity.
 
 ### Features Added
 - `ManagedIdentityCredential` now supports specifying a user-assigned managed identity by object ID.

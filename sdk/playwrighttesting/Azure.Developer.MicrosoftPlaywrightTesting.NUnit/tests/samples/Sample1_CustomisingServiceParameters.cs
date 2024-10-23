@@ -12,7 +12,7 @@ namespace PlaywrightTests;
 #if SNIPPET
 public class PlaywrightServiceSetup : PlaywrightServiceNUnit
 #else
-public class Sample2ServiceSetup : PlaywrightServiceNUnit
+public class Sample1ServiceSetup : PlaywrightServiceNUnit
 #endif
 {
     public static readonly TokenCredential managedIdentityCredential = new ManagedIdentityCredential();
@@ -20,7 +20,7 @@ public class Sample2ServiceSetup : PlaywrightServiceNUnit
 #if SNIPPET
     public PlaywrightServiceSetup() : base(managedIdentityCredential) {}
 #else
-    public Sample2ServiceSetup() : base(managedIdentityCredential) {}
+    public Sample1ServiceSetup() : base(managedIdentityCredential) {}
 #endif
 }
 #endregion

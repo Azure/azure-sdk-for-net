@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// The AppLogsConfiguration.
 /// </summary>
-public partial class AppLogsConfiguration : ProvisioningConstruct
+public partial class AppLogsConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets the destination.

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// MongoDBRoleDefinition.
 /// </summary>
-public partial class MongoDBRoleDefinition : Resource
+public partial class MongoDBRoleDefinition : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -80,15 +80,15 @@ public partial class MongoDBRoleDefinition : Resource
     /// <summary>
     /// Creates a new MongoDBRoleDefinition.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the MongoDBRoleDefinition resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the MongoDBRoleDefinition.</param>
-    public MongoDBRoleDefinition(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/mongodbRoleDefinitions", resourceVersion ?? "2024-08-15")
+    public MongoDBRoleDefinition(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/mongodbRoleDefinitions", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _databaseName = BicepValue<string>.DefineProperty(this, "DatabaseName", ["properties", "databaseName"]);
@@ -106,11 +106,6 @@ public partial class MongoDBRoleDefinition : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -240,7 +235,7 @@ public partial class MongoDBRoleDefinition : Resource
     /// <summary>
     /// Creates a reference to an existing MongoDBRoleDefinition.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the MongoDBRoleDefinition resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -248,6 +243,6 @@ public partial class MongoDBRoleDefinition : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the MongoDBRoleDefinition.</param>
     /// <returns>The existing MongoDBRoleDefinition resource.</returns>
-    public static MongoDBRoleDefinition FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static MongoDBRoleDefinition FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

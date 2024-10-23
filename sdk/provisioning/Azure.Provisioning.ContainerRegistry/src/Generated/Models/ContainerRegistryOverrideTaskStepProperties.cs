@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The ContainerRegistryOverrideTaskStepProperties.
 /// </summary>
-public partial class ContainerRegistryOverrideTaskStepProperties : ProvisioningConstruct
+public partial class ContainerRegistryOverrideTaskStepProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The source context against which run has to be queued.

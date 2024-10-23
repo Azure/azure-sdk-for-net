@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the custom Open ID Connect provider.
 /// </summary>
-public partial class ContainerAppCustomOpenIdConnectProviderConfiguration : ProvisioningConstruct
+public partial class ContainerAppCustomOpenIdConnectProviderConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// &lt;code&gt;false&lt;/code&gt; if the custom Open ID provider provider

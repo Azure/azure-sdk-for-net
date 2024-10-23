@@ -11,7 +11,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// Billing information related properties of a server.
 /// </summary>
-public partial class PostgreSqlSku : ProvisioningConstruct
+public partial class PostgreSqlSku : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1,

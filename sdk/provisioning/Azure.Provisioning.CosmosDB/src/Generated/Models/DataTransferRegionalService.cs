@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Resource for a regional service location.
 /// </summary>
-public partial class DataTransferRegionalService : ProvisioningConstruct
+public partial class DataTransferRegionalService : ProvisionableConstruct
 {
     /// <summary>
     /// The regional service name.

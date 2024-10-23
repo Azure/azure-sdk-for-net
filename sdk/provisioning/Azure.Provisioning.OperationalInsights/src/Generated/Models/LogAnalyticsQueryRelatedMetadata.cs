@@ -12,7 +12,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// The related metadata items for the function.
 /// </summary>
-public partial class LogAnalyticsQueryRelatedMetadata : ProvisioningConstruct
+public partial class LogAnalyticsQueryRelatedMetadata : ProvisionableConstruct
 {
     /// <summary>
     /// The related categories for the function.

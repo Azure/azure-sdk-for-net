@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB indexing policy.
 /// </summary>
-public partial class CosmosDBIndexingPolicy : ProvisioningConstruct
+public partial class CosmosDBIndexingPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates if the indexing policy is automatic.

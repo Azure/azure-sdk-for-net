@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Istio service mesh configuration.
 /// </summary>
-public partial class IstioServiceMesh : ProvisioningConstruct
+public partial class IstioServiceMesh : ProvisionableConstruct
 {
     /// <summary>
     /// Istio components configuration.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// The DynamicRoutingEnrichment.
 /// </summary>
-public partial class DynamicRoutingEnrichment : ProvisioningConstruct
+public partial class DynamicRoutingEnrichment : ProvisionableConstruct
 {
     /// <summary>
     /// Dynamic routing enrichment key.
