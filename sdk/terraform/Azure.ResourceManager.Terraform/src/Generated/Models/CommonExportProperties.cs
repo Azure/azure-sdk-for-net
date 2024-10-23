@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.Terraform.Models
 {
     /// <summary>
     /// The base export parameter
-    /// Please note <see cref="BaseExportModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="CommonExportProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ExportQuery"/>, <see cref="ExportResource"/> and <see cref="ExportResourceGroup"/>.
     /// </summary>
-    public abstract partial class BaseExportModel
+    public abstract partial class CommonExportProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,18 +49,18 @@ namespace Azure.ResourceManager.Terraform.Models
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BaseExportModel"/>. </summary>
-        protected BaseExportModel()
+        /// <summary> Initializes a new instance of <see cref="CommonExportProperties"/>. </summary>
+        protected CommonExportProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BaseExportModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonExportProperties"/>. </summary>
         /// <param name="type"> The parameter type. </param>
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
         /// <param name="fullProperties"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
         /// <param name="maskSensitive"> Mask sensitive attributes in the Terraform configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BaseExportModel(Type type, TargetProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommonExportProperties(Type type, TargetProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             TargetProvider = targetProvider;

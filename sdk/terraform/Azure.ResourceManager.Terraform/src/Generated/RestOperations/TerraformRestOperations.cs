@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Terraform
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateExportTerraformRequestUri(string subscriptionId, BaseExportModel body)
+        internal RequestUriBuilder CreateExportTerraformRequestUri(string subscriptionId, CommonExportProperties body)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Terraform
             return uri;
         }
 
-        internal HttpMessage CreateExportTerraformRequest(string subscriptionId, BaseExportModel body)
+        internal HttpMessage CreateExportTerraformRequest(string subscriptionId, CommonExportProperties body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Terraform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ExportTerraformAsync(string subscriptionId, BaseExportModel body, CancellationToken cancellationToken = default)
+        public async Task<Response> ExportTerraformAsync(string subscriptionId, CommonExportProperties body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(body, nameof(body));
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Terraform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ExportTerraform(string subscriptionId, BaseExportModel body, CancellationToken cancellationToken = default)
+        public Response ExportTerraform(string subscriptionId, CommonExportProperties body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(body, nameof(body));

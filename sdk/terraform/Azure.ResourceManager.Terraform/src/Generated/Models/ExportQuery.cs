@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Terraform.Models
 {
     /// <summary> Export parameter for resources queried by ARG (Azure Resource Graph). </summary>
-    public partial class ExportQuery : BaseExportModel
+    public partial class ExportQuery : CommonExportProperties
     {
         /// <summary> Initializes a new instance of <see cref="ExportQuery"/>. </summary>
         /// <param name="query"> The ARG where predicate. Note that you can combine multiple conditions in one `where` predicate, e.g. `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. </param>

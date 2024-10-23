@@ -2,8 +2,8 @@ namespace Azure.ResourceManager.Terraform
 {
     public static partial class TerraformExtensions
     {
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Terraform.Models.TerraformOperationStatus> ExportTerraform(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Terraform.Models.BaseExportModel body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Terraform.Models.TerraformOperationStatus>> ExportTerraformAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Terraform.Models.BaseExportModel body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Terraform.Models.TerraformOperationStatus> ExportTerraform(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Terraform.Models.CommonExportProperties body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Terraform.Models.TerraformOperationStatus>> ExportTerraformAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Terraform.Models.CommonExportProperties body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Terraform.Mocking
@@ -11,8 +11,8 @@ namespace Azure.ResourceManager.Terraform.Mocking
     public partial class MockableTerraformSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableTerraformSubscriptionResource() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Terraform.Models.TerraformOperationStatus> ExportTerraform(Azure.WaitUntil waitUntil, Azure.ResourceManager.Terraform.Models.BaseExportModel body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Terraform.Models.TerraformOperationStatus>> ExportTerraformAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Terraform.Models.BaseExportModel body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Terraform.Models.TerraformOperationStatus> ExportTerraform(Azure.WaitUntil waitUntil, Azure.ResourceManager.Terraform.Models.CommonExportProperties body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Terraform.Models.TerraformOperationStatus>> ExportTerraformAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Terraform.Models.CommonExportProperties body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Terraform.Models
@@ -24,20 +24,20 @@ namespace Azure.ResourceManager.Terraform.Models
         public static Azure.ResourceManager.Terraform.Models.ExportResult ExportResult(string configuration = null, System.Collections.Generic.IEnumerable<string> skippedResources = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
         public static Azure.ResourceManager.Terraform.Models.TerraformOperationStatus TerraformOperationStatus(Azure.ResourceManager.Terraform.Models.ExportResult properties = null, Azure.ResourceManager.Terraform.Models.ResourceProvisioningState status = default(Azure.ResourceManager.Terraform.Models.ResourceProvisioningState), string name = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), double? percentComplete = default(double?), Azure.ResponseError error = null) { throw null; }
     }
-    public abstract partial class BaseExportModel : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.BaseExportModel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.BaseExportModel>
+    public abstract partial class CommonExportProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.CommonExportProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.CommonExportProperties>
     {
-        protected BaseExportModel() { }
+        protected CommonExportProperties() { }
         public bool? FullProperties { get { throw null; } set { } }
         public bool? MaskSensitive { get { throw null; } set { } }
         public Azure.ResourceManager.Terraform.Models.TargetProvider? TargetProvider { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Terraform.Models.BaseExportModel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.BaseExportModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.BaseExportModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Terraform.Models.BaseExportModel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.BaseExportModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.BaseExportModel>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.BaseExportModel>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Terraform.Models.CommonExportProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.CommonExportProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.CommonExportProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Terraform.Models.CommonExportProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.CommonExportProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.CommonExportProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.CommonExportProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExportQuery : Azure.ResourceManager.Terraform.Models.BaseExportModel, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportQuery>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportQuery>
+    public partial class ExportQuery : Azure.ResourceManager.Terraform.Models.CommonExportProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportQuery>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportQuery>
     {
         public ExportQuery(string query) { }
         public string NamePattern { get { throw null; } set { } }
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.Terraform.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportQuery>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportQuery>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExportResource : Azure.ResourceManager.Terraform.Models.BaseExportModel, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResource>
+    public partial class ExportResource : Azure.ResourceManager.Terraform.Models.CommonExportProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResource>
     {
-        public ExportResource(System.Collections.Generic.IEnumerable<string> resourceIds) { }
+        public ExportResource(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds) { }
         public string NamePattern { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ResourceIds { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourceIds { get { throw null; } }
         public string ResourceName { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Terraform.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExportResourceGroup : Azure.ResourceManager.Terraform.Models.BaseExportModel, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResourceGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResourceGroup>
+    public partial class ExportResourceGroup : Azure.ResourceManager.Terraform.Models.CommonExportProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResourceGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResourceGroup>
     {
         public ExportResourceGroup(string resourceGroupName) { }
         public string NamePattern { get { throw null; } set { } }

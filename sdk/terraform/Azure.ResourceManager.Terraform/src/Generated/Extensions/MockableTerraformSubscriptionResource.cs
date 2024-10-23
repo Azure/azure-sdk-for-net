@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<TerraformOperationStatus>> ExportTerraformAsync(WaitUntil waitUntil, BaseExportModel body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TerraformOperationStatus>> ExportTerraformAsync(WaitUntil waitUntil, CommonExportProperties body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<TerraformOperationStatus> ExportTerraform(WaitUntil waitUntil, BaseExportModel body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TerraformOperationStatus> ExportTerraform(WaitUntil waitUntil, CommonExportProperties body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Terraform
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.ExportTerraform(WaitUntil,BaseExportModel,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.ExportTerraform(WaitUntil,CommonExportProperties,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Terraform
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="body"/> is null. </exception>
-        public static async Task<ArmOperation<TerraformOperationStatus>> ExportTerraformAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, BaseExportModel body, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<TerraformOperationStatus>> ExportTerraformAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CommonExportProperties body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Terraform
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.ExportTerraform(WaitUntil,BaseExportModel,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTerraformSubscriptionResource.ExportTerraform(WaitUntil,CommonExportProperties,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Terraform
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="body"/> is null. </exception>
-        public static ArmOperation<TerraformOperationStatus> ExportTerraform(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, BaseExportModel body, CancellationToken cancellationToken = default)
+        public static ArmOperation<TerraformOperationStatus> ExportTerraform(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CommonExportProperties body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Terraform.Models
             writer.WriteStartArray();
             foreach (var item in ResourceIds)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -79,7 +84,7 @@ namespace Azure.ResourceManager.Terraform.Models
             {
                 return null;
             }
-            IList<string> resourceIds = default;
+            IList<ResourceIdentifier> resourceIds = default;
             string resourceName = default;
             string resourceType = default;
             string namePattern = default;
@@ -93,10 +98,17 @@ namespace Azure.ResourceManager.Terraform.Models
             {
                 if (property.NameEquals("resourceIds"u8))
                 {
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     resourceIds = array;
                     continue;

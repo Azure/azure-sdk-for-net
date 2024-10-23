@@ -10,22 +10,22 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
-    /// <summary> Unknown version of BaseExportModel. </summary>
-    internal partial class UnknownBaseExportModel : BaseExportModel
+    /// <summary> Unknown version of CommonExportProperties. </summary>
+    internal partial class UnknownCommonExportProperties : CommonExportProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownBaseExportModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCommonExportProperties"/>. </summary>
         /// <param name="type"> The parameter type. </param>
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
         /// <param name="fullProperties"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
         /// <param name="maskSensitive"> Mask sensitive attributes in the Terraform configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownBaseExportModel(Type type, TargetProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
+        internal UnknownCommonExportProperties(Type type, TargetProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
         {
             Type = type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnknownBaseExportModel"/> for deserialization. </summary>
-        internal UnknownBaseExportModel()
+        /// <summary> Initializes a new instance of <see cref="UnknownCommonExportProperties"/> for deserialization. </summary>
+        internal UnknownCommonExportProperties()
         {
         }
     }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Terraform.Models
 {
     /// <summary> Export parameter for a resource group. </summary>
-    public partial class ExportResourceGroup : BaseExportModel
+    public partial class ExportResourceGroup : CommonExportProperties
     {
         /// <summary> Initializes a new instance of <see cref="ExportResourceGroup"/>. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to be exported. </param>
