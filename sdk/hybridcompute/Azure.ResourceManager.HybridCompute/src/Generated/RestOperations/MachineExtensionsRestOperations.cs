@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-07-10";
+            _apiVersion = apiVersion ?? "2024-07-31-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.HybridCompute
             return message;
         }
 
-        /// <summary> The operation to update the extension. </summary>
+        /// <summary> The operation to create or update the extension. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="machineName"> The name of the machine where the extension should be created or updated. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        /// <summary> The operation to update the extension. </summary>
+        /// <summary> The operation to create or update the extension. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="machineName"> The name of the machine where the extension should be created or updated. </param>

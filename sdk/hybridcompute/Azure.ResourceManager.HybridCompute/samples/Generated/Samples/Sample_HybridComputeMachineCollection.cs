@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateAMachine()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_CreateOrUpdate.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_CreateOrUpdate.json
             // this example is just showing the usage of "Machines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetMachine()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_Get.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Get.json
             // this example is just showing the usage of "Machines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetMachine()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_Get.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Get.json
             // this example is just showing the usage of "Machines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetMachine()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_Get.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Get.json
             // this example is just showing the usage of "Machines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetMachineWithLicenseProfileInstanceView()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_Get_LicenseProfileInstanceView.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Get_LicenseProfileInstanceView.json
             // this example is just showing the usage of "Machines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetMachineWithLicenseProfileInstanceView()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_Get_LicenseProfileInstanceView.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Get_LicenseProfileInstanceView.json
             // this example is just showing the usage of "Machines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetMachineWithLicenseProfileInstanceView()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_Get_LicenseProfileInstanceView.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Get_LicenseProfileInstanceView.json
             // this example is just showing the usage of "Machines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListMachinesByResourceGroup()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_ListByResourceGroup.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_ListByResourceGroup.json
             // this example is just showing the usage of "Machines_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

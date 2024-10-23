@@ -95,6 +95,30 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="MachineRunCommandResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineRunCommandResource.CreateResourceIdentifier" /> to create a <see cref="MachineRunCommandResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineRunCommandResource"/> object. </returns>
+        public virtual MachineRunCommandResource GetMachineRunCommandResource(ResourceIdentifier id)
+        {
+            MachineRunCommandResource.ValidateResourceId(id);
+            return new MachineRunCommandResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GatewayResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GatewayResource.CreateResourceIdentifier" /> to create a <see cref="GatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GatewayResource"/> object. </returns>
+        public virtual GatewayResource GetGatewayResource(ResourceIdentifier id)
+        {
+            GatewayResource.ValidateResourceId(id);
+            return new GatewayResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="HybridComputePrivateLinkScopeResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HybridComputePrivateLinkScopeResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputePrivateLinkScopeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
