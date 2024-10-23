@@ -10,19 +10,22 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Internal;
 
-internal class LoggingHandler
+internal class PipelineLoggingHandler
 {
     private readonly ILogger _logger;
     private readonly PipelineMessageSanitizer _sanitizer;
-    private readonly ClientModelLogMessages _logMessages;
+    private readonly ClientModelLogMessages? _logMessages;
     private readonly bool _useILogger;
 
-    public LoggingHandler(ILogger logger, PipelineMessageSanitizer sanitizer)
+    public PipelineLoggingHandler(ILogger? logger, PipelineMessageSanitizer sanitizer)
     {
-        _logger = logger;
+        _logger = logger ?? NullLogger.Instance;
         _sanitizer = sanitizer;
-        _logMessages = new ClientModelLogMessages(logger, _sanitizer);
         _useILogger = logger is not NullLogger;
+        if (_useILogger)
+        {
+            _logMessages = new ClientModelLogMessages(_logger, _sanitizer);
+        }
     }
 
     /// <summary>
@@ -41,7 +44,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.Request(requestId, request, assemblyName);
+            _logMessages?.Request(requestId, request, assemblyName);
         }
         else
         {
@@ -53,7 +56,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.RequestContent(requestId, content, textEncoding);
+            _logMessages?.RequestContent(requestId, content, textEncoding);
         }
         else
         {
@@ -65,7 +68,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.Response(requestId, response, seconds);
+            _logMessages?.Response(requestId, response, seconds);
         }
         else
         {
@@ -77,7 +80,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.ResponseContent(requestId, content, textEncoding);
+            _logMessages?.ResponseContent(requestId, content, textEncoding);
         }
         else
         {
@@ -89,7 +92,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.ResponseContentBlock(requestId, blockNumber, content, textEncoding);
+            _logMessages?.ResponseContentBlock(requestId, blockNumber, content, textEncoding);
         }
         else
         {
@@ -101,7 +104,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.ErrorResponse(requestId, response, seconds);
+            _logMessages?.ErrorResponse(requestId, response, seconds);
         }
         else
         {
@@ -113,7 +116,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.ErrorResponseContent(requestId, content, textEncoding);
+            _logMessages?.ErrorResponseContent(requestId, content, textEncoding);
         }
         else
         {
@@ -125,7 +128,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.ErrorResponseContentBlock(requestId, blockNumber, content, textEncoding);
+            _logMessages?.ErrorResponseContentBlock(requestId, blockNumber, content, textEncoding);
         }
         else
         {
@@ -137,7 +140,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.RequestRetrying(requestId, retryCount, seconds);
+            _logMessages?.RequestRetrying(requestId, retryCount, seconds);
         }
         else
         {
@@ -149,7 +152,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.ResponseDelay(requestId, seconds);
+            _logMessages?.ResponseDelay(requestId, seconds);
         }
         else
         {
@@ -164,7 +167,7 @@ internal class LoggingHandler
 
         if (_useILogger && isLoggerEnabled)
         {
-            _logMessages.ExceptionResponse(requestId, exception);
+            _logMessages?.ExceptionResponse(requestId, exception);
         }
         else if (isEventSourceEnabled)
         {

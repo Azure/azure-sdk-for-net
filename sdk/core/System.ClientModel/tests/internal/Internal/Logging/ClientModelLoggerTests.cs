@@ -65,17 +65,17 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         byte[] requestContent = new byte[] { 1, 2, 3, 4, 5 };
         byte[] responseContent = new byte[] { 6, 7, 8, 9, 0 };
 
-        LoggingOptions loggingOptions = new()
+        ClientPipelineOptions options = new()
         {
-            IsLoggingContentEnabled = true,
-            LoggedContentSizeLimit = int.MaxValue,
+            EnableMessageContentLogging = true,
+            MessageContentSizeLimit = int.MaxValue,
             LoggerFactory = _factory
         };
 
         MockPipelineResponse response = new(200, mockHeaders: _defaultHeaders);
         response.SetContent(responseContent);
 
-        await CreatePipelineAndSendRequest(response, requestContentBytes: requestContent, loggingOptions: loggingOptions);
+        await CreatePipelineAndSendRequest(response, requestContentBytes: requestContent, clientOptions: options);
 
         LoggerEvent log = GetSingleEvent(LoggingEventIds.RequestEvent, "Request", LogLevel.Information);
         Assert.AreEqual("http://example.com/", log.GetValueFromArguments<string>("uri"));
@@ -99,17 +99,17 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         byte[] responseContent = new byte[] { 6, 7, 8, 9, 0 };
 
-        LoggingOptions loggingOptions = new()
+        ClientPipelineOptions pipelineOptions = new()
         {
-            IsLoggingContentEnabled = true,
-            LoggedContentSizeLimit = int.MaxValue,
+            EnableMessageContentLogging = true,
+            MessageContentSizeLimit = int.MaxValue,
             LoggerFactory = _factory
         };
 
         MockPipelineResponse response = new(500, mockHeaders: _defaultHeaders);
         response.SetContent(responseContent);
 
-        await CreatePipelineAndSendRequest(response, requestContentBytes: new byte[] { 1, 2, 3, 4, 5 }, loggingOptions: loggingOptions);
+        await CreatePipelineAndSendRequest(response, requestContentBytes: new byte[] { 1, 2, 3, 4, 5 }, clientOptions: pipelineOptions);
 
         LoggerEvent log = GetSingleEvent(LoggingEventIds.ErrorResponseEvent, "ErrorResponse", LogLevel.Warning);
         Assert.AreEqual(log.GetValueFromArguments<int>("status"), 500);
@@ -127,17 +127,17 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         string requestContent = "Hello";
         string responseContent = "World!";
 
-        LoggingOptions loggingOptions = new()
+        ClientPipelineOptions pipelineOptions = new()
         {
-            IsLoggingContentEnabled = true,
-            LoggedContentSizeLimit = int.MaxValue,
+            EnableMessageContentLogging = true,
+            MessageContentSizeLimit = int.MaxValue,
             LoggerFactory = _factory
         };
 
         MockPipelineResponse response = new(200, mockHeaders: _defaultTextHeaders);
         response.SetContent(responseContent);
 
-        await CreatePipelineAndSendRequest(response, requestContentString: requestContent, loggingOptions: loggingOptions);
+        await CreatePipelineAndSendRequest(response, requestContentString: requestContent, clientOptions: pipelineOptions);
 
         LoggerEvent log = GetSingleEvent(LoggingEventIds.RequestContentTextEvent, "RequestContentText", LogLevel.Debug);
         Assert.AreEqual(requestContent, log.GetValueFromArguments<string>("content"));
@@ -151,17 +151,17 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     [Test]
     public async Task ContentIsNotLoggedAsTextWhenDisabled()
     {
-        LoggingOptions loggingOptions = new()
+        ClientPipelineOptions pipelineOptions = new()
         {
-            IsLoggingContentEnabled = false,
-            LoggedContentSizeLimit = int.MaxValue,
+            EnableMessageContentLogging = false,
+            MessageContentSizeLimit = int.MaxValue,
             LoggerFactory = _factory
         };
 
         MockPipelineResponse response = new(500, mockHeaders: _defaultTextHeaders);
         response.SetContent("TextResponseContent");
 
-        await CreatePipelineAndSendRequest(response, requestContentString: "TextRequestContent", loggingOptions: loggingOptions);
+        await CreatePipelineAndSendRequest(response, requestContentString: "TextRequestContent", clientOptions: pipelineOptions);
 
         AssertNoContentLogged();
     }
@@ -169,17 +169,17 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     [Test]
     public async Task ContentIsNotLoggedWhenDisabled()
     {
-        LoggingOptions loggingOptions = new()
+        ClientPipelineOptions pipelineOptions = new()
         {
-            IsLoggingContentEnabled = false,
-            LoggedContentSizeLimit = int.MaxValue,
+            EnableMessageContentLogging = false,
+            MessageContentSizeLimit = int.MaxValue,
             LoggerFactory = _factory
         };
 
         MockPipelineResponse response = new(500, mockHeaders: _defaultHeaders);
         response.SetContent(new byte[] { 1, 2, 3 });
 
-        await CreatePipelineAndSendRequest(response, requestContentBytes: Encoding.UTF8.GetBytes("Hello world"), loggingOptions: loggingOptions);
+        await CreatePipelineAndSendRequest(response, requestContentBytes: Encoding.UTF8.GetBytes("Hello world"), clientOptions: pipelineOptions);
 
         AssertNoContentLogged();
     }
@@ -305,10 +305,10 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         var response = new MockPipelineResponse(500);
 
-        LoggingOptions loggingOptions = new LoggingOptions
+        ClientPipelineOptions pipelineOptions = new()
         {
-            IsLoggingContentEnabled = true,
-            LoggedContentSizeLimit = 5,
+            EnableMessageContentLogging = true,
+            MessageContentSizeLimit = 5,
             LoggerFactory = _factory
         };
 
@@ -317,7 +317,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             { "Content-Type", "text/plain" }
         };
 
-        await CreatePipelineAndSendRequest(response, requestContentBytes: Encoding.UTF8.GetBytes("Hello world"), requestHeaders: requestHeaders, loggingOptions: loggingOptions);
+        await CreatePipelineAndSendRequest(response, requestContentBytes: Encoding.UTF8.GetBytes("Hello world"), requestHeaders: requestHeaders, clientOptions: pipelineOptions);
 
         LoggerEvent logEvent = GetSingleEvent(LoggingEventIds.RequestContentTextEvent, "RequestContentText", LogLevel.Debug);
         Assert.AreEqual("Hello", logEvent.GetValueFromArguments<string>("content"));
@@ -373,12 +373,12 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         var response = new MockPipelineResponse(200, mockHeaders: mockHeaders);
         response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
 
-        LoggingOptions loggingOptions = new()
+        ClientPipelineOptions pipelineOptions = new()
         {
             LoggerFactory = _factory
         };
-        loggingOptions.AllowedQueryParameters.Add("*");
-        loggingOptions.AllowedHeaderNames.Add("*");
+        pipelineOptions.AllowedQueryParameters.Add("*");
+        pipelineOptions.AllowedHeaderNames.Add("*");
 
         Uri requestUri = new("https://contoso.a.io?api-version=5&secret=123");
 
@@ -388,7 +388,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             { "Content-Type", "text/json" }
         };
 
-        await CreatePipelineAndSendRequest(response, requestContentBytes: new byte[] { 1, 2, 3, 4, 5 }, requestHeaders: requestHeaders, requestUri: requestUri, loggingOptions: loggingOptions);
+        await CreatePipelineAndSendRequest(response, requestContentBytes: new byte[] { 1, 2, 3, 4, 5 }, requestHeaders: requestHeaders, requestUri: requestUri, clientOptions: pipelineOptions);
 
         LoggerEvent log = GetSingleEvent(LoggingEventIds.RequestEvent, "Request", LogLevel.Information);
         Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=123", log.GetValueFromArguments<string>("uri"));
@@ -410,11 +410,8 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         ClientPipelineOptions options = new()
         {
             Transport = new MockPipelineTransport("Transport", (PipelineMessage i) => throw exception),
-            LoggingOptions = new LoggingOptions
-            {
-                IsLoggingContentEnabled = true,
-                LoggerFactory = _factory
-            }
+            EnableMessageContentLogging = true,
+            LoggerFactory = _factory
         };
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -474,10 +471,10 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             response.ContentStream = new NonSeekableMemoryStream(responseContent);
         }
 
-        LoggingOptions loggingOptions = new()
+        ClientPipelineOptions clientOptions = new()
         {
-            IsLoggingContentEnabled = true,
-            LoggedContentSizeLimit = maxLength,
+            EnableMessageContentLogging = true,
+            MessageContentSizeLimit = maxLength,
             LoggerFactory = _factory
         };
 
@@ -485,7 +482,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         // correctly when responses are buffered (memory stream) and unbuffered
         // (non-seekable). In order to validate the intent of the test, we set
         // message.BufferResponse accordingly here.
-        await CreatePipelineAndSendRequest(response, loggingOptions: loggingOptions, bufferResponse: isSeekable);
+        await CreatePipelineAndSendRequest(response, clientOptions: clientOptions, bufferResponse: isSeekable);
 
         var buffer = new byte[11];
 
@@ -508,24 +505,19 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
                                                     byte[]? requestContentBytes = default,
                                                     Dictionary<string, string>? requestHeaders = default,
                                                     Uri? requestUri = default,
-                                                    LoggingOptions? loggingOptions = default,
+                                                    ClientPipelineOptions? clientOptions = default,
                                                     bool? bufferResponse = default)
     {
-        loggingOptions ??= new LoggingOptions
+        clientOptions ??= new ClientPipelineOptions
         {
             LoggerFactory = _factory
         };
-        loggingOptions.AllowedHeaderNames.Add("Custom-Header");
-        loggingOptions.AllowedHeaderNames.Add("Custom-Response-Header");
+        clientOptions.AllowedHeaderNames.Add("Custom-Header");
+        clientOptions.AllowedHeaderNames.Add("Custom-Response-Header");
+        clientOptions.RetryPolicy = new ObservablePolicy("RetryPolicy");
+        clientOptions.Transport = new MockPipelineTransport("Transport", i => response);
 
-        ClientPipelineOptions options = new()
-        {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = loggingOptions,
-            RetryPolicy = new ObservablePolicy("RetryPolicy")
-        };
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
+        ClientPipeline pipeline = ClientPipeline.Create(clientOptions);
         Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
 
         PipelineMessage message = pipeline.CreateMessage();

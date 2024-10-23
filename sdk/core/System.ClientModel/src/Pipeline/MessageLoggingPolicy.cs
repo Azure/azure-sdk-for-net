@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Primitives;
 
@@ -18,37 +19,46 @@ namespace System.ClientModel.Primitives;
 /// A <see cref="PipelinePolicy"/> used by a <see cref="ClientPipeline"/> to
 /// log request and response information.
 /// </summary>
-public class ClientLoggingPolicy : PipelinePolicy
+public class MessageLoggingPolicy : PipelinePolicy
 {
-    private const double RequestTooLongSeconds = 3.0; // sec
+    /// <summary>
+    /// The <see cref="ClientRetryPolicy"/> instance used by a default
+    /// <see cref="ClientPipeline"/>.
+    /// </summary>
+    public static MessageLoggingPolicy Default { get; } = new MessageLoggingPolicy();
 
-    private readonly bool _logContent;
+    private const double RequestTooLongSeconds = 3.0; // sec
+    private const bool DefaultEnableMessageContentLogging = false;
+    private const int DefaultMessageContentSizeLimit = 4 * 1024;
+    private const bool DefaultEnableMessageLogging = true;
+
+    private readonly bool _enableMessageContentLogging;
     private readonly int _maxLength;
     private readonly string _clientAssembly = "System-ClientModel";
-    private readonly LoggingHandler _handler;
+    private readonly PipelineLoggingHandler _handler;
 
     /// <summary>
-    /// Creates a new instance of the <see cref="ClientLoggingPolicy"/> class.
+    /// Creates a new instance of the <see cref="MessageLoggingPolicy"/> class.
     /// </summary>
     /// <param name="clientAssembly">The assembly name to include with each entry.</param>
     /// <param name="options">The user-provided logging options object.</param>
-    protected ClientLoggingPolicy(string clientAssembly, LoggingOptions? options = default) : this(options)
+    internal protected MessageLoggingPolicy(string clientAssembly, ClientPipelineOptions? options = default) : this(options)
     {
         _clientAssembly = clientAssembly;
     }
 
     /// <summary>
-    /// Creates a new instance of the <see cref="ClientLoggingPolicy"/> class.
+    /// Creates a new instance of the <see cref="MessageLoggingPolicy"/> class.
     /// </summary>
     /// <param name="options">The user-provided logging options object.</param>
-    public ClientLoggingPolicy(LoggingOptions? options = default)
+    public MessageLoggingPolicy(ClientPipelineOptions? options = default)
     {
-        LoggingOptions loggingOptions = options ?? new LoggingOptions();
-        _logContent = loggingOptions.IsLoggingContentEnabled;
-        _maxLength = loggingOptions.LoggedContentSizeLimit;
-        PipelineMessageSanitizer sanitizer = new(loggingOptions.AllowedQueryParameters.ToArray(), loggingOptions.AllowedHeaderNames.ToArray());
-        ILogger logger = loggingOptions.LoggerFactory.CreateLogger<ClientLoggingPolicy>();
-        _handler = new LoggingHandler(logger, sanitizer);
+        ClientPipelineOptions clientPipelineOptions = options ?? new ClientPipelineOptions();
+        _enableMessageContentLogging = clientPipelineOptions.EnableMessageContentLogging ?? DefaultEnableMessageContentLogging;
+        _maxLength = clientPipelineOptions.MessageContentSizeLimit ?? DefaultMessageContentSizeLimit;
+        ILoggerFactory factory = clientPipelineOptions.LoggerFactory ?? NullLoggerFactory.Instance;
+        ILogger logger = factory.CreateLogger<MessageLoggingPolicy>();
+        _handler = new PipelineLoggingHandler(logger, clientPipelineOptions.GetPipelineMessageSanitizer());
     }
 
     /// <inheritdoc/>
@@ -77,14 +87,14 @@ public class ClientLoggingPolicy : PipelinePolicy
         PipelineRequest request = message.Request;
 
         string requestId = Guid.NewGuid().ToString();
-        message.LoggingCorrelationId = requestId;
+        message.Request.ClientRequestId = requestId;
 
         _handler.LogRequest(request, requestId, _clientAssembly);
 
         byte[]? bytes = null;
         Encoding? requestTextEncoding = null;
 
-        if (_logContent && request.Content != null && _handler.IsEnabled(LogLevel.Information, EventLevel.Informational))
+        if (_enableMessageContentLogging && request.Content != null && _handler.IsEnabled(LogLevel.Information, EventLevel.Informational))
         {
             // Convert binary content to bytes
             using var memoryStream = new MaxLengthStream(_maxLength);
@@ -130,6 +140,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         var after = Stopwatch.GetTimestamp();
 
         PipelineResponse response = message.Response!;
+        response.ClientRequestId = requestId;
 
         double elapsed = (after - before) / (double)Stopwatch.Frequency;
 
@@ -142,7 +153,7 @@ public class ClientLoggingPolicy : PipelinePolicy
             _handler.LogResponse(requestId, response, elapsed);
         }
 
-        if (_logContent && response.ContentStream != null && _handler.IsEnabled(LogLevel.Information, EventLevel.Informational))
+        if (_enableMessageContentLogging && response.ContentStream != null && _handler.IsEnabled(LogLevel.Information, EventLevel.Informational))
         {
             Encoding? responseTextEncoding = null;
 
@@ -233,9 +244,9 @@ public class ClientLoggingPolicy : PipelinePolicy
         private readonly bool _error;
         private readonly Encoding? _textEncoding;
         private int _blockNumber;
-        private readonly LoggingHandler _handler;
+        private readonly PipelineLoggingHandler _handler;
 
-        public LoggingStream(LoggingHandler handler, string requestId, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding)
+        public LoggingStream(PipelineLoggingHandler handler, string requestId, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding)
         {
             // Should only wrap non-seekable streams
             Debug.Assert(!originalStream.CanSeek);

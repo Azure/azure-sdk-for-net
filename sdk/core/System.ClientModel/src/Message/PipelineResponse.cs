@@ -71,6 +71,11 @@ public abstract class PipelineResponse : IDisposable
     public abstract BinaryData Content { get; }
 
     /// <summary>
+    /// The client request id to include in log entries.
+    /// </summary>
+    internal string? ClientRequestId { get; set; }
+
+    /// <summary>
     /// Transfer the contents of the response network stream from
     /// <see cref="ContentStream"/> to a buffered cache on this
     /// <see cref="PipelineResponse"/> instance.

@@ -34,10 +34,7 @@ public class ClientLoggingPolicyTests : SyncAsyncTestBase
         ClientPipelineOptions options = new()
         {
             Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = new LoggingOptions()
-            {
-                LoggerFactory = _loggerFactory
-            }
+            LoggerFactory = _loggerFactory
         };
 
         ClientPipeline pipeline = ClientPipeline.Create(options);

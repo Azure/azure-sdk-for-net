@@ -84,7 +84,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         ClientPipelineOptions options = new()
         {
             Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = new LoggingOptions()
         };
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -136,13 +135,10 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         ClientPipelineOptions options = new()
         {
             Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = new LoggingOptions
-            {
-                IsLoggingContentEnabled = true
-            }
+            EnableMessageContentLogging = true
         };
-        options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
-        options.LoggingOptions.AllowedHeaderNames.Add("Custom-Response-Header");
+        options.AllowedHeaderNames.Add("Custom-Header");
+        options.AllowedHeaderNames.Add("Custom-Response-Header");
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -191,10 +187,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         ClientPipelineOptions options = new()
         {
             Transport = new MockPipelineTransport("Transport", (PipelineMessage i) => throw exception),
-            LoggingOptions = new LoggingOptions
-            {
-                IsLoggingContentEnabled = true
-            }
+            EnableMessageContentLogging = true
         };
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -227,15 +220,12 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         {
             Transport = new MockPipelineTransport("Transport", i => response),
             RetryPolicy = new ObservablePolicy("RetryPolicy"),
-            LoggingOptions = new LoggingOptions
-            {
-                IsLoggingContentEnabled = true,
-                LoggedContentSizeLimit = int.MaxValue,
-            }
+            EnableMessageContentLogging = true,
+            MessageContentSizeLimit = int.MaxValue
         };
-        options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
-        options.LoggingOptions.AllowedHeaderNames.Add("Date");
-        options.LoggingOptions.AllowedHeaderNames.Add("Custom-Response-Header");
+        options.AllowedHeaderNames.Add("Custom-Header");
+        options.AllowedHeaderNames.Add("Date");
+        options.AllowedHeaderNames.Add("Custom-Response-Header");
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -273,11 +263,8 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         {
             Transport = new MockPipelineTransport("Transport", i => response),
             RetryPolicy = new ObservablePolicy("RetryPolicy"),
-            LoggingOptions = new LoggingOptions
-            {
-                IsLoggingContentEnabled = true,
-                LoggedContentSizeLimit = int.MaxValue
-            }
+            EnableMessageContentLogging = true,
+            MessageContentSizeLimit = int.MaxValue
         };
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -311,13 +298,10 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         ClientPipelineOptions options = new()
         {
             Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = new LoggingOptions
-            {
-                IsLoggingContentEnabled = false,
-                LoggedContentSizeLimit = int.MaxValue
-            }
+            EnableMessageContentLogging = false,
+            MessageContentSizeLimit = int.MaxValue
         };
-        options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
+        options.AllowedHeaderNames.Add("Custom-Header");
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -560,11 +544,8 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         {
             Transport = new MockPipelineTransport("Transport", i => response),
             RetryPolicy = new ObservablePolicy("RetryPolicy"),
-            LoggingOptions = new LoggingOptions
-            {
-                IsLoggingContentEnabled = true,
-                LoggedContentSizeLimit = 5
-            }
+            EnableMessageContentLogging = true,
+            MessageContentSizeLimit = 5
         };
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -620,8 +601,8 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         {
             Transport = new MockPipelineTransport("Transport", i => response)
         };
-        options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
-        options.LoggingOptions.AllowedHeaderNames.Add("Custom-Response-Header");
+        options.AllowedHeaderNames.Add("Custom-Header");
+        options.AllowedHeaderNames.Add("Custom-Response-Header");
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -666,8 +647,8 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         {
             Transport = new MockPipelineTransport("Transport", i => response)
         };
-        options.LoggingOptions.AllowedQueryParameters.Add("*");
-        options.LoggingOptions.AllowedHeaderNames.Add("*");
+        options.AllowedQueryParameters.Add("*");
+        options.AllowedHeaderNames.Add("*");
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -717,11 +698,8 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         {
             Transport = new MockPipelineTransport("Transport", i => response),
             RetryPolicy = new ObservablePolicy("RetryPolicy"),
-            LoggingOptions = new LoggingOptions
-            {
-                IsLoggingContentEnabled = true,
-                LoggedContentSizeLimit = maxLength
-            }
+            EnableMessageContentLogging = true,
+            MessageContentSizeLimit = maxLength
         };
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
