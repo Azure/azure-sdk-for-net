@@ -42,6 +42,11 @@ trigger:
     - sdk/communication/Azure.ResourceManager.Communication
     - sdk/compute/Azure.ResourceManager.Compute
     - sdk/computefleet/Azure.ResourceManager.ComputeFleet
+    - sdk/computemigration/Azure.ResourceManager.Compute
+    - sdk/computemigration/Azure.ResourceManager.Diagnostic
+    - sdk/computemigration/Azure.ResourceManager.Disk
+    - sdk/computemigration/Azure.ResourceManager.Gallery
+    - sdk/computemigration/Azure.ResourceManager.Sku
     - sdk/computeschedule/Azure.ResourceManager.ComputeSchedule
     - sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger
     - sdk/confluent/Azure.ResourceManager.Confluent
@@ -245,6 +250,11 @@ pr:
     - sdk/communication/Azure.ResourceManager.Communication
     - sdk/compute/Azure.ResourceManager.Compute
     - sdk/computefleet/Azure.ResourceManager.ComputeFleet
+    - sdk/computemigration/Azure.ResourceManager.Compute
+    - sdk/computemigration/Azure.ResourceManager.Diagnostic
+    - sdk/computemigration/Azure.ResourceManager.Disk
+    - sdk/computemigration/Azure.ResourceManager.Gallery
+    - sdk/computemigration/Azure.ResourceManager.Sku
     - sdk/computeschedule/Azure.ResourceManager.ComputeSchedule
     - sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger
     - sdk/confluent/Azure.ResourceManager.Confluent
