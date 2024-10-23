@@ -17,7 +17,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CassandraKeyspace.
 /// </summary>
-public partial class CassandraKeyspace : Resource
+public partial class CassandraKeyspace : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB keyspace name.
@@ -83,15 +83,15 @@ public partial class CassandraKeyspace : Resource
     /// <summary>
     /// Creates a new CassandraKeyspace.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CassandraKeyspace resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CassandraKeyspace.</param>
-    public CassandraKeyspace(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces", resourceVersion ?? "2024-08-15")
+    public CassandraKeyspace(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -110,11 +110,6 @@ public partial class CassandraKeyspace : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -244,7 +239,7 @@ public partial class CassandraKeyspace : Resource
     /// <summary>
     /// Creates a reference to an existing CassandraKeyspace.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CassandraKeyspace resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -252,6 +247,6 @@ public partial class CassandraKeyspace : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CassandraKeyspace.</param>
     /// <returns>The existing CassandraKeyspace resource.</returns>
-    public static CassandraKeyspace FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CassandraKeyspace FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

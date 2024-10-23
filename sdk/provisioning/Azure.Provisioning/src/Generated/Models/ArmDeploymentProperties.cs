@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Deployment properties.
 /// </summary>
-public partial class ArmDeploymentProperties : ProvisioningConstruct
+public partial class ArmDeploymentProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The template content. You use this element when you want to pass the

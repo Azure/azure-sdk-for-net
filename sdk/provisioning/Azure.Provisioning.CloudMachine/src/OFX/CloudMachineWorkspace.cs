@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Identity;
+using Azure.Provisioning.CloudMachine;
 using Microsoft.Extensions.Configuration;
 
 namespace Azure.CloudMachine;
@@ -52,9 +53,9 @@ public class CloudMachineWorkspace : ClientWorkspace
             case "Azure.Security.KeyVault.Secrets.SecretClient":
                 return new ClientConnectionOptions(new($"https://{this.Id}.vault.azure.net/"), Credential);
             case "Azure.Messaging.ServiceBus.ServiceBusClient":
-                return new ClientConnectionOptions(new($"{this.Id}.servicebus.windows.net"), Credential);
+                return new ClientConnectionOptions(new($"https://{this.Id}.servicebus.windows.net"), Credential);
             case "Azure.Messaging.ServiceBus.ServiceBusSender":
-                if (instanceId == default) instanceId = "cm_default_topic_sender";
+                if (instanceId == default) instanceId = CloudMachineInfrastructure.SB_PRIVATE_TOPIC;
                 return new ClientConnectionOptions(instanceId);
             case "Azure.Storage.Blobs.BlobContainerClient":
                 if (instanceId == default) instanceId = "default";

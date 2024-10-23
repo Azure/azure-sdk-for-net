@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The authorization properties for accessing the source code repository.
 /// </summary>
-public partial class SourceCodeRepoAuthInfo : ProvisioningConstruct
+public partial class SourceCodeRepoAuthInfo : ProvisionableConstruct
 {
     /// <summary>
     /// The type of Auth token.

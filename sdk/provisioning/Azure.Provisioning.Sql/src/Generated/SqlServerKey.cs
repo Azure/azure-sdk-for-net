@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerKey.
 /// </summary>
-public partial class SqlServerKey : Resource
+public partial class SqlServerKey : ProvisionableResource
 {
     /// <summary>
     /// The name of the server key to be operated on (updated or created). The
@@ -100,15 +100,15 @@ public partial class SqlServerKey : Resource
     /// <summary>
     /// Creates a new SqlServerKey.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlServerKey resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerKey.</param>
-    public SqlServerKey(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/keys", resourceVersion ?? "2021-11-01")
+    public SqlServerKey(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/keys", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _serverKeyType = BicepValue<SqlServerKeyType>.DefineProperty(this, "ServerKeyType", ["properties", "serverKeyType"]);
@@ -130,11 +130,6 @@ public partial class SqlServerKey : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
@@ -143,7 +138,7 @@ public partial class SqlServerKey : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerKey.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlServerKey resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -151,6 +146,6 @@ public partial class SqlServerKey : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerKey.</param>
     /// <returns>The existing SqlServerKey resource.</returns>
-    public static SqlServerKey FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerKey FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Function app runtime name and version.
 /// </summary>
-public partial class FunctionAppRuntime : ProvisioningConstruct
+public partial class FunctionAppRuntime : ProvisionableConstruct
 {
     /// <summary>
     /// Function app runtime name. Available options: dotnet-isolated, node,

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// The ManagedInstancePrivateLinkServiceConnectionStateProperty.
 /// </summary>
-public partial class ManagedInstancePrivateLinkServiceConnectionStateProperty : ProvisioningConstruct
+public partial class ManagedInstancePrivateLinkServiceConnectionStateProperty : ProvisionableConstruct
 {
     /// <summary>
     /// The private link service connection status.

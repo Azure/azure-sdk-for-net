@@ -16,7 +16,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsLinkedStorageAccounts.
 /// </summary>
-public partial class OperationalInsightsLinkedStorageAccounts : Resource
+public partial class OperationalInsightsLinkedStorageAccounts : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -57,7 +57,7 @@ public partial class OperationalInsightsLinkedStorageAccounts : Resource
     /// <summary>
     /// Creates a new OperationalInsightsLinkedStorageAccounts.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// OperationalInsightsLinkedStorageAccounts resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -65,8 +65,8 @@ public partial class OperationalInsightsLinkedStorageAccounts : Resource
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsLinkedStorageAccounts.</param>
-    public OperationalInsightsLinkedStorageAccounts(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.OperationalInsights/workspaces/linkedStorageAccounts", resourceVersion ?? "2023-09-01")
+    public OperationalInsightsLinkedStorageAccounts(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.OperationalInsights/workspaces/linkedStorageAccounts", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _dataSourceType = BicepValue<OperationalInsightsDataSourceType>.DefineProperty(this, "DataSourceType", ["properties", "dataSourceType"], isRequired: true);
@@ -96,7 +96,7 @@ public partial class OperationalInsightsLinkedStorageAccounts : Resource
     /// Creates a reference to an existing
     /// OperationalInsightsLinkedStorageAccounts.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// OperationalInsightsLinkedStorageAccounts resource.  This can be used
     /// to refer to the resource in expressions, but is not the Azure name of
@@ -105,6 +105,6 @@ public partial class OperationalInsightsLinkedStorageAccounts : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsLinkedStorageAccounts.</param>
     /// <returns>The existing OperationalInsightsLinkedStorageAccounts resource.</returns>
-    public static OperationalInsightsLinkedStorageAccounts FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static OperationalInsightsLinkedStorageAccounts FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

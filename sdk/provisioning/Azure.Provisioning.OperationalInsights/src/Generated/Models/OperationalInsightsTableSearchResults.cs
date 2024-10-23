@@ -11,7 +11,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// Parameters of the search job that initiated this table.
 /// </summary>
-public partial class OperationalInsightsTableSearchResults : ProvisioningConstruct
+public partial class OperationalInsightsTableSearchResults : ProvisionableConstruct
 {
     /// <summary>
     /// Search job query.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// Server info for the server trust group.
 /// </summary>
-public partial class ServerTrustGroupServerInfo : ProvisioningConstruct
+public partial class ServerTrustGroupServerInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Server Id.

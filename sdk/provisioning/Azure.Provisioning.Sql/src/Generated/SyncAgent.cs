@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SyncAgent.
 /// </summary>
-public partial class SyncAgent : Resource
+public partial class SyncAgent : ProvisionableResource
 {
     /// <summary>
     /// The name of the sync agent.
@@ -80,15 +80,15 @@ public partial class SyncAgent : Resource
     /// <summary>
     /// Creates a new SyncAgent.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SyncAgent resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SyncAgent.</param>
-    public SyncAgent(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/syncAgents", resourceVersion ?? "2021-11-01")
+    public SyncAgent(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/syncAgents", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _syncDatabaseId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SyncDatabaseId", ["properties", "syncDatabaseId"]);
@@ -108,11 +108,6 @@ public partial class SyncAgent : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
@@ -121,7 +116,7 @@ public partial class SyncAgent : Resource
     /// <summary>
     /// Creates a reference to an existing SyncAgent.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SyncAgent resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -129,6 +124,6 @@ public partial class SyncAgent : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SyncAgent.</param>
     /// <returns>The existing SyncAgent resource.</returns>
-    public static SyncAgent FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SyncAgent FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

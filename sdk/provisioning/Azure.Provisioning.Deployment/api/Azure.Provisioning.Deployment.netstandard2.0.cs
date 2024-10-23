@@ -7,13 +7,11 @@ namespace Azure.Provisioning
         public Azure.ResponseError? Error { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, object?> Outputs { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ResourcesProvisioningState? ProvisioningState { get { throw null; } }
-        public TClient CreateClient<TClient, TOptions>(Azure.Provisioning.Primitives.IClientCreator<TClient, TOptions> resource, Azure.Core.TokenCredential? credential = null, TOptions? options = null) where TOptions : Azure.Core.ClientOptions { throw null; }
     }
     public partial class ProvisioningDeploymentOptions
     {
         public ProvisioningDeploymentOptions() { }
         public Azure.ResourceManager.ArmClient ArmClient { get { throw null; } set { } }
-        public System.Action<Azure.Core.ClientOptions>? ConfigureClientOptionsCallback { get { throw null; } set { } }
         public Azure.Core.TokenCredential DefaultArmCredential { get { throw null; } set { } }
         public Azure.Core.TokenCredential DefaultClientCredential { get { throw null; } set { } }
         public Azure.Core.TokenCredential? DefaultCredential { get { throw null; } set { } }

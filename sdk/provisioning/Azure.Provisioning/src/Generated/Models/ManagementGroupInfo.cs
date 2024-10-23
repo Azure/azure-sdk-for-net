@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// The details of a management group.
 /// </summary>
-public partial class ManagementGroupInfo : ProvisioningConstruct
+public partial class ManagementGroupInfo : ProvisionableConstruct
 {
     /// <summary>
     /// The version number of the object.

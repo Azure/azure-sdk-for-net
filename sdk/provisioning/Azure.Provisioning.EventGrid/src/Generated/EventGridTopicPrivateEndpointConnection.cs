@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// EventGridTopicPrivateEndpointConnection.
 /// </summary>
-public partial class EventGridTopicPrivateEndpointConnection : Resource
+public partial class EventGridTopicPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The name of the private endpoint connection connection.
@@ -69,15 +69,15 @@ public partial class EventGridTopicPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new EventGridTopicPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// EventGridTopicPrivateEndpointConnection resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridTopicPrivateEndpointConnection.</param>
-    public EventGridTopicPrivateEndpointConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventGrid/topics/privateEndpointConnections", resourceVersion ?? "2022-06-15")
+    public EventGridTopicPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/topics/privateEndpointConnections", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<EventGridPrivateEndpointConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -94,11 +94,6 @@ public partial class EventGridTopicPrivateEndpointConnection : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
-
         /// <summary>
         /// 2022-06-15.
         /// </summary>
@@ -134,7 +129,7 @@ public partial class EventGridTopicPrivateEndpointConnection : Resource
     /// Creates a reference to an existing
     /// EventGridTopicPrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// EventGridTopicPrivateEndpointConnection resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -142,6 +137,6 @@ public partial class EventGridTopicPrivateEndpointConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridTopicPrivateEndpointConnection.</param>
     /// <returns>The existing EventGridTopicPrivateEndpointConnection resource.</returns>
-    public static EventGridTopicPrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static EventGridTopicPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

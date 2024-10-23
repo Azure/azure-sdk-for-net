@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Parameters to reconcile to the GitRepository source kind type.
 /// </summary>
-public partial class KubernetesGitRepository : ProvisioningConstruct
+public partial class KubernetesGitRepository : ProvisionableConstruct
 {
     /// <summary>
     /// The URL to sync for the flux configuration git repository.

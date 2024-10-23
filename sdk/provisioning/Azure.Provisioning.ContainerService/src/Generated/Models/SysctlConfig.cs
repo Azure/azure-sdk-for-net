@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Sysctl settings for Linux agent nodes.
 /// </summary>
-public partial class SysctlConfig : ProvisioningConstruct
+public partial class SysctlConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Sysctl setting net.core.somaxconn.

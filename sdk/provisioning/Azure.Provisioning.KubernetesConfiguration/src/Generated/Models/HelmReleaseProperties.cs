@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Properties for HelmRelease objects.
 /// </summary>
-public partial class HelmReleaseProperties : ProvisioningConstruct
+public partial class HelmReleaseProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The revision number of the last released object change.

@@ -10,7 +10,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// The SKU of a Managed Cluster.
 /// </summary>
-public partial class ManagedClusterSku : ProvisioningConstruct
+public partial class ManagedClusterSku : ProvisionableConstruct
 {
     /// <summary>
     /// The name of a managed cluster SKU.

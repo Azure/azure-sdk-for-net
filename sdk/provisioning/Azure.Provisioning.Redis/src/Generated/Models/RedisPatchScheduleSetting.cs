@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// Patch schedule entry for a Premium Redis Cache.
 /// </summary>
-public partial class RedisPatchScheduleSetting : ProvisioningConstruct
+public partial class RedisPatchScheduleSetting : ProvisionableConstruct
 {
     /// <summary>
     /// Day of the week when a cache can be patched.
@@ -38,6 +38,6 @@ public partial class RedisPatchScheduleSetting : ProvisioningConstruct
     {
         _dayOfWeek = BicepValue<RedisDayOfWeek>.DefineProperty(this, "DayOfWeek", ["dayOfWeek"]);
         _startHourUtc = BicepValue<int>.DefineProperty(this, "StartHourUtc", ["startHourUtc"]);
-        _maintenanceWindow = BicepValue<TimeSpan>.DefineProperty(this, "MaintenanceWindow", ["maintenanceWindow"]);
+        _maintenanceWindow = BicepValue<TimeSpan>.DefineProperty(this, "MaintenanceWindow", ["maintenanceWindow"], format: "P");
     }
 }

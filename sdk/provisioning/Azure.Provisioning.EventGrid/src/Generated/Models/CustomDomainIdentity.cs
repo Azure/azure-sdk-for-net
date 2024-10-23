@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid;
 /// The identity information for retrieving the certificate for the custom
 /// domain.
 /// </summary>
-public partial class CustomDomainIdentity : ProvisioningConstruct
+public partial class CustomDomainIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// The type of managed identity used. Can be either

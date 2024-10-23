@@ -11,7 +11,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// The SKU (tier) of a workspace.
 /// </summary>
-public partial class OperationalInsightsWorkspaceSku : ProvisioningConstruct
+public partial class OperationalInsightsWorkspaceSku : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the SKU.

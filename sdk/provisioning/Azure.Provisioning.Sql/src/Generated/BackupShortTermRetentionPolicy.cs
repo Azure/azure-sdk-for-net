@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// BackupShortTermRetentionPolicy.
 /// </summary>
-public partial class BackupShortTermRetentionPolicy : Resource
+public partial class BackupShortTermRetentionPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -59,15 +59,15 @@ public partial class BackupShortTermRetentionPolicy : Resource
     /// <summary>
     /// Creates a new BackupShortTermRetentionPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the BackupShortTermRetentionPolicy
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the BackupShortTermRetentionPolicy.</param>
-    public BackupShortTermRetentionPolicy(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies", resourceVersion ?? "2021-11-01")
+    public BackupShortTermRetentionPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _diffBackupIntervalInHours = BicepValue<int>.DefineProperty(this, "DiffBackupIntervalInHours", ["properties", "diffBackupIntervalInHours"]);
@@ -83,11 +83,6 @@ public partial class BackupShortTermRetentionPolicy : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
@@ -96,7 +91,7 @@ public partial class BackupShortTermRetentionPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing BackupShortTermRetentionPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the BackupShortTermRetentionPolicy
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -104,6 +99,6 @@ public partial class BackupShortTermRetentionPolicy : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the BackupShortTermRetentionPolicy.</param>
     /// <returns>The existing BackupShortTermRetentionPolicy resource.</returns>
-    public static BackupShortTermRetentionPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static BackupShortTermRetentionPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

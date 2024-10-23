@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// The Transaction Manager Communication Settings of managed instance DTC.
 /// </summary>
-public partial class ManagedInstanceDtcTransactionManagerCommunicationSettings : ProvisioningConstruct
+public partial class ManagedInstanceDtcTransactionManagerCommunicationSettings : ProvisionableConstruct
 {
     /// <summary>
     /// Allow Inbound traffic to managed instance DTC.
