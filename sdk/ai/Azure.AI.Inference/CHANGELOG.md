@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (2024-10-22)
+## 1.0.0-beta.2 (2024-10-23)
 
 ### Features Added
 - Added new `EmbeddingsClient`, to provide support for generating text embeddings using supported models.
