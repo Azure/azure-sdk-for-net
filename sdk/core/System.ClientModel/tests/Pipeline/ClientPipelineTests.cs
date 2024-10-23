@@ -205,7 +205,7 @@ public class ClientPipelineTests : SyncAsyncTestBase
         ClientPipelineOptions options = new()
         {
             RetryPolicy = new ObservablePolicy("RetryPolicy"),
-            LoggingPolicy = new ObservablePolicy("LoggingPolicy"),
+            MessageLoggingPolicy = new ObservablePolicy("LoggingPolicy"),
             Transport = new ObservableTransport("Transport")
         };
 
@@ -301,7 +301,7 @@ public class ClientPipelineTests : SyncAsyncTestBase
     {
         ClientPipelineOptions pipelineOptions = new ClientPipelineOptions();
         pipelineOptions.RetryPolicy = new ObservablePolicy("RetryPolicy");
-        pipelineOptions.LoggingPolicy = new ObservablePolicy("LoggingPolicy");
+        pipelineOptions.MessageLoggingPolicy = new ObservablePolicy("LoggingPolicy");
         pipelineOptions.Transport = new ObservableTransport("Transport");
 
         ClientPipeline pipeline = ClientPipeline.Create(pipelineOptions);

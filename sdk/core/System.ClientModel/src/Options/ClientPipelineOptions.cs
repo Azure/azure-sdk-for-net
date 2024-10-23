@@ -4,10 +4,7 @@
 using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-using System.Runtime.CompilerServices;
 
 namespace System.ClientModel.Primitives;
 
@@ -94,7 +91,7 @@ public class ClientPipelineOptions
     /// In most cases, this property will be set to an instance of
     /// <see cref="MessageLoggingPolicy"/>.
     /// </remarks>
-    public PipelinePolicy? LoggingPolicy
+    public PipelinePolicy? MessageLoggingPolicy
     {
         get => _loggingPolicy;
         set

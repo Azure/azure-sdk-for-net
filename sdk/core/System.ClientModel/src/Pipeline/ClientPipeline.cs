@@ -166,7 +166,7 @@ public sealed partial class ClientPipeline
         }
         else if (options.EnableLogging != false && options.EnableMessageLogging != false)
         {
-            policies[index++] = options.LoggingPolicy ?? new MessageLoggingPolicy(options);
+            policies[index++] = options.MessageLoggingPolicy ?? new MessageLoggingPolicy(options);
         }
 
         // Before transport policies come before the transport.

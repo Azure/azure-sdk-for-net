@@ -101,8 +101,8 @@ namespace System.ClientModel.Primitives
         public bool? EnableMessageContentLogging { get { throw null; } set { } }
         public bool? EnableMessageLogging { get { throw null; } set { } }
         public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
-        public System.ClientModel.Primitives.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
         public int? MessageContentSizeLimit { get { throw null; } set { } }
+        public System.ClientModel.Primitives.PipelinePolicy? MessageLoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
