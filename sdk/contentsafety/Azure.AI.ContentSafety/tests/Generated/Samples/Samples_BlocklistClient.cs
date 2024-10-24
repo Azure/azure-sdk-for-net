@@ -32,12 +32,6 @@ new
 {
 description = "Hate word",
 text = "hate",
-},
-new
-{
-description = "A regular expression that matches harmful words.",
-text = "b[i1][a@][s\\$]",
-isRegex = true,
 }
             },
             });
@@ -64,12 +58,6 @@ new
 {
 description = "Hate word",
 text = "hate",
-},
-new
-{
-description = "A regular expression that matches harmful words.",
-text = "b[i1][a@][s\\$]",
-isRegex = true,
 }
             },
             });
@@ -93,11 +81,6 @@ isRegex = true,
 new TextBlocklistItem("hate")
 {
 Description = "Hate word",
-},
-new TextBlocklistItem("b[i1][a@][s\\$]")
-{
-Description = "A regular expression that matches harmful words.",
-IsRegex = true,
 }
             });
             Response<AddOrUpdateTextBlocklistItemsResult> response = client.AddOrUpdateBlocklistItems("TestBlocklist", options);
@@ -116,11 +99,6 @@ IsRegex = true,
 new TextBlocklistItem("hate")
 {
 Description = "Hate word",
-},
-new TextBlocklistItem("b[i1][a@][s\\$]")
-{
-Description = "A regular expression that matches harmful words.",
-IsRegex = true,
 }
             });
             Response<AddOrUpdateTextBlocklistItemsResult> response = await client.AddOrUpdateBlocklistItemsAsync("TestBlocklist", options);

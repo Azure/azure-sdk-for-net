@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.ContentSafety
 {
-    /// <summary> The harm category supported in Text content analysis. </summary>
+    /// <summary> Text analyze category. </summary>
     public readonly partial struct TextCategory : IEquatable<TextCategory>
     {
         private readonly string _value;
@@ -27,13 +27,13 @@ namespace Azure.AI.ContentSafety
         private const string SexualValue = "Sexual";
         private const string ViolenceValue = "Violence";
 
-        /// <summary> The harm category for Text - Hate. </summary>
+        /// <summary> Hate. </summary>
         public static TextCategory Hate { get; } = new TextCategory(HateValue);
-        /// <summary> The harm category for Text - SelfHarm. </summary>
+        /// <summary> SelfHarm. </summary>
         public static TextCategory SelfHarm { get; } = new TextCategory(SelfHarmValue);
-        /// <summary> The harm category for Text - Sexual. </summary>
+        /// <summary> Sexual. </summary>
         public static TextCategory Sexual { get; } = new TextCategory(SexualValue);
-        /// <summary> The harm category for Text - Violence. </summary>
+        /// <summary> Violence. </summary>
         public static TextCategory Violence { get; } = new TextCategory(ViolenceValue);
         /// <summary> Determines if two <see cref="TextCategory"/> values are the same. </summary>
         public static bool operator ==(TextCategory left, TextCategory right) => left.Equals(right);
