@@ -11,10 +11,7 @@ using System.Net;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Break file locks request
-    /// Serialized Name: BreakFileLocksRequest
-    /// </summary>
+    /// <summary> Break file locks request. </summary>
     public partial class NetAppVolumeBreakFileLocksContent
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeBreakFileLocksContent"/>. </summary>
-        /// <param name="clientIP">
-        /// To clear file locks on a volume for a particular client
-        /// Serialized Name: BreakFileLocksRequest.clientIp
-        /// </param>
-        /// <param name="confirmRunningDisruptiveOperation">
-        /// Break File locks could be a disruptive operation for application as locks on the volume will be broken, if want to process, set to true.
-        /// Serialized Name: BreakFileLocksRequest.confirmRunningDisruptiveOperation
-        /// </param>
+        /// <param name="clientIP"> To clear file locks on a volume for a particular client. </param>
+        /// <param name="confirmRunningDisruptiveOperation"> Break File locks could be a disruptive operation for application as locks on the volume will be broken, if want to process, set to true. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeBreakFileLocksContent(IPAddress clientIP, bool? confirmRunningDisruptiveOperation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// To clear file locks on a volume for a particular client
-        /// Serialized Name: BreakFileLocksRequest.clientIp
-        /// </summary>
+        /// <summary> To clear file locks on a volume for a particular client. </summary>
         public IPAddress ClientIP { get; set; }
-        /// <summary>
-        /// Break File locks could be a disruptive operation for application as locks on the volume will be broken, if want to process, set to true.
-        /// Serialized Name: BreakFileLocksRequest.confirmRunningDisruptiveOperation
-        /// </summary>
+        /// <summary> Break File locks could be a disruptive operation for application as locks on the volume will be broken, if want to process, set to true. </summary>
         public bool? ConfirmRunningDisruptiveOperation { get; set; }
     }
 }

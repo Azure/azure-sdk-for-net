@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool.
-    /// Serialized Name: EncryptionType
-    /// </summary>
+    /// <summary> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </summary>
     public readonly partial struct CapacityPoolEncryptionType : IEquatable<CapacityPoolEncryptionType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string SingleValue = "Single";
         private const string DoubleValue = "Double";
 
-        /// <summary>
-        /// EncryptionType Single, volumes will use single encryption at rest
-        /// Serialized Name: EncryptionType.Single
-        /// </summary>
+        /// <summary> EncryptionType Single, volumes will use single encryption at rest. </summary>
         public static CapacityPoolEncryptionType Single { get; } = new CapacityPoolEncryptionType(SingleValue);
-        /// <summary>
-        /// EncryptionType Double, volumes will use double encryption at rest
-        /// Serialized Name: EncryptionType.Double
-        /// </summary>
+        /// <summary> EncryptionType Double, volumes will use double encryption at rest. </summary>
         public static CapacityPoolEncryptionType Double { get; } = new CapacityPoolEncryptionType(DoubleValue);
         /// <summary> Determines if two <see cref="CapacityPoolEncryptionType"/> values are the same. </summary>
         public static bool operator ==(CapacityPoolEncryptionType left, CapacityPoolEncryptionType right) => left.Equals(right);

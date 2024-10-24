@@ -11,10 +11,7 @@ using System.Net;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Mount target properties
-    /// Serialized Name: MountTargetProperties
-    /// </summary>
+    /// <summary> Mount target properties. </summary>
     public partial class NetAppVolumeMountTarget
     {
         /// <summary>
@@ -50,32 +47,17 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeMountTarget"/>. </summary>
-        /// <param name="fileSystemId">
-        /// UUID v4 used to identify the MountTarget
-        /// Serialized Name: MountTargetProperties.fileSystemId
-        /// </param>
+        /// <param name="fileSystemId"> UUID v4 used to identify the MountTarget. </param>
         internal NetAppVolumeMountTarget(Guid fileSystemId)
         {
             FileSystemId = fileSystemId;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeMountTarget"/>. </summary>
-        /// <param name="mountTargetId">
-        /// UUID v4 used to identify the MountTarget
-        /// Serialized Name: MountTargetProperties.mountTargetId
-        /// </param>
-        /// <param name="fileSystemId">
-        /// UUID v4 used to identify the MountTarget
-        /// Serialized Name: MountTargetProperties.fileSystemId
-        /// </param>
-        /// <param name="ipAddress">
-        /// The mount target's IPv4 address
-        /// Serialized Name: MountTargetProperties.ipAddress
-        /// </param>
-        /// <param name="smbServerFqdn">
-        /// The SMB server's Fully Qualified Domain Name, FQDN
-        /// Serialized Name: MountTargetProperties.smbServerFqdn
-        /// </param>
+        /// <param name="mountTargetId"> UUID v4 used to identify the MountTarget. </param>
+        /// <param name="fileSystemId"> UUID v4 used to identify the MountTarget. </param>
+        /// <param name="ipAddress"> The mount target's IPv4 address. </param>
+        /// <param name="smbServerFqdn"> The SMB server's Fully Qualified Domain Name, FQDN. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeMountTarget(Guid? mountTargetId, Guid fileSystemId, IPAddress ipAddress, string smbServerFqdn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -91,25 +73,13 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary>
-        /// UUID v4 used to identify the MountTarget
-        /// Serialized Name: MountTargetProperties.mountTargetId
-        /// </summary>
+        /// <summary> UUID v4 used to identify the MountTarget. </summary>
         public Guid? MountTargetId { get; }
-        /// <summary>
-        /// UUID v4 used to identify the MountTarget
-        /// Serialized Name: MountTargetProperties.fileSystemId
-        /// </summary>
+        /// <summary> UUID v4 used to identify the MountTarget. </summary>
         public Guid FileSystemId { get; }
-        /// <summary>
-        /// The mount target's IPv4 address
-        /// Serialized Name: MountTargetProperties.ipAddress
-        /// </summary>
+        /// <summary> The mount target's IPv4 address. </summary>
         public IPAddress IPAddress { get; }
-        /// <summary>
-        /// The SMB server's Fully Qualified Domain Name, FQDN
-        /// Serialized Name: MountTargetProperties.smbServerFqdn
-        /// </summary>
+        /// <summary> The SMB server's Fully Qualified Domain Name, FQDN. </summary>
         public string SmbServerFqdn { get; }
     }
 }
