@@ -19,13 +19,21 @@ namespace Azure.AI.Language.Text
 
         void IJsonModel<SentimentConfidenceScores>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SentimentConfidenceScores>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SentimentConfidenceScores)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("positive"u8);
             writer.WriteNumberValue(Positive);
             writer.WritePropertyName("neutral"u8);
@@ -47,7 +55,6 @@ namespace Azure.AI.Language.Text
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SentimentConfidenceScores IJsonModel<SentimentConfidenceScores>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
