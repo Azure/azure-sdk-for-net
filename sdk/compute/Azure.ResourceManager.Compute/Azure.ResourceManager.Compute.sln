@@ -4,12 +4,6 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Compute", "src\Azure.ResourceManager.Compute.csproj", "{34F1E6F5-F5E7-4F8E-A26B-56EB03E7C15C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Compute.Tests", "tests\Azure.ResourceManager.Compute.Tests.csproj", "{738C0769-57F8-439C-8078-54498A030BA0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{DF15D10D-3646-447E-B00B-49506D142322}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Compute.Samples", "samples\Azure.ResourceManager.Compute.Samples.csproj", "{424A2502-7868-40EE-AB91-268E1430CB8B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

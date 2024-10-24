@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_ProximityPlacementGroupCollection
     {
-        // Create or Update a proximity placement group.
+        // List proximity placement group.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateOrUpdateAProximityPlacementGroup()
+        public async Task GetAll_ListProximityPlacementGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/proximityPlacementGroupExamples/ProximityPlacementGroup_CreateOrUpdate.json
-            // this example is just showing the usage of "ProximityPlacementGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/proximityPlacementGroupExamples/ProximityPlacementGroup_ListByResourceGroup.json
+            // this example is just showing the usage of "ProximityPlacementGroups_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,28 +39,17 @@ namespace Azure.ResourceManager.Compute.Samples
             // get the collection of this ProximityPlacementGroupResource
             ProximityPlacementGroupCollection collection = resourceGroupResource.GetProximityPlacementGroups();
 
-            // invoke the operation
-            string proximityPlacementGroupName = "myProximityPlacementGroup";
-            ProximityPlacementGroupData data = new ProximityPlacementGroupData(new AzureLocation("westus"))
+            // invoke the operation and iterate over the result
+            await foreach (ProximityPlacementGroupResource item in collection.GetAllAsync())
             {
-                Zones =
-{
-"1"
-},
-                ProximityPlacementGroupType = ProximityPlacementGroupType.Standard,
-                IntentVmSizes =
-{
-"Basic_A0","Basic_A2"
-},
-            };
-            ArmOperation<ProximityPlacementGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, proximityPlacementGroupName, data);
-            ProximityPlacementGroupResource result = lro.Value;
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ProximityPlacementGroupData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ProximityPlacementGroupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine($"Succeeded");
         }
 
         // Get proximity placement groups.
@@ -169,13 +158,13 @@ namespace Azure.ResourceManager.Compute.Samples
             }
         }
 
-        // List proximity placement group.
+        // Create or Update a proximity placement group.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListProximityPlacementGroup()
+        public async Task CreateOrUpdate_CreateOrUpdateAProximityPlacementGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/proximityPlacementGroupExamples/ProximityPlacementGroup_ListByResourceGroup.json
-            // this example is just showing the usage of "ProximityPlacementGroups_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/proximityPlacementGroupExamples/ProximityPlacementGroup_CreateOrUpdate.json
+            // this example is just showing the usage of "ProximityPlacementGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -192,17 +181,28 @@ namespace Azure.ResourceManager.Compute.Samples
             // get the collection of this ProximityPlacementGroupResource
             ProximityPlacementGroupCollection collection = resourceGroupResource.GetProximityPlacementGroups();
 
-            // invoke the operation and iterate over the result
-            await foreach (ProximityPlacementGroupResource item in collection.GetAllAsync())
+            // invoke the operation
+            string proximityPlacementGroupName = "myProximityPlacementGroup";
+            ProximityPlacementGroupData data = new ProximityPlacementGroupData(new AzureLocation("westus"))
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ProximityPlacementGroupData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Zones =
+{
+"1"
+},
+                ProximityPlacementGroupType = ProximityPlacementGroupType.Standard,
+                IntentVmSizes =
+{
+"Basic_A0","Basic_A2"
+},
+            };
+            ArmOperation<ProximityPlacementGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, proximityPlacementGroupName, data);
+            ProximityPlacementGroupResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ProximityPlacementGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

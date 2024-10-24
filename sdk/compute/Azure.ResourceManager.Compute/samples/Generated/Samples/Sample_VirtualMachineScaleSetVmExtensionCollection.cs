@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_VirtualMachineScaleSetVmExtensionCollection
     {
-        // Create VirtualMachineScaleSet VM extension.
+        // List extensions in Vmss instance.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateVirtualMachineScaleSetVMExtension()
+        public async Task GetAll_ListExtensionsInVmssInstance()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMExtension_Create.json
-            // this example is just showing the usage of "VirtualMachineScaleSetVMExtensions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMExtension_List.json
+            // this example is just showing the usage of "VirtualMachineScaleSetVMExtensions_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,27 +40,17 @@ namespace Azure.ResourceManager.Compute.Samples
             // get the collection of this VirtualMachineScaleSetVmExtensionResource
             VirtualMachineScaleSetVmExtensionCollection collection = virtualMachineScaleSetVm.GetVirtualMachineScaleSetVmExtensions();
 
-            // invoke the operation
-            string vmExtensionName = "myVMExtension";
-            VirtualMachineScaleSetVmExtensionData data = new VirtualMachineScaleSetVmExtensionData()
+            // invoke the operation and iterate over the result
+            await foreach (VirtualMachineScaleSetVmExtensionResource item in collection.GetAllAsync())
             {
-                Publisher = "extPublisher",
-                ExtensionType = "extType",
-                TypeHandlerVersion = "1.2",
-                AutoUpgradeMinorVersion = true,
-                Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                {
-                    ["UserName"] = "xyz@microsoft.com"
-                }),
-            };
-            ArmOperation<VirtualMachineScaleSetVmExtensionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmExtensionName, data);
-            VirtualMachineScaleSetVmExtensionResource result = lro.Value;
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualMachineScaleSetVmExtensionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineScaleSetVmExtensionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine($"Succeeded");
         }
 
         // Get VirtualMachineScaleSet VM extension.
@@ -175,13 +165,13 @@ namespace Azure.ResourceManager.Compute.Samples
             }
         }
 
-        // List extensions in Vmss instance.
+        // Create VirtualMachineScaleSet VM extension.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListExtensionsInVmssInstance()
+        public async Task CreateOrUpdate_CreateVirtualMachineScaleSetVMExtension()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMExtension_List.json
-            // this example is just showing the usage of "VirtualMachineScaleSetVMExtensions_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMExtension_Create.json
+            // this example is just showing the usage of "VirtualMachineScaleSetVMExtensions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -200,17 +190,27 @@ namespace Azure.ResourceManager.Compute.Samples
             // get the collection of this VirtualMachineScaleSetVmExtensionResource
             VirtualMachineScaleSetVmExtensionCollection collection = virtualMachineScaleSetVm.GetVirtualMachineScaleSetVmExtensions();
 
-            // invoke the operation and iterate over the result
-            await foreach (VirtualMachineScaleSetVmExtensionResource item in collection.GetAllAsync())
+            // invoke the operation
+            string vmExtensionName = "myVMExtension";
+            VirtualMachineScaleSetVmExtensionData data = new VirtualMachineScaleSetVmExtensionData()
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineScaleSetVmExtensionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Publisher = "extPublisher",
+                ExtensionType = "extType",
+                TypeHandlerVersion = "1.2",
+                AutoUpgradeMinorVersion = true,
+                Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                {
+                    ["UserName"] = "xyz@microsoft.com"
+                }),
+            };
+            ArmOperation<VirtualMachineScaleSetVmExtensionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmExtensionName, data);
+            VirtualMachineScaleSetVmExtensionResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineScaleSetVmExtensionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

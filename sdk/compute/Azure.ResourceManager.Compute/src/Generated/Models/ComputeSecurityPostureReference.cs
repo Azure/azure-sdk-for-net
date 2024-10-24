@@ -70,6 +70,11 @@ namespace Azure.ResourceManager.Compute.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ComputeSecurityPostureReference"/> for deserialization. </summary>
+        internal ComputeSecurityPostureReference()
+        {
+        }
+
         /// <summary> The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|latest. </summary>
         public ResourceIdentifier Id { get; set; }
         /// <summary> The list of virtual machine extension names to exclude when applying the security posture. </summary>
