@@ -14,9 +14,9 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
     {
         private readonly ILogger _logger;
 
-        public BlobService(ILogger logger)
+        public BlobService(ILogger? logger)
         {
-            _logger = logger;
+            _logger = logger ?? new Logger();
         }
 
         public async Task UploadBufferAsync(string uri, string buffer, string fileRelativePath)
