@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(3600, naptrRecord.Value.Data.TtlInSeconds);
             Assert.AreEqual(orderValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Order);
             Assert.AreEqual(preferenceValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Preference);
-            Assert.AreEqual(flagsValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Flags);            
+            Assert.AreEqual(flagsValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Flags);
             Assert.AreEqual(servicesValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Services);
             Assert.AreEqual(regexpValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Regexp);
             Assert.AreEqual(replacementValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Replacement);
