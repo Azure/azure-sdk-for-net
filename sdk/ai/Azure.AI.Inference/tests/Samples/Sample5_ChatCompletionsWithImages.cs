@@ -131,7 +131,7 @@ namespace Azure.AI.Inference.Tests.Samples
 
         [Test]
         [SyncOnly]
-        public void ChatCompletionsWithImageDataScenario()
+        public void ChatCompletionsWithImageStreamScenario()
         {
             var endpoint = new Uri(TestEnvironment.AoaiEndpoint);
             var credential = new AzureKeyCredential("foo");
@@ -186,6 +186,20 @@ namespace Azure.AI.Inference.Tests.Samples
             Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
             Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
             Assert.That(result.Content, Is.Not.Null.Or.Empty);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void ChatCompletionsWithImagePathScenario()
+        {
+            var endpoint = new Uri(TestEnvironment.AoaiEndpoint);
+            var credential = new AzureKeyCredential("foo");
+            var key = TestEnvironment.AoaiKey;
+
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+            clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(key), HttpPipelinePosition.PerCall);
+
+            var client = new ChatCompletionsClient(endpoint, credential, clientOptions);
 
             #region Snippet:Azure_AI_Inference_ChatCompletionsWithImagePathScenario
 #if SNIPPET
@@ -196,7 +210,7 @@ namespace Azure.AI.Inference.Tests.Samples
                     ChatMessageImageDetailLevel.Low
                 );
 #else
-            imageContentItem =
+            ChatMessageImageContentItem imageContentItem =
                 new ChatMessageImageContentItem(
                     TestEnvironment.TestImageJpgInputPath,
                     "image/jpg",
@@ -205,7 +219,7 @@ namespace Azure.AI.Inference.Tests.Samples
 #endif
             #endregion
 
-            requestOptions = new ChatCompletionsOptions()
+            var requestOptions = new ChatCompletionsOptions()
             {
                 Messages =
                 {
@@ -216,13 +230,13 @@ namespace Azure.AI.Inference.Tests.Samples
                 },
             };
 
-            response = client.Complete(requestOptions);
+            var response = client.Complete(requestOptions);
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
-            result = response.Value;
+            var result = response.Value;
             Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
             Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
             Assert.That(result.Content, Is.Not.Null.Or.Empty);

@@ -52,12 +52,6 @@ namespace Azure.AI.Inference.Tests.Samples
             Assert.IsTrue(exceptionThrown);
 #endif
             #endregion
-
-            #region Snippet:Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenarioExtraParams
-#if SNIPPET
-            response = client.Complete(requestOptions, extraParams: ExtraParameters.PassThrough);
-#endif
-            #endregion
         }
 
         [Test]
@@ -100,12 +94,6 @@ namespace Azure.AI.Inference.Tests.Samples
                 Assert.IsTrue(e.Message.Contains("Extra inputs are not permitted"));
             }
             Assert.IsTrue(exceptionThrown);
-#endif
-            #endregion
-
-            #region Snippet:Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenarioExtraParamsAsync
-#if SNIPPET
-            response = await client.CompleteAsync(requestOptions, extraParams: ExtraParameters.PassThrough);
 #endif
             #endregion
         }
