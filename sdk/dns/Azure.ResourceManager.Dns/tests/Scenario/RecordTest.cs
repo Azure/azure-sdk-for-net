@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
                     },
                 }
             };
-        
+
             var naptrRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, naptrRecordName, data);
             ValidateRecordBaseInfo(naptrRecord.Value.Data, naptrRecordName);
             Assert.AreEqual("dnszones/NAPTR", naptrRecord.Value.Data.ResourceType.Type.ToString());
@@ -455,15 +455,15 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(servicesValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Services);
             Assert.AreEqual(regexpValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Regexp);
             Assert.AreEqual(replacementValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Replacement);
-        
+
             // Exist
             bool flag = await collection.ExistsAsync(naptrRecordName);
             Assert.IsTrue(flag);
-        
+
             // Update
             var updateResponse = await naptrRecord.Value.UpdateAsync(new DnsNaptrRecordData() { TtlInSeconds = 7200 });
             Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
-        
+
             // Get
             var getResponse = await collection.GetAsync(naptrRecordName);
             ValidateRecordBaseInfo(getResponse.Value.Data, naptrRecordName);
@@ -479,12 +479,12 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(servicesValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Services);
             Assert.AreEqual(regexpValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Regexp);
             Assert.AreEqual(replacementValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Replacement);
-        
+
             // GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             ValidateRecordBaseInfo(list.First(item => item.Data.Name == naptrRecordName).Data, naptrRecordName);
-        
+
             // Delete
             await naptrRecord.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync(naptrRecordName);
