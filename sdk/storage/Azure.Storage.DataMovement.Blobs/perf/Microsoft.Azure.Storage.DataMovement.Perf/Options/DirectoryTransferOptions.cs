@@ -4,7 +4,7 @@
 using Azure.Test.Perf;
 using CommandLine;
 
-namespace Azure.Storage.DataMovement.Blobs.Perf
+namespace Microsoft.Azure.Storage.DataMovement.Perf
 {
     public class DirectoryTransferOptions : PerfOptions
     {
@@ -14,17 +14,11 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
         [Option('s', "size", Default = 1024, HelpText = "Size of each file (in bytes)")]
         public long Size { get; set; }
 
-        [Option("initial-transfer-size", HelpText = "The initial size to use during transfers (in bytes)")]
-        public long? InitialTransferSize { get; set; }
-
         [Option("chunk-size", HelpText = "The chunk/block size to use during transfers (in bytes)")]
         public long? ChunkSize { get; set; }
 
         [Option("concurrency", HelpText = "The max concurrency to use during each transfer.")]
         public int? Concurrency { get; set; }
-
-        [Option("disable-checkpointer", HelpText = "Set to disable checkpointing.")]
-        public bool DisableCheckpointer { get; set; }
 
         // Override warmup to set default to 0
         [Option('w', "warmup", Default = 0, HelpText = "Duration of warmup in seconds")]
