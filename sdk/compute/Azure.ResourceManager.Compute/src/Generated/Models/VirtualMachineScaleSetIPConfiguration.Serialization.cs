@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new FormatException($"The model {nameof(VirtualMachineScaleSetIPConfiguration)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
@@ -101,6 +100,21 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         VirtualMachineScaleSetIPConfiguration IJsonModel<VirtualMachineScaleSetIPConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -124,7 +138,6 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            ResourceIdentifier id = default;
             WritableSubResource subnet = default;
             bool? primary = default;
             VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default;
@@ -140,15 +153,6 @@ namespace Azure.ResourceManager.Compute.Models
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -262,8 +266,6 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineScaleSetIPConfiguration(
-                id,
-                serializedAdditionalRawData,
                 name,
                 subnet,
                 primary,
@@ -272,7 +274,8 @@ namespace Azure.ResourceManager.Compute.Models
                 applicationGatewayBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
                 applicationSecurityGroups ?? new ChangeTrackingList<WritableSubResource>(),
                 loadBalancerBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
-                loadBalancerInboundNatPools ?? new ChangeTrackingList<WritableSubResource>());
+                loadBalancerInboundNatPools ?? new ChangeTrackingList<WritableSubResource>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetIPConfiguration>.Write(ModelReaderWriterOptions options)

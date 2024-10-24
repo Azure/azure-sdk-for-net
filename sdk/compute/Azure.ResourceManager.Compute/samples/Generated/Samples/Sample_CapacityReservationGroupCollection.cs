@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_CapacityReservationGroupCollection
     {
-        // Create or update a capacity reservation group.
+        // List capacity reservation groups in resource group.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateOrUpdateACapacityReservationGroup()
+        public async Task GetAll_ListCapacityReservationGroupsInResourceGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/capacityReservationExamples/CapacityReservationGroup_CreateOrUpdate.json
-            // this example is just showing the usage of "CapacityReservationGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/capacityReservationExamples/CapacityReservationGroup_ListByResourceGroup.json
+            // this example is just showing the usage of "CapacityReservationGroups_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,37 +40,18 @@ namespace Azure.ResourceManager.Compute.Samples
             // get the collection of this CapacityReservationGroupResource
             CapacityReservationGroupCollection collection = resourceGroupResource.GetCapacityReservationGroups();
 
-            // invoke the operation
-            string capacityReservationGroupName = "myCapacityReservationGroup";
-            CapacityReservationGroupData data = new CapacityReservationGroupData(new AzureLocation("westus"))
+            // invoke the operation and iterate over the result
+            CapacityReservationGroupGetExpand? expand = CapacityReservationGroupGetExpand.VirtualMachinesRef;
+            await foreach (CapacityReservationGroupResource item in collection.GetAllAsync(expand: expand))
             {
-                Zones =
-{
-"1","2"
-},
-                SharingSubscriptionIds =
-{
-new WritableSubResource()
-{
-Id = new ResourceIdentifier("/subscriptions/{subscription-id1}"),
-},new WritableSubResource()
-{
-Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
-}
-},
-                Tags =
-{
-["department"] = "finance",
-},
-            };
-            ArmOperation<CapacityReservationGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, capacityReservationGroupName, data);
-            CapacityReservationGroupResource result = lro.Value;
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CapacityReservationGroupData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CapacityReservationGroupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine($"Succeeded");
         }
 
         // Get a capacity reservation Group.
@@ -182,13 +163,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
             }
         }
 
-        // List capacity reservation groups in resource group.
+        // Create or update a capacity reservation group.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListCapacityReservationGroupsInResourceGroup()
+        public async Task CreateOrUpdate_CreateOrUpdateACapacityReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/capacityReservationExamples/CapacityReservationGroup_ListByResourceGroup.json
-            // this example is just showing the usage of "CapacityReservationGroups_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/capacityReservationExamples/CapacityReservationGroup_CreateOrUpdate.json
+            // this example is just showing the usage of "CapacityReservationGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -205,18 +186,37 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
             // get the collection of this CapacityReservationGroupResource
             CapacityReservationGroupCollection collection = resourceGroupResource.GetCapacityReservationGroups();
 
-            // invoke the operation and iterate over the result
-            CapacityReservationGroupGetExpand? expand = CapacityReservationGroupGetExpand.VirtualMachinesRef;
-            await foreach (CapacityReservationGroupResource item in collection.GetAllAsync(expand: expand))
+            // invoke the operation
+            string capacityReservationGroupName = "myCapacityReservationGroup";
+            CapacityReservationGroupData data = new CapacityReservationGroupData(new AzureLocation("westus"))
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CapacityReservationGroupData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Zones =
+{
+"1","2"
+},
+                SharingSubscriptionIds =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("/subscriptions/{subscription-id1}"),
+},new WritableSubResource()
+{
+Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
+}
+},
+                Tags =
+{
+["department"] = "finance",
+},
+            };
+            ArmOperation<CapacityReservationGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, capacityReservationGroupName, data);
+            CapacityReservationGroupResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CapacityReservationGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

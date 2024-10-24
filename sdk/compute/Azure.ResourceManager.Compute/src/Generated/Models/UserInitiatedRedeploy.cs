@@ -63,5 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies Redeploy Scheduled Event related configurations. </summary>
         public bool? AutomaticallyApprove { get; set; }
+        /// <summary> This is a dummy property to prevent flattening. </summary>
+        public string DummyProperty { get; set; }
     }
 }

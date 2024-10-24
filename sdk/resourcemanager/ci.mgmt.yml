@@ -41,6 +41,10 @@ trigger:
     - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices
     - sdk/communication/Azure.ResourceManager.Communication
     - sdk/compute/Azure.ResourceManager.Compute
+    - sdk/compute/Azure.ResourceManager.Diagnostic
+    - sdk/compute/Azure.ResourceManager.Disk
+    - sdk/compute/Azure.ResourceManager.Gallery
+    - sdk/compute/Azure.ResourceManager.Sku
     - sdk/computefleet/Azure.ResourceManager.ComputeFleet
     - sdk/computeschedule/Azure.ResourceManager.ComputeSchedule
     - sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger
@@ -244,6 +248,10 @@ pr:
     - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices
     - sdk/communication/Azure.ResourceManager.Communication
     - sdk/compute/Azure.ResourceManager.Compute
+    - sdk/compute/Azure.ResourceManager.Diagnostic
+    - sdk/compute/Azure.ResourceManager.Disk
+    - sdk/compute/Azure.ResourceManager.Gallery
+    - sdk/compute/Azure.ResourceManager.Sku
     - sdk/computefleet/Azure.ResourceManager.ComputeFleet
     - sdk/computeschedule/Azure.ResourceManager.ComputeSchedule
     - sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger

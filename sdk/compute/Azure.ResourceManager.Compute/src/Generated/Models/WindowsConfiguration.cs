@@ -94,5 +94,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return WinRM.Listeners;
             }
         }
+
+        /// <summary> Indicates whether VMAgent Platform Updates are enabled for the Windows Virtual Machine. </summary>
+        public bool? IsVmAgentPlatformUpdatesEnabled { get; }
     }
 }
