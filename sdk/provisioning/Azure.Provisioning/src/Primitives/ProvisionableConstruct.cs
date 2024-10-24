@@ -14,7 +14,8 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     /// <summary>
     /// Gets the parent infrastructure construct, if any.
     /// </summary>
-    internal Infrastructure? ParentInfrastructure { get; set; }
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public Infrastructure? ParentInfrastructure { get; set; }
 
     /// <inheritdoc />
     [EditorBrowsable(EditorBrowsableState.Never)]
