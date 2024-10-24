@@ -83,6 +83,13 @@ namespace System.ClientModel.Primitives
         Default = 0,
         NoThrow = 1,
     }
+    public partial class ClientLoggingOptions
+    {
+        public ClientLoggingOptions() { }
+        public System.Collections.Generic.IList<string> AllowedHeaderNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> AllowedQueryParameters { get { throw null; } }
+        public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
+    }
     public sealed partial class ClientPipeline
     {
         internal ClientPipeline() { }
@@ -95,7 +102,7 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
-        public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
+        public System.ClientModel.Primitives.ClientLoggingOptions LoggingOptions { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
@@ -161,7 +168,7 @@ namespace System.ClientModel.Primitives
     }
     public partial class MessageLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public MessageLoggingPolicy() { }
+        public MessageLoggingPolicy(System.ClientModel.Primitives.ClientLoggingOptions options) { }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }

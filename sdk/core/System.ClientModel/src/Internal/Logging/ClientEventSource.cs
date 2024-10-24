@@ -19,7 +19,7 @@ internal sealed class ClientEventSource : EventSource
     #region Request
 
     [NonEvent]
-    public void Request(string requestId, PipelineRequest request, string? clientAssembly, PipelineMessageSanitizer sanitizer)
+    public void Request(string? requestId, PipelineRequest request, string? clientAssembly, PipelineMessageSanitizer sanitizer)
     {
         if (IsEnabled(EventLevel.Informational, EventKeywords.None))
         {
