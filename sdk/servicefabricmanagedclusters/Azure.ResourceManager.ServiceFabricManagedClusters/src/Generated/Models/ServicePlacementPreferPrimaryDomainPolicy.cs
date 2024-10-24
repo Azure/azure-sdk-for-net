@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -36,17 +35,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Initializes a new instance of <see cref="ServicePlacementPreferPrimaryDomainPolicy"/>. </summary>
         /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
-        internal ServicePlacementPreferPrimaryDomainPolicy(ServicePlacementPolicyType servicePlacementPolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData, string domainName) : base(servicePlacementPolicyType, serializedAdditionalRawData)
+        internal ServicePlacementPreferPrimaryDomainPolicy(ServicePlacementPolicyType servicePlacementPolicyType, string domainName) : base(servicePlacementPolicyType)
         {
             DomainName = domainName;
             ServicePlacementPolicyType = servicePlacementPolicyType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServicePlacementPreferPrimaryDomainPolicy"/> for deserialization. </summary>
-        internal ServicePlacementPreferPrimaryDomainPolicy()
-        {
         }
 
         /// <summary> The name of the domain that should used for placement as per this policy. </summary>

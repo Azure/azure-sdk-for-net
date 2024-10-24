@@ -14,38 +14,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> The service endpoint properties. </summary>
     public partial class ManagedClusterServiceEndpoint
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ManagedClusterServiceEndpoint"/>. </summary>
         /// <param name="service"> The type of the endpoint service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="service"/> is null. </exception>
@@ -60,17 +28,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterServiceEndpoint"/>. </summary>
         /// <param name="service"> The type of the endpoint service. </param>
         /// <param name="locations"> A list of locations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterServiceEndpoint(string service, IList<AzureLocation> locations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterServiceEndpoint(string service, IList<AzureLocation> locations)
         {
             Service = service;
             Locations = locations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterServiceEndpoint"/> for deserialization. </summary>
-        internal ManagedClusterServiceEndpoint()
-        {
         }
 
         /// <summary> The type of the endpoint service. </summary>

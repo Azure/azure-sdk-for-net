@@ -5,46 +5,11 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Parameters for Resume Upgrade action. The upgrade domain name must be specified. </summary>
     public partial class RuntimeResumeApplicationUpgradeContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="RuntimeResumeApplicationUpgradeContent"/>. </summary>
         public RuntimeResumeApplicationUpgradeContent()
         {
@@ -52,11 +17,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Initializes a new instance of <see cref="RuntimeResumeApplicationUpgradeContent"/>. </summary>
         /// <param name="upgradeDomainName"> The upgrade domain name. Expected to be the next upgrade domain if the application is upgrading. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeResumeApplicationUpgradeContent(string upgradeDomainName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RuntimeResumeApplicationUpgradeContent(string upgradeDomainName)
         {
             UpgradeDomainName = upgradeDomainName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The upgrade domain name. Expected to be the next upgrade domain if the application is upgrading. </summary>

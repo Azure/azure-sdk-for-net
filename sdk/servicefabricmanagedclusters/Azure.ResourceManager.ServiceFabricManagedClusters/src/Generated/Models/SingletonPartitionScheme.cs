@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> SingletonPartitionScheme. </summary>
@@ -21,8 +18,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Initializes a new instance of <see cref="SingletonPartitionScheme"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SingletonPartitionScheme(PartitionScheme partitionScheme, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(partitionScheme, serializedAdditionalRawData)
+        internal SingletonPartitionScheme(PartitionScheme partitionScheme) : base(partitionScheme)
         {
             PartitionScheme = partitionScheme;
         }
