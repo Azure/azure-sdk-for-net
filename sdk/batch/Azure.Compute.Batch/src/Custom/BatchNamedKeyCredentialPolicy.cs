@@ -178,7 +178,7 @@ namespace Azure.Compute.Batch.Custom
         private string ComputeSasSignature(string message)
         {
 #if NET6_0_OR_GREATER
-            return Convert.ToBase64String(HMACSHA256.HashData(AccountKeyValue, Encoding.UTF8.GetBytes(message)));
+            return Convert.ToBase64String(HMACSHA256.HashData(AccountKey, Encoding.UTF8.GetBytes(message)));
 #else
             return Convert.ToBase64String(new HMACSHA256(AccountKey).ComputeHash(Encoding.UTF8.GetBytes(message)));
 #endif

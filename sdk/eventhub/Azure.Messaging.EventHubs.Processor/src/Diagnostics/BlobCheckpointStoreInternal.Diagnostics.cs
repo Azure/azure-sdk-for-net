@@ -291,7 +291,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string partitionId,
                                            string clientIdentifier,
                                            DateTimeOffset lastModified) =>
-            Logger.GetCheckpointComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, clientIdentifier, lastModified);
+            Logger.GetCheckpointComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, clientIdentifier, lastModified.ToString());
 
         /// <summary>
         ///   Indicates that an unhandled exception was encountered while retrieving a checkpoint.

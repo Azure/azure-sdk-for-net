@@ -38,7 +38,7 @@ namespace Azure.AI.Translation.Document
             writer.WriteStartObject();
             writer.WritePropertyName("document"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(global::System.BinaryData.FromStream(Document));
+				writer.WriteRawValue(global::System.BinaryData.FromStream(MultipartDocument.Content));
 #else
             using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(MultipartDocument.Content)))
             {
@@ -57,7 +57,7 @@ namespace Azure.AI.Translation.Document
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(global::System.BinaryData.FromStream(item));
+				writer.WriteRawValue(global::System.BinaryData.FromStream(item.Content));
 #else
                     using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(item.Content)))
                     {

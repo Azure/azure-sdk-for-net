@@ -56,7 +56,11 @@ internal static class GuidUtilities
 
         if (BitConverter.IsLittleEndian)
         {
+#if NET6_0_OR_GREATER
+            MemoryMarshal.Write(buffer, in guid);
+#else
             MemoryMarshal.Write(buffer, ref guid);
+#endif
             return;
         }
 

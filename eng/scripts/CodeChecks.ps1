@@ -107,10 +107,10 @@ try {
         & $PSScriptRoot\Update-Snippets.ps1 -ServiceDirectory $ServiceDirectory
     }
 
-    Write-Host "Re-generating listings"
-    Invoke-Block {
-        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface
-    }
+    # Write-Host "Re-generating listings"
+    # Invoke-Block {
+    #     & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface
+    # }
 
     Write-Host "Validating installation instructions"
     Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory  `

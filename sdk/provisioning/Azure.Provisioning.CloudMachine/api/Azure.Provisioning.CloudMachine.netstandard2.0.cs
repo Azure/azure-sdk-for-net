@@ -37,7 +37,7 @@ namespace Azure.CloudMachine
         public void Delete() { }
         public System.BinaryData Download() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static implicit operator Azure.Response (Azure.CloudMachine.StorageFile result) { throw null; }
