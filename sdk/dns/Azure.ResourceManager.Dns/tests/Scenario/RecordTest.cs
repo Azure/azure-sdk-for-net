@@ -396,6 +396,102 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
+        public async Task NAPTRRecordOperationTest()
+        {
+            var collection = _dnsZone.GetDnsNaptrRecords();
+            string naptrRecordName = Recording.GenerateAssetName("naptr");
+            int orderValue1 = 10;
+            int orderValue2 = 20;
+            int preferenceValue1 = 100;
+            int preferenceValue2 = 200;
+            string flagsValue1 = "s";
+            string flagsValue2 = "a";
+            string servicesValue1 = "eau";
+            string servicesValue2 = "eau+sip";
+            string regexpValue1 = "";
+            string regexpValue2 = "!^(\\+441632960083)$!sip:\\1@example.com!";
+            string replacementValue1 = "sip.contoso.com";
+            string replacementValue2 = ".";
+            // CreateOrUpdate
+            var data = new DnsNaptrRecordData()
+            {
+                TtlInSeconds = 3600,
+                DnsNaptrRecords =
+                {
+                    new DnsNaptrRecordInfo()
+                    {
+                        Order = orderValue1,
+                        Preference = preferenceValue1,
+                        Flags = flagsValue1,
+                        Services = servicesValue1,
+                        Regexp = regexpValue1,
+                        Replacement = replacementValue1
+                    },
+                    new DnsNaptrRecordInfo()
+                    {
+                        Order = orderValue2,
+                        Preference = preferenceValue2,
+                        Flags = flagsValue2,
+                        Services = servicesValue2,
+                        Regexp = regexpValue2,
+                        Replacement = replacementValue2
+                    },
+                }
+            };
+        
+            var naptrRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, naptrRecordName, data);
+            ValidateRecordBaseInfo(naptrRecord.Value.Data, naptrRecordName);
+            Assert.AreEqual("dnszones/NAPTR", naptrRecord.Value.Data.ResourceType.Type.ToString());
+            Assert.AreEqual(3600, naptrRecord.Value.Data.TtlInSeconds);
+            Assert.AreEqual(orderValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Order);
+            Assert.AreEqual(preferenceValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Preference);
+            Assert.AreEqual(flagsValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Flags);            
+            Assert.AreEqual(servicesValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Services);
+            Assert.AreEqual(regexpValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Regexp);
+            Assert.AreEqual(replacementValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Replacement);
+            Assert.AreEqual(orderValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Order);
+            Assert.AreEqual(preferenceValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Preference);
+            Assert.AreEqual(flagsValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Flags);
+            Assert.AreEqual(servicesValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Services);
+            Assert.AreEqual(regexpValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Regexp);
+            Assert.AreEqual(replacementValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Replacement);
+        
+            // Exist
+            bool flag = await collection.ExistsAsync(naptrRecordName);
+            Assert.IsTrue(flag);
+        
+            // Update
+            var updateResponse = await naptrRecord.Value.UpdateAsync(new DnsNaptrRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
+        
+            // Get
+            var getResponse = await collection.GetAsync(naptrRecordName);
+            ValidateRecordBaseInfo(getResponse.Value.Data, naptrRecordName);
+            Assert.AreEqual(orderValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Order);
+            Assert.AreEqual(preferenceValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Preference);
+            Assert.AreEqual(flagsValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Flags);
+            Assert.AreEqual(servicesValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Services);
+            Assert.AreEqual(regexpValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Regexp);
+            Assert.AreEqual(replacementValue1, naptrRecord.Value.Data.DnsNaptrRecords[0].Replacement);
+            Assert.AreEqual(orderValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Order);
+            Assert.AreEqual(preferenceValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Preference);
+            Assert.AreEqual(flagsValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Flags);
+            Assert.AreEqual(servicesValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Services);
+            Assert.AreEqual(regexpValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Regexp);
+            Assert.AreEqual(replacementValue2, naptrRecord.Value.Data.DnsNaptrRecords[1].Replacement);
+        
+            // GetAll
+            var list = await collection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+            ValidateRecordBaseInfo(list.First(item => item.Data.Name == naptrRecordName).Data, naptrRecordName);
+        
+            // Delete
+            await naptrRecord.Value.DeleteAsync(WaitUntil.Completed);
+            flag = await collection.ExistsAsync(naptrRecordName);
+            Assert.IsFalse(flag);
+        }
+
+        [RecordedTest]
         public async Task NSRecordOperationTest()
         {
             string _recordSetName = "ns";
