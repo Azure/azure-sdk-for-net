@@ -11,12 +11,6 @@
 - Added read-only property `EffectiveNetworkFeatures` to `Volume` `VolumeProperties` and `VolumeGroupVolumeProperties`
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.7.0 (2024-08-16)
 
 ### Features Added
