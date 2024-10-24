@@ -44,6 +44,17 @@ public class BicepValue<T> : BicepValue
     private protected BicepValue(BicepValueReference? self, T literal) : base(self, (object)literal!) { Value = literal; }
     private protected BicepValue(BicepValueReference? self, BicepExpression expression) : base(self, expression) { }
 
+    /// <summary>
+    /// Clears a previously assigned literal or expression value.
+    /// </summary>
+    public void ClearValue()
+    {
+        _kind = BicepValueKind.Unset;
+        Value = default;
+        _expression = null;
+        _source = null;
+    }
+
     // Move strongly typed literal values when assigning
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void Assign(BicepValue<T> source) => Assign((BicepValue)source);

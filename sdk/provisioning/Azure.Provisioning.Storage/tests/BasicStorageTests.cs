@@ -66,6 +66,7 @@ public class BasicStorageTests(bool async)
                         IsHnsEnabled = true,
                         AllowBlobPublicAccess = false
                     };
+                storage.IsHnsEnabled.ClearValue();
                 infra.Add(storage);
 
                 BlobService blobs = new(nameof(blobs)) { Parent = storage, DependsOn = { storage } };
@@ -87,7 +88,6 @@ public class BasicStorageTests(bool async)
               }
               properties: {
                 allowBlobPublicAccess: false
-                isHnsEnabled: true
               }
             }
 
