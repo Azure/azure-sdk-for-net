@@ -11,7 +11,6 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
-using Azure.Identity;
 using Azure.Storage.Blobs;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
@@ -36,7 +35,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         internal int FailedTestCount { get; set; } = 0;
         internal int SkippedTestCount { get; set; } = 0;
         internal int TotalArtifactCount { get; set; } = 0;
-        internal int TotalArtifactSize { get; set; } = 0;
+        internal int TotalArtifactSizeInBytes { get; set; } = 0;
         internal List<TestResults> TestResults { get; set; } = new List<TestResults>();
         internal ConcurrentDictionary<string, RawTestResult?> RawTestResultsMap { get; set; } = new();
         internal bool FatalTestExecution { get; set; } = false;
@@ -216,36 +215,26 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                         {
                             // get file size
                             var fileSize = new FileInfo(filePath).Length;
-                            var cloudFileName = GetCloudFileName(filePath, testExecutionId);
+                            var cloudFileName = ReporterUtils.GetCloudFileName(filePath, testExecutionId);
                             if (cloudFileName != null) {
                                 UploadBlobFile(_testResultsSasUri!.Uri!, cloudFileName, filePath);
                                 TotalArtifactCount++;
-                                TotalArtifactSize = TotalArtifactSize + (int)fileSize;
+                                TotalArtifactSizeInBytes = TotalArtifactSizeInBytes + (int)fileSize;
                             }
                             else
                             {
                                 _logger.Error($"Attachment file Upload Failed: {filePath}");
                             }
                         }
-                        catch (Exception exp)
+                        catch (Exception ex)
                         {
-                            var error = $"Cannot Upload '{filePath}' file: {exp.Message}";
+                            var error = $"Cannot Upload '{filePath}' file: {ex.Message}";
 
                             _logger.Error(error);
                         }
                     }
                 }
             }
-        }
-
-        private string? GetCloudFileName(string filePath, string testExecutionId)
-        {
-            var fileName = Path.GetFileName(filePath);
-            if (fileName == null)
-            {
-                return null;
-            }
-            return $"{testExecutionId}/{fileName}"; // TODO check if we need to add {Guid.NewGuid()} for file with same name
         }
 
         private TestResultsUri? CheckAndRenewSasUri()
@@ -304,9 +293,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             BlobClient blobClient = new(new Uri(cloudFilePath));
             // Upload filePath to Blob
             blobClient.Upload(filePath, overwrite: true);
-
-            //byte[] bufferBytes = File.ReadAllBytes(fileRelativePath);
-            //blobClient.Upload(new BinaryData(bufferBytes), overwrite: true);
             _logger.Info($"Uploaded file {filePath} to {fileRelativePath}");
         }
 
@@ -330,7 +316,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             testRunShard.Summary.StartTime = _cloudRunMetadata.TestRunStartTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
             testRunShard.Summary.EndTime = testRunEndedOn.ToString("yyyy-MM-ddTHH:mm:ssZ");
             testRunShard.Summary.TotalTime = durationInMs;
-            testRunShard.Summary.UploadMetadata = new UploadMetadata() { NumTestResults = TotalTestCount, NumTotalAttachments = TotalArtifactCount, SizeTotalAttachments = TotalArtifactSize };
+            testRunShard.Summary.UploadMetadata = new UploadMetadata() { NumTestResults = TotalTestCount, NumTotalAttachments = TotalArtifactCount, SizeTotalAttachments = TotalArtifactSizeInBytes };
             testRunShard.UploadCompleted = true;
             return testRunShard;
         }
