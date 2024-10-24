@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="query"> The ARG where predicate. Note that you can combine multiple conditions in one `where` predicate, e.g. `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
         /// <param name="recursive"> Whether to recursively list child resources of the query result. </param>
-        internal ExportQuery(Type type, TargetProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData, string query, string namePattern, bool? recursive) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
+        internal ExportQuery(Type type, TargetTerraformProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData, string query, string namePattern, bool? recursive) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
         {
             Query = query;
             NamePattern = namePattern;

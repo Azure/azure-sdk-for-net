@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
     /// <summary> The Terraform export result. </summary>
-    public partial class ExportResult
+    public partial class TerraformExportResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +46,22 @@ namespace Azure.ResourceManager.Terraform.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ExportResult"/>. </summary>
-        internal ExportResult()
+        /// <summary> Initializes a new instance of <see cref="TerraformExportResult"/>. </summary>
+        internal TerraformExportResult()
         {
-            SkippedResources = new ChangeTrackingList<string>();
+            SkippedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
             Errors = new ChangeTrackingList<ResponseError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TerraformExportResult"/>. </summary>
         /// <param name="configuration"> The Terraform configuration content. </param>
-        /// <param name="skippedResources"> A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform. </param>
+        /// <param name="skippedResourceIds"> A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform. </param>
         /// <param name="errors"> A list of errors derived during exporting each resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportResult(string configuration, IReadOnlyList<string> skippedResources, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TerraformExportResult(string configuration, IReadOnlyList<ResourceIdentifier> skippedResourceIds, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Configuration = configuration;
-            SkippedResources = skippedResources;
+            SkippedResourceIds = skippedResourceIds;
             Errors = errors;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <summary> The Terraform configuration content. </summary>
         public string Configuration { get; }
         /// <summary> A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform. </summary>
-        public IReadOnlyList<string> SkippedResources { get; }
+        public IReadOnlyList<ResourceIdentifier> SkippedResourceIds { get; }
         /// <summary> A list of errors derived during exporting each resource. </summary>
         public IReadOnlyList<ResponseError> Errors { get; }
     }

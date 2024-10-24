@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="resourceName"> The Terraform resource name. Only works when `resourceIds` contains only one item. </param>
         /// <param name="resourceType"> The Terraform resource type. Only works when `resourceIds` contains only one item. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
-        internal ExportResource(Type type, TargetProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ResourceIdentifier> resourceIds, string resourceName, string resourceType, string namePattern) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
+        internal ExportResource(Type type, TargetTerraformProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ResourceIdentifier> resourceIds, string resourceName, string resourceType, string namePattern) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
         {
             ResourceIds = resourceIds;
             ResourceName = resourceName;

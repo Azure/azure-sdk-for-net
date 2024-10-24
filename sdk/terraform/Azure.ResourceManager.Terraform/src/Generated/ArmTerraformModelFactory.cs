@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
         /// <param name="recursive"> Whether to recursively list child resources of the query result. </param>
         /// <returns> A new <see cref="Models.ExportQuery"/> instance for mocking. </returns>
-        public static ExportQuery ExportQuery(TargetProvider? targetProvider = null, bool? fullProperties = null, bool? maskSensitive = null, string query = null, string namePattern = null, bool? recursive = null)
+        public static ExportQuery ExportQuery(TargetTerraformProvider? targetProvider = null, bool? fullProperties = null, bool? maskSensitive = null, string query = null, string namePattern = null, bool? recursive = null)
         {
             return new ExportQuery(
                 Type.ExportQuery,
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="resourceGroupName"> The name of the resource group to be exported. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
         /// <returns> A new <see cref="Models.ExportResourceGroup"/> instance for mocking. </returns>
-        public static ExportResourceGroup ExportResourceGroup(TargetProvider? targetProvider = null, bool? fullProperties = null, bool? maskSensitive = null, string resourceGroupName = null, string namePattern = null)
+        public static ExportResourceGroup ExportResourceGroup(TargetTerraformProvider? targetProvider = null, bool? fullProperties = null, bool? maskSensitive = null, string resourceGroupName = null, string namePattern = null)
         {
             return new ExportResourceGroup(
                 Type.ExportResourceGroup,
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="percentComplete"> The progress made toward completing the operation. </param>
         /// <param name="error"> Errors that occurred if the operation ended with Canceled or Failed status. </param>
         /// <returns> A new <see cref="Models.TerraformOperationStatus"/> instance for mocking. </returns>
-        public static TerraformOperationStatus TerraformOperationStatus(ExportResult properties = null, ResourceProvisioningState status = default, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, ResponseError error = null)
+        public static TerraformOperationStatus TerraformOperationStatus(TerraformExportResult properties = null, TerraformResourceProvisioningState status = default, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, ResponseError error = null)
         {
             return new TerraformOperationStatus(
                 properties,
@@ -76,17 +77,17 @@ namespace Azure.ResourceManager.Terraform.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExportResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TerraformExportResult"/>. </summary>
         /// <param name="configuration"> The Terraform configuration content. </param>
-        /// <param name="skippedResources"> A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform. </param>
+        /// <param name="skippedResourceIds"> A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform. </param>
         /// <param name="errors"> A list of errors derived during exporting each resource. </param>
-        /// <returns> A new <see cref="Models.ExportResult"/> instance for mocking. </returns>
-        public static ExportResult ExportResult(string configuration = null, IEnumerable<string> skippedResources = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.TerraformExportResult"/> instance for mocking. </returns>
+        public static TerraformExportResult TerraformExportResult(string configuration = null, IEnumerable<ResourceIdentifier> skippedResourceIds = null, IEnumerable<ResponseError> errors = null)
         {
-            skippedResources ??= new List<string>();
+            skippedResourceIds ??= new List<ResourceIdentifier>();
             errors ??= new List<ResponseError>();
 
-            return new ExportResult(configuration, skippedResources?.ToList(), errors?.ToList(), serializedAdditionalRawData: null);
+            return new TerraformExportResult(configuration, skippedResourceIds?.ToList(), errors?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

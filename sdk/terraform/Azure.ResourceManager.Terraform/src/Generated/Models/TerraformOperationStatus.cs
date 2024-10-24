@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary> Initializes a new instance of <see cref="TerraformOperationStatus"/>. </summary>
         /// <param name="status"> The operation status. </param>
-        internal TerraformOperationStatus(ResourceProvisioningState status)
+        internal TerraformOperationStatus(TerraformResourceProvisioningState status)
         {
             Status = status;
         }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="percentComplete"> The progress made toward completing the operation. </param>
         /// <param name="error"> Errors that occurred if the operation ended with Canceled or Failed status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TerraformOperationStatus(ExportResult properties, ResourceProvisioningState status, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TerraformOperationStatus(TerraformExportResult properties, TerraformResourceProvisioningState status, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             Status = status;
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Terraform.Models
         }
 
         /// <summary> RP-specific properties for the operationStatus resource, only appears when operation ended with Succeeded status. </summary>
-        public ExportResult Properties { get; }
+        public TerraformExportResult Properties { get; }
         /// <summary> The operation status. </summary>
-        public ResourceProvisioningState Status { get; }
+        public TerraformResourceProvisioningState Status { get; }
         /// <summary> The name of the  operationStatus resource. </summary>
         public string Name { get; }
         /// <summary> Operation start time. </summary>

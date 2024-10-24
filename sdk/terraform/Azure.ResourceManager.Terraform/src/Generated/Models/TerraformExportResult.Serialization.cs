@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
-    public partial class ExportResult : IUtf8JsonSerializable, IJsonModel<ExportResult>
+    public partial class TerraformExportResult : IUtf8JsonSerializable, IJsonModel<TerraformExportResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TerraformExportResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ExportResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TerraformExportResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TerraformExportResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TerraformExportResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Configuration))
@@ -39,12 +39,17 @@ namespace Azure.ResourceManager.Terraform.Models
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteStringValue(Configuration);
             }
-            if (Optional.IsCollectionDefined(SkippedResources))
+            if (Optional.IsCollectionDefined(SkippedResourceIds))
             {
                 writer.WritePropertyName("skippedResources"u8);
                 writer.WriteStartArray();
-                foreach (var item in SkippedResources)
+                foreach (var item in SkippedResourceIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -76,19 +81,19 @@ namespace Azure.ResourceManager.Terraform.Models
             }
         }
 
-        ExportResult IJsonModel<ExportResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TerraformExportResult IJsonModel<TerraformExportResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TerraformExportResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TerraformExportResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExportResult(document.RootElement, options);
+            return DeserializeTerraformExportResult(document.RootElement, options);
         }
 
-        internal static ExportResult DeserializeExportResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TerraformExportResult DeserializeTerraformExportResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,7 +102,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 return null;
             }
             string configuration = default;
-            IReadOnlyList<string> skippedResources = default;
+            IReadOnlyList<ResourceIdentifier> skippedResources = default;
             IReadOnlyList<ResponseError> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -114,10 +119,17 @@ namespace Azure.ResourceManager.Terraform.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     skippedResources = array;
                     continue;
@@ -142,38 +154,38 @@ namespace Azure.ResourceManager.Terraform.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExportResult(configuration, skippedResources ?? new ChangeTrackingList<string>(), errors ?? new ChangeTrackingList<ResponseError>(), serializedAdditionalRawData);
+            return new TerraformExportResult(configuration, skippedResources ?? new ChangeTrackingList<ResourceIdentifier>(), errors ?? new ChangeTrackingList<ResponseError>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ExportResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TerraformExportResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TerraformExportResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TerraformExportResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ExportResult IPersistableModel<ExportResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TerraformExportResult IPersistableModel<TerraformExportResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TerraformExportResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeExportResult(document.RootElement, options);
+                        return DeserializeTerraformExportResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TerraformExportResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ExportResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TerraformExportResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

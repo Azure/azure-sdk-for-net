@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceGroupName"> The name of the resource group to be exported. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
-        internal ExportResourceGroup(Type type, TargetProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceGroupName, string namePattern) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
+        internal ExportResourceGroup(Type type, TargetTerraformProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceGroupName, string namePattern) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
         {
             ResourceGroupName = resourceGroupName;
             NamePattern = namePattern;

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Terraform.Models
             string namePattern = default;
             bool? recursive = default;
             Type type = default;
-            TargetProvider? targetProvider = default;
+            TargetTerraformProvider? targetProvider = default;
             bool? fullProperties = default;
             bool? maskSensitive = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Terraform.Models
                     {
                         continue;
                     }
-                    targetProvider = new TargetProvider(property.Value.GetString());
+                    targetProvider = new TargetTerraformProvider(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fullProperties"u8))

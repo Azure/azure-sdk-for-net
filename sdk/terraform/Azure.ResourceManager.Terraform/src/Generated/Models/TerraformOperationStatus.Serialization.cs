@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.Terraform.Models
             {
                 return null;
             }
-            ExportResult properties = default;
-            ResourceProvisioningState status = default;
+            TerraformExportResult properties = default;
+            TerraformResourceProvisioningState status = default;
             string name = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.Terraform.Models
                     {
                         continue;
                     }
-                    properties = ExportResult.DeserializeExportResult(property.Value, options);
+                    properties = TerraformExportResult.DeserializeTerraformExportResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new ResourceProvisioningState(property.Value.GetString());
+                    status = new TerraformResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
