@@ -772,7 +772,7 @@ function GeneratePackage()
 
     if ($isGenerateSuccess) {
         # update resourcemanager ci.mgmt.yml for mgmt sdk
-        if ( $serviceType -eq "resource-manager" ) {
+        if ($serviceType -eq "resource-manager") {
             & $sdkRootPath/eng/scripts/Update-Mgmt-CI.ps1
         }
         # Build project when successfully generated the code
