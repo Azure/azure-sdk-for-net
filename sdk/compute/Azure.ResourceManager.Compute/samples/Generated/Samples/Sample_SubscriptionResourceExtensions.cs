@@ -132,13 +132,13 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // VirtualMachineImage_Get_MaximumSet_Gen
+        // VirtualMachineImagesEdgeZone_ListPublishers_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImage_VirtualMachineImageGetMaximumSetGen()
+        public async Task GetPublishersVirtualMachineImagesEdgeZones_VirtualMachineImagesEdgeZoneListPublishersMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImages_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListPublishers_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImagesEdgeZone_ListPublishers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -151,69 +151,10 @@ namespace Azure.ResourceManager.Compute.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // invoke the operation
+            // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("aaaaaa");
-            string publisherName = "aaa";
-            string offer = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            string skus = "aaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            string version = "aaaaaaaaaaaaaaaaaaa";
-            VirtualMachineImage result = await subscriptionResource.GetVirtualMachineImageAsync(location, publisherName, offer, skus, version);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // VirtualMachineImage_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImage_VirtualMachineImageGetMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImages_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            AzureLocation location = new AzureLocation("aaaaaaaaaaaa");
-            string publisherName = "aaaaaaaaaaa";
-            string offer = "aa";
-            string skus = "aaaaaaaaa";
-            string version = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            VirtualMachineImage result = await subscriptionResource.GetVirtualMachineImageAsync(location, publisherName, offer, skus, version);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // VirtualMachineImage_List_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImages_VirtualMachineImageListMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_List_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImages_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location: new AzureLocation("aaaaaaaaaaaaaaa"), publisherName: "aaaaaa", offer: "aaaaaaaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaaaaaaa") { Expand = "aaaaaaaaaaaaaaaaaaaaaaaa", Top = 18, Orderby = "aa" };
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesAsync(options))
+            string edgeZone = "aaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetPublishersVirtualMachineImagesEdgeZonesAsync(location, edgeZone))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -221,160 +162,13 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // VirtualMachineImage_List_MinimumSet_Gen
+        // VirtualMachineImagesEdgeZone_ListPublishers_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImages_VirtualMachineImageListMinimumSetGen()
+        public async Task GetPublishersVirtualMachineImagesEdgeZones_VirtualMachineImagesEdgeZoneListPublishersMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_List_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImages_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location: new AzureLocation("aaaaaaa"), publisherName: "aaaaaaaaaaa", offer: "aaaaaaaaaa", skus: "aaaaaa") { };
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesAsync(options))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachineImage_ListOffers_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImageOffers_VirtualMachineImageListOffersMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListOffers_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImages_ListOffers" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("aaaaaaa");
-            string publisherName = "aaaaaaaa";
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImageOffersAsync(location, publisherName))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachineImage_ListOffers_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImageOffers_VirtualMachineImageListOffersMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListOffers_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImages_ListOffers" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("aaaaaaaaaaaaaaaaa");
-            string publisherName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImageOffersAsync(location, publisherName))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachineImage_ListPublishers_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImagePublishers_VirtualMachineImageListPublishersMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListPublishers_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImages_ListPublishers" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("aaaaa");
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagePublishersAsync(location))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachineImage_ListPublishers_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImagePublishers_VirtualMachineImageListPublishersMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListPublishers_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImages_ListPublishers" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagePublishersAsync(location))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachineImage_ListSkus_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImageSkus_VirtualMachineImageListSkusMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListSkus_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImages_ListSkus" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListPublishers_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImagesEdgeZone_ListPublishers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -389,210 +183,8 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("aaaa");
-            string publisherName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            string offer = "aaaaaaa";
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImageSkusAsync(location, publisherName, offer))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachineImage_ListSkus_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImageSkus_VirtualMachineImageListSkusMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListSkus_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImages_ListSkus" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("aaaa");
-            string publisherName = "aaaaaaaaaaaaa";
-            string offer = "aaaaaaa";
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImageSkusAsync(location, publisherName, offer))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachineImagesEdgeZone_ListByEdgeZone_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImagesByEdgeZone_VirtualMachineImagesEdgeZoneListByEdgeZoneMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListByEdgeZone_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImages_ListByEdgeZone" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "5ece5940-d962-4dad-a98f-ca9ac0f021a5";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("WestUS");
-            string edgeZone = "microsoftlosangeles1";
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesByEdgeZoneAsync(location, edgeZone))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachineImagesEdgeZone_ListByEdgeZone_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImagesByEdgeZone_VirtualMachineImagesEdgeZoneListByEdgeZoneMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListByEdgeZone_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImages_ListByEdgeZone" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "5ece5940-d962-4dad-a98f-ca9ac0f021a5";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("WestUS");
-            string edgeZone = "microsoftlosangeles1";
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesByEdgeZoneAsync(location, edgeZone))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachineImagesEdgeZone_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImagesEdgeZone_VirtualMachineImagesEdgeZoneGetMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImagesEdgeZone_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions(location: new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaa"), edgeZone: "aaaaaaaa", publisherName: "aaaaaaaaaaaaaaaaaaaaaaa", offer: "aaaaaaaaaaaaaaaaaaaaaaaaaaa", skus: "aaaaaaaaaa", version: "aaaaaaaaaaaaaaaaaaaaaaaaaaa") { };
-            VirtualMachineImage result = await subscriptionResource.GetVirtualMachineImagesEdgeZoneAsync(options);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // VirtualMachineImagesEdgeZone_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImagesEdgeZone_VirtualMachineImagesEdgeZoneGetMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImagesEdgeZone_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions(location: new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaa"), edgeZone: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa", publisherName: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa", offer: "aaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaa", version: "aa") { };
-            VirtualMachineImage result = await subscriptionResource.GetVirtualMachineImagesEdgeZoneAsync(options);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // VirtualMachineImagesEdgeZone_List_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImagesEdgeZones_VirtualMachineImagesEdgeZoneListMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_List_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImagesEdgeZone_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions(location: new AzureLocation("aaaaaaaaaaaaaaa"), edgeZone: "aaaaaaaaaaaaaaaaaaaaaaaaa", publisherName: "aaaa", offer: "aaaaaaaaaaaaaaaaaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaaaaaaa") { Expand = "aaaaaaaaaaaaaaaaaaaaaaaa", Top = 12, Orderby = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa" };
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesEdgeZonesAsync(options))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachineImagesEdgeZone_List_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachineImagesEdgeZones_VirtualMachineImagesEdgeZoneListMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_List_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImagesEdgeZone_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions(location: new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"), edgeZone: "aaaaa", publisherName: "aaaaaaaaaaaaaaaaaaa", offer: "aaaaaaaaaaaaaaaaaaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa") { };
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesEdgeZonesAsync(options))
+            string edgeZone = "aaaaaaaaaaaaaaaaaaaaaaa";
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetPublishersVirtualMachineImagesEdgeZonesAsync(location, edgeZone))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -655,66 +247,6 @@ namespace Azure.ResourceManager.Compute.Samples
             string edgeZone = "aaaaaaaaaaaaaaaaaaaaa";
             string publisherName = "aaaaaaaaaaaaaaaaaaaaaaaaaaa";
             await foreach (VirtualMachineImageBase item in subscriptionResource.GetOffersVirtualMachineImagesEdgeZonesAsync(location, edgeZone, publisherName))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachineImagesEdgeZone_ListPublishers_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetPublishersVirtualMachineImagesEdgeZones_VirtualMachineImagesEdgeZoneListPublishersMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListPublishers_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImagesEdgeZone_ListPublishers" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("aaaaaa");
-            string edgeZone = "aaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetPublishersVirtualMachineImagesEdgeZonesAsync(location, edgeZone))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachineImagesEdgeZone_ListPublishers_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetPublishersVirtualMachineImagesEdgeZones_VirtualMachineImagesEdgeZoneListPublishersMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListPublishers_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineImagesEdgeZone_ListPublishers" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("aaaa");
-            string edgeZone = "aaaaaaaaaaaaaaaaaaaaaaa";
-            await foreach (VirtualMachineImageBase item in subscriptionResource.GetPublishersVirtualMachineImagesEdgeZonesAsync(location, edgeZone))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -786,6 +318,474 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded");
         }
 
+        // VirtualMachineImagesEdgeZone_List_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImagesEdgeZones_VirtualMachineImagesEdgeZoneListMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_List_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImagesEdgeZone_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions(location: new AzureLocation("aaaaaaaaaaaaaaa"), edgeZone: "aaaaaaaaaaaaaaaaaaaaaaaaa", publisherName: "aaaa", offer: "aaaaaaaaaaaaaaaaaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaaaaaaa") { Expand = "aaaaaaaaaaaaaaaaaaaaaaaa", Top = 12, Orderby = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa" };
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesEdgeZonesAsync(options))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VirtualMachineImagesEdgeZone_List_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImagesEdgeZones_VirtualMachineImagesEdgeZoneListMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_List_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImagesEdgeZone_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions(location: new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"), edgeZone: "aaaaa", publisherName: "aaaaaaaaaaaaaaaaaaa", offer: "aaaaaaaaaaaaaaaaaaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa") { };
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesEdgeZonesAsync(options))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VirtualMachineImagesEdgeZone_Get_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImagesEdgeZone_VirtualMachineImagesEdgeZoneGetMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImagesEdgeZone_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions(location: new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaa"), edgeZone: "aaaaaaaa", publisherName: "aaaaaaaaaaaaaaaaaaaaaaa", offer: "aaaaaaaaaaaaaaaaaaaaaaaaaaa", skus: "aaaaaaaaaa", version: "aaaaaaaaaaaaaaaaaaaaaaaaaaa") { };
+            VirtualMachineImage result = await subscriptionResource.GetVirtualMachineImagesEdgeZoneAsync(options);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // VirtualMachineImagesEdgeZone_Get_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImagesEdgeZone_VirtualMachineImagesEdgeZoneGetMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImagesEdgeZone_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions(location: new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaa"), edgeZone: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa", publisherName: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa", offer: "aaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaa", version: "aa") { };
+            VirtualMachineImage result = await subscriptionResource.GetVirtualMachineImagesEdgeZoneAsync(options);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // VirtualMachineImagesEdgeZone_ListByEdgeZone_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImagesByEdgeZone_VirtualMachineImagesEdgeZoneListByEdgeZoneMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListByEdgeZone_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImages_ListByEdgeZone" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "5ece5940-d962-4dad-a98f-ca9ac0f021a5";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation location = new AzureLocation("WestUS");
+            string edgeZone = "microsoftlosangeles1";
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesByEdgeZoneAsync(location, edgeZone))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VirtualMachineImagesEdgeZone_ListByEdgeZone_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImagesByEdgeZone_VirtualMachineImagesEdgeZoneListByEdgeZoneMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImagesEdgeZone_ListByEdgeZone_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImages_ListByEdgeZone" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "5ece5940-d962-4dad-a98f-ca9ac0f021a5";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation location = new AzureLocation("WestUS");
+            string edgeZone = "microsoftlosangeles1";
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesByEdgeZoneAsync(location, edgeZone))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VirtualMachineImage_ListPublishers_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImagePublishers_VirtualMachineImageListPublishersMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListPublishers_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImages_ListPublishers" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation location = new AzureLocation("aaaaa");
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagePublishersAsync(location))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VirtualMachineImage_ListPublishers_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImagePublishers_VirtualMachineImageListPublishersMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListPublishers_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImages_ListPublishers" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation location = new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagePublishersAsync(location))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VirtualMachineImage_ListOffers_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImageOffers_VirtualMachineImageListOffersMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListOffers_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImages_ListOffers" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation location = new AzureLocation("aaaaaaa");
+            string publisherName = "aaaaaaaa";
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImageOffersAsync(location, publisherName))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VirtualMachineImage_ListOffers_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImageOffers_VirtualMachineImageListOffersMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListOffers_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImages_ListOffers" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation location = new AzureLocation("aaaaaaaaaaaaaaaaa");
+            string publisherName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImageOffersAsync(location, publisherName))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VirtualMachineImage_ListSkus_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImageSkus_VirtualMachineImageListSkusMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListSkus_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImages_ListSkus" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation location = new AzureLocation("aaaa");
+            string publisherName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            string offer = "aaaaaaa";
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImageSkusAsync(location, publisherName, offer))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VirtualMachineImage_ListSkus_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImageSkus_VirtualMachineImageListSkusMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_ListSkus_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImages_ListSkus" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation location = new AzureLocation("aaaa");
+            string publisherName = "aaaaaaaaaaaaa";
+            string offer = "aaaaaaa";
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImageSkusAsync(location, publisherName, offer))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VirtualMachineImage_List_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImages_VirtualMachineImageListMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_List_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImages_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location: new AzureLocation("aaaaaaaaaaaaaaa"), publisherName: "aaaaaa", offer: "aaaaaaaaaaaaaaaa", skus: "aaaaaaaaaaaaaaaaaaaaaaa") { Expand = "aaaaaaaaaaaaaaaaaaaaaaaa", Top = 18, Orderby = "aa" };
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesAsync(options))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VirtualMachineImage_List_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImages_VirtualMachineImageListMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_List_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImages_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location: new AzureLocation("aaaaaaa"), publisherName: "aaaaaaaaaaa", offer: "aaaaaaaaaa", skus: "aaaaaa") { };
+            await foreach (VirtualMachineImageBase item in subscriptionResource.GetVirtualMachineImagesAsync(options))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VirtualMachineImage_Get_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImage_VirtualMachineImageGetMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImages_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation location = new AzureLocation("aaaaaa");
+            string publisherName = "aaa";
+            string offer = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            string skus = "aaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            string version = "aaaaaaaaaaaaaaaaaaa";
+            VirtualMachineImage result = await subscriptionResource.GetVirtualMachineImageAsync(location, publisherName, offer, skus, version);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // VirtualMachineImage_Get_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVirtualMachineImage_VirtualMachineImageGetMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineImageExamples/VirtualMachineImage_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineImages_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation location = new AzureLocation("aaaaaaaaaaaa");
+            string publisherName = "aaaaaaaaaaa";
+            string offer = "aa";
+            string skus = "aaaaaaaaa";
+            string version = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            VirtualMachineImage result = await subscriptionResource.GetVirtualMachineImageAsync(location, publisherName, offer, skus, version);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // Export logs which contain all Api requests made to Compute Resource Provider within the given time period broken down by intervals.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -849,92 +849,6 @@ namespace Azure.ResourceManager.Compute.Samples
             LogAnalytics result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Lists all available Resource SKUs
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetComputeResourceSkus_ListsAllAvailableResourceSKUs()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Skus/stable/2021-07-01/examples/skus/ListAvailableResourceSkus.json
-            // this example is just showing the usage of "ResourceSkus_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ComputeResourceSku item in subscriptionResource.GetComputeResourceSkusAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Lists all available Resource SKUs for the specified region
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetComputeResourceSkus_ListsAllAvailableResourceSKUsForTheSpecifiedRegion()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Skus/stable/2021-07-01/examples/skus/ListAvailableResourceSkusForARegion.json
-            // this example is just showing the usage of "ResourceSkus_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            string filter = "location eq 'westus'";
-            await foreach (ComputeResourceSku item in subscriptionResource.GetComputeResourceSkusAsync(filter: filter))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Lists all available Resource SKUs with Extended Location information
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetComputeResourceSkus_ListsAllAvailableResourceSKUsWithExtendedLocationInformation()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Skus/stable/2021-07-01/examples/skus/ListAvailableResourceSkusWithExtendedLocations.json
-            // this example is just showing the usage of "ResourceSkus_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            string includeExtendedLocations = "true";
-            await foreach (ComputeResourceSku item in subscriptionResource.GetComputeResourceSkusAsync(includeExtendedLocations: includeExtendedLocations))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_RestorePointGroupCollection
     {
-        // Create or update a restore point collection for cross region copy.
+        // Gets the list of restore point collections in a resource group.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateOrUpdateARestorePointCollectionForCrossRegionCopy()
+        public async Task GetAll_GetsTheListOfRestorePointCollectionsInAResourceGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/restorePointExamples/RestorePointCollection_CreateOrUpdate_ForCrossRegionCopy.json
-            // this example is just showing the usage of "RestorePointCollections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/restorePointExamples/RestorePointCollection_ListByResourceGroup.json
+            // this example is just showing the usage of "RestorePointCollections_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,73 +39,17 @@ namespace Azure.ResourceManager.Compute.Samples
             // get the collection of this RestorePointGroupResource
             RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
 
-            // invoke the operation
-            string restorePointGroupName = "myRpc";
-            RestorePointGroupData data = new RestorePointGroupData(new AzureLocation("norwayeast"))
+            // invoke the operation and iterate over the result
+            await foreach (RestorePointGroupResource item in collection.GetAllAsync())
             {
-                Source = new RestorePointGroupSource()
-                {
-                    Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/sourceRpcName"),
-                },
-                Tags =
-{
-["myTag1"] = "tagValue1",
-},
-            };
-            ArmOperation<RestorePointGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, restorePointGroupName, data);
-            RestorePointGroupResource result = lro.Value;
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                RestorePointGroupData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            RestorePointGroupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create or update a restore point collection.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateOrUpdateARestorePointCollection()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/restorePointExamples/RestorePointCollection_CreateOrUpdate.json
-            // this example is just showing the usage of "RestorePointCollections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this RestorePointGroupResource
-            RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
-
-            // invoke the operation
-            string restorePointGroupName = "myRpc";
-            RestorePointGroupData data = new RestorePointGroupData(new AzureLocation("norwayeast"))
-            {
-                Source = new RestorePointGroupSource()
-                {
-                    Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
-                },
-                Tags =
-{
-["myTag1"] = "tagValue1",
-},
-            };
-            ArmOperation<RestorePointGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, restorePointGroupName, data);
-            RestorePointGroupResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            RestorePointGroupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine($"Succeeded");
         }
 
         // Get a restore point collection (but not the restore points contained in the restore point collection)
@@ -320,13 +264,13 @@ namespace Azure.ResourceManager.Compute.Samples
             }
         }
 
-        // Gets the list of restore point collections in a resource group.
+        // Create or update a restore point collection for cross region copy.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_GetsTheListOfRestorePointCollectionsInAResourceGroup()
+        public async Task CreateOrUpdate_CreateOrUpdateARestorePointCollectionForCrossRegionCopy()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/restorePointExamples/RestorePointCollection_ListByResourceGroup.json
-            // this example is just showing the usage of "RestorePointCollections_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/restorePointExamples/RestorePointCollection_CreateOrUpdate_ForCrossRegionCopy.json
+            // this example is just showing the usage of "RestorePointCollections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -343,17 +287,73 @@ namespace Azure.ResourceManager.Compute.Samples
             // get the collection of this RestorePointGroupResource
             RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
 
-            // invoke the operation and iterate over the result
-            await foreach (RestorePointGroupResource item in collection.GetAllAsync())
+            // invoke the operation
+            string restorePointGroupName = "myRpc";
+            RestorePointGroupData data = new RestorePointGroupData(new AzureLocation("norwayeast"))
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                RestorePointGroupData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Source = new RestorePointGroupSource()
+                {
+                    Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/sourceRpcName"),
+                },
+                Tags =
+{
+["myTag1"] = "tagValue1",
+},
+            };
+            ArmOperation<RestorePointGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, restorePointGroupName, data);
+            RestorePointGroupResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            RestorePointGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Create or update a restore point collection.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateOrUpdateARestorePointCollection()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/restorePointExamples/RestorePointCollection_CreateOrUpdate.json
+            // this example is just showing the usage of "RestorePointCollections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this RestorePointGroupResource
+            RestorePointGroupCollection collection = resourceGroupResource.GetRestorePointGroups();
+
+            // invoke the operation
+            string restorePointGroupName = "myRpc";
+            RestorePointGroupData data = new RestorePointGroupData(new AzureLocation("norwayeast"))
+            {
+                Source = new RestorePointGroupSource()
+                {
+                    Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
+                },
+                Tags =
+{
+["myTag1"] = "tagValue1",
+},
+            };
+            ArmOperation<RestorePointGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, restorePointGroupName, data);
+            RestorePointGroupResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            RestorePointGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

@@ -16,6 +16,301 @@ namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_VirtualMachineScaleSetVmCollection
     {
+        // VirtualMachineScaleSetVM_List_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetAll_VirtualMachineScaleSetVMListMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_List_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineScaleSetVMs_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaa";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // get the collection of this VirtualMachineScaleSetVmResource
+            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
+
+            // invoke the operation and iterate over the result
+            string filter = "aaaaaaaaaaaaaa";
+            string select = "aaaaaaaaaaaaaaaaaaaaa";
+            string expand = "aaaaaaaaaaaaa";
+            await foreach (VirtualMachineScaleSetVmResource item in collection.GetAllAsync(filter: filter, select: select, expand: expand))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualMachineScaleSetVmData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VirtualMachineScaleSetVM_List_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetAll_VirtualMachineScaleSetVMListMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_List_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineScaleSetVMs_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // get the collection of this VirtualMachineScaleSetVmResource
+            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
+
+            // invoke the operation and iterate over the result
+            await foreach (VirtualMachineScaleSetVmResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualMachineScaleSetVmData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // Get VM scale set VM with UserData
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetVMScaleSetVMWithUserData()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithUserData.json
+            // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string virtualMachineScaleSetName = "{vmss-name}";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // get the collection of this VirtualMachineScaleSetVmResource
+            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
+
+            // invoke the operation
+            string instanceId = "0";
+            VirtualMachineScaleSetVmResource result = await collection.GetAsync(instanceId);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineScaleSetVmData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get VM scale set VM with UserData
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetVMScaleSetVMWithUserData()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithUserData.json
+            // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string virtualMachineScaleSetName = "{vmss-name}";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // get the collection of this VirtualMachineScaleSetVmResource
+            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
+
+            // invoke the operation
+            string instanceId = "0";
+            bool result = await collection.ExistsAsync(instanceId);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get VM scale set VM with UserData
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetVMScaleSetVMWithUserData()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithUserData.json
+            // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string virtualMachineScaleSetName = "{vmss-name}";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // get the collection of this VirtualMachineScaleSetVmResource
+            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
+
+            // invoke the operation
+            string instanceId = "0";
+            NullableResponse<VirtualMachineScaleSetVmResource> response = await collection.GetIfExistsAsync(instanceId);
+            VirtualMachineScaleSetVmResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualMachineScaleSetVmData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // Get VM scale set VM with VMSizeProperties
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetVMScaleSetVMWithVMSizeProperties()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithVMSizeProperties.json
+            // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string virtualMachineScaleSetName = "{vmss-name}";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // get the collection of this VirtualMachineScaleSetVmResource
+            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
+
+            // invoke the operation
+            string instanceId = "0";
+            VirtualMachineScaleSetVmResource result = await collection.GetAsync(instanceId);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineScaleSetVmData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get VM scale set VM with VMSizeProperties
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetVMScaleSetVMWithVMSizeProperties()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithVMSizeProperties.json
+            // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string virtualMachineScaleSetName = "{vmss-name}";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // get the collection of this VirtualMachineScaleSetVmResource
+            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
+
+            // invoke the operation
+            string instanceId = "0";
+            bool result = await collection.ExistsAsync(instanceId);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get VM scale set VM with VMSizeProperties
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetVMScaleSetVMWithVMSizeProperties()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithVMSizeProperties.json
+            // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string virtualMachineScaleSetName = "{vmss-name}";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // get the collection of this VirtualMachineScaleSetVmResource
+            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
+
+            // invoke the operation
+            string instanceId = "0";
+            NullableResponse<VirtualMachineScaleSetVmResource> response = await collection.GetIfExistsAsync(instanceId);
+            VirtualMachineScaleSetVmResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualMachineScaleSetVmData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // VirtualMachineScaleSetVM_Update_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -419,301 +714,6 @@ DeleteOption = ComputeDeleteOption.Delete,
             VirtualMachineScaleSetVmData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get VM scale set VM with UserData
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetVMScaleSetVMWithUserData()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithUserData.json
-            // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
-            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string virtualMachineScaleSetName = "{vmss-name}";
-            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
-
-            // get the collection of this VirtualMachineScaleSetVmResource
-            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
-
-            // invoke the operation
-            string instanceId = "0";
-            VirtualMachineScaleSetVmResource result = await collection.GetAsync(instanceId);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineScaleSetVmData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get VM scale set VM with UserData
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetVMScaleSetVMWithUserData()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithUserData.json
-            // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
-            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string virtualMachineScaleSetName = "{vmss-name}";
-            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
-
-            // get the collection of this VirtualMachineScaleSetVmResource
-            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
-
-            // invoke the operation
-            string instanceId = "0";
-            bool result = await collection.ExistsAsync(instanceId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get VM scale set VM with UserData
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetVMScaleSetVMWithUserData()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithUserData.json
-            // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
-            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string virtualMachineScaleSetName = "{vmss-name}";
-            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
-
-            // get the collection of this VirtualMachineScaleSetVmResource
-            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
-
-            // invoke the operation
-            string instanceId = "0";
-            NullableResponse<VirtualMachineScaleSetVmResource> response = await collection.GetIfExistsAsync(instanceId);
-            VirtualMachineScaleSetVmResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineScaleSetVmData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Get VM scale set VM with VMSizeProperties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetVMScaleSetVMWithVMSizeProperties()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithVMSizeProperties.json
-            // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
-            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string virtualMachineScaleSetName = "{vmss-name}";
-            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
-
-            // get the collection of this VirtualMachineScaleSetVmResource
-            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
-
-            // invoke the operation
-            string instanceId = "0";
-            VirtualMachineScaleSetVmResource result = await collection.GetAsync(instanceId);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineScaleSetVmData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get VM scale set VM with VMSizeProperties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetVMScaleSetVMWithVMSizeProperties()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithVMSizeProperties.json
-            // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
-            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string virtualMachineScaleSetName = "{vmss-name}";
-            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
-
-            // get the collection of this VirtualMachineScaleSetVmResource
-            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
-
-            // invoke the operation
-            string instanceId = "0";
-            bool result = await collection.ExistsAsync(instanceId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get VM scale set VM with VMSizeProperties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetVMScaleSetVMWithVMSizeProperties()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithVMSizeProperties.json
-            // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
-            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string virtualMachineScaleSetName = "{vmss-name}";
-            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
-
-            // get the collection of this VirtualMachineScaleSetVmResource
-            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
-
-            // invoke the operation
-            string instanceId = "0";
-            NullableResponse<VirtualMachineScaleSetVmResource> response = await collection.GetIfExistsAsync(instanceId);
-            VirtualMachineScaleSetVmResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineScaleSetVmData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // VirtualMachineScaleSetVM_List_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_VirtualMachineScaleSetVMListMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_List_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineScaleSetVMs_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
-            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
-
-            // get the collection of this VirtualMachineScaleSetVmResource
-            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
-
-            // invoke the operation and iterate over the result
-            string filter = "aaaaaaaaaaaaaa";
-            string select = "aaaaaaaaaaaaaaaaaaaaa";
-            string expand = "aaaaaaaaaaaaa";
-            await foreach (VirtualMachineScaleSetVmResource item in collection.GetAllAsync(filter: filter, select: select, expand: expand))
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineScaleSetVmData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachineScaleSetVM_List_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_VirtualMachineScaleSetVMListMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_List_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineScaleSetVMs_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
-            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
-
-            // get the collection of this VirtualMachineScaleSetVmResource
-            VirtualMachineScaleSetVmCollection collection = virtualMachineScaleSet.GetVirtualMachineScaleSetVms();
-
-            // invoke the operation and iterate over the result
-            await foreach (VirtualMachineScaleSetVmResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineScaleSetVmData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
+    /// <summary> The hypervisor generation of the Virtual Machine [V1, V2]. </summary>
     public readonly partial struct HyperVGeneration : IEquatable<HyperVGeneration>
     {
         private readonly string _value;

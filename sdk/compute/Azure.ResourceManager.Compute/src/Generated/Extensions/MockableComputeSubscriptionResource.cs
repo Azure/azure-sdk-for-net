@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         private VirtualMachineScaleSetsRestOperations _virtualMachineScaleSetRestClient;
         private ClientDiagnostics _virtualMachineClientDiagnostics;
         private VirtualMachinesRestOperations _virtualMachineRestClient;
-        private ClientDiagnostics _virtualMachineImagesClientDiagnostics;
-        private VirtualMachineImagesRestOperations _virtualMachineImagesRestClient;
         private ClientDiagnostics _virtualMachineImagesEdgeZoneClientDiagnostics;
         private VirtualMachineImagesEdgeZoneRestOperations _virtualMachineImagesEdgeZoneRestClient;
+        private ClientDiagnostics _virtualMachineImagesClientDiagnostics;
+        private VirtualMachineImagesRestOperations _virtualMachineImagesRestClient;
         private ClientDiagnostics _availabilitySetClientDiagnostics;
         private AvailabilitySetsRestOperations _availabilitySetRestClient;
         private ClientDiagnostics _proximityPlacementGroupClientDiagnostics;
@@ -48,20 +48,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         private LogAnalyticsRestOperations _logAnalyticsRestClient;
         private ClientDiagnostics _virtualMachineRunCommandClientDiagnostics;
         private VirtualMachineRunCommandsRestOperations _virtualMachineRunCommandRestClient;
-        private ClientDiagnostics _managedDiskDisksClientDiagnostics;
-        private DisksRestOperations _managedDiskDisksRestClient;
-        private ClientDiagnostics _diskAccessClientDiagnostics;
-        private DiskAccessesRestOperations _diskAccessRestClient;
-        private ClientDiagnostics _diskEncryptionSetClientDiagnostics;
-        private DiskEncryptionSetsRestOperations _diskEncryptionSetRestClient;
-        private ClientDiagnostics _snapshotClientDiagnostics;
-        private SnapshotsRestOperations _snapshotRestClient;
-        private ClientDiagnostics _resourceSkusClientDiagnostics;
-        private ResourceSkusRestOperations _resourceSkusRestClient;
-        private ClientDiagnostics _galleryClientDiagnostics;
-        private GalleriesRestOperations _galleryRestClient;
-        private ClientDiagnostics _cloudServiceClientDiagnostics;
-        private CloudServicesRestOperations _cloudServiceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableComputeSubscriptionResource"/> class for mocking. </summary>
         protected MockableComputeSubscriptionResource()
@@ -83,10 +69,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         private VirtualMachineScaleSetsRestOperations VirtualMachineScaleSetRestClient => _virtualMachineScaleSetRestClient ??= new VirtualMachineScaleSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualMachineScaleSetResource.ResourceType));
         private ClientDiagnostics VirtualMachineClientDiagnostics => _virtualMachineClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineResource.ResourceType.Namespace, Diagnostics);
         private VirtualMachinesRestOperations VirtualMachineRestClient => _virtualMachineRestClient ??= new VirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualMachineResource.ResourceType));
-        private ClientDiagnostics VirtualMachineImagesClientDiagnostics => _virtualMachineImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private VirtualMachineImagesRestOperations VirtualMachineImagesRestClient => _virtualMachineImagesRestClient ??= new VirtualMachineImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics VirtualMachineImagesEdgeZoneClientDiagnostics => _virtualMachineImagesEdgeZoneClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private VirtualMachineImagesEdgeZoneRestOperations VirtualMachineImagesEdgeZoneRestClient => _virtualMachineImagesEdgeZoneRestClient ??= new VirtualMachineImagesEdgeZoneRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics VirtualMachineImagesClientDiagnostics => _virtualMachineImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private VirtualMachineImagesRestOperations VirtualMachineImagesRestClient => _virtualMachineImagesRestClient ??= new VirtualMachineImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics AvailabilitySetClientDiagnostics => _availabilitySetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", AvailabilitySetResource.ResourceType.Namespace, Diagnostics);
         private AvailabilitySetsRestOperations AvailabilitySetRestClient => _availabilitySetRestClient ??= new AvailabilitySetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AvailabilitySetResource.ResourceType));
         private ClientDiagnostics ProximityPlacementGroupClientDiagnostics => _proximityPlacementGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProximityPlacementGroupResource.ResourceType.Namespace, Diagnostics);
@@ -105,20 +91,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         private LogAnalyticsRestOperations LogAnalyticsRestClient => _logAnalyticsRestClient ??= new LogAnalyticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics VirtualMachineRunCommandClientDiagnostics => _virtualMachineRunCommandClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineRunCommandResource.ResourceType.Namespace, Diagnostics);
         private VirtualMachineRunCommandsRestOperations VirtualMachineRunCommandRestClient => _virtualMachineRunCommandRestClient ??= new VirtualMachineRunCommandsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualMachineRunCommandResource.ResourceType));
-        private ClientDiagnostics ManagedDiskDisksClientDiagnostics => _managedDiskDisksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ManagedDiskResource.ResourceType.Namespace, Diagnostics);
-        private DisksRestOperations ManagedDiskDisksRestClient => _managedDiskDisksRestClient ??= new DisksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedDiskResource.ResourceType));
-        private ClientDiagnostics DiskAccessClientDiagnostics => _diskAccessClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", DiskAccessResource.ResourceType.Namespace, Diagnostics);
-        private DiskAccessesRestOperations DiskAccessRestClient => _diskAccessRestClient ??= new DiskAccessesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DiskAccessResource.ResourceType));
-        private ClientDiagnostics DiskEncryptionSetClientDiagnostics => _diskEncryptionSetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", DiskEncryptionSetResource.ResourceType.Namespace, Diagnostics);
-        private DiskEncryptionSetsRestOperations DiskEncryptionSetRestClient => _diskEncryptionSetRestClient ??= new DiskEncryptionSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DiskEncryptionSetResource.ResourceType));
-        private ClientDiagnostics SnapshotClientDiagnostics => _snapshotClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", SnapshotResource.ResourceType.Namespace, Diagnostics);
-        private SnapshotsRestOperations SnapshotRestClient => _snapshotRestClient ??= new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SnapshotResource.ResourceType));
-        private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ResourceSkusRestOperations ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics GalleryClientDiagnostics => _galleryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", GalleryResource.ResourceType.Namespace, Diagnostics);
-        private GalleriesRestOperations GalleryRestClient => _galleryRestClient ??= new GalleriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(GalleryResource.ResourceType));
-        private ClientDiagnostics CloudServiceClientDiagnostics => _cloudServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", CloudServiceResource.ResourceType.Namespace, Diagnostics);
-        private CloudServicesRestOperations CloudServiceRestClient => _cloudServiceRestClient ??= new CloudServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CloudServiceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -203,293 +175,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         public virtual Response<VirtualMachineExtensionImageResource> GetVirtualMachineExtensionImage(AzureLocation location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
         {
             return GetVirtualMachineExtensionImages(location, publisherName).Get(type, version, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SharedGalleryResources in the SubscriptionResource. </summary>
-        /// <param name="location"> Resource location. </param>
-        /// <returns> An object representing collection of SharedGalleryResources and their operations over a SharedGalleryResource. </returns>
-        public virtual SharedGalleryCollection GetSharedGalleries(AzureLocation location)
-        {
-            return new SharedGalleryCollection(Client, Id, location);
-        }
-
-        /// <summary>
-        /// Get a shared gallery by subscription id or tenant id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedGalleries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SharedGalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SharedGalleryResource>> GetSharedGalleryAsync(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
-        {
-            return await GetSharedGalleries(location).GetAsync(galleryUniqueName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a shared gallery by subscription id or tenant id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedGalleries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SharedGalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SharedGalleryResource> GetSharedGallery(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
-        {
-            return GetSharedGalleries(location).Get(galleryUniqueName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CommunityGalleryResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of CommunityGalleryResources and their operations over a CommunityGalleryResource. </returns>
-        public virtual CommunityGalleryCollection GetCommunityGalleries()
-        {
-            return GetCachedClient(client => new CommunityGalleryCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a community gallery by gallery public name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunityGalleries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommunityGalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CommunityGalleryResource>> GetCommunityGalleryAsync(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
-        {
-            return await GetCommunityGalleries().GetAsync(location, publicGalleryName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a community gallery by gallery public name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunityGalleries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommunityGalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CommunityGalleryResource> GetCommunityGallery(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
-        {
-            return GetCommunityGalleries().Get(location, publicGalleryName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CloudServiceOSVersionResources in the SubscriptionResource. </summary>
-        /// <param name="location"> Name of the location that the OS versions pertain to. </param>
-        /// <returns> An object representing collection of CloudServiceOSVersionResources and their operations over a CloudServiceOSVersionResource. </returns>
-        public virtual CloudServiceOSVersionCollection GetCloudServiceOSVersions(AzureLocation location)
-        {
-            return new CloudServiceOSVersionCollection(Client, Id, location);
-        }
-
-        /// <summary>
-        /// Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceOSVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> Name of the location that the OS versions pertain to. </param>
-        /// <param name="osVersionName"> Name of the OS version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CloudServiceOSVersionResource>> GetCloudServiceOSVersionAsync(AzureLocation location, string osVersionName, CancellationToken cancellationToken = default)
-        {
-            return await GetCloudServiceOSVersions(location).GetAsync(osVersionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceOSVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> Name of the location that the OS versions pertain to. </param>
-        /// <param name="osVersionName"> Name of the OS version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CloudServiceOSVersionResource> GetCloudServiceOSVersion(AzureLocation location, string osVersionName, CancellationToken cancellationToken = default)
-        {
-            return GetCloudServiceOSVersions(location).Get(osVersionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CloudServiceOSFamilyResources in the SubscriptionResource. </summary>
-        /// <param name="location"> Name of the location that the OS families pertain to. </param>
-        /// <returns> An object representing collection of CloudServiceOSFamilyResources and their operations over a CloudServiceOSFamilyResource. </returns>
-        public virtual CloudServiceOSFamilyCollection GetCloudServiceOSFamilies(AzureLocation location)
-        {
-            return new CloudServiceOSFamilyCollection(Client, Id, location);
-        }
-
-        /// <summary>
-        /// Gets properties of a guest operating system family that can be specified in the XML service configuration (.cscfg) for a cloud service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServiceOperatingSystems_GetOSFamily</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceOSFamilyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> Name of the location that the OS families pertain to. </param>
-        /// <param name="osFamilyName"> Name of the OS family. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CloudServiceOSFamilyResource>> GetCloudServiceOSFamilyAsync(AzureLocation location, string osFamilyName, CancellationToken cancellationToken = default)
-        {
-            return await GetCloudServiceOSFamilies(location).GetAsync(osFamilyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets properties of a guest operating system family that can be specified in the XML service configuration (.cscfg) for a cloud service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServiceOperatingSystems_GetOSFamily</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceOSFamilyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> Name of the location that the OS families pertain to. </param>
-        /// <param name="osFamilyName"> Name of the OS family. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CloudServiceOSFamilyResource> GetCloudServiceOSFamily(AzureLocation location, string osFamilyName, CancellationToken cancellationToken = default)
-        {
-            return GetCloudServiceOSFamilies(location).Get(osFamilyName, cancellationToken);
         }
 
         /// <summary>
@@ -849,6 +534,638 @@ namespace Azure.ResourceManager.Compute.Mocking
         }
 
         /// <summary>
+        /// Gets a list of virtual machine image publishers for the specified Azure location and edge zone.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImagesEdgeZone_ListPublishers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="edgeZone"> The name of the edge zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListPublishersRequest(Id.SubscriptionId, location, edgeZone);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of virtual machine image publishers for the specified Azure location and edge zone.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImagesEdgeZone_ListPublishers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="edgeZone"> The name of the edge zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListPublishersRequest(Id.SubscriptionId, location, edgeZone);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of virtual machine image offers for the specified location, edge zone and publisher.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImagesEdgeZone_ListOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="edgeZone"> The name of the edge zone. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListOffersRequest(Id.SubscriptionId, location, edgeZone, publisherName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of virtual machine image offers for the specified location, edge zone and publisher.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImagesEdgeZone_ListOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="edgeZone"> The name of the edge zone. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListOffersRequest(Id.SubscriptionId, location, edgeZone, publisherName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of virtual machine image SKUs for the specified location, edge zone, publisher, and offer.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImagesEdgeZone_ListSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="edgeZone"> The name of the edge zone. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="offer"> A valid image publisher offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkusAsync(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListSkusRequest(Id.SubscriptionId, location, edgeZone, publisherName, offer);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of virtual machine image SKUs for the specified location, edge zone, publisher, and offer.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImagesEdgeZone_ListSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="edgeZone"> The name of the edge zone. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="offer"> A valid image publisher offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkus(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListSkusRequest(Id.SubscriptionId, location, edgeZone, publisherName, offer);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified location, edge zone, publisher, offer, and SKU.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImagesEdgeZone_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified location, edge zone, publisher, offer, and SKU.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImagesEdgeZone_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a virtual machine image in an edge zone.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImagesEdgeZone_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZone");
+            scope.Start();
+            try
+            {
+                var response = await VirtualMachineImagesEdgeZoneRestClient.GetAsync(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Version, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a virtual machine image in an edge zone.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImagesEdgeZone_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZone");
+            scope.Start();
+            try
+            {
+                var response = VirtualMachineImagesEdgeZoneRestClient.Get(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Version, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified edge zone
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/vmimages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImages_ListByEdgeZone</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="edgeZone"> The name of the edge zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZoneAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListByEdgeZoneRequest(Id.SubscriptionId, location, edgeZone);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified edge zone
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/vmimages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImages_ListByEdgeZone</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="edgeZone"> The name of the edge zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZone(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListByEdgeZoneRequest(Id.SubscriptionId, location, edgeZone);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of virtual machine image publishers for the specified Azure location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImages_ListPublishers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagePublishersAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListPublishersRequest(Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of virtual machine image publishers for the specified Azure location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImages_ListPublishers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagePublishers(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListPublishersRequest(Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of virtual machine image offers for the specified location and publisher.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImages_ListOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageOffersAsync(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListOffersRequest(Id.SubscriptionId, location, publisherName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of virtual machine image offers for the specified location and publisher.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImages_ListOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageOffers(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListOffersRequest(Id.SubscriptionId, location, publisherName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImages_ListSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="offer"> A valid image publisher offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageSkusAsync(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListSkusRequest(Id.SubscriptionId, location, publisherName, offer);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImages_ListSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="offer"> A valid image publisher offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageSkus(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListSkusRequest(Id.SubscriptionId, location, publisherName, offer);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImages", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineImages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImages(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImages", "", null, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a virtual machine image.
         /// <list type="bullet">
         /// <item>
@@ -938,638 +1255,6 @@ namespace Azure.ResourceManager.Compute.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImages_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImages", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImages_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImages(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImages", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of virtual machine image offers for the specified location and publisher.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImages_ListOffers</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="publisherName"> A valid image publisher. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageOffersAsync(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListOffersRequest(Id.SubscriptionId, location, publisherName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of virtual machine image offers for the specified location and publisher.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImages_ListOffers</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="publisherName"> A valid image publisher. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageOffers(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListOffersRequest(Id.SubscriptionId, location, publisherName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageOffers", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of virtual machine image publishers for the specified Azure location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImages_ListPublishers</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagePublishersAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListPublishersRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of virtual machine image publishers for the specified Azure location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImages_ListPublishers</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagePublishers(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListPublishersRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImages_ListSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="publisherName"> A valid image publisher. </param>
-        /// <param name="offer"> A valid image publisher offer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageSkusAsync(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListSkusRequest(Id.SubscriptionId, location, publisherName, offer);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImages_ListSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="publisherName"> A valid image publisher. </param>
-        /// <param name="offer"> A valid image publisher offer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageSkus(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListSkusRequest(Id.SubscriptionId, location, publisherName, offer);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all virtual machine image versions for the specified edge zone
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/vmimages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImages_ListByEdgeZone</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="edgeZone"> The name of the edge zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZoneAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListByEdgeZoneRequest(Id.SubscriptionId, location, edgeZone);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all virtual machine image versions for the specified edge zone
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/vmimages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImages_ListByEdgeZone</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="edgeZone"> The name of the edge zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZone(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListByEdgeZoneRequest(Id.SubscriptionId, location, edgeZone);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a virtual machine image in an edge zone.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImagesEdgeZone_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZone");
-            scope.Start();
-            try
-            {
-                var response = await VirtualMachineImagesEdgeZoneRestClient.GetAsync(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Version, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a virtual machine image in an edge zone.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImagesEdgeZone_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZone");
-            scope.Start();
-            try
-            {
-                var response = VirtualMachineImagesEdgeZoneRestClient.Get(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Version, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of all virtual machine image versions for the specified location, edge zone, publisher, offer, and SKU.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImagesEdgeZone_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all virtual machine image versions for the specified location, edge zone, publisher, offer, and SKU.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImagesEdgeZone_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of virtual machine image offers for the specified location, edge zone and publisher.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImagesEdgeZone_ListOffers</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="edgeZone"> The name of the edge zone. </param>
-        /// <param name="publisherName"> A valid image publisher. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListOffersRequest(Id.SubscriptionId, location, edgeZone, publisherName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of virtual machine image offers for the specified location, edge zone and publisher.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImagesEdgeZone_ListOffers</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="edgeZone"> The name of the edge zone. </param>
-        /// <param name="publisherName"> A valid image publisher. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListOffersRequest(Id.SubscriptionId, location, edgeZone, publisherName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of virtual machine image publishers for the specified Azure location and edge zone.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImagesEdgeZone_ListPublishers</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="edgeZone"> The name of the edge zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListPublishersRequest(Id.SubscriptionId, location, edgeZone);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of virtual machine image publishers for the specified Azure location and edge zone.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImagesEdgeZone_ListPublishers</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="edgeZone"> The name of the edge zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListPublishersRequest(Id.SubscriptionId, location, edgeZone);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of virtual machine image SKUs for the specified location, edge zone, publisher, and offer.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImagesEdgeZone_ListSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="edgeZone"> The name of the edge zone. </param>
-        /// <param name="publisherName"> A valid image publisher. </param>
-        /// <param name="offer"> A valid image publisher offer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkusAsync(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListSkusRequest(Id.SubscriptionId, location, edgeZone, publisherName, offer);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of virtual machine image SKUs for the specified location, edge zone, publisher, and offer.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImagesEdgeZone_ListSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="edgeZone"> The name of the edge zone. </param>
-        /// <param name="publisherName"> A valid image publisher. </param>
-        /// <param name="offer"> A valid image publisher offer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkus(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListSkusRequest(Id.SubscriptionId, location, edgeZone, publisherName, offer);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImageBase.DeserializeVirtualMachineImageBase(e), VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2318,422 +2003,6 @@ namespace Azure.ResourceManager.Compute.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Lists all the disks under a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/disks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Disks_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDiskResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedDiskResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedDiskResource> GetManagedDisksAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedDiskDisksRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedDiskDisksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), ManagedDiskDisksClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetManagedDisks", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the disks under a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/disks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Disks_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDiskResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedDiskResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedDiskResource> GetManagedDisks(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedDiskDisksRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedDiskDisksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), ManagedDiskDisksClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetManagedDisks", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the disk access resources under a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskAccesses</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskAccesses_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskAccessResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskAccessResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DiskAccessResource> GetDiskAccessesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiskAccessRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskAccessRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskAccessResource(Client, DiskAccessData.DeserializeDiskAccessData(e)), DiskAccessClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetDiskAccesses", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the disk access resources under a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskAccesses</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskAccesses_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskAccessResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskAccessResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DiskAccessResource> GetDiskAccesses(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiskAccessRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskAccessRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskAccessResource(Client, DiskAccessData.DeserializeDiskAccessData(e)), DiskAccessClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetDiskAccesses", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the disk encryption sets under a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskEncryptionSets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskEncryptionSets_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskEncryptionSetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskEncryptionSetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DiskEncryptionSetResource> GetDiskEncryptionSetsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiskEncryptionSetRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskEncryptionSetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskEncryptionSetResource(Client, DiskEncryptionSetData.DeserializeDiskEncryptionSetData(e)), DiskEncryptionSetClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetDiskEncryptionSets", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the disk encryption sets under a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskEncryptionSets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskEncryptionSets_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskEncryptionSetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskEncryptionSetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DiskEncryptionSetResource> GetDiskEncryptionSets(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiskEncryptionSetRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskEncryptionSetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskEncryptionSetResource(Client, DiskEncryptionSetData.DeserializeDiskEncryptionSetData(e)), DiskEncryptionSetClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetDiskEncryptionSets", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists snapshots under a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/snapshots</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Snapshots_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SnapshotResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SnapshotResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SnapshotResource> GetSnapshotsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SnapshotRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SnapshotRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SnapshotResource(Client, SnapshotData.DeserializeSnapshotData(e)), SnapshotClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetSnapshots", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists snapshots under a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/snapshots</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Snapshots_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SnapshotResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SnapshotResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SnapshotResource> GetSnapshots(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SnapshotRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SnapshotRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SnapshotResource(Client, SnapshotData.DeserializeSnapshotData(e)), SnapshotClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetSnapshots", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of Microsoft.Compute SKUs available for your Subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceSkus_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
-        /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ComputeResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ComputeResourceSku> GetComputeResourceSkusAsync(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, filter, includeExtendedLocations);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, includeExtendedLocations);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ComputeResourceSku.DeserializeComputeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of Microsoft.Compute SKUs available for your Subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceSkus_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
-        /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComputeResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ComputeResourceSku> GetComputeResourceSkus(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, filter, includeExtendedLocations);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, includeExtendedLocations);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ComputeResourceSku.DeserializeComputeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List galleries under a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/galleries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Galleries_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GalleryResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GalleryResource> GetGalleriesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => GalleryRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GalleryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GalleryResource(Client, GalleryData.DeserializeGalleryData(e)), GalleryClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetGalleries", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List galleries under a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/galleries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Galleries_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GalleryResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GalleryResource> GetGalleries(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => GalleryRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GalleryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryResource(Client, GalleryData.DeserializeGalleryData(e)), GalleryClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetGalleries", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all cloud services in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/cloudServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServices_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CloudServiceResource> GetCloudServicesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CloudServiceRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudServiceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudServiceResource(Client, CloudServiceData.DeserializeCloudServiceData(e)), CloudServiceClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetCloudServices", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all cloud services in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of Cloud Services. Do this till nextLink is null to fetch all the Cloud Services.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/cloudServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServices_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CloudServiceResource> GetCloudServices(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CloudServiceRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudServiceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudServiceResource(Client, CloudServiceData.DeserializeCloudServiceData(e)), CloudServiceClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetCloudServices", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(MaximumDuration))
             {
                 writer.WritePropertyName("maximumDuration"u8);
-                writer.WriteStringValue(MaximumDuration.Value, "P");
+                writer.WriteStringValue(MaximumDuration.Value, "c");
             }
             writer.WritePropertyName("rebootSetting"u8);
             writer.WriteStringValue(RebootSetting.ToString());
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    maximumDuration = property.Value.GetTimeSpan("P");
+                    maximumDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("rebootSetting"u8))

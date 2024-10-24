@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
@@ -50,42 +49,79 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // VirtualMachine_Capture_MaximumSet_Gen
+        // VirtualMachine_ListAll_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Capture_VirtualMachineCaptureMaximumSetGen()
+        public async Task GetVirtualMachines_VirtualMachineListAllMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Capture_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_Capture" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_ListAll_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachines_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
             string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string vmName = "aaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // invoke the operation
-            VirtualMachineCaptureContent content = new VirtualMachineCaptureContent("aaaaaaaaa", "aaaaaaa", true);
-            ArmOperation<VirtualMachineCaptureResult> lro = await virtualMachine.CaptureAsync(WaitUntil.Completed, content);
-            VirtualMachineCaptureResult result = lro.Value;
+            // invoke the operation and iterate over the result
+            string statusOnly = "aaaaaa";
+            string filter = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            await foreach (VirtualMachineResource item in subscriptionResource.GetVirtualMachinesAsync(statusOnly: statusOnly, filter: filter))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualMachineData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine($"Succeeded");
         }
 
-        // VirtualMachine_Capture_MinimumSet_Gen
+        // VirtualMachine_ListAll_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Capture_VirtualMachineCaptureMinimumSetGen()
+        public async Task GetVirtualMachines_VirtualMachineListAllMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Capture_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_Capture" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_ListAll_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachines_ListAll" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (VirtualMachineResource item in subscriptionResource.GetVirtualMachinesAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualMachineData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // Get a Virtual Machine.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetAVirtualMachine()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get.json
+            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -95,17 +131,114 @@ namespace Azure.ResourceManager.Compute.Samples
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
             string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string vmName = "aaaaaaaaaaaaa";
+            string resourceGroupName = "myResourceGroup";
+            string vmName = "myVM";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            VirtualMachineCaptureContent content = new VirtualMachineCaptureContent("aaaaaaaaa", "aaaaaaa", true);
-            ArmOperation<VirtualMachineCaptureResult> lro = await virtualMachine.CaptureAsync(WaitUntil.Completed, content);
-            VirtualMachineCaptureResult result = lro.Value;
+            InstanceViewType? expand = InstanceViewType.UserData;
+            VirtualMachineResource result = await virtualMachine.GetAsync(expand: expand);
 
-            Console.WriteLine($"Succeeded: {result}");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get a virtual machine placed on a dedicated host group through automatic placement
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
+            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string vmName = "myVM";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            VirtualMachineResource result = await virtualMachine.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get a virtual machine with Disk Controller Type Properties
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetAVirtualMachineWithDiskControllerTypeProperties()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithDiskControllerType.json
+            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string vmName = "myVM";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            InstanceViewType? expand = InstanceViewType.UserData;
+            VirtualMachineResource result = await virtualMachine.GetAsync(expand: expand);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get a virtual machine with VM Size Properties
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetAVirtualMachineWithVMSizeProperties()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
+            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string vmName = "myVM";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            VirtualMachineResource result = await virtualMachine.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         // Update a VM by detaching data disk
@@ -311,13 +444,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded");
         }
 
-        // Get a Virtual Machine.
+        // Assess patch state of a virtual machine.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetAVirtualMachine()
+        public async Task AssessPatches_AssessPatchStateOfAVirtualMachine()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_AssessPatches.json
+            // this example is just showing the usage of "VirtualMachines_AssessPatches" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -327,150 +460,25 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
             string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string vmName = "myVM";
+            string resourceGroupName = "myResourceGroupName";
+            string vmName = "myVMName";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            InstanceViewType? expand = InstanceViewType.UserData;
-            VirtualMachineResource result = await virtualMachine.GetAsync(expand: expand);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get a virtual machine placed on a dedicated host group through automatic placement
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_AutoPlacedOnDedicatedHostGroup.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            VirtualMachineResource result = await virtualMachine.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get a virtual machine with Disk Controller Type Properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetAVirtualMachineWithDiskControllerTypeProperties()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithDiskControllerType.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            InstanceViewType? expand = InstanceViewType.UserData;
-            VirtualMachineResource result = await virtualMachine.GetAsync(expand: expand);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get a virtual machine with VM Size Properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetAVirtualMachineWithVMSizeProperties()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_WithVMSizeProperties.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            VirtualMachineResource result = await virtualMachine.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get Virtual Machine Instance View.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task InstanceView_GetVirtualMachineInstanceView()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_InstanceView.json
-            // this example is just showing the usage of "VirtualMachines_InstanceView" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string vmName = "myVM";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            VirtualMachineInstanceView result = await virtualMachine.InstanceViewAsync();
+            ArmOperation<VirtualMachineAssessPatchesResult> lro = await virtualMachine.AssessPatchesAsync(WaitUntil.Completed);
+            VirtualMachineAssessPatchesResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get instance view of a virtual machine placed on a dedicated host group through automatic placement.
+        // VirtualMachine_AttachDetachDataDisks_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task InstanceView_GetInstanceViewOfAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
+        public async Task AttachDetachDataDisks_VirtualMachineAttachDetachDataDisksMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_InstanceViewAutoPlacedOnDedicatedHostGroup.json
-            // this example is just showing the usage of "VirtualMachines_InstanceView" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_AttachDetachDataDisks_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachines_AttachDetachDataDisks" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -480,13 +488,142 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
             string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string vmName = "myVM";
+            string resourceGroupName = "rgcompute";
+            string vmName = "aaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            VirtualMachineInstanceView result = await virtualMachine.InstanceViewAsync();
+            AttachDetachDataDisksRequest attachDetachDataDisksRequest = new AttachDetachDataDisksRequest()
+            {
+                DataDisksToAttach =
+{
+new DataDisksToAttach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_0_disk2_6c4f554bdafa49baa780eb2d128ff39d")
+{
+Lun = 1,
+Caching = CachingType.ReadOnly,
+DeleteOption = DiskDeleteOptionType.Delete,
+DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
+WriteAcceleratorEnabled = true,
+},new DataDisksToAttach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_2_disk3_7d5e664bdafa49baa780eb2d128ff38e")
+{
+Lun = 2,
+Caching = CachingType.ReadWrite,
+DeleteOption = DiskDeleteOptionType.Detach,
+DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
+WriteAcceleratorEnabled = false,
+}
+},
+                DataDisksToDetach =
+{
+new DataDisksToDetach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_1_disk1_1a4e784bdafa49baa780eb2d128ff65x")
+{
+DetachOption = DiskDetachOptionType.ForceDetach,
+},new DataDisksToDetach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_4_disk4_4d4e784bdafa49baa780eb2d256ff41z")
+{
+DetachOption = DiskDetachOptionType.ForceDetach,
+}
+},
+            };
+            ArmOperation<VirtualMachineStorageProfile> lro = await virtualMachine.AttachDetachDataDisksAsync(WaitUntil.Completed, attachDetachDataDisksRequest);
+            VirtualMachineStorageProfile result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // VirtualMachine_AttachDetachDataDisks_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task AttachDetachDataDisks_VirtualMachineAttachDetachDataDisksMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_AttachDetachDataDisks_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachines_AttachDetachDataDisks" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string vmName = "azure-vm";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            AttachDetachDataDisksRequest attachDetachDataDisksRequest = new AttachDetachDataDisksRequest()
+            {
+                DataDisksToAttach =
+{
+new DataDisksToAttach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_0_disk2_6c4f554bdafa49baa780eb2d128ff39d")
+},
+                DataDisksToDetach =
+{
+new DataDisksToDetach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_1_disk1_1a4e784bdafa49baa780eb2d128ff65x")
+},
+            };
+            ArmOperation<VirtualMachineStorageProfile> lro = await virtualMachine.AttachDetachDataDisksAsync(WaitUntil.Completed, attachDetachDataDisksRequest);
+            VirtualMachineStorageProfile result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // VirtualMachine_Capture_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Capture_VirtualMachineCaptureMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Capture_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachines_Capture" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string vmName = "aaaaaaaaaaaaaaaaaaaa";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            VirtualMachineCaptureContent content = new VirtualMachineCaptureContent("aaaaaaaaa", "aaaaaaa", true);
+            ArmOperation<VirtualMachineCaptureResult> lro = await virtualMachine.CaptureAsync(WaitUntil.Completed, content);
+            VirtualMachineCaptureResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // VirtualMachine_Capture_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Capture_VirtualMachineCaptureMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Capture_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachines_Capture" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string vmName = "aaaaaaaaaaaaa";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            VirtualMachineCaptureContent content = new VirtualMachineCaptureContent("aaaaaaaaa", "aaaaaaa", true);
+            ArmOperation<VirtualMachineCaptureResult> lro = await virtualMachine.CaptureAsync(WaitUntil.Completed, content);
+            VirtualMachineCaptureResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -627,79 +764,53 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded");
         }
 
-        // VirtualMachine_ListAll_MaximumSet_Gen
+        // Install patch state of a virtual machine.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachines_VirtualMachineListAllMaximumSetGen()
+        public async Task InstallPatches_InstallPatchStateOfAVirtualMachine()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_ListAll_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_ListAll" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_InstallPatches.json
+            // this example is just showing the usage of "VirtualMachines_InstallPatches" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
             string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "myResourceGroupName";
+            string vmName = "myVMName";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
-            // invoke the operation and iterate over the result
-            string statusOnly = "aaaaaa";
-            string filter = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            await foreach (VirtualMachineResource item in subscriptionResource.GetVirtualMachinesAsync(statusOnly: statusOnly, filter: filter))
+            // invoke the operation
+            VirtualMachineInstallPatchesContent content = new VirtualMachineInstallPatchesContent(VmGuestPatchRebootSetting.IfRequired)
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                MaximumDuration = TimeSpan.Parse("PT4H"),
+                WindowsParameters = new WindowsParameters()
+                {
+                    ClassificationsToInclude =
+{
+VmGuestPatchClassificationForWindows.Critical,VmGuestPatchClassificationForWindows.Security
+},
+                    MaxPatchPublishOn = DateTimeOffset.Parse("2020-11-19T02:36:43.0539904+00:00"),
+                },
+            };
+            ArmOperation<VirtualMachineInstallPatchesResult> lro = await virtualMachine.InstallPatchesAsync(WaitUntil.Completed, content);
+            VirtualMachineInstallPatchesResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VirtualMachine_ListAll_MinimumSet_Gen
+        // Get Virtual Machine Instance View.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualMachines_VirtualMachineListAllMinimumSetGen()
+        public async Task InstanceView_GetVirtualMachineInstanceView()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_ListAll_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_ListAll" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (VirtualMachineResource item in subscriptionResource.GetVirtualMachinesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Lists all available virtual machine sizes to which the specified virtual machine can be resized
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAvailableSizes_ListsAllAvailableVirtualMachineSizesToWhichTheSpecifiedVirtualMachineCanBeResized()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_ListAvailableVmSizes.json
-            // this example is just showing the usage of "VirtualMachines_ListAvailableSizes" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_InstanceView.json
+            // this example is just showing the usage of "VirtualMachines_InstanceView" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -710,15 +821,93 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "myResourceGroup";
-            string vmName = "myVmName";
+            string vmName = "myVM";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (VirtualMachineSize item in virtualMachine.GetAvailableSizesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+            // invoke the operation
+            VirtualMachineInstanceView result = await virtualMachine.InstanceViewAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get instance view of a virtual machine placed on a dedicated host group through automatic placement.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task InstanceView_GetInstanceViewOfAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Get_InstanceViewAutoPlacedOnDedicatedHostGroup.json
+            // this example is just showing the usage of "VirtualMachines_InstanceView" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string vmName = "myVM";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            VirtualMachineInstanceView result = await virtualMachine.InstanceViewAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // VirtualMachine_PerformMaintenance_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task PerformMaintenance_VirtualMachinePerformMaintenanceMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_PerformMaintenance_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachines_PerformMaintenance" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string vmName = "aaaaaaa";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            await virtualMachine.PerformMaintenanceAsync(WaitUntil.Completed);
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VirtualMachine_PerformMaintenance_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task PerformMaintenance_VirtualMachinePerformMaintenanceMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_PerformMaintenance_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachines_PerformMaintenance" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string vmName = "aaaaaaaaaa";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            await virtualMachine.PerformMaintenanceAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -801,114 +990,6 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             // invoke the operation
             await virtualMachine.ReapplyAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachine_Restart_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Restart_VirtualMachineRestartMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Restart_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_Restart" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string vmName = "aaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            await virtualMachine.RestartAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachine_Restart_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Restart_VirtualMachineRestartMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Restart_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_Restart" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string vmName = "aaa";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            await virtualMachine.RestartAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachine_Start_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task PowerOn_VirtualMachineStartMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Start_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_Start" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string vmName = "aaaaaaaaaaaaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            await virtualMachine.PowerOnAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachine_Start_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task PowerOn_VirtualMachineStartMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Start_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_Start" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string vmName = "aaaaa";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            await virtualMachine.PowerOnAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -1035,6 +1116,60 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded");
         }
 
+        // VirtualMachine_Restart_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Restart_VirtualMachineRestartMaximumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Restart_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachines_Restart" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string vmName = "aaaaaaaaaaaaaaaaaaaa";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            await virtualMachine.RestartAsync(WaitUntil.Completed);
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VirtualMachine_Restart_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Restart_VirtualMachineRestartMinimumSetGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Restart_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachines_Restart" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "rgcompute";
+            string vmName = "aaa";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation
+            await virtualMachine.RestartAsync(WaitUntil.Completed);
+
+            Console.WriteLine($"Succeeded");
+        }
+
         // RetrieveBootDiagnosticsData of a virtual machine.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -1061,60 +1196,6 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             RetrieveBootDiagnosticsDataResult result = await virtualMachine.RetrieveBootDiagnosticsDataAsync(sasUriExpirationTimeInMinutes: sasUriExpirationTimeInMinutes);
 
             Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // VirtualMachine_PerformMaintenance_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task PerformMaintenance_VirtualMachinePerformMaintenanceMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_PerformMaintenance_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_PerformMaintenance" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string vmName = "aaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            await virtualMachine.PerformMaintenanceAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // VirtualMachine_PerformMaintenance_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task PerformMaintenance_VirtualMachinePerformMaintenanceMinimumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_PerformMaintenance_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_PerformMaintenance" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "rgcompute";
-            string vmName = "aaaaaaaaaa";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            await virtualMachine.PerformMaintenanceAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
         }
 
         // Simulate Eviction a virtual machine.
@@ -1144,81 +1225,13 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             Console.WriteLine($"Succeeded");
         }
 
-        // Assess patch state of a virtual machine.
+        // VirtualMachine_Start_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task AssessPatches_AssessPatchStateOfAVirtualMachine()
+        public async Task PowerOn_VirtualMachineStartMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_AssessPatches.json
-            // this example is just showing the usage of "VirtualMachines_AssessPatches" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroupName";
-            string vmName = "myVMName";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            ArmOperation<VirtualMachineAssessPatchesResult> lro = await virtualMachine.AssessPatchesAsync(WaitUntil.Completed);
-            VirtualMachineAssessPatchesResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Install patch state of a virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task InstallPatches_InstallPatchStateOfAVirtualMachine()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_InstallPatches.json
-            // this example is just showing the usage of "VirtualMachines_InstallPatches" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineResource created on azure
-            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroupName";
-            string vmName = "myVMName";
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
-
-            // invoke the operation
-            VirtualMachineInstallPatchesContent content = new VirtualMachineInstallPatchesContent(VmGuestPatchRebootSetting.IfRequired)
-            {
-                MaximumDuration = XmlConvert.ToTimeSpan("PT4H"),
-                WindowsParameters = new WindowsParameters()
-                {
-                    ClassificationsToInclude =
-{
-VmGuestPatchClassificationForWindows.Critical,VmGuestPatchClassificationForWindows.Security
-},
-                    MaxPatchPublishOn = DateTimeOffset.Parse("2020-11-19T02:36:43.0539904+00:00"),
-                },
-            };
-            ArmOperation<VirtualMachineInstallPatchesResult> lro = await virtualMachine.InstallPatchesAsync(WaitUntil.Completed, content);
-            VirtualMachineInstallPatchesResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // VirtualMachine_AttachDetachDataDisks_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task AttachDetachDataDisks_VirtualMachineAttachDetachDataDisksMaximumSetGen()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_AttachDetachDataDisks_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_AttachDetachDataDisks" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Start_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachines_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -1234,50 +1247,18 @@ VmGuestPatchClassificationForWindows.Critical,VmGuestPatchClassificationForWindo
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            AttachDetachDataDisksRequest attachDetachDataDisksRequest = new AttachDetachDataDisksRequest()
-            {
-                DataDisksToAttach =
-{
-new DataDisksToAttach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_0_disk2_6c4f554bdafa49baa780eb2d128ff39d")
-{
-Lun = 1,
-Caching = CachingType.ReadOnly,
-DeleteOption = DiskDeleteOptionType.Delete,
-DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
-WriteAcceleratorEnabled = true,
-},new DataDisksToAttach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_2_disk3_7d5e664bdafa49baa780eb2d128ff38e")
-{
-Lun = 2,
-Caching = CachingType.ReadWrite,
-DeleteOption = DiskDeleteOptionType.Detach,
-DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
-WriteAcceleratorEnabled = false,
-}
-},
-                DataDisksToDetach =
-{
-new DataDisksToDetach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_1_disk1_1a4e784bdafa49baa780eb2d128ff65x")
-{
-DetachOption = DiskDetachOptionType.ForceDetach,
-},new DataDisksToDetach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_4_disk4_4d4e784bdafa49baa780eb2d256ff41z")
-{
-DetachOption = DiskDetachOptionType.ForceDetach,
-}
-},
-            };
-            ArmOperation<VirtualMachineStorageProfile> lro = await virtualMachine.AttachDetachDataDisksAsync(WaitUntil.Completed, attachDetachDataDisksRequest);
-            VirtualMachineStorageProfile result = lro.Value;
+            await virtualMachine.PowerOnAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine($"Succeeded");
         }
 
-        // VirtualMachine_AttachDetachDataDisks_MinimumSet_Gen
+        // VirtualMachine_Start_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task AttachDetachDataDisks_VirtualMachineAttachDetachDataDisksMinimumSetGen()
+        public async Task PowerOn_VirtualMachineStartMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_AttachDetachDataDisks_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachines_AttachDetachDataDisks" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_Start_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachines_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -1288,26 +1269,44 @@ DetachOption = DiskDetachOptionType.ForceDetach,
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
-            string vmName = "azure-vm";
+            string vmName = "aaaaa";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            AttachDetachDataDisksRequest attachDetachDataDisksRequest = new AttachDetachDataDisksRequest()
-            {
-                DataDisksToAttach =
-{
-new DataDisksToAttach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_0_disk2_6c4f554bdafa49baa780eb2d128ff39d")
-},
-                DataDisksToDetach =
-{
-new DataDisksToDetach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_1_disk1_1a4e784bdafa49baa780eb2d128ff65x")
-},
-            };
-            ArmOperation<VirtualMachineStorageProfile> lro = await virtualMachine.AttachDetachDataDisksAsync(WaitUntil.Completed, attachDetachDataDisksRequest);
-            VirtualMachineStorageProfile result = lro.Value;
+            await virtualMachine.PowerOnAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine($"Succeeded");
+        }
+
+        // Lists all available virtual machine sizes to which the specified virtual machine can be resized
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetAvailableSizes_ListsAllAvailableVirtualMachineSizesToWhichTheSpecifiedVirtualMachineCanBeResized()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineExamples/VirtualMachine_ListAvailableVmSizes.json
+            // this example is just showing the usage of "VirtualMachines_ListAvailableSizes" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineResource created on azure
+            // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string vmName = "myVmName";
+            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
+            VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (VirtualMachineSize item in virtualMachine.GetAvailableSizesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
         }
 
         // VirtualMachineRunCommand
