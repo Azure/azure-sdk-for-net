@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0 (Unreleased)
+## 1.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -12,12 +12,6 @@
 - Support for VoIP to PSTN transfer scenario
 - Added CreateCallFailed event to signify when create call API fails to establish a call
 - Added AnswerFailed event to signify when answer call API fails to answer a call
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.3.0-beta.1 (2024-08-02)
 
