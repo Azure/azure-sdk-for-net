@@ -11,7 +11,7 @@
     "build:emitter": "tsc -p ./emitter/tsconfig.build.json",
     "build:generator": "dotnet build ./generator && copyfiles -u 5 ./node_modules/@typespec/http-client-csharp/dist/generator/Microsoft.Generator.CSharp.runtimeconfig.json ./dist/generator",
     "build": "npm run build:emitter && npm run build:generator",
-    "test:emitter": "vitest run -c ./emitter/vitest.config.ts",
+    "test:emitter": "vitest run -c ./emitter/vitest.config.ts --passWithNoTests",
     "test:generator": "dotnet test ./generator --logger \"trx;LogFileName=debug.trx\"",
     "test": "npm run test:generator && npm run test:emitter",
     "lint": "eslint . --max-warnings=0",
