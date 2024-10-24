@@ -1,4 +1,4 @@
-## Sample of Mapping claims using ADFS
+## Sample of Mapping claims using NuGet
 
 Below is sample code for adding a string and string array as two new claims to the response with the NuGet
 ```csharp
