@@ -1,15 +1,15 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.8.0 (2024-10-24)
 
 ### Features Added
 
-- Exposed `JsonModelWriteCore` for model serialization procedure.
-- Upgraded api-version to 'package-netapp-2024-07-01'.
+- Upgraded api-version tag from 'package-2024-03' to 'package-2024-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f37b54b187bac95237c62478a10b94e9cff236f3/specification/netapp/resource-manager/readme.md.
 - Added support for external migration replication volumes with operations `PeerExternalClusterAsync`, `AuthorizeExternalReplicationAsync`, `PerformReplicationTransferAsync`, `FinalizeExternalReplicationAsync`
 - Added `RemotePath` to `ReplicationObject` 
 - Added `AvailabilityZone` to `FilePathAvailabilityRequest`
 - Added read-only property `EffectiveNetworkFeatures` to `Volume` `VolumeProperties` and `VolumeGroupVolumeProperties`
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 

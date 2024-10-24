@@ -9,7 +9,7 @@ csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
 require: https://github.com/Azure/azure-rest-api-specs/blob/f37b54b187bac95237c62478a10b94e9cff236f3/specification/netapp/resource-manager/readme.md
-tag: package-2024-07
+#tag: package-2024-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -21,8 +21,8 @@ modelerfour:
 use-model-reader-writer: true
 use-write-core: true
 
-mgmt-debug:
-  show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
