@@ -2300,58 +2300,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 throw;
             }
         }
-        private async Task<(string CallerCallConnectionId, string TargetCallConnectionId)> CreateAndAnswerCallWithMediaOrTranscriptionOptions(
-            CallAutomationClient client,
-            CallAutomationClient targetClient,
-            CommunicationUserIdentifier target,
-            string uniqueId,
-            bool isOutboundValidation
-            )
-        {
-            try
-            {
-                // create call and assert response
-                var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
-                if (isOutboundValidation)
-                {
-                    createCallOptions.CallIntelligenceOptions = new CallIntelligenceOptions()
-                    {
-                        CognitiveServicesEndpoint = new Uri(TestEnvironment.CognitiveServiceEndpoint)
-                    };
-                }
-                CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
-                var callerCallConnectionId = response.CallConnectionProperties.CallConnectionId;
-                Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
-
-                // wait for incomingcall context
-                string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(incomingCallContext);
-
-                // answer the call
-                var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
-                if (!isOutboundValidation)
-                {
-                    answerCallOptions.CallIntelligenceOptions = new CallIntelligenceOptions()
-                    {
-                        CognitiveServicesEndpoint = new Uri(TestEnvironment.CognitiveServiceEndpoint)
-                    };
-                }
-                AnswerCallResult answerResponse = await targetClient.AnswerCallAsync(answerCallOptions);
-
-                var targetCallConnectionId = answerResponse.CallConnectionProperties.CallConnectionId;
-                // wait for callConnected
-
-                var connectedEvent = await WaitForEvent<CallConnected>(targetCallConnectionId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(connectedEvent);
-                Assert.IsTrue(connectedEvent is CallConnected);
-                Assert.AreEqual(targetCallConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
-                return (callerCallConnectionId, targetCallConnectionId);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
 
         private async Task VerifyRecognizeFailedEventForMultipleSources(string callConnectionId,
             CallAutomationClient client, List<PlaySource> playMultipleSources,

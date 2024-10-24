@@ -12,28 +12,27 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
     public class CallAutomationTestBase
     {
         protected const string ConnectionString = "endpoint=https://contoso.azure.com/;accesskey=ZHVtbXlhY2Nlc3NrZXk=";
-        protected const string DummyPayload = "{{" +
-                                        "\"callConnectionId\": \"someCallConnectionId\"," +
-                                        "\"serverCallId\": \"someServerCallId\"," +
-                                        "\"targets\": [" +
-                                           "{{" +
-                                               "\"rawId\":\"targetId\"," +
-                                               "\"kind\":\"communicationUser\"," +
-                                               "\"communicationUser\":{{\"id\":\"targetId\"}}" +
-                                            "}}" +
-                                        "]," +
-                                        "\"sourceDisplayName\": \"displayName\"," +
-                                        "\"source\":{{" +
-                                                  "\"rawId\":\"sourceId\"," +
-                                                  "\"kind\":\"communicationUser\"," +
-                                                  "\"communicationUser\":{{\"id\":\"sourceId\"}}" +
-                                                            "}}," +
-                                        "\"callConnectionState\": \"connecting\"," +
-                                        "\"subject\": \"dummySubject\"," +
-                                        "\"callbackUri\": \"https://bot.contoso.com/callback\"," +
-                                        "\"mediaStreamingSubscription\": {0}," +
-                                        "\"transcriptionSubscription\": {1}" +
-                                        "}}";
+        protected const string DummyPayload = "{" +
+                                         "\"callConnectionId\": \"someCallConnectionId\"," +
+                                         "\"serverCallId\": \"someServerCallId\"," +
+                                         "\"targets\": [" +
+                                             "{" +
+                                                 "\"rawId\": \"targetId\"," +
+                                                 "\"kind\": \"communicationUser\"," +
+                                                 "\"communicationUser\": {\"id\": \"targetId\"}" +
+                                             "}" +
+                                         "]," +
+                                         "\"sourceDisplayName\": \"displayName\"," +
+                                         "\"source\": {" +
+                                             "\"rawId\": \"sourceId\"," +
+                                             "\"kind\": \"communicationUser\"," +
+                                             "\"communicationUser\": {\"id\": \"sourceId\"}" +
+                                         "}," +
+                                         "\"callConnectionState\": \"connecting\"," +
+                                         "\"subject\": \"dummySubject\"," +
+                                         "\"callbackUri\": \"https://bot.contoso.com/callback\"" +
+                                         "}";
+
         protected const string DummyConnectPayload = "{" +
                                         "\"callConnectionId\": \"someCallConnectionId\"," +
                                         "\"serverCallId\": \"someServerCallId\"," +
@@ -49,21 +48,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected const string CallBackUri = "https://bot.contoso.com/callback";
         protected const string DisplayName = "displayName";
         protected static readonly CallLocator _serverCallLocator = new ServerCallLocator(ServerCallId);
-
-        private const string NoneMediaStreamingSubscription = "null";
-        private const string MediaSubscriptionId = "\"mediaSubscriptionId\"";
-        private const string MediaStreamingSubscription = "{" +
-                                        " \"id\": \"22c3a25a-aed5-47df-9ef9-5ba5c7b6d08e\"," +
-                                        "\"state\": \"disabled\",\"subscribedContentTypes\": [" +
-                                        "\"audio\"] }";
-        private const string TranscriptionSubscription = "{" +
-                                        "\"id\": \"81c66a1b-12eb-4d89-ab99-c9f0de59e893\"," +
-                                        "\"state\": \"inactive\"," +
-                                        "\"subscribedResultTypes\": [\"final\"]}";
-        private const string NoneTranscriptionSubscription = "null";
-        private const string DataSubscriptionId = "\"dataSubscriptionId\"";
-        protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaStreamingSubscription, NoneTranscriptionSubscription);
-        protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload = string.Format(DummyPayload, MediaStreamingSubscription, TranscriptionSubscription);
 
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
         {

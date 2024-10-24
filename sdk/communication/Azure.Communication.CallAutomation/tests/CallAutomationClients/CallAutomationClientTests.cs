@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public async Task AnswerCallAsync_200OK(string incomingCallContext, Uri callbackUri)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, DummyPayload);
 
             var response = await callAutomationClient.AnswerCallAsync(incomingCallContext, callbackUri).ConfigureAwait(false);
             Assert.NotNull(response);
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public void AnswerCall_200OK(string incomingCallContext, Uri callbackUri)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, DummyPayload);
 
             var response = callAutomationClient.AnswerCall(incomingCallContext, callbackUri);
             Assert.NotNull(response);
@@ -39,7 +39,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public async Task AnswerCallWithOptionsAsync_200OK(string incomingCallContext, Uri callbackUri)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, DummyPayload);
             AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: callbackUri)
             {
                 OperationContext = "operation_context"
@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public void AnswerCallWithOptions_200OK(string incomingCallContext, Uri callbackUri)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, DummyPayload);
             AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: callbackUri)
             {
             };
@@ -182,7 +182,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         [TestCaseSource(nameof(TestData_CreateCall))]
         public async Task CreateCallAsync_201Created(CallInvite target, Uri callbackUri)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, DummyPayload);
 
             var options = new CreateCallOptions(target, callbackUri);
             var response = await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false);
@@ -196,7 +196,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         [TestCaseSource(nameof(TestData_CreateCall))]
         public void CreateCall_201Created(CallInvite target, Uri callbackUri)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, DummyPayload);
 
             var options = new CreateCallOptions(target, callbackUri);
             var response = callAutomationClient.CreateCall(options);
@@ -210,7 +210,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         [TestCaseSource(nameof(TestData_CreateCall))]
         public async Task CreateCallWithOptionsAsync_201Created(CallInvite target, Uri callbackUri)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, DummyPayload);
             CreateCallOptions options = new CreateCallOptions(
                 callInvite: target,
                 callbackUri: callbackUri)
@@ -228,7 +228,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         [TestCaseSource(nameof(TestData_CreateCall))]
         public void CreateCallWithOptions_201Created(CallInvite target, Uri callbackUri)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, DummyPayload);
             CreateCallOptions options = new CreateCallOptions(
                 callInvite: target,
                 callbackUri: callbackUri)
@@ -336,7 +336,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         [TestCaseSource(nameof(TestData_CreateGroupCall))]
         public async Task CreateGroupCallAsync_201Created(IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, PhoneNumberIdentifier callerIdNumber)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, DummyPayload);
             CreateGroupCallOptions options = new(
                 targets: targets,
                 callbackUri: callbackUri)
