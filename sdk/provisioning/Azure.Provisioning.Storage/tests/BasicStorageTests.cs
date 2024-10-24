@@ -23,7 +23,7 @@ public class BasicStorageTests(bool async)
             new StorageAccount("storage", StorageAccount.ResourceVersions.V2023_01_01)
             {
                 Kind = StorageKind.StorageV2,
-                Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                Sku = { Name = StorageSkuName.StandardLrs },
                 IsHnsEnabled = true,
                 AllowBlobPublicAccess = false
             })
@@ -267,7 +267,7 @@ public class BasicStorageTests(bool async)
                 BlobService blobs = new(nameof(blobs)) { Parent = storage };
                 infra.Add(blobs);
 
-                infra.Add(new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri });
+                infra.Add(new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.BlobUri });
 
                 // Manually compute the public Azure endpoint
                 string? nothing = null;
@@ -333,7 +333,7 @@ public class BasicStorageTests(bool async)
                 BlobService blobs = new(nameof(blobs)) { Parent = storage };
                 infra.Add(blobs);
 
-                infra.Add(new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri });
+                infra.Add(new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.BlobUri });
 
                 return infra;
             })

@@ -27,13 +27,21 @@ public partial class StorageAccount : ProvisionableResource
     /// Storage account names must be between 3 and 24 characters in length
     /// and use numbers and lower-case letters only.
     /// </summary>
-    public BicepValue<string> Name { get => _name!; set => _name!.Assign(value); }
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
     private BicepValue<string>? _name;
 
     /// <summary>
     /// Required. Indicates the type of storage account.
     /// </summary>
-    public BicepValue<StorageKind> Kind { get => _kind!; set => _kind!.Assign(value); }
+    public BicepValue<StorageKind> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
     private BicepValue<StorageKind>? _kind;
 
     /// <summary>
@@ -43,8 +51,22 @@ public partial class StorageAccount : ProvisionableResource
     /// changed once it is created, but if an identical geo region is
     /// specified on update, the request will succeed.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location!; set => _location!.Assign(value); }
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
     private BicepValue<AzureLocation>? _location;
+
+    /// <summary>
+    /// Required. Gets or sets the SKU name.
+    /// </summary>
+    public StorageSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private StorageSku? _sku;
 
     /// <summary>
     /// Required for storage accounts where kind = BlobStorage. The access tier
@@ -52,28 +74,44 @@ public partial class StorageAccount : ProvisionableResource
     /// default value for premium block blobs storage account type and it
     /// cannot be changed for the premium block blobs storage account type.
     /// </summary>
-    public BicepValue<StorageAccountAccessTier> AccessTier { get => _accessTier!; set => _accessTier!.Assign(value); }
+    public BicepValue<StorageAccountAccessTier> AccessTier 
+    {
+        get { Initialize(); return _accessTier!; }
+        set { Initialize(); _accessTier!.Assign(value); }
+    }
     private BicepValue<StorageAccountAccessTier>? _accessTier;
 
     /// <summary>
     /// Allow or disallow public access to all blobs or containers in the
     /// storage account. The default interpretation is true for this property.
     /// </summary>
-    public BicepValue<bool> AllowBlobPublicAccess { get => _allowBlobPublicAccess!; set => _allowBlobPublicAccess!.Assign(value); }
+    public BicepValue<bool> AllowBlobPublicAccess 
+    {
+        get { Initialize(); return _allowBlobPublicAccess!; }
+        set { Initialize(); _allowBlobPublicAccess!.Assign(value); }
+    }
     private BicepValue<bool>? _allowBlobPublicAccess;
 
     /// <summary>
     /// Allow or disallow cross AAD tenant object replication. The default
     /// interpretation is true for this property.
     /// </summary>
-    public BicepValue<bool> AllowCrossTenantReplication { get => _allowCrossTenantReplication!; set => _allowCrossTenantReplication!.Assign(value); }
+    public BicepValue<bool> AllowCrossTenantReplication 
+    {
+        get { Initialize(); return _allowCrossTenantReplication!; }
+        set { Initialize(); _allowCrossTenantReplication!.Assign(value); }
+    }
     private BicepValue<bool>? _allowCrossTenantReplication;
 
     /// <summary>
     /// Restrict copy to and from Storage Accounts within an AAD tenant or with
     /// Private Links to the same VNet.
     /// </summary>
-    public BicepValue<AllowedCopyScope> AllowedCopyScope { get => _allowedCopyScope!; set => _allowedCopyScope!.Assign(value); }
+    public BicepValue<AllowedCopyScope> AllowedCopyScope 
+    {
+        get { Initialize(); return _allowedCopyScope!; }
+        set { Initialize(); _allowedCopyScope!.Assign(value); }
+    }
     private BicepValue<AllowedCopyScope>? _allowedCopyScope;
 
     /// <summary>
@@ -83,14 +121,22 @@ public partial class StorageAccount : ProvisionableResource
     /// Azure Active Directory (Azure AD). The default value is null, which is
     /// equivalent to true.
     /// </summary>
-    public BicepValue<bool> AllowSharedKeyAccess { get => _allowSharedKeyAccess!; set => _allowSharedKeyAccess!.Assign(value); }
+    public BicepValue<bool> AllowSharedKeyAccess 
+    {
+        get { Initialize(); return _allowSharedKeyAccess!; }
+        set { Initialize(); _allowSharedKeyAccess!.Assign(value); }
+    }
     private BicepValue<bool>? _allowSharedKeyAccess;
 
     /// <summary>
     /// Provides the identity based authentication settings for Azure Files.
     /// </summary>
-    public BicepValue<FilesIdentityBasedAuthentication> AzureFilesIdentityBasedAuthentication { get => _azureFilesIdentityBasedAuthentication!; set => _azureFilesIdentityBasedAuthentication!.Assign(value); }
-    private BicepValue<FilesIdentityBasedAuthentication>? _azureFilesIdentityBasedAuthentication;
+    public FilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication 
+    {
+        get { Initialize(); return _azureFilesIdentityBasedAuthentication!; }
+        set { Initialize(); AssignOrReplace(ref _azureFilesIdentityBasedAuthentication, value); }
+    }
+    private FilesIdentityBasedAuthentication? _azureFilesIdentityBasedAuthentication;
 
     /// <summary>
     /// User domain assigned to the storage account. Name is the CNAME source.
@@ -98,8 +144,12 @@ public partial class StorageAccount : ProvisionableResource
     /// To clear the existing custom domain, use an empty string for the
     /// custom domain name property.
     /// </summary>
-    public BicepValue<StorageCustomDomain> CustomDomain { get => _customDomain!; set => _customDomain!.Assign(value); }
-    private BicepValue<StorageCustomDomain>? _customDomain;
+    public StorageCustomDomain CustomDomain 
+    {
+        get { Initialize(); return _customDomain!; }
+        set { Initialize(); AssignOrReplace(ref _customDomain, value); }
+    }
+    private StorageCustomDomain? _customDomain;
 
     /// <summary>
     /// Allows you to specify the type of endpoint. Set this to AzureDNSZone to
@@ -107,122 +157,194 @@ public partial class StorageAccount : ProvisionableResource
     /// creates accounts in an Azure DNS Zone and the endpoint URL will have
     /// an alphanumeric DNS Zone identifier.
     /// </summary>
-    public BicepValue<StorageDnsEndpointType> DnsEndpointType { get => _dnsEndpointType!; set => _dnsEndpointType!.Assign(value); }
+    public BicepValue<StorageDnsEndpointType> DnsEndpointType 
+    {
+        get { Initialize(); return _dnsEndpointType!; }
+        set { Initialize(); _dnsEndpointType!.Assign(value); }
+    }
     private BicepValue<StorageDnsEndpointType>? _dnsEndpointType;
 
     /// <summary>
     /// Allows https traffic only to storage service if sets to true. The
     /// default value is true since API version 2019-04-01.
     /// </summary>
-    public BicepValue<bool> EnableHttpsTrafficOnly { get => _enableHttpsTrafficOnly!; set => _enableHttpsTrafficOnly!.Assign(value); }
+    public BicepValue<bool> EnableHttpsTrafficOnly 
+    {
+        get { Initialize(); return _enableHttpsTrafficOnly!; }
+        set { Initialize(); _enableHttpsTrafficOnly!.Assign(value); }
+    }
     private BicepValue<bool>? _enableHttpsTrafficOnly;
 
     /// <summary>
     /// Encryption settings to be used for server-side encryption for the
     /// storage account.
     /// </summary>
-    public BicepValue<StorageAccountEncryption> Encryption { get => _encryption!; set => _encryption!.Assign(value); }
-    private BicepValue<StorageAccountEncryption>? _encryption;
+    public StorageAccountEncryption Encryption 
+    {
+        get { Initialize(); return _encryption!; }
+        set { Initialize(); AssignOrReplace(ref _encryption, value); }
+    }
+    private StorageAccountEncryption? _encryption;
 
     /// <summary>
     /// Optional. Set the extended location of the resource. If not set, the
     /// storage account will be created in Azure main region. Otherwise it
     /// will be created in the specified extended location.
     /// </summary>
-    public BicepValue<ExtendedAzureLocation> ExtendedLocation { get => _extendedLocation!; set => _extendedLocation!.Assign(value); }
-    private BicepValue<ExtendedAzureLocation>? _extendedLocation;
+    public ExtendedAzureLocation ExtendedLocation 
+    {
+        get { Initialize(); return _extendedLocation!; }
+        set { Initialize(); AssignOrReplace(ref _extendedLocation, value); }
+    }
+    private ExtendedAzureLocation? _extendedLocation;
 
     /// <summary>
     /// The identity of the resource.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity!; set => _identity!.Assign(value); }
-    private BicepValue<ManagedServiceIdentity>? _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// The property is immutable and can only be set to true at the account
     /// creation time. When set to true, it enables object level immutability
     /// for all the new containers in the account by default.
     /// </summary>
-    public BicepValue<ImmutableStorageAccount> ImmutableStorageWithVersioning { get => _immutableStorageWithVersioning!; set => _immutableStorageWithVersioning!.Assign(value); }
-    private BicepValue<ImmutableStorageAccount>? _immutableStorageWithVersioning;
+    public ImmutableStorageAccount ImmutableStorageWithVersioning 
+    {
+        get { Initialize(); return _immutableStorageWithVersioning!; }
+        set { Initialize(); AssignOrReplace(ref _immutableStorageWithVersioning, value); }
+    }
+    private ImmutableStorageAccount? _immutableStorageWithVersioning;
 
     /// <summary>
     /// A boolean flag which indicates whether the default authentication is
     /// OAuth or not. The default interpretation is false for this property.
     /// </summary>
-    public BicepValue<bool> IsDefaultToOAuthAuthentication { get => _isDefaultToOAuthAuthentication!; set => _isDefaultToOAuthAuthentication!.Assign(value); }
+    public BicepValue<bool> IsDefaultToOAuthAuthentication 
+    {
+        get { Initialize(); return _isDefaultToOAuthAuthentication!; }
+        set { Initialize(); _isDefaultToOAuthAuthentication!.Assign(value); }
+    }
     private BicepValue<bool>? _isDefaultToOAuthAuthentication;
 
     /// <summary>
     /// Account HierarchicalNamespace enabled if sets to true.
     /// </summary>
-    public BicepValue<bool> IsHnsEnabled { get => _isHnsEnabled!; set => _isHnsEnabled!.Assign(value); }
+    public BicepValue<bool> IsHnsEnabled 
+    {
+        get { Initialize(); return _isHnsEnabled!; }
+        set { Initialize(); _isHnsEnabled!.Assign(value); }
+    }
     private BicepValue<bool>? _isHnsEnabled;
 
     /// <summary>
     /// Enables local users feature, if set to true.
     /// </summary>
-    public BicepValue<bool> IsLocalUserEnabled { get => _isLocalUserEnabled!; set => _isLocalUserEnabled!.Assign(value); }
+    public BicepValue<bool> IsLocalUserEnabled 
+    {
+        get { Initialize(); return _isLocalUserEnabled!; }
+        set { Initialize(); _isLocalUserEnabled!.Assign(value); }
+    }
     private BicepValue<bool>? _isLocalUserEnabled;
 
     /// <summary>
     /// NFS 3.0 protocol support enabled if set to true.
     /// </summary>
-    public BicepValue<bool> IsNfsV3Enabled { get => _isNfsV3Enabled!; set => _isNfsV3Enabled!.Assign(value); }
+    public BicepValue<bool> IsNfsV3Enabled 
+    {
+        get { Initialize(); return _isNfsV3Enabled!; }
+        set { Initialize(); _isNfsV3Enabled!.Assign(value); }
+    }
     private BicepValue<bool>? _isNfsV3Enabled;
 
     /// <summary>
     /// Enables Secure File Transfer Protocol, if set to true.
     /// </summary>
-    public BicepValue<bool> IsSftpEnabled { get => _isSftpEnabled!; set => _isSftpEnabled!.Assign(value); }
+    public BicepValue<bool> IsSftpEnabled 
+    {
+        get { Initialize(); return _isSftpEnabled!; }
+        set { Initialize(); _isSftpEnabled!.Assign(value); }
+    }
     private BicepValue<bool>? _isSftpEnabled;
 
     /// <summary>
     /// The key expiration period in days.
     /// </summary>
-    public BicepValue<int> KeyExpirationPeriodInDays { get => _keyExpirationPeriodInDays!; set => _keyExpirationPeriodInDays!.Assign(value); }
+    public BicepValue<int> KeyExpirationPeriodInDays 
+    {
+        get { Initialize(); return _keyExpirationPeriodInDays!; }
+        set { Initialize(); _keyExpirationPeriodInDays!.Assign(value); }
+    }
     private BicepValue<int>? _keyExpirationPeriodInDays;
 
     /// <summary>
     /// Allow large file shares if sets to Enabled. It cannot be disabled once
     /// it is enabled.
     /// </summary>
-    public BicepValue<LargeFileSharesState> LargeFileSharesState { get => _largeFileSharesState!; set => _largeFileSharesState!.Assign(value); }
+    public BicepValue<LargeFileSharesState> LargeFileSharesState 
+    {
+        get { Initialize(); return _largeFileSharesState!; }
+        set { Initialize(); _largeFileSharesState!.Assign(value); }
+    }
     private BicepValue<LargeFileSharesState>? _largeFileSharesState;
 
     /// <summary>
     /// Set the minimum TLS version to be permitted on requests to storage. The
     /// default interpretation is TLS 1.0 for this property.
     /// </summary>
-    public BicepValue<StorageMinimumTlsVersion> MinimumTlsVersion { get => _minimumTlsVersion!; set => _minimumTlsVersion!.Assign(value); }
+    public BicepValue<StorageMinimumTlsVersion> MinimumTlsVersion 
+    {
+        get { Initialize(); return _minimumTlsVersion!; }
+        set { Initialize(); _minimumTlsVersion!.Assign(value); }
+    }
     private BicepValue<StorageMinimumTlsVersion>? _minimumTlsVersion;
 
     /// <summary>
     /// Network rule set.
     /// </summary>
-    public BicepValue<StorageAccountNetworkRuleSet> NetworkRuleSet { get => _networkRuleSet!; set => _networkRuleSet!.Assign(value); }
-    private BicepValue<StorageAccountNetworkRuleSet>? _networkRuleSet;
+    public StorageAccountNetworkRuleSet NetworkRuleSet 
+    {
+        get { Initialize(); return _networkRuleSet!; }
+        set { Initialize(); AssignOrReplace(ref _networkRuleSet, value); }
+    }
+    private StorageAccountNetworkRuleSet? _networkRuleSet;
 
     /// <summary>
     /// Allow or disallow public network access to Storage Account. Value is
     /// optional but if passed in, must be &apos;Enabled&apos; or
     /// &apos;Disabled&apos;.
     /// </summary>
-    public BicepValue<StoragePublicNetworkAccess> PublicNetworkAccess { get => _publicNetworkAccess!; set => _publicNetworkAccess!.Assign(value); }
+    public BicepValue<StoragePublicNetworkAccess> PublicNetworkAccess 
+    {
+        get { Initialize(); return _publicNetworkAccess!; }
+        set { Initialize(); _publicNetworkAccess!.Assign(value); }
+    }
     private BicepValue<StoragePublicNetworkAccess>? _publicNetworkAccess;
 
     /// <summary>
     /// Maintains information about the network routing choice opted by the
     /// user for data transfer.
     /// </summary>
-    public BicepValue<StorageRoutingPreference> RoutingPreference { get => _routingPreference!; set => _routingPreference!.Assign(value); }
-    private BicepValue<StorageRoutingPreference>? _routingPreference;
+    public StorageRoutingPreference RoutingPreference 
+    {
+        get { Initialize(); return _routingPreference!; }
+        set { Initialize(); AssignOrReplace(ref _routingPreference, value); }
+    }
+    private StorageRoutingPreference? _routingPreference;
 
     /// <summary>
     /// SasPolicy assigned to the storage account.
     /// </summary>
-    public BicepValue<StorageAccountSasPolicy> SasPolicy { get => _sasPolicy!; set => _sasPolicy!.Assign(value); }
-    private BicepValue<StorageAccountSasPolicy>? _sasPolicy;
+    public StorageAccountSasPolicy SasPolicy 
+    {
+        get { Initialize(); return _sasPolicy!; }
+        set { Initialize(); AssignOrReplace(ref _sasPolicy, value); }
+    }
+    private StorageAccountSasPolicy? _sasPolicy;
 
     /// <summary>
     /// Gets or sets a list of key value pairs that describe the resource.
@@ -231,45 +353,67 @@ public partial class StorageAccount : ProvisionableResource
     /// Each tag must have a key with a length no greater than 128 characters
     /// and a value with a length no greater than 256 characters.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags!; set => _tags!.Assign(value); }
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
     private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Blob restore status.
     /// </summary>
-    public BicepValue<BlobRestoreStatus> BlobRestoreStatus { get => _blobRestoreStatus!; }
-    private BicepValue<BlobRestoreStatus>? _blobRestoreStatus;
+    public BlobRestoreStatus BlobRestoreStatus 
+    {
+        get { Initialize(); return _blobRestoreStatus!; }
+    }
+    private BlobRestoreStatus? _blobRestoreStatus;
 
     /// <summary>
     /// Gets the creation date and time of the storage account in UTC.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn!; }
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
     private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Geo Replication Stats.
     /// </summary>
-    public BicepValue<GeoReplicationStatistics> GeoReplicationStats { get => _geoReplicationStats!; }
-    private BicepValue<GeoReplicationStatistics>? _geoReplicationStats;
+    public GeoReplicationStatistics GeoReplicationStats 
+    {
+        get { Initialize(); return _geoReplicationStats!; }
+    }
+    private GeoReplicationStatistics? _geoReplicationStats;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id!; }
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// If the failover is in progress, the value will be true, otherwise, it
     /// will be null.
     /// </summary>
-    public BicepValue<bool> IsFailoverInProgress { get => _isFailoverInProgress!; }
+    public BicepValue<bool> IsFailoverInProgress 
+    {
+        get { Initialize(); return _isFailoverInProgress!; }
+    }
     private BicepValue<bool>? _isFailoverInProgress;
 
     /// <summary>
     /// Storage account keys creation time.
     /// </summary>
-    public BicepValue<StorageAccountKeyCreationTime> KeyCreationTime { get => _keyCreationTime!; }
-    private BicepValue<StorageAccountKeyCreationTime>? _keyCreationTime;
+    public StorageAccountKeyCreationTime KeyCreationTime 
+    {
+        get { Initialize(); return _keyCreationTime!; }
+    }
+    private StorageAccountKeyCreationTime? _keyCreationTime;
 
     /// <summary>
     /// Gets the timestamp of the most recent instance of a failover to the
@@ -277,27 +421,50 @@ public partial class StorageAccount : ProvisionableResource
     /// element is not returned if there has never been a failover instance.
     /// Only available if the accountType is Standard_GRS or Standard_RAGRS.
     /// </summary>
-    public BicepValue<DateTimeOffset> LastGeoFailoverOn { get => _lastGeoFailoverOn!; }
+    public BicepValue<DateTimeOffset> LastGeoFailoverOn 
+    {
+        get { Initialize(); return _lastGeoFailoverOn!; }
+    }
     private BicepValue<DateTimeOffset>? _lastGeoFailoverOn;
+
+    /// <summary>
+    /// Gets the URLs that are used to perform a retrieval of a public blob,
+    /// queue, or table object. Note that Standard_ZRS and Premium_LRS
+    /// accounts only return the blob endpoint.
+    /// </summary>
+    public StorageAccountEndpoints PrimaryEndpoints 
+    {
+        get { Initialize(); return _primaryEndpoints!; }
+    }
+    private StorageAccountEndpoints? _primaryEndpoints;
 
     /// <summary>
     /// Gets the location of the primary data center for the storage account.
     /// </summary>
-    public BicepValue<AzureLocation> PrimaryLocation { get => _primaryLocation!; }
+    public BicepValue<AzureLocation> PrimaryLocation 
+    {
+        get { Initialize(); return _primaryLocation!; }
+    }
     private BicepValue<AzureLocation>? _primaryLocation;
 
     /// <summary>
     /// List of private endpoint connection associated with the specified
     /// storage account.
     /// </summary>
-    public BicepList<StoragePrivateEndpointConnectionData> PrivateEndpointConnections { get => _privateEndpointConnections!; }
+    public BicepList<StoragePrivateEndpointConnectionData> PrivateEndpointConnections 
+    {
+        get { Initialize(); return _privateEndpointConnections!; }
+    }
     private BicepList<StoragePrivateEndpointConnectionData>? _privateEndpointConnections;
 
     /// <summary>
     /// Gets the status of the storage account at the time the operation was
     /// called.
     /// </summary>
-    public BicepValue<StorageProvisioningState> ProvisioningState { get => _provisioningState!; }
+    public BicepValue<StorageProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
     private BicepValue<StorageProvisioningState>? _provisioningState;
 
     /// <summary>
@@ -305,22 +472,31 @@ public partial class StorageAccount : ProvisionableResource
     /// queue, or table object from the secondary location of the storage
     /// account. Only available if the SKU name is Standard_RAGRS.
     /// </summary>
-    public BicepValue<StorageAccountEndpoints> SecondaryEndpoints { get => _secondaryEndpoints!; }
-    private BicepValue<StorageAccountEndpoints>? _secondaryEndpoints;
+    public StorageAccountEndpoints SecondaryEndpoints 
+    {
+        get { Initialize(); return _secondaryEndpoints!; }
+    }
+    private StorageAccountEndpoints? _secondaryEndpoints;
 
     /// <summary>
     /// Gets the location of the geo-replicated secondary for the storage
     /// account. Only available if the accountType is Standard_GRS or
     /// Standard_RAGRS.
     /// </summary>
-    public BicepValue<AzureLocation> SecondaryLocation { get => _secondaryLocation!; }
+    public BicepValue<AzureLocation> SecondaryLocation 
+    {
+        get { Initialize(); return _secondaryLocation!; }
+    }
     private BicepValue<AzureLocation>? _secondaryLocation;
 
     /// <summary>
     /// Gets the status indicating whether the primary location of the storage
     /// account is available or unavailable.
     /// </summary>
-    public BicepValue<StorageAccountStatus> StatusOfPrimary { get => _statusOfPrimary!; }
+    public BicepValue<StorageAccountStatus> StatusOfPrimary 
+    {
+        get { Initialize(); return _statusOfPrimary!; }
+    }
     private BicepValue<StorageAccountStatus>? _statusOfPrimary;
 
     /// <summary>
@@ -328,95 +504,30 @@ public partial class StorageAccount : ProvisionableResource
     /// storage account is available or unavailable. Only available if the SKU
     /// name is Standard_GRS or Standard_RAGRS.
     /// </summary>
-    public BicepValue<StorageAccountStatus> StatusOfSecondary { get => _statusOfSecondary!; }
+    public BicepValue<StorageAccountStatus> StatusOfSecondary 
+    {
+        get { Initialize(); return _statusOfSecondary!; }
+    }
     private BicepValue<StorageAccountStatus>? _statusOfSecondary;
 
     /// <summary>
     /// This property is readOnly and is set by server during asynchronous
     /// storage account sku conversion operations.
     /// </summary>
-    public BicepValue<StorageAccountSkuConversionStatus> StorageAccountSkuConversionStatus { get => _storageAccountSkuConversionStatus!; }
-    private BicepValue<StorageAccountSkuConversionStatus>? _storageAccountSkuConversionStatus;
+    public StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus 
+    {
+        get { Initialize(); return _storageAccountSkuConversionStatus!; }
+    }
+    private StorageAccountSkuConversionStatus? _storageAccountSkuConversionStatus;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData!; }
-    private BicepValue<SystemData>? _systemData;
-
-
-    /// <summary>
-    /// Required. Gets or sets the SKU name.
-    /// </summary>
-    public StorageSku Sku
+    public SystemData SystemData 
     {
-        get { Initialize(); return _sku!; }
-        set { Initialize(); AssignOrReplace(ref _sku, value);  }
+        get { Initialize(); return _systemData!; }
     }
-    private StorageSku? _sku = null;
-
-    /// <summary>
-    /// Gets the URLs that are used to perform a retrieval of a public blob,
-    /// queue, or table object. Note that Standard_ZRS and Premium_LRS
-    /// accounts only return the blob endpoint.
-    /// </summary>
-    public StorageAccountEndpoints PrimaryEndpoints
-    {
-        get { Initialize(); return _primaryEndpoints!; }
-    }
-    private StorageAccountEndpoints? _primaryEndpoints = null;
-
-    protected override void DefineProvisionableProperties()
-    {
-        base.DefineProvisionableProperties();
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _kind = BicepValue<StorageKind>.DefineProperty(this, "Kind", ["kind"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _sku ??= DefineComplexProperty<StorageSku>(this, "Sku", ["sku"], isRequired: true);
-        _accessTier = BicepValue<StorageAccountAccessTier>.DefineProperty(this, "AccessTier", ["properties", "accessTier"]);
-        _allowBlobPublicAccess = BicepValue<bool>.DefineProperty(this, "AllowBlobPublicAccess", ["properties", "allowBlobPublicAccess"]);
-        _allowCrossTenantReplication = BicepValue<bool>.DefineProperty(this, "AllowCrossTenantReplication", ["properties", "allowCrossTenantReplication"]);
-        _allowedCopyScope = BicepValue<AllowedCopyScope>.DefineProperty(this, "AllowedCopyScope", ["properties", "allowedCopyScope"]);
-        _allowSharedKeyAccess = BicepValue<bool>.DefineProperty(this, "AllowSharedKeyAccess", ["properties", "allowSharedKeyAccess"]);
-        _azureFilesIdentityBasedAuthentication = BicepValue<FilesIdentityBasedAuthentication>.DefineProperty(this, "AzureFilesIdentityBasedAuthentication", ["properties", "azureFilesIdentityBasedAuthentication"]);
-        _customDomain = BicepValue<StorageCustomDomain>.DefineProperty(this, "CustomDomain", ["properties", "customDomain"]);
-        _dnsEndpointType = BicepValue<StorageDnsEndpointType>.DefineProperty(this, "DnsEndpointType", ["properties", "dnsEndpointType"]);
-        _enableHttpsTrafficOnly = BicepValue<bool>.DefineProperty(this, "EnableHttpsTrafficOnly", ["properties", "supportsHttpsTrafficOnly"]);
-        _encryption = BicepValue<StorageAccountEncryption>.DefineProperty(this, "Encryption", ["properties", "encryption"]);
-        _extendedLocation = BicepValue<ExtendedAzureLocation>.DefineProperty(this, "ExtendedLocation", ["extendedLocation"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _immutableStorageWithVersioning = BicepValue<ImmutableStorageAccount>.DefineProperty(this, "ImmutableStorageWithVersioning", ["properties", "immutableStorageWithVersioning"]);
-        _isDefaultToOAuthAuthentication = BicepValue<bool>.DefineProperty(this, "IsDefaultToOAuthAuthentication", ["properties", "defaultToOAuthAuthentication"]);
-        _isHnsEnabled = BicepValue<bool>.DefineProperty(this, "IsHnsEnabled", ["properties", "isHnsEnabled"]);
-        _isLocalUserEnabled = BicepValue<bool>.DefineProperty(this, "IsLocalUserEnabled", ["properties", "isLocalUserEnabled"]);
-        _isNfsV3Enabled = BicepValue<bool>.DefineProperty(this, "IsNfsV3Enabled", ["properties", "isNfsV3Enabled"]);
-        _isSftpEnabled = BicepValue<bool>.DefineProperty(this, "IsSftpEnabled", ["properties", "isSftpEnabled"]);
-        _keyExpirationPeriodInDays = BicepValue<int>.DefineProperty(this, "KeyExpirationPeriodInDays", ["properties", "keyPolicy", "keyExpirationPeriodInDays"]);
-        _largeFileSharesState = BicepValue<LargeFileSharesState>.DefineProperty(this, "LargeFileSharesState", ["properties", "largeFileSharesState"]);
-        _minimumTlsVersion = BicepValue<StorageMinimumTlsVersion>.DefineProperty(this, "MinimumTlsVersion", ["properties", "minimumTlsVersion"]);
-        _networkRuleSet = BicepValue<StorageAccountNetworkRuleSet>.DefineProperty(this, "NetworkRuleSet", ["properties", "networkAcls"]);
-        _publicNetworkAccess = BicepValue<StoragePublicNetworkAccess>.DefineProperty(this, "PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
-        _routingPreference = BicepValue<StorageRoutingPreference>.DefineProperty(this, "RoutingPreference", ["properties", "routingPreference"]);
-        _sasPolicy = BicepValue<StorageAccountSasPolicy>.DefineProperty(this, "SasPolicy", ["properties", "sasPolicy"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _blobRestoreStatus = BicepValue<BlobRestoreStatus>.DefineProperty(this, "BlobRestoreStatus", ["properties", "blobRestoreStatus"], isOutput: true);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "creationTime"], isOutput: true);
-        _geoReplicationStats = BicepValue<GeoReplicationStatistics>.DefineProperty(this, "GeoReplicationStats", ["properties", "geoReplicationStats"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _isFailoverInProgress = BicepValue<bool>.DefineProperty(this, "IsFailoverInProgress", ["properties", "failoverInProgress"], isOutput: true);
-        _keyCreationTime = BicepValue<StorageAccountKeyCreationTime>.DefineProperty(this, "KeyCreationTime", ["properties", "keyCreationTime"], isOutput: true);
-        _lastGeoFailoverOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LastGeoFailoverOn", ["properties", "lastGeoFailoverTime"], isOutput: true);
-        _primaryEndpoints = DefineComplexProperty<StorageAccountEndpoints>(this, "PrimaryEndpoints", ["properties", "primaryEndpoints"], isOutput: true);
-        _primaryLocation = BicepValue<AzureLocation>.DefineProperty(this, "PrimaryLocation", ["properties", "primaryLocation"], isOutput: true);
-        _privateEndpointConnections = BicepList<StoragePrivateEndpointConnectionData>.DefineProperty(this, "PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
-        _provisioningState = BicepValue<StorageProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _secondaryEndpoints = BicepValue<StorageAccountEndpoints>.DefineProperty(this, "SecondaryEndpoints", ["properties", "secondaryEndpoints"], isOutput: true);
-        _secondaryLocation = BicepValue<AzureLocation>.DefineProperty(this, "SecondaryLocation", ["properties", "secondaryLocation"], isOutput: true);
-        _statusOfPrimary = BicepValue<StorageAccountStatus>.DefineProperty(this, "StatusOfPrimary", ["properties", "statusOfPrimary"], isOutput: true);
-        _statusOfSecondary = BicepValue<StorageAccountStatus>.DefineProperty(this, "StatusOfSecondary", ["properties", "statusOfSecondary"], isOutput: true);
-        _storageAccountSkuConversionStatus = BicepValue<StorageAccountSkuConversionStatus>.DefineProperty(this, "StorageAccountSkuConversionStatus", ["properties", "storageAccountSkuConversionStatus"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new StorageAccount.
@@ -431,7 +542,60 @@ public partial class StorageAccount : ProvisionableResource
     public StorageAccount(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Storage/storageAccounts", resourceVersion ?? "2024-01-01")
     {
-        Initialize();
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of StorageAccount.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _kind = DefineProperty<StorageKind>("Kind", ["kind"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _sku = DefineModelProperty<StorageSku>("Sku", ["sku"], isRequired: true);
+        _accessTier = DefineProperty<StorageAccountAccessTier>("AccessTier", ["properties", "accessTier"]);
+        _allowBlobPublicAccess = DefineProperty<bool>("AllowBlobPublicAccess", ["properties", "allowBlobPublicAccess"]);
+        _allowCrossTenantReplication = DefineProperty<bool>("AllowCrossTenantReplication", ["properties", "allowCrossTenantReplication"]);
+        _allowedCopyScope = DefineProperty<AllowedCopyScope>("AllowedCopyScope", ["properties", "allowedCopyScope"]);
+        _allowSharedKeyAccess = DefineProperty<bool>("AllowSharedKeyAccess", ["properties", "allowSharedKeyAccess"]);
+        _azureFilesIdentityBasedAuthentication = DefineModelProperty<FilesIdentityBasedAuthentication>("AzureFilesIdentityBasedAuthentication", ["properties", "azureFilesIdentityBasedAuthentication"]);
+        _customDomain = DefineModelProperty<StorageCustomDomain>("CustomDomain", ["properties", "customDomain"]);
+        _dnsEndpointType = DefineProperty<StorageDnsEndpointType>("DnsEndpointType", ["properties", "dnsEndpointType"]);
+        _enableHttpsTrafficOnly = DefineProperty<bool>("EnableHttpsTrafficOnly", ["properties", "supportsHttpsTrafficOnly"]);
+        _encryption = DefineModelProperty<StorageAccountEncryption>("Encryption", ["properties", "encryption"]);
+        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _immutableStorageWithVersioning = DefineModelProperty<ImmutableStorageAccount>("ImmutableStorageWithVersioning", ["properties", "immutableStorageWithVersioning"]);
+        _isDefaultToOAuthAuthentication = DefineProperty<bool>("IsDefaultToOAuthAuthentication", ["properties", "defaultToOAuthAuthentication"]);
+        _isHnsEnabled = DefineProperty<bool>("IsHnsEnabled", ["properties", "isHnsEnabled"]);
+        _isLocalUserEnabled = DefineProperty<bool>("IsLocalUserEnabled", ["properties", "isLocalUserEnabled"]);
+        _isNfsV3Enabled = DefineProperty<bool>("IsNfsV3Enabled", ["properties", "isNfsV3Enabled"]);
+        _isSftpEnabled = DefineProperty<bool>("IsSftpEnabled", ["properties", "isSftpEnabled"]);
+        _keyExpirationPeriodInDays = DefineProperty<int>("KeyExpirationPeriodInDays", ["properties", "keyPolicy", "keyExpirationPeriodInDays"]);
+        _largeFileSharesState = DefineProperty<LargeFileSharesState>("LargeFileSharesState", ["properties", "largeFileSharesState"]);
+        _minimumTlsVersion = DefineProperty<StorageMinimumTlsVersion>("MinimumTlsVersion", ["properties", "minimumTlsVersion"]);
+        _networkRuleSet = DefineModelProperty<StorageAccountNetworkRuleSet>("NetworkRuleSet", ["properties", "networkAcls"]);
+        _publicNetworkAccess = DefineProperty<StoragePublicNetworkAccess>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
+        _routingPreference = DefineModelProperty<StorageRoutingPreference>("RoutingPreference", ["properties", "routingPreference"]);
+        _sasPolicy = DefineModelProperty<StorageAccountSasPolicy>("SasPolicy", ["properties", "sasPolicy"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _blobRestoreStatus = DefineModelProperty<BlobRestoreStatus>("BlobRestoreStatus", ["properties", "blobRestoreStatus"], isOutput: true);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationTime"], isOutput: true);
+        _geoReplicationStats = DefineModelProperty<GeoReplicationStatistics>("GeoReplicationStats", ["properties", "geoReplicationStats"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _isFailoverInProgress = DefineProperty<bool>("IsFailoverInProgress", ["properties", "failoverInProgress"], isOutput: true);
+        _keyCreationTime = DefineModelProperty<StorageAccountKeyCreationTime>("KeyCreationTime", ["properties", "keyCreationTime"], isOutput: true);
+        _lastGeoFailoverOn = DefineProperty<DateTimeOffset>("LastGeoFailoverOn", ["properties", "lastGeoFailoverTime"], isOutput: true);
+        _primaryEndpoints = DefineModelProperty<StorageAccountEndpoints>("PrimaryEndpoints", ["properties", "primaryEndpoints"], isOutput: true);
+        _primaryLocation = DefineProperty<AzureLocation>("PrimaryLocation", ["properties", "primaryLocation"], isOutput: true);
+        _privateEndpointConnections = DefineListProperty<StoragePrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _provisioningState = DefineProperty<StorageProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _secondaryEndpoints = DefineModelProperty<StorageAccountEndpoints>("SecondaryEndpoints", ["properties", "secondaryEndpoints"], isOutput: true);
+        _secondaryLocation = DefineProperty<AzureLocation>("SecondaryLocation", ["properties", "secondaryLocation"], isOutput: true);
+        _statusOfPrimary = DefineProperty<StorageAccountStatus>("StatusOfPrimary", ["properties", "statusOfPrimary"], isOutput: true);
+        _statusOfSecondary = DefineProperty<StorageAccountStatus>("StatusOfSecondary", ["properties", "statusOfSecondary"], isOutput: true);
+        _storageAccountSkuConversionStatus = DefineModelProperty<StorageAccountSkuConversionStatus>("StorageAccountSkuConversionStatus", ["properties", "storageAccountSkuConversionStatus"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>

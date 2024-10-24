@@ -13,17 +13,26 @@ public class BicepValueReference(ProvisionableConstruct construct, string proper
     public string PropertyName { get; } = propertyName;
     public IReadOnlyList<string>? BicepPath { get; } = path;
 
-    internal BicepExpression GetReference()
+    internal BicepExpression GetReference(bool throwIfNoRoot = true)
     {
         // Get the root
         BicepExpression? target = ((IBicepValue)Construct).Self?.GetReference();
         if (target is null)
         {
-            if (Construct is not NamedProvisionableConstruct named)
+            if (Construct is NamedProvisionableConstruct named)
+            {
+                target = BicepSyntax.Var(named.BicepIdentifier);
+            }
+            else if (throwIfNoRoot)
             {
                 throw new NotImplementedException("Cannot reference a construct without a name.");
             }
-            target = BicepSyntax.Var(named.BicepIdentifier);
+            else
+            {
+                // This will render unrooted ToStrings as MISSING_RESOURCE.foo.bar
+                // which is obviously invalid, but potentially helpful for debugging.
+                target = BicepSyntax.Var("MISSING_RESOURCE");
+            }
         }
 
         // Finish getting to this resource
@@ -37,5 +46,5 @@ public class BicepValueReference(ProvisionableConstruct construct, string proper
         return target;
     }
 
-    public override string ToString() => GetReference().ToString();
+    public override string ToString() => GetReference(throwIfNoRoot: false).ToString();
 }
