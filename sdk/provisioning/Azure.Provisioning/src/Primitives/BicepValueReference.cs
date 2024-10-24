@@ -7,25 +7,27 @@ using Azure.Provisioning.Expressions;
 
 namespace Azure.Provisioning.Primitives;
 
-// Work in progress to to help track the flow of values through the computation
-// graph so we can intelligently and automatically split expressions across
-// module boundaries.
-
 public class BicepValueReference(ProvisionableConstruct construct, string propertyName, params string[]? path)
 {
+    public BicepValueReference? Parent { get; private set; } = ((IBicepValue)construct).Self;
     public ProvisionableConstruct Construct { get; } = construct;
     public string PropertyName { get; } = propertyName;
     public IReadOnlyList<string>? BicepPath { get; } = path;
 
     internal BicepExpression GetReference()
     {
-        // We'll relax this soon
-        if (Construct is not NamedProvisionableConstruct named)
+        // Get the root
+        BicepExpression? target = Parent?.GetReference();
+        if (target is null)
         {
-            throw new NotImplementedException("Cannot reference a construct without a name yet.");
+            if (Construct is not NamedProvisionableConstruct named)
+            {
+                throw new NotImplementedException("Cannot reference a construct without a name.");
+            }
+            target = BicepSyntax.Var(named.BicepIdentifier);
         }
 
-        BicepExpression target = BicepSyntax.Var(named.BicepIdentifier);
+        // Finish getting to this resource
         if (BicepPath is not null)
         {
             foreach (string segment in BicepPath)
@@ -36,6 +38,5 @@ public class BicepValueReference(ProvisionableConstruct construct, string proper
         return target;
     }
 
-    public override string ToString() =>
-        $"<{GetReference()} from {Construct.GetType().Name}.{PropertyName}>";
+    public override string ToString() => GetReference().ToString();
 }

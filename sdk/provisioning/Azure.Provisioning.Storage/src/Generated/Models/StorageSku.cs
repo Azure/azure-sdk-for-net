@@ -16,20 +16,30 @@ public partial class StorageSku : ProvisionableConstruct
     /// The SKU name. Required for account creation; optional for update. Note
     /// that in older versions, SKU name was called accountType.
     /// </summary>
-    public BicepValue<StorageSkuName> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<StorageSkuName> _name;
+    public BicepValue<StorageSkuName> Name
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<StorageSkuName> _name;
 
     /// <summary>
     /// The SKU tier. This is based on the SKU name.
     /// </summary>
-    public BicepValue<StorageSkuTier> Tier { get => _tier; }
-    private readonly BicepValue<StorageSkuTier> _tier;
+    public BicepValue<StorageSkuTier> Tier
+    {
+        get { Initialize(); return _tier!; }
+    }
+    private BicepValue<StorageSkuTier> _tier;
 
     /// <summary>
     /// Creates a new StorageSku.
     /// </summary>
-    public StorageSku()
+    public StorageSku() { }
+
+    protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = BicepValue<StorageSkuName>.DefineProperty(this, "Name", ["name"]);
         _tier = BicepValue<StorageSkuTier>.DefineProperty(this, "Tier", ["tier"], isOutput: true);
     }

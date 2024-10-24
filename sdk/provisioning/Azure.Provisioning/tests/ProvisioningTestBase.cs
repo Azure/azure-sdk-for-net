@@ -20,7 +20,7 @@ using NUnit.Framework;
 namespace Azure.Provisioning.Tests;
 
 [AsyncOnly]
-[LiveOnly] // Ignore tests in the CI for now
+// [LiveOnly] // Ignore tests in the CI for now
 public class ProvisioningTestBase : ManagementRecordedTestBase<ProvisioningTestEnvironment>
 {
     public bool SkipTools { get; set; }
@@ -83,12 +83,8 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
 
     public Trycep Define(ProvisionableConstruct resource)
     {
-        Infra = resource.ParentInfrastructure;
-        if (Infra is null)
-        {
-            Infra = new Infrastructure();
-            Infra.Add(resource);
-        }
+        Infra = new Infrastructure();
+        Infra.Add(resource);
         Plan = Infra.Build(BuildOptions);
         return this;
     }

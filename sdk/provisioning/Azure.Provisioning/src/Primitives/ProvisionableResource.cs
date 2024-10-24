@@ -33,7 +33,22 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
     /// Gets whether this is referencing an existing resource or we're defining
     /// a new resource.
     /// </summary>
-    public bool IsExistingResource { get; protected set; } = false;
+    public bool IsExistingResource
+    {
+        get => _isExisting;
+        protected set
+        {
+            _isExisting = value;
+            if (_isExisting)
+            {
+                foreach (IBicepValue property in ProvisionableProperties.Values)
+                {
+                    property.SetReadOnly();
+                }
+            }
+        }
+    }
+    private bool _isExisting = false;
 
     /// <summary>
     /// Declares explicit dependencies on other resources.
@@ -80,7 +95,7 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
             throw new InvalidOperationException($"{GetType().Name} resource {BicepIdentifier} must have {nameof(ResourceVersion)} specified.");
         }
 
-        if (DependsOn.Count > 0 && (IsExistingResource || ExpressionOverride is not null))
+        if (DependsOn.Count > 0 && (IsExistingResource || ((IBicepValue)this).Kind == BicepValueKind.Expression))
         {
             throw new InvalidOperationException($"{GetType().Name} resource {BicepIdentifier} cannot have dependencies if it's an existing resource or an expression override.");
         }
@@ -88,7 +103,7 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
         if (IsExistingResource)
         {
             // We only want to validate the name if we're linking to an existing resource
-            if (ProvisioningProperties.TryGetValue("Name", out BicepValue? name) && name.IsRequired)
+            if (ProvisionableProperties.TryGetValue("Name", out IBicepValue? name) && name.IsRequired)
             {
                 RequireProperty(name);
             }
@@ -103,9 +118,9 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
     /// <inheritdoc />
     protected internal override IEnumerable<BicepStatement> Compile()
     {
-        if (ExpressionOverride is not null)
+        if (((IBicepValue)this).Kind == BicepValueKind.Expression)
         {
-            yield return new ExpressionStatement(ExpressionOverride);
+            yield return new ExpressionStatement(CompileProperties());
             yield break;
         }
 
@@ -152,4 +167,21 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ResourceNameRequirements GetResourceNameRequirements() =>
         new(minLength: 1, maxLength: 24, validCharacters: ResourceNameCharacters.LowercaseLetters);
+
+    protected ResourceReference<T> DefineResource<T>(
+        string propertyName,
+        string[]? bicepPath,
+        bool isOutput = false,
+        bool isRequired = false,
+        T? defaultValue = null)
+        where T : ProvisionableResource
+    {
+        ResourceReference<T> resource = new(
+            DefineProperty<string>(propertyName, bicepPath, isOutput: isOutput, isRequired: isRequired));
+        if (defaultValue is not null)
+        {
+            resource.Value = defaultValue;
+        }
+        return resource;
+    }
 }
