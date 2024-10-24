@@ -23,6 +23,14 @@ public class ClientPipelineOptions
     private PipelineTransport? _transport;
     private TimeSpan? _timeout;
 
+    /// <summary>
+    /// TBD
+    /// </summary>
+    public ClientPipelineOptions()
+    {
+        LoggingOptions = new();
+    }
+
     #region Pipeline creation: Overrides of default pipeline policies
 
     /// <summary>
@@ -80,6 +88,11 @@ public class ClientPipelineOptions
             _timeout = value;
         }
     }
+
+    /// <summary>
+    /// TBD
+    /// </summary>
+    public ClientLoggingOptions LoggingOptions { get; set; }
 
     #endregion
 
