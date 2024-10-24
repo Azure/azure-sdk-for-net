@@ -18,11 +18,11 @@ namespace Azure.AI.Projects;
 /// </summary>
 internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
 {
-    private readonly Func<ClientResult> _sendRequest;
+    private readonly Func<Response> _sendRequest;
     private readonly CancellationToken _cancellationToken;
 
     public StreamingUpdateCollection(
-        Func<ClientResult> sendRequest,
+        Func<Response> sendRequest,
         CancellationToken cancellationToken)
     {
         Argument.AssertNotNull(sendRequest, nameof(sendRequest));
@@ -37,9 +37,12 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
 
     public override IEnumerable<ClientResult> GetRawPages()
     {
+        Response response = _sendRequest();
+        PipelineResponse scmResponse = new ResponseAdapter(response);
+
         // We don't currently support resuming a dropped connection from the
         // last received event, so the response collection has a single element.
-        yield return _sendRequest();
+        yield return ClientResult.FromResponse(scmResponse);
     }
     protected override IEnumerable<StreamingUpdate> GetValuesFromPage(ClientResult page)
     {

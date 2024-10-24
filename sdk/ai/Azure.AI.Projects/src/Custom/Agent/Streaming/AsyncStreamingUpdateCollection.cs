@@ -19,10 +19,10 @@ namespace Azure.AI.Projects;
 /// </summary>
 internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingUpdate>
 {
-    private readonly Func<Task<ClientResult>> _sendRequestAsync;
+    private readonly Func<Task<Response>> _sendRequestAsync;
     private readonly CancellationToken _cancellationToken;
 
-    public AsyncStreamingUpdateCollection(Func<Task<ClientResult>> sendRequestAsync,
+    public AsyncStreamingUpdateCollection(Func<Task<Response>> sendRequestAsync,
         CancellationToken cancellationToken)
     {
         Argument.AssertNotNull(sendRequestAsync, nameof(sendRequestAsync));
@@ -37,9 +37,12 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
 
     public async override IAsyncEnumerable<ClientResult> GetRawPagesAsync()
     {
+        Response response = await _sendRequestAsync().ConfigureAwait(false);
+        PipelineResponse scmResponse = new ResponseAdapter(response);
+
         // We don't currently support resuming a dropped connection from the
         // last received event, so the response collection has a single element.
-        yield return await _sendRequestAsync().ConfigureAwait(false);
+        yield return ClientResult.FromResponse(scmResponse);
     }
 
     protected async override IAsyncEnumerable<StreamingUpdate> GetValuesFromPageAsync(ClientResult page)
