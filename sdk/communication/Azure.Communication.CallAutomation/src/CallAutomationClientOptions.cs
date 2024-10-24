@@ -35,7 +35,6 @@ namespace Azure.Communication.CallAutomation
                 ServiceVersion.V2023_03_06 => "2023-03-06",
                 ServiceVersion.V2023_10_15 => "2023-10-15",
                 ServiceVersion.V2024_04_15 => "2024-04-15",
-                ServiceVersion.V2024_06_15_Preview => "2024-06-15-preview",
                 ServiceVersion.V2024_09_15 => "2024-09-15",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
@@ -63,14 +62,9 @@ namespace Azure.Communication.CallAutomation
             V2024_04_15 = 3,
 
             /// <summary>
-            /// Latest BETA4 (1.3.0-beta) preview of the CallAutomation service.
-            /// </summary>
-            V2024_06_15_Preview = 4,
-
-            /// <summary>
             /// Latest GA4 (1.3.0) of the CallAutomation service.
             /// </summary>
-            V2024_09_15 = 5
+            V2024_09_15 = 4
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

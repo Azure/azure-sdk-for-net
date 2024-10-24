@@ -4,13 +4,20 @@
 
 ### Features Added
 
+- Support multiple play sources for Play and Recognize
+- Support for PlayStarted event in Play/Recognize
+- Hold and Unhold the participant
+- Support to manage the rooms/servercall/group call using connect API
+- Expose original PSTN number target from incoming call event in call connection properties
+- Support for VoIP to PSTN transfer scenario
+- Added CreateCallFailed event to signify when create call API fails to establish a call
+- Added AnswerFailed event to signify when answer call API fails to answer a call
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
-- Added CreateCallFailed event to signify when create call API fails to establish a call
-- Added AnswerFailed event to signify when answer call API fails to answer a call
 
 ## 1.3.0-beta.1 (2024-08-02)
 
@@ -18,10 +25,12 @@
 
 - Support multiple play sources for Play and Recognize
 - Support for PlayStarted event in Play/Recognize
+- Support for the real time transcription
+- Monetization for real-time transcription and audio streaming
 - Hold and Unhold the participant
 - Support to manage the rooms/servercall/group call using connect API
 - Expose original PSTN number target from incoming call event in call connection properties
-- Support for VoIP to PSTN transfer scenario
+- Support for VoIP to PSTN transfer scenario 
 
 ## 1.2.0 (2024-04-15)
 
