@@ -3,9 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,6 +17,7 @@ namespace Azure.AI.Project;
 internal class ResponseAdapter : PipelineResponse
 {
     private readonly Response _azureResponse;
+    private PipelineResponseHeaders? _headers;
 
     public ResponseAdapter(Response azureResponse)
     {
@@ -38,16 +37,16 @@ internal class ResponseAdapter : PipelineResponse
     public override BinaryData Content => _azureResponse.Content;
 
     protected override PipelineResponseHeaders HeadersCore =>
-        _azureResponse.Headers;
+        _headers ??= new ResponseHeadersAdapter(_azureResponse.Headers);
 
     public override BinaryData BufferContent(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException("Content buffering is not supported for SSE response streams.");
     }
 
     public override ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException("Content buffering is not supported for SSE response streams.");
     }
 
     public override void Dispose() => _azureResponse?.Dispose();
