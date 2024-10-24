@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         [Test]
         public async Task GetCallConnectionPropertiesAsync_200OK()
         {
-            var callConnection = CreateMockCallConnection(200, CreateOrAnswerCallOrGetCallConnectionPayload);
+            var callConnection = CreateMockCallConnection(200, DummyPayload);
 
             var response = await callConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
 
@@ -56,7 +56,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         [Test]
         public void GetCallConnectionProperties_200OK()
         {
-            var callConnection = CreateMockCallConnection(200, CreateOrAnswerCallOrGetCallConnectionPayload);
+            var callConnection = CreateMockCallConnection(200, DummyPayload);
 
             var response = callConnection.GetCallConnectionProperties();
 
