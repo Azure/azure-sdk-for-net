@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("diskPoolVolume"u8);
                 writer.WriteObjectValue(DiskPoolVolume, options);
             }
+            if (Optional.IsDefined(ElasticSanVolume))
+            {
+                writer.WritePropertyName("elasticSanVolume"u8);
+                writer.WriteObjectValue(ElasticSanVolume, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -90,6 +95,7 @@ namespace Azure.ResourceManager.Avs
             AvsPrivateCloudDatastoreProvisioningState? provisioningState = default;
             WritableSubResource netAppVolume = default;
             DiskPoolVolume diskPoolVolume = default;
+            ElasticSanVolume elasticSanVolume = default;
             DatastoreStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -155,6 +161,15 @@ namespace Azure.ResourceManager.Avs
                             diskPoolVolume = DiskPoolVolume.DeserializeDiskPoolVolume(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("elasticSanVolume"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            elasticSanVolume = ElasticSanVolume.DeserializeElasticSanVolume(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -181,6 +196,7 @@ namespace Azure.ResourceManager.Avs
                 provisioningState,
                 netAppVolume,
                 diskPoolVolume,
+                elasticSanVolume,
                 status,
                 serializedAdditionalRawData);
         }
