@@ -19,13 +19,21 @@ namespace Azure.Communication.JobRouter
 
         void IJsonModel<WorkerWeightedAllocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WorkerWeightedAllocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkerWeightedAllocation)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
             writer.WritePropertyName("workerSelectors"u8);
@@ -50,7 +58,6 @@ namespace Azure.Communication.JobRouter
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WorkerWeightedAllocation IJsonModel<WorkerWeightedAllocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
