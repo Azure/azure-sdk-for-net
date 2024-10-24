@@ -1,22 +1,28 @@
 # Release History
 
-## 1.2.0-beta.1 (2024-10-18)
+## 1.2.0-beta.1 (2024-10-24)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Upgraded api-version tag from 'package-2022-07' to 'package-preview-2023-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b26a190235f162b15d77dad889d104d06871fb4f/specification/dnsresolver/resource-manager/readme.md.
+    - Add DNS Security Policy functionality for the following resources:
+        - DNS Security Policy
+        - DNS Security Policy Links
+        - Dns Security Rules
+        - DNS Resolver Domain Lists
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-- Add DNS Security Policy functionality for the following resources:
-    - DNS Security Policy
-    - DNS Security Policy Links
-    - Dns Security Rules
-    - DNS Resolver Domain Lists
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.44.1
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.13.0
 
 ## 1.1.0 (2023-11-27)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -26,7 +32,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 
