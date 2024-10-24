@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 #nullable enable
 
-namespace Azure.AI.Project;
+namespace Azure.AI.Projects;
 
 /// <summary>
 /// Adapts an Azure.Core Response to an SCM PipelineResponse.

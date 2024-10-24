@@ -7,7 +7,7 @@ using Azure.Core;
 
 #nullable enable
 
-namespace Azure.AI.Project;
+namespace Azure.AI.Projects;
 
 /// <summary>
 /// Adapts an Azure.Core ResponseHeaders to an SCM PipelineResponseHeaders.
