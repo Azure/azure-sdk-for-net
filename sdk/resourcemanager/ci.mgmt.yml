@@ -131,6 +131,7 @@ trigger:
     - sdk/mongocluster/Azure.ResourceManager.MongoCluster
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
+    - sdk/neonpostgres/Azure.ResourceManager.NeonPostgres
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
     - sdk/networkanalytics/Azure.ResourceManager.NetworkAnalytics
@@ -334,6 +335,7 @@ pr:
     - sdk/mongocluster/Azure.ResourceManager.MongoCluster
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
+    - sdk/neonpostgres/Azure.ResourceManager.NeonPostgres
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
     - sdk/networkanalytics/Azure.ResourceManager.NetworkAnalytics
