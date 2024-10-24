@@ -9,7 +9,6 @@ namespace Azure.Provisioning.Primitives;
 
 public class BicepValueReference(ProvisionableConstruct construct, string propertyName, params string[]? path)
 {
-    public BicepValueReference? Parent { get; private set; } = ((IBicepValue)construct).Self;
     public ProvisionableConstruct Construct { get; } = construct;
     public string PropertyName { get; } = propertyName;
     public IReadOnlyList<string>? BicepPath { get; } = path;
@@ -17,7 +16,7 @@ public class BicepValueReference(ProvisionableConstruct construct, string proper
     internal BicepExpression GetReference()
     {
         // Get the root
-        BicepExpression? target = Parent?.GetReference();
+        BicepExpression? target = ((IBicepValue)Construct).Self?.GetReference();
         if (target is null)
         {
             if (Construct is not NamedProvisionableConstruct named)

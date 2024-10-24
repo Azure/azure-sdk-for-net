@@ -835,7 +835,6 @@ namespace Azure.Provisioning.Primitives
         public BicepValueReference(Azure.Provisioning.Primitives.ProvisionableConstruct construct, string propertyName, params string[]? path) { }
         public System.Collections.Generic.IReadOnlyList<string>? BicepPath { get { throw null; } }
         public Azure.Provisioning.Primitives.ProvisionableConstruct Construct { get { throw null; } }
-        public Azure.Provisioning.Primitives.BicepValueReference? Parent { get { throw null; } }
         public string PropertyName { get { throw null; } }
         public override string ToString() { throw null; }
     }
