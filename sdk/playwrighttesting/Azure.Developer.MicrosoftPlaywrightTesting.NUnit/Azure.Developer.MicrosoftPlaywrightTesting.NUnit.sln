@@ -7,10 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Developer.MicrosoftPl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Developer.MicrosoftPlaywrightTesting.NUnit.Tests", "tests\Azure.Developer.MicrosoftPlaywrightTesting.NUnit.Tests.csproj", "{081210F2-A9F8-4137-97F4-5D5EF238B553}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tempSample", "tempSample", "{2FB9C819-42B3-4AF3-A77E-A324AEAA5678}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaywrightTests", "tempSample\PlaywrightTests\PlaywrightTests.csproj", "{66C28F1E-A7DB-4B0E-B65C-61380B420026}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,12 +24,5 @@ Global
 		{081210F2-A9F8-4137-97F4-5D5EF238B553}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{081210F2-A9F8-4137-97F4-5D5EF238B553}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{081210F2-A9F8-4137-97F4-5D5EF238B553}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66C28F1E-A7DB-4B0E-B65C-61380B420026}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66C28F1E-A7DB-4B0E-B65C-61380B420026}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66C28F1E-A7DB-4B0E-B65C-61380B420026}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66C28F1E-A7DB-4B0E-B65C-61380B420026}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{66C28F1E-A7DB-4B0E-B65C-61380B420026} = {2FB9C819-42B3-4AF3-A77E-A324AEAA5678}
 	EndGlobalSection
 EndGlobal
