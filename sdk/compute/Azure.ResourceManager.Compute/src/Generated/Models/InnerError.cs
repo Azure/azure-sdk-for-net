@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
     /// <summary> Inner error details. </summary>
     public partial class InnerError

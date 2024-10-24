@@ -11,17 +11,17 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Compute.Samples
+namespace Azure.ResourceManager.Disk.Samples
 {
     public partial class Sample_DiskAccessCollection
     {
-        // Create a disk access resource.
+        // List all disk access resources in a resource group.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateADiskAccessResource()
+        public async Task GetAll_ListAllDiskAccessResourcesInAResourceGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskAccessExamples/DiskAccess_Create.json
-            // this example is just showing the usage of "DiskAccesses_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskAccessExamples/DiskAccess_ListByResourceGroup.json
+            // this example is just showing the usage of "DiskAccesses_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.Compute.Samples
             // get the collection of this DiskAccessResource
             DiskAccessCollection collection = resourceGroupResource.GetDiskAccesses();
 
-            // invoke the operation
-            string diskAccessName = "myDiskAccess";
-            DiskAccessData data = new DiskAccessData(new AzureLocation("West US"));
-            ArmOperation<DiskAccessResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskAccessName, data);
-            DiskAccessResource result = lro.Value;
+            // invoke the operation and iterate over the result
+            await foreach (DiskAccessResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DiskAccessData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DiskAccessData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine($"Succeeded");
         }
 
         // Get information about a disk access resource with private endpoints.
@@ -263,13 +263,13 @@ namespace Azure.ResourceManager.Compute.Samples
             }
         }
 
-        // List all disk access resources in a resource group.
+        // Create a disk access resource.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListAllDiskAccessResourcesInAResourceGroup()
+        public async Task CreateOrUpdate_CreateADiskAccessResource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskAccessExamples/DiskAccess_ListByResourceGroup.json
-            // this example is just showing the usage of "DiskAccesses_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskAccessExamples/DiskAccess_Create.json
+            // this example is just showing the usage of "DiskAccesses_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.Compute.Samples
             // get the collection of this DiskAccessResource
             DiskAccessCollection collection = resourceGroupResource.GetDiskAccesses();
 
-            // invoke the operation and iterate over the result
-            await foreach (DiskAccessResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DiskAccessData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+            // invoke the operation
+            string diskAccessName = "myDiskAccess";
+            DiskAccessData data = new DiskAccessData(new AzureLocation("West US"));
+            ArmOperation<DiskAccessResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskAccessName, data);
+            DiskAccessResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DiskAccessData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

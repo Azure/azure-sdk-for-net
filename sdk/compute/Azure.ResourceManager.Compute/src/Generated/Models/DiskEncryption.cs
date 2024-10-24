@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
     /// <summary> Encryption at rest settings for disk or snapshot. </summary>
     public partial class DiskEncryption
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskEncryptionSetId"> ResourceId of the disk encryption set to use for enabling encryption at rest. </param>
         /// <param name="encryptionType"> The type of key used to encrypt the data of the disk. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryption(ResourceIdentifier diskEncryptionSetId, ComputeEncryptionType? encryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskEncryption(ResourceIdentifier diskEncryptionSetId, DiskEncryptionType? encryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskEncryptionSetId = diskEncryptionSetId;
             EncryptionType = encryptionType;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> ResourceId of the disk encryption set to use for enabling encryption at rest. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; set; }
         /// <summary> The type of key used to encrypt the data of the disk. </summary>
-        public ComputeEncryptionType? EncryptionType { get; set; }
+        public DiskEncryptionType? EncryptionType { get; set; }
     }
 }

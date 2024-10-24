@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
     /// <summary> This enumerates the possible sources of a disk's creation. </summary>
     public readonly partial struct DiskCreateOption : IEquatable<DiskCreateOption>

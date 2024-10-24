@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
     internal static partial class SupportedOperatingSystemTypeExtensions
     {

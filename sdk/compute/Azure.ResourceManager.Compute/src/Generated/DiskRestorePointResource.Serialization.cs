@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Disk
 {
     public partial class DiskRestorePointResource : IJsonModel<DiskRestorePointData>
     {

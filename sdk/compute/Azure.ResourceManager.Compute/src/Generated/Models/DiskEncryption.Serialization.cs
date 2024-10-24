@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
     public partial class DiskEncryption : IUtf8JsonSerializable, IJsonModel<DiskEncryption>
     {
@@ -19,21 +19,13 @@ namespace Azure.ResourceManager.Compute.Models
 
         void IJsonModel<DiskEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<DiskEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiskEncryption)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
@@ -59,6 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         DiskEncryption IJsonModel<DiskEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -82,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             ResourceIdentifier diskEncryptionSetId = default;
-            ComputeEncryptionType? type = default;
+            DiskEncryptionType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    type = new ComputeEncryptionType(property.Value.GetString());
+                    type = new DiskEncryptionType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

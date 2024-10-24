@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
     /// <summary> Additional authentication requirements when exporting or uploading to a disk or snapshot. </summary>
     public readonly partial struct DataAccessAuthMode : IEquatable<DataAccessAuthMode>

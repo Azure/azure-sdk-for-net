@@ -11,7 +11,7 @@ using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Disk
 {
     /// <summary>
     /// A class representing the DiskAccess data model.
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public DiskAccessData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<ComputePrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<DiskPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DiskAccessData"/>. </summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningState"> The disk access resource provisioning state. </param>
         /// <param name="timeCreated"> The time when the disk access was created. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskAccessData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<ComputePrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DiskAccessData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<DiskPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             PrivateEndpointConnections = privateEndpointConnections;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The extended location where the disk access will be created. Extended location cannot be changed. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> A readonly collection of private endpoint connections created on the disk. Currently only one endpoint connection is supported. </summary>
-        public IReadOnlyList<ComputePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<DiskPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The disk access resource provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> The time when the disk access was created. </summary>

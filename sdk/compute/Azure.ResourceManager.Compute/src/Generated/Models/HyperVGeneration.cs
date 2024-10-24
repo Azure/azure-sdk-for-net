@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
     /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
     public readonly partial struct HyperVGeneration : IEquatable<HyperVGeneration>

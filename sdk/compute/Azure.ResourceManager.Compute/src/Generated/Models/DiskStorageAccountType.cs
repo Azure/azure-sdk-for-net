@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
     /// <summary> The sku name. </summary>
     public readonly partial struct DiskStorageAccountType : IEquatable<DiskStorageAccountType>

@@ -7,7 +7,7 @@
 
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Disk
 {
     internal static class ProviderConstants
     {

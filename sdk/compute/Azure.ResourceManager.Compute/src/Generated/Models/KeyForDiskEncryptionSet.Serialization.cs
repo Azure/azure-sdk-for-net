@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
     public partial class KeyForDiskEncryptionSet : IUtf8JsonSerializable, IJsonModel<KeyForDiskEncryptionSet>
     {
@@ -20,21 +20,13 @@ namespace Azure.ResourceManager.Compute.Models
 
         void IJsonModel<KeyForDiskEncryptionSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<KeyForDiskEncryptionSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KeyForDiskEncryptionSet)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (Optional.IsDefined(SourceVault))
             {
                 writer.WritePropertyName("sourceVault"u8);
@@ -57,6 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         KeyForDiskEncryptionSet IJsonModel<KeyForDiskEncryptionSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

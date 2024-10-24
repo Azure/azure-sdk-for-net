@@ -8,9 +8,9 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
-    /// <summary> Specifies the Architecture Type. </summary>
+    /// <summary> CPU architecture supported by an OS disk. </summary>
     public readonly partial struct ArchitectureType : IEquatable<ArchitectureType>
     {
         private readonly string _value;

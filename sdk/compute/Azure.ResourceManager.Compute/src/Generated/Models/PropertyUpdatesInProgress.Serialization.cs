@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
     internal partial class PropertyUpdatesInProgress : IUtf8JsonSerializable, IJsonModel<PropertyUpdatesInProgress>
     {
@@ -19,21 +19,13 @@ namespace Azure.ResourceManager.Compute.Models
 
         void IJsonModel<PropertyUpdatesInProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<PropertyUpdatesInProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PropertyUpdatesInProgress)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (Optional.IsDefined(TargetTier))
             {
                 writer.WritePropertyName("targetTier"u8);
@@ -54,6 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         PropertyUpdatesInProgress IJsonModel<PropertyUpdatesInProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

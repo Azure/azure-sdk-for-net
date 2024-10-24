@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
     /// <summary> Indicates the error code if the background copy of a resource created via the CopyStart operation fails. </summary>
     public readonly partial struct CopyCompletionErrorReason : IEquatable<CopyCompletionErrorReason>
