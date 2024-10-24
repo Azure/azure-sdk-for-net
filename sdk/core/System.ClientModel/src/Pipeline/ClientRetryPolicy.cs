@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Primitives;
 
@@ -38,6 +39,8 @@ public class ClientRetryPolicy : PipelinePolicy
         _initialDelay = DefaultInitialDelay;
     }
 
+    internal PipelineLoggingHandler? LogHandler { get; set; }
+
     /// <inheritdoc/>
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         => ProcessSyncOrAsync(message, pipeline, currentIndex, async: false).EnsureCompleted();
@@ -53,6 +56,7 @@ public class ClientRetryPolicy : PipelinePolicy
         while (true)
         {
             Exception? thisTryException = null;
+            var before = Stopwatch.GetTimestamp();
 
             if (async)
             {
@@ -91,6 +95,9 @@ public class ClientRetryPolicy : PipelinePolicy
                 OnRequestSent(message);
             }
 
+            var after = Stopwatch.GetTimestamp();
+            double elapsed = (after-before) / (double)Stopwatch.Frequency;
+
             bool shouldRetry = async ?
                 await ShouldRetryInternalAsync(message, thisTryException).ConfigureAwait(false) :
                 ShouldRetryInternal(message, thisTryException);
@@ -115,6 +122,8 @@ public class ClientRetryPolicy : PipelinePolicy
 
                 message.RetryCount++;
                 OnTryComplete(message);
+
+                LogHandler?.LogRequestRetrying(message.Request.ClientRequestId ?? string.Empty, message.RetryCount, elapsed);
 
                 continue;
             }

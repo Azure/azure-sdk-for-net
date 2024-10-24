@@ -154,6 +154,8 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         Assert.Throws<InvalidOperationException>(()
             => options.RetryPolicy = new MockRetryPolicy());
         Assert.Throws<InvalidOperationException>(()
+            => options.MessageLoggingPolicy = new MockPipelinePolicy());
+        Assert.Throws<InvalidOperationException>(()
             => options.Transport = new MockPipelineTransport("Transport"));
         Assert.Throws<InvalidOperationException>(()
             => options.NetworkTimeout = TimeSpan.MinValue);
@@ -169,6 +171,8 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
 
         Assert.Throws<InvalidOperationException>(()
             => options.RetryPolicy = new MockRetryPolicy());
+        Assert.Throws<InvalidOperationException>(()
+            => options.MessageLoggingPolicy = new MockPipelinePolicy());
         Assert.Throws<InvalidOperationException>(()
             => options.Transport = new MockPipelineTransport("Transport"));
         Assert.Throws<InvalidOperationException>(()

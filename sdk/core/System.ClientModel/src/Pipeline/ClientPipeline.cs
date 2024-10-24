@@ -5,7 +5,10 @@ using System.ClientModel.Internal;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Primitives;
 
@@ -101,6 +104,7 @@ public sealed partial class ClientPipeline
         Argument.AssertNotNull(options, nameof(options));
 
         options.Freeze();
+        bool useDefaultLogging = options.UseDefaultLogging();
 
         // Add length of client-specific policies.
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
@@ -111,6 +115,10 @@ public sealed partial class ClientPipeline
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
         pipelineLength++; // for retry policy
+        if (options.EnableLogging != false && options.EnableMessageLogging != false)
+        {
+            pipelineLength++; // for logging policy
+        }
         pipelineLength++; // for transport
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
@@ -132,6 +140,12 @@ public sealed partial class ClientPipeline
         // Add retry policy.
         policies[index++] = options.RetryPolicy ?? ClientRetryPolicy.Default;
 
+        if (options.EnableLogging != false && policies[index] is ClientRetryPolicy retryPolicy)
+        {
+            ILogger? logger = options.LoggerFactory?.CreateLogger<ClientRetryPolicy>();
+            retryPolicy.LogHandler = new PipelineLoggingHandler(logger, options.GetPipelineMessageSanitizer());
+        }
+
         // Per try policies come after the retry policy.
         perTryPolicies.CopyTo(policies.AsSpan(index));
         index += perTryPolicies.Length;
@@ -143,6 +157,17 @@ public sealed partial class ClientPipeline
         }
 
         int perTryIndex = index;
+
+        // Add logging policy just before the transport.
+
+        if (useDefaultLogging)
+        {
+            policies[index++] = MessageLoggingPolicy.Default;
+        }
+        else if (options.EnableLogging != false && options.EnableMessageLogging != false)
+        {
+            policies[index++] = options.MessageLoggingPolicy ?? new MessageLoggingPolicy(options);
+        }
 
         // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));
