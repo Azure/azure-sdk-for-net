@@ -1,14 +1,12 @@
 # Release History
 
-## 1.4.0-beta.1 (2024-10-28)
+## 1.4.0 (2024-10-28)
 
 ### Features Added
 
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 - Upgraded api-version tag from 'package-2023-03-01' to 'package-2023-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/e19b5771846718774c0452800b9a42c251319f48/specification/vmware/resource-manager/readme.md.
-
-### Breaking Changes
-- WorkloadNetworkResource is now a singleton resource
+    - WorkloadNetworkResource is now a singleton resource
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.3.0 (2024-01-22)
 

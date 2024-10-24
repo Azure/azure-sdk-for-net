@@ -3,13 +3,8 @@
 
 #nullable disable
 
-using System;
-using System.Globalization;
 using System.ComponentModel;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs
@@ -20,7 +15,6 @@ namespace Azure.ResourceManager.Avs
     /// from an instance of <see cref="ArmClient"/> using the GetWorkloadNetworkResource method.
     /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetWorkloadNetwork method.
     /// </summary>
-     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class WorkloadNetworkResource : ArmResource
     {
         /// <summary>
@@ -31,9 +25,6 @@ namespace Azure.ResourceManager.Avs
         /// <param name="workloadNetworkName"> The workloadNetworkName. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, WorkloadNetworkName workloadNetworkName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/{workloadNetworkName}";
-            return new ResourceIdentifier(resourceId);
-        }
+            => CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
     }
 }

@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public virtual Response<WorkloadNetworkResource> GetWorkloadNetwork(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
             return GetWorkloadNetworks().Get(workloadNetworkName, cancellationToken);
@@ -79,6 +80,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public virtual async Task<Response<WorkloadNetworkResource>> GetWorkloadNetworkAsync(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
             return await GetWorkloadNetworks().GetAsync(workloadNetworkName, cancellationToken).ConfigureAwait(false);
@@ -87,6 +89,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Gets a collection of WorkloadNetworkResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of WorkloadNetworkResources and their operations over a WorkloadNetworkResource. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public virtual WorkloadNetworkCollection GetWorkloadNetworks()
         {
             return GetCachedClient(client => new WorkloadNetworkCollection(client, Id));

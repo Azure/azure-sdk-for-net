@@ -22,13 +22,14 @@ namespace Azure.ResourceManager.Avs
     /// Each <see cref="WorkloadNetworkResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
     /// To get a <see cref="WorkloadNetworkCollection"/> instance call the GetWorkloadNetworks method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This class is obsolete and will be removed in a future release.", false)]
     public partial class WorkloadNetworkCollection : ArmCollection, IEnumerable<WorkloadNetworkResource>, IAsyncEnumerable<WorkloadNetworkResource>
     {
         private readonly ClientDiagnostics _workloadNetworkClientDiagnostics;
         private readonly WorkloadNetworksRestOperations _workloadNetworkRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkCollection"/> class for mocking. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         protected WorkloadNetworkCollection()
         {
         }
@@ -75,7 +76,6 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<WorkloadNetworkResource>> GetAsync(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
             using var scope = _workloadNetworkClientDiagnostics.CreateScope("WorkloadNetworkCollection.Get");
@@ -117,7 +117,6 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<WorkloadNetworkResource> Get(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
             using var scope = _workloadNetworkClientDiagnostics.CreateScope("WorkloadNetworkCollection.Get");
@@ -159,7 +158,6 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WorkloadNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<WorkloadNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -190,7 +188,6 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WorkloadNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<WorkloadNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -221,7 +218,6 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<bool>> ExistsAsync(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
             using var scope = _workloadNetworkClientDiagnostics.CreateScope("WorkloadNetworkCollection.Exists");
@@ -261,7 +257,6 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<bool> Exists(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
             using var scope = _workloadNetworkClientDiagnostics.CreateScope("WorkloadNetworkCollection.Exists");
@@ -301,7 +296,6 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<NullableResponse<WorkloadNetworkResource>> GetIfExistsAsync(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
             using var scope = _workloadNetworkClientDiagnostics.CreateScope("WorkloadNetworkCollection.GetIfExists");
@@ -343,7 +337,6 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual NullableResponse<WorkloadNetworkResource> GetIfExists(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
             using var scope = _workloadNetworkClientDiagnostics.CreateScope("WorkloadNetworkCollection.GetIfExists");
@@ -362,19 +355,16 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         IEnumerator<WorkloadNetworkResource> IEnumerable<WorkloadNetworkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         IAsyncEnumerator<WorkloadNetworkResource> IAsyncEnumerable<WorkloadNetworkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

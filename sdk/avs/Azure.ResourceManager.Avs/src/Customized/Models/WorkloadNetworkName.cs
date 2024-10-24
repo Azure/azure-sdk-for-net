@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public WorkloadNetworkName(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
@@ -24,30 +23,24 @@ namespace Azure.ResourceManager.Avs.Models
         private const string DefaultValue = "default";
 
         /// <summary> default. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static WorkloadNetworkName Default { get; } = new WorkloadNetworkName(DefaultValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkName"/> values are the same. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static bool operator ==(WorkloadNetworkName left, WorkloadNetworkName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkName"/> values are not the same. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static bool operator !=(WorkloadNetworkName left, WorkloadNetworkName right) => !left.Equals(right);
         /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadNetworkName"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static implicit operator WorkloadNetworkName(string value) => new WorkloadNetworkName(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkloadNetworkName other && Equals(other);
         /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(WorkloadNetworkName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => _value;
     }
 }
