@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ApiManagementListWorkspaceProductApiLinks()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListWorkspaceProductApiLinks.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListWorkspaceProductApiLinks.json
             // this example is just showing the usage of "WorkspaceProductApiLink_ListByProduct" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ApiManagementGetWorkspaceProductApiLink()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetWorkspaceProductApiLink.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceProductApiLink.json
             // this example is just showing the usage of "WorkspaceProductApiLink_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ApiManagementGetWorkspaceProductApiLink()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetWorkspaceProductApiLink.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceProductApiLink.json
             // this example is just showing the usage of "WorkspaceProductApiLink_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_ApiManagementGetWorkspaceProductApiLink()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetWorkspaceProductApiLink.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceProductApiLink.json
             // this example is just showing the usage of "WorkspaceProductApiLink_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ApiManagementCreateWorkspaceProductApiLink()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateWorkspaceProductApiLink.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWorkspaceProductApiLink.json
             // this example is just showing the usage of "WorkspaceProductApiLink_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetEntityState_ApiManagementHeadWorkspaceTag()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadWorkspaceTag.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadWorkspaceTag.json
             // this example is just showing the usage of "WorkspaceTag_GetEntityState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ApiManagementGetWorkspaceTag()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetWorkspaceTag.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceTag.json
             // this example is just showing the usage of "WorkspaceTag_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ApiManagementUpdateWorkspaceTag()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateWorkspaceTag.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementUpdateWorkspaceTag.json
             // this example is just showing the usage of "WorkspaceTag_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_ApiManagementDeleteWorkspaceTag()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteWorkspaceTag.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementDeleteWorkspaceTag.json
             // this example is just showing the usage of "WorkspaceTag_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
