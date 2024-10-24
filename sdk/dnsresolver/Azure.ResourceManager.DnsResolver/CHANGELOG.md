@@ -5,11 +5,11 @@
 ### Features Added
 
 - Upgraded api-version tag from 'package-2022-07' to 'package-preview-2023-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b26a190235f162b15d77dad889d104d06871fb4f/specification/dnsresolver/resource-manager/readme.md.
-    - Add DNS Security Policy functionality for the following resources:
-        - DNS Security Policy
-        - DNS Security Policy Links
-        - Dns Security Rules
-        - DNS Resolver Domain Lists
+- Add DNS Security Policy functionality for the following resources:
+    - DNS Security Policy
+    - DNS Security Policy Links
+    - Dns Security Rules
+    - DNS Resolver Domain Lists
 - Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
