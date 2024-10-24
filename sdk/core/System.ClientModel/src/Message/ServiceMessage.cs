@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace System.ClientModel.Primitives;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public abstract class ServiceResponse
+public abstract class ServiceMessage
 {
     /// <summary>
     /// Gets the status code of the response.

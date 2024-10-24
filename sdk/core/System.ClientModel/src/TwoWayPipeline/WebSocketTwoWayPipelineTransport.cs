@@ -32,7 +32,7 @@ public partial class WebSocketTwoWayPipelineTransport : TwoWayPipelineTransport,
         throw new NotImplementedException();
     }
 
-    protected override async ValueTask ProcessCoreAsync(TwoWayPipelineClientMessage clientMessage)
+    protected override ValueTask ProcessCoreAsync(TwoWayPipelineClientMessage clientMessage)
     {
         // Send the message over the WebSocket.
 
@@ -42,18 +42,21 @@ public partial class WebSocketTwoWayPipelineTransport : TwoWayPipelineTransport,
         // TODO: text vs. binary?
         // TODO: end of message?
 
-#if NET6_0_OR_GREATER
-        await _webSocket!.SendAsync((clientMessage.Content!).ToMemory(),
-            WebSocketMessageType.Text,
-            endOfMessage: true,
-            clientMessage.CancellationToken).ConfigureAwait(false);
-#else
-        // TODO: perf for netstandard2.0?
-        await _webSocket!.SendAsync(new ArraySegment<byte>(clientMessage.Content!.ToArray()),
-            WebSocketMessageType.Text,
-            endOfMessage: true,
-            clientMessage.CancellationToken).ConfigureAwait(false);
-#endif
+        // TODO: implement Send using BinaryContent instead of BinaryData.
+        throw new NotImplementedException();
+
+//#if NET6_0_OR_GREATER
+//        await _webSocket!.SendAsync((clientMessage.Content!).ToMemory(),
+//            WebSocketMessageType.Text,
+//            endOfMessage: true,
+//            clientMessage.CancellationToken).ConfigureAwait(false);
+//#else
+//        // TODO: perf for netstandard2.0?
+//        await _webSocket!.SendAsync(new ArraySegment<byte>(clientMessage.Content!.ToArray()),
+//            WebSocketMessageType.Text,
+//            endOfMessage: true,
+//            clientMessage.CancellationToken).ConfigureAwait(false);
+//#endif
     }
 
     protected override void ProcessCore(TwoWayPipelineServiceMessage serviceMessage)

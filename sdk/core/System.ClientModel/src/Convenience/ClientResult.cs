@@ -11,15 +11,15 @@ namespace System.ClientModel;
 /// </summary>
 public class ClientResult
 {
-    private readonly ServiceResponse _response;
+    private readonly ServiceMessage _response;
 
     /// <summary>
     /// Creates a new instance of <see cref="ClientResult"/> from a service
     /// response.
     /// </summary>
-    /// <param name="response">The <see cref="ServiceResponse"/> received
+    /// <param name="response">The <see cref="ServiceMessage"/> received
     /// from the service.</param>
-    protected ClientResult(ServiceResponse response)
+    protected ClientResult(ServiceMessage response)
     {
         Argument.AssertNotNull(response, nameof(response));
 
@@ -52,7 +52,7 @@ public class ClientResult
     /// </summary>
     /// <returns>The <see cref="PipelineResponse"/> received from the service.
     /// </returns>
-    public ServiceResponse GetServiceResponse() => _response;
+    public ServiceMessage GetServiceResponse() => _response;
 
     #region Factory methods for ClientResult and subtypes
 
@@ -61,7 +61,7 @@ public class ClientResult
     /// </summary>
     /// <param name="response"></param>
     /// <returns></returns>
-    public static ClientResult FromResponse(ServiceResponse response)
+    public static ClientResult FromResponse(ServiceMessage response)
     {
         Argument.AssertNotNull(response, nameof(response));
 

@@ -10,7 +10,7 @@ namespace System.ClientModel.Primitives;
 /// <summary>
 /// Represents an HTTP response received from a cloud service.
 /// </summary>
-public abstract class PipelineResponse : ServiceResponse, IDisposable
+public abstract class PipelineResponse : ServiceMessage, IDisposable
 {
     /// <summary>
     /// Gets the reason phrase that accompanies the status code on the HTTP

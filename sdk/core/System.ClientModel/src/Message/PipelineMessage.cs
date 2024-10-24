@@ -92,7 +92,7 @@ public class PipelineMessage : IDisposable
     /// Gets or sets the <see cref="PipelineMessageClassifier"/> used by the
     /// <see cref="ClientPipeline"/> to determine whether the response received
     /// from the service is considered an error and populate the
-    /// <see cref="ServiceResponse.IsError"/> on <see cref="Response"/>.
+    /// <see cref="ServiceMessage.IsError"/> on <see cref="Response"/>.
     ///
     /// This property is intended to be set in a client's service method to a
     /// a <see cref="PipelineMessageClassifier"/> that classifies responses as
