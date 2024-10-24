@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Initializes a new instance of <see cref="AgentUpgrade"/>. </summary>
         /// <param name="desiredVersion"> Specifies the version info w.r.t AgentUpgrade for the machine. </param>
-        /// <param name="correlationId"> The correlation ID passed in from RSM per upgrade. </param>
-        /// <param name="isAutomaticUpgradeEnabled"> Specifies if RSM should try to upgrade this machine. </param>
+        /// <param name="correlationId"> The correlation ID associated with an agent upgrade operation. </param>
+        /// <param name="isAutomaticUpgradeEnabled"> Specifies if the machine's agent should be upgraded. </param>
         /// <param name="lastAttemptDesiredVersion"> Specifies the version of the last attempt. </param>
         /// <param name="lastAttemptedOn"> Timestamp of last upgrade attempt. </param>
         /// <param name="lastAttemptStatus"> Specifies the status of Agent Upgrade. </param>
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Specifies the version info w.r.t AgentUpgrade for the machine. </summary>
         [WirePath("desiredVersion")]
         public string DesiredVersion { get; set; }
-        /// <summary> The correlation ID passed in from RSM per upgrade. </summary>
+        /// <summary> The correlation ID associated with an agent upgrade operation. </summary>
         [WirePath("correlationId")]
         public Guid? CorrelationId { get; set; }
-        /// <summary> Specifies if RSM should try to upgrade this machine. </summary>
+        /// <summary> Specifies if the machine's agent should be upgraded. </summary>
         [WirePath("enableAutomaticUpgrade")]
         public bool? IsAutomaticUpgradeEnabled { get; set; }
         /// <summary> Specifies the version of the last attempt. </summary>
