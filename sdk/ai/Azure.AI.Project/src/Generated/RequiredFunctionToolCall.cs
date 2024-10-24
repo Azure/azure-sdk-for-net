@@ -22,16 +22,15 @@ namespace Azure.AI.Project
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(internalDetails, nameof(internalDetails));
 
-            Type = "function";
             InternalDetails = internalDetails;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequiredFunctionToolCall"/>. </summary>
-        /// <param name="type"> The object type for the required tool call. </param>
-        /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
+        /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
         /// <param name="internalDetails"> Detailed information about the function to be executed by the tool that includes name and arguments. </param>
-        internal RequiredFunctionToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalRequiredFunctionToolCallDetails internalDetails) : base(type, id, serializedAdditionalRawData)
+        internal RequiredFunctionToolCall(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string id, InternalRequiredFunctionToolCallDetails internalDetails) : base(type, serializedAdditionalRawData, id)
         {
             InternalDetails = internalDetails;
         }

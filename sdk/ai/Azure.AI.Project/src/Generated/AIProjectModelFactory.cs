@@ -118,12 +118,12 @@ namespace Azure.AI.Project
         }
 
         /// <summary> Initializes a new instance of <see cref="Project.RequiredToolCall"/>. </summary>
-        /// <param name="type"> The object type for the required tool call. </param>
+        /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
         /// <returns> A new <see cref="Project.RequiredToolCall"/> instance for mocking. </returns>
         public static RequiredToolCall RequiredToolCall(string type = null, string id = null)
         {
-            return new UnknownRequiredToolCall(type, id, serializedAdditionalRawData: null);
+            return new UnknownRequiredToolCall(type, serializedAdditionalRawData: null, id);
         }
 
         /// <summary> Initializes a new instance of <see cref="Project.RunError"/>. </summary>

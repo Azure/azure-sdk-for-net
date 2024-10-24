@@ -26,10 +26,10 @@ namespace Azure.AI.Project
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -111,14 +111,14 @@ namespace Azure.AI.Project
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static RequiredToolCall FromResponse(Response response)
+        internal static new RequiredToolCall FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeRequiredToolCall(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);

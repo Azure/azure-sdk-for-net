@@ -14,7 +14,7 @@ namespace Azure.AI.Project;
  * is to avoid having types that contain nothing meaningful beyond a property to another type.
  */
 
-public partial class RequiredFunctionToolCall
+public partial class RequiredFunctionToolCall : RequiredToolCall
 {
     /// <inheritdoc cref="InternalRequiredFunctionToolCallDetails.Name"/>
     public string Name => InternalDetails.Name;

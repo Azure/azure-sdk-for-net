@@ -28,10 +28,10 @@ namespace Azure.AI.Project
             writer.WriteStartObject();
             writer.WritePropertyName("function"u8);
             writer.WriteObjectValue<InternalRequiredFunctionToolCallDetails>(InternalDetails, options);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -71,8 +71,8 @@ namespace Azure.AI.Project
                 return null;
             }
             InternalRequiredFunctionToolCallDetails function = default;
-            string type = default;
             string id = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -82,14 +82,14 @@ namespace Azure.AI.Project
                     function = InternalRequiredFunctionToolCallDetails.DeserializeInternalRequiredFunctionToolCallDetails(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -98,7 +98,7 @@ namespace Azure.AI.Project
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RequiredFunctionToolCall(type, id, serializedAdditionalRawData, function);
+            return new RequiredFunctionToolCall(type, serializedAdditionalRawData, id, function);
         }
 
         BinaryData IPersistableModel<RequiredFunctionToolCall>.Write(ModelReaderWriterOptions options)

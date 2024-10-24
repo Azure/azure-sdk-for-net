@@ -7,7 +7,8 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <NoWarn>$(NoWarn);CS1591;AZC0012</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AZC0012;SA1649;SA1402;</NoWarn>
+    <LangVersion>latest</LangVersion>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
