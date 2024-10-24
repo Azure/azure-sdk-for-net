@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
     public partial class KeyVaultAndKeyReference : IUtf8JsonSerializable, IJsonModel<KeyVaultAndKeyReference>
     {
@@ -20,21 +20,13 @@ namespace Azure.ResourceManager.Compute.Models
 
         void IJsonModel<KeyVaultAndKeyReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultAndKeyReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KeyVaultAndKeyReference)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             writer.WritePropertyName("sourceVault"u8);
             JsonSerializer.Serialize(writer, SourceVault);
             writer.WritePropertyName("keyUrl"u8);
@@ -54,6 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         KeyVaultAndKeyReference IJsonModel<KeyVaultAndKeyReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -9,9 +9,9 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Disk.Models;
 
-namespace Azure.ResourceManager.Compute.Samples
+namespace Azure.ResourceManager.Disk.Samples
 {
     public partial class Sample_DiskRestorePointResource
     {

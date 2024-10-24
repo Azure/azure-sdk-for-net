@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
     /// <summary> This enumerates the possible state of the disk. </summary>
     public readonly partial struct DiskState : IEquatable<DiskState>

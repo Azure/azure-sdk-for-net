@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
     /// <summary> Used to specify the file format when making request for SAS on a VHDX file format snapshot. </summary>
     public readonly partial struct DiskImageFileFormat : IEquatable<DiskImageFileFormat>

@@ -16,7 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Disk
 {
     /// <summary>
     /// A class representing a collection of <see cref="ManagedDiskResource"/> and their operations.
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedDiskCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedDiskDisksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ManagedDiskResource.ResourceType.Namespace, Diagnostics);
+            _managedDiskDisksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Disk", ManagedDiskResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ManagedDiskResource.ResourceType, out string managedDiskDisksApiVersion);
             _managedDiskDisksRestClient = new DisksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDiskDisksApiVersion);
 #if DEBUG
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _managedDiskDisksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, diskName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<ManagedDiskResource>(new ManagedDiskOperationSource(Client), _managedDiskDisksClientDiagnostics, Pipeline, _managedDiskDisksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DiskArmOperation<ManagedDiskResource>(new ManagedDiskOperationSource(Client), _managedDiskDisksClientDiagnostics, Pipeline, _managedDiskDisksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _managedDiskDisksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, diskName, data, cancellationToken);
-                var operation = new ComputeArmOperation<ManagedDiskResource>(new ManagedDiskOperationSource(Client), _managedDiskDisksClientDiagnostics, Pipeline, _managedDiskDisksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DiskArmOperation<ManagedDiskResource>(new ManagedDiskOperationSource(Client), _managedDiskDisksClientDiagnostics, Pipeline, _managedDiskDisksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

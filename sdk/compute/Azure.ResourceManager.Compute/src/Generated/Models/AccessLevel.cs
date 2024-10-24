@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
     /// <summary> The Access Level, accepted values include None, Read, Write. </summary>
     public readonly partial struct AccessLevel : IEquatable<AccessLevel>

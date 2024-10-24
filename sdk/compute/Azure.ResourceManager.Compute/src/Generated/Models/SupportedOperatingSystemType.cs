@@ -5,9 +5,9 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Disk.Models
 {
-    /// <summary> This property allows you to specify the supported type of the OS that application is built for. Possible values are: **Windows,** **Linux.**. </summary>
+    /// <summary> The Operating System type. </summary>
     public enum SupportedOperatingSystemType
     {
         /// <summary> Windows. </summary>
