@@ -7,10 +7,11 @@ using Azure.Core;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.IO;
 
 namespace Azure.AI.Inference.Tests.Samples
 {
-    public class Sample5_ChatCompletionsWithImageUrl : SamplesBase<InferenceClientTestEnvironment>
+    public class Sample5_ChatCompletionsWithImages : SamplesBase<InferenceClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
@@ -123,6 +124,105 @@ namespace Azure.AI.Inference.Tests.Samples
             Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
             ChatCompletions result = response.Value;
+            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void ChatCompletionsWithImageDataScenario()
+        {
+            var endpoint = new Uri(TestEnvironment.AoaiEndpoint);
+            var credential = new AzureKeyCredential("foo");
+            var key = TestEnvironment.AoaiKey;
+
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+            clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(key), HttpPipelinePosition.PerCall);
+
+            var client = new ChatCompletionsClient(endpoint, credential, clientOptions);
+
+            #region Snippet:Azure_AI_Inference_ChatCompletionsWithImageStreamScenario
+#if SNIPPET
+            Stream imageStream = File.OpenRead("sample_image_path");
+
+            ChatMessageImageContentItem imageContentItem =
+                new ChatMessageImageContentItem(
+                    imageStream,
+                    "image/jpg",
+                    ChatMessageImageDetailLevel.Low
+                );
+#else
+            Stream imageStream = File.OpenRead(TestEnvironment.TestImageJpgInputPath);
+
+            ChatMessageImageContentItem imageContentItem =
+                new ChatMessageImageContentItem(
+                    imageStream,
+                    "image/jpg",
+                    ChatMessageImageDetailLevel.Low
+                );
+#endif
+
+            var requestOptions = new ChatCompletionsOptions()
+            {
+                Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant that helps describe images."),
+                    new ChatRequestUserMessage(
+                        new ChatMessageTextContentItem("describe this image"),
+                        imageContentItem),
+                },
+            };
+
+            Response<ChatCompletions> response = client.Complete(requestOptions);
+            System.Console.WriteLine(response.Value.Content);
+            #endregion
+
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            ChatCompletions result = response.Value;
+            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+
+            #region Snippet:Azure_AI_Inference_ChatCompletionsWithImagePathScenario
+#if SNIPPET
+            ChatMessageImageContentItem imageContentItem =
+                new ChatMessageImageContentItem(
+                    "sample_image_path",
+                    "image/jpg",
+                    ChatMessageImageDetailLevel.Low
+                );
+#else
+            imageContentItem =
+                new ChatMessageImageContentItem(
+                    TestEnvironment.TestImageJpgInputPath,
+                    "image/jpg",
+                    ChatMessageImageDetailLevel.Low
+                );
+#endif
+            #endregion
+
+            requestOptions = new ChatCompletionsOptions()
+            {
+                Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant that helps describe images."),
+                    new ChatRequestUserMessage(
+                        new ChatMessageTextContentItem("describe this image"),
+                        imageContentItem),
+                },
+            };
+
+            response = client.Complete(requestOptions);
+
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            result = response.Value;
             Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
             Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
             Assert.That(result.Content, Is.Not.Null.Or.Empty);

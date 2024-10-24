@@ -244,35 +244,6 @@ namespace Azure.AI.Inference.Tests
                 Assert.IsTrue(captureRequestPayloadPolicy._requestHeaders["extra-parameters"] == ExtraParameters.PassThrough);
             }
             Assert.IsTrue(exceptionThrown);
-
-            exceptionThrown = false;
-            try
-            {
-                 await client.CompleteAsync(requestOptions, ExtraParameters.PassThrough);
-            }
-            catch (Exception e)
-            {
-                exceptionThrown = true;
-                Assert.IsTrue(e.Message.Contains("Extra inputs are not permitted"));
-                Assert.IsTrue(captureRequestPayloadPolicy._requestContent.Contains("foo"));
-            }
-            Assert.IsTrue(exceptionThrown);
-
-            /*
-            // To be enabled once ExtraParameters is implemented in the service
-            var response = await client.CompleteAsync(requestOptions, ExtraParameters.Drop);
-
-            Assert.IsTrue(captureRequestPayloadPolicy._requestContent.Contains("foo"));
-
-            Assert.That(response, Is.Not.Null);
-            Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
-            ChatCompletions result = response.Value;
-            Assert.That(result.Id, Is.Not.Null.Or.Empty);
-            Assert.That(result.Created, Is.Not.Null.Or.Empty);
-            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(result.Content, Is.Not.Null.Or.Empty);
-            */
         }
 
         [RecordedTest]

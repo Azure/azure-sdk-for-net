@@ -1,6 +1,6 @@
-# Chat Completions with an Image URL Input
+# Chat Completions with an Image Input
 
-This sample demonstrates how to get a chat completions response from the service using a synchronous call. It shows how to include an image URL in the input chat messages.
+This sample demonstrates how to get a chat completions response from the service using a synchronous call. It shows different ways to include an image in the input chat messages.
 
 This sample will only work on AI models that support image input.
 
@@ -66,4 +66,42 @@ var requestOptions = new ChatCompletionsOptions()
 
 Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
 System.Console.WriteLine(response.Value.Content);
+```
+
+Alternatively, you can provide a Stream object:
+
+```C# Snippet:Azure_AI_Inference_ChatCompletionsWithImageStreamScenario
+Stream imageStream = File.OpenRead("sample_image_path");
+
+ChatMessageImageContentItem imageContentItem =
+    new ChatMessageImageContentItem(
+        imageStream,
+        "image/jpg",
+        ChatMessageImageDetailLevel.Low
+    );
+
+var requestOptions = new ChatCompletionsOptions()
+{
+    Messages =
+    {
+        new ChatRequestSystemMessage("You are a helpful assistant that helps describe images."),
+        new ChatRequestUserMessage(
+            new ChatMessageTextContentItem("describe this image"),
+            imageContentItem),
+    },
+};
+
+Response<ChatCompletions> response = client.Complete(requestOptions);
+System.Console.WriteLine(response.Value.Content);
+```
+
+Or a direct pointer to a file on disk:
+
+```C# Snippet:Azure_AI_Inference_ChatCompletionsWithImagePathScenario
+ChatMessageImageContentItem imageContentItem =
+    new ChatMessageImageContentItem(
+        "sample_image_path",
+        "image/jpg",
+        ChatMessageImageDetailLevel.Low
+    );
 ```

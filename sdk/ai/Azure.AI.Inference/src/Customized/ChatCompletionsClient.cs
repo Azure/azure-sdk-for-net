@@ -16,6 +16,9 @@ namespace Azure.AI.Inference
     //   Modified code for the ChatCompletionsClient
 
     /// <summary> The ChatCompletions service client. </summary>
+
+    [CodeGenSuppress("Complete", typeof(ChatCompletionsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
+    [CodeGenSuppress("CompleteAsync", typeof(ChatCompletionsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
     public partial class ChatCompletionsClient
     {
         /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
@@ -49,15 +52,12 @@ namespace Azure.AI.Inference
         /// Completions support a wide variety of tasks and generate text that continues from or "completes"
         /// provided prompt data.
         /// </param>
-        /// <param name="extraParams">
-        /// Controls what happens if extra parameters are passed in the JSON request payload.
-        /// This sets the HTTP request header `extra-parameters`.
-        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionsOptions"/> is null. </exception>
-        public virtual async Task<Response<ChatCompletions>> CompleteAsync(ChatCompletionsOptions chatCompletionsOptions, ExtraParameters? extraParams = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChatCompletions>> CompleteAsync(ChatCompletionsOptions chatCompletionsOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+            ExtraParameters? extraParams = null;
 
             // CUSTOM CODE NOTE:
             //   If AdditionalProperties are provided, the decision has been made to default extraParams to "PassThrough"
@@ -96,15 +96,12 @@ namespace Azure.AI.Inference
         /// Completions support a wide variety of tasks and generate text that continues from or "completes"
         /// provided prompt data.
         /// </param>
-        /// <param name="extraParams">
-        /// Controls what happens if extra parameters are passed in the JSON request payload.
-        /// This sets the HTTP request header `extra-parameters`.
-        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionsOptions"/> is null. </exception>
-        public virtual Response<ChatCompletions> Complete(ChatCompletionsOptions chatCompletionsOptions, ExtraParameters? extraParams = null, CancellationToken cancellationToken = default)
+        public virtual Response<ChatCompletions> Complete(ChatCompletionsOptions chatCompletionsOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+            ExtraParameters? extraParams = null;
 
             // CUSTOM CODE NOTE:
             //   If AdditionalProperties are provided, the decision has been made to default extraParams to "PassThrough"
@@ -245,6 +242,90 @@ namespace Azure.AI.Inference
                         otelScope,
                         cancellationToken
                         ));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets chat completions for the provided chat messages.
+        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
+        /// provided prompt data. The method makes a REST API call to the `/chat/completions` route
+        /// on the given endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CompleteAsync(ChatCompletionsOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="extraParams"> The <see cref="string"/> to use. Allowed values: "error" | "drop" | "pass-through". </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> CompleteAsync(RequestContent content, string extraParams = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.Complete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCompleteRequest(content, extraParams, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets chat completions for the provided chat messages.
+        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
+        /// provided prompt data. The method makes a REST API call to the `/chat/completions` route
+        /// on the given endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="Complete(ChatCompletionsOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="extraParams"> The <see cref="string"/> to use. Allowed values: "error" | "drop" | "pass-through". </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response Complete(RequestContent content, string extraParams = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.Complete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCompleteRequest(content, extraParams, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal HttpMessage CreatePostRequestMessage(

@@ -15,6 +15,7 @@
 - `ChatCompletionsNamedFunctionToolSelection` has been replaced with `ChatCompletionsNamedToolChoice`.
 - `ChatCompletionsFunctionToolSelection` has been replaced with `ChatCompletionsNamedToolChoiceFunction`.
 - `StreamingChatCompletionsUpdate.AuthorName` has been removed
+- Removed `extraParams` from the `complete` and `completeAsync` methods. It is now set implicitly if `additionalProperties` is provided in the options object.
 
 ### Bugs Fixed
 - Fixed support for chat completions streaming while using tools.
