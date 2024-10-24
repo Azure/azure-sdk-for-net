@@ -20,51 +20,80 @@ public partial class RedisCacheAccessPolicyAssignment : ProvisionableResource
     /// <summary>
     /// The name of the access policy assignment.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The name of the access policy that is being assigned.
     /// </summary>
-    public BicepValue<string> AccessPolicyName { get => _accessPolicyName; set => _accessPolicyName.Assign(value); }
-    private readonly BicepValue<string> _accessPolicyName;
+    public BicepValue<string> AccessPolicyName 
+    {
+        get { Initialize(); return _accessPolicyName!; }
+        set { Initialize(); _accessPolicyName!.Assign(value); }
+    }
+    private BicepValue<string>? _accessPolicyName;
 
     /// <summary>
     /// Object Id to assign access policy to.
     /// </summary>
-    public BicepValue<Guid> ObjectId { get => _objectId; set => _objectId.Assign(value); }
-    private readonly BicepValue<Guid> _objectId;
+    public BicepValue<Guid> ObjectId 
+    {
+        get { Initialize(); return _objectId!; }
+        set { Initialize(); _objectId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _objectId;
 
     /// <summary>
     /// User friendly name for object id. Also represents username for token
     /// based authentication.
     /// </summary>
-    public BicepValue<string> ObjectIdAlias { get => _objectIdAlias; set => _objectIdAlias.Assign(value); }
-    private readonly BicepValue<string> _objectIdAlias;
+    public BicepValue<string> ObjectIdAlias 
+    {
+        get { Initialize(); return _objectIdAlias!; }
+        set { Initialize(); _objectIdAlias!.Assign(value); }
+    }
+    private BicepValue<string>? _objectIdAlias;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of an access policy assignment set.
     /// </summary>
-    public BicepValue<AccessPolicyAssignmentProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<AccessPolicyAssignmentProvisioningState> _provisioningState;
+    public BicepValue<AccessPolicyAssignmentProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<AccessPolicyAssignmentProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent RedisResource.
     /// </summary>
-    public RedisResource? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<RedisResource> _parent;
+    public RedisResource? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<RedisResource>? _parent;
 
     /// <summary>
     /// Creates a new RedisCacheAccessPolicyAssignment.
@@ -79,14 +108,22 @@ public partial class RedisCacheAccessPolicyAssignment : ProvisionableResource
     public RedisCacheAccessPolicyAssignment(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Cache/redis/accessPolicyAssignments", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _accessPolicyName = BicepValue<string>.DefineProperty(this, "AccessPolicyName", ["properties", "accessPolicyName"]);
-        _objectId = BicepValue<Guid>.DefineProperty(this, "ObjectId", ["properties", "objectId"]);
-        _objectIdAlias = BicepValue<string>.DefineProperty(this, "ObjectIdAlias", ["properties", "objectIdAlias"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<AccessPolicyAssignmentProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<RedisResource>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// RedisCacheAccessPolicyAssignment.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _accessPolicyName = DefineProperty<string>("AccessPolicyName", ["properties", "accessPolicyName"]);
+        _objectId = DefineProperty<Guid>("ObjectId", ["properties", "objectId"]);
+        _objectIdAlias = DefineProperty<string>("ObjectIdAlias", ["properties", "objectIdAlias"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<AccessPolicyAssignmentProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<RedisResource>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

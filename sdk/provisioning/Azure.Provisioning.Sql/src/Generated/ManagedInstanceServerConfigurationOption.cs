@@ -20,38 +20,58 @@ public partial class ManagedInstanceServerConfigurationOption : ProvisionableRes
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Value of the server configuration option.
     /// </summary>
-    public BicepValue<int> ServerConfigurationOptionValue { get => _serverConfigurationOptionValue; set => _serverConfigurationOptionValue.Assign(value); }
-    private readonly BicepValue<int> _serverConfigurationOptionValue;
+    public BicepValue<int> ServerConfigurationOptionValue 
+    {
+        get { Initialize(); return _serverConfigurationOptionValue!; }
+        set { Initialize(); _serverConfigurationOptionValue!.Assign(value); }
+    }
+    private BicepValue<int>? _serverConfigurationOptionValue;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of server configuration option.
     /// </summary>
-    public BicepValue<JobExecutionProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<JobExecutionProvisioningState> _provisioningState;
+    public BicepValue<JobExecutionProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<JobExecutionProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ManagedInstance.
     /// </summary>
-    public ManagedInstance? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ManagedInstance> _parent;
+    public ManagedInstance? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
     /// Creates a new ManagedInstanceServerConfigurationOption.
@@ -67,12 +87,20 @@ public partial class ManagedInstanceServerConfigurationOption : ProvisionableRes
     public ManagedInstanceServerConfigurationOption(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/managedInstances/serverConfigurationOptions", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _serverConfigurationOptionValue = BicepValue<int>.DefineProperty(this, "ServerConfigurationOptionValue", ["properties", "serverConfigurationOptionValue"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<JobExecutionProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ManagedInstance>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ManagedInstanceServerConfigurationOption.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _serverConfigurationOptionValue = DefineProperty<int>("ServerConfigurationOptionValue", ["properties", "serverConfigurationOptionValue"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<JobExecutionProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ManagedInstance>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
