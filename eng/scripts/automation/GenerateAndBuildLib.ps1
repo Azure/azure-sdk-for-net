@@ -856,7 +856,7 @@ function GeneratePackage()
                 $hasBreakingChange = $false
             }
             else {
-                $logFile = Get-Content -Path $logFilePath | select-object -skip 2
+                $logFile = Get-Content -Path $logFilePath | select-object -SkipLast 1
                 $breakingChanges = $logFile -join ",`n"
                 $content = "Breaking Changes: $breakingChanges"
                 $hasBreakingChange = $true
