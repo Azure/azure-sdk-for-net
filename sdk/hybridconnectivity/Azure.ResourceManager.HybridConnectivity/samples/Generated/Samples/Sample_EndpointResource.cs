@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_HybridConnectivityEndpointsGetCustom()
         {
-            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/preview/2021-10-06-preview/examples/EndpointsGetCustom.json
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2024-12-01/examples/EndpointsGetCustom.json
             // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_HybridConnectivityEndpointsGetDefault()
         {
-            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/preview/2021-10-06-preview/examples/EndpointsGetDefault.json
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2024-12-01/examples/EndpointsGetDefault.json
             // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_HybridConnectivityEndpointsPatchDefault()
         {
-            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/preview/2021-10-06-preview/examples/EndpointsPatchDefault.json
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2024-12-01/examples/EndpointsPatchDefault.json
             // this example is just showing the usage of "Endpoints_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             // invoke the operation
             EndpointResourceData data = new EndpointResourceData()
             {
-                EndpointType = EndpointType.Default,
+                Properties = new EndpointProperties(EndpointType.Default),
             };
             EndpointResource result = await endpointResource.UpdateAsync(data);
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_HybridConnectivityEndpointsDeleteDefault()
         {
-            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/preview/2021-10-06-preview/examples/EndpointsDeleteDefault.json
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2024-12-01/examples/EndpointsDeleteDefault.json
             // this example is just showing the usage of "Endpoints_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetCredentials_HybridConnectivityEndpointsPostListCredentials()
         {
-            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/preview/2021-10-06-preview/examples/EndpointsPostListCredentials.json
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2024-12-01/examples/EndpointsPostListCredentials.json
             // this example is just showing the usage of "Endpoints_ListCredentials" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -156,8 +156,70 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             EndpointResource endpointResource = client.GetEndpointResource(endpointResourceId);
 
             // invoke the operation
+            ListCredentialsContent content = new ListCredentialsContent()
+            {
+                ServiceName = ServiceName.SSH,
+            };
             long? expiresin = 10800L;
-            TargetResourceEndpointAccess result = await endpointResource.GetCredentialsAsync(expiresin: expiresin);
+            TargetResourceEndpointAccess result = await endpointResource.GetCredentialsAsync(content: content, expiresin: expiresin);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // HybridConnectivityEndpointsPostListIngressGatewayCredentials
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIngressGatewayCredentials_HybridConnectivityEndpointsPostListIngressGatewayCredentials()
+        {
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2024-12-01/examples/EndpointsPostListIngressGatewayCredentials.json
+            // this example is just showing the usage of "Endpoints_ListIngressGatewayCredentials" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this EndpointResource created on azure
+            // for more information of creating EndpointResource, please refer to the document of EndpointResource
+            string scope = "subscriptions/f5bcc1d9-23af-4ae9-aca1-041d0f593a63/resourceGroups/arcGroup/providers/Microsoft.ArcPlaceHolder/ProvisionedClusters/cluster0";
+            string endpointName = "default";
+            ResourceIdentifier endpointResourceId = EndpointResource.CreateResourceIdentifier(scope, endpointName);
+            EndpointResource endpointResource = client.GetEndpointResource(endpointResourceId);
+
+            // invoke the operation
+            long? expiresin = 10800L;
+            IngressGatewayResource result = await endpointResource.GetIngressGatewayCredentialsAsync(expiresin: expiresin);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // HybridConnectivityEndpointsPostListManagedProxyDetails
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetManagedProxyDetails_HybridConnectivityEndpointsPostListManagedProxyDetails()
+        {
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2024-12-01/examples/EndpointsPostListManagedProxyDetails.json
+            // this example is just showing the usage of "Endpoints_ListManagedProxyDetails" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this EndpointResource created on azure
+            // for more information of creating EndpointResource, please refer to the document of EndpointResource
+            string scope = "subscriptions/f5bcc1d9-23af-4ae9-aca1-041d0f593a63/resourceGroups/arcGroup/providers/Microsoft.Compute/virtualMachines/vm00006";
+            string endpointName = "default";
+            ResourceIdentifier endpointResourceId = EndpointResource.CreateResourceIdentifier(scope, endpointName);
+            EndpointResource endpointResource = client.GetEndpointResource(endpointResourceId);
+
+            // invoke the operation
+            ManagedProxyContent content = new ManagedProxyContent("127.0.0.1:65035")
+            {
+                Hostname = "r.proxy.arc.com",
+                ServiceName = ServiceName.WAC,
+            };
+            ManagedProxyResource result = await endpointResource.GetManagedProxyDetailsAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
