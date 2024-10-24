@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task PutDataBoundary()
+        public void PutDataBoundary()
         {
             DataBoundaryName name = DataBoundaryName.Default;
             ResourceIdentifier tenantDataBoundaryResourceId = TenantDataBoundaryResource.CreateResourceIdentifier(name);
@@ -80,13 +80,8 @@ namespace Azure.ResourceManager.Resources.Tests
                 }
             };
 
-            try {
-                ArmOperation<TenantDataBoundaryResource> result = await tenantDataBoundary.UpdateAsync(WaitUntil.Completed, data);
-                throw new Exception();
-            } catch (Exception e)
-            {
-                Assert.IsTrue(e.ToString().Contains("does not have authorization to perform action"));
-            }
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await tenantDataBoundary.UpdateAsync(WaitUntil.Completed, data));
+            Assert.IsTrue(ex.Message.Contains("does not have authorization to perform action"));
         }
     }
 }
