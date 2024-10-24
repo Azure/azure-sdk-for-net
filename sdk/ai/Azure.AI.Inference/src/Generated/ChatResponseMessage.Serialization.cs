@@ -19,13 +19,21 @@ namespace Azure.AI.Inference
 
         void IJsonModel<ChatResponseMessage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ChatResponseMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ChatResponseMessage)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
             if (Content != null)
@@ -62,7 +70,6 @@ namespace Azure.AI.Inference
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ChatResponseMessage IJsonModel<ChatResponseMessage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
