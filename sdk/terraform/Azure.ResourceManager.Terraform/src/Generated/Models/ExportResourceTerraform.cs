@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.Terraform.Models
 {
     /// <summary> Export parameter for individual resources. </summary>
-    public partial class ExportResource : CommonExportProperties
+    public partial class ExportResourceTerraform : CommonExportProperties
     {
-        /// <summary> Initializes a new instance of <see cref="ExportResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportResourceTerraform"/>. </summary>
         /// <param name="resourceIds"> The id of the resource to be exported. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceIds"/> is null. </exception>
-        public ExportResource(IEnumerable<ResourceIdentifier> resourceIds)
+        public ExportResourceTerraform(IEnumerable<ResourceIdentifier> resourceIds)
         {
             Argument.AssertNotNull(resourceIds, nameof(resourceIds));
 
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Terraform.Models
             Type = Type.ExportResource;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportResourceTerraform"/>. </summary>
         /// <param name="type"> The parameter type. </param>
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
         /// <param name="fullProperties"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="resourceName"> The Terraform resource name. Only works when `resourceIds` contains only one item. </param>
         /// <param name="resourceType"> The Terraform resource type. Only works when `resourceIds` contains only one item. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
-        internal ExportResource(Type type, TargetTerraformProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ResourceIdentifier> resourceIds, string resourceName, string resourceType, string namePattern) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
+        internal ExportResourceTerraform(Type type, TargetTerraformProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ResourceIdentifier> resourceIds, string resourceName, string resourceType, string namePattern) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
         {
             ResourceIds = resourceIds;
             ResourceName = resourceName;
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Terraform.Models
             Type = type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportResource"/> for deserialization. </summary>
-        internal ExportResource()
+        /// <summary> Initializes a new instance of <see cref="ExportResourceTerraform"/> for deserialization. </summary>
+        internal ExportResourceTerraform()
         {
         }
 

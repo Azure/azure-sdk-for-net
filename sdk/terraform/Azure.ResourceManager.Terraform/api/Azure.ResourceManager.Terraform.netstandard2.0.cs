@@ -50,20 +50,6 @@ namespace Azure.ResourceManager.Terraform.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportQuery>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportQuery>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExportResource : Azure.ResourceManager.Terraform.Models.CommonExportProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResource>
-    {
-        public ExportResource(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds) { }
-        public string NamePattern { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourceIds { get { throw null; } }
-        public string ResourceName { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } set { } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Terraform.Models.ExportResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Terraform.Models.ExportResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ExportResourceGroup : Azure.ResourceManager.Terraform.Models.CommonExportProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResourceGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResourceGroup>
     {
         public ExportResourceGroup(string resourceGroupName) { }
@@ -75,6 +61,20 @@ namespace Azure.ResourceManager.Terraform.Models
         Azure.ResourceManager.Terraform.Models.ExportResourceGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResourceGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResourceGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResourceGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ExportResourceTerraform : Azure.ResourceManager.Terraform.Models.CommonExportProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResourceTerraform>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResourceTerraform>
+    {
+        public ExportResourceTerraform(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds) { }
+        public string NamePattern { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourceIds { get { throw null; } }
+        public string ResourceName { get { throw null; } set { } }
+        public string ResourceType { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Terraform.Models.ExportResourceTerraform System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResourceTerraform>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Terraform.Models.ExportResourceTerraform>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Terraform.Models.ExportResourceTerraform System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResourceTerraform>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResourceTerraform>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Terraform.Models.ExportResourceTerraform>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TargetTerraformProvider : System.IEquatable<Azure.ResourceManager.Terraform.Models.TargetTerraformProvider>

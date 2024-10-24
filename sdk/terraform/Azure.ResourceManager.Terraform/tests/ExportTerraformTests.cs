@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Terraform.Tests
         public async Task ExportResourceTest()
         {
             string vnetName = s_env.VNetName;
-            ExportResource exportResource = new(new[] { s_env.VNetId });
+            ExportResourceTerraform exportResource = new(new[] { s_env.VNetId });
 
             ArmOperation<TerraformOperationStatus> operationStatus = await DefaultSubscription.ExportTerraformAsync(WaitUntil.Completed, exportResource);
 

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
-    public partial class ExportResource : IUtf8JsonSerializable, IJsonModel<ExportResource>
+    public partial class ExportResourceTerraform : IUtf8JsonSerializable, IJsonModel<ExportResourceTerraform>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportResourceTerraform>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ExportResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExportResourceTerraform>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportResourceTerraform>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportResourceTerraform)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -64,19 +64,19 @@ namespace Azure.ResourceManager.Terraform.Models
             }
         }
 
-        ExportResource IJsonModel<ExportResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ExportResourceTerraform IJsonModel<ExportResourceTerraform>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportResourceTerraform>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportResourceTerraform)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExportResource(document.RootElement, options);
+            return DeserializeExportResourceTerraform(document.RootElement, options);
         }
 
-        internal static ExportResource DeserializeExportResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ExportResourceTerraform DeserializeExportResourceTerraform(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExportResource(
+            return new ExportResourceTerraform(
                 type,
                 targetProvider,
                 fullProperties,
@@ -178,35 +178,35 @@ namespace Azure.ResourceManager.Terraform.Models
                 namePattern);
         }
 
-        BinaryData IPersistableModel<ExportResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ExportResourceTerraform>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportResourceTerraform>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportResourceTerraform)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ExportResource IPersistableModel<ExportResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ExportResourceTerraform IPersistableModel<ExportResourceTerraform>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportResourceTerraform>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeExportResource(document.RootElement, options);
+                        return DeserializeExportResourceTerraform(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportResourceTerraform)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ExportResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExportResourceTerraform>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

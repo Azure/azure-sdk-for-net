@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 switch (discriminator.GetString())
                 {
                     case "ExportQuery": return ExportQuery.DeserializeExportQuery(element, options);
-                    case "ExportResource": return ExportResource.DeserializeExportResource(element, options);
+                    case "ExportResource": return ExportResourceTerraform.DeserializeExportResourceTerraform(element, options);
                     case "ExportResourceGroup": return ExportResourceGroup.DeserializeExportResourceGroup(element, options);
                 }
             }
