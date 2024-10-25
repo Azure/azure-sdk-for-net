@@ -119,9 +119,10 @@ var entraTokenCredential = new InteractiveBrowserCredential(options);
 
 var entraTokenCredentialOptions = new EntraCommunicationTokenCredentialOptions(
     resourceEndpoint: "https://<your-resource>.communication.azure.com",
-    entraTokenCredential: entraTokenCredential,
-    scopes: new[] { "https://communication.azure.com/clients/VoIP" }
-);
+    entraTokenCredential: entraTokenCredential
+){
+      Scopes = new[] { "https://communication.azure.com/clients/VoIP" }
+};
 
 var credential = new CommunicationTokenCredential(entraTokenCredentialOptions);
 

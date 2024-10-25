@@ -42,28 +42,24 @@ namespace Azure.Communication.Identity
         {
             Assert.Throws<ArgumentNullException>(() => new EntraCommunicationTokenCredentialOptions(
                 null,
-                _mockTokenCredential.Object,
-                _scopes));
+                _mockTokenCredential.Object)
+            {
+                Scopes = _scopes
+            });
 
             Assert.Throws<ArgumentException>(() => new EntraCommunicationTokenCredentialOptions(
                 "",
-                _mockTokenCredential.Object,
-                _scopes));
+                _mockTokenCredential.Object)
+            {
+                Scopes = _scopes
+            });
 
             Assert.Throws<ArgumentNullException>(() => new EntraCommunicationTokenCredentialOptions(
                 _resourceEndpoint,
-                null,
-                _scopes));
-
-            Assert.Throws<ArgumentException>(() => new EntraCommunicationTokenCredentialOptions(
-                _resourceEndpoint,
-                _mockTokenCredential.Object,
-                new string[] { }));
-
-            Assert.Throws<ArgumentNullException>(() => new EntraCommunicationTokenCredentialOptions(
-                _resourceEndpoint,
-                _mockTokenCredential.Object,
-                null));
+                null)
+            {
+                Scopes = _scopes
+            });
         }
 
         [Test]
@@ -215,7 +211,10 @@ namespace Azure.Communication.Identity
 
         private EntraCommunicationTokenCredentialOptions CreateEntraTokenCredentialOptions()
         {
-            return new EntraCommunicationTokenCredentialOptions(_resourceEndpoint, _mockTokenCredential.Object, _scopes);
+            return new EntraCommunicationTokenCredentialOptions(_resourceEndpoint, _mockTokenCredential.Object)
+            {
+                Scopes = _scopes
+            };
         }
 
         private MockResponse CreateMockResponse(int statusCode, string body)
