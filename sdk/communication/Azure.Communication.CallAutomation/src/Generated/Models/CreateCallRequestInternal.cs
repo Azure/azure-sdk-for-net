@@ -35,18 +35,20 @@ namespace Azure.Communication.CallAutomation
         /// </param>
         /// <param name="sourceDisplayName"> Display name of the call if dialing out to a pstn number. </param>
         /// <param name="source"> The identifier of the source of the call. </param>
+        /// <param name="opsSource"> The identifier of the source in an OPS call. </param>
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
         /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
         /// <param name="customCallingContext"> Used by customer to send custom calling context to targets. </param>
-        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, CallIntelligenceOptionsInternal callIntelligenceOptions, CustomCallingContextInternal customCallingContext)
+        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, MicrosoftTeamsAppIdentifierModel opsSource, string operationContext, string callbackUri, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, CallIntelligenceOptionsInternal callIntelligenceOptions, CustomCallingContextInternal customCallingContext)
         {
             Targets = targets;
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
             Source = source;
+            OpsSource = opsSource;
             OperationContext = operationContext;
             CallbackUri = callbackUri;
             MediaStreamingConfiguration = mediaStreamingConfiguration;
@@ -66,6 +68,8 @@ namespace Azure.Communication.CallAutomation
         public string SourceDisplayName { get; set; }
         /// <summary> The identifier of the source of the call. </summary>
         public CommunicationUserIdentifierModel Source { get; set; }
+        /// <summary> The identifier of the source in an OPS call. </summary>
+        public MicrosoftTeamsAppIdentifierModel OpsSource { get; set; }
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
         /// <summary> The callback URI. </summary>
