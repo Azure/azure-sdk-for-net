@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
             ArmOperation lro = await privateCloudResource.RotateNsxtPasswordAsync(WaitUntil.Started);
         }
 
-        //  [TestCase]
-        //  [RecordedTest]
-        // public async Task Delete()
-        // {
-        //     var privateCloudResource = await getAvsPrivateCloudResource();
-        //     ArmOperation lro = await privateCloudResource.DeleteAsync(WaitUntil.Started);
-        // }
+         [TestCase]
+         [RecordedTest]
+        public async Task Delete()
+        {
+            var privateCloudResource = await getAvsPrivateCloudResource();
+            ArmOperation lro = await privateCloudResource.DeleteAsync(WaitUntil.Started);
+        }
     }
 }
