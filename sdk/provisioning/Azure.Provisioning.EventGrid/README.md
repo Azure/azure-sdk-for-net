@@ -9,7 +9,7 @@ Azure.Provisioning.EventGrid simplifies declarative resource provisioning in .NE
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.EventGrid --prerelease
+dotnet add package Azure.Provisioning.EventGrid
 ```
 
 ### Prerequisites
