@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Volume relocation properties. </summary>
+    /// <summary>
+    /// Volume relocation properties
+    /// Serialized Name: VolumeRelocationProperties
+    /// </summary>
     public partial class NetAppVolumeRelocationProperties
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeRelocationProperties"/>. </summary>
-        /// <param name="isRelocationRequested"> Has relocation been requested for this volume. </param>
-        /// <param name="isReadyToBeFinalized"> Has relocation finished and is ready to be cleaned up. </param>
+        /// <param name="isRelocationRequested">
+        /// Has relocation been requested for this volume
+        /// Serialized Name: VolumeRelocationProperties.relocationRequested
+        /// </param>
+        /// <param name="isReadyToBeFinalized">
+        /// Has relocation finished and is ready to be cleaned up
+        /// Serialized Name: VolumeRelocationProperties.readyToBeFinalized
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeRelocationProperties(bool? isRelocationRequested, bool? isReadyToBeFinalized, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Has relocation been requested for this volume. </summary>
+        /// <summary>
+        /// Has relocation been requested for this volume
+        /// Serialized Name: VolumeRelocationProperties.relocationRequested
+        /// </summary>
         public bool? IsRelocationRequested { get; set; }
-        /// <summary> Has relocation finished and is ready to be cleaned up. </summary>
+        /// <summary>
+        /// Has relocation finished and is ready to be cleaned up
+        /// Serialized Name: VolumeRelocationProperties.readyToBeFinalized
+        /// </summary>
         public bool? IsReadyToBeFinalized { get; }
     }
 }

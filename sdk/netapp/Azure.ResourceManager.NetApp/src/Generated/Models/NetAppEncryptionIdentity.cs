@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Identity used to authenticate with key vault. </summary>
+    /// <summary>
+    /// Identity used to authenticate with key vault.
+    /// Serialized Name: EncryptionIdentity
+    /// </summary>
     public partial class NetAppEncryptionIdentity
     {
         /// <summary>
@@ -63,9 +66,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The principal ID (object ID) of the identity used to authenticate with key vault. Read-only. </summary>
+        /// <summary>
+        /// The principal ID (object ID) of the identity used to authenticate with key vault. Read-only.
+        /// Serialized Name: EncryptionIdentity.principalId
+        /// </summary>
         public string PrincipalId { get; }
-        /// <summary> The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities. </summary>
+        /// <summary>
+        /// The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities.
+        /// Serialized Name: EncryptionIdentity.userAssignedIdentity
+        /// </summary>
         public string UserAssignedIdentity { get; set; }
         /// <summary> ClientId of the multi-tenant AAD Application. Used to access cross-tenant KeyVaults. </summary>
         public string FederatedClientId { get; set; }

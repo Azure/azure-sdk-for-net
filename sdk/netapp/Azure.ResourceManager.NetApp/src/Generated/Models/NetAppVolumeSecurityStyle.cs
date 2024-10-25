@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS protocol. </summary>
+    /// <summary>
+    /// The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS protocol
+    /// Serialized Name: SecurityStyle
+    /// </summary>
     public readonly partial struct NetAppVolumeSecurityStyle : IEquatable<NetAppVolumeSecurityStyle>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string NtfsValue = "ntfs";
         private const string UnixValue = "unix";
 
-        /// <summary> ntfs. </summary>
+        /// <summary>
+        /// ntfs
+        /// Serialized Name: SecurityStyle.ntfs
+        /// </summary>
         public static NetAppVolumeSecurityStyle Ntfs { get; } = new NetAppVolumeSecurityStyle(NtfsValue);
-        /// <summary> unix. </summary>
+        /// <summary>
+        /// unix
+        /// Serialized Name: SecurityStyle.unix
+        /// </summary>
         public static NetAppVolumeSecurityStyle Unix { get; } = new NetAppVolumeSecurityStyle(UnixValue);
         /// <summary> Determines if two <see cref="NetAppVolumeSecurityStyle"/> values are the same. </summary>
         public static bool operator ==(NetAppVolumeSecurityStyle left, NetAppVolumeSecurityStyle right) => left.Equals(right);

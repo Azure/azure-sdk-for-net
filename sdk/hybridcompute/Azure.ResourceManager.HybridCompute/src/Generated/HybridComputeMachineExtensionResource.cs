@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// The operation to create or update the extension.
+        /// The operation to update the extension.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// The operation to create or update the extension.
+        /// The operation to update the extension.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.NetApp
     /// <summary>
     /// A class representing the NetAppBackupVault data model.
     /// Backup Vault information
+    /// Serialized Name: BackupVault
     /// </summary>
     public partial class NetAppBackupVaultData : TrackedResourceData
     {
@@ -63,7 +64,10 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="provisioningState">
+        /// Azure lifecycle management
+        /// Serialized Name: BackupVault.properties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppBackupVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -76,7 +80,10 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
-        /// <summary> Azure lifecycle management. </summary>
+        /// <summary>
+        /// Azure lifecycle management
+        /// Serialized Name: BackupVault.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
     }
 }

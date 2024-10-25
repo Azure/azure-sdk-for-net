@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Provides storage to network proximity information for the volume. </summary>
+    /// <summary>
+    /// Provides storage to network proximity information for the volume.
+    /// Serialized Name: VolumeStorageToNetworkProximity
+    /// </summary>
     public readonly partial struct NetAppVolumeStorageToNetworkProximity : IEquatable<NetAppVolumeStorageToNetworkProximity>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string T2Value = "T2";
         private const string AcrossT2Value = "AcrossT2";
 
-        /// <summary> Basic storage to network connectivity. </summary>
+        /// <summary>
+        /// Basic storage to network connectivity.
+        /// Serialized Name: VolumeStorageToNetworkProximity.Default
+        /// </summary>
         public static NetAppVolumeStorageToNetworkProximity Default { get; } = new NetAppVolumeStorageToNetworkProximity(DefaultValue);
-        /// <summary> Standard T1 storage to network connectivity. </summary>
+        /// <summary>
+        /// Standard T1 storage to network connectivity.
+        /// Serialized Name: VolumeStorageToNetworkProximity.T1
+        /// </summary>
         public static NetAppVolumeStorageToNetworkProximity T1 { get; } = new NetAppVolumeStorageToNetworkProximity(T1Value);
-        /// <summary> Standard T2 storage to network connectivity. </summary>
+        /// <summary>
+        /// Standard T2 storage to network connectivity.
+        /// Serialized Name: VolumeStorageToNetworkProximity.T2
+        /// </summary>
         public static NetAppVolumeStorageToNetworkProximity T2 { get; } = new NetAppVolumeStorageToNetworkProximity(T2Value);
-        /// <summary> Standard AcrossT2 storage to network connectivity. </summary>
+        /// <summary>
+        /// Standard AcrossT2 storage to network connectivity.
+        /// Serialized Name: VolumeStorageToNetworkProximity.AcrossT2
+        /// </summary>
         public static NetAppVolumeStorageToNetworkProximity AcrossT2 { get; } = new NetAppVolumeStorageToNetworkProximity(AcrossT2Value);
         /// <summary> Determines if two <see cref="NetAppVolumeStorageToNetworkProximity"/> values are the same. </summary>
         public static bool operator ==(NetAppVolumeStorageToNetworkProximity left, NetAppVolumeStorageToNetworkProximity right) => left.Equals(right);

@@ -11,6 +11,7 @@ library-name: MySql
 #mgmt-debug:
 #  show-serialized-names: true
 use-model-reader-writer: true
+use-write-core: true
 
 batch:
   - tag: package-2020-01-01

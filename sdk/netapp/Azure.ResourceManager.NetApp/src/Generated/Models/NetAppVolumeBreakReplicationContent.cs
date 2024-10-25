@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Break replication request. </summary>
+    /// <summary>
+    /// Break replication request
+    /// Serialized Name: BreakReplicationRequest
+    /// </summary>
     public partial class NetAppVolumeBreakReplicationContent
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeBreakReplicationContent"/>. </summary>
-        /// <param name="forceBreakReplication"> If replication is in status transferring and you want to force break the replication, set to true. </param>
+        /// <param name="forceBreakReplication">
+        /// If replication is in status transferring and you want to force break the replication, set to true
+        /// Serialized Name: BreakReplicationRequest.forceBreakReplication
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeBreakReplicationContent(bool? forceBreakReplication, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> If replication is in status transferring and you want to force break the replication, set to true. </summary>
+        /// <summary>
+        /// If replication is in status transferring and you want to force break the replication, set to true
+        /// Serialized Name: BreakReplicationRequest.forceBreakReplication
+        /// </summary>
         public bool? ForceBreakReplication { get; set; }
     }
 }

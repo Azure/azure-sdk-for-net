@@ -151,6 +151,12 @@ public partial class RedisCommonConfiguration : ProvisionableConstruct
     private BicepValue<string>? _notifyKeyspaceEvents;
 
     /// <summary>
+    /// The keyspace events which should be monitored.
+    /// </summary>
+    public BicepValue<string> NotifyKeyspaceEvents { get => _notifyKeyspaceEvents; set => _notifyKeyspaceEvents.Assign(value); }
+    private readonly BicepValue<string> _notifyKeyspaceEvents;
+
+    /// <summary>
     /// Preferred auth method to communicate to storage account used for data
     /// archive, specify SAS or ManagedIdentity, default value is SAS.
     /// </summary>

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Capacity pool patch resource. </summary>
+    /// <summary>
+    /// Capacity pool patch resource
+    /// Serialized Name: CapacityPoolPatch
+    /// </summary>
     public partial class CapacityPoolPatch : TrackedResourceData
     {
         /// <summary>
@@ -79,11 +82,20 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </summary>
+        /// <summary>
+        /// Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776).
+        /// Serialized Name: CapacityPoolPatch.properties.size
+        /// </summary>
         public long? Size { get; set; }
-        /// <summary> The qos type of the pool. </summary>
+        /// <summary>
+        /// The qos type of the pool
+        /// Serialized Name: CapacityPoolPatch.properties.qosType
+        /// </summary>
         public CapacityPoolQosType? QosType { get; set; }
-        /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
+        /// <summary>
+        /// If enabled (true) the pool can contain cool Access enabled volumes.
+        /// Serialized Name: CapacityPoolPatch.properties.coolAccess
+        /// </summary>
         public bool? IsCoolAccessEnabled { get; set; }
         /// <summary> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </summary>
         public float? CustomThroughputMibps { get; set; }

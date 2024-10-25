@@ -85,6 +85,13 @@ public partial class RedisResource : ProvisionableResource
     private BicepValue<bool>? _isAccessKeyAuthenticationDisabled;
 
     /// <summary>
+    /// Authentication to Redis through access keys is disabled when set as
+    /// true. Default value is false.
+    /// </summary>
+    public BicepValue<bool> IsAccessKeyAuthenticationDisabled { get => _isAccessKeyAuthenticationDisabled; set => _isAccessKeyAuthenticationDisabled.Assign(value); }
+    private readonly BicepValue<bool> _isAccessKeyAuthenticationDisabled;
+
+    /// <summary>
     /// Optional: requires clients to use a specified TLS version (or higher)
     /// to connect (e,g, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;).
     /// </summary>

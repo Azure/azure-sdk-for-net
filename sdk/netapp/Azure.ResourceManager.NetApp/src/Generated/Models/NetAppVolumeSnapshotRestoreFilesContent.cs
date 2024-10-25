@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Restore payload for Single File Snapshot Restore. </summary>
+    /// <summary>
+    /// Restore payload for Single File Snapshot Restore
+    /// Serialized Name: SnapshotRestoreFiles
+    /// </summary>
     public partial class NetAppVolumeSnapshotRestoreFilesContent
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotRestoreFilesContent"/>. </summary>
-        /// <param name="filePaths"> List of files to be restored. </param>
+        /// <param name="filePaths">
+        /// List of files to be restored
+        /// Serialized Name: SnapshotRestoreFiles.filePaths
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePaths"/> is null. </exception>
         public NetAppVolumeSnapshotRestoreFilesContent(IEnumerable<string> filePaths)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotRestoreFilesContent"/>. </summary>
-        /// <param name="filePaths"> List of files to be restored. </param>
-        /// <param name="destinationPath"> Destination folder where the files will be restored. </param>
+        /// <param name="filePaths">
+        /// List of files to be restored
+        /// Serialized Name: SnapshotRestoreFiles.filePaths
+        /// </param>
+        /// <param name="destinationPath">
+        /// Destination folder where the files will be restored
+        /// Serialized Name: SnapshotRestoreFiles.destinationPath
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeSnapshotRestoreFilesContent(IList<string> filePaths, string destinationPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> List of files to be restored. </summary>
+        /// <summary>
+        /// List of files to be restored
+        /// Serialized Name: SnapshotRestoreFiles.filePaths
+        /// </summary>
         public IList<string> FilePaths { get; }
-        /// <summary> Destination folder where the files will be restored. </summary>
+        /// <summary>
+        /// Destination folder where the files will be restored
+        /// Serialized Name: SnapshotRestoreFiles.destinationPath
+        /// </summary>
         public string DestinationPath { get; set; }
     }
 }

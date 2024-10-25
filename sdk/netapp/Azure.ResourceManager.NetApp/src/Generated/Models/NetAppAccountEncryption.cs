@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Encryption settings. </summary>
+    /// <summary>
+    /// Encryption settings
+    /// Serialized Name: AccountEncryption
+    /// </summary>
     public partial class NetAppAccountEncryption
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppAccountEncryption"/>. </summary>
-        /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </param>
-        /// <param name="keyVaultProperties"> Properties provided by KeVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
-        /// <param name="identity"> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
+        /// <param name="keySource">
+        /// The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault
+        /// Serialized Name: AccountEncryption.keySource
+        /// </param>
+        /// <param name="keyVaultProperties">
+        /// Properties provided by KeVault. Applicable if keySource is 'Microsoft.KeyVault'.
+        /// Serialized Name: AccountEncryption.keyVaultProperties
+        /// </param>
+        /// <param name="identity">
+        /// Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'.
+        /// Serialized Name: AccountEncryption.identity
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppAccountEncryption(NetAppKeySource? keySource, NetAppKeyVaultProperties keyVaultProperties, NetAppEncryptionIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </summary>
+        /// <summary>
+        /// The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault
+        /// Serialized Name: AccountEncryption.keySource
+        /// </summary>
         public NetAppKeySource? KeySource { get; set; }
-        /// <summary> Properties provided by KeVault. Applicable if keySource is 'Microsoft.KeyVault'. </summary>
+        /// <summary>
+        /// Properties provided by KeVault. Applicable if keySource is 'Microsoft.KeyVault'.
+        /// Serialized Name: AccountEncryption.keyVaultProperties
+        /// </summary>
         public NetAppKeyVaultProperties KeyVaultProperties { get; set; }
-        /// <summary> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </summary>
+        /// <summary>
+        /// Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'.
+        /// Serialized Name: AccountEncryption.identity
+        /// </summary>
         public NetAppEncryptionIdentity Identity { get; set; }
     }
 }

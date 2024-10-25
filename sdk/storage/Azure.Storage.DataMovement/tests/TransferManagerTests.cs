@@ -395,7 +395,7 @@ public class TransferManagerTests
             jobsProcessor,
             partsProcessor,
             chunksProcessor,
-            jobBuilder.Object,
+            jobBuilder,
             checkpointer.Object,
             default);
 

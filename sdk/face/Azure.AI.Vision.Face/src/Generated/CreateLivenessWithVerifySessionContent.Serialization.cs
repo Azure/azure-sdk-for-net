@@ -14,6 +14,7 @@ using Azure.Core;
 namespace Azure.AI.Vision.Face
 {
     public partial class CreateLivenessWithVerifySessionContent : IUtf8JsonSerializable, IJsonModel<CreateLivenessWithVerifySessionContent>
+    public partial class CreateLivenessWithVerifySessionContent : IUtf8JsonSerializable, IJsonModel<CreateLivenessWithVerifySessionContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateLivenessWithVerifySessionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -75,6 +76,13 @@ namespace Azure.AI.Vision.Face
             {
                 writer.WritePropertyName("verifyConfidenceThreshold"u8);
                 writer.WriteNumberValue(VerifyConfidenceThreshold.Value);
+                writer.WritePropertyName("returnVerifyImageHash"u8);
+                writer.WriteBooleanValue(ReturnVerifyImageHash.Value);
+            }
+            if (Optional.IsDefined(VerifyConfidenceThreshold))
+            {
+                writer.WritePropertyName("verifyConfidenceThreshold"u8);
+                writer.WriteNumberValue(VerifyConfidenceThreshold.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -122,10 +130,25 @@ namespace Azure.AI.Vision.Face
             int? authTokenTimeToLiveInSeconds = default;
             bool? returnVerifyImageHash = default;
             float? verifyConfidenceThreshold = default;
+            LivenessOperationMode livenessOperationMode = default;
+            bool? sendResultsToClient = default;
+            bool? deviceCorrelationIdSetInClient = default;
+            bool? enableSessionImage = default;
+            LivenessModel? livenessSingleModalModel = default;
+            string deviceCorrelationId = default;
+            int? authTokenTimeToLiveInSeconds = default;
+            bool? returnVerifyImageHash = default;
+            float? verifyConfidenceThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("livenessOperationMode"u8))
+                {
+                    livenessOperationMode = new LivenessOperationMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sendResultsToClient"u8))
                 if (property.NameEquals("livenessOperationMode"u8))
                 {
                     livenessOperationMode = new LivenessOperationMode(property.Value.GetString());
@@ -188,10 +211,71 @@ namespace Azure.AI.Vision.Face
                         continue;
                     }
                     returnVerifyImageHash = property.Value.GetBoolean();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sendResultsToClient = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("deviceCorrelationIdSetInClient"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deviceCorrelationIdSetInClient = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("enableSessionImage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableSessionImage = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("livenessSingleModalModel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    livenessSingleModalModel = new LivenessModel(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("deviceCorrelationId"u8))
+                {
+                    deviceCorrelationId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("authTokenTimeToLiveInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authTokenTimeToLiveInSeconds = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("returnVerifyImageHash"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    returnVerifyImageHash = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("verifyConfidenceThreshold"u8))
+                if (property.NameEquals("verifyConfidenceThreshold"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    verifyConfidenceThreshold = property.Value.GetSingle();
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
@@ -205,6 +289,17 @@ namespace Azure.AI.Vision.Face
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+            return new CreateLivenessWithVerifySessionContent(
+                livenessOperationMode,
+                sendResultsToClient,
+                deviceCorrelationIdSetInClient,
+                enableSessionImage,
+                livenessSingleModalModel,
+                deviceCorrelationId,
+                authTokenTimeToLiveInSeconds,
+                returnVerifyImageHash,
+                verifyConfidenceThreshold,
+                serializedAdditionalRawData);
             return new CreateLivenessWithVerifySessionContent(
                 livenessOperationMode,
                 sendResultsToClient,
@@ -247,6 +342,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
+        string IPersistableModel<CreateLivenessWithVerifySessionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         string IPersistableModel<CreateLivenessWithVerifySessionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>

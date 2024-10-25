@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </summary>
+    /// <summary>
+    /// &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable.
+    /// Serialized Name: InAvailabilityReasonType
+    /// </summary>
     public readonly partial struct NetAppNameUnavailableReason : IEquatable<NetAppNameUnavailableReason>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string InvalidValue = "Invalid";
         private const string AlreadyExistsValue = "AlreadyExists";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: InAvailabilityReasonType.Invalid
+        /// </summary>
         public static NetAppNameUnavailableReason Invalid { get; } = new NetAppNameUnavailableReason(InvalidValue);
-        /// <summary> AlreadyExists. </summary>
+        /// <summary>
+        /// AlreadyExists
+        /// Serialized Name: InAvailabilityReasonType.AlreadyExists
+        /// </summary>
         public static NetAppNameUnavailableReason AlreadyExists { get; } = new NetAppNameUnavailableReason(AlreadyExistsValue);
         /// <summary> Determines if two <see cref="NetAppNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(NetAppNameUnavailableReason left, NetAppNameUnavailableReason right) => left.Equals(right);

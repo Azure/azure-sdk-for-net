@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -36,6 +37,10 @@ namespace Azure.AI.Inference
 
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("function"u8);
+            writer.WriteObjectValue(Function, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("function"u8);
@@ -83,7 +88,35 @@ namespace Azure.AI.Inference
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
+            string id = default;
+            ChatCompletionsToolCallType type = default;
+            FunctionCall function = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ChatCompletionsToolCallType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("function"u8))
+                {
+                    function = FunctionCall.DeserializeFunctionCall(property.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ChatCompletionsToolCall(id, type, function, serializedAdditionalRawData);
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();

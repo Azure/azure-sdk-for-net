@@ -46,14 +46,14 @@ namespace Azure.Developer.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevBoxNextAction"/>. </summary>
-        /// <param name="scheduledTime"> The time the action will be triggered (UTC). </param>
+        /// <param name="scheduledTime"> The time the action will be triggered (UTC), in RFC3339 format. </param>
         internal DevBoxNextAction(DateTimeOffset scheduledTime)
         {
             ScheduledTime = scheduledTime;
         }
 
         /// <summary> Initializes a new instance of <see cref="DevBoxNextAction"/>. </summary>
-        /// <param name="scheduledTime"> The time the action will be triggered (UTC). </param>
+        /// <param name="scheduledTime"> The time the action will be triggered (UTC), in RFC3339 format. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DevBoxNextAction(DateTimeOffset scheduledTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,7 +66,7 @@ namespace Azure.Developer.DevCenter.Models
         {
         }
 
-        /// <summary> The time the action will be triggered (UTC). </summary>
+        /// <summary> The time the action will be triggered (UTC), in RFC3339 format. </summary>
         public DateTimeOffset ScheduledTime { get; }
     }
 }
