@@ -6,6 +6,7 @@ using Azure.Core.Pipeline;
 using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Expressions;
 using Microsoft.Generator.CSharp.Primitives;
+using Microsoft.Generator.CSharp.Providers;
 using static Microsoft.Generator.CSharp.Snippets.Snippet;
 
 namespace Azure.Generator.Providers.Abstraction
@@ -28,10 +29,7 @@ namespace Azure.Generator.Providers.Abstraction
         public override ValueExpression Create(ValueExpression options, ValueExpression perRetryPolicies)
             => Static(typeof(HttpPipelineBuilder)).Invoke(nameof(HttpPipelineBuilder.Build), [options, perRetryPolicies]);
 
-        public override HttpMessageApi CreateMessage()
-            => new HttpMessageProvider(Original.Invoke(nameof(HttpPipeline.CreateMessage)));
-
-        public override ValueExpression CreateMessage(HttpRequestOptionsApi requestOptions, ValueExpression responseClassifier)
+        public override ValueExpression CreateMessage(ParameterProvider requestOptions, ValueExpression responseClassifier)
             => Original.Invoke(nameof(HttpPipeline.CreateMessage), requestOptions, responseClassifier).As<HttpMessage>();
 
         public override ClientPipelineApi FromExpression(ValueExpression expression)

@@ -26,10 +26,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateSayHiRequest(string headParameter, string queryParameter, string optionalQuery, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             message.ResponseClassifier = PipelineMessageClassifier200;
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Parse("GET");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/hello", false);
@@ -39,17 +39,17 @@ namespace BasicTypeSpec
                 uri.AppendQuery("optionalQuery", optionalQuery, true);
             }
             request.Uri = uri;
-            request.Headers.Add("head-parameter", headParameter);
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("head-parameter", headParameter);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateHelloAgainRequest(string p2, string p1, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             message.ResponseClassifier = PipelineMessageClassifier200;
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Parse("GET");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/againHi/", false);
@@ -64,10 +64,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateNoContentTypeRequest(string p2, string p1, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             message.ResponseClassifier = PipelineMessageClassifier200;
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Parse("GET");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/noContentType/", false);
@@ -82,10 +82,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateHelloDemo2Request(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             message.ResponseClassifier = PipelineMessageClassifier200;
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Parse("GET");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/demoHi", false);
@@ -96,10 +96,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateCreateLiteralRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             message.ResponseClassifier = PipelineMessageClassifier200;
             Request request = message.Request;
-            request.Method = new RequestMethod("POST");
+            request.Method = RequestMethod.Parse("POST");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/literal", false);
@@ -112,10 +112,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateHelloLiteralRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             message.ResponseClassifier = PipelineMessageClassifier200;
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Parse("GET");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/helloLiteral/", false);
@@ -129,10 +129,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateTopActionRequest(DateTimeOffset action, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             message.ResponseClassifier = PipelineMessageClassifier200;
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Parse("GET");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/top/", false);
@@ -144,10 +144,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateTopAction2Request(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             message.ResponseClassifier = PipelineMessageClassifier200;
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Parse("GET");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/top2", false);
@@ -158,10 +158,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreatePatchActionRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             message.ResponseClassifier = PipelineMessageClassifier200;
             Request request = message.Request;
-            request.Method = new RequestMethod("PATCH");
+            request.Method = RequestMethod.Parse("PATCH");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/patch", false);
@@ -174,10 +174,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateAnonymousBodyRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             message.ResponseClassifier = PipelineMessageClassifier200;
             Request request = message.Request;
-            request.Method = new RequestMethod("POST");
+            request.Method = RequestMethod.Parse("POST");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/anonymousBody", false);
@@ -190,10 +190,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateFriendlyModelRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             message.ResponseClassifier = PipelineMessageClassifier200;
             Request request = message.Request;
-            request.Method = new RequestMethod("POST");
+            request.Method = RequestMethod.Parse("POST");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/friendlyName", false);
@@ -206,10 +206,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateAddTimeHeaderRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             message.ResponseClassifier = PipelineMessageClassifier204;
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Parse("GET");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
@@ -220,10 +220,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateProjectedNameModelRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             message.ResponseClassifier = PipelineMessageClassifier200;
             Request request = message.Request;
-            request.Method = new RequestMethod("POST");
+            request.Method = RequestMethod.Parse("POST");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projectedName", false);
@@ -236,10 +236,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateReturnsAnonymousModelRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             message.ResponseClassifier = PipelineMessageClassifier200;
             Request request = message.Request;
-            request.Method = new RequestMethod("POST");
+            request.Method = RequestMethod.Parse("POST");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/returnsAnonymousModel", false);
@@ -250,10 +250,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateGetUnknownValueRequest(string accept, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             message.ResponseClassifier = PipelineMessageClassifier200;
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Parse("GET");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/unknown-value", false);
@@ -264,10 +264,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateInternalProtocolRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             message.ResponseClassifier = PipelineMessageClassifier200;
             Request request = message.Request;
-            request.Method = new RequestMethod("POST");
+            request.Method = RequestMethod.Parse("POST");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/internalProtocol", false);
@@ -280,10 +280,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateStillConvenientRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             message.ResponseClassifier = PipelineMessageClassifier204;
             Request request = message.Request;
-            request.Method = new RequestMethod("GET");
+            request.Method = RequestMethod.Parse("GET");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stillConvenient", false);
@@ -293,10 +293,10 @@ namespace BasicTypeSpec
 
         internal HttpMessage CreateHeadAsBooleanRequest(string id, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier2xxAnd4xx);
             message.ResponseClassifier = PipelineMessageClassifier2xxAnd4xx;
             Request request = message.Request;
-            request.Method = new RequestMethod("HEAD");
+            request.Method = RequestMethod.Parse("HEAD");
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/headAsBoolean/", false);

@@ -4,7 +4,6 @@
 using Azure.Core;
 using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Expressions;
-using Microsoft.Generator.CSharp.Snippets;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using static Microsoft.Generator.CSharp.Snippets.Snippet;
@@ -27,10 +26,10 @@ namespace Azure.Generator.Providers
             => new HttpRequestProvider(original);
 
         public override InvokeMethodExpression SetHeaders(IReadOnlyList<ValueExpression> arguments)
-            => Original.Property(nameof(PipelineRequest.Headers)).Invoke(nameof(RequestHeaders.Add), arguments);
+            => Original.Property(nameof(PipelineRequest.Headers)).Invoke(nameof(RequestHeaders.SetValue), arguments);
 
         public override AssignmentExpression SetMethod(string httpMethod)
-            => Original.Property(nameof(PipelineRequest.Method)).Assign(New.Instance(typeof(RequestMethod), [Literal(httpMethod)]));
+            => Original.Property(nameof(PipelineRequest.Method)).Assign(Static<RequestMethod>().Invoke(nameof(RequestMethod.Parse), [Literal(httpMethod)]));
 
         public override AssignmentExpression SetUri(ValueExpression value)
             => Original.Property("Uri").Assign(value);
