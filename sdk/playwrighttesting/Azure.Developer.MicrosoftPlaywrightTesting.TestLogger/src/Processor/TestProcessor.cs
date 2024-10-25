@@ -278,10 +278,9 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
              _blobService.UploadBufferAsync(uri, buffer, fileRelativePath);
         }
 
-
         private void UploadBlobFile(string uri, string fileRelativePath, string filePath)
         {
-            string cloudFilePath = GetCloudFilePath(uri, fileRelativePath);
+            string cloudFilePath = _blobService.GetCloudFilePath(uri, fileRelativePath);
             BlobClient blobClient = new(new Uri(cloudFilePath));
             // Upload filePath to Blob
             blobClient.Upload(filePath, overwrite: true);
