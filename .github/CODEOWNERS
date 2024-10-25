@@ -300,7 +300,7 @@
 /sdk/communication/                                                @acsdevx-msft
 
 # ServiceLabel: %Communication
-# ServiceOwners:                                                   @acsdevx-msft
+# ServiceOwners:                                                   @Azure/azure-sdk-write-communication
 
 # PRLabel: %Communication - Calling Server
 /sdk/communication/Azure.Communication.CallingServer/              @minwoolee-msft
@@ -318,7 +318,7 @@
 /sdk/communication/Azure.Communication.PhoneNumbers/               @miguhern @whisper6284 @danielav7
 
 # PRLabel: %Communication - Programmable Connectivity
-/sdk/communication/Azure.Communication.ProgrammableConnectivity/   @acsdevx-msft
+/sdk/communication/Azure.Communication.ProgrammableConnectivity/   @Azure/azure-sdk-write-communication
 
 # PRLabel: %Communication - Short Codes
 /sdk/communication/Azure.Communication.ShortCodes/                 @guilhermeluizsp @danielav7
