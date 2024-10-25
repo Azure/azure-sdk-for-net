@@ -856,6 +856,7 @@ function GeneratePackage()
                 $hasBreakingChange = $false
             }
             else {
+                Write-Host "Breaking changes detected in the build log."
                 $logFile = Get-Content -Path $logFilePath | select-object -SkipLast 1
                 $breakingChanges = $logFile -join ",`n"
                 $content = "Breaking Changes: $breakingChanges"
