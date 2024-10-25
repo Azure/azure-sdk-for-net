@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
         {
             resourceGroupResource = await CreateResourceGroupWithTag();
 
-            clusterName = Recording.GenerateAssetName("sfmctestcluster");
+            clusterName = Recording.GenerateAssetName("sfmctestclusternet");
             clusterCollection = resourceGroupResource.GetServiceFabricManagedClusters();
 
             ServiceFabricManagedClusterData data = new ServiceFabricManagedClusterData(new AzureLocation("southcentralus"))

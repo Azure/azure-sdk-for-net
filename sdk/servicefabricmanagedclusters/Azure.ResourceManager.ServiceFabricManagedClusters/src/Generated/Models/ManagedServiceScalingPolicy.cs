@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Specifies a metric to load balance a service during runtime. </summary>
     public partial class ManagedServiceScalingPolicy
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingPolicy"/>. </summary>
         /// <param name="scalingMechanism">
         /// Specifies the mechanism associated with this scaling policy
@@ -31,6 +64,30 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
             ScalingMechanism = scalingMechanism;
             ScalingTrigger = scalingTrigger;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingPolicy"/>. </summary>
+        /// <param name="scalingMechanism">
+        /// Specifies the mechanism associated with this scaling policy
+        /// Please note <see cref="ManagedServiceScalingMechanism"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NamedPartitionAddOrRemoveScalingMechanism"/> and <see cref="PartitionInstanceCountScalingMechanism"/>.
+        /// </param>
+        /// <param name="scalingTrigger">
+        /// Specifies the trigger associated with this scaling policy.
+        /// Please note <see cref="ManagedServiceScalingTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AveragePartitionLoadScalingTrigger"/> and <see cref="AverageServiceLoadScalingTrigger"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServiceScalingPolicy(ManagedServiceScalingMechanism scalingMechanism, ManagedServiceScalingTrigger scalingTrigger, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ScalingMechanism = scalingMechanism;
+            ScalingTrigger = scalingTrigger;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingPolicy"/> for deserialization. </summary>
+        internal ManagedServiceScalingPolicy()
+        {
         }
 
         /// <summary>

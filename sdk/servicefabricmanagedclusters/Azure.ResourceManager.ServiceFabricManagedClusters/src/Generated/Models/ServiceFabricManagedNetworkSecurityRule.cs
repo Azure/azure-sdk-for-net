@@ -13,6 +13,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes a network security rule. </summary>
     public partial class ServiceFabricManagedNetworkSecurityRule
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNetworkSecurityRule"/>. </summary>
         /// <param name="name"> Network security rule name. </param>
         /// <param name="protocol"> Network protocol this rule applies to. </param>
@@ -50,7 +82,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="access"> The network traffic is allowed or denied. </param>
         /// <param name="priority"> The priority of the rule. The value can be in the range 1000 to 3000. Values outside this range are reserved for Service Fabric ManagerCluster Resource Provider. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
         /// <param name="direction"> Network security rule direction. </param>
-        internal ServiceFabricManagedNetworkSecurityRule(string name, string description, ServiceFabricManagedNsgProtocol protocol, IList<string> sourceAddressPrefixes, IList<string> destinationAddressPrefixes, IList<string> sourcePortRanges, IList<string> destinationPortRanges, string sourceAddressPrefix, string destinationAddressPrefix, string sourcePortRange, string destinationPortRange, ServiceFabricManagedNetworkTrafficAccess access, int priority, ServiceFabricManagedNetworkSecurityRuleDirection direction)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricManagedNetworkSecurityRule(string name, string description, ServiceFabricManagedNsgProtocol protocol, IList<string> sourceAddressPrefixes, IList<string> destinationAddressPrefixes, IList<string> sourcePortRanges, IList<string> destinationPortRanges, string sourceAddressPrefix, string destinationAddressPrefix, string sourcePortRange, string destinationPortRange, ServiceFabricManagedNetworkTrafficAccess access, int priority, ServiceFabricManagedNetworkSecurityRuleDirection direction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
@@ -66,6 +99,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Access = access;
             Priority = priority;
             Direction = direction;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNetworkSecurityRule"/> for deserialization. </summary>
+        internal ServiceFabricManagedNetworkSecurityRule()
+        {
         }
 
         /// <summary> Network security rule name. </summary>

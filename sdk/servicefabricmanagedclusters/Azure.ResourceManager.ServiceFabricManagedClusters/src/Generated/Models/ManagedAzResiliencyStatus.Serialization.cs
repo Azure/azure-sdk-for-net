@@ -5,21 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedAzResiliencyStatus
+    public partial class ManagedAzResiliencyStatus : IUtf8JsonSerializable, IJsonModel<ManagedAzResiliencyStatus>
     {
-        internal static ManagedAzResiliencyStatus DeserializeManagedAzResiliencyStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedAzResiliencyStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ManagedAzResiliencyStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedAzResiliencyStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsCollectionDefined(BaseResourceStatus))
+            {
+                writer.WritePropertyName("baseResourceStatus"u8);
+                writer.WriteStartArray();
+                foreach (var item in BaseResourceStatus)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsClusterZoneResilient))
+            {
+                writer.WritePropertyName("isClusterZoneResilient"u8);
+                writer.WriteBooleanValue(IsClusterZoneResilient.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        ManagedAzResiliencyStatus IJsonModel<ManagedAzResiliencyStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedAzResiliencyStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedAzResiliencyStatus(document.RootElement, options);
+        }
+
+        internal static ManagedAzResiliencyStatus DeserializeManagedAzResiliencyStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<ResourceAzStatus> baseResourceStatus = default;
             bool? isClusterZoneResilient = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseResourceStatus"u8))
@@ -31,7 +101,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ResourceAzStatus> array = new List<ResourceAzStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceAzStatus.DeserializeResourceAzStatus(item));
+                        array.Add(ResourceAzStatus.DeserializeResourceAzStatus(item, options));
                     }
                     baseResourceStatus = array;
                     continue;
@@ -45,8 +115,44 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     isClusterZoneResilient = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedAzResiliencyStatus(baseResourceStatus ?? new ChangeTrackingList<ResourceAzStatus>(), isClusterZoneResilient);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedAzResiliencyStatus(baseResourceStatus ?? new ChangeTrackingList<ResourceAzStatus>(), isClusterZoneResilient, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedAzResiliencyStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedAzResiliencyStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedAzResiliencyStatus IPersistableModel<ManagedAzResiliencyStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedAzResiliencyStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedAzResiliencyStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedAzResiliencyStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Unknown version of ScalingMechanism. </summary>
@@ -12,9 +15,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownScalingMechanism"/>. </summary>
         /// <param name="kind"> Specifies the mechanism associated with this scaling policy. </param>
-        internal UnknownScalingMechanism(ServiceScalingMechanismKind kind) : base(kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownScalingMechanism(ServiceScalingMechanismKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownScalingMechanism"/> for deserialization. </summary>
+        internal UnknownScalingMechanism()
+        {
         }
     }
 }

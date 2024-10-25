@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Represents a scaling mechanism for adding or removing instances of stateless service partition. </summary>
@@ -24,15 +27,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Initializes a new instance of <see cref="PartitionInstanceCountScalingMechanism"/>. </summary>
         /// <param name="kind"> Specifies the mechanism associated with this scaling policy. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="minInstanceCount"> Minimum number of instances of the partition. </param>
         /// <param name="maxInstanceCount"> Maximum number of instances of the partition. </param>
         /// <param name="scaleIncrement"> The number of instances to add or remove during a scaling operation. </param>
-        internal PartitionInstanceCountScalingMechanism(ServiceScalingMechanismKind kind, int minInstanceCount, int maxInstanceCount, int scaleIncrement) : base(kind)
+        internal PartitionInstanceCountScalingMechanism(ServiceScalingMechanismKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, int minInstanceCount, int maxInstanceCount, int scaleIncrement) : base(kind, serializedAdditionalRawData)
         {
             MinInstanceCount = minInstanceCount;
             MaxInstanceCount = maxInstanceCount;
             ScaleIncrement = scaleIncrement;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PartitionInstanceCountScalingMechanism"/> for deserialization. </summary>
+        internal PartitionInstanceCountScalingMechanism()
+        {
         }
 
         /// <summary> Minimum number of instances of the partition. </summary>
