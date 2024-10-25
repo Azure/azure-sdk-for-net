@@ -799,9 +799,12 @@ public partial class CosmosDBAccount : ProvisionableResource
     /// Get access keys for this CosmosDBAccount resource.
     /// </summary>
     /// <returns>The keys for this CosmosDBAccount resource.</returns>
-    public CosmosDBAccountKeyList GetKeys() =>
-        CosmosDBAccountKeyList.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
+    public CosmosDBAccountKeyList GetKeys()
+    {
+        CosmosDBAccountKeyList key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 
     /// <summary>
     /// Creates a role assignment for a user-assigned identity that grants

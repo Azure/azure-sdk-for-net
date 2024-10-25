@@ -71,20 +71,4 @@ public partial class CosmosDBAccountKeyList : ProvisionableConstruct
         _primaryReadonlyMasterKey = DefineProperty<string>("PrimaryReadonlyMasterKey", ["primaryReadonlyMasterKey"], isOutput: true, isSecure: true);
         _secondaryReadonlyMasterKey = DefineProperty<string>("SecondaryReadonlyMasterKey", ["secondaryReadonlyMasterKey"], isOutput: true, isSecure: true);
     }
-
-    /// <summary>
-    /// Creates a new CosmosDBAccountKeyList resource from a Bicep expression
-    /// that evaluates to a CosmosDBAccountKeyList.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a CosmosDBAccountKeyList resource.
-    /// </param>
-    /// <returns>A CosmosDBAccountKeyList resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static CosmosDBAccountKeyList FromExpression(BicepExpression expression)
-    {
-        CosmosDBAccountKeyList resource = new();
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
 }

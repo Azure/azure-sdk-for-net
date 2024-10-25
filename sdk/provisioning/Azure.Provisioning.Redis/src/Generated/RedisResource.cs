@@ -488,9 +488,12 @@ public partial class RedisResource : ProvisionableResource
     /// Get access keys for this RedisResource resource.
     /// </summary>
     /// <returns>The keys for this RedisResource resource.</returns>
-    public RedisAccessKeys GetKeys() =>
-        RedisAccessKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
+    public RedisAccessKeys GetKeys()
+    {
+        RedisAccessKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 
     /// <summary>
     /// Creates a role assignment for a user-assigned identity that grants

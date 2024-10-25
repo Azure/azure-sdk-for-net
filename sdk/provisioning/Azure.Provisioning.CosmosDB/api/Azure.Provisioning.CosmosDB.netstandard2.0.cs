@@ -728,8 +728,6 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<string> SecondaryMasterKey { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecondaryReadonlyMasterKey { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.CosmosDB.CosmosDBAccountKeyList FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
     }
     public enum CosmosDBAccountKind
     {

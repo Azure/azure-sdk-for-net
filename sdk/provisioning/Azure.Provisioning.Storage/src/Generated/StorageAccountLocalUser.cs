@@ -308,7 +308,10 @@ public partial class StorageAccountLocalUser : ProvisionableResource
     /// Get access keys for this StorageAccountLocalUser resource.
     /// </summary>
     /// <returns>The keys for this StorageAccountLocalUser resource.</returns>
-    public LocalUserKeys GetKeys() =>
-        LocalUserKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
+    public LocalUserKeys GetKeys()
+    {
+        LocalUserKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 }

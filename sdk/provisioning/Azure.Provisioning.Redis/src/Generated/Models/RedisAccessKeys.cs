@@ -53,20 +53,4 @@ public partial class RedisAccessKeys : ProvisionableConstruct
         _primaryKey = DefineProperty<string>("PrimaryKey", ["primaryKey"], isOutput: true, isSecure: true);
         _secondaryKey = DefineProperty<string>("SecondaryKey", ["secondaryKey"], isOutput: true, isSecure: true);
     }
-
-    /// <summary>
-    /// Creates a new RedisAccessKeys resource from a Bicep expression that
-    /// evaluates to a RedisAccessKeys.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a RedisAccessKeys resource.
-    /// </param>
-    /// <returns>A RedisAccessKeys resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static RedisAccessKeys FromExpression(BicepExpression expression)
-    {
-        RedisAccessKeys resource = new();
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
 }

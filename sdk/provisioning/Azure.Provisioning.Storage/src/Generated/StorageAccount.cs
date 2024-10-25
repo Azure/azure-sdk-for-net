@@ -750,10 +750,12 @@ public partial class StorageAccount : ProvisionableResource
     /// Get access keys for this StorageAccount resource.
     /// </summary>
     /// <returns>The keys for this StorageAccount resource.</returns>
-    public BicepList<StorageAccountKey> GetKeys() =>
-        BicepList<StorageAccountKey>.FromExpression(
-            StorageAccountKey.FromExpression,
+    public BicepList<StorageAccountKey> GetKeys()
+    {
+        return BicepList<StorageAccountKey>.FromExpression(
+            e => { StorageAccountKey key = new(); ((IBicepValue)key).Expression = e; return key; },
             new MemberExpression(new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")), "keys"));
+    }
 
     /// <summary>
     /// Creates a role assignment for a user-assigned identity that grants

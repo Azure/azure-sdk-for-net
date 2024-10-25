@@ -196,7 +196,5 @@ namespace Azure.Provisioning.AppConfiguration
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.AppConfiguration.AppConfigurationStoreApiKey FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
     }
 }

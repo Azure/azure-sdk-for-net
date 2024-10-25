@@ -154,7 +154,10 @@ public partial class EventHubsNamespaceAuthorizationRule : ProvisionableResource
     /// Get access keys for this EventHubsNamespaceAuthorizationRule resource.
     /// </summary>
     /// <returns>The keys for this EventHubsNamespaceAuthorizationRule resource.</returns>
-    public EventHubsAccessKeys GetKeys() =>
-        EventHubsAccessKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
+    public EventHubsAccessKeys GetKeys()
+    {
+        EventHubsAccessKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 }

@@ -473,8 +473,6 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<string> Key1 { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Key2 { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.CognitiveServices.ServiceAccountApiKeys FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
     }
     public partial class ServiceAccountApiProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

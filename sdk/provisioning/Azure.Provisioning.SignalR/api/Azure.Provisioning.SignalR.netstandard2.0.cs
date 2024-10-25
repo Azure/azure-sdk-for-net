@@ -98,8 +98,6 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepValue<string> SecondaryConnectionString { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecondaryKey { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.SignalR.SignalRKeys FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
     }
     public partial class SignalRLiveTraceCategory : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

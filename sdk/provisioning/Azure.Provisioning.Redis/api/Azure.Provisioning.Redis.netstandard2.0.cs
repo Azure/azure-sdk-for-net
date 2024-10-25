@@ -29,8 +29,6 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepValue<string> PrimaryKey { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecondaryKey { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.Redis.RedisAccessKeys FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RedisBuiltInRole : System.IEquatable<Azure.Provisioning.Redis.RedisBuiltInRole>

@@ -349,9 +349,12 @@ public partial class WebPubSubService : ProvisionableResource
     /// Get access keys for this WebPubSubService resource.
     /// </summary>
     /// <returns>The keys for this WebPubSubService resource.</returns>
-    public WebPubSubKeys GetKeys() =>
-        WebPubSubKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
+    public WebPubSubKeys GetKeys()
+    {
+        WebPubSubKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 
     /// <summary>
     /// Creates a role assignment for a user-assigned identity that grants

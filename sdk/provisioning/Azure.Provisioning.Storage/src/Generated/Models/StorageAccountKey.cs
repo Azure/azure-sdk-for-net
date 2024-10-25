@@ -71,20 +71,4 @@ public partial class StorageAccountKey : ProvisionableConstruct
         _permissions = DefineProperty<StorageAccountKeyPermission>("Permissions", ["permissions"], isOutput: true);
         _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["creationTime"], isOutput: true);
     }
-
-    /// <summary>
-    /// Creates a new StorageAccountKey resource from a Bicep expression that
-    /// evaluates to a StorageAccountKey.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a StorageAccountKey resource.
-    /// </param>
-    /// <returns>A StorageAccountKey resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static StorageAccountKey FromExpression(BicepExpression expression)
-    {
-        StorageAccountKey resource = new();
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
 }

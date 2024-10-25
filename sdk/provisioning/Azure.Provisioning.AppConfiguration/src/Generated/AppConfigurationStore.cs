@@ -286,10 +286,12 @@ public partial class AppConfigurationStore : ProvisionableResource
     /// Get access keys for this AppConfigurationStore resource.
     /// </summary>
     /// <returns>The keys for this AppConfigurationStore resource.</returns>
-    public BicepList<AppConfigurationStoreApiKey> GetKeys() =>
-        BicepList<AppConfigurationStoreApiKey>.FromExpression(
-            AppConfigurationStoreApiKey.FromExpression,
+    public BicepList<AppConfigurationStoreApiKey> GetKeys()
+    {
+        return BicepList<AppConfigurationStoreApiKey>.FromExpression(
+            e => { AppConfigurationStoreApiKey key = new(); ((IBicepValue)key).Expression = e; return key; },
             new MemberExpression(new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")), "keys"));
+    }
 
     /// <summary>
     /// Creates a role assignment for a user-assigned identity that grants

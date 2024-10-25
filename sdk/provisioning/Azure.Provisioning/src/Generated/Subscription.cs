@@ -254,20 +254,4 @@ public partial class Subscription : ProvisionableResource
         /// </summary>
         public static readonly string V2015_01_01 = "2015-01-01";
     }
-
-    /// <summary>
-    /// Creates a new Subscription resource from a Bicep expression that
-    /// evaluates to a Subscription.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a Subscription resource.
-    /// </param>
-    /// <returns>A Subscription resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static Subscription FromExpression(BicepExpression expression)
-    {
-        Subscription resource = new(nameof(Subscription));
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
 }

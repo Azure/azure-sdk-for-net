@@ -81,7 +81,6 @@ namespace Azure.Provisioning
     }
     public static partial class BicepValueExtensions
     {
-        public static Azure.Provisioning.BicepValue<System.Uri> ToUri(this Azure.Provisioning.BicepValue<string> value) { throw null; }
         public static T Unwrap<T>(this Azure.Provisioning.BicepValue<T> value) where T : Azure.Provisioning.Primitives.ProvisionableConstruct, new() { throw null; }
     }
     public enum BicepValueKind
@@ -1265,8 +1264,6 @@ namespace Azure.Provisioning.Resources
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Resources.ArmDeployment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.Resources.ArmDeployment FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -1980,8 +1977,6 @@ namespace Azure.Provisioning.Resources
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Resources.ResourceGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.Resources.ResourceGroup FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -2179,8 +2174,6 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.Resources.Subscription FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2015_01_01;
@@ -2372,8 +2365,6 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TenantType { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.Resources.Tenant FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2015_01_01;

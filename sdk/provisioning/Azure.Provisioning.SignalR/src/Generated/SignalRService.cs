@@ -412,9 +412,12 @@ public partial class SignalRService : ProvisionableResource
     /// Get access keys for this SignalRService resource.
     /// </summary>
     /// <returns>The keys for this SignalRService resource.</returns>
-    public SignalRKeys GetKeys() =>
-        SignalRKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
+    public SignalRKeys GetKeys()
+    {
+        SignalRKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 
     /// <summary>
     /// Creates a role assignment for a user-assigned identity that grants

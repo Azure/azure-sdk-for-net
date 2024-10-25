@@ -52,20 +52,4 @@ public partial class LocalUserKeys : ProvisionableConstruct
         _sshAuthorizedKeys = DefineListProperty<StorageSshPublicKey>("SshAuthorizedKeys", ["sshAuthorizedKeys"], isOutput: true);
         _sharedKey = DefineProperty<string>("SharedKey", ["sharedKey"], isOutput: true, isSecure: true);
     }
-
-    /// <summary>
-    /// Creates a new LocalUserKeys resource from a Bicep expression that
-    /// evaluates to a LocalUserKeys.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a LocalUserKeys resource.
-    /// </param>
-    /// <returns>A LocalUserKeys resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static LocalUserKeys FromExpression(BicepExpression expression)
-    {
-        LocalUserKeys resource = new();
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
 }

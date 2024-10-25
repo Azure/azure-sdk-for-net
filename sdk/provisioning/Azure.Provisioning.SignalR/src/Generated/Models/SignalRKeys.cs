@@ -71,20 +71,4 @@ public partial class SignalRKeys : ProvisionableConstruct
         _primaryConnectionString = DefineProperty<string>("PrimaryConnectionString", ["primaryConnectionString"], isOutput: true, isSecure: true);
         _secondaryConnectionString = DefineProperty<string>("SecondaryConnectionString", ["secondaryConnectionString"], isOutput: true, isSecure: true);
     }
-
-    /// <summary>
-    /// Creates a new SignalRKeys resource from a Bicep expression that
-    /// evaluates to a SignalRKeys.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a SignalRKeys resource.
-    /// </param>
-    /// <returns>A SignalRKeys resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static SignalRKeys FromExpression(BicepExpression expression)
-    {
-        SignalRKeys resource = new();
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
 }

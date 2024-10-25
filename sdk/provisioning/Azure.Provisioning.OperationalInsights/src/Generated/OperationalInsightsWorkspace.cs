@@ -325,7 +325,10 @@ public partial class OperationalInsightsWorkspace : ProvisionableResource
     /// Get access keys for this OperationalInsightsWorkspace resource.
     /// </summary>
     /// <returns>The keys for this OperationalInsightsWorkspace resource.</returns>
-    public OperationalInsightsWorkspaceSharedKeys GetKeys() =>
-        OperationalInsightsWorkspaceSharedKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
+    public OperationalInsightsWorkspaceSharedKeys GetKeys()
+    {
+        OperationalInsightsWorkspaceSharedKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 }

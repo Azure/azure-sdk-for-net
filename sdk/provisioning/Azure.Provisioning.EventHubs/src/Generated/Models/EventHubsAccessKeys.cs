@@ -103,20 +103,4 @@ public partial class EventHubsAccessKeys : ProvisionableConstruct
         _secondaryKey = DefineProperty<string>("SecondaryKey", ["secondaryKey"], isOutput: true, isSecure: true);
         _keyName = DefineProperty<string>("KeyName", ["keyName"], isOutput: true);
     }
-
-    /// <summary>
-    /// Creates a new EventHubsAccessKeys resource from a Bicep expression that
-    /// evaluates to a EventHubsAccessKeys.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a EventHubsAccessKeys resource.
-    /// </param>
-    /// <returns>A EventHubsAccessKeys resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static EventHubsAccessKeys FromExpression(BicepExpression expression)
-    {
-        EventHubsAccessKeys resource = new();
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
 }

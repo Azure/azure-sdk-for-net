@@ -147,28 +147,6 @@ public class SimpleModel(Specification spec, Type armType, string name, string? 
                             writer.WriteLine($");");
                         }
                     }
-
-                    // Add the FromExpression method
-                    if (FromExpression)
-                    {
-                        if (fence.RequiresSeparator) { writer.WriteLine(); }
-
-                        writer.WriteLine($"/// <summary>");
-                        writer.WriteWrapped($"Creates a new {Name} resource from a Bicep expression that evaluates to a {Name}.");
-                        writer.WriteLine($"/// </summary>");
-                        writer.WriteLine($"/// <param name=\"expression\">");
-                        writer.WriteWrapped($"A Bicep expression that evaluates to a {Name} resource.");
-                        writer.WriteLine($"/// </param>");
-                        writer.WriteLine($"/// <returns>A {Name} resource.</returns>");
-                        writer.WriteLine($"[EditorBrowsable(EditorBrowsableState.Never)]");
-                        writer.WriteLine($"public static {Name} FromExpression(BicepExpression expression)");
-                        using (writer.Scope("{", "}"))
-                        {
-                            writer.WriteLine($"{Name} resource = new();");
-                            writer.WriteLine($"resource.OverrideWithExpression(expression);");
-                            writer.WriteLine($"return resource;");
-                        }
-                    }
                 }
 
                 // Write out the model

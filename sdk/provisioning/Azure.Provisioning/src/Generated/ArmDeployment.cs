@@ -269,22 +269,6 @@ public partial class ArmDeployment : ProvisionableResource
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
-    /// Creates a new ArmDeployment resource from a Bicep expression that
-    /// evaluates to a ArmDeployment.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a ArmDeployment resource.
-    /// </param>
-    /// <returns>A ArmDeployment resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static ArmDeployment FromExpression(BicepExpression expression)
-    {
-        ArmDeployment resource = new(nameof(ArmDeployment));
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
-
-    /// <summary>
     /// Get the requirements for naming this ArmDeployment resource.
     /// </summary>
     /// <returns>Naming requirements.</returns>

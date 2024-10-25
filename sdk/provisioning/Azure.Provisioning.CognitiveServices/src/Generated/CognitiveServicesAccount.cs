@@ -224,9 +224,12 @@ public partial class CognitiveServicesAccount : ProvisionableResource
     /// Get access keys for this CognitiveServicesAccount resource.
     /// </summary>
     /// <returns>The keys for this CognitiveServicesAccount resource.</returns>
-    public ServiceAccountApiKeys GetKeys() =>
-        ServiceAccountApiKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
+    public ServiceAccountApiKeys GetKeys()
+    {
+        ServiceAccountApiKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 
     /// <summary>
     /// Creates a role assignment for a user-assigned identity that grants

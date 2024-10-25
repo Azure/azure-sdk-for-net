@@ -71,20 +71,4 @@ public partial class WebPubSubKeys : ProvisionableConstruct
         _primaryConnectionString = DefineProperty<string>("PrimaryConnectionString", ["primaryConnectionString"], isOutput: true, isSecure: true);
         _secondaryConnectionString = DefineProperty<string>("SecondaryConnectionString", ["secondaryConnectionString"], isOutput: true, isSecure: true);
     }
-
-    /// <summary>
-    /// Creates a new WebPubSubKeys resource from a Bicep expression that
-    /// evaluates to a WebPubSubKeys.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a WebPubSubKeys resource.
-    /// </param>
-    /// <returns>A WebPubSubKeys resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static WebPubSubKeys FromExpression(BicepExpression expression)
-    {
-        WebPubSubKeys resource = new();
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
 }

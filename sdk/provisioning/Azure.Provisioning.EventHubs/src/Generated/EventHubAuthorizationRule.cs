@@ -152,7 +152,10 @@ public partial class EventHubAuthorizationRule : ProvisionableResource
     /// Get access keys for this EventHubAuthorizationRule resource.
     /// </summary>
     /// <returns>The keys for this EventHubAuthorizationRule resource.</returns>
-    public EventHubsAccessKeys GetKeys() =>
-        EventHubsAccessKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
+    public EventHubsAccessKeys GetKeys()
+    {
+        EventHubsAccessKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 }

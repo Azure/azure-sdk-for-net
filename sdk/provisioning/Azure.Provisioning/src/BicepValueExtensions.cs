@@ -33,13 +33,5 @@ public static class BicepValueExtensions
         }
     }
 
-    public static BicepValue<Uri> ToUri(this BicepValue<string> value) =>
-        ((IBicepValue)value).Kind switch
-        {
-            BicepValueKind.Literal => (BicepValue<Uri>)new Uri(value.Value!),
-            BicepValueKind.Expression => new BicepValue<Uri>(((IBicepValue)value).Expression!),
-            _ => new BicepValue<Uri>(self: null),
-        };
-
     // TODO: Add more common casts
 }

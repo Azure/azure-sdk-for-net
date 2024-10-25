@@ -52,22 +52,4 @@ public partial class OperationalInsightsWorkspaceSharedKeys : ProvisionableConst
         _primarySharedKey = DefineProperty<string>("PrimarySharedKey", ["primarySharedKey"], isOutput: true, isSecure: true);
         _secondarySharedKey = DefineProperty<string>("SecondarySharedKey", ["secondarySharedKey"], isOutput: true, isSecure: true);
     }
-
-    /// <summary>
-    /// Creates a new OperationalInsightsWorkspaceSharedKeys resource from a
-    /// Bicep expression that evaluates to a
-    /// OperationalInsightsWorkspaceSharedKeys.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a
-    /// OperationalInsightsWorkspaceSharedKeys resource.
-    /// </param>
-    /// <returns>A OperationalInsightsWorkspaceSharedKeys resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static OperationalInsightsWorkspaceSharedKeys FromExpression(BicepExpression expression)
-    {
-        OperationalInsightsWorkspaceSharedKeys resource = new();
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
 }

@@ -47,8 +47,6 @@ namespace Azure.Provisioning.ServiceBus
         public Azure.Provisioning.BicepValue<string> SecondaryConnectionString { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecondaryKey { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.ServiceBus.ServiceBusAccessKeys FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
     }
     public enum ServiceBusAccessRight
     {

@@ -227,7 +227,10 @@ public partial class CommunicationService : ProvisionableResource
     /// Get access keys for this CommunicationService resource.
     /// </summary>
     /// <returns>The keys for this CommunicationService resource.</returns>
-    public CommunicationServiceKeys GetKeys() =>
-        CommunicationServiceKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
+    public CommunicationServiceKeys GetKeys()
+    {
+        CommunicationServiceKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 }

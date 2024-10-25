@@ -51,20 +51,4 @@ public partial class ServiceAccountApiKeys : ProvisionableConstruct
         _key1 = DefineProperty<string>("Key1", ["key1"], isOutput: true, isSecure: true);
         _key2 = DefineProperty<string>("Key2", ["key2"], isOutput: true, isSecure: true);
     }
-
-    /// <summary>
-    /// Creates a new ServiceAccountApiKeys resource from a Bicep expression
-    /// that evaluates to a ServiceAccountApiKeys.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a ServiceAccountApiKeys resource.
-    /// </param>
-    /// <returns>A ServiceAccountApiKeys resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static ServiceAccountApiKeys FromExpression(BicepExpression expression)
-    {
-        ServiceAccountApiKeys resource = new();
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
 }

@@ -103,20 +103,4 @@ public partial class ServiceBusAccessKeys : ProvisionableConstruct
         _secondaryKey = DefineProperty<string>("SecondaryKey", ["secondaryKey"], isOutput: true, isSecure: true);
         _keyName = DefineProperty<string>("KeyName", ["keyName"], isOutput: true);
     }
-
-    /// <summary>
-    /// Creates a new ServiceBusAccessKeys resource from a Bicep expression
-    /// that evaluates to a ServiceBusAccessKeys.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a ServiceBusAccessKeys resource.
-    /// </param>
-    /// <returns>A ServiceBusAccessKeys resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static ServiceBusAccessKeys FromExpression(BicepExpression expression)
-    {
-        ServiceBusAccessKeys resource = new();
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
 }

@@ -92,21 +92,4 @@ public partial class AppConfigurationStoreApiKey : ProvisionableConstruct
         _lastModifiedOn = DefineProperty<DateTimeOffset>("LastModifiedOn", ["lastModified"], isOutput: true);
         _isReadOnly = DefineProperty<bool>("IsReadOnly", ["readOnly"], isOutput: true);
     }
-
-    /// <summary>
-    /// Creates a new AppConfigurationStoreApiKey resource from a Bicep
-    /// expression that evaluates to a AppConfigurationStoreApiKey.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a AppConfigurationStoreApiKey
-    /// resource.
-    /// </param>
-    /// <returns>A AppConfigurationStoreApiKey resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static AppConfigurationStoreApiKey FromExpression(BicepExpression expression)
-    {
-        AppConfigurationStoreApiKey resource = new();
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
 }

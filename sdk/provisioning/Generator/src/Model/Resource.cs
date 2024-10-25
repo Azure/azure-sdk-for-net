@@ -234,28 +234,6 @@ public class Resource(Specification spec, Type armType)
                         }
                     }
 
-                    // Add the FromExpression method
-                    if (FromExpression)
-                    {
-                        if (fence.RequiresSeparator) { writer.WriteLine(); }
-
-                        writer.WriteLine($"/// <summary>");
-                        writer.WriteWrapped($"Creates a new {Name} resource from a Bicep expression that evaluates to a {Name}.");
-                        writer.WriteLine($"/// </summary>");
-                        writer.WriteLine($"/// <param name=\"expression\">");
-                        writer.WriteWrapped($"A Bicep expression that evaluates to a {Name} resource.");
-                        writer.WriteLine($"/// </param>");
-                        writer.WriteLine($"/// <returns>A {Name} resource.</returns>");
-                        writer.WriteLine($"[EditorBrowsable(EditorBrowsableState.Never)]");
-                        writer.WriteLine($"public static {Name} FromExpression(BicepExpression expression)");
-                        using (writer.Scope("{", "}"))
-                        {
-                            writer.WriteLine($"{Name} resource = new(nameof({Name}));");
-                            writer.WriteLine($"resource.OverrideWithExpression(expression);");
-                            writer.WriteLine($"return resource;");
-                        }
-                    }
-
                     // Add the name requirements
                     if (NameRequirements is not null)
                     {
@@ -292,22 +270,24 @@ public class Resource(Specification spec, Type armType)
                         writer.WriteLine($"/// <returns>The keys for this {Name} resource.</returns>");
                         string keyType = GetKeysType.Name;
                         if (GetKeysIsList) { keyType = $"BicepList<{keyType}>"; }
-                        writer.WriteLine($"public {keyType} GetKeys() =>");
-                        using (writer.Scope())
+                        string expr = $"new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), \"listKeys\"))";
+                        writer.WriteLine($"public {keyType} GetKeys()");
+                        using (writer.Scope("{", "}"))
                         {
-                            writer.WriteLine($"{keyType}.FromExpression(");
-                            using (writer.Scope())
+                            if (GetKeysIsList)
                             {
-                                if (GetKeysIsList)
+                                writer.WriteLine($"return {keyType}.FromExpression(");
+                                using (writer.Scope())
                                 {
-                                    writer.WriteLine($"{GetKeysType.Name}.FromExpression,");
+                                    writer.WriteLine($"e => {{ {GetKeysType.Name} key = new(); ((IBicepValue)key).Expression = e; return key; }},");
+                                    writer.WriteLine($"new MemberExpression({expr}, \"keys\"));");
                                 }
-                                string expr = $"new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), \"listKeys\"))";
-                                if (GetKeysIsList)
-                                {
-                                    expr = $"new MemberExpression({expr}, \"keys\")";
-                                }
-                                writer.WriteLine($"{expr});");
+                            }
+                            else
+                            {
+                                writer.WriteLine($"{keyType} key = new();");
+                                writer.WriteLine($"((IBicepValue)key).Expression = {expr};");
+                                writer.WriteLine($"return key;");
                             }
                         }
                     }

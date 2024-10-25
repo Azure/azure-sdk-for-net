@@ -71,21 +71,4 @@ public partial class CommunicationServiceKeys : ProvisionableConstruct
         _primaryConnectionString = DefineProperty<string>("PrimaryConnectionString", ["primaryConnectionString"], isOutput: true, isSecure: true);
         _secondaryConnectionString = DefineProperty<string>("SecondaryConnectionString", ["secondaryConnectionString"], isOutput: true, isSecure: true);
     }
-
-    /// <summary>
-    /// Creates a new CommunicationServiceKeys resource from a Bicep expression
-    /// that evaluates to a CommunicationServiceKeys.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a CommunicationServiceKeys
-    /// resource.
-    /// </param>
-    /// <returns>A CommunicationServiceKeys resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static CommunicationServiceKeys FromExpression(BicepExpression expression)
-    {
-        CommunicationServiceKeys resource = new();
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
 }

@@ -635,8 +635,6 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<string> SharedKey { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.StorageSshPublicKey> SshAuthorizedKeys { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.Storage.LocalUserKeys FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
     }
     public partial class ManagementPolicyAction : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -993,8 +991,6 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountKeyPermission> Permissions { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.Storage.StorageAccountKey FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
     }
     public partial class StorageAccountKeyCreationTime : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

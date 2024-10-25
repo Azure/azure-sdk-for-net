@@ -350,22 +350,6 @@ public partial class ResourceGroup : ProvisionableResource
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
-    /// Creates a new ResourceGroup resource from a Bicep expression that
-    /// evaluates to a ResourceGroup.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a ResourceGroup resource.
-    /// </param>
-    /// <returns>A ResourceGroup resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static ResourceGroup FromExpression(BicepExpression expression)
-    {
-        ResourceGroup resource = new(nameof(ResourceGroup));
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
-
-    /// <summary>
     /// Get the requirements for naming this ResourceGroup resource.
     /// </summary>
     /// <returns>Naming requirements.</returns>

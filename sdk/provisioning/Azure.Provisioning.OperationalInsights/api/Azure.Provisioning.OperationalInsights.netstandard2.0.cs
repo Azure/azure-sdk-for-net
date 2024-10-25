@@ -582,8 +582,6 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<string> PrimarySharedKey { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecondarySharedKey { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceSharedKeys FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
     }
     public partial class OperationalInsightsWorkspaceSku : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

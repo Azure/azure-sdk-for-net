@@ -154,7 +154,10 @@ public partial class ServiceBusQueueAuthorizationRule : ProvisionableResource
     /// Get access keys for this ServiceBusQueueAuthorizationRule resource.
     /// </summary>
     /// <returns>The keys for this ServiceBusQueueAuthorizationRule resource.</returns>
-    public ServiceBusAccessKeys GetKeys() =>
-        ServiceBusAccessKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
+    public ServiceBusAccessKeys GetKeys()
+    {
+        ServiceBusAccessKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 }

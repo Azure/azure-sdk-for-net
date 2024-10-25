@@ -262,20 +262,4 @@ public partial class Tenant : ProvisionableResource
         /// </summary>
         public static readonly string V2015_01_01 = "2015-01-01";
     }
-
-    /// <summary>
-    /// Creates a new Tenant resource from a Bicep expression that evaluates to
-    /// a Tenant.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a Tenant resource.
-    /// </param>
-    /// <returns>A Tenant resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static Tenant FromExpression(BicepExpression expression)
-    {
-        Tenant resource = new(nameof(Tenant));
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
 }
