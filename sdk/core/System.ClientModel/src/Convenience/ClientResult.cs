@@ -3,6 +3,7 @@
 
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
+using System.ClientModel.Primitives.TwoWayPipeline;
 
 namespace System.ClientModel;
 
@@ -48,11 +49,12 @@ public class ClientResult
         throw new NotSupportedException();
 
     /// <summary>
-    /// Gets the <see cref="PipelineResponse"/> received from the service.
+    /// TBD
     /// </summary>
-    /// <returns>The <see cref="PipelineResponse"/> received from the service.
-    /// </returns>
-    public ServiceMessage GetServiceResponse() => _response;
+    /// <returns></returns>
+    /// <exception cref="NotSupportedException"></exception>
+    public WebSocketServiceMessage GetWebSocketResponse() => _response as WebSocketServiceMessage ??
+        throw new NotSupportedException();
 
     #region Factory methods for ClientResult and subtypes
 

@@ -32,7 +32,7 @@ namespace System.ClientModel
         public static System.ClientModel.ClientResult FromResponse(System.ClientModel.Primitives.ServiceMessage response) { throw null; }
         public static System.ClientModel.ClientResult<T> FromValue<T>(T value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public System.ClientModel.Primitives.PipelineResponse GetRawResponse() { throw null; }
-        public System.ClientModel.Primitives.ServiceMessage GetServiceResponse() { throw null; }
+        public System.ClientModel.Primitives.TwoWayPipeline.WebSocketServiceMessage GetWebSocketResponse() { throw null; }
     }
     public partial class ClientResultException : System.Exception
     {
@@ -372,6 +372,27 @@ namespace System.ClientModel.Primitives.TwoWayPipeline
         protected abstract void ProcessCore(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage serviceMessage);
         protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineClientMessage clientMessage);
         protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage serviceMessage);
+    }
+    public partial class TwoWayResult
+    {
+        protected TwoWayResult(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage response) { }
+        public static System.ClientModel.Primitives.TwoWayPipeline.TwoWayResult FromResponse(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage response) { throw null; }
+        public static System.ClientModel.Primitives.TwoWayPipeline.TwoWayResult<T> FromValue<T>(T value, System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage response) { throw null; }
+        public System.ClientModel.Primitives.TwoWayPipeline.WebSocketServiceMessage GetWebSocketResponse() { throw null; }
+    }
+    public partial class TwoWayResult<T> : System.ClientModel.Primitives.TwoWayPipeline.TwoWayResult
+    {
+        protected internal TwoWayResult(T value, System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage response) : base (default(System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage)) { }
+        public T Value { get { throw null; } }
+        public static implicit operator T (System.ClientModel.Primitives.TwoWayPipeline.TwoWayResult<T> result) { throw null; }
+    }
+    public abstract partial class WebSocketClientMessage : System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineClientMessage
+    {
+        protected WebSocketClientMessage() { }
+    }
+    public abstract partial class WebSocketServiceMessage : System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineServiceMessage
+    {
+        protected WebSocketServiceMessage() { }
     }
     public partial class WebSocketTwoWayPipelineTransport : System.ClientModel.Primitives.TwoWayPipeline.TwoWayPipelineTransport, System.IAsyncDisposable, System.IDisposable
     {

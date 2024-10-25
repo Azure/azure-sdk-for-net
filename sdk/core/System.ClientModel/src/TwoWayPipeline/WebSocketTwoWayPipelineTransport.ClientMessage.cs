@@ -12,7 +12,7 @@ namespace System.ClientModel.Primitives.TwoWayPipeline;
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public partial class WebSocketTwoWayPipelineTransport
 {
-    private sealed class WebSocketTransportClientMessage : TwoWayPipelineClientMessage
+    private sealed class WebSocketTransportClientMessage : WebSocketClientMessage
     {
         protected override BinaryContent? ContentCore
         {

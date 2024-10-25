@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ClientModel.Internal;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 namespace System.ClientModel.Primitives.TwoWayPipeline;
