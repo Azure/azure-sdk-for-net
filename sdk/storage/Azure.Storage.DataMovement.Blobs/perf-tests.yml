@@ -9,6 +9,7 @@ Tests:
 - Test: download
   Class: DownloadDirectory
   Arguments: &sizes
+  - --size 100
   - --size 1024 --count 10000 --duration 60
   - --size 10485760 --count 1000 --duration 60
   - --size 1073741824 --count 10 --duration 120
