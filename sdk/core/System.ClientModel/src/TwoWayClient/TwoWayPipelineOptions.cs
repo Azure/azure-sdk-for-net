@@ -1,13 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Internal;
-using System.Threading;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives.TwoWayCommunication;
+namespace System.ClientModel.Primitives.TwoWayClient;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public abstract class WebSocketClientMessage : TwoWayPipelineClientMessage
+public class TwoWayPipelineOptions
 {
 }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

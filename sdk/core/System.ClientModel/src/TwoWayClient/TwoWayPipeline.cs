@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives.TwoWayCommunication;
+namespace System.ClientModel.Primitives.TwoWayClient;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public sealed class TwoWayPipeline
+public sealed class TwoWayPipeline : IDisposable, IAsyncDisposable
 {
     private readonly ReadOnlyMemory<TwoWayPipelinePolicy> _policies;
+
+    private bool _disposed;
 
     private TwoWayPipeline(ReadOnlyMemory<TwoWayPipelinePolicy> policies)
     {
@@ -54,6 +56,36 @@ public sealed class TwoWayPipeline
     }
 
     public IAsyncEnumerable<TwoWayPipelineServiceMessage> GetResponseStreamAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    // TODO: I believe we need these as a way to dispose the transport
+    // as sessions that use these pipelines come in and out of existence.
+    // TODO: validate hypotheses about WebSocket life-cycle
+    private void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                // TODO: dispose managed state (managed objects)
+            }
+
+            // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+            // TODO: set large fields to null
+            _disposed = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
+
+    public ValueTask DisposeAsync()
     {
         throw new NotImplementedException();
     }
