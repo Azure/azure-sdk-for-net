@@ -151,7 +151,10 @@ BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool001", "standard_
             },
             Caching = CachingType.ReadWrite,
             DiskSizeGB = 100,
-            ManagedDisk = new ManagedDisk(StorageAccountType.StandardSSDLRS),
+            ManagedDisk = new ManagedDisk
+            {
+                StorageAccountType = StorageAccountType.StandardSSDLRS,
+            },
         },
     },
     ResizeTimeout = XmlConvert.ToTimeSpan("PT15M"),
@@ -427,7 +430,10 @@ BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool001", "standard_
             },
             Caching = CachingType.ReadWrite,
             DiskSizeGB = 100,
-            ManagedDisk = new ManagedDisk(StorageAccountType.StandardSSDLRS),
+            ManagedDisk = new ManagedDisk
+            {
+                StorageAccountType = StorageAccountType.StandardSSDLRS,
+            },
         },
     },
     ResizeTimeout = XmlConvert.ToTimeSpan("PT15M"),
@@ -2109,7 +2115,7 @@ Response response = client.RemoveNodes("poolId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeleteJobAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="DeleteJobAsync(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call DeleteJobAsync.
 <code><![CDATA[
@@ -2122,7 +2128,7 @@ Response response = await client.DeleteJobAsync("jobId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeleteJob(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="DeleteJob(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call DeleteJob.
 <code><![CDATA[
@@ -2419,7 +2425,7 @@ Response response = client.EnableJob("jobId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="TerminateJobAsync(string,BatchJobTerminateContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
+    <member name="TerminateJobAsync(string,BatchJobTerminateContent,int?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call TerminateJobAsync.
 <code><![CDATA[
@@ -2430,7 +2436,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response response = await client.TerminateJobAsync("jobId");
 ]]></code></example>
     </member>
-    <member name="TerminateJob(string,BatchJobTerminateContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
+    <member name="TerminateJob(string,BatchJobTerminateContent,int?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call TerminateJob.
 <code><![CDATA[
@@ -2441,7 +2447,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response response = client.TerminateJob("jobId");
 ]]></code></example>
     </member>
-    <member name="TerminateJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="TerminateJobAsync(string,RequestContent,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call TerminateJobAsync.
 <code><![CDATA[
@@ -2455,7 +2461,7 @@ Response response = await client.TerminateJobAsync("jobId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="TerminateJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="TerminateJob(string,RequestContent,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call TerminateJob.
 <code><![CDATA[
@@ -2497,7 +2503,7 @@ BatchJobCreateContent job = new BatchJobCreateContent("jobId", new BatchPoolInfo
     AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
     {
         AutoPoolIdPrefix = "mypool",
-        Pool = new BatchPoolSpecification("Standard_D1_v2")
+        Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
         {
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
@@ -2505,7 +2511,17 @@ BatchJobCreateContent job = new BatchJobCreateContent("jobId", new BatchPoolInfo
                 Offer = "WindowsServer",
                 Sku = "2016-datacenter-smalldisk",
                 Version = "latest",
-            }, "batch.node.windows amd64"),
+            }, "batch.node.windows amd64")
+            {
+                WindowsConfiguration = new WindowsConfiguration
+                {
+                    EnableAutomaticUpdates = false,
+                },
+                NodePlacementConfiguration = new BatchNodePlacementConfiguration
+                {
+                    Policy = BatchNodePlacementPolicyType.Zonal,
+                },
+            },
             TaskSlotsPerNode = 2,
             TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
             ResizeTimeout = XmlConvert.ToTimeSpan("PT15M"),
@@ -2613,7 +2629,7 @@ BatchJobCreateContent job = new BatchJobCreateContent("jobId", new BatchPoolInfo
     AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
     {
         AutoPoolIdPrefix = "mypool",
-        Pool = new BatchPoolSpecification("Standard_D1_v2")
+        Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
         {
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
@@ -2621,7 +2637,17 @@ BatchJobCreateContent job = new BatchJobCreateContent("jobId", new BatchPoolInfo
                 Offer = "WindowsServer",
                 Sku = "2016-datacenter-smalldisk",
                 Version = "latest",
-            }, "batch.node.windows amd64"),
+            }, "batch.node.windows amd64")
+            {
+                WindowsConfiguration = new WindowsConfiguration
+                {
+                    EnableAutomaticUpdates = false,
+                },
+                NodePlacementConfiguration = new BatchNodePlacementConfiguration
+                {
+                    Policy = BatchNodePlacementPolicyType.Zonal,
+                },
+            },
             TaskSlotsPerNode = 2,
             TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
             ResizeTimeout = XmlConvert.ToTimeSpan("PT15M"),
@@ -2788,7 +2814,7 @@ using RequestContent content = RequestContent.Create(new
             poolLifetimeOption = "job",
             pool = new
             {
-                vmSize = "Standard_D1_v2",
+                vmSize = "STANDARD_D2S_V3",
                 virtualMachineConfiguration = new
                 {
                     imageReference = new
@@ -2799,6 +2825,14 @@ using RequestContent content = RequestContent.Create(new
                         version = "latest",
                     },
                     nodeAgentSKUId = "batch.node.windows amd64",
+                    windowsConfiguration = new
+                    {
+                        enableAutomaticUpdates = false,
+                    },
+                    nodePlacementConfiguration = new
+                    {
+                        policy = "zonal",
+                    },
                 },
                 resizeTimeout = "PT15M",
                 targetDedicatedNodes = 3,
@@ -2953,7 +2987,7 @@ using RequestContent content = RequestContent.Create(new
             poolLifetimeOption = "job",
             pool = new
             {
-                vmSize = "Standard_D1_v2",
+                vmSize = "STANDARD_D2S_V3",
                 virtualMachineConfiguration = new
                 {
                     imageReference = new
@@ -2964,6 +2998,14 @@ using RequestContent content = RequestContent.Create(new
                         version = "latest",
                     },
                     nodeAgentSKUId = "batch.node.windows amd64",
+                    windowsConfiguration = new
+                    {
+                        enableAutomaticUpdates = false,
+                    },
+                    nodePlacementConfiguration = new
+                    {
+                        policy = "zonal",
+                    },
                 },
                 resizeTimeout = "PT15M",
                 targetDedicatedNodes = 3,
@@ -3099,7 +3141,7 @@ Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("succeeded").
 Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("failed").ToString());
 ]]></code></example>
     </member>
-    <member name="DeleteJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="DeleteJobScheduleAsync(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call DeleteJobScheduleAsync.
 <code><![CDATA[
@@ -3112,7 +3154,7 @@ Response response = await client.DeleteJobScheduleAsync("jobScheduleId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeleteJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="DeleteJobSchedule(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call DeleteJobSchedule.
 <code><![CDATA[
@@ -3423,7 +3465,7 @@ Response response = client.EnableJobSchedule("jobScheduleId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="TerminateJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="TerminateJobScheduleAsync(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call TerminateJobScheduleAsync.
 <code><![CDATA[
@@ -3436,7 +3478,7 @@ Response response = await client.TerminateJobScheduleAsync("jobScheduleId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="TerminateJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="TerminateJobSchedule(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call TerminateJobSchedule.
 <code><![CDATA[
@@ -3483,7 +3525,7 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("j
     AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.JobSchedule)
     {
         AutoPoolIdPrefix = "mypool",
-        Pool = new BatchPoolSpecification("Standard_D1_v2")
+        Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
         {
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
@@ -3491,7 +3533,17 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("j
                 Offer = "WindowsServer",
                 Sku = "2016-datacenter-smalldisk",
                 Version = "latest",
-            }, "batch.node.windows amd64"),
+            }, "batch.node.windows amd64")
+            {
+                WindowsConfiguration = new WindowsConfiguration
+                {
+                    EnableAutomaticUpdates = false,
+                },
+                NodePlacementConfiguration = new BatchNodePlacementConfiguration
+                {
+                    Policy = BatchNodePlacementPolicyType.Zonal,
+                },
+            },
             TaskSlotsPerNode = 2,
             TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
             ResizeTimeout = XmlConvert.ToTimeSpan("PT15M"),
@@ -3607,7 +3659,7 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("j
     AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.JobSchedule)
     {
         AutoPoolIdPrefix = "mypool",
-        Pool = new BatchPoolSpecification("Standard_D1_v2")
+        Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
         {
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
@@ -3615,7 +3667,17 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("j
                 Offer = "WindowsServer",
                 Sku = "2016-datacenter-smalldisk",
                 Version = "latest",
-            }, "batch.node.windows amd64"),
+            }, "batch.node.windows amd64")
+            {
+                WindowsConfiguration = new WindowsConfiguration
+                {
+                    EnableAutomaticUpdates = false,
+                },
+                NodePlacementConfiguration = new BatchNodePlacementConfiguration
+                {
+                    Policy = BatchNodePlacementPolicyType.Zonal,
+                },
+            },
             TaskSlotsPerNode = 2,
             TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
             ResizeTimeout = XmlConvert.ToTimeSpan("PT15M"),
@@ -3799,7 +3861,7 @@ using RequestContent content = RequestContent.Create(new
                 poolLifetimeOption = "jobschedule",
                 pool = new
                 {
-                    vmSize = "Standard_D1_v2",
+                    vmSize = "STANDARD_D2S_V3",
                     virtualMachineConfiguration = new
                     {
                         imageReference = new
@@ -3810,6 +3872,14 @@ using RequestContent content = RequestContent.Create(new
                             version = "latest",
                         },
                         nodeAgentSKUId = "batch.node.windows amd64",
+                        windowsConfiguration = new
+                        {
+                            enableAutomaticUpdates = false,
+                        },
+                        nodePlacementConfiguration = new
+                        {
+                            policy = "zonal",
+                        },
                     },
                     resizeTimeout = "PT15M",
                     targetDedicatedNodes = 3,
@@ -3980,7 +4050,7 @@ using RequestContent content = RequestContent.Create(new
                 poolLifetimeOption = "jobschedule",
                 pool = new
                 {
-                    vmSize = "Standard_D1_v2",
+                    vmSize = "STANDARD_D2S_V3",
                     virtualMachineConfiguration = new
                     {
                         imageReference = new
@@ -3991,6 +4061,14 @@ using RequestContent content = RequestContent.Create(new
                             version = "latest",
                         },
                         nodeAgentSKUId = "batch.node.windows amd64",
+                        windowsConfiguration = new
+                        {
+                            enableAutomaticUpdates = false,
+                        },
+                        nodePlacementConfiguration = new
+                        {
+                            policy = "zonal",
+                        },
                     },
                     resizeTimeout = "PT15M",
                     targetDedicatedNodes = 3,
@@ -4099,6 +4177,64 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
+BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
+{
+    ContainerSettings = new BatchTaskContainerSettings("ubuntu")
+    {
+        ContainerHostBatchBindMounts = {new ContainerHostBatchBindMountEntry
+        {
+            Source = ContainerHostDataPath.Task,
+            IsReadOnly = true,
+        }},
+    },
+    UserIdentity = new UserIdentity
+    {
+        AutoUser = new AutoUserSpecification
+        {
+            Scope = AutoUserScope.Task,
+            ElevationLevel = ElevationLevel.NonAdmin,
+        },
+    },
+};
+Response response = await client.CreateTaskAsync("jobId", task);
+]]></code>
+This sample shows how to call CreateTaskAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
+{
+    ContainerSettings = new BatchTaskContainerSettings("ubuntu")
+    {
+        ContainerHostBatchBindMounts = {new ContainerHostBatchBindMountEntry
+        {
+            Source = ContainerHostDataPath.Task,
+            IsReadOnly = true,
+        }, new ContainerHostBatchBindMountEntry
+        {
+            Source = ContainerHostDataPath.Task,
+            IsReadOnly = true,
+        }},
+    },
+    UserIdentity = new UserIdentity
+    {
+        AutoUser = new AutoUserSpecification
+        {
+            Scope = AutoUserScope.Task,
+            ElevationLevel = ElevationLevel.NonAdmin,
+        },
+    },
+};
+Response response = await client.CreateTaskAsync("jobId", task);
+]]></code>
+This sample shows how to call CreateTaskAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
 BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "cmd /c exit 3")
 {
     ExitConditions = new ExitConditions
@@ -4154,6 +4290,64 @@ BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'ech
     ContainerSettings = new BatchTaskContainerSettings("ubuntu")
     {
         ContainerRunOptions = "--rm",
+    },
+    UserIdentity = new UserIdentity
+    {
+        AutoUser = new AutoUserSpecification
+        {
+            Scope = AutoUserScope.Task,
+            ElevationLevel = ElevationLevel.NonAdmin,
+        },
+    },
+};
+Response response = client.CreateTask("jobId", task);
+]]></code>
+This sample shows how to call CreateTask.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
+{
+    ContainerSettings = new BatchTaskContainerSettings("ubuntu")
+    {
+        ContainerHostBatchBindMounts = {new ContainerHostBatchBindMountEntry
+        {
+            Source = ContainerHostDataPath.Task,
+            IsReadOnly = true,
+        }},
+    },
+    UserIdentity = new UserIdentity
+    {
+        AutoUser = new AutoUserSpecification
+        {
+            Scope = AutoUserScope.Task,
+            ElevationLevel = ElevationLevel.NonAdmin,
+        },
+    },
+};
+Response response = client.CreateTask("jobId", task);
+]]></code>
+This sample shows how to call CreateTask.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
+{
+    ContainerSettings = new BatchTaskContainerSettings("ubuntu")
+    {
+        ContainerHostBatchBindMounts = {new ContainerHostBatchBindMountEntry
+        {
+            Source = ContainerHostDataPath.Task,
+            IsReadOnly = true,
+        }, new ContainerHostBatchBindMountEntry
+        {
+            Source = ContainerHostDataPath.Task,
+            IsReadOnly = true,
+        }},
     },
     UserIdentity = new UserIdentity
     {
@@ -4259,6 +4453,81 @@ BatchClient client = new BatchClient(endpoint, credential);
 using RequestContent content = RequestContent.Create(new
 {
     id = "taskId",
+    commandLine = "bash -c 'echo hello'",
+    containerSettings = new
+    {
+        imageName = "ubuntu",
+        containerHostBatchBindMounts = new object[]
+        {
+            new
+            {
+                source = "Task",
+                isReadOnly = true,
+            }
+        },
+    },
+    userIdentity = new
+    {
+        autoUser = new
+        {
+            scope = "task",
+            elevationLevel = "nonadmin",
+        },
+    },
+});
+Response response = await client.CreateTaskAsync("jobId", content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreateTaskAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = "taskId",
+    commandLine = "bash -c 'echo hello'",
+    containerSettings = new
+    {
+        imageName = "ubuntu",
+        containerHostBatchBindMounts = new object[]
+        {
+            new
+            {
+                source = "Task",
+                isReadOnly = true,
+            },
+            new
+            {
+                source = "Task",
+                isReadOnly = true,
+            }
+        },
+    },
+    userIdentity = new
+    {
+        autoUser = new
+        {
+            scope = "task",
+            elevationLevel = "nonadmin",
+        },
+    },
+});
+Response response = await client.CreateTaskAsync("jobId", content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreateTaskAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = "taskId",
     commandLine = "cmd /c exit 3",
     exitConditions = new
     {
@@ -4336,6 +4605,81 @@ using RequestContent content = RequestContent.Create(new
     {
         imageName = "ubuntu",
         containerRunOptions = "--rm",
+    },
+    userIdentity = new
+    {
+        autoUser = new
+        {
+            scope = "task",
+            elevationLevel = "nonadmin",
+        },
+    },
+});
+Response response = client.CreateTask("jobId", content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreateTask.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = "taskId",
+    commandLine = "bash -c 'echo hello'",
+    containerSettings = new
+    {
+        imageName = "ubuntu",
+        containerHostBatchBindMounts = new object[]
+        {
+            new
+            {
+                source = "Task",
+                isReadOnly = true,
+            }
+        },
+    },
+    userIdentity = new
+    {
+        autoUser = new
+        {
+            scope = "task",
+            elevationLevel = "nonadmin",
+        },
+    },
+});
+Response response = client.CreateTask("jobId", content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CreateTask.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = "taskId",
+    commandLine = "bash -c 'echo hello'",
+    containerSettings = new
+    {
+        imageName = "ubuntu",
+        containerHostBatchBindMounts = new object[]
+        {
+            new
+            {
+                source = "Task",
+                isReadOnly = true,
+            },
+            new
+            {
+                source = "Task",
+                isReadOnly = true,
+            }
+        },
     },
     userIdentity = new
     {
@@ -5281,6 +5625,132 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 using RequestContent content = null;
 Response response = client.RebootNode("poolId", "tvm-1695681911_1-20161122t193202z", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="StartNodeAsync(string,string,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call StartNodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.StartNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="StartNode(string,string,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call StartNode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.StartNode("poolId", "tvm-1695681911_1-20161122t193202z");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="ReimageNodeAsync(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)">
+      <example>
+This sample shows how to call ReimageNodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.ReimageNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z");
+]]></code></example>
+    </member>
+    <member name="ReimageNode(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)">
+      <example>
+This sample shows how to call ReimageNode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.ReimageNode("poolId", "tvm-1695681911_1-20161122t193202z");
+]]></code></example>
+    </member>
+    <member name="ReimageNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call ReimageNodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = await client.ReimageNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="ReimageNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call ReimageNode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = client.ReimageNode("poolId", "tvm-1695681911_1-20161122t193202z", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeallocateNodeAsync(string,string,BatchNodeDeallocateContent,int?,DateTimeOffset?,CancellationToken)">
+      <example>
+This sample shows how to call DeallocateNodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.DeallocateNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z");
+]]></code></example>
+    </member>
+    <member name="DeallocateNode(string,string,BatchNodeDeallocateContent,int?,DateTimeOffset?,CancellationToken)">
+      <example>
+This sample shows how to call DeallocateNode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.DeallocateNode("poolId", "tvm-1695681911_1-20161122t193202z");
+]]></code></example>
+    </member>
+    <member name="DeallocateNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call DeallocateNodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = await client.DeallocateNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeallocateNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call DeallocateNode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = client.DeallocateNode("poolId", "tvm-1695681911_1-20161122t193202z", content);
 
 Console.WriteLine(response.Status);
 ]]></code></example>

@@ -19,13 +19,21 @@ namespace Azure.Compute.Batch
 
         void IJsonModel<FileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FileProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(CreationTime))
             {
                 writer.WritePropertyName("creationTime"u8);
@@ -34,7 +42,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("lastModified"u8);
             writer.WriteStringValue(LastModified, "O");
             writer.WritePropertyName("contentLength"u8);
-            writer.WriteNumberValue(ContentLength);
+            writer.WriteStringValue(ContentLength);
             if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
@@ -60,7 +68,6 @@ namespace Azure.Compute.Batch
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FileProperties IJsonModel<FileProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -85,7 +92,7 @@ namespace Azure.Compute.Batch
             }
             DateTimeOffset? creationTime = default;
             DateTimeOffset lastModified = default;
-            long contentLength = default;
+            string contentLength = default;
             string contentType = default;
             string fileMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -108,7 +115,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("contentLength"u8))
                 {
-                    contentLength = property.Value.GetInt64();
+                    contentLength = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("contentType"u8))

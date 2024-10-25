@@ -61,8 +61,10 @@ namespace Azure.Compute.Batch
         /// <param name="version"> The version of the Azure Virtual Machines Marketplace Image. A value of 'latest' can be specified to select the latest version of an Image. If omitted, the default is 'latest'. </param>
         /// <param name="virtualMachineImageId"> The ARM resource identifier of the Azure Compute Gallery Image. Compute Nodes in the Pool will be created using this Image Id. This is of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{VersionId} or /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName} for always defaulting to the latest image version. This property is mutually exclusive with other ImageReference properties. The Azure Compute Gallery Image must have replicas in the same region and must be in the same subscription as the Azure Batch account. If the image version is not specified in the imageId, the latest version will be used. For information about the firewall settings for the Batch Compute Node agent to communicate with the Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration. </param>
         /// <param name="exactVersion"> The specific version of the platform image or marketplace image used to create the node. This read-only field differs from 'version' only if the value specified for 'version' when the pool was created was 'latest'. </param>
+        /// <param name="sharedGalleryImageId"> The shared gallery image unique identifier. This property is mutually exclusive with other properties and can be fetched from shared gallery image GET call. </param>
+        /// <param name="communityGalleryImageId"> The community gallery image unique identifier. This property is mutually exclusive with other properties and can be fetched from community gallery image GET call. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageReference(string publisher, string offer, string sku, string version, string virtualMachineImageId, string exactVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImageReference(string publisher, string offer, string sku, string version, string virtualMachineImageId, string exactVersion, string sharedGalleryImageId, string communityGalleryImageId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Publisher = publisher;
             Offer = offer;
@@ -70,6 +72,8 @@ namespace Azure.Compute.Batch
             Version = version;
             VirtualMachineImageId = virtualMachineImageId;
             ExactVersion = exactVersion;
+            SharedGalleryImageId = sharedGalleryImageId;
+            CommunityGalleryImageId = communityGalleryImageId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -85,5 +89,9 @@ namespace Azure.Compute.Batch
         public string VirtualMachineImageId { get; set; }
         /// <summary> The specific version of the platform image or marketplace image used to create the node. This read-only field differs from 'version' only if the value specified for 'version' when the pool was created was 'latest'. </summary>
         public string ExactVersion { get; }
+        /// <summary> The shared gallery image unique identifier. This property is mutually exclusive with other properties and can be fetched from shared gallery image GET call. </summary>
+        public string SharedGalleryImageId { get; set; }
+        /// <summary> The community gallery image unique identifier. This property is mutually exclusive with other properties and can be fetched from community gallery image GET call. </summary>
+        public string CommunityGalleryImageId { get; set; }
     }
 }
