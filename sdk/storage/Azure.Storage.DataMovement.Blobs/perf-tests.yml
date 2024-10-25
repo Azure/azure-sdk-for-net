@@ -1,6 +1,6 @@
 Service: storage-datamovement-blob
 
-Project: sdk\storage\Azure.Storage.DataMovement.Blobs\perf\Azure.Storage.DataMovement.Blobs.Perf\Azure.Storage.DataMovement.Blobs.Perf.csproj
+Project: sdk/storage/Azure.Storage.DataMovement.Blobs/perf/Azure.Storage.DataMovement.Blobs.Perf/Azure.Storage.DataMovement.Blobs.Perf.csproj
 
 PackageVersions:
 - Azure.Storage.DataMovement.Blobs: source
