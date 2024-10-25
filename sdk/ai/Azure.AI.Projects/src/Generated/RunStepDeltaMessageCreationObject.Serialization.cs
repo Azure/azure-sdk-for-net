@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
 namespace Azure.AI.Projects
 {
     public partial class RunStepDeltaMessageCreationObject : IUtf8JsonSerializable, IJsonModel<RunStepDeltaMessageCreationObject>
@@ -39,6 +40,25 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("message_id"u8);
                 writer.WriteStringValue(MessageId);
             }
+========
+namespace Azure.AI.Vision.Face
+{
+    internal partial class AddFaceFromUrlRequest : IUtf8JsonSerializable, IJsonModel<AddFaceFromUrlRequest>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddFaceFromUrlRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AddFaceFromUrlRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddFaceFromUrlRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AddFaceFromUrlRequest)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("url"u8);
+            writer.WriteStringValue(Uri.AbsoluteUri);
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/face/Azure.AI.Vision.Face/src/Generated/AddFaceFromUrlRequest.Serialization.cs
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -56,6 +76,7 @@ namespace Azure.AI.Projects
             }
         }
 
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
         RunStepDeltaMessageCreationObject IJsonModel<RunStepDeltaMessageCreationObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaMessageCreationObject>)this).GetFormatFromOptions(options) : options.Format;
@@ -69,6 +90,21 @@ namespace Azure.AI.Projects
         }
 
         internal static RunStepDeltaMessageCreationObject DeserializeRunStepDeltaMessageCreationObject(JsonElement element, ModelReaderWriterOptions options = null)
+========
+        AddFaceFromUrlRequest IJsonModel<AddFaceFromUrlRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddFaceFromUrlRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AddFaceFromUrlRequest)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAddFaceFromUrlRequest(document.RootElement, options);
+        }
+
+        internal static AddFaceFromUrlRequest DeserializeAddFaceFromUrlRequest(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/face/Azure.AI.Vision.Face/src/Generated/AddFaceFromUrlRequest.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -76,14 +112,24 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
             string messageId = default;
+========
+            Uri url = default;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/face/Azure.AI.Vision.Face/src/Generated/AddFaceFromUrlRequest.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
                 if (property.NameEquals("message_id"u8))
                 {
                     messageId = property.Value.GetString();
+========
+                if (property.NameEquals("url"u8))
+                {
+                    url = new Uri(property.Value.GetString());
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/face/Azure.AI.Vision.Face/src/Generated/AddFaceFromUrlRequest.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
@@ -92,18 +138,28 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
             return new RunStepDeltaMessageCreationObject(messageId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunStepDeltaMessageCreationObject>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaMessageCreationObject>)this).GetFormatFromOptions(options) : options.Format;
+========
+            return new AddFaceFromUrlRequest(url, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AddFaceFromUrlRequest>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddFaceFromUrlRequest>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/face/Azure.AI.Vision.Face/src/Generated/AddFaceFromUrlRequest.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
                     throw new FormatException($"The model {nameof(RunStepDeltaMessageCreationObject)} does not support writing '{options.Format}' format.");
             }
         }
@@ -111,12 +167,22 @@ namespace Azure.AI.Projects
         RunStepDeltaMessageCreationObject IPersistableModel<RunStepDeltaMessageCreationObject>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaMessageCreationObject>)this).GetFormatFromOptions(options) : options.Format;
+========
+                    throw new FormatException($"The model {nameof(AddFaceFromUrlRequest)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AddFaceFromUrlRequest IPersistableModel<AddFaceFromUrlRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AddFaceFromUrlRequest>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/face/Azure.AI.Vision.Face/src/Generated/AddFaceFromUrlRequest.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
                         return DeserializeRunStepDeltaMessageCreationObject(document.RootElement, options);
                     }
                 default:
@@ -132,6 +198,23 @@ namespace Azure.AI.Projects
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeRunStepDeltaMessageCreationObject(document.RootElement);
+========
+                        return DeserializeAddFaceFromUrlRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AddFaceFromUrlRequest)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AddFaceFromUrlRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AddFaceFromUrlRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAddFaceFromUrlRequest(document.RootElement);
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/face/Azure.AI.Vision.Face/src/Generated/AddFaceFromUrlRequest.Serialization.cs
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

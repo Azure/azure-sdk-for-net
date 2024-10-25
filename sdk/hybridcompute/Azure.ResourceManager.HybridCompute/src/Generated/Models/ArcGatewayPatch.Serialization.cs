@@ -11,13 +11,21 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.HybridCompute.Models
+namespace Azure.ResourceManager.DnsResolver.Models
 {
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcGatewayPatch.Serialization.cs
     public partial class ArcGatewayPatch : IUtf8JsonSerializable, IJsonModel<ArcGatewayPatch>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcGatewayPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArcGatewayPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+========
+    public partial class DnsResolverDomainListPatch : IUtf8JsonSerializable, IJsonModel<DnsResolverDomainListPatch>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsResolverDomainListPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DnsResolverDomainListPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/Models/DnsResolverDomainListPatch.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -26,30 +34,63 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcGatewayPatch.Serialization.cs
             var format = options.Format == "W" ? ((IPersistableModel<ArcGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArcGatewayPatch)} does not support writing '{format}' format.");
+========
+            var format = options.Format == "W" ? ((IPersistableModel<DnsResolverDomainListPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsResolverDomainListPatch)} does not support writing '{format}' format.");
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/Models/DnsResolverDomainListPatch.Serialization.cs
             }
 
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedFeatures))
+            if (Optional.IsCollectionDefined(Domains))
             {
-                writer.WritePropertyName("allowedFeatures"u8);
+                writer.WritePropertyName("domains"u8);
                 writer.WriteStartArray();
-                foreach (var item in AllowedFeatures)
+                foreach (var item in Domains)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcGatewayPatch.Serialization.cs
         ArcGatewayPatch IJsonModel<ArcGatewayPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArcGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -63,6 +104,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         internal static ArcGatewayPatch DeserializeArcGatewayPatch(JsonElement element, ModelReaderWriterOptions options = null)
+========
+        DnsResolverDomainListPatch IJsonModel<DnsResolverDomainListPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsResolverDomainListPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsResolverDomainListPatch)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsResolverDomainListPatch(document.RootElement, options);
+        }
+
+        internal static DnsResolverDomainListPatch DeserializeDnsResolverDomainListPatch(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/Models/DnsResolverDomainListPatch.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -71,7 +127,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            IList<string> allowedFeatures = default;
+            IList<string> domains = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +155,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("allowedFeatures"u8))
+                        if (property0.NameEquals("domains"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -110,7 +166,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 array.Add(item.GetString());
                             }
-                            allowedFeatures = array;
+                            domains = array;
                             continue;
                         }
                     }
@@ -122,18 +178,28 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcGatewayPatch.Serialization.cs
             return new ArcGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, allowedFeatures ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<ArcGatewayPatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArcGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
+========
+            return new DnsResolverDomainListPatch(tags ?? new ChangeTrackingDictionary<string, string>(), domains ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<DnsResolverDomainListPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsResolverDomainListPatch>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/Models/DnsResolverDomainListPatch.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcGatewayPatch.Serialization.cs
                     throw new FormatException($"The model {nameof(ArcGatewayPatch)} does not support writing '{options.Format}' format.");
             }
         }
@@ -141,12 +207,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
         ArcGatewayPatch IPersistableModel<ArcGatewayPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArcGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
+========
+                    throw new FormatException($"The model {nameof(DnsResolverDomainListPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DnsResolverDomainListPatch IPersistableModel<DnsResolverDomainListPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsResolverDomainListPatch>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/Models/DnsResolverDomainListPatch.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcGatewayPatch.Serialization.cs
                         return DeserializeArcGatewayPatch(document.RootElement, options);
                     }
                 default:
@@ -155,5 +231,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         string IPersistableModel<ArcGatewayPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+========
+                        return DeserializeDnsResolverDomainListPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DnsResolverDomainListPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DnsResolverDomainListPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/Models/DnsResolverDomainListPatch.Serialization.cs
     }
 }

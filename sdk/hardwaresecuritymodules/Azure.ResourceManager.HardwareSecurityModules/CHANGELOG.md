@@ -5,10 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Removed FipsApprovedMode Property from CloudHsmClusterProperties. 
 
 ## 1.0.0-beta.4 (2024-10-31)
 

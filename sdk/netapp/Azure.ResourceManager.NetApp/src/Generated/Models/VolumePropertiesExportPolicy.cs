@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Set of export policy rules. </summary>
+    /// <summary>
+    /// Set of export policy rules
+    /// Serialized Name: VolumePropertiesExportPolicy
+    /// </summary>
     internal partial class VolumePropertiesExportPolicy
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumePropertiesExportPolicy"/>. </summary>
-        /// <param name="rules"> Export policy rule. </param>
+        /// <param name="rules">
+        /// Export policy rule
+        /// Serialized Name: VolumePropertiesExportPolicy.rules
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VolumePropertiesExportPolicy(IList<NetAppVolumeExportPolicyRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Export policy rule. </summary>
+        /// <summary>
+        /// Export policy rule
+        /// Serialized Name: VolumePropertiesExportPolicy.rules
+        /// </summary>
         public IList<NetAppVolumeExportPolicyRule> Rules { get; }
     }
 }

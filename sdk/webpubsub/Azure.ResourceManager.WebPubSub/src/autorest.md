@@ -18,6 +18,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 enable-bicep-serialization: true
+use-write-core: true
 
 no-property-type-replacement: PrivateEndpoint
 

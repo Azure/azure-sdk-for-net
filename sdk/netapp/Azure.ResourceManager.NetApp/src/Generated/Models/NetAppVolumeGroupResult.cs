@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Volume group resource. </summary>
+    /// <summary>
+    /// Volume group resource
+    /// Serialized Name: VolumeGroup
+    /// </summary>
     public partial class NetAppVolumeGroupResult : ResourceData
     {
         /// <summary>
@@ -57,9 +60,18 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="groupMetaData"> Volume group details. </param>
+        /// <param name="location">
+        /// Resource location
+        /// Serialized Name: VolumeGroup.location
+        /// </param>
+        /// <param name="provisioningState">
+        /// Azure lifecycle management
+        /// Serialized Name: VolumeGroup.properties.provisioningState
+        /// </param>
+        /// <param name="groupMetaData">
+        /// Volume group details
+        /// Serialized Name: VolumeGroup.properties.groupMetaData
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeGroupResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string provisioningState, NetAppVolumeGroupMetadata groupMetaData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -69,11 +81,20 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource location. </summary>
+        /// <summary>
+        /// Resource location
+        /// Serialized Name: VolumeGroup.location
+        /// </summary>
         public AzureLocation? Location { get; }
-        /// <summary> Azure lifecycle management. </summary>
+        /// <summary>
+        /// Azure lifecycle management
+        /// Serialized Name: VolumeGroup.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
-        /// <summary> Volume group details. </summary>
+        /// <summary>
+        /// Volume group details
+        /// Serialized Name: VolumeGroup.properties.groupMetaData
+        /// </summary>
         public NetAppVolumeGroupMetadata GroupMetaData { get; }
     }
 }

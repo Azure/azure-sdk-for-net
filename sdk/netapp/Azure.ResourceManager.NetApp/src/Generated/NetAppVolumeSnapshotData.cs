@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.NetApp
     /// <summary>
     /// A class representing the NetAppVolumeSnapshot data model.
     /// Snapshot of a Volume
+    /// Serialized Name: Snapshot
     /// </summary>
     public partial class NetAppVolumeSnapshotData : ResourceData
     {
@@ -51,7 +52,10 @@ namespace Azure.ResourceManager.NetApp
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotData"/>. </summary>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="location">
+        /// Resource location
+        /// Serialized Name: Snapshot.location
+        /// </param>
         public NetAppVolumeSnapshotData(AzureLocation location)
         {
             Location = location;
@@ -62,10 +66,22 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="snapshotId"> UUID v4 used to identify the Snapshot. </param>
-        /// <param name="created"> The creation date of the snapshot. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="location">
+        /// Resource location
+        /// Serialized Name: Snapshot.location
+        /// </param>
+        /// <param name="snapshotId">
+        /// UUID v4 used to identify the Snapshot
+        /// Serialized Name: Snapshot.properties.snapshotId
+        /// </param>
+        /// <param name="created">
+        /// The creation date of the snapshot
+        /// Serialized Name: Snapshot.properties.created
+        /// </param>
+        /// <param name="provisioningState">
+        /// Azure lifecycle management
+        /// Serialized Name: Snapshot.properties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, string snapshotId, DateTimeOffset? created, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -81,13 +97,25 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
-        /// <summary> Resource location. </summary>
+        /// <summary>
+        /// Resource location
+        /// Serialized Name: Snapshot.location
+        /// </summary>
         public AzureLocation Location { get; set; }
-        /// <summary> UUID v4 used to identify the Snapshot. </summary>
+        /// <summary>
+        /// UUID v4 used to identify the Snapshot
+        /// Serialized Name: Snapshot.properties.snapshotId
+        /// </summary>
         public string SnapshotId { get; }
-        /// <summary> The creation date of the snapshot. </summary>
+        /// <summary>
+        /// The creation date of the snapshot
+        /// Serialized Name: Snapshot.properties.created
+        /// </summary>
         public DateTimeOffset? Created { get; }
-        /// <summary> Azure lifecycle management. </summary>
+        /// <summary>
+        /// Azure lifecycle management
+        /// Serialized Name: Snapshot.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
     }
 }

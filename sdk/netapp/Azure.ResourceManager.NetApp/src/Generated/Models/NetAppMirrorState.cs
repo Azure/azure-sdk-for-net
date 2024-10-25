@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> The status of the replication. </summary>
+    /// <summary>
+    /// The status of the replication
+    /// Serialized Name: MirrorState
+    /// </summary>
     public readonly partial struct NetAppMirrorState : IEquatable<NetAppMirrorState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string MirroredValue = "Mirrored";
         private const string BrokenValue = "Broken";
 
-        /// <summary> Uninitialized. </summary>
+        /// <summary>
+        /// Uninitialized
+        /// Serialized Name: MirrorState.Uninitialized
+        /// </summary>
         public static NetAppMirrorState Uninitialized { get; } = new NetAppMirrorState(UninitializedValue);
-        /// <summary> Mirrored. </summary>
+        /// <summary>
+        /// Mirrored
+        /// Serialized Name: MirrorState.Mirrored
+        /// </summary>
         public static NetAppMirrorState Mirrored { get; } = new NetAppMirrorState(MirroredValue);
-        /// <summary> Broken. </summary>
+        /// <summary>
+        /// Broken
+        /// Serialized Name: MirrorState.Broken
+        /// </summary>
         public static NetAppMirrorState Broken { get; } = new NetAppMirrorState(BrokenValue);
         /// <summary> Determines if two <see cref="NetAppMirrorState"/> values are the same. </summary>
         public static bool operator ==(NetAppMirrorState left, NetAppMirrorState right) => left.Equals(right);

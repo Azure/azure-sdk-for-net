@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/MessageContent.cs
 namespace Azure.AI.Projects
 {
     /// <summary>
@@ -16,6 +17,12 @@ namespace Azure.AI.Projects
     /// The available derived classes include <see cref="MessageImageFileContent"/> and <see cref="MessageTextContent"/>.
     /// </summary>
     public abstract partial class MessageContent
+========
+namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
+{
+    /// <summary> Properties for the service resource. </summary>
+    public partial class ConnectedClusterServiceProperties
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime/src/Generated/Models/ConnectedClusterServiceProperties.cs
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,8 +54,9 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/MessageContent.cs
         /// <summary> Initializes a new instance of <see cref="MessageContent"/>. </summary>
         protected MessageContent()
         {
@@ -58,12 +66,27 @@ namespace Azure.AI.Projects
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MessageContent(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+========
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterServiceProperties"/>. </summary>
+        public ConnectedClusterServiceProperties()
         {
-            Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterServiceProperties"/>. </summary>
+        /// <param name="rpObjectId"> The object id of the service principal of the RP provisioned in the tenant. </param>
+        /// <param name="provisioningState"> Resource provision state. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedClusterServiceProperties(Guid? rpObjectId, ContainerOrchestratorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime/src/Generated/Models/ConnectedClusterServiceProperties.cs
+        {
+            RpObjectId = rpObjectId;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The object type. </summary>
-        internal string Type { get; set; }
+        /// <summary> The object id of the service principal of the RP provisioned in the tenant. </summary>
+        public Guid? RpObjectId { get; }
+        /// <summary> Resource provision state. </summary>
+        public ContainerOrchestratorProvisioningState? ProvisioningState { get; }
     }
 }

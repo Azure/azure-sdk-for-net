@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Status of the Active Directory. </summary>
+    /// <summary>
+    /// Status of the Active Directory
+    /// Serialized Name: ActiveDirectoryStatus
+    /// </summary>
     public readonly partial struct NetAppAccountActiveDirectoryStatus : IEquatable<NetAppAccountActiveDirectoryStatus>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string ErrorValue = "Error";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> Active Directory created but not in use. </summary>
+        /// <summary>
+        /// Active Directory created but not in use
+        /// Serialized Name: ActiveDirectoryStatus.Created
+        /// </summary>
         public static NetAppAccountActiveDirectoryStatus Created { get; } = new NetAppAccountActiveDirectoryStatus(CreatedValue);
-        /// <summary> Active Directory in use by SMB Volume. </summary>
+        /// <summary>
+        /// Active Directory in use by SMB Volume
+        /// Serialized Name: ActiveDirectoryStatus.InUse
+        /// </summary>
         public static NetAppAccountActiveDirectoryStatus InUse { get; } = new NetAppAccountActiveDirectoryStatus(InUseValue);
-        /// <summary> Active Directory Deleted. </summary>
+        /// <summary>
+        /// Active Directory Deleted
+        /// Serialized Name: ActiveDirectoryStatus.Deleted
+        /// </summary>
         public static NetAppAccountActiveDirectoryStatus Deleted { get; } = new NetAppAccountActiveDirectoryStatus(DeletedValue);
-        /// <summary> Error with the Active Directory. </summary>
+        /// <summary>
+        /// Error with the Active Directory
+        /// Serialized Name: ActiveDirectoryStatus.Error
+        /// </summary>
         public static NetAppAccountActiveDirectoryStatus Error { get; } = new NetAppAccountActiveDirectoryStatus(ErrorValue);
-        /// <summary> Active Directory Updating. </summary>
+        /// <summary>
+        /// Active Directory Updating
+        /// Serialized Name: ActiveDirectoryStatus.Updating
+        /// </summary>
         public static NetAppAccountActiveDirectoryStatus Updating { get; } = new NetAppAccountActiveDirectoryStatus(UpdatingValue);
         /// <summary> Determines if two <see cref="NetAppAccountActiveDirectoryStatus"/> values are the same. </summary>
         public static bool operator ==(NetAppAccountActiveDirectoryStatus left, NetAppAccountActiveDirectoryStatus right) => left.Equals(right);

@@ -12,12 +12,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.HybridCompute.Models;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.DnsResolver.Models;
 
-namespace Azure.ResourceManager.HybridCompute
+namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
     /// A Class representing an ArcGateway along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ArcGatewayResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetArcGatewayResource method.
@@ -26,22 +26,40 @@ namespace Azure.ResourceManager.HybridCompute
     public partial class ArcGatewayResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ArcGatewayResource"/> instance. </summary>
+========
+    /// A Class representing a DnsSecurityRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DnsSecurityRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDnsSecurityRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsResolverPolicyResource"/> using the GetDnsSecurityRule method.
+    /// </summary>
+    public partial class DnsSecurityRuleResource : ArmResource
+    {
+        /// <summary> Generate the resource identifier of a <see cref="DnsSecurityRuleResource"/> instance. </summary>
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="gatewayName"> The gatewayName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string gatewayName)
+        /// <param name="dnsResolverPolicyName"> The dnsResolverPolicyName. </param>
+        /// <param name="dnsSecurityRuleName"> The dnsSecurityRuleName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dnsResolverPolicyName, string dnsSecurityRuleName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/dnsSecurityRules/{dnsSecurityRuleName}";
             return new ResourceIdentifier(resourceId);
         }
 
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         private readonly ClientDiagnostics _arcGatewayGatewaysClientDiagnostics;
         private readonly GatewaysRestOperations _arcGatewayGatewaysRestClient;
         private readonly ArcGatewayData _data;
+========
+        private readonly ClientDiagnostics _dnsSecurityRuleClientDiagnostics;
+        private readonly DnsSecurityRulesRestOperations _dnsSecurityRuleRestClient;
+        private readonly DnsSecurityRuleData _data;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/gateways";
+        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsResolverPolicies/dnsSecurityRules";
 
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         /// <summary> Initializes a new instance of the <see cref="ArcGatewayResource"/> class for mocking. </summary>
         protected ArcGatewayResource()
         {
@@ -51,11 +69,23 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ArcGatewayResource(ArmClient client, ArcGatewayData data) : this(client, data.Id)
+========
+        /// <summary> Initializes a new instance of the <see cref="DnsSecurityRuleResource"/> class for mocking. </summary>
+        protected DnsSecurityRuleResource()
+        {
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="DnsSecurityRuleResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal DnsSecurityRuleResource(ArmClient client, DnsSecurityRuleData data) : this(client, data.Id)
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         {
             HasData = true;
             _data = data;
         }
 
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         /// <summary> Initializes a new instance of the <see cref="ArcGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
@@ -64,6 +94,16 @@ namespace Azure.ResourceManager.HybridCompute
             _arcGatewayGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string arcGatewayGatewaysApiVersion);
             _arcGatewayGatewaysRestClient = new GatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, arcGatewayGatewaysApiVersion);
+========
+        /// <summary> Initializes a new instance of the <see cref="DnsSecurityRuleResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal DnsSecurityRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+            _dnsSecurityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dnsSecurityRuleApiVersion);
+            _dnsSecurityRuleRestClient = new DnsSecurityRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsSecurityRuleApiVersion);
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +114,11 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         public virtual ArcGatewayData Data
+========
+        public virtual DnsSecurityRuleData Data
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         {
             get
             {
@@ -91,27 +135,36 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Retrieves information about the view of a gateway.
+        /// Gets properties of a DNS security rule for a DNS resolver policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/dnsSecurityRules/{dnsSecurityRuleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Gateways_Get</description>
+        /// <description>DnsSecurityRules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         /// <description>2024-07-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
         /// <description><see cref="ArcGatewayResource"/></description>
+========
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsSecurityRuleResource"/></description>
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         public virtual async Task<Response<ArcGatewayResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayResource.Get");
@@ -122,6 +175,18 @@ namespace Azure.ResourceManager.HybridCompute
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ArcGatewayResource(Client, response.Value), response.GetRawResponse());
+========
+        public virtual async Task<Response<DnsSecurityRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _dnsSecurityRuleClientDiagnostics.CreateScope("DnsSecurityRuleResource.Get");
+            scope.Start();
+            try
+            {
+                var response = await _dnsSecurityRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DnsSecurityRuleResource(Client, response.Value), response.GetRawResponse());
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
             }
             catch (Exception e)
             {
@@ -131,27 +196,36 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Retrieves information about the view of a gateway.
+        /// Gets properties of a DNS security rule for a DNS resolver policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/dnsSecurityRules/{dnsSecurityRuleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Gateways_Get</description>
+        /// <description>DnsSecurityRules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         /// <description>2024-07-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
         /// <description><see cref="ArcGatewayResource"/></description>
+========
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsSecurityRuleResource"/></description>
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         public virtual Response<ArcGatewayResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayResource.Get");
@@ -162,6 +236,18 @@ namespace Azure.ResourceManager.HybridCompute
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ArcGatewayResource(Client, response.Value), response.GetRawResponse());
+========
+        public virtual Response<DnsSecurityRuleResource> Get(CancellationToken cancellationToken = default)
+        {
+            using var scope = _dnsSecurityRuleClientDiagnostics.CreateScope("DnsSecurityRuleResource.Get");
+            scope.Start();
+            try
+            {
+                var response = _dnsSecurityRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DnsSecurityRuleResource(Client, response.Value), response.GetRawResponse());
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
             }
             catch (Exception e)
             {
@@ -171,36 +257,54 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// The operation to delete a gateway.
+        /// Deletes a DNS security rule for a DNS resolver policy. WARNING: This operation cannot be undone.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/dnsSecurityRules/{dnsSecurityRuleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Gateways_Delete</description>
+        /// <description>DnsSecurityRules_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         /// <description>2024-07-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
         /// <description><see cref="ArcGatewayResource"/></description>
+========
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsSecurityRuleResource"/></description>
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
             using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayResource.Delete");
             scope.Start();
             try
             {
                 var response = await _arcGatewayGatewaysRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new HybridComputeArmOperation(_arcGatewayGatewaysClientDiagnostics, Pipeline, _arcGatewayGatewaysRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+========
+            using var scope = _dnsSecurityRuleClientDiagnostics.CreateScope("DnsSecurityRuleResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _dnsSecurityRuleRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsResolverArmOperation(_dnsSecurityRuleClientDiagnostics, Pipeline, _dnsSecurityRuleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -213,36 +317,54 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// The operation to delete a gateway.
+        /// Deletes a DNS security rule for a DNS resolver policy. WARNING: This operation cannot be undone.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/dnsSecurityRules/{dnsSecurityRuleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Gateways_Delete</description>
+        /// <description>DnsSecurityRules_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         /// <description>2024-07-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
         /// <description><see cref="ArcGatewayResource"/></description>
+========
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsSecurityRuleResource"/></description>
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
             using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayResource.Delete");
             scope.Start();
             try
             {
                 var response = _arcGatewayGatewaysRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new HybridComputeArmOperation(_arcGatewayGatewaysClientDiagnostics, Pipeline, _arcGatewayGatewaysRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+========
+            using var scope = _dnsSecurityRuleClientDiagnostics.CreateScope("DnsSecurityRuleResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = _dnsSecurityRuleRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
+                var operation = new DnsResolverArmOperation(_dnsSecurityRuleClientDiagnostics, Pipeline, _dnsSecurityRuleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -255,29 +377,40 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// The operation to update a gateway.
+        /// Updates a DNS security rule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/dnsSecurityRules/{dnsSecurityRuleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Gateways_Update</description>
+        /// <description>DnsSecurityRules_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         /// <description>2024-07-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
         /// <description><see cref="ArcGatewayResource"/></description>
+========
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsSecurityRuleResource"/></description>
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Parameters supplied to the Update gateway operation. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Parameters supplied to the Update operation. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         public virtual async Task<Response<ArcGatewayResource>> UpdateAsync(ArcGatewayPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -288,6 +421,21 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 var response = await _arcGatewayGatewaysRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ArcGatewayResource(Client, response.Value), response.GetRawResponse());
+========
+        public virtual async Task<ArmOperation<DnsSecurityRuleResource>> UpdateAsync(WaitUntil waitUntil, DnsSecurityRulePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _dnsSecurityRuleClientDiagnostics.CreateScope("DnsSecurityRuleResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _dnsSecurityRuleRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsResolverArmOperation<DnsSecurityRuleResource>(new DnsSecurityRuleOperationSource(Client), _dnsSecurityRuleClientDiagnostics, Pipeline, _dnsSecurityRuleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
             }
             catch (Exception e)
             {
@@ -297,29 +445,40 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// The operation to update a gateway.
+        /// Updates a DNS security rule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/dnsSecurityRules/{dnsSecurityRuleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Gateways_Update</description>
+        /// <description>DnsSecurityRules_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         /// <description>2024-07-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
         /// <description><see cref="ArcGatewayResource"/></description>
+========
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsSecurityRuleResource"/></description>
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Parameters supplied to the Update gateway operation. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Parameters supplied to the Update operation. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         public virtual Response<ArcGatewayResource> Update(ArcGatewayPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -330,6 +489,21 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 var response = _arcGatewayGatewaysRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new ArcGatewayResource(Client, response.Value), response.GetRawResponse());
+========
+        public virtual ArmOperation<DnsSecurityRuleResource> Update(WaitUntil waitUntil, DnsSecurityRulePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _dnsSecurityRuleClientDiagnostics.CreateScope("DnsSecurityRuleResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _dnsSecurityRuleRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, cancellationToken);
+                var operation = new DnsResolverArmOperation<DnsSecurityRuleResource>(new DnsSecurityRuleOperationSource(Client), _dnsSecurityRuleClientDiagnostics, Pipeline, _dnsSecurityRuleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
             }
             catch (Exception e)
             {
@@ -343,19 +517,27 @@ namespace Azure.ResourceManager.HybridCompute
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/dnsSecurityRules/{dnsSecurityRuleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Gateways_Get</description>
+        /// <description>DnsSecurityRules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         /// <description>2024-07-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
         /// <description><see cref="ArcGatewayResource"/></description>
+========
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsSecurityRuleResource"/></description>
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         /// </item>
         /// </list>
         /// </summary>
@@ -363,12 +545,20 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         public virtual async Task<Response<ArcGatewayResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+========
+        public virtual async Task<Response<DnsSecurityRuleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
             using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayResource.AddTag");
+========
+            using var scope = _dnsSecurityRuleClientDiagnostics.CreateScope("DnsSecurityRuleResource.AddTag");
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
             scope.Start();
             try
             {
@@ -377,20 +567,29 @@ namespace Azure.ResourceManager.HybridCompute
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
                     var originalResponse = await _arcGatewayGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new ArcGatewayResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+========
+                    var originalResponse = await _dnsSecurityRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new DnsSecurityRuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
                     var patch = new ArcGatewayPatch();
+========
+                    var patch = new DnsSecurityRulePatch();
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -405,19 +604,27 @@ namespace Azure.ResourceManager.HybridCompute
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/dnsSecurityRules/{dnsSecurityRuleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Gateways_Get</description>
+        /// <description>DnsSecurityRules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         /// <description>2024-07-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
         /// <description><see cref="ArcGatewayResource"/></description>
+========
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsSecurityRuleResource"/></description>
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         /// </item>
         /// </list>
         /// </summary>
@@ -425,12 +632,20 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         public virtual Response<ArcGatewayResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+========
+        public virtual Response<DnsSecurityRuleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
             using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayResource.AddTag");
+========
+            using var scope = _dnsSecurityRuleClientDiagnostics.CreateScope("DnsSecurityRuleResource.AddTag");
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
             scope.Start();
             try
             {
@@ -439,20 +654,29 @@ namespace Azure.ResourceManager.HybridCompute
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
                     var originalResponse = _arcGatewayGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new ArcGatewayResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+========
+                    var originalResponse = _dnsSecurityRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new DnsSecurityRuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
                     var patch = new ArcGatewayPatch();
+========
+                    var patch = new DnsSecurityRulePatch();
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -467,30 +691,46 @@ namespace Azure.ResourceManager.HybridCompute
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/dnsSecurityRules/{dnsSecurityRuleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Gateways_Get</description>
+        /// <description>DnsSecurityRules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         /// <description>2024-07-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
         /// <description><see cref="ArcGatewayResource"/></description>
+========
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsSecurityRuleResource"/></description>
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         public virtual async Task<Response<ArcGatewayResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayResource.SetTags");
+========
+        public virtual async Task<Response<DnsSecurityRuleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using var scope = _dnsSecurityRuleClientDiagnostics.CreateScope("DnsSecurityRuleResource.SetTags");
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
             scope.Start();
             try
             {
@@ -500,16 +740,25 @@ namespace Azure.ResourceManager.HybridCompute
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
                     var originalResponse = await _arcGatewayGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new ArcGatewayResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+========
+                    var originalResponse = await _dnsSecurityRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new DnsSecurityRuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
                     var patch = new ArcGatewayPatch();
+========
+                    var patch = new DnsSecurityRulePatch();
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -524,30 +773,46 @@ namespace Azure.ResourceManager.HybridCompute
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/dnsSecurityRules/{dnsSecurityRuleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Gateways_Get</description>
+        /// <description>DnsSecurityRules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         /// <description>2024-07-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
         /// <description><see cref="ArcGatewayResource"/></description>
+========
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsSecurityRuleResource"/></description>
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         public virtual Response<ArcGatewayResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayResource.SetTags");
+========
+        public virtual Response<DnsSecurityRuleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using var scope = _dnsSecurityRuleClientDiagnostics.CreateScope("DnsSecurityRuleResource.SetTags");
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
             scope.Start();
             try
             {
@@ -557,16 +822,25 @@ namespace Azure.ResourceManager.HybridCompute
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
                     var originalResponse = _arcGatewayGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new ArcGatewayResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+========
+                    var originalResponse = _dnsSecurityRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new DnsSecurityRuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
                     var patch = new ArcGatewayPatch();
+========
+                    var patch = new DnsSecurityRulePatch();
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -581,30 +855,46 @@ namespace Azure.ResourceManager.HybridCompute
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/dnsSecurityRules/{dnsSecurityRuleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Gateways_Get</description>
+        /// <description>DnsSecurityRules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         /// <description>2024-07-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
         /// <description><see cref="ArcGatewayResource"/></description>
+========
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsSecurityRuleResource"/></description>
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         public virtual async Task<Response<ArcGatewayResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayResource.RemoveTag");
+========
+        public virtual async Task<Response<DnsSecurityRuleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using var scope = _dnsSecurityRuleClientDiagnostics.CreateScope("DnsSecurityRuleResource.RemoveTag");
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
             scope.Start();
             try
             {
@@ -613,20 +903,29 @@ namespace Azure.ResourceManager.HybridCompute
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
                     var originalResponse = await _arcGatewayGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new ArcGatewayResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+========
+                    var originalResponse = await _dnsSecurityRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new DnsSecurityRuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
                     var patch = new ArcGatewayPatch();
+========
+                    var patch = new DnsSecurityRulePatch();
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -641,30 +940,46 @@ namespace Azure.ResourceManager.HybridCompute
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/dnsSecurityRules/{dnsSecurityRuleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Gateways_Get</description>
+        /// <description>DnsSecurityRules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         /// <description>2024-07-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
         /// <description><see cref="ArcGatewayResource"/></description>
+========
+        /// <description>2023-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsSecurityRuleResource"/></description>
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
         public virtual Response<ArcGatewayResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _arcGatewayGatewaysClientDiagnostics.CreateScope("ArcGatewayResource.RemoveTag");
+========
+        public virtual Response<DnsSecurityRuleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using var scope = _dnsSecurityRuleClientDiagnostics.CreateScope("DnsSecurityRuleResource.RemoveTag");
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
             scope.Start();
             try
             {
@@ -673,20 +988,29 @@ namespace Azure.ResourceManager.HybridCompute
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
                     var originalResponse = _arcGatewayGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new ArcGatewayResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+========
+                    var originalResponse = _dnsSecurityRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new DnsSecurityRuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/ArcGatewayResource.cs
                     var patch = new ArcGatewayPatch();
+========
+                    var patch = new DnsSecurityRulePatch();
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/dnsresolver/Azure.ResourceManager.DnsResolver/src/Generated/DnsSecurityRuleResource.cs
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

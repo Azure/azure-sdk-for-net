@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRecognitionEvaluationResult.Serialization.cs
 namespace Azure.AI.Language.Text.Authoring.Models
 {
     public partial class DocumentEntityRecognitionEvaluationResult : IUtf8JsonSerializable, IJsonModel<DocumentEntityRecognitionEvaluationResult>
@@ -41,6 +42,35 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+========
+namespace Azure.AI.Vision.Face
+{
+    internal partial class CreateRequest : IUtf8JsonSerializable, IJsonModel<CreateRequest>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CreateRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CreateRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CreateRequest)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(UserData))
+            {
+                writer.WritePropertyName("userData"u8);
+                writer.WriteStringValue(UserData);
+            }
+            if (Optional.IsDefined(RecognitionModel))
+            {
+                writer.WritePropertyName("recognitionModel"u8);
+                writer.WriteStringValue(RecognitionModel.Value.ToString());
+            }
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/face/Azure.AI.Vision.Face/src/Generated/CreateRequest.Serialization.cs
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -58,6 +88,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             }
         }
 
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRecognitionEvaluationResult.Serialization.cs
         DocumentEntityRecognitionEvaluationResult IJsonModel<DocumentEntityRecognitionEvaluationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentEntityRecognitionEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -71,6 +102,21 @@ namespace Azure.AI.Language.Text.Authoring.Models
         }
 
         internal static DocumentEntityRecognitionEvaluationResult DeserializeDocumentEntityRecognitionEvaluationResult(JsonElement element, ModelReaderWriterOptions options = null)
+========
+        CreateRequest IJsonModel<CreateRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CreateRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CreateRequest)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCreateRequest(document.RootElement, options);
+        }
+
+        internal static CreateRequest DeserializeCreateRequest(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/face/Azure.AI.Vision.Face/src/Generated/CreateRequest.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,11 +124,18 @@ namespace Azure.AI.Language.Text.Authoring.Models
             {
                 return null;
             }
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRecognitionEvaluationResult.Serialization.cs
             IReadOnlyList<DocumentEntityRegionEvaluationResult> entities = default;
+========
+            string name = default;
+            string userData = default;
+            FaceRecognitionModel? recognitionModel = default;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/face/Azure.AI.Vision.Face/src/Generated/CreateRequest.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRecognitionEvaluationResult.Serialization.cs
                 if (property.NameEquals("entities"u8))
                 {
                     List<DocumentEntityRegionEvaluationResult> array = new List<DocumentEntityRegionEvaluationResult>();
@@ -91,6 +144,25 @@ namespace Azure.AI.Language.Text.Authoring.Models
                         array.Add(DocumentEntityRegionEvaluationResult.DeserializeDocumentEntityRegionEvaluationResult(item, options));
                     }
                     entities = array;
+========
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("userData"u8))
+                {
+                    userData = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recognitionModel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recognitionModel = new FaceRecognitionModel(property.Value.GetString());
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/face/Azure.AI.Vision.Face/src/Generated/CreateRequest.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,18 +171,28 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRecognitionEvaluationResult.Serialization.cs
             return new DocumentEntityRecognitionEvaluationResult(entities, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentEntityRecognitionEvaluationResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentEntityRecognitionEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
+========
+            return new CreateRequest(name, userData, recognitionModel, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<CreateRequest>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CreateRequest>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/face/Azure.AI.Vision.Face/src/Generated/CreateRequest.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRecognitionEvaluationResult.Serialization.cs
                     throw new FormatException($"The model {nameof(DocumentEntityRecognitionEvaluationResult)} does not support writing '{options.Format}' format.");
             }
         }
@@ -118,12 +200,22 @@ namespace Azure.AI.Language.Text.Authoring.Models
         DocumentEntityRecognitionEvaluationResult IPersistableModel<DocumentEntityRecognitionEvaluationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentEntityRecognitionEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
+========
+                    throw new FormatException($"The model {nameof(CreateRequest)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CreateRequest IPersistableModel<CreateRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CreateRequest>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/face/Azure.AI.Vision.Face/src/Generated/CreateRequest.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRecognitionEvaluationResult.Serialization.cs
                         return DeserializeDocumentEntityRecognitionEvaluationResult(document.RootElement, options);
                     }
                 default:
@@ -139,6 +231,23 @@ namespace Azure.AI.Language.Text.Authoring.Models
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeDocumentEntityRecognitionEvaluationResult(document.RootElement);
+========
+                        return DeserializeCreateRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CreateRequest)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CreateRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CreateRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCreateRequest(document.RootElement);
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/face/Azure.AI.Vision.Face/src/Generated/CreateRequest.Serialization.cs
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -8,12 +8,21 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ContainerOrchestratorRuntime.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HybridCompute.Models
+namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcSettings.cs
     /// <summary> The ArcSettings. </summary>
     public partial class ArcSettings : ResourceData
+========
+    /// <summary>
+    /// A class representing the ConnectedClusterBgpPeer data model.
+    /// A BgpPeer resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters)
+    /// </summary>
+    public partial class ConnectedClusterBgpPeerData : ResourceData
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime/src/Generated/ConnectedClusterBgpPeerData.cs
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,31 +56,38 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcSettings.cs
         /// <summary> Initializes a new instance of <see cref="ArcSettings"/>. </summary>
         public ArcSettings()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcSettings"/>. </summary>
+========
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterBgpPeerData"/>. </summary>
+        public ConnectedClusterBgpPeerData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterBgpPeerData"/>. </summary>
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime/src/Generated/ConnectedClusterBgpPeerData.cs
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tenantId"> Azure resource tenant Id. </param>
-        /// <param name="gatewayResourceId"> Associated Gateway Resource Id. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/Models/ArcSettings.cs
         internal ArcSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, ResourceIdentifier gatewayResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+========
+        internal ConnectedClusterBgpPeerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectedClusterBgpPeerProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime/src/Generated/ConnectedClusterBgpPeerData.cs
         {
-            TenantId = tenantId;
-            GatewayResourceId = gatewayResourceId;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Azure resource tenant Id. </summary>
-        [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; }
-        /// <summary> Associated Gateway Resource Id. </summary>
-        [WirePath("properties.gatewayResourceId")]
-        public ResourceIdentifier GatewayResourceId { get; set; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public ConnectedClusterBgpPeerProperties Properties { get; set; }
     }
 }

@@ -32,7 +32,15 @@ namespace Azure.ResourceManager.HybridCompute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
+<<<<<<< HEAD
             _apiVersion = apiVersion ?? "2024-07-31-preview";
+=======
+<<<<<<<< HEAD:sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/RestOperations/MachineRunCommandsRestOperations.cs
+            _apiVersion = apiVersion ?? "2024-07-31-preview";
+========
+            _apiVersion = apiVersion ?? "2024-07-10";
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Generated/RestOperations/LicenseProfilesRestOperations.cs
+>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383))
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

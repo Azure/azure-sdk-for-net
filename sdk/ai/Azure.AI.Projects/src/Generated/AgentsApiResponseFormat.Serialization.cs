@@ -13,6 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/AgentsApiResponseFormat.Serialization.cs
     public partial class AgentsApiResponseFormat : IUtf8JsonSerializable, IJsonModel<AgentsApiResponseFormat>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentsApiResponseFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -39,6 +40,32 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
+========
+    public partial class EmbeddingItem : IUtf8JsonSerializable, IJsonModel<EmbeddingItem>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmbeddingItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<EmbeddingItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EmbeddingItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EmbeddingItem)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("embedding"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Embedding);
+#else
+            using (JsonDocument document = JsonDocument.Parse(Embedding))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
+            writer.WritePropertyName("index"u8);
+            writer.WriteNumberValue(Index);
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/ai/Azure.AI.Inference/src/Generated/EmbeddingItem.Serialization.cs
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -56,6 +83,7 @@ namespace Azure.AI.Projects
             }
         }
 
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/AgentsApiResponseFormat.Serialization.cs
         AgentsApiResponseFormat IJsonModel<AgentsApiResponseFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AgentsApiResponseFormat>)this).GetFormatFromOptions(options) : options.Format;
@@ -69,6 +97,21 @@ namespace Azure.AI.Projects
         }
 
         internal static AgentsApiResponseFormat DeserializeAgentsApiResponseFormat(JsonElement element, ModelReaderWriterOptions options = null)
+========
+        EmbeddingItem IJsonModel<EmbeddingItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EmbeddingItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EmbeddingItem)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEmbeddingItem(document.RootElement, options);
+        }
+
+        internal static EmbeddingItem DeserializeEmbeddingItem(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/ai/Azure.AI.Inference/src/Generated/EmbeddingItem.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -76,18 +119,32 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/AgentsApiResponseFormat.Serialization.cs
             ResponseFormat? type = default;
+========
+            BinaryData embedding = default;
+            int index = default;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/ai/Azure.AI.Inference/src/Generated/EmbeddingItem.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (property.NameEquals("embedding"u8))
                 {
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/AgentsApiResponseFormat.Serialization.cs
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     type = new ResponseFormat(property.Value.GetString());
+========
+                    embedding = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("index"u8))
+                {
+                    index = property.Value.GetInt32();
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/ai/Azure.AI.Inference/src/Generated/EmbeddingItem.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
@@ -96,18 +153,28 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/AgentsApiResponseFormat.Serialization.cs
             return new AgentsApiResponseFormat(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentsApiResponseFormat>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AgentsApiResponseFormat>)this).GetFormatFromOptions(options) : options.Format;
+========
+            return new EmbeddingItem(embedding, index, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<EmbeddingItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EmbeddingItem>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/ai/Azure.AI.Inference/src/Generated/EmbeddingItem.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/AgentsApiResponseFormat.Serialization.cs
                     throw new FormatException($"The model {nameof(AgentsApiResponseFormat)} does not support writing '{options.Format}' format.");
             }
         }
@@ -115,12 +182,22 @@ namespace Azure.AI.Projects
         AgentsApiResponseFormat IPersistableModel<AgentsApiResponseFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AgentsApiResponseFormat>)this).GetFormatFromOptions(options) : options.Format;
+========
+                    throw new FormatException($"The model {nameof(EmbeddingItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EmbeddingItem IPersistableModel<EmbeddingItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EmbeddingItem>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/ai/Azure.AI.Inference/src/Generated/EmbeddingItem.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/AgentsApiResponseFormat.Serialization.cs
                         return DeserializeAgentsApiResponseFormat(document.RootElement, options);
                     }
                 default:
@@ -136,6 +213,23 @@ namespace Azure.AI.Projects
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeAgentsApiResponseFormat(document.RootElement);
+========
+                        return DeserializeEmbeddingItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EmbeddingItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EmbeddingItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EmbeddingItem FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEmbeddingItem(document.RootElement);
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/ai/Azure.AI.Inference/src/Generated/EmbeddingItem.Serialization.cs
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

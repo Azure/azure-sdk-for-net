@@ -77,6 +77,16 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        public async Task CanUpdateMachine()
+        {
+            HybridComputeMachineData resourceData = await updateMachine();
+
+            Debug.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Assert.AreEqual(machineName, resourceData.Name.ToString());
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task CanDeleteMachine(){
             await deleteMachine();
         }

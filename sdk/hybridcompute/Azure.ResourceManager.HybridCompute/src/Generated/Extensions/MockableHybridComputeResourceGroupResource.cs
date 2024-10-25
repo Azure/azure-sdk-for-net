@@ -9,17 +9,12 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager.HybridCompute.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableHybridComputeResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _settingsClientDiagnostics;
-        private SettingsRestOperations _settingsRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="MockableHybridComputeResourceGroupResource"/> class for mocking. </summary>
         protected MockableHybridComputeResourceGroupResource()
         {
@@ -31,9 +26,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         internal MockableHybridComputeResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics SettingsClientDiagnostics => _settingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SettingsRestOperations SettingsRestClient => _settingsRestClient ??= new SettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

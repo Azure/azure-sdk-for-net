@@ -55,7 +55,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="version"> The version of the image. </param>
         /// <param name="operatingSystem"> The operating system of the image. </param>
         /// <param name="osBuildNumber"> The operating system build number of the image. </param>
-        /// <param name="publishedDate"> The datetime that the backing image version was published. </param>
+        /// <param name="publishedDate"> The datetime that the backing image version was published, in RFC3339 format. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DevBoxImageReference(string name, string version, string operatingSystem, string osBuildNumber, DateTimeOffset? publishedDate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,7 +75,7 @@ namespace Azure.Developer.DevCenter.Models
         public string OperatingSystem { get; }
         /// <summary> The operating system build number of the image. </summary>
         public string OSBuildNumber { get; }
-        /// <summary> The datetime that the backing image version was published. </summary>
+        /// <summary> The datetime that the backing image version was published, in RFC3339 format. </summary>
         public DateTimeOffset? PublishedDate { get; }
     }
 }

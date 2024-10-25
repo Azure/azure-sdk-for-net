@@ -1210,5 +1210,15 @@ namespace Azure.Identity.Tests
             }
             return response;
         }
+
+        private static MockResponse CreateResponse(int status, string message)
+        {
+            var response = new MockResponse(status);
+            if (message != null)
+            {
+                response.SetContent(message);
+            }
+            return response;
+        }
     }
 }

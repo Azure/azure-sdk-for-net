@@ -211,9 +211,9 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
             // invoke the operation
-            AdminCredentials result = await avsPrivateCloud.GetAdminCredentialsAsync();
+            await avsPrivateCloud.RotateVCenterPasswordAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine($"Succeeded");
         }
 
         [Test]

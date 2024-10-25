@@ -57,6 +57,9 @@ public abstract class BicepValue : IBicepValue
     // Optional format defining how values should be serialized
     internal string? Format { get; set; } = null;
 
+    // Optional format defining how values should be serialized
+    internal string? Format { get; set; } = null;
+
     // Indicate whether this value is empty or should be included in output
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual bool IsEmpty => _kind == BicepValueKind.Unset;

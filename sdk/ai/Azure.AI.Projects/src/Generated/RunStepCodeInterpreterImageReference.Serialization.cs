@@ -13,6 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepCodeInterpreterImageReference.Serialization.cs
     public partial class RunStepCodeInterpreterImageReference : IUtf8JsonSerializable, IJsonModel<RunStepCodeInterpreterImageReference>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepCodeInterpreterImageReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -32,6 +33,18 @@ namespace Azure.AI.Projects
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RunStepCodeInterpreterImageReference)} does not support writing '{format}' format.");
+========
+    public partial class ChatCompletionsNamedToolChoiceFunction : IUtf8JsonSerializable, IJsonModel<ChatCompletionsNamedToolChoiceFunction>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletionsNamedToolChoiceFunction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ChatCompletionsNamedToolChoiceFunction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ChatCompletionsNamedToolChoiceFunction)} does not support writing '{format}' format.");
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
             }
 
             writer.WritePropertyName("file_id"u8);
@@ -53,6 +66,7 @@ namespace Azure.AI.Projects
             }
         }
 
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepCodeInterpreterImageReference.Serialization.cs
         RunStepCodeInterpreterImageReference IJsonModel<RunStepCodeInterpreterImageReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterImageReference>)this).GetFormatFromOptions(options) : options.Format;
@@ -66,6 +80,21 @@ namespace Azure.AI.Projects
         }
 
         internal static RunStepCodeInterpreterImageReference DeserializeRunStepCodeInterpreterImageReference(JsonElement element, ModelReaderWriterOptions options = null)
+========
+        ChatCompletionsNamedToolChoiceFunction IJsonModel<ChatCompletionsNamedToolChoiceFunction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ChatCompletionsNamedToolChoiceFunction)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeChatCompletionsNamedToolChoiceFunction(document.RootElement, options);
+        }
+
+        internal static ChatCompletionsNamedToolChoiceFunction DeserializeChatCompletionsNamedToolChoiceFunction(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -89,18 +118,28 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepCodeInterpreterImageReference.Serialization.cs
             return new RunStepCodeInterpreterImageReference(fileId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunStepCodeInterpreterImageReference>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterImageReference>)this).GetFormatFromOptions(options) : options.Format;
+========
+            return new ChatCompletionsNamedToolChoiceFunction(name, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ChatCompletionsNamedToolChoiceFunction>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepCodeInterpreterImageReference.Serialization.cs
                     throw new FormatException($"The model {nameof(RunStepCodeInterpreterImageReference)} does not support writing '{options.Format}' format.");
             }
         }
@@ -108,12 +147,22 @@ namespace Azure.AI.Projects
         RunStepCodeInterpreterImageReference IPersistableModel<RunStepCodeInterpreterImageReference>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterImageReference>)this).GetFormatFromOptions(options) : options.Format;
+========
+                    throw new FormatException($"The model {nameof(ChatCompletionsNamedToolChoiceFunction)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ChatCompletionsNamedToolChoiceFunction IPersistableModel<ChatCompletionsNamedToolChoiceFunction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepCodeInterpreterImageReference.Serialization.cs
                         return DeserializeRunStepCodeInterpreterImageReference(document.RootElement, options);
                     }
                 default:
@@ -129,6 +178,23 @@ namespace Azure.AI.Projects
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeRunStepCodeInterpreterImageReference(document.RootElement);
+========
+                        return DeserializeChatCompletionsNamedToolChoiceFunction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ChatCompletionsNamedToolChoiceFunction)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ChatCompletionsNamedToolChoiceFunction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChatCompletionsNamedToolChoiceFunction FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeChatCompletionsNamedToolChoiceFunction(document.RootElement);
+>>>>>>>> 0f03b6ad11f ([ACS][Common] OPS - Dual Persona (#46383)):sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

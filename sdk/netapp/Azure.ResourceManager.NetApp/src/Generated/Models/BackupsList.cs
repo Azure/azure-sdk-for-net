@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of Backups. </summary>
+    /// <summary>
+    /// List of Backups
+    /// Serialized Name: BackupsList
+    /// </summary>
     internal partial class BackupsList
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupsList"/>. </summary>
-        /// <param name="value"> A list of Backups. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value">
+        /// A list of Backups
+        /// Serialized Name: BackupsList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of results.
+        /// Serialized Name: BackupsList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackupsList(IReadOnlyList<NetAppBackupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of Backups. </summary>
+        /// <summary>
+        /// A list of Backups
+        /// Serialized Name: BackupsList.value
+        /// </summary>
         public IReadOnlyList<NetAppBackupData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
+        /// <summary>
+        /// URL to get the next set of results.
+        /// Serialized Name: BackupsList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }
