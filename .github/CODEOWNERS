@@ -318,7 +318,7 @@
 /sdk/communication/Azure.Communication.PhoneNumbers/               @miguhern @whisper6284 @danielav7
 
 # PRLabel: %Communication - Programmable Connectivity
-/sdk/communication/Azure.Communication.ProgrammableConnectivity/   @aronhegedusms
+/sdk/communication/Azure.Communication.ProgrammableConnectivity/   @acsdevx-msft
 
 # PRLabel: %Communication - Short Codes
 /sdk/communication/Azure.Communication.ShortCodes/                 @guilhermeluizsp @danielav7
