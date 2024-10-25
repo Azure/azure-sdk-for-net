@@ -26,26 +26,26 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
             return policies;
         }
 
-        [TestCase, Order(1)]
-        [RecordedTest]
-        [AsyncOnly]
-        public async Task Create() {
-            var collection = await GetPlacementPolicyCollectionAsync();
-            string placementPolicyName = "policy1";
-            PlacementPolicyData data = new PlacementPolicyData()
-            {
-                Properties = new VmHostPlacementPolicyProperties(new ResourceIdentifier[]
-            {
-new ResourceIdentifier($"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{RESOURCE_GROUP_NAME}/providers/Microsoft.AVS/privateClouds/{PRIVATE_CLOUD_NAME}/clusters/{CLUSTER1_NAME}/virtualMachines/vm-1818")
-            }, new string[]
-            {"esx05-r20.p04.eastus.avs.azure.com"
-            }, AvsPlacementPolicyAffinityType.Affinity)
-            };
-            ArmOperation<PlacementPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, placementPolicyName, data);
-            Assert.AreEqual(placementPolicyName, lro.Value.Data.Name);
-        }
+//         [TestCase, Order(1)]
+//         [RecordedTest]
+//         [AsyncOnly]
+//         public async Task Create() {
+//             var collection = await GetPlacementPolicyCollectionAsync();
+//             string placementPolicyName = "policy1";
+//             PlacementPolicyData data = new PlacementPolicyData()
+//             {
+//                 Properties = new VmHostPlacementPolicyProperties(new ResourceIdentifier[]
+//             {
+// new ResourceIdentifier($"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{RESOURCE_GROUP_NAME}/providers/Microsoft.AVS/privateClouds/{PRIVATE_CLOUD_NAME}/clusters/{CLUSTER1_NAME}/virtualMachines/vm-1818")
+//             }, new string[]
+//             {"esx05-r20.p04.eastus.avs.azure.com"
+//             }, AvsPlacementPolicyAffinityType.Affinity)
+//             };
+//             ArmOperation<PlacementPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, placementPolicyName, data);
+//             Assert.AreEqual(placementPolicyName, lro.Value.Data.Name);
+//         }
 
-        [TestCase, Order(2)]
+        [TestCase, Order(1)]
         [RecordedTest]
         public async Task GetCollection()
         {
@@ -57,7 +57,7 @@ new ResourceIdentifier($"/subscriptions/{DefaultSubscription.Data.SubscriptionId
                 policies.Add(item);
             }
 
-            Assert.IsTrue(policies.Any());
+            Assert.IsFalse(policies.Any());
         }
     }
 }

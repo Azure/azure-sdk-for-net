@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
 
         //  [TestCase]
         //  [RecordedTest]
-        public async Task Delete()
-        {
-            var privateCloudResource = await getAvsPrivateCloudResource();
-            ArmOperation lro = await privateCloudResource.DeleteAsync(WaitUntil.Started);
-        }
+        // public async Task Delete()
+        // {
+        //     var privateCloudResource = await getAvsPrivateCloudResource();
+        //     ArmOperation lro = await privateCloudResource.DeleteAsync(WaitUntil.Started);
+        // }
     }
 }
