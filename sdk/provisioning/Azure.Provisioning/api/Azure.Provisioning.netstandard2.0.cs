@@ -81,6 +81,7 @@ namespace Azure.Provisioning
     }
     public static partial class BicepValueExtensions
     {
+        public static Azure.Provisioning.BicepValue<System.Uri> ToUri(this Azure.Provisioning.BicepValue<string> value) { throw null; }
         public static T Unwrap<T>(this Azure.Provisioning.BicepValue<T> value) where T : Azure.Provisioning.Primitives.ProvisionableConstruct, new() { throw null; }
     }
     public enum BicepValueKind
@@ -96,6 +97,7 @@ namespace Azure.Provisioning
         public T? Value { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Assign(Azure.Provisioning.BicepValue<T> source) { }
+        public void ClearValue() { }
         public static implicit operator Azure.Provisioning.BicepValue<System.String> (Azure.Provisioning.BicepValue<T> value) { throw null; }
         public static implicit operator Azure.Provisioning.BicepValue<T> (Azure.Provisioning.Expressions.BicepExpression? expression) { throw null; }
         public static implicit operator Azure.Provisioning.BicepValue<T> (Azure.Provisioning.ProvisioningVariable reference) { throw null; }
@@ -905,6 +907,8 @@ namespace Azure.Provisioning.Primitives
         object? Azure.Provisioning.IBicepValue.LiteralValue { get { throw null; } }
         Azure.Provisioning.Primitives.BicepValueReference? Azure.Provisioning.IBicepValue.Self { get { throw null; } set { } }
         Azure.Provisioning.Primitives.BicepValueReference? Azure.Provisioning.IBicepValue.Source { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Provisioning.Infrastructure? ParentInfrastructure { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IDictionary<string, Azure.Provisioning.IBicepValue> ProvisionableProperties { get { throw null; } }
         protected virtual void AssignOrReplace<T>(ref T? property, T value) where T : Azure.Provisioning.IBicepValue { }
