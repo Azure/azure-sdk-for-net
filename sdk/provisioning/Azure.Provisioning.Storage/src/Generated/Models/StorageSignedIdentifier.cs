@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// The StorageSignedIdentifier.
 /// </summary>
-public partial class StorageSignedIdentifier : ProvisioningConstruct
+public partial class StorageSignedIdentifier : ProvisionableConstruct
 {
     /// <summary>
     /// An unique identifier of the stored access policy.

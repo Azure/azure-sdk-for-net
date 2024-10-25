@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Certificate resource specific properties.
 /// </summary>
-public partial class ManagedCertificateProperties : ProvisioningConstruct
+public partial class ManagedCertificateProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Provisioning state of the certificate.

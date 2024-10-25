@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Static Site Linked Backend ARM resource.
 /// </summary>
-public partial class StaticSiteLinkedBackendInfo : ProvisioningConstruct
+public partial class StaticSiteLinkedBackendInfo : ProvisionableConstruct
 {
     /// <summary>
     /// The resource id of the backend linked to the static site.

@@ -190,14 +190,14 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 new BareMetalMachineConfiguration(new AdministrativeCredentials("username")
 {
 Password = "{password}",
-},"AA:BB:CC:DD:EE:FF","00:BB:CC:DD:EE:FF",1,"BM1219XXX")
+},"AA:BB:CC:DD:EE:FF","00:BB:CC:DD:EE:FF",1L,"BM1219XXX")
 {
 MachineDetails = "extraDetails",
 MachineName = "bmmName1",
 },new BareMetalMachineConfiguration(new AdministrativeCredentials("username")
 {
 Password = "{password}",
-},"AA:BB:CC:DD:EE:00","00:BB:CC:DD:EE:00",2,"BM1219YYY")
+},"AA:BB:CC:DD:EE:00","00:BB:CC:DD:EE:00",2L,"BM1219YYY")
 {
 MachineDetails = "extraDetails",
 MachineName = "bmmName2",
@@ -209,7 +209,7 @@ MachineName = "bmmName2",
 new StorageApplianceConfiguration(new AdministrativeCredentials("username")
 {
 Password = "{password}",
-},1,"BM1219XXX")
+},1L,"BM1219XXX")
 {
 StorageApplianceName = "vmName",
 }
@@ -222,7 +222,7 @@ StorageApplianceName = "vmName",
                 {
                     Password = "{password}",
                 },
-                ComputeDeploymentThreshold = new ValidationThreshold(ValidationThresholdGrouping.PerCluster, ValidationThresholdType.PercentSuccess, 90),
+                ComputeDeploymentThreshold = new ValidationThreshold(ValidationThresholdGrouping.PerCluster, ValidationThresholdType.PercentSuccess, 90L),
                 ComputeRackDefinitions =
 {
 new NetworkCloudRackDefinition(new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/networkRacks/networkRackName"),"AA1234",new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/providers/Microsoft.NetworkCloud/rackSkus/rackSkuName"))
@@ -232,14 +232,14 @@ BareMetalMachineConfigurationData =
 new BareMetalMachineConfiguration(new AdministrativeCredentials("username")
 {
 Password = "{password}",
-},"AA:BB:CC:DD:EE:FF","00:BB:CC:DD:EE:FF",1,"BM1219XXX")
+},"AA:BB:CC:DD:EE:FF","00:BB:CC:DD:EE:FF",1L,"BM1219XXX")
 {
 MachineDetails = "extraDetails",
 MachineName = "bmmName1",
 },new BareMetalMachineConfiguration(new AdministrativeCredentials("username")
 {
 Password = "{password}",
-},"AA:BB:CC:DD:EE:00","00:BB:CC:DD:EE:00",2,"BM1219YYY")
+},"AA:BB:CC:DD:EE:00","00:BB:CC:DD:EE:00",2L,"BM1219YYY")
 {
 MachineDetails = "extraDetails",
 MachineName = "bmmName2",
@@ -251,7 +251,7 @@ StorageApplianceConfigurationData =
 new StorageApplianceConfiguration(new AdministrativeCredentials("username")
 {
 Password = "{password}",
-},1,"BM1219XXX")
+},1L,"BM1219XXX")
 {
 StorageApplianceName = "vmName",
 }

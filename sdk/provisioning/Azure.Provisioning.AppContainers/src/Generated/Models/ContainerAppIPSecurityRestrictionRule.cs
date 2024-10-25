@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Rule to restrict incoming IP address.
 /// </summary>
-public partial class ContainerAppIPSecurityRestrictionRule : ProvisioningConstruct
+public partial class ContainerAppIPSecurityRestrictionRule : ProvisionableConstruct
 {
     /// <summary>
     /// Name for the IP restriction rule.

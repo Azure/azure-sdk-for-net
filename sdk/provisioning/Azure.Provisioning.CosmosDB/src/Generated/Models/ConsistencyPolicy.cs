@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The consistency policy for the Cosmos DB database account.
 /// </summary>
-public partial class ConsistencyPolicy : ProvisioningConstruct
+public partial class ConsistencyPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// The default consistency level and configuration settings of the Cosmos

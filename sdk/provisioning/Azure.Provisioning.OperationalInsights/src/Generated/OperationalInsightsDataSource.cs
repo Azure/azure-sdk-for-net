@@ -17,7 +17,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsDataSource.
 /// </summary>
-public partial class OperationalInsightsDataSource : Resource
+public partial class OperationalInsightsDataSource : ProvisionableResource
 {
     /// <summary>
     /// The name of the datasource resource.
@@ -84,15 +84,15 @@ public partial class OperationalInsightsDataSource : Resource
     /// <summary>
     /// Creates a new OperationalInsightsDataSource.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the OperationalInsightsDataSource
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsDataSource.</param>
-    public OperationalInsightsDataSource(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.OperationalInsights/workspaces/dataSources", resourceVersion ?? "2023-09-01")
+    public OperationalInsightsDataSource(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.OperationalInsights/workspaces/dataSources", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<OperationalInsightsDataSourceKind>.DefineProperty(this, "Kind", ["kind"], isRequired: true);
@@ -123,7 +123,7 @@ public partial class OperationalInsightsDataSource : Resource
     /// <summary>
     /// Creates a reference to an existing OperationalInsightsDataSource.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the OperationalInsightsDataSource
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -131,6 +131,6 @@ public partial class OperationalInsightsDataSource : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsDataSource.</param>
     /// <returns>The existing OperationalInsightsDataSource resource.</returns>
-    public static OperationalInsightsDataSource FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static OperationalInsightsDataSource FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

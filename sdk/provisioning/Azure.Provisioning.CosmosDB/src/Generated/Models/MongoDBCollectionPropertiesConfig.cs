@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The MongoDBCollectionPropertiesConfig.
 /// </summary>
-public partial class MongoDBCollectionPropertiesConfig : ProvisioningConstruct
+public partial class MongoDBCollectionPropertiesConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Value of the Cosmos DB resource throughput or autoscaleSettings. Use

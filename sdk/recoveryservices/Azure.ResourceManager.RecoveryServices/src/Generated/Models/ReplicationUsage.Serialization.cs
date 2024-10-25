@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         void IJsonModel<ReplicationUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReplicationUsage)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(MonitoringSummary))
             {
                 writer.WritePropertyName("monitoringSummary"u8);
@@ -71,7 +79,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ReplicationUsage IJsonModel<ReplicationUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

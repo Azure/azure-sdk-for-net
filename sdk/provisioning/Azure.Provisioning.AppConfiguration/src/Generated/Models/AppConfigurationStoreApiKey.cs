@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppConfiguration;
 /// <summary>
 /// An API key used for authenticating with a configuration store endpoint.
 /// </summary>
-public partial class AppConfigurationStoreApiKey : ProvisioningConstruct
+public partial class AppConfigurationStoreApiKey : ProvisionableConstruct
 {
     /// <summary>
     /// The key ID.
@@ -75,7 +75,7 @@ public partial class AppConfigurationStoreApiKey : ProvisioningConstruct
     /// </param>
     /// <returns>A AppConfigurationStoreApiKey resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static AppConfigurationStoreApiKey FromExpression(Expression expression)
+    public static AppConfigurationStoreApiKey FromExpression(BicepExpression expression)
     {
         AppConfigurationStoreApiKey resource = new();
         resource.OverrideWithExpression(expression);

@@ -10,7 +10,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The platform properties against which the run has to happen.
 /// </summary>
-public partial class ContainerRegistryPlatformProperties : ProvisioningConstruct
+public partial class ContainerRegistryPlatformProperties : ProvisionableConstruct
 {
     /// <summary>
     /// The operating system type required for the run.

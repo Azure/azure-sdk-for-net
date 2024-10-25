@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// The JIT scheduling policies.
 /// </summary>
-public partial class JitSchedulingPolicy : ProvisioningConstruct
+public partial class JitSchedulingPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// The type of JIT schedule.
@@ -37,7 +37,7 @@ public partial class JitSchedulingPolicy : ProvisioningConstruct
     public JitSchedulingPolicy()
     {
         _schedulingType = BicepValue<JitSchedulingType>.DefineProperty(this, "SchedulingType", ["type"], isOutput: true);
-        _duration = BicepValue<TimeSpan>.DefineProperty(this, "Duration", ["duration"]);
+        _duration = BicepValue<TimeSpan>.DefineProperty(this, "Duration", ["duration"], format: "P");
         _startOn = BicepValue<DateTimeOffset>.DefineProperty(this, "StartOn", ["startTime"]);
     }
 }

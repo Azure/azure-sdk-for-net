@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// RedisResource.
 /// </summary>
-public partial class RedisResource : Resource
+public partial class RedisResource : ProvisionableResource
 {
     /// <summary>
     /// The name of the Redis cache.
@@ -54,6 +54,13 @@ public partial class RedisResource : Resource
     private readonly BicepValue<ManagedServiceIdentity> _identity;
 
     /// <summary>
+    /// Authentication to Redis through access keys is disabled when set as
+    /// true. Default value is false.
+    /// </summary>
+    public BicepValue<bool> IsAccessKeyAuthenticationDisabled { get => _isAccessKeyAuthenticationDisabled; set => _isAccessKeyAuthenticationDisabled.Assign(value); }
+    private readonly BicepValue<bool> _isAccessKeyAuthenticationDisabled;
+
+    /// <summary>
     /// Optional: requires clients to use a specified TLS version (or higher)
     /// to connect (e,g, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;).
     /// </summary>
@@ -71,8 +78,9 @@ public partial class RedisResource : Resource
 
     /// <summary>
     /// All Redis Settings. Few possible keys:
-    /// rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value
-    /// etc.
+    /// rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,
+    /// maxmemory-policy,notify-keyspace-events, aof-backup-enabled,
+    /// aof-storage-connection-string-0, aof-storage-connection-string-1 etc.
     /// </summary>
     public BicepValue<RedisCommonConfiguration> RedisConfiguration { get => _redisConfiguration; set => _redisConfiguration.Assign(value); }
     private readonly BicepValue<RedisCommonConfiguration> _redisConfiguration;
@@ -214,21 +222,22 @@ public partial class RedisResource : Resource
     /// <summary>
     /// Creates a new RedisResource.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the RedisResource resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the RedisResource.</param>
-    public RedisResource(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Cache/redis", resourceVersion ?? "2024-03-01")
+    public RedisResource(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Cache/redis", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
         _sku = BicepValue<RedisSku>.DefineProperty(this, "Sku", ["properties", "sku"], isRequired: true);
         _enableNonSslPort = BicepValue<bool>.DefineProperty(this, "EnableNonSslPort", ["properties", "enableNonSslPort"]);
         _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
+        _isAccessKeyAuthenticationDisabled = BicepValue<bool>.DefineProperty(this, "IsAccessKeyAuthenticationDisabled", ["properties", "disableAccessKeyAuthentication"]);
         _minimumTlsVersion = BicepValue<RedisTlsVersion>.DefineProperty(this, "MinimumTlsVersion", ["properties", "minimumTlsVersion"]);
         _publicNetworkAccess = BicepValue<RedisPublicNetworkAccess>.DefineProperty(this, "PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
         _redisConfiguration = BicepValue<RedisCommonConfiguration>.DefineProperty(this, "RedisConfiguration", ["properties", "redisConfiguration"]);
@@ -259,11 +268,6 @@ public partial class RedisResource : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -348,7 +352,7 @@ public partial class RedisResource : Resource
     /// <summary>
     /// Creates a reference to an existing RedisResource.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the RedisResource resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -356,8 +360,8 @@ public partial class RedisResource : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the RedisResource.</param>
     /// <returns>The existing RedisResource resource.</returns>
-    public static RedisResource FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static RedisResource FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this RedisResource resource.
@@ -373,7 +377,7 @@ public partial class RedisResource : Resource
     /// <returns>The keys for this RedisResource resource.</returns>
     public RedisAccessKeys GetKeys() =>
         RedisAccessKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(IdentifierName), "listKeys")));
+            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
 
     /// <summary>
     /// Creates a role assignment for a user-assigned identity that grants
@@ -383,10 +387,10 @@ public partial class RedisResource : Resource
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
     public RoleAssignment CreateRoleAssignment(RedisBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{IdentifierName}_{identity.IdentifierName}_{RedisBuiltInRole.GetBuiltInRoleName(role)}")
+        new($"{BicepIdentifier}_{identity.BicepIdentifier}_{RedisBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(IdentifierName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
@@ -399,13 +403,13 @@ public partial class RedisResource : Resource
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
-    /// <param name="identifierNameSuffix">Optional role assignment identifier name suffix.</param>
+    /// <param name="bicepIdentifierSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment CreateRoleAssignment(RedisBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? identifierNameSuffix = default) =>
-        new($"{IdentifierName}_{RedisBuiltInRole.GetBuiltInRoleName(role)}{(identifierNameSuffix is null ? "" : "_")}{identifierNameSuffix}")
+    public RoleAssignment CreateRoleAssignment(RedisBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? bicepIdentifierSuffix = default) =>
+        new($"{BicepIdentifier}_{RedisBuiltInRole.GetBuiltInRoleName(role)}{(bicepIdentifierSuffix is null ? "" : "_")}{bicepIdentifierSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(IdentifierName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

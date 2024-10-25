@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// and
 /// Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskRunContent.
 /// </summary>
-public partial class ContainerRegistryRunContent : ProvisioningConstruct
+public partial class ContainerRegistryRunContent : ProvisionableConstruct
 {
     /// <summary>
     /// The value that indicates whether archiving is enabled for the run or

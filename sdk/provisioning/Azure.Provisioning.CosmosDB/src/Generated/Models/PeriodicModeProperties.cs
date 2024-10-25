@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Configuration values for periodic mode backup.
 /// </summary>
-public partial class PeriodicModeProperties : ProvisioningConstruct
+public partial class PeriodicModeProperties : ProvisionableConstruct
 {
     /// <summary>
     /// An integer representing the interval in minutes between two backups.

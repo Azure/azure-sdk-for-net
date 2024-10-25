@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// The blob service properties for blob restore policy.
 /// </summary>
-public partial class RestorePolicy : ProvisioningConstruct
+public partial class RestorePolicy : ProvisionableConstruct
 {
     /// <summary>
     /// Blob restore is enabled if set to true.

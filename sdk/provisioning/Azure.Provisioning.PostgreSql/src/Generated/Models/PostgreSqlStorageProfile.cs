@@ -11,7 +11,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// Storage Profile properties of a server.
 /// </summary>
-public partial class PostgreSqlStorageProfile : ProvisioningConstruct
+public partial class PostgreSqlStorageProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Backup retention days for the server.

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerService;
 /// Information about a service principal identity for the cluster to use for
 /// manipulating Azure APIs.
 /// </summary>
-public partial class ManagedClusterServicePrincipalProfile : ProvisioningConstruct
+public partial class ManagedClusterServicePrincipalProfile : ProvisionableConstruct
 {
     /// <summary>
     /// The ID for the service principal.

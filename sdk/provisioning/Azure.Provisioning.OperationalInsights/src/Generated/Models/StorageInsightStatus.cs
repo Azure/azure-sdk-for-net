@@ -11,7 +11,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// The status of the storage insight.
 /// </summary>
-public partial class StorageInsightStatus : ProvisioningConstruct
+public partial class StorageInsightStatus : ProvisionableConstruct
 {
     /// <summary>
     /// The state of the storage insight connection to the workspace.

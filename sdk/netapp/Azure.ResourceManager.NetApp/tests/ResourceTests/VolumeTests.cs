@@ -559,6 +559,50 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [RecordedTest]
+        public async Task CreateExternalMigrationVolumeNoPeering()
+        {
+            //Tests the negative case, we should get errors here
+
+            //create volume
+            string volumeName = Recording.GenerateAssetName("volumeName-");
+            await CreateVirtualNetwork();
+            //Update the remote volume with dataProtection for Migration (external replication)
+            NetAppReplicationObject replication = new()
+            {
+                EndpointType = NetAppEndpointType.Destination,
+                RemotePath = new RemotePath() { ExternalHostName = "hostname1", ServerName = "server1", VolumeName = "volume1" }
+            };
+            NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection() { Replication = replication };
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName, volumeType: "Migration", dataProtection: dataProtectionProperties);
+            VerifyVolumeProperties(volumeResource1, true);
+            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
+            //validate if created successfully
+            NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
+            VerifyVolumeProperties(volumeResource2, true);
+
+            PeerClusterForVolumeMigrationContent peerClusterRequest = new PeerClusterForVolumeMigrationContent(new string[]
+            {
+                "0.0.0.1","0.0.0.2","0.0.0.3","0.0.0.4","0.0.0.5","0.0.0.6"
+            });
+
+            //ArmOperation<ClusterPeerCommandResult> lro = await volumeResource2.PeerExternalClusterAsync(WaitUntil.Completed, peerClusterRequest);
+            //ClusterPeerCommandResult result = lro.Value;
+            //Assert.NotNull(result);
+
+            InvalidOperationException peerException = Assert.ThrowsAsync<InvalidOperationException>(async () => { await volumeResource2.PeerExternalClusterAsync(WaitUntil.Completed, peerClusterRequest); });
+            //Assert.AreEqual(409, peerException.Status);
+
+            InvalidOperationException authorizeException = Assert.ThrowsAsync<InvalidOperationException>(async () => { await volumeResource2.AuthorizeExternalReplicationAsync(WaitUntil.Completed); });
+            //Assert.AreEqual(400, authorizeException.Status);
+
+            RequestFailedException performException = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource2.PerformReplicationTransferAsync(WaitUntil.Completed); });
+            //Assert.AreEqual(400, performException.Status);
+
+            RequestFailedException finalizeException = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource2.FinalizeExternalReplicationAsync(WaitUntil.Completed); });
+            //Assert.AreEqual(409, finalizeException.Status);
+        }
+
+        [RecordedTest]
         public async Task BreakFileLocksVolumeNoFiles()
         {
             //create volume

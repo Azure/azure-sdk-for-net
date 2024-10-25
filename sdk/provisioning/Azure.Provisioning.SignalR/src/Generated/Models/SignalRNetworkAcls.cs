@@ -12,7 +12,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// Network ACLs for the resource.
 /// </summary>
-public partial class SignalRNetworkAcls : ProvisioningConstruct
+public partial class SignalRNetworkAcls : ProvisionableConstruct
 {
     /// <summary>
     /// Azure Networking ACL Action.

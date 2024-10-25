@@ -13,8 +13,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task ManageModelsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), TestEnvironment.Credential);
 
             // Build to make sure that there is at least one custom model.
             string setupModelId = Guid.NewGuid().ToString();

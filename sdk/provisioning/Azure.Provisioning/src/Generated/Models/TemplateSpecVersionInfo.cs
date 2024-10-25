@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// High-level information about a Template Spec version.
 /// </summary>
-public partial class TemplateSpecVersionInfo : ProvisioningConstruct
+public partial class TemplateSpecVersionInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Template Spec version description.

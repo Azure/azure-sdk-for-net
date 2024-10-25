@@ -33,7 +33,7 @@ namespace Azure.Maps.Weather.Models
         public static bool operator ==(WeatherDataUnit left, WeatherDataUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WeatherDataUnit"/> values are not the same. </summary>
         public static bool operator !=(WeatherDataUnit left, WeatherDataUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WeatherDataUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WeatherDataUnit"/>. </summary>
         public static implicit operator WeatherDataUnit(string value) => new WeatherDataUnit(value);
 
         /// <inheritdoc />

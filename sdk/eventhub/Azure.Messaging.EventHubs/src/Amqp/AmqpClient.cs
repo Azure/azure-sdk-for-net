@@ -200,7 +200,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     clientOptions.CertificateValidationCallback);
 
                 ManagementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
-                    linkTimeout => ConnectionScope.OpenManagementLinkAsync(operationTimeout, linkTimeout, CancellationToken.None),
+                    linkTimeout => CreateManagementLinkAsync(operationTimeout, linkTimeout, CancellationToken.None),
                     link =>
                     {
                         link.Session?.SafeClose();
@@ -543,6 +543,35 @@ namespace Azure.Messaging.EventHubs.Amqp
             {
                 EventHubsEventSource.Log.ClientCloseComplete(clientType, EventHubName, clientId);
             }
+        }
+
+        /// <summary>
+        ///   Creates the AMQP link to be used for management operations and ensures
+        ///   that any corresponding state has been updated based on the link configuration.
+        /// </summary>
+        ///
+        /// <param name="operationTimeout">The timeout to apply to management operations using the link..</param>
+        /// <param name="linkTimeout">The timeout to apply for creating the link.</param>
+        /// <param name="cancellationToken">The cancellation token to consider when creating the link.</param>
+        ///
+        /// <returns>The AMQP link to use for management operations.</returns>
+        ///
+        private async Task<RequestResponseAmqpLink> CreateManagementLinkAsync(TimeSpan operationTimeout,
+                                                                              TimeSpan linkTimeout,
+                                                                              CancellationToken cancellationToken)
+        {
+            var link = default(RequestResponseAmqpLink);
+
+            try
+            {
+                link = await ConnectionScope.OpenManagementLinkAsync(operationTimeout, linkTimeout, CancellationToken.None).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                ExceptionDispatchInfo.Capture(ex.TranslateConnectionCloseDuringLinkCreationException(EventHubName)).Throw();
+            }
+
+            return link;
         }
 
         /// <summary>

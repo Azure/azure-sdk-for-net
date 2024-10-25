@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Container App Private Registry.
 /// </summary>
-public partial class ContainerAppRegistryCredentials : ProvisioningConstruct
+public partial class ContainerAppRegistryCredentials : ProvisionableConstruct
 {
     /// <summary>
     /// Container Registry Server.

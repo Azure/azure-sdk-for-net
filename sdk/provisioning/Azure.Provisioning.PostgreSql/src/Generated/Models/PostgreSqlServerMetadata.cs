@@ -12,7 +12,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// Database server metadata.
 /// </summary>
-public partial class PostgreSqlServerMetadata : ProvisioningConstruct
+public partial class PostgreSqlServerMetadata : ProvisionableConstruct
 {
     /// <summary>
     /// Location of database server.

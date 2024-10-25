@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// The approval settings.
 /// </summary>
-public partial class RoleManagementApprovalSettings : ProvisioningConstruct
+public partial class RoleManagementApprovalSettings : ProvisionableConstruct
 {
     /// <summary>
     /// Determines whether approval is required or not.

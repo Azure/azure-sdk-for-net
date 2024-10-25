@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <Version>5.4.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>5.3.2</ApiCompatVersion>
+    <ApiCompatVersion>5.3.3</ApiCompatVersion>
     <RunApiCompat>false</RunApiCompat>
     <Description>This extension adds bindings for Storage</Description>
     <!-- This package is a metapackage. The flag below makes sure it doesn't include any DLL-->

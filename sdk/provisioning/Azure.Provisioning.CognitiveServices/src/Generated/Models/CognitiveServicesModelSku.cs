@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// Describes an available Cognitive Services Model SKU.
 /// </summary>
-public partial class CognitiveServicesModelSku : ProvisioningConstruct
+public partial class CognitiveServicesModelSku : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the model SKU.

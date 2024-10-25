@@ -168,9 +168,7 @@ namespace Azure.AI.Inference.Tests
                 role: ChatRole.Assistant,
                 contentUpdate: content,
                 finishReason: isLast ? CompletionsFinishReason.ToolCalls : (CompletionsFinishReason?) null,
-                functionName: null,
-                functionArgumentsUpdate: null,
-                toolCallUpdate: StreamingToolCallUpdate.DeserializeStreamingToolCallUpdate(JsonSerializer.SerializeToElement(toolUpdate))
+                toolCallUpdate: StreamingChatResponseToolCallUpdate.DeserializeStreamingChatResponseToolCallUpdate(JsonSerializer.SerializeToElement(toolUpdate))
             );
         }
         #endregion
