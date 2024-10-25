@@ -7,26 +7,33 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
-using Azure.Storage.Tests.Shared;
 using Azure.Test.Perf;
 
 namespace Azure.Storage.DataMovement.Blobs.Perf
 {
     public abstract class DirectoryTransferTest<TOptions> : PerfTest<TOptions> where TOptions : DirectoryTransferOptions
     {
-        protected Random Random { get; }
         protected BlobServiceClient BlobServiceClient { get; }
         protected LocalFilesStorageResourceProvider LocalFileResourceProvider { get; }
         protected BlobsStorageResourceProvider BlobResourceProvider { get; }
+
+        private TransferManager _transferManager;
         private TimeSpan _transferTimeout;
 
         public DirectoryTransferTest(TOptions options) : base(options)
         {
-            Random = new Random();
-            BlobServiceClient = new BlobServiceClient(PerfTestEnvironment.Instance.BlobStorageEndpoint, PerfTestEnvironment.Instance.Credential);
+            BlobServiceClient = new BlobServiceClient(PerfTestEnvironment.Instance.StorageEndpoint, PerfTestEnvironment.Instance.Credential);
             LocalFileResourceProvider = new LocalFilesStorageResourceProvider();
             BlobResourceProvider = new BlobsStorageResourceProvider(PerfTestEnvironment.Instance.Credential);
-            _transferTimeout = TimeSpan.FromSeconds(5 + (Options.Count * Options.Size) / (1 * 1024 * 1024));
+            _transferTimeout = TimeSpan.FromSeconds(10 + (Options.Count * Options.Size) / (1 * 1024 * 1024));
+
+            TransferManagerOptions managerOptions = new()
+            {
+                ErrorHandling = DataTransferErrorMode.StopOnAnyFailure,
+                CheckpointerOptions = Options.DisableCheckpointer ? TransferCheckpointStoreOptions.Disabled() : default,
+                MaximumConcurrency = Options.Concurrency
+            };
+            _transferManager = new TransferManager(managerOptions);
         }
 
         protected string CreateLocalDirectory(bool populate = false)
@@ -39,7 +46,7 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
                 foreach (int i in Enumerable.Range(0, Options.Count))
                 {
                     string filePath = Path.Combine(directory, $"file{i}");
-                    using (RepeatingStream stream = new(1024 * 1024, Options.Size, true))
+                    using (Stream stream = RandomStream.Create(Options.Size))
                     using (FileStream file = File.Open(filePath, FileMode.Create))
                     {
                         stream.CopyTo(file);
@@ -61,7 +68,7 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
                 foreach (int i in Enumerable.Range(0, Options.Count))
                 {
                     BlobClient blob = container.GetBlobClient($"blob{i}");
-                    using (RepeatingStream stream = new(1024 * 1024, Options.Size, true))
+                    using (Stream stream = RandomStream.Create(Options.Size))
                     {
                         await blob.UploadAsync(stream);
                     }
@@ -76,13 +83,6 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
             StorageResource destination,
             CancellationToken cancellationToken)
         {
-            TransferManagerOptions managerOptions = new()
-            {
-                ErrorHandling = DataTransferErrorMode.StopOnAnyFailure,
-                CheckpointerOptions = Options.DisableCheckpointer ? TransferCheckpointStoreOptions.Disabled() : default
-            };
-            TransferManager transferManager = new(managerOptions);
-
             DataTransferOptions options = new()
             {
                 CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
@@ -90,7 +90,7 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
                 MaximumTransferChunkSize = Options.ChunkSize,
             };
             options.ItemTransferFailed += HandleFailure;
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            DataTransfer transfer = await _transferManager.StartTransferAsync(
                 source, destination, options, cancellationToken);
 
             // The test runs for a specified duration and then cancels the token.
