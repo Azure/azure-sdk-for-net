@@ -50,16 +50,8 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
-        /// <param name="remoteVolumeResourceId">
-        /// The resource ID of the remote volume.
-        /// Serialized Name: ReplicationObject.remoteVolumeResourceId
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="remoteVolumeResourceId"/> is null. </exception>
-        public NetAppReplicationObject(ResourceIdentifier remoteVolumeResourceId)
+        public NetAppReplicationObject()
         {
-            Argument.AssertNotNull(remoteVolumeResourceId, nameof(remoteVolumeResourceId));
-
-            RemoteVolumeResourceId = remoteVolumeResourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
@@ -76,7 +68,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Serialized Name: ReplicationObject.replicationSchedule
         /// </param>
         /// <param name="remoteVolumeResourceId">
-        /// The resource ID of the remote volume.
+        /// The resource ID of the remote volume. Required for cross region and cross zone replication
         /// Serialized Name: ReplicationObject.remoteVolumeResourceId
         /// </param>
         /// <param name="remotePath">
@@ -98,11 +90,6 @@ namespace Azure.ResourceManager.NetApp.Models
             RemoteVolumeRegion = remoteVolumeRegion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/> for deserialization. </summary>
-        internal NetAppReplicationObject()
-        {
-        }
         /// <summary>
         /// Indicates whether the local volume is the source or destination for the Volume Replication
         /// Serialized Name: ReplicationObject.endpointType
@@ -114,7 +101,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; set; }
         /// <summary>
-        /// The resource ID of the remote volume.
+        /// The resource ID of the remote volume. Required for cross region and cross zone replication
         /// Serialized Name: ReplicationObject.remoteVolumeResourceId
         /// </summary>
         public ResourceIdentifier RemoteVolumeResourceId { get; set; }

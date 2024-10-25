@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Serialized Name: ReplicationObject.replicationSchedule
         /// </param>
         /// <param name="remoteVolumeResourceId">
-        /// The resource ID of the remote volume.
+        /// The resource ID of the remote volume. Required for cross region and cross zone replication
         /// Serialized Name: ReplicationObject.remoteVolumeResourceId
         /// </param>
         /// <param name="remotePath">

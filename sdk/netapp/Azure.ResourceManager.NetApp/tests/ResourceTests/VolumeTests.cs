@@ -569,7 +569,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Update the remote volume with dataProtection for Migration (external replication)
             NetAppReplicationObject replication = new()
             {
-                EndpointType = NetAppEndpointType.Destination,
                 RemotePath = new RemotePath() { ExternalHostName = "hostname1", ServerName = "server1", VolumeName = "volume1" }
             };
             NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection() { Replication = replication };
@@ -589,7 +588,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //ClusterPeerCommandResult result = lro.Value;
             //Assert.NotNull(result);
 
-            InvalidOperationException peerException = Assert.ThrowsAsync<InvalidOperationException>(async () => { await volumeResource2.PeerExternalClusterAsync(WaitUntil.Completed, peerClusterRequest); });
+            RequestFailedException peerException = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource2.PeerExternalClusterAsync(WaitUntil.Completed, peerClusterRequest); });
             //Assert.AreEqual(409, peerException.Status);
 
             InvalidOperationException authorizeException = Assert.ThrowsAsync<InvalidOperationException>(async () => { await volumeResource2.AuthorizeExternalReplicationAsync(WaitUntil.Completed); });
