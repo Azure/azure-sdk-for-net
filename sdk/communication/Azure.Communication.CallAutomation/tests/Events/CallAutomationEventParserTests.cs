@@ -997,6 +997,32 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
+        public void CreateCallFailedEventParsed_Test()
+        {
+            CreateCallFailed @event = CallAutomationModelFactory.CreateCallFailed(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                resultInformation: new ResultInformation(code: 400, subCode: 8510, message: "Action failed, some error."),
+                operationContext: "operationContext");
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.CreateCallFailed");
+            if (parsedEvent is CreateCallFailed createCallFailed)
+            {
+                Assert.AreEqual("operationContext", createCallFailed.OperationContext);
+                Assert.AreEqual("callConnectionId", createCallFailed.CallConnectionId);
+                Assert.AreEqual("correlationId", createCallFailed.CorrelationId);
+                Assert.AreEqual("serverCallId", createCallFailed.ServerCallId);
+                Assert.AreEqual(400, createCallFailed.ResultInformation?.Code);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
         public void TranscriptionStartedEventParsed_Test()
         {
             TranscriptionStarted @event = CallAutomationModelFactory.TranscriptionStarted(

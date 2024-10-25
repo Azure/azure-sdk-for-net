@@ -552,5 +552,18 @@ namespace Azure.Communication.CallAutomation
 
             return new TranscriptionFailed(internalObject);
         }
+
+        /// <summary>
+        /// Initializes a new instance of create call failed event.
+        /// </summary>
+        public static CreateCallFailed CreateCallFailed(
+            string callConnectionId = default,
+            string serverCallId = default,
+            string correlationId = default,
+            ResultInformation resultInformation = default,
+            string operationContext = default)
+        {
+            return new CreateCallFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+        }
     }
 }
