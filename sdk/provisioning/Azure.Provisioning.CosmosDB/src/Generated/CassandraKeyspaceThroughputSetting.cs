@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CassandraKeyspaceThroughputSetting.
 /// </summary>
-public partial class CassandraKeyspaceThroughputSetting : Resource
+public partial class CassandraKeyspaceThroughputSetting : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -69,15 +69,15 @@ public partial class CassandraKeyspaceThroughputSetting : Resource
     /// <summary>
     /// Creates a new CassandraKeyspaceThroughputSetting.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CassandraKeyspaceThroughputSetting
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CassandraKeyspaceThroughputSetting.</param>
-    public CassandraKeyspaceThroughputSetting(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/throughputSettings", resourceVersion ?? "2024-08-15")
+    public CassandraKeyspaceThroughputSetting(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/throughputSettings", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -94,11 +94,6 @@ public partial class CassandraKeyspaceThroughputSetting : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -228,7 +223,7 @@ public partial class CassandraKeyspaceThroughputSetting : Resource
     /// <summary>
     /// Creates a reference to an existing CassandraKeyspaceThroughputSetting.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CassandraKeyspaceThroughputSetting
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -236,6 +231,6 @@ public partial class CassandraKeyspaceThroughputSetting : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CassandraKeyspaceThroughputSetting.</param>
     /// <returns>The existing CassandraKeyspaceThroughputSetting resource.</returns>
-    public static CassandraKeyspaceThroughputSetting FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CassandraKeyspaceThroughputSetting FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

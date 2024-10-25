@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppConnectedEnvironmentCertificate.
 /// </summary>
-public partial class ContainerAppConnectedEnvironmentCertificate : Resource
+public partial class ContainerAppConnectedEnvironmentCertificate : ProvisionableResource
 {
     /// <summary>
     /// Name of the Certificate.
@@ -63,7 +63,7 @@ public partial class ContainerAppConnectedEnvironmentCertificate : Resource
     /// <summary>
     /// Creates a new ContainerAppConnectedEnvironmentCertificate.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ContainerAppConnectedEnvironmentCertificate resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
@@ -71,8 +71,8 @@ public partial class ContainerAppConnectedEnvironmentCertificate : Resource
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironmentCertificate.</param>
-    public ContainerAppConnectedEnvironmentCertificate(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.App/connectedEnvironments/certificates", resourceVersion ?? "2024-03-01")
+    public ContainerAppConnectedEnvironmentCertificate(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/connectedEnvironments/certificates", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -88,11 +88,6 @@ public partial class ContainerAppConnectedEnvironmentCertificate : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -113,7 +108,7 @@ public partial class ContainerAppConnectedEnvironmentCertificate : Resource
     /// Creates a reference to an existing
     /// ContainerAppConnectedEnvironmentCertificate.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ContainerAppConnectedEnvironmentCertificate resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
@@ -122,6 +117,6 @@ public partial class ContainerAppConnectedEnvironmentCertificate : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironmentCertificate.</param>
     /// <returns>The existing ContainerAppConnectedEnvironmentCertificate resource.</returns>
-    public static ContainerAppConnectedEnvironmentCertificate FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppConnectedEnvironmentCertificate FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

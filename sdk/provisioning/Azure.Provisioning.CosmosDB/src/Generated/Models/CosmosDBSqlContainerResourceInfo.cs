@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB SQL container resource object.
 /// </summary>
-public partial class CosmosDBSqlContainerResourceInfo : ProvisioningConstruct
+public partial class CosmosDBSqlContainerResourceInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the Cosmos DB SQL container.

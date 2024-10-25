@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ContainerService;
 /// identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity)
 /// for more details on pod identity integration.
 /// </summary>
-public partial class ManagedClusterPodIdentityProfile : ProvisioningConstruct
+public partial class ManagedClusterPodIdentityProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Whether the pod identity addon is enabled.

@@ -4,10 +4,13 @@
 #nullable enable
 
 using System;
+using System.Threading;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CloudMachine.KeyVault;
+using Azure.Provisioning.CloudMachine.OpenAI;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
+using OpenAI.Chat;
 
 namespace Azure.CloudMachine.Tests;
 
@@ -16,17 +19,71 @@ public class CloudMachineTests
     [Theory]
     [TestCase([new string[] { "--init" }])]
     [TestCase([new string[] { "" }])]
-    public void Configure(string[] args)
+    public void Provisioning(string[] args)
     {
-        if (CloudMachineInfrastructure.Configure(args, (cm) => {
-            cm.AddFeature(new KeyVaultFeature()
-            {
-                //Sku = new KeyVaultSku { Name = KeyVaultSkuName.Premium, Family = KeyVaultSkuFamily.A, }
-            });
-        })) return;
+        if (CloudMachineInfrastructure.Configure(args, (cm) =>
+        {
+            cm.AddFeature(new KeyVaultFeature());
+            cm.AddFeature(new OpenAIFeature("gpt-35-turbo", "0125"));
+        }))
+            return;
+
+        CloudMachineWorkspace cm = new();
+        Console.WriteLine(cm.Id);
+    }
+
+    [Ignore("no recordings yet")]
+    [Theory]
+    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "" }])]
+    public void Storage(string[] args)
+    {
+        ManualResetEventSlim eventSlim = new(false);
+        if (CloudMachineInfrastructure.Configure(args, (cm) =>
+        {
+        }))
+            return;
 
         CloudMachineClient cm = new();
-        Console.WriteLine(cm.Id);
+
+        cm.Storage.WhenBlobUploaded((StorageFile file) =>
+        {
+            var data = file.Download();
+            Console.WriteLine(data.ToString());
+            Assert.AreEqual("{\"Foo\":5,\"Bar\":true}", data.ToString());
+            eventSlim.Set();
+        });
+        var uploaded = cm.Storage.UploadBlob(new
+        {
+            Foo = 5,
+            Bar = true
+        });
+        BinaryData downloaded = cm.Storage.DownloadBlob(uploaded);
+        Console.WriteLine(downloaded.ToString());
+        eventSlim.Wait();
+    }
+
+    [Ignore("no recordings yet")]
+    [Theory]
+    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "" }])]
+    public void OpenAI(string[] args)
+    {
+        if (CloudMachineInfrastructure.Configure(args, (cm) =>
+        {
+            cm.AddFeature(new OpenAIFeature("gpt-35-turbo", "0125"));
+        }))
+            return;
+
+        CloudMachineWorkspace cm = new();
+        ChatClient chat = cm.GetOpenAIChatClient();
+        ChatCompletion completion = chat.CompleteChat("Is Azure programming easy?");
+
+        ChatMessageContent content = completion.Content;
+        foreach (ChatMessageContentPart part in content)
+        {
+            Console.WriteLine(part.Text);
+        }
     }
 
     [Ignore("no recordings yet")]
@@ -37,33 +94,13 @@ public class CloudMachineTests
     {
         if (CloudMachineInfrastructure.Configure(args, (cm) =>
         {
-            cm.AddFeature(new KeyVaultFeature()
-            {
-                //Sku = new KeyVaultSku { Name = KeyVaultSkuName.Premium, Family = KeyVaultSkuFamily.A, }
-            });
-        })) return;
+            cm.AddFeature(new KeyVaultFeature());
+        }))
+            return;
 
-        CloudMachineClient cm = new();
-        SecretClient secrets = cm.GetKeyVaultSecretClient();
+        CloudMachineWorkspace cm = new();
+        SecretClient secrets = cm.GetKeyVaultSecretsClient();
         secrets.SetSecret("testsecret", "don't tell anybody");
-    }
-
-    [Ignore("no recordings yet")]
-    [Theory]
-    [TestCase([new string[] { "--init" }])]
-    [TestCase([new string[] { "" }])]
-    public void Storage(string[] args)
-    {
-        if (CloudMachineInfrastructure.Configure(args, (cm) => {
-        })) return;
-
-        CloudMachineClient cm = new();
-        var uploaded = cm.Upload(new
-        {
-            Foo = 5,
-            Bar = true
-        });
-        BinaryData downloaded = cm.Download(uploaded);
     }
 
     [Ignore("no recordings yet")]
@@ -72,14 +109,43 @@ public class CloudMachineTests
     [TestCase([new string[] { "" }])]
     public void Messaging(string[] args)
     {
-        if (CloudMachineInfrastructure.Configure(args, (cm) => {
-        })) return;
+        if (CloudMachineInfrastructure.Configure(args))
+            return;
 
         CloudMachineClient cm = new();
-        cm.Send(new
+        cm.Messaging.WhenMessageReceived(message =>
+        {
+            Console.WriteLine(message);
+            Assert.True(message != null);
+        });
+        cm.Messaging.SendMessage(new
         {
             Foo = 5,
             Bar = true
         });
+    }
+
+    [Ignore("no recordings yet")]
+    [Theory]
+    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "" }])]
+    public void Demo(string[] args)
+    {
+        if (CloudMachineInfrastructure.Configure(args))
+            return;
+
+        CloudMachineClient cm = new();
+
+        // setup
+        cm.Messaging.WhenMessageReceived((string message) => cm.Storage.UploadBlob(message));
+        cm.Storage.WhenBlobUploaded((StorageFile file) =>
+        {
+            var content = file.Download();
+            ChatCompletion completion = cm.GetOpenAIChatClient().CompleteChat(content.ToString());
+            Console.WriteLine(completion.Content[0].Text);
+        });
+
+        // go!
+        cm.Messaging.SendMessage("Tell me something about Redmond, WA.");
     }
 }

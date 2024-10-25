@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Status condition of Kubernetes object.
 /// </summary>
-public partial class KubernetesObjectStatusCondition : ProvisioningConstruct
+public partial class KubernetesObjectStatusCondition : ProvisionableConstruct
 {
     /// <summary>
     /// Last time this status condition has changed.

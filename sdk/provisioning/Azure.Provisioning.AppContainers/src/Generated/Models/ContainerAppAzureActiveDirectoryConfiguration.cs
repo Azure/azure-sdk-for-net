@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the Azure Active directory provider.
 /// </summary>
-public partial class ContainerAppAzureActiveDirectoryConfiguration : ProvisioningConstruct
+public partial class ContainerAppAzureActiveDirectoryConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider

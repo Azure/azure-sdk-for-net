@@ -118,7 +118,7 @@
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.18.2" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.4.0" />
     <PackageReference Update="Azure.MixedReality.Authentication" version= "1.2.0" />
-    <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.4.0-beta.1" />
+    <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.4.0-beta.2" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
     <PackageReference Update="Azure.Identity" Version="1.12.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.6.0" />
@@ -153,9 +153,9 @@
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.7" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.4.0" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.65.0" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.65.0" />
-    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.65.0" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.66.1" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.66.1" />
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.66.1" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
@@ -228,7 +228,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20241010.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20241017.2" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20240813.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" PrivateAssets="All" />
@@ -243,7 +243,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20240913.1" />
+    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20241022.3" />
   </ItemGroup>
 
   <!--
@@ -256,21 +256,21 @@
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
     <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.11.3" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.18.2" />
-    <PackageReference Update="Azure.ResourceManager.Compute" Version="1.2.0" />
+    <PackageReference Update="Azure.ResourceManager.Compute" Version="1.7.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.3.0" />
     <PackageReference Update="Azure.ResourceManager.KeyVault" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.ManagedServiceIdentities" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.Network" Version="1.5.0" />
-    <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.1.0" />
+    <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.3.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager.PrivateDns" Version="1.0.1" />
-    <PackageReference Update="Azure.ResourceManager.RecoveryServices" Version="1.1.0" />
+    <PackageReference Update="Azure.ResourceManager.RecoveryServices" Version="1.2.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager.Resources" Version="1.6.0" />
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.1.1" />
     <PackageReference Update="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.3" />
     <PackageReference Update="Azure.ResourceManager.KubernetesConfiguration" Version="1.2.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager.ExtendedLocations" Version="1.1.0-beta.1" />
-    <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.0.0" />
-    <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.1.0" />
+    <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.2.0-beta.1" />
+    <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.3.0-beta.1" />
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.6.0" />
@@ -313,6 +313,7 @@
     <PackageReference Update="Microsoft.Azure.ResourceManager" Version="[1.1.0-preview]" />
     <PackageReference Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
+    <PackageReference Update="Microsoft.Azure.Storage.DataMovement" Version="2.0.5" />
     <PackageReference Update="Microsoft.Azure.Storage.File" Version="11.2.2" />
     <PackageReference Update="Microsoft.Azure.Storage.Queue" Version="11.1.7" />
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.3, 2.0.0)" />
@@ -325,7 +326,7 @@
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.10" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="5.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Hosting" Version="8.0.1" />
     <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="8.0.0-rc.1.23419.4" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="3.1.32" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />

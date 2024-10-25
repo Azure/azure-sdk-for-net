@@ -14,7 +14,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// A class representing the WebPubSubSharedPrivateLink data model.
 /// Describes a Shared Private Link Resource
 /// </summary>
-public partial class WebPubSubSharedPrivateLinkData : ProvisioningConstruct
+public partial class WebPubSubSharedPrivateLinkData : ProvisionableConstruct
 {
     /// <summary>
     /// The group id from the provider of resource the shared private link

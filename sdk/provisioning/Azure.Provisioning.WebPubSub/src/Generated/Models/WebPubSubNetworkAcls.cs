@@ -12,7 +12,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// Network ACLs for the resource.
 /// </summary>
-public partial class WebPubSubNetworkAcls : ProvisioningConstruct
+public partial class WebPubSubNetworkAcls : ProvisionableConstruct
 {
     /// <summary>
     /// Azure Networking ACL Action.

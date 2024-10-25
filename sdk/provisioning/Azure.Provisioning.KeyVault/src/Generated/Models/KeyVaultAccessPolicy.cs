@@ -13,7 +13,7 @@ namespace Azure.Provisioning.KeyVault;
 /// An identity that have access to the key vault. All identities in the array
 /// must use the same tenant ID as the key vault&apos;s tenant ID.
 /// </summary>
-public partial class KeyVaultAccessPolicy : ProvisioningConstruct
+public partial class KeyVaultAccessPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// The Azure Active Directory tenant ID that should be used for

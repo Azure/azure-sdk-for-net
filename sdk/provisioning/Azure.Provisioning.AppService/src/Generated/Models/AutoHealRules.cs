@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Rules that can be defined for auto-heal.
 /// </summary>
-public partial class AutoHealRules : ProvisioningConstruct
+public partial class AutoHealRules : ProvisionableConstruct
 {
     /// <summary>
     /// Conditions that describe when to execute the auto-heal actions.

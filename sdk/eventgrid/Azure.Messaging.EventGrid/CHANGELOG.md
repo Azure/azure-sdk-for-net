@@ -1,6 +1,6 @@
 # Release History
 
-## 4.27.0-beta.1 (Unreleased)
+## 4.28.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.27.0 (2024-10-14)
+
+### Features Added
+
+- Added `OnBehalfOfCallee` property to `AcsIncomingCallEventData` event.
 
 ## 4.26.0 (2024-09-18)
 

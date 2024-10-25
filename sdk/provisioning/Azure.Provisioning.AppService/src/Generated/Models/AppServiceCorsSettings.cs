@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Cross-Origin Resource Sharing (CORS) settings for the app.
 /// </summary>
-public partial class AppServiceCorsSettings : ProvisioningConstruct
+public partial class AppServiceCorsSettings : ProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets the list of origins that should be allowed to make

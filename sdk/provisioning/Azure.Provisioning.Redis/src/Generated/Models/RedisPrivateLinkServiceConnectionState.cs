@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Redis;
 /// A collection of information about the state of the connection between
 /// service consumer and provider.
 /// </summary>
-public partial class RedisPrivateLinkServiceConnectionState : ProvisioningConstruct
+public partial class RedisPrivateLinkServiceConnectionState : ProvisionableConstruct
 {
     /// <summary>
     /// Indicates whether the connection has been Approved/Rejected/Removed by

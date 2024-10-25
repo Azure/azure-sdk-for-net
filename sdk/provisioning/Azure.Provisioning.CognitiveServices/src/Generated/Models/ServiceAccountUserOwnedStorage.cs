@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// The user owned storage for Cognitive Services account.
 /// </summary>
-public partial class ServiceAccountUserOwnedStorage : ProvisioningConstruct
+public partial class ServiceAccountUserOwnedStorage : ProvisionableConstruct
 {
     /// <summary>
     /// Full resource id of a Microsoft.Storage resource.

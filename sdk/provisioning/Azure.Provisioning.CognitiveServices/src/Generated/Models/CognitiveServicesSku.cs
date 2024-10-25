@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// The resource model definition representing SKU.
 /// </summary>
-public partial class CognitiveServicesSku : ProvisioningConstruct
+public partial class CognitiveServicesSku : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the SKU. Ex - P3. It is typically a letter+number code.

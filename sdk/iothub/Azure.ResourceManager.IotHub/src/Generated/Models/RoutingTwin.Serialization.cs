@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.IotHub.Models
 
         void IJsonModel<RoutingTwin>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RoutingTwin>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoutingTwin)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.IotHub.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RoutingTwin IJsonModel<RoutingTwin>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

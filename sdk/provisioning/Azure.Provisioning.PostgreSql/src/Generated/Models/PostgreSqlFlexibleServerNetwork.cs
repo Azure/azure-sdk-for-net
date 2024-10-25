@@ -11,7 +11,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// Network properties of a server.
 /// </summary>
-public partial class PostgreSqlFlexibleServerNetwork : ProvisioningConstruct
+public partial class PostgreSqlFlexibleServerNetwork : ProvisionableConstruct
 {
     /// <summary>
     /// public network access is enabled or not.

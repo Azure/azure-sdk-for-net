@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// The value of a parameter.
 /// </summary>
-public partial class ArmPolicyParameterValue : ProvisioningConstruct
+public partial class ArmPolicyParameterValue : ProvisionableConstruct
 {
     /// <summary>
     /// The value of the parameter.                          To assign an

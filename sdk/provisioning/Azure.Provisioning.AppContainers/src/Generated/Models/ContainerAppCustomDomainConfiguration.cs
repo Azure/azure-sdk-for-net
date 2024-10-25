@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Configuration properties for apps environment custom domain.
 /// </summary>
-public partial class ContainerAppCustomDomainConfiguration : ProvisioningConstruct
+public partial class ContainerAppCustomDomainConfiguration : ProvisionableConstruct
 {
     /// <summary>
     /// Id used to verify domain name ownership.

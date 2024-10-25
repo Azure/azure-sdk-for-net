@@ -14,7 +14,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Configuration of an App Service app.
 /// </summary>
-public partial class SiteConfigProperties : ProvisioningConstruct
+public partial class SiteConfigProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Number of workers.

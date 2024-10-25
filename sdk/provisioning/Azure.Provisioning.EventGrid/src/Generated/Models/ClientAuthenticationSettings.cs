@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Client authentication settings for namespace resource.
 /// </summary>
-public partial class ClientAuthenticationSettings : ProvisioningConstruct
+public partial class ClientAuthenticationSettings : ProvisionableConstruct
 {
     /// <summary>
     /// Alternative authentication name sources related to client

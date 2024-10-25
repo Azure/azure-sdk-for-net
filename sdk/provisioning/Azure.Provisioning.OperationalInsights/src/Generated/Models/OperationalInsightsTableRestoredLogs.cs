@@ -11,7 +11,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// Restore parameters.
 /// </summary>
-public partial class OperationalInsightsTableRestoredLogs : ProvisioningConstruct
+public partial class OperationalInsightsTableRestoredLogs : ProvisionableConstruct
 {
     /// <summary>
     /// The timestamp to start the restore from (UTC).

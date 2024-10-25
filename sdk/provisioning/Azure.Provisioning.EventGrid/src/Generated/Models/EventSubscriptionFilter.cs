@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Filter for the Event Subscription.
 /// </summary>
-public partial class EventSubscriptionFilter : ProvisioningConstruct
+public partial class EventSubscriptionFilter : ProvisionableConstruct
 {
     /// <summary>
     /// An optional string to filter events for an event subscription based on

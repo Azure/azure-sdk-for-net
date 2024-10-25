@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Storage;
 /// &apos;Container&apos; definition.objectType only prefixMatch is applicable
 /// and is optional.
 /// </summary>
-public partial class BlobInventoryPolicyFilter : ProvisioningConstruct
+public partial class BlobInventoryPolicyFilter : ProvisionableConstruct
 {
     /// <summary>
     /// An array of strings with maximum 10 blob prefixes to be included in the

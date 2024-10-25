@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ApplicationInsights;
 /// <summary>
 /// ApplicationInsightsComponent.
 /// </summary>
-public partial class ApplicationInsightsComponent : Resource
+public partial class ApplicationInsightsComponent : ProvisionableResource
 {
     /// <summary>
     /// The name of the Application Insights component resource.
@@ -240,15 +240,15 @@ public partial class ApplicationInsightsComponent : Resource
     /// <summary>
     /// Creates a new ApplicationInsightsComponent.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ApplicationInsightsComponent
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsComponent.</param>
-    public ApplicationInsightsComponent(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Insights/components", resourceVersion ?? "2020-02-02")
+    public ApplicationInsightsComponent(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Insights/components", resourceVersion ?? "2020-02-02")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isRequired: true);
@@ -290,11 +290,6 @@ public partial class ApplicationInsightsComponent : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2020-02-02-preview.
-        /// </summary>
-        public static readonly string V2020_02_02_preview = "2020-02-02-preview";
-
-        /// <summary>
         /// 2020-02-02.
         /// </summary>
         public static readonly string V2020_02_02 = "2020-02-02";
@@ -318,7 +313,7 @@ public partial class ApplicationInsightsComponent : Resource
     /// <summary>
     /// Creates a reference to an existing ApplicationInsightsComponent.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ApplicationInsightsComponent
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -326,8 +321,8 @@ public partial class ApplicationInsightsComponent : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsComponent.</param>
     /// <returns>The existing ApplicationInsightsComponent resource.</returns>
-    public static ApplicationInsightsComponent FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ApplicationInsightsComponent FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ApplicationInsightsComponent
@@ -346,10 +341,10 @@ public partial class ApplicationInsightsComponent : Resource
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
     public RoleAssignment CreateRoleAssignment(ApplicationInsightsBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{IdentifierName}_{identity.IdentifierName}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}")
+        new($"{BicepIdentifier}_{identity.BicepIdentifier}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(IdentifierName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
@@ -362,13 +357,13 @@ public partial class ApplicationInsightsComponent : Resource
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
-    /// <param name="identifierNameSuffix">Optional role assignment identifier name suffix.</param>
+    /// <param name="bicepIdentifierSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment CreateRoleAssignment(ApplicationInsightsBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? identifierNameSuffix = default) =>
-        new($"{IdentifierName}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}{(identifierNameSuffix is null ? "" : "_")}{identifierNameSuffix}")
+    public RoleAssignment CreateRoleAssignment(ApplicationInsightsBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? bicepIdentifierSuffix = default) =>
+        new($"{BicepIdentifier}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}{(bicepIdentifierSuffix is null ? "" : "_")}{bicepIdentifierSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(IdentifierName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

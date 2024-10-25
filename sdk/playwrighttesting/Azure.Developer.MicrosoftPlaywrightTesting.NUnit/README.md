@@ -55,7 +55,7 @@ Create a file `PlaywrightServiceSetup.cs` in the root directory with the below c
 ```C# Snippet:Sample2_SetDefaultAuthenticationMechanism
 using Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 
-namespace PlaywrightATests; // Remember to change this as per your project namespace
+namespace PlaywrightTests; // Remember to change this as per your project namespace
 
 [SetUpFixture]
 public class PlaywrightServiceSetup : PlaywrightServiceNUnit {};
@@ -81,7 +81,7 @@ Ensure that the `PLAYWRIGHT_SERVICE_URL` that you obtained in previous step is a
 Run Playwright tests against browsers managed by the service using the configuration you created above.
 
 ```dotnetcli
-dotnet test --logger "ms-playwright-service"
+dotnet test --logger "microsoft-playwright-testing"
 ```
 
 ## Key concepts

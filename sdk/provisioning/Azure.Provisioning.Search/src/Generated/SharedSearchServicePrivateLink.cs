@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Search;
 /// <summary>
 /// SharedSearchServicePrivateLink.
 /// </summary>
-public partial class SharedSearchServicePrivateLink : Resource
+public partial class SharedSearchServicePrivateLink : ProvisionableResource
 {
     /// <summary>
     /// The name of the shared private link resource managed by the Azure AI
@@ -52,15 +52,15 @@ public partial class SharedSearchServicePrivateLink : Resource
     /// <summary>
     /// Creates a new SharedSearchServicePrivateLink.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SharedSearchServicePrivateLink
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SharedSearchServicePrivateLink.</param>
-    public SharedSearchServicePrivateLink(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Search/searchServices/sharedPrivateLinkResources", resourceVersion ?? "2023-11-01")
+    public SharedSearchServicePrivateLink(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Search/searchServices/sharedPrivateLinkResources", resourceVersion ?? "2023-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<SharedSearchServicePrivateLinkResourceProperties>.DefineProperty(this, "Properties", ["properties"]);
@@ -143,7 +143,7 @@ public partial class SharedSearchServicePrivateLink : Resource
     /// <summary>
     /// Creates a reference to an existing SharedSearchServicePrivateLink.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SharedSearchServicePrivateLink
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -151,6 +151,6 @@ public partial class SharedSearchServicePrivateLink : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SharedSearchServicePrivateLink.</param>
     /// <returns>The existing SharedSearchServicePrivateLink resource.</returns>
-    public static SharedSearchServicePrivateLink FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SharedSearchServicePrivateLink FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

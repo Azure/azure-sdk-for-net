@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// The policy property value override.
 /// </summary>
-public partial class PolicyOverride : ProvisioningConstruct
+public partial class PolicyOverride : ProvisionableConstruct
 {
     /// <summary>
     /// The override kind.

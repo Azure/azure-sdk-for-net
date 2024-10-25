@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ArmDeploymentScript.
 /// </summary>
-public partial class ArmDeploymentScript : Resource
+public partial class ArmDeploymentScript : ProvisionableResource
 {
     /// <summary>
     /// Name of the deployment script.
@@ -58,15 +58,15 @@ public partial class ArmDeploymentScript : Resource
     /// <summary>
     /// Creates a new ArmDeploymentScript.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ArmDeploymentScript resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ArmDeploymentScript.</param>
-    public ArmDeploymentScript(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Resources/deploymentScripts", resourceVersion ?? "2023-08-01")
+    public ArmDeploymentScript(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Resources/deploymentScripts", resourceVersion ?? "2023-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -95,7 +95,7 @@ public partial class ArmDeploymentScript : Resource
     /// <summary>
     /// Creates a reference to an existing ArmDeploymentScript.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ArmDeploymentScript resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -103,6 +103,6 @@ public partial class ArmDeploymentScript : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ArmDeploymentScript.</param>
     /// <returns>The existing ArmDeploymentScript resource.</returns>
-    public static ArmDeploymentScript FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ArmDeploymentScript FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

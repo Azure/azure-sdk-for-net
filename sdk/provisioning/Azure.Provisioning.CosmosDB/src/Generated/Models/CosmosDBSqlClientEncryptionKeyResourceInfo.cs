@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB client encryption key resource object.
 /// </summary>
-public partial class CosmosDBSqlClientEncryptionKeyResourceInfo : ProvisioningConstruct
+public partial class CosmosDBSqlClientEncryptionKeyResourceInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the ClientEncryptionKey.

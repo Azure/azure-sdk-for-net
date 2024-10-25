@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB Cassandra table schema.
 /// </summary>
-public partial class CassandraSchema : ProvisioningConstruct
+public partial class CassandraSchema : ProvisionableConstruct
 {
     /// <summary>
     /// List of Cassandra table columns.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// The appliance package support URLs.
 /// </summary>
-public partial class ArmApplicationPackageSupportUris : ProvisioningConstruct
+public partial class ArmApplicationPackageSupportUris : ProvisionableConstruct
 {
     /// <summary>
     /// The public azure support URL.
