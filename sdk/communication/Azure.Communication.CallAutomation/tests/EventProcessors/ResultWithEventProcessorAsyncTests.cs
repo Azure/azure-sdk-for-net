@@ -44,6 +44,29 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         }
 
         [Test]
+        public async Task CreateCallEventResultFailedTest()
+        {
+            // Failed with operation mismatch
+            int successCode = (int)HttpStatusCode.Created;
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(
+                responseCode: successCode,
+                responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
+                options: new CallAutomationClientOptions() { Source = new CommunicationUserIdentifier("12345") });
+            CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
+            var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
+            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            SendAndProcessEvent(handler, new CreateCallFailed(CallConnectionId, ServerCallId, CorelationId, "mismatchedOperationId", null));
+            CreateCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+            // Assert
+            Assert.NotNull(returnedResult);
+            Assert.AreEqual(false, returnedResult.IsSuccess);
+            Assert.NotNull(returnedResult.FailureResult);
+            Assert.IsNull(returnedResult.SuccessResult);
+            Assert.AreEqual(typeof(CreateCallFailed), returnedResult.FailureResult.GetType());
+            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
+        }
+
+        [Test]
         public async Task AnswerCallEventResultSuccessTest()
         {
             int successCode = (int)HttpStatusCode.OK;

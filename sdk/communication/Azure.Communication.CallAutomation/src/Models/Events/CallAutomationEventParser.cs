@@ -158,6 +158,8 @@ namespace Azure.Communication.CallAutomation
                     return MediaStreamingStopped.Deserialize(eventData);
                 case nameof(MediaStreamingFailed):
                     return MediaStreamingFailed.Deserialize(eventData);
+                case nameof(CreateCallFailed):
+                    return CreateCallFailed.Deserialize(eventData);
                 default:
                     return null;
             }
