@@ -42,7 +42,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Implementa
             string fileRelativePath = "test/path";
             string expectedPath = "https://example.com/container/test/path?";
 
-            string result = BlobService.GetCloudFilePath(uri, fileRelativePath);
+            string? result = _blobService?.GetCloudFilePath(uri, fileRelativePath);
 
             Assert.AreEqual(expectedPath, result);
         }
@@ -54,7 +54,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Implementa
             string fileRelativePath = "test/path";
             string expectedPath = "https://example.com/container/test/path?sasToken";
 
-            string result = BlobService.GetCloudFilePath(uri, fileRelativePath);
+            string? result = _blobService?.GetCloudFilePath(uri, fileRelativePath);
 
             Assert.AreEqual(expectedPath, result);
         }

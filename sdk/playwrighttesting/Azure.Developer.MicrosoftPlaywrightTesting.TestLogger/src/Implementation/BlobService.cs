@@ -35,7 +35,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             }
         }
 
-        public static string GetCloudFilePath(string uri, string fileRelativePath)
+        public string GetCloudFilePath(string uri, string fileRelativePath)
         {
             string[] parts = uri.Split(new string[] { ReporterConstants.s_sASUriSeparator }, StringSplitOptions.None);
             string containerUri = parts[0];
