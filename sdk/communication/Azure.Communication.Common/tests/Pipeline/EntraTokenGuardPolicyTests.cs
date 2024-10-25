@@ -112,6 +112,8 @@ namespace Azure.Communication.Pipeline
             }
         }
 
+        [Test]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task Process_PrevExchangeCallFailed_CallsProcessNext(bool async)
         {
