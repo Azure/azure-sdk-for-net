@@ -10,8 +10,6 @@ namespace Azure.ResourceManager.Terraform.Tests
 {
     public class ExportTerraformTests : TerraformManagementTestBase
     {
-        private static readonly TerraformManagementTestEnvironment s_env = new();
-
         public ExportTerraformTests(bool isAsync) : base(isAsync)
         {
         }
@@ -20,8 +18,8 @@ namespace Azure.ResourceManager.Terraform.Tests
         [RecordedTest]
         public async Task ExportResourceGroupTest()
         {
-            string resourceGroupName = s_env.ResourceGroup;
-            string vnetName = s_env.VNetName;
+            string resourceGroupName = TestEnvironment.ResourceGroup;
+            string vnetName = TestEnvironment.VNetName;
             ExportResourceGroup exportResourceGroup = new(resourceGroupName);
 
             ArmOperation<TerraformOperationStatus> operationStatus = await DefaultSubscription.ExportTerraformAsync(WaitUntil.Completed, exportResourceGroup);
@@ -38,8 +36,8 @@ namespace Azure.ResourceManager.Terraform.Tests
         [RecordedTest]
         public async Task ExportQueryTest()
         {
-            string resourceGroupName = s_env.ResourceGroup;
-            string vnetName = s_env.VNetName;
+            string resourceGroupName = TestEnvironment.ResourceGroup;
+            string vnetName = TestEnvironment.VNetName;
             ExportQuery exportQuery = new($"resourceGroup =~ \"{resourceGroupName}\"");
 
             ArmOperation<TerraformOperationStatus> operationStatus = await DefaultSubscription.ExportTerraformAsync(WaitUntil.Completed, exportQuery);
@@ -53,8 +51,8 @@ namespace Azure.ResourceManager.Terraform.Tests
         [RecordedTest]
         public async Task ExportResourceTest()
         {
-            string vnetName = s_env.VNetName;
-            ExportResourceTerraform exportResource = new(new[] { s_env.VNetId });
+            string vnetName = TestEnvironment.VNetName;
+            ExportResourceTerraform exportResource = new(new[] { TestEnvironment.VNetId });
 
             ArmOperation<TerraformOperationStatus> operationStatus = await DefaultSubscription.ExportTerraformAsync(WaitUntil.Completed, exportResource);
 

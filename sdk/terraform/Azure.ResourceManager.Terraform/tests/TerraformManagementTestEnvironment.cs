@@ -9,9 +9,6 @@ namespace Azure.ResourceManager.Terraform.Tests
     public class TerraformManagementTestEnvironment : TestEnvironment
     {
         public string VNetName => GetRecordedVariable("VNET_NAME");
-
         public ResourceIdentifier VNetId => new(GetRecordedVariable("VNET_ID"));
-
-        public TerraformManagementTestEnvironment() { }
     }
 }
