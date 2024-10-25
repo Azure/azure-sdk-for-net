@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             InvalidOperationException peerException = Assert.ThrowsAsync<InvalidOperationException>(async () => { await volumeResource2.PeerExternalClusterAsync(WaitUntil.Completed, peerClusterRequest); });
             //Assert.AreEqual(409, peerException.Status);
 
-            RequestFailedException authorizeException = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource2.AuthorizeExternalReplicationAsync(WaitUntil.Completed); });
+            InvalidOperationException authorizeException = Assert.ThrowsAsync<InvalidOperationException>(async () => { await volumeResource2.AuthorizeExternalReplicationAsync(WaitUntil.Completed); });
             //Assert.AreEqual(400, authorizeException.Status);
 
             RequestFailedException performException = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource2.PerformReplicationTransferAsync(WaitUntil.Completed); });
