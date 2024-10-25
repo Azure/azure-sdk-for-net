@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Materialized View definition for the container.
 /// </summary>
-public partial class MaterializedViewDefinition : ProvisioningConstruct
+public partial class MaterializedViewDefinition : ProvisionableConstruct
 {
     /// <summary>
     /// An unique identifier for the source collection. This is a system

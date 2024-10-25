@@ -57,7 +57,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void CustomAuthorityHost()
         {
-            string envHostValue = AzureAuthorityHosts.AzureGermany.ToString();
+            string envHostValue = AzureAuthorityHosts.AzureGovernment.ToString();
 
             using (new TestEnvVar("AZURE_AUTHORITY_HOST", envHostValue))
             {

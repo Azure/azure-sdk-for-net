@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Logic.Models
 
         void IJsonModel<AS2ErrorSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AS2ErrorSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AS2ErrorSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("suspendDuplicateMessage"u8);
             writer.WriteBooleanValue(SuspendDuplicateMessage);
             writer.WritePropertyName("resendIfMDNNotReceived"u8);
@@ -45,7 +53,6 @@ namespace Azure.ResourceManager.Logic.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AS2ErrorSettings IJsonModel<AS2ErrorSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Settings for upgrading an agentpool.
 /// </summary>
-public partial class AgentPoolUpgradeSettings : ProvisioningConstruct
+public partial class AgentPoolUpgradeSettings : ProvisionableConstruct
 {
     /// <summary>
     /// This can either be set to an integer (e.g. &apos;5&apos;) or a

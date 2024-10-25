@@ -20,7 +20,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppManagedEnvironment.
 /// </summary>
-public partial class ContainerAppManagedEnvironment : Resource
+public partial class ContainerAppManagedEnvironment : ProvisionableResource
 {
     /// <summary>
     /// Name of the Environment.
@@ -170,15 +170,15 @@ public partial class ContainerAppManagedEnvironment : Resource
     /// <summary>
     /// Creates a new ContainerAppManagedEnvironment.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerAppManagedEnvironment
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironment.</param>
-    public ContainerAppManagedEnvironment(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.App/managedEnvironments", resourceVersion ?? "2024-03-01")
+    public ContainerAppManagedEnvironment(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/managedEnvironments", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -211,11 +211,6 @@ public partial class ContainerAppManagedEnvironment : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
-        /// <summary>
         /// 2024-03-01.
         /// </summary>
         public static readonly string V2024_03_01 = "2024-03-01";
@@ -239,7 +234,7 @@ public partial class ContainerAppManagedEnvironment : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerAppManagedEnvironment.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerAppManagedEnvironment
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -247,8 +242,8 @@ public partial class ContainerAppManagedEnvironment : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironment.</param>
     /// <returns>The existing ContainerAppManagedEnvironment resource.</returns>
-    public static ContainerAppManagedEnvironment FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppManagedEnvironment FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Creates a role assignment for a user-assigned identity that grants
@@ -258,10 +253,10 @@ public partial class ContainerAppManagedEnvironment : Resource
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
     public RoleAssignment CreateRoleAssignment(AppContainersBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{IdentifierName}_{identity.IdentifierName}_{AppContainersBuiltInRole.GetBuiltInRoleName(role)}")
+        new($"{BicepIdentifier}_{identity.BicepIdentifier}_{AppContainersBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(IdentifierName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
@@ -274,13 +269,13 @@ public partial class ContainerAppManagedEnvironment : Resource
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
-    /// <param name="identifierNameSuffix">Optional role assignment identifier name suffix.</param>
+    /// <param name="bicepIdentifierSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment CreateRoleAssignment(AppContainersBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? identifierNameSuffix = default) =>
-        new($"{IdentifierName}_{AppContainersBuiltInRole.GetBuiltInRoleName(role)}{(identifierNameSuffix is null ? "" : "_")}{identifierNameSuffix}")
+    public RoleAssignment CreateRoleAssignment(AppContainersBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? bicepIdentifierSuffix = default) =>
+        new($"{BicepIdentifier}_{AppContainersBuiltInRole.GetBuiltInRoleName(role)}{(bicepIdentifierSuffix is null ? "" : "_")}{bicepIdentifierSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(IdentifierName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

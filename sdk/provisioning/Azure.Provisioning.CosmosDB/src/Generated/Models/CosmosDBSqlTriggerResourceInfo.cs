@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Cosmos DB SQL trigger resource object.
 /// </summary>
-public partial class CosmosDBSqlTriggerResourceInfo : ProvisioningConstruct
+public partial class CosmosDBSqlTriggerResourceInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the Cosmos DB SQL trigger.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Database connection string information.
 /// </summary>
-public partial class ConnStringInfo : ProvisioningConstruct
+public partial class ConnStringInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Name of connection string.

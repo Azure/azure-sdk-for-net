@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlDatabase.
 /// </summary>
-public partial class SqlDatabase : Resource
+public partial class SqlDatabase : ProvisionableResource
 {
     /// <summary>
     /// The name of the database.
@@ -476,15 +476,15 @@ public partial class SqlDatabase : Resource
     /// <summary>
     /// Creates a new SqlDatabase.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlDatabase resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SqlDatabase.</param>
-    public SqlDatabase(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/databases", resourceVersion ?? "2021-11-01")
+    public SqlDatabase(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -552,11 +552,6 @@ public partial class SqlDatabase : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
@@ -580,7 +575,7 @@ public partial class SqlDatabase : Resource
     /// <summary>
     /// Creates a reference to an existing SqlDatabase.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SqlDatabase resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -588,8 +583,8 @@ public partial class SqlDatabase : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlDatabase.</param>
     /// <returns>The existing SqlDatabase resource.</returns>
-    public static SqlDatabase FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SqlDatabase FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this SqlDatabase resource.

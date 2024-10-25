@@ -1,16 +1,27 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2024-10-24)
+
+### Features Added
+
+- Add pageSize support to Salesforce V2 Source.
+- Add pageSize support to ServiceNow V2 Source.
+- Add host property to Snowflake linked service.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Bugs Fixed
+
+- Fix missing authenticationType in PostgreSQL V2 linked service.
 
 ## 1.4.0 (2024-09-10)
 

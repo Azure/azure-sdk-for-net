@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid;
 /// The identity information for retrieving the certificate for custom JWT
 /// authentication.
 /// </summary>
-public partial class CustomJwtAuthenticationManagedIdentity : ProvisioningConstruct
+public partial class CustomJwtAuthenticationManagedIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// The type of managed identity used. Can be either

@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<DataTransferJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataTransferJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataTransferJobProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(JobName))
             {
                 writer.WritePropertyName("jobName"u8);
@@ -91,7 +99,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataTransferJobProperties IJsonModel<DataTransferJobProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

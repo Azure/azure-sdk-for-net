@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// The JIT authorization policies.
 /// </summary>
-public partial class JitAuthorizationPolicies : ProvisioningConstruct
+public partial class JitAuthorizationPolicies : ProvisionableConstruct
 {
     /// <summary>
     /// The the principal id that will be granted JIT access.

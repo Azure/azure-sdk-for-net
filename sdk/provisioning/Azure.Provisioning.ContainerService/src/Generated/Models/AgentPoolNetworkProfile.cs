@@ -13,7 +13,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Network settings of an agent pool.
 /// </summary>
-public partial class AgentPoolNetworkProfile : ProvisioningConstruct
+public partial class AgentPoolNetworkProfile : ProvisionableConstruct
 {
     /// <summary>
     /// IPTags of instance-level public IPs.

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         void IJsonModel<DnsZone>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DnsZone>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DnsZone)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SubResource))
             {
                 writer.WritePropertyName("subResource"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DnsZone IJsonModel<DnsZone>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

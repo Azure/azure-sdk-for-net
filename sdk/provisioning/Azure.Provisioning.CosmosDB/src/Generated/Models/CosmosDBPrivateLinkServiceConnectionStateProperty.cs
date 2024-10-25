@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Connection State of the Private Endpoint Connection.
 /// </summary>
-public partial class CosmosDBPrivateLinkServiceConnectionStateProperty : ProvisioningConstruct
+public partial class CosmosDBPrivateLinkServiceConnectionStateProperty : ProvisionableConstruct
 {
     /// <summary>
     /// The private link service connection status.

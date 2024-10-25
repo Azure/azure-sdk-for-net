@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// InstancePool.
 /// </summary>
-public partial class InstancePool : Resource
+public partial class InstancePool : ProvisionableResource
 {
     /// <summary>
     /// The name of the instance pool to be created or updated.
@@ -90,15 +90,15 @@ public partial class InstancePool : Resource
     /// <summary>
     /// Creates a new InstancePool.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the InstancePool resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the InstancePool.</param>
-    public InstancePool(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/instancePools", resourceVersion ?? "2021-11-01")
+    public InstancePool(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/instancePools", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -119,11 +119,6 @@ public partial class InstancePool : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
@@ -132,7 +127,7 @@ public partial class InstancePool : Resource
     /// <summary>
     /// Creates a reference to an existing InstancePool.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the InstancePool resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -140,6 +135,6 @@ public partial class InstancePool : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the InstancePool.</param>
     /// <returns>The existing InstancePool resource.</returns>
-    public static InstancePool FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static InstancePool FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

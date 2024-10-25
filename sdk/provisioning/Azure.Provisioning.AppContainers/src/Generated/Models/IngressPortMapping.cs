@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// Port mappings of container app ingress.
 /// </summary>
-public partial class IngressPortMapping : ProvisioningConstruct
+public partial class IngressPortMapping : ProvisionableConstruct
 {
     /// <summary>
     /// Specifies whether the app port is accessible outside of the environment.

@@ -49,6 +49,7 @@ trigger:
     - sdk/consumption/Azure.ResourceManager.Consumption
     - sdk/containerapps/Azure.ResourceManager.AppContainers
     - sdk/containerinstance/Azure.ResourceManager.ContainerInstance
+    - sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB
@@ -251,6 +252,7 @@ pr:
     - sdk/consumption/Azure.ResourceManager.Consumption
     - sdk/containerapps/Azure.ResourceManager.AppContainers
     - sdk/containerinstance/Azure.ResourceManager.ContainerInstance
+    - sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB

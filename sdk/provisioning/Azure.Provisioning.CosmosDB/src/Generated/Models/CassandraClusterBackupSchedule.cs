@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// The CassandraClusterBackupSchedule.
 /// </summary>
-public partial class CassandraClusterBackupSchedule : ProvisioningConstruct
+public partial class CassandraClusterBackupSchedule : ProvisionableConstruct
 {
     /// <summary>
     /// The unique identifier of backup schedule.

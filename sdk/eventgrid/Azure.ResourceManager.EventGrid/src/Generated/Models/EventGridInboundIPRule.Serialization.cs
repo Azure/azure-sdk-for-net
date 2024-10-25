@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         void IJsonModel<EventGridInboundIPRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<EventGridInboundIPRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EventGridInboundIPRule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IPMask))
             {
                 writer.WritePropertyName("ipMask"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.EventGrid.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         EventGridInboundIPRule IJsonModel<EventGridInboundIPRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

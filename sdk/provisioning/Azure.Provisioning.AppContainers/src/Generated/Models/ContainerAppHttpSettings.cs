@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppContainers;
 /// authorization requests made against ContainerApp Service
 /// Authentication/Authorization.
 /// </summary>
-public partial class ContainerAppHttpSettings : ProvisioningConstruct
+public partial class ContainerAppHttpSettings : ProvisionableConstruct
 {
     /// <summary>
     /// &lt;code&gt;false&lt;/code&gt; if the authentication/authorization

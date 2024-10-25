@@ -5,66 +5,73 @@
 
 #nullable disable
 
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
     internal static partial class ClientPipelineExtensions
     {
-        public static async ValueTask<PipelineResponse> ProcessMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
+        public static async ValueTask<Response> ProcessMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext options)
         {
-            await pipeline.SendAsync(message).ConfigureAwait(false);
+            await pipeline.SendAsync(message, default).ConfigureAwait(false);
 
-            if (message.Response.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
+            if (message.Response.IsError && (options?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
             {
-                throw await ClientResultException.CreateAsync(message.Response).ConfigureAwait(false);
+                throw new RequestFailedException(message.Response);
             }
 
-            PipelineResponse response = message.BufferResponse ? message.Response : message.ExtractResponse();
+            Response response = message.BufferResponse ? message.Response : ExtractResponseContent(message);
             return response;
         }
 
-        public static PipelineResponse ProcessMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
+        public static Response ProcessMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext options)
         {
-            pipeline.Send(message);
+            pipeline.Send(message, default);
 
-            if (message.Response.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
+            if (message.Response.IsError && (options?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
             {
-                throw new ClientResultException(message.Response);
+                throw new RequestFailedException(message.Response);
             }
 
-            PipelineResponse response = message.BufferResponse ? message.Response : message.ExtractResponse();
+            Response response = message.BufferResponse ? message.Response : ExtractResponseContent(message);
             return response;
         }
 
-        public static async ValueTask<ClientResult<bool>> ProcessHeadAsBoolMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
+        public static async ValueTask<Response<bool>> ProcessHeadAsBoolMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext options)
         {
-            PipelineResponse response = await pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            Response response = await pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
             switch (response.Status)
             {
                 case >= 200 and < 300:
-                    return ClientResult.FromValue(true, response);
+                    return Response.FromValue(true, response);
                 case >= 400 and < 500:
-                    return ClientResult.FromValue(false, response);
+                    return Response.FromValue(false, response);
                 default:
-                    return new ErrorResult<bool>(response, new ClientResultException(response));
+                    return new ErrorResult<bool>(response, new RequestFailedException(response));
             }
         }
 
-        public static ClientResult<bool> ProcessHeadAsBoolMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
+        public static Response<bool> ProcessHeadAsBoolMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext options)
         {
-            PipelineResponse response = pipeline.ProcessMessage(message, options);
+            Response response = pipeline.ProcessMessage(message, options);
             switch (response.Status)
             {
                 case >= 200 and < 300:
-                    return ClientResult.FromValue(true, response);
+                    return Response.FromValue(true, response);
                 case >= 400 and < 500:
-                    return ClientResult.FromValue(false, response);
+                    return Response.FromValue(false, response);
                 default:
-                    return new ErrorResult<bool>(response, new ClientResultException(response));
+                    return new ErrorResult<bool>(response, new RequestFailedException(response));
             }
+        }
+
+        private static Response ExtractResponseContent(HttpMessage message)
+        {
+            message.ExtractResponseContent();
+            return message.Response;
         }
     }
 }

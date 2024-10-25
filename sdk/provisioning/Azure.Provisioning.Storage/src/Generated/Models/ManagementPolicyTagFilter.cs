@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Blob index tag based filtering for blob objects.
 /// </summary>
-public partial class ManagementPolicyTagFilter : ProvisioningConstruct
+public partial class ManagementPolicyTagFilter : ProvisionableConstruct
 {
     /// <summary>
     /// This is the filter tag name, it can have 1 - 128 characters.

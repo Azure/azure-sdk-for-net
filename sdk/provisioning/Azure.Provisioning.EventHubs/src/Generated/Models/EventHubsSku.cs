@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// SKU parameters supplied to the create namespace operation.
 /// </summary>
-public partial class EventHubsSku : ProvisioningConstruct
+public partial class EventHubsSku : ProvisionableConstruct
 {
     /// <summary>
     /// Name of this SKU.

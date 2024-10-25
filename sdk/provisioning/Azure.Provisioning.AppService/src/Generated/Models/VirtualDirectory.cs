@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Directory for virtual application.
 /// </summary>
-public partial class VirtualDirectory : ProvisioningConstruct
+public partial class VirtualDirectory : ProvisionableConstruct
 {
     /// <summary>
     /// Path to virtual application.

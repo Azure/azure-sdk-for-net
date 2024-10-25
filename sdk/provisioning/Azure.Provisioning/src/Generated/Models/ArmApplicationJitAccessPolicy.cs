@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Managed application Jit access policy.
 /// </summary>
-public partial class ArmApplicationJitAccessPolicy : ProvisioningConstruct
+public partial class ArmApplicationJitAccessPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// Whether the JIT access is enabled.
@@ -47,6 +47,6 @@ public partial class ArmApplicationJitAccessPolicy : ProvisioningConstruct
         _jitAccessEnabled = BicepValue<bool>.DefineProperty(this, "JitAccessEnabled", ["jitAccessEnabled"]);
         _jitApprovalMode = BicepValue<JitApprovalMode>.DefineProperty(this, "JitApprovalMode", ["jitApprovalMode"]);
         _jitApprovers = BicepList<JitApprover>.DefineProperty(this, "JitApprovers", ["jitApprovers"]);
-        _maximumJitAccessDuration = BicepValue<TimeSpan>.DefineProperty(this, "MaximumJitAccessDuration", ["maximumJitAccessDuration"]);
+        _maximumJitAccessDuration = BicepValue<TimeSpan>.DefineProperty(this, "MaximumJitAccessDuration", ["maximumJitAccessDuration"], format: "P");
     }
 }

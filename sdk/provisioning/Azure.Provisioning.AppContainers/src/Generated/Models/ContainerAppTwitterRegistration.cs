@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// The configuration settings of the app registration for the Twitter provider.
 /// </summary>
-public partial class ContainerAppTwitterRegistration : ProvisioningConstruct
+public partial class ContainerAppTwitterRegistration : ProvisionableConstruct
 {
     /// <summary>
     /// The OAuth 1.0a consumer key of the Twitter application used for

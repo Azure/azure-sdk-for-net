@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Windows gMSA Profile in the managed cluster.
 /// </summary>
-public partial class WindowsGmsaProfile : ProvisioningConstruct
+public partial class WindowsGmsaProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Specifies whether to enable Windows gMSA in the managed cluster.

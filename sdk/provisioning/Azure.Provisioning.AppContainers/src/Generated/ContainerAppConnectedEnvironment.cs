@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppConnectedEnvironment.
 /// </summary>
-public partial class ContainerAppConnectedEnvironment : Resource
+public partial class ContainerAppConnectedEnvironment : ProvisionableResource
 {
     /// <summary>
     /// Name of the connectedEnvironment.
@@ -95,15 +95,15 @@ public partial class ContainerAppConnectedEnvironment : Resource
     /// <summary>
     /// Creates a new ContainerAppConnectedEnvironment.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerAppConnectedEnvironment
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironment.</param>
-    public ContainerAppConnectedEnvironment(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.App/connectedEnvironments", resourceVersion ?? "2024-03-01")
+    public ContainerAppConnectedEnvironment(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/connectedEnvironments", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -125,11 +125,6 @@ public partial class ContainerAppConnectedEnvironment : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
-        /// <summary>
         /// 2024-03-01.
         /// </summary>
         public static readonly string V2024_03_01 = "2024-03-01";
@@ -148,7 +143,7 @@ public partial class ContainerAppConnectedEnvironment : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerAppConnectedEnvironment.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerAppConnectedEnvironment
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -156,6 +151,6 @@ public partial class ContainerAppConnectedEnvironment : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironment.</param>
     /// <returns>The existing ContainerAppConnectedEnvironment resource.</returns>
-    public static ContainerAppConnectedEnvironment FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppConnectedEnvironment FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

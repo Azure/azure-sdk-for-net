@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// EventGridPartnerNamespacePrivateEndpointConnection.
 /// </summary>
-public partial class EventGridPartnerNamespacePrivateEndpointConnection : Resource
+public partial class EventGridPartnerNamespacePrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The name of the private endpoint connection connection.
@@ -69,7 +69,7 @@ public partial class EventGridPartnerNamespacePrivateEndpointConnection : Resour
     /// <summary>
     /// Creates a new EventGridPartnerNamespacePrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// EventGridPartnerNamespacePrivateEndpointConnection resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
@@ -77,8 +77,8 @@ public partial class EventGridPartnerNamespacePrivateEndpointConnection : Resour
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridPartnerNamespacePrivateEndpointConnection.</param>
-    public EventGridPartnerNamespacePrivateEndpointConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventGrid/partnerNamespaces/privateEndpointConnections", resourceVersion ?? "2022-06-15")
+    public EventGridPartnerNamespacePrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/partnerNamespaces/privateEndpointConnections", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<EventGridPrivateEndpointConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -97,11 +97,6 @@ public partial class EventGridPartnerNamespacePrivateEndpointConnection : Resour
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
-
-        /// <summary>
         /// 2022-06-15.
         /// </summary>
         public static readonly string V2022_06_15 = "2022-06-15";
@@ -111,7 +106,7 @@ public partial class EventGridPartnerNamespacePrivateEndpointConnection : Resour
     /// Creates a reference to an existing
     /// EventGridPartnerNamespacePrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// EventGridPartnerNamespacePrivateEndpointConnection resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
@@ -120,6 +115,6 @@ public partial class EventGridPartnerNamespacePrivateEndpointConnection : Resour
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridPartnerNamespacePrivateEndpointConnection.</param>
     /// <returns>The existing EventGridPartnerNamespacePrivateEndpointConnection resource.</returns>
-    public static EventGridPartnerNamespacePrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static EventGridPartnerNamespacePrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

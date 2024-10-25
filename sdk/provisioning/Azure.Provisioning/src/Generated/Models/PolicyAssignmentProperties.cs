@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// Expanded info of resource scope, role definition and policy.
 /// </summary>
-public partial class PolicyAssignmentProperties : ProvisioningConstruct
+public partial class PolicyAssignmentProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Id of the policy.

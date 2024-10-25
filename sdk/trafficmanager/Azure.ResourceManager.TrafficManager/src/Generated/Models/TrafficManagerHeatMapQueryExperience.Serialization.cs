@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         void IJsonModel<TrafficManagerHeatMapQueryExperience>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerHeatMapQueryExperience>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TrafficManagerHeatMapQueryExperience)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("endpointId"u8);
             writer.WriteNumberValue(EndpointId);
             writer.WritePropertyName("queryCount"u8);
@@ -50,7 +58,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TrafficManagerHeatMapQueryExperience IJsonModel<TrafficManagerHeatMapQueryExperience>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

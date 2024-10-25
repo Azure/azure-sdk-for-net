@@ -11,7 +11,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// Upstream auth settings. If not set, no auth is used for upstream messages.
 /// </summary>
-public partial class UpstreamAuthSettings : ProvisioningConstruct
+public partial class UpstreamAuthSettings : ProvisionableConstruct
 {
     /// <summary>
     /// Upstream auth type enum.

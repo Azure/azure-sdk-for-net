@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Virtual application in an app.
 /// </summary>
-public partial class VirtualApplication : ProvisioningConstruct
+public partial class VirtualApplication : ProvisionableConstruct
 {
     /// <summary>
     /// Virtual path.
