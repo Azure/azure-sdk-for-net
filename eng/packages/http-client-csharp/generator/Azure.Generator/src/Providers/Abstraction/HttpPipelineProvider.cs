@@ -38,12 +38,12 @@ namespace Azure.Generator.Providers.Abstraction
         public override ValueExpression PerRetryPolicy(params ValueExpression[] arguments)
             => Empty; // TODO: implement with default retry policy for Azure
 
-        public override InvokeMethodExpression Send(HttpMessageApi message)
-            => Original.Invoke(nameof(HttpPipeline.Send), [message, Default]);
-
-        public override InvokeMethodExpression SendAsync(HttpMessageApi message)
-            => Original.Invoke(nameof(HttpPipeline.SendAsync), [message, Default], true);
-
         public override ClientPipelineApi ToExpression() => this;
+
+        public override InvokeMethodExpression Send(HttpMessageApi message, HttpRequestOptionsApi options)
+            => Original.Invoke(nameof(HttpPipeline.Send), [message, options.Property(nameof(RequestContext.CancellationToken))]);
+
+        public override InvokeMethodExpression SendAsync(HttpMessageApi message, HttpRequestOptionsApi options)
+            => Original.Invoke(nameof(HttpPipeline.SendAsync), [message, options.Property(nameof(RequestContext.CancellationToken))], true);
     }
 }

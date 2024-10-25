@@ -352,7 +352,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        intExtensibleEnum = null;
                         continue;
                     }
                     intExtensibleEnum = new IntExtensibleEnum(prop.Value.GetInt32());
@@ -376,7 +375,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        floatExtensibleEnum = null;
                         continue;
                     }
                     floatExtensibleEnum = new FloatExtensibleEnum(prop.Value.GetSingle());
@@ -386,7 +384,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        floatExtensibleEnumWithIntValue = null;
                         continue;
                     }
                     floatExtensibleEnumWithIntValue = new FloatExtensibleEnumWithIntValue(prop.Value.GetSingle());
@@ -410,7 +407,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        floatFixedEnum = null;
                         continue;
                     }
                     floatFixedEnum = prop.Value.GetSingle().ToFloatFixedEnum();
@@ -420,7 +416,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        floatFixedEnumWithIntValue = null;
                         continue;
                     }
                     floatFixedEnumWithIntValue = prop.Value.GetInt32().ToFloatFixedEnumWithIntValue();
@@ -444,7 +439,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        intFixedEnum = null;
                         continue;
                     }
                     intFixedEnum = prop.Value.GetInt32().ToIntFixedEnum();
@@ -468,7 +462,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        stringFixedEnum = null;
                         continue;
                     }
                     stringFixedEnum = prop.Value.GetString().ToStringFixedEnum();
@@ -483,7 +476,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        optionalUnknown = null;
                         continue;
                     }
                     optionalUnknown = BinaryData.FromString(prop.Value.GetRawText());

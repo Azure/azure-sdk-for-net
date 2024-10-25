@@ -15,10 +15,13 @@ namespace BasicTypeSpec
     public partial class BasicTypeSpecClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
+        private static ResponseClassifier _pipelineMessageClassifier201;
         private static ResponseClassifier _pipelineMessageClassifier204;
         private static Classifier2xxAnd4xx _pipelineMessageClassifier2xxAnd4xx;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+
+        private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 = new StatusCodeClassifier(stackalloc ushort[] { 201 });
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
@@ -55,9 +58,9 @@ namespace BasicTypeSpec
             uri.AppendPath("/againHi/", false);
             uri.AppendPath(p2, true);
             request.Uri = uri;
-            request.Headers.Add("p1", p1);
-            request.Headers.Add("Content-Type", "text/plain");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("p1", p1);
+            request.Headers.SetValue("Content-Type", "text/plain");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
@@ -73,9 +76,9 @@ namespace BasicTypeSpec
             uri.AppendPath("/noContentType/", false);
             uri.AppendPath(p2, true);
             request.Uri = uri;
-            request.Headers.Add("p1", p1);
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("p1", p1);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
@@ -90,7 +93,7 @@ namespace BasicTypeSpec
             uri.Reset(_endpoint);
             uri.AppendPath("/demoHi", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -104,8 +107,8 @@ namespace BasicTypeSpec
             uri.Reset(_endpoint);
             uri.AppendPath("/literal", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
@@ -122,8 +125,8 @@ namespace BasicTypeSpec
             uri.AppendPath(123.ToString(), true);
             uri.AppendQuery("p3", TypeFormatters.ConvertToString(true, null), true);
             request.Uri = uri;
-            request.Headers.Add("p1", "test");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("p1", "test");
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -138,7 +141,7 @@ namespace BasicTypeSpec
             uri.AppendPath("/top/", false);
             uri.AppendPath(action.ToString("O"), true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -152,7 +155,7 @@ namespace BasicTypeSpec
             uri.Reset(_endpoint);
             uri.AppendPath("/top2", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -166,8 +169,8 @@ namespace BasicTypeSpec
             uri.Reset(_endpoint);
             uri.AppendPath("/patch", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
@@ -182,8 +185,8 @@ namespace BasicTypeSpec
             uri.Reset(_endpoint);
             uri.AppendPath("/anonymousBody", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
@@ -198,8 +201,8 @@ namespace BasicTypeSpec
             uri.Reset(_endpoint);
             uri.AppendPath("/friendlyName", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
@@ -214,7 +217,7 @@ namespace BasicTypeSpec
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             request.Uri = uri;
-            request.Headers.Add("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, "R"));
+            request.Headers.SetValue("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, "R"));
             return message;
         }
 
@@ -228,8 +231,8 @@ namespace BasicTypeSpec
             uri.Reset(_endpoint);
             uri.AppendPath("/projectedName", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
@@ -244,7 +247,7 @@ namespace BasicTypeSpec
             uri.Reset(_endpoint);
             uri.AppendPath("/returnsAnonymousModel", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -258,7 +261,7 @@ namespace BasicTypeSpec
             uri.Reset(_endpoint);
             uri.AppendPath("/unknown-value", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", accept);
+            request.Headers.SetValue("Accept", accept);
             return message;
         }
 
@@ -272,8 +275,8 @@ namespace BasicTypeSpec
             uri.Reset(_endpoint);
             uri.AppendPath("/internalProtocol", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
