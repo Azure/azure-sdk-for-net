@@ -19,17 +19,17 @@ public sealed class TwoWayPipeline : IDisposable, IAsyncDisposable
         _policies = policies;
     }
 
-    public static TwoWayPipeline Create(ReadOnlySpan<TwoWayPipelinePolicy> policies)
-    {
-        if (policies[policies.Length - 1] is not TwoWayPipelineTransport)
-        {
-            throw new ArgumentException("The last policy must be of type 'TwoWayPipelineTransport'.", nameof(policies));
-        }
+    //public static TwoWayPipeline Create(ReadOnlySpan<TwoWayPipelinePolicy> policies)
+    //{
+    //    if (policies[policies.Length - 1] is not TwoWayPipelineTransport)
+    //    {
+    //        throw new ArgumentException("The last policy must be of type 'TwoWayPipelineTransport'.", nameof(policies));
+    //    }
 
-        throw new NotImplementedException();
-    }
+    //    throw new NotImplementedException();
+    //}
 
-    public static TwoWayPipeline Create(TwoWayPipelineOptions options)
+    public static TwoWayPipeline Create(PipelineResponse response, TwoWayPipelineOptions options)
     {
         throw new NotImplementedException();
     }

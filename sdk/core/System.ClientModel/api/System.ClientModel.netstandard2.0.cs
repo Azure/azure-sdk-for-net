@@ -302,11 +302,24 @@ namespace System.ClientModel.Primitives
 }
 namespace System.ClientModel.Primitives.TwoWayClient
 {
+    public partial class TwoWayConnectionResult : System.IDisposable
+    {
+        protected TwoWayConnectionResult(System.ClientModel.Primitives.PipelineResponse response, System.ClientModel.Primitives.TwoWayClient.TwoWayPipelineOptions? options = null) { }
+        public System.ClientModel.Primitives.TwoWayClient.TwoWayPipeline Pipeline { get { throw null; } }
+        public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        public virtual System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.TwoWayClient.TwoWayResult> GetResponses(System.ClientModel.Primitives.TwoWayClient.TwoWayMessageOptions options) { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.TwoWayClient.TwoWayResult> GetResponsesAsync(System.ClientModel.Primitives.TwoWayClient.TwoWayMessageOptions options) { throw null; }
+    }
+    public partial class TwoWayMessageOptions
+    {
+        public TwoWayMessageOptions() { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+    }
     public sealed partial class TwoWayPipeline : System.IAsyncDisposable, System.IDisposable
     {
         internal TwoWayPipeline() { }
-        public static System.ClientModel.Primitives.TwoWayClient.TwoWayPipeline Create(System.ClientModel.Primitives.TwoWayClient.TwoWayPipelineOptions options) { throw null; }
-        public static System.ClientModel.Primitives.TwoWayClient.TwoWayPipeline Create(System.ReadOnlySpan<System.ClientModel.Primitives.TwoWayClient.TwoWayPipelinePolicy> policies) { throw null; }
+        public static System.ClientModel.Primitives.TwoWayClient.TwoWayPipeline Create(System.ClientModel.Primitives.PipelineResponse response, System.ClientModel.Primitives.TwoWayClient.TwoWayPipelineOptions options) { throw null; }
         public System.ClientModel.Primitives.TwoWayClient.TwoWayPipelineClientMessage CreateMessage() { throw null; }
         public void Dispose() { }
         public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
@@ -326,6 +339,8 @@ namespace System.ClientModel.Primitives.TwoWayClient
     public partial class TwoWayPipelineOptions
     {
         public TwoWayPipelineOptions() { }
+        protected void AssertNotFrozen() { }
+        public virtual void Freeze() { }
     }
     public abstract partial class TwoWayPipelinePolicy
     {
