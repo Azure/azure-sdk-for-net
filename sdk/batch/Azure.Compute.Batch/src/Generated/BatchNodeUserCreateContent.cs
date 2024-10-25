@@ -59,7 +59,7 @@ namespace Azure.Compute.Batch
         /// <param name="name"> The user name of the Account. </param>
         /// <param name="isAdmin"> Whether the Account should be an administrator on the Compute Node. The default value is false. </param>
         /// <param name="expiryTime"> The time at which the Account should expire. If omitted, the default is 1 day from the current time. For Linux Compute Nodes, the expiryTime has a precision up to a day. </param>
-        /// <param name="password"> The password of the Account. The password is required for Windows Compute Nodes. For Linux Compute Nodes, the password can optionally be specified along with the sshPublicKey property. </param>
+        /// <param name="password"> The password of the Account. The password is required for Windows Compute Nodes (those created with 'virtualMachineConfiguration' using a Windows Image reference). For Linux Compute Nodes, the password can optionally be specified along with the sshPublicKey property. </param>
         /// <param name="sshPublicKey"> The SSH public key that can be used for remote login to the Compute Node. The public key should be compatible with OpenSSH encoding and should be base 64 encoded. This property can be specified only for Linux Compute Nodes. If this is specified for a Windows Compute Node, then the Batch service rejects the request; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BatchNodeUserCreateContent(string name, bool? isAdmin, DateTimeOffset? expiryTime, string password, string sshPublicKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -83,7 +83,7 @@ namespace Azure.Compute.Batch
         public bool? IsAdmin { get; set; }
         /// <summary> The time at which the Account should expire. If omitted, the default is 1 day from the current time. For Linux Compute Nodes, the expiryTime has a precision up to a day. </summary>
         public DateTimeOffset? ExpiryTime { get; set; }
-        /// <summary> The password of the Account. The password is required for Windows Compute Nodes. For Linux Compute Nodes, the password can optionally be specified along with the sshPublicKey property. </summary>
+        /// <summary> The password of the Account. The password is required for Windows Compute Nodes (those created with 'virtualMachineConfiguration' using a Windows Image reference). For Linux Compute Nodes, the password can optionally be specified along with the sshPublicKey property. </summary>
         public string Password { get; set; }
         /// <summary> The SSH public key that can be used for remote login to the Compute Node. The public key should be compatible with OpenSSH encoding and should be base 64 encoded. This property can be specified only for Linux Compute Nodes. If this is specified for a Windows Compute Node, then the Batch service rejects the request; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </summary>
         public string SshPublicKey { get; set; }

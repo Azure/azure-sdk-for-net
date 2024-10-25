@@ -42,7 +42,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("lastModified"u8);
             writer.WriteStringValue(LastModified, "O");
             writer.WritePropertyName("contentLength"u8);
-            writer.WriteStringValue(ContentLength);
+            writer.WriteNumberValue(ContentLength);
             if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
@@ -92,7 +92,7 @@ namespace Azure.Compute.Batch
             }
             DateTimeOffset? creationTime = default;
             DateTimeOffset lastModified = default;
-            string contentLength = default;
+            long contentLength = default;
             string contentType = default;
             string fileMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -115,7 +115,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("contentLength"u8))
                 {
-                    contentLength = property.Value.GetString();
+                    contentLength = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("contentType"u8))
