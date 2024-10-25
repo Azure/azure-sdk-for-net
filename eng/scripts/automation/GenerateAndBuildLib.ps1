@@ -747,6 +747,7 @@ function GeneratePackage()
     $artifacts = @()
     $apiViewArtifact = ""
     $hasBreakingChange = $false
+    $breakingChangeItems = @()
     $content = ""
     $result = "succeeded"
     $isGenerateSuccess = $true
@@ -858,7 +859,13 @@ function GeneratePackage()
             else {
                 Write-Host "Breaking changes detected in the build log."
                 $logFile = Get-Content -Path $logFilePath | select-object -SkipLast 1
-                $breakingChanges = $logFile -join ",`n"
+                $regex = "error( ?):( ?)(?<breakingChange>.*) .*\["
+                foreach ($line in $logFile) {
+                    if ($line -match $regex) {
+                        $breakingChangeItems += $matches["breakingChange"]
+                    }
+                }
+                $breakingChanges = $breakingChangeItems -join ",`n"
                 $content = "Breaking Changes: $breakingChanges"
                 $hasBreakingChange = $true
             }
@@ -872,6 +879,7 @@ function GeneratePackage()
     $changelog = [PSCustomObject]@{
         content           = $content
         hasBreakingChange = $hasBreakingChange
+        breakingChangeItems = $breakingChangeItems
     }
 
     $ciFilePath = "sdk/$service/ci.yml"
