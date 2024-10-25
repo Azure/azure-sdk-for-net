@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning;
@@ -32,5 +33,13 @@ public static class BicepValueExtensions
         }
     }
 
-    // TODO: Consider adding simple casts (i.e. URI <-> string) in the future
+    public static BicepValue<Uri> ToUri(this BicepValue<string> value) =>
+        ((IBicepValue)value).Kind switch
+        {
+            BicepValueKind.Literal => (BicepValue<Uri>)new Uri(value.Value!),
+            BicepValueKind.Expression => new BicepValue<Uri>(((IBicepValue)value).Expression!),
+            _ => new BicepValue<Uri>(self: null),
+        };
+
+    // TODO: Add more common casts
 }
