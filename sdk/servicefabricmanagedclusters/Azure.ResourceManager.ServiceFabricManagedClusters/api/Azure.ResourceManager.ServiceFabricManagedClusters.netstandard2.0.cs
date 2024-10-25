@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceFabricManagedApplicationData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ServiceFabricManagedApplicationData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>
     {
         public ServiceFabricManagedApplicationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -26,8 +26,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUpgradePolicy UpgradePolicy { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceFabricManagedApplicationResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceFabricManagedApplicationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceFabricManagedApplicationResource() { }
@@ -53,6 +59,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation StartRollback(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartRollbackAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationResource> Update(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationResource>> UpdateAsync(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -73,12 +84,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceFabricManagedApplicationTypeData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ServiceFabricManagedApplicationTypeData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData>
     {
         public ServiceFabricManagedApplicationTypeData(Azure.Core.AzureLocation location) { }
         public string ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceFabricManagedApplicationTypeResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceFabricManagedApplicationTypeResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceFabricManagedApplicationTypeResource() { }
@@ -98,6 +115,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeResource> Update(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeResource>> UpdateAsync(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -118,13 +140,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceFabricManagedApplicationTypeVersionData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ServiceFabricManagedApplicationTypeVersionData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData>
     {
         public ServiceFabricManagedApplicationTypeVersionData(Azure.Core.AzureLocation location) { }
         public System.Uri AppPackageUri { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceFabricManagedApplicationTypeVersionResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceFabricManagedApplicationTypeVersionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceFabricManagedApplicationTypeVersionResource() { }
@@ -141,6 +169,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionResource> Update(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypeVersionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionResource>> UpdateAsync(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypeVersionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -161,7 +194,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceFabricManagedClusterData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ServiceFabricManagedClusterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>
     {
         public ServiceFabricManagedClusterData(Azure.Core.AzureLocation location) { }
         public ServiceFabricManagedClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSku sku) { }
@@ -208,8 +241,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradePolicy UpgradeDescription { get { throw null; } set { } }
         public bool? UseCustomVnet { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ZonalUpdateMode? ZonalUpdateMode { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceFabricManagedClusterResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceFabricManagedClusterResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceFabricManagedClusterResource() { }
@@ -241,6 +280,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterResource> Update(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterResource>> UpdateAsync(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -287,7 +331,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceFabricManagedNodeTypeData : Azure.ResourceManager.Models.ResourceData
+    public partial class ServiceFabricManagedNodeTypeData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData>
     {
         public ServiceFabricManagedNodeTypeData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssDataDisk> AdditionalDataDisks { get { throw null; } }
@@ -342,8 +386,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public Azure.Core.ResourceIdentifier VmSharedGalleryImageId { get { throw null; } set { } }
         public string VmSize { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceFabricManagedNodeTypeResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceFabricManagedNodeTypeResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceFabricManagedNodeTypeResource() { }
@@ -368,6 +418,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestartAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeResource> Update(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNodeTypePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeResource>> UpdateAsync(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNodeTypePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -388,12 +443,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceFabricManagedServiceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ServiceFabricManagedServiceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData>
     {
         public ServiceFabricManagedServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceFabricManagedServiceResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceFabricManagedServiceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceFabricManagedServiceResource() { }
@@ -410,6 +471,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceResource> Update(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceResource>> UpdateAsync(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -454,23 +520,35 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
 }
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class AdditionalNetworkInterfaceConfiguration
+    public partial class AdditionalNetworkInterfaceConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AdditionalNetworkInterfaceConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AdditionalNetworkInterfaceConfiguration>
     {
         public AdditionalNetworkInterfaceConfiguration(string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfiguration> ipConfigurations) { }
         public Azure.Core.ResourceIdentifier DscpConfigurationId { get { throw null; } set { } }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfiguration> IPConfigurations { get { throw null; } }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.AdditionalNetworkInterfaceConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AdditionalNetworkInterfaceConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AdditionalNetworkInterfaceConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.AdditionalNetworkInterfaceConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AdditionalNetworkInterfaceConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AdditionalNetworkInterfaceConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AdditionalNetworkInterfaceConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationHealthPolicy
+    public partial class ApplicationHealthPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationHealthPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationHealthPolicy>
     {
         public ApplicationHealthPolicy(bool considerWarningAsError, int maxPercentUnhealthyDeployedApplications) { }
         public bool ConsiderWarningAsError { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceTypeHealthPolicy DefaultServiceTypeHealthPolicy { get { throw null; } set { } }
         public int MaxPercentUnhealthyDeployedApplications { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceTypeHealthPolicy> ServiceTypeHealthPolicyMap { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationHealthPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationHealthPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationHealthPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationHealthPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationHealthPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationHealthPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationHealthPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationUpgradePolicy
+    public partial class ApplicationUpgradePolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUpgradePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUpgradePolicy>
     {
         public ApplicationUpgradePolicy() { }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationHealthPolicy ApplicationHealthPolicy { get { throw null; } set { } }
@@ -480,12 +558,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMonitoringPolicy RollingUpgradeMonitoringPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMode? UpgradeMode { get { throw null; } set { } }
         public long? UpgradeReplicaSetCheckTimeout { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUpgradePolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUpgradePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUpgradePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUpgradePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUpgradePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUpgradePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUpgradePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationUserAssignedIdentityInfo
+    public partial class ApplicationUserAssignedIdentityInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUserAssignedIdentityInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUserAssignedIdentityInfo>
     {
         public ApplicationUserAssignedIdentityInfo(string name, string principalId) { }
         public string Name { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUserAssignedIdentityInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUserAssignedIdentityInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUserAssignedIdentityInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUserAssignedIdentityInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUserAssignedIdentityInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUserAssignedIdentityInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUserAssignedIdentityInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmServiceFabricManagedClustersModelFactory
     {
@@ -528,15 +618,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.AutoGeneratedDomainNameLabelScope left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.AutoGeneratedDomainNameLabelScope right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AveragePartitionLoadScalingTrigger : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingTrigger
+    public partial class AveragePartitionLoadScalingTrigger : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingTrigger, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AveragePartitionLoadScalingTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AveragePartitionLoadScalingTrigger>
     {
         public AveragePartitionLoadScalingTrigger(string metricName, double lowerLoadThreshold, double upperLoadThreshold, string scaleInterval) { }
         public double LowerLoadThreshold { get { throw null; } set { } }
         public string MetricName { get { throw null; } set { } }
         public string ScaleInterval { get { throw null; } set { } }
         public double UpperLoadThreshold { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.AveragePartitionLoadScalingTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AveragePartitionLoadScalingTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AveragePartitionLoadScalingTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.AveragePartitionLoadScalingTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AveragePartitionLoadScalingTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AveragePartitionLoadScalingTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AveragePartitionLoadScalingTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AverageServiceLoadScalingTrigger : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingTrigger
+    public partial class AverageServiceLoadScalingTrigger : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingTrigger, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AverageServiceLoadScalingTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AverageServiceLoadScalingTrigger>
     {
         public AverageServiceLoadScalingTrigger(string metricName, double lowerLoadThreshold, double upperLoadThreshold, string scaleInterval, bool useOnlyPrimaryLoad) { }
         public double LowerLoadThreshold { get { throw null; } set { } }
@@ -544,26 +640,50 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public string ScaleInterval { get { throw null; } set { } }
         public double UpperLoadThreshold { get { throw null; } set { } }
         public bool UseOnlyPrimaryLoad { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.AverageServiceLoadScalingTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AverageServiceLoadScalingTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AverageServiceLoadScalingTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.AverageServiceLoadScalingTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AverageServiceLoadScalingTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AverageServiceLoadScalingTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.AverageServiceLoadScalingTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ClusterFabricSettingsParameterDescription
+    public partial class ClusterFabricSettingsParameterDescription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsParameterDescription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsParameterDescription>
     {
         public ClusterFabricSettingsParameterDescription(string name, string value) { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsParameterDescription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsParameterDescription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsParameterDescription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsParameterDescription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsParameterDescription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsParameterDescription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsParameterDescription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ClusterFabricSettingsSection
+    public partial class ClusterFabricSettingsSection : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsSection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsSection>
     {
         public ClusterFabricSettingsSection(string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsParameterDescription> parameters) { }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsParameterDescription> Parameters { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsSection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsSection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsSection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsSection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsSection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsSection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsSection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ClusterHealthPolicy
+    public partial class ClusterHealthPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterHealthPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterHealthPolicy>
     {
         public ClusterHealthPolicy(int maxPercentUnhealthyNodes, int maxPercentUnhealthyApplications) { }
         public int MaxPercentUnhealthyApplications { get { throw null; } set { } }
         public int MaxPercentUnhealthyNodes { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterHealthPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterHealthPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterHealthPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterHealthPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterHealthPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterHealthPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterHealthPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ClusterMonitoringPolicy
+    public partial class ClusterMonitoringPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterMonitoringPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterMonitoringPolicy>
     {
         public ClusterMonitoringPolicy(System.TimeSpan healthCheckWaitDuration, System.TimeSpan healthCheckStableDuration, string healthCheckRetryTimeout, string upgradeTimeout, string upgradeDomainTimeout) { }
         public string HealthCheckRetryTimeout { get { throw null; } set { } }
@@ -571,15 +691,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public System.TimeSpan HealthCheckWaitDuration { get { throw null; } set { } }
         public string UpgradeDomainTimeout { get { throw null; } set { } }
         public string UpgradeTimeout { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterMonitoringPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterMonitoringPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterMonitoringPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterMonitoringPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterMonitoringPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterMonitoringPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterMonitoringPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ClusterUpgradeDeltaHealthPolicy
+    public partial class ClusterUpgradeDeltaHealthPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradeDeltaHealthPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradeDeltaHealthPolicy>
     {
         public ClusterUpgradeDeltaHealthPolicy(int maxPercentDeltaUnhealthyNodes) { }
         public int? MaxPercentDeltaUnhealthyApplications { get { throw null; } set { } }
         public int MaxPercentDeltaUnhealthyNodes { get { throw null; } set { } }
         public int? MaxPercentUpgradeDomainDeltaUnhealthyNodes { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradeDeltaHealthPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradeDeltaHealthPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradeDeltaHealthPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradeDeltaHealthPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradeDeltaHealthPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradeDeltaHealthPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradeDeltaHealthPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ClusterUpgradePolicy
+    public partial class ClusterUpgradePolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradePolicy>
     {
         public ClusterUpgradePolicy() { }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradeDeltaHealthPolicy DeltaHealthPolicy { get { throw null; } set { } }
@@ -587,14 +719,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterHealthPolicy HealthPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterMonitoringPolicy MonitoringPolicy { get { throw null; } set { } }
         public string UpgradeReplicaSetCheckTimeout { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradePolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterUpgradePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EndpointRangeDescription
+    public partial class EndpointRangeDescription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.EndpointRangeDescription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.EndpointRangeDescription>
     {
         public EndpointRangeDescription(int startPort, int endPort) { }
         public int EndPort { get { throw null; } set { } }
         public int StartPort { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.EndpointRangeDescription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.EndpointRangeDescription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.EndpointRangeDescription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.EndpointRangeDescription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.EndpointRangeDescription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.EndpointRangeDescription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.EndpointRangeDescription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IPConfiguration
+    public partial class IPConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfiguration>
     {
         public IPConfiguration(string name) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationGatewayBackendAddressPools { get { throw null; } }
@@ -604,19 +748,37 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.PrivateIPAddressVersion? PrivateIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfigurationPublicIPAddressConfiguration PublicIPAddressConfiguration { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IPConfigurationPublicIPAddressConfiguration
+    public partial class IPConfigurationPublicIPAddressConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfigurationPublicIPAddressConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfigurationPublicIPAddressConfiguration>
     {
         public IPConfigurationPublicIPAddressConfiguration(string name) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterIPTag> IPTags { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.PublicIPAddressVersion? PublicIPAddressVersion { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfigurationPublicIPAddressConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfigurationPublicIPAddressConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfigurationPublicIPAddressConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfigurationPublicIPAddressConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfigurationPublicIPAddressConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfigurationPublicIPAddressConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.IPConfigurationPublicIPAddressConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedAzResiliencyStatus
+    public partial class ManagedAzResiliencyStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus>
     {
         internal ManagedAzResiliencyStatus() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ResourceAzStatus> BaseResourceStatus { get { throw null; } }
         public bool? IsClusterZoneResilient { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedClusterAddOnFeature : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterAddOnFeature>
@@ -637,26 +799,44 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterAddOnFeature left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterAddOnFeature right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedClusterAzureActiveDirectory
+    public partial class ManagedClusterAzureActiveDirectory : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterAzureActiveDirectory>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterAzureActiveDirectory>
     {
         public ManagedClusterAzureActiveDirectory() { }
         public string ClientApplication { get { throw null; } set { } }
         public string ClusterApplication { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterAzureActiveDirectory System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterAzureActiveDirectory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterAzureActiveDirectory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterAzureActiveDirectory System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterAzureActiveDirectory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterAzureActiveDirectory>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterAzureActiveDirectory>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedClusterClientCertificate
+    public partial class ManagedClusterClientCertificate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterClientCertificate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterClientCertificate>
     {
         public ManagedClusterClientCertificate(bool isAdmin) { }
         public string CommonName { get { throw null; } set { } }
         public bool IsAdmin { get { throw null; } set { } }
         public System.BinaryData IssuerThumbprint { get { throw null; } set { } }
         public System.BinaryData Thumbprint { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterClientCertificate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterClientCertificate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterClientCertificate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterClientCertificate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterClientCertificate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterClientCertificate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterClientCertificate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedClusterIPTag
+    public partial class ManagedClusterIPTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterIPTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterIPTag>
     {
         public ManagedClusterIPTag(string ipTagType, string tag) { }
         public string IPTagType { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterIPTag System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterIPTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterIPTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterIPTag System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterIPTag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterIPTag>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterIPTag>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedClusterLoadBalanceProbeProtocol : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalanceProbeProtocol>
@@ -677,7 +857,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalanceProbeProtocol left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalanceProbeProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedClusterLoadBalancingRule
+    public partial class ManagedClusterLoadBalancingRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalancingRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalancingRule>
     {
         public ManagedClusterLoadBalancingRule(int frontendPort, int backendPort, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalancingRuleTransportProtocol protocol, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalanceProbeProtocol probeProtocol) { }
         public int BackendPort { get { throw null; } set { } }
@@ -687,6 +867,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalanceProbeProtocol ProbeProtocol { get { throw null; } set { } }
         public string ProbeRequestPath { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalancingRuleTransportProtocol Protocol { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalancingRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalancingRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalancingRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalancingRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalancingRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalancingRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalancingRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedClusterLoadBalancingRuleTransportProtocol : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalancingRuleTransportProtocol>
@@ -706,13 +892,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalancingRuleTransportProtocol left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterLoadBalancingRuleTransportProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedClusterServiceEndpoint
+    public partial class ManagedClusterServiceEndpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterServiceEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterServiceEndpoint>
     {
         public ManagedClusterServiceEndpoint(string service) { }
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public string Service { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterServiceEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterServiceEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterServiceEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterServiceEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterServiceEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterServiceEndpoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterServiceEndpoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedClusterSubnet
+    public partial class ManagedClusterSubnet : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterSubnet>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterSubnet>
     {
         public ManagedClusterSubnet(string name) { }
         public bool? IsIPv6Enabled { get { throw null; } set { } }
@@ -720,6 +912,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterSubnetPrivateEndpointNetworkPoliciesState? PrivateEndpointNetworkPolicies { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState? PrivateLinkServiceNetworkPolicies { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterSubnet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterSubnet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterSubnet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterSubnet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterSubnet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterSubnet>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterSubnet>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedClusterSubnetPrivateEndpointNetworkPoliciesState : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterSubnetPrivateEndpointNetworkPoliciesState>
@@ -811,7 +1009,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterVersionEnvironment left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterVersionEnvironment right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedMaintenanceWindowStatus
+    public partial class ManagedMaintenanceWindowStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedMaintenanceWindowStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedMaintenanceWindowStatus>
     {
         internal ManagedMaintenanceWindowStatus() { }
         public bool? CanApplyUpdates { get { throw null; } }
@@ -821,8 +1019,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public System.DateTimeOffset? LastWindowEndTimeUTC { get { throw null; } }
         public System.DateTimeOffset? LastWindowStartTimeUTC { get { throw null; } }
         public System.DateTimeOffset? LastWindowStatusUpdateAtUTC { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedMaintenanceWindowStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedMaintenanceWindowStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedMaintenanceWindowStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedMaintenanceWindowStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedMaintenanceWindowStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedMaintenanceWindowStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedMaintenanceWindowStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedServiceBaseProperties
+    public partial class ManagedServiceBaseProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceBaseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceBaseProperties>
     {
         public ManagedServiceBaseProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelation> CorrelationScheme { get { throw null; } }
@@ -831,12 +1035,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingPolicy> ScalingPolicies { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceLoadMetric> ServiceLoadMetrics { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy> ServicePlacementPolicies { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceBaseProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceBaseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceBaseProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceBaseProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceBaseProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceBaseProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceBaseProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedServiceCorrelation
+    public partial class ManagedServiceCorrelation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelation>
     {
         public ManagedServiceCorrelation(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelationScheme scheme, string serviceName) { }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelationScheme Scheme { get { throw null; } set { } }
         public string ServiceName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedServiceCorrelationScheme : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelationScheme>
@@ -856,7 +1072,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelationScheme left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelationScheme right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedServiceLoadMetric
+    public partial class ManagedServiceLoadMetric : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceLoadMetric>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceLoadMetric>
     {
         public ManagedServiceLoadMetric(string name) { }
         public int? DefaultLoad { get { throw null; } set { } }
@@ -864,6 +1080,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public int? PrimaryDefaultLoad { get { throw null; } set { } }
         public int? SecondaryDefaultLoad { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceLoadMetricWeight? Weight { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceLoadMetric System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceLoadMetric>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceLoadMetric>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceLoadMetric System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceLoadMetric>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceLoadMetric>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceLoadMetric>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedServiceLoadMetricWeight : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceLoadMetricWeight>
@@ -903,15 +1125,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePackageActivationMode left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePackageActivationMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class ManagedServicePartitionScheme
+    public abstract partial class ManagedServicePartitionScheme : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme>
     {
         protected ManagedServicePartitionScheme() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class ManagedServicePlacementPolicy
+    public abstract partial class ManagedServicePlacementPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy>
     {
         protected ManagedServicePlacementPolicy() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedServiceProperties : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceBaseProperties
+    public partial class ManagedServiceProperties : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceBaseProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties>
     {
         public ManagedServiceProperties(string serviceTypeName, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme partitionDescription) { }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme PartitionDescription { get { throw null; } set { } }
@@ -919,34 +1153,70 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public string ServiceDnsName { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePackageActivationMode? ServicePackageActivationMode { get { throw null; } set { } }
         public string ServiceTypeName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class ManagedServiceScalingMechanism
+    public abstract partial class ManagedServiceScalingMechanism : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism>
     {
         protected ManagedServiceScalingMechanism() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedServiceScalingPolicy
+    public partial class ManagedServiceScalingPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingPolicy>
     {
         public ManagedServiceScalingPolicy(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism scalingMechanism, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingTrigger scalingTrigger) { }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism ScalingMechanism { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingTrigger ScalingTrigger { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class ManagedServiceScalingTrigger
+    public abstract partial class ManagedServiceScalingTrigger : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingTrigger>
     {
         protected ManagedServiceScalingTrigger() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NamedPartitionAddOrRemoveScalingMechanism : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism
+    public partial class NamedPartitionAddOrRemoveScalingMechanism : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionAddOrRemoveScalingMechanism>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionAddOrRemoveScalingMechanism>
     {
         public NamedPartitionAddOrRemoveScalingMechanism(int minPartitionCount, int maxPartitionCount, int scaleIncrement) { }
         public int MaxPartitionCount { get { throw null; } set { } }
         public int MinPartitionCount { get { throw null; } set { } }
         public int ScaleIncrement { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionAddOrRemoveScalingMechanism System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionAddOrRemoveScalingMechanism>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionAddOrRemoveScalingMechanism>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionAddOrRemoveScalingMechanism System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionAddOrRemoveScalingMechanism>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionAddOrRemoveScalingMechanism>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionAddOrRemoveScalingMechanism>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NamedPartitionScheme : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme
+    public partial class NamedPartitionScheme : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionScheme>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionScheme>
     {
         public NamedPartitionScheme(System.Collections.Generic.IEnumerable<string> names) { }
         public System.Collections.Generic.IList<string> Names { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionScheme System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionScheme>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionScheme>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionScheme System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionScheme>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionScheme>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NamedPartitionScheme>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NodeTypeActionContent
+    public partial class NodeTypeActionContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeActionContent>
     {
         public NodeTypeActionContent() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -955,21 +1225,39 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public bool? IsForced { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Nodes { get { throw null; } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterUpdateType? UpdateType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeActionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeActionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeActionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeActionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeActionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeActionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NodeTypeAvailableSku
+    public partial class NodeTypeAvailableSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeAvailableSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeAvailableSku>
     {
         internal NodeTypeAvailableSku() { }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuCapacity Capacity { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSupportedSku Sku { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeAvailableSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeAvailableSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeAvailableSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeAvailableSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeAvailableSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeAvailableSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeAvailableSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NodeTypeFrontendConfiguration
+    public partial class NodeTypeFrontendConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeFrontendConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeFrontendConfiguration>
     {
         public NodeTypeFrontendConfiguration() { }
         public Azure.Core.ResourceIdentifier ApplicationGatewayBackendAddressPoolId { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeFrontendConfigurationIPAddressType? IPAddressType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LoadBalancerBackendAddressPoolId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LoadBalancerInboundNatPoolId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeFrontendConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeFrontendConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeFrontendConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeFrontendConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeFrontendConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeFrontendConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeFrontendConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NodeTypeFrontendConfigurationIPAddressType : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeFrontendConfigurationIPAddressType>
@@ -989,27 +1277,45 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeFrontendConfigurationIPAddressType left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeFrontendConfigurationIPAddressType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NodeTypeNatConfig
+    public partial class NodeTypeNatConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeNatConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeNatConfig>
     {
         public NodeTypeNatConfig() { }
         public int? BackendPort { get { throw null; } set { } }
         public int? FrontendPortRangeEnd { get { throw null; } set { } }
         public int? FrontendPortRangeStart { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeNatConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeNatConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeNatConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeNatConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeNatConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeNatConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeNatConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NodeTypeSku
+    public partial class NodeTypeSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSku>
     {
         public NodeTypeSku(int capacity) { }
         public int Capacity { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NodeTypeSkuCapacity
+    public partial class NodeTypeSkuCapacity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuCapacity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuCapacity>
     {
         internal NodeTypeSkuCapacity() { }
         public int? Default { get { throw null; } }
         public int? Maximum { get { throw null; } }
         public int? Minimum { get { throw null; } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuScaleType? ScaleType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuCapacity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuCapacity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NodeTypeSkuScaleType : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuScaleType>
@@ -1030,33 +1336,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuScaleType left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuScaleType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NodeTypeSupportedSku
+    public partial class NodeTypeSupportedSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSupportedSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSupportedSku>
     {
         internal NodeTypeSupportedSku() { }
         public string Name { get { throw null; } }
         public string Tier { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSupportedSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSupportedSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSupportedSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSupportedSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSupportedSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSupportedSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSupportedSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NodeTypeVaultCertificate
+    public partial class NodeTypeVaultCertificate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultCertificate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultCertificate>
     {
         public NodeTypeVaultCertificate(System.Uri certificateUri, string certificateStore) { }
         public string CertificateStore { get { throw null; } set { } }
         public System.Uri CertificateUri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultCertificate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultCertificate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultCertificate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultCertificate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultCertificate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultCertificate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultCertificate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NodeTypeVaultSecretGroup
+    public partial class NodeTypeVaultSecretGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultSecretGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultSecretGroup>
     {
         public NodeTypeVaultSecretGroup(Azure.ResourceManager.Resources.Models.WritableSubResource sourceVault, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultCertificate> vaultCertificates) { }
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultCertificate> VaultCertificates { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultSecretGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultSecretGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultSecretGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultSecretGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultSecretGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultSecretGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVaultSecretGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NodeTypeVmssDataDisk
+    public partial class NodeTypeVmssDataDisk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssDataDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssDataDisk>
     {
         public NodeTypeVmssDataDisk(int lun, int diskSizeInGB, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedDataDiskType diskType, string diskLetter) { }
         public string DiskLetter { get { throw null; } set { } }
         public int DiskSizeInGB { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedDataDiskType DiskType { get { throw null; } set { } }
         public int Lun { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssDataDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssDataDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssDataDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssDataDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssDataDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssDataDisk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssDataDisk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NodeTypeVmssExtension
+    public partial class NodeTypeVmssExtension : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssExtension>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssExtension>
     {
         public NodeTypeVmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion) { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
@@ -1071,13 +1401,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmssExtensionSetupOrder> SetupOrder { get { throw null; } }
         public string TypeHandlerVersion { get { throw null; } set { } }
         public string VmssExtensionPropertiesType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssExtension System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssExtension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssExtension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssExtension System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssExtension>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssExtension>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssExtension>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PartitionInstanceCountScalingMechanism : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism
+    public partial class PartitionInstanceCountScalingMechanism : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.PartitionInstanceCountScalingMechanism>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.PartitionInstanceCountScalingMechanism>
     {
         public PartitionInstanceCountScalingMechanism(int minInstanceCount, int maxInstanceCount, int scaleIncrement) { }
         public int MaxInstanceCount { get { throw null; } set { } }
         public int MinInstanceCount { get { throw null; } set { } }
         public int ScaleIncrement { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.PartitionInstanceCountScalingMechanism System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.PartitionInstanceCountScalingMechanism>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.PartitionInstanceCountScalingMechanism>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.PartitionInstanceCountScalingMechanism System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.PartitionInstanceCountScalingMechanism>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.PartitionInstanceCountScalingMechanism>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.PartitionInstanceCountScalingMechanism>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyViolationCompensationAction : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.PolicyViolationCompensationAction>
@@ -1133,13 +1475,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.PublicIPAddressVersion left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.PublicIPAddressVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourceAzStatus
+    public partial class ResourceAzStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ResourceAzStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ResourceAzStatus>
     {
         internal ResourceAzStatus() { }
         public string Details { get { throw null; } }
         public bool? IsZoneResilient { get { throw null; } }
         public string ResourceName { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ResourceAzStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ResourceAzStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ResourceAzStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ResourceAzStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ResourceAzStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ResourceAzStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ResourceAzStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RollingUpgradeMode : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMode>
@@ -1159,7 +1507,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMode left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RollingUpgradeMonitoringPolicy
+    public partial class RollingUpgradeMonitoringPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMonitoringPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMonitoringPolicy>
     {
         public RollingUpgradeMonitoringPolicy(Azure.ResourceManager.ServiceFabricManagedClusters.Models.PolicyViolationCompensationAction failureAction, System.TimeSpan healthCheckWaitDuration, System.TimeSpan healthCheckStableDuration, System.TimeSpan healthCheckRetryTimeout, System.TimeSpan upgradeTimeout, System.TimeSpan upgradeDomainTimeout) { }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.PolicyViolationCompensationAction FailureAction { get { throw null; } set { } }
@@ -1168,26 +1516,56 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public System.TimeSpan HealthCheckWaitDuration { get { throw null; } set { } }
         public System.TimeSpan UpgradeDomainTimeout { get { throw null; } set { } }
         public System.TimeSpan UpgradeTimeout { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMonitoringPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMonitoringPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMonitoringPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMonitoringPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMonitoringPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMonitoringPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMonitoringPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RuntimeResumeApplicationUpgradeContent
+    public partial class RuntimeResumeApplicationUpgradeContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeResumeApplicationUpgradeContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeResumeApplicationUpgradeContent>
     {
         public RuntimeResumeApplicationUpgradeContent() { }
         public string UpgradeDomainName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeResumeApplicationUpgradeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeResumeApplicationUpgradeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeResumeApplicationUpgradeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeResumeApplicationUpgradeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeResumeApplicationUpgradeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeResumeApplicationUpgradeContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeResumeApplicationUpgradeContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceFabricManagedApplicationPatch
+    public partial class ServiceFabricManagedApplicationPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch>
     {
         public ServiceFabricManagedApplicationPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceFabricManagedApplicationTypePatch
+    public partial class ServiceFabricManagedApplicationTypePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypePatch>
     {
         public ServiceFabricManagedApplicationTypePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceFabricManagedApplicationTypeVersionPatch
+    public partial class ServiceFabricManagedApplicationTypeVersionPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypeVersionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypeVersionPatch>
     {
         public ServiceFabricManagedApplicationTypeVersionPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypeVersionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypeVersionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypeVersionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypeVersionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypeVersionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypeVersionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationTypeVersionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceFabricManagedClusterOSType : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterOSType>
@@ -1206,10 +1584,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterOSType left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterOSType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceFabricManagedClusterPatch
+    public partial class ServiceFabricManagedClusterPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterPatch>
     {
         public ServiceFabricManagedClusterPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceFabricManagedClusterSecurityType : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterSecurityType>
@@ -1229,10 +1613,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterSecurityType left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterSecurityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceFabricManagedClustersSku
+    public partial class ServiceFabricManagedClustersSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSku>
     {
         public ServiceFabricManagedClustersSku(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSkuName name) { }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSkuName Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceFabricManagedClustersSkuName : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSkuName>
@@ -1292,12 +1682,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterUpdateType left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterUpdateType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceFabricManagedClusterVersion : Azure.ResourceManager.Models.ResourceData
+    public partial class ServiceFabricManagedClusterVersion : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterVersion>
     {
         internal ServiceFabricManagedClusterVersion() { }
         public string ClusterCodeVersion { get { throw null; } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterOSType? OSType { get { throw null; } }
         public System.DateTimeOffset? VersionSupportExpireOn { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterVersion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterVersion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterVersion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterVersion>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterVersion>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceFabricManagedDataDiskType : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedDataDiskType>
@@ -1318,7 +1714,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedDataDiskType left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedDataDiskType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceFabricManagedNetworkSecurityRule
+    public partial class ServiceFabricManagedNetworkSecurityRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNetworkSecurityRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNetworkSecurityRule>
     {
         public ServiceFabricManagedNetworkSecurityRule(string name, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNsgProtocol protocol, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNetworkTrafficAccess access, int priority, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNetworkSecurityRuleDirection direction) { }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNetworkTrafficAccess Access { get { throw null; } set { } }
@@ -1335,6 +1731,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public System.Collections.Generic.IList<string> SourceAddressPrefixes { get { throw null; } }
         public string SourcePortRange { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SourcePortRanges { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNetworkSecurityRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNetworkSecurityRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNetworkSecurityRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNetworkSecurityRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNetworkSecurityRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNetworkSecurityRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNetworkSecurityRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceFabricManagedNetworkSecurityRuleDirection : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNetworkSecurityRuleDirection>
@@ -1372,11 +1774,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNetworkTrafficAccess left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNetworkTrafficAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceFabricManagedNodeTypePatch
+    public partial class ServiceFabricManagedNodeTypePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNodeTypePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNodeTypePatch>
     {
         public ServiceFabricManagedNodeTypePatch() { }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNodeTypePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNodeTypePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNodeTypePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNodeTypePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNodeTypePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNodeTypePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNodeTypePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceFabricManagedNsgProtocol : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedNsgProtocol>
@@ -1447,50 +1855,104 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedServiceMoveCost left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedServiceMoveCost right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceFabricManagedServicePatch
+    public partial class ServiceFabricManagedServicePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedServicePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedServicePatch>
     {
         public ServiceFabricManagedServicePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedServicePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedServicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedServicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedServicePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedServicePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedServicePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedServicePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceFabricManagedUnsupportedVmSize : Azure.ResourceManager.Models.ResourceData
+    public partial class ServiceFabricManagedUnsupportedVmSize : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedUnsupportedVmSize>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedUnsupportedVmSize>
     {
         internal ServiceFabricManagedUnsupportedVmSize() { }
         public string VmSize { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedUnsupportedVmSize System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedUnsupportedVmSize>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedUnsupportedVmSize>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedUnsupportedVmSize System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedUnsupportedVmSize>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedUnsupportedVmSize>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedUnsupportedVmSize>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServicePlacementInvalidDomainPolicy : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy
+    public partial class ServicePlacementInvalidDomainPolicy : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementInvalidDomainPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementInvalidDomainPolicy>
     {
         public ServicePlacementInvalidDomainPolicy(string domainName) { }
         public string DomainName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementInvalidDomainPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementInvalidDomainPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementInvalidDomainPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementInvalidDomainPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementInvalidDomainPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementInvalidDomainPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementInvalidDomainPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServicePlacementNonPartiallyPlaceServicePolicy : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy
+    public partial class ServicePlacementNonPartiallyPlaceServicePolicy : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementNonPartiallyPlaceServicePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementNonPartiallyPlaceServicePolicy>
     {
         public ServicePlacementNonPartiallyPlaceServicePolicy() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementNonPartiallyPlaceServicePolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementNonPartiallyPlaceServicePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementNonPartiallyPlaceServicePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementNonPartiallyPlaceServicePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementNonPartiallyPlaceServicePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementNonPartiallyPlaceServicePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementNonPartiallyPlaceServicePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServicePlacementPreferPrimaryDomainPolicy : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy
+    public partial class ServicePlacementPreferPrimaryDomainPolicy : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementPreferPrimaryDomainPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementPreferPrimaryDomainPolicy>
     {
         public ServicePlacementPreferPrimaryDomainPolicy(string domainName) { }
         public string DomainName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementPreferPrimaryDomainPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementPreferPrimaryDomainPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementPreferPrimaryDomainPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementPreferPrimaryDomainPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementPreferPrimaryDomainPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementPreferPrimaryDomainPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementPreferPrimaryDomainPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServicePlacementRequiredDomainPolicy : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy
+    public partial class ServicePlacementRequiredDomainPolicy : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequiredDomainPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequiredDomainPolicy>
     {
         public ServicePlacementRequiredDomainPolicy(string domainName) { }
         public string DomainName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequiredDomainPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequiredDomainPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequiredDomainPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequiredDomainPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequiredDomainPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequiredDomainPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequiredDomainPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServicePlacementRequireDomainDistributionPolicy : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy
+    public partial class ServicePlacementRequireDomainDistributionPolicy : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequireDomainDistributionPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequireDomainDistributionPolicy>
     {
         public ServicePlacementRequireDomainDistributionPolicy(string domainName) { }
         public string DomainName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequireDomainDistributionPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequireDomainDistributionPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequireDomainDistributionPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequireDomainDistributionPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequireDomainDistributionPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequireDomainDistributionPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServicePlacementRequireDomainDistributionPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceTypeHealthPolicy
+    public partial class ServiceTypeHealthPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceTypeHealthPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceTypeHealthPolicy>
     {
         public ServiceTypeHealthPolicy(int maxPercentUnhealthyServices, int maxPercentUnhealthyPartitionsPerService, int maxPercentUnhealthyReplicasPerPartition) { }
         public int MaxPercentUnhealthyPartitionsPerService { get { throw null; } set { } }
         public int MaxPercentUnhealthyReplicasPerPartition { get { throw null; } set { } }
         public int MaxPercentUnhealthyServices { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceTypeHealthPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceTypeHealthPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceTypeHealthPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceTypeHealthPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceTypeHealthPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceTypeHealthPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceTypeHealthPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SingletonPartitionScheme : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme
+    public partial class SingletonPartitionScheme : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.SingletonPartitionScheme>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.SingletonPartitionScheme>
     {
         public SingletonPartitionScheme() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.SingletonPartitionScheme System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.SingletonPartitionScheme>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.SingletonPartitionScheme>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.SingletonPartitionScheme System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.SingletonPartitionScheme>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.SingletonPartitionScheme>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.SingletonPartitionScheme>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SpotNodeVmEvictionPolicyType : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.SpotNodeVmEvictionPolicyType>
@@ -1510,7 +1972,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.SpotNodeVmEvictionPolicyType left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.SpotNodeVmEvictionPolicyType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class StatefulServiceProperties : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties
+    public partial class StatefulServiceProperties : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatefulServiceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatefulServiceProperties>
     {
         public StatefulServiceProperties(string serviceTypeName, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme partitionDescription) : base (default(string), default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme)) { }
         public bool? HasPersistedState { get { throw null; } set { } }
@@ -1520,22 +1982,40 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public System.TimeSpan? ServicePlacementTimeLimit { get { throw null; } set { } }
         public System.TimeSpan? StandByReplicaKeepDuration { get { throw null; } set { } }
         public int? TargetReplicaSetSize { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatefulServiceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatefulServiceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatefulServiceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatefulServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatefulServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatefulServiceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatefulServiceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StatelessServiceProperties : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties
+    public partial class StatelessServiceProperties : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatelessServiceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatelessServiceProperties>
     {
         public StatelessServiceProperties(string serviceTypeName, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme partitionDescription, int instanceCount) : base (default(string), default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme)) { }
         public int InstanceCount { get { throw null; } set { } }
         public int? MinInstanceCount { get { throw null; } set { } }
         public int? MinInstancePercentage { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatelessServiceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatelessServiceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatelessServiceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatelessServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatelessServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatelessServiceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.StatelessServiceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UniformInt64RangePartitionScheme : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme
+    public partial class UniformInt64RangePartitionScheme : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.UniformInt64RangePartitionScheme>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.UniformInt64RangePartitionScheme>
     {
         public UniformInt64RangePartitionScheme(int count, long lowKey, long highKey) { }
         public int Count { get { throw null; } set { } }
         public long HighKey { get { throw null; } set { } }
         public long LowKey { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.UniformInt64RangePartitionScheme System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.UniformInt64RangePartitionScheme>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.UniformInt64RangePartitionScheme>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.UniformInt64RangePartitionScheme System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.UniformInt64RangePartitionScheme>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.UniformInt64RangePartitionScheme>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.UniformInt64RangePartitionScheme>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VmApplication
+    public partial class VmApplication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmApplication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmApplication>
     {
         public VmApplication(Azure.Core.ResourceIdentifier packageReferenceId) { }
         public System.Uri ConfigurationReference { get { throw null; } set { } }
@@ -1544,14 +2024,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public Azure.Core.ResourceIdentifier PackageReferenceId { get { throw null; } set { } }
         public bool? TreatFailureAsDeploymentFailure { get { throw null; } set { } }
         public string VmGalleryTags { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmApplication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmApplication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmApplication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmApplication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmApplication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmApplication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmApplication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VmImagePlan
+    public partial class VmImagePlan : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmImagePlan>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmImagePlan>
     {
         public VmImagePlan() { }
         public string Name { get { throw null; } set { } }
         public string Product { get { throw null; } set { } }
         public string PromotionCode { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmImagePlan System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmImagePlan>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmImagePlan>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmImagePlan System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmImagePlan>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmImagePlan>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmImagePlan>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VmSetupAction : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmSetupAction>
