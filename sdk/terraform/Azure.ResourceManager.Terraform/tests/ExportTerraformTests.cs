@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Terraform.Tests
         {
             string resourceGroupName = TestEnvironment.ResourceGroup;
             string vnetName = TestEnvironment.VNetName;
-            ExportResourceGroup exportResourceGroup = new(resourceGroupName);
+            ExportResourceGroupTerraform exportResourceGroup = new(resourceGroupName);
 
             ArmOperation<TerraformOperationStatus> operationStatus = await DefaultSubscription.ExportTerraformAsync(WaitUntil.Completed, exportResourceGroup);
             string hcl = operationStatus.Value.Properties.Configuration;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Terraform.Tests
         {
             string resourceGroupName = TestEnvironment.ResourceGroup;
             string vnetName = TestEnvironment.VNetName;
-            ExportQuery exportQuery = new($"resourceGroup =~ \"{resourceGroupName}\"");
+            ExportQueryTerraform exportQuery = new($"resourceGroup =~ \"{resourceGroupName}\"");
 
             ArmOperation<TerraformOperationStatus> operationStatus = await DefaultSubscription.ExportTerraformAsync(WaitUntil.Completed, exportQuery);
             string hcl = operationStatus.Value.Properties.Configuration;

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
-    public partial class ExportResourceGroup : IUtf8JsonSerializable, IJsonModel<ExportResourceGroup>
+    public partial class ExportQueryTerraform : IUtf8JsonSerializable, IJsonModel<ExportQueryTerraform>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportResourceGroup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportQueryTerraform>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ExportResourceGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExportQueryTerraform>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,35 +28,40 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResourceGroup>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportQueryTerraform>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportResourceGroup)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportQueryTerraform)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("resourceGroupName"u8);
-            writer.WriteStringValue(ResourceGroupName);
+            writer.WritePropertyName("query"u8);
+            writer.WriteStringValue(Query);
             if (Optional.IsDefined(NamePattern))
             {
                 writer.WritePropertyName("namePattern"u8);
                 writer.WriteStringValue(NamePattern);
             }
+            if (Optional.IsDefined(Recursive))
+            {
+                writer.WritePropertyName("recursive"u8);
+                writer.WriteBooleanValue(Recursive.Value);
+            }
         }
 
-        ExportResourceGroup IJsonModel<ExportResourceGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ExportQueryTerraform IJsonModel<ExportQueryTerraform>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResourceGroup>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportQueryTerraform>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportResourceGroup)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportQueryTerraform)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExportResourceGroup(document.RootElement, options);
+            return DeserializeExportQueryTerraform(document.RootElement, options);
         }
 
-        internal static ExportResourceGroup DeserializeExportResourceGroup(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ExportQueryTerraform DeserializeExportQueryTerraform(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -64,8 +69,9 @@ namespace Azure.ResourceManager.Terraform.Models
             {
                 return null;
             }
-            string resourceGroupName = default;
+            string query = default;
             string namePattern = default;
+            bool? recursive = default;
             Type type = default;
             TargetTerraformProvider? targetProvider = default;
             bool? fullProperties = default;
@@ -74,14 +80,23 @@ namespace Azure.ResourceManager.Terraform.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceGroupName"u8))
+                if (property.NameEquals("query"u8))
                 {
-                    resourceGroupName = property.Value.GetString();
+                    query = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("namePattern"u8))
                 {
                     namePattern = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recursive"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recursive = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -122,45 +137,46 @@ namespace Azure.ResourceManager.Terraform.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExportResourceGroup(
+            return new ExportQueryTerraform(
                 type,
                 targetProvider,
                 fullProperties,
                 maskSensitive,
                 serializedAdditionalRawData,
-                resourceGroupName,
-                namePattern);
+                query,
+                namePattern,
+                recursive);
         }
 
-        BinaryData IPersistableModel<ExportResourceGroup>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ExportQueryTerraform>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResourceGroup>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportQueryTerraform>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportResourceGroup)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportQueryTerraform)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ExportResourceGroup IPersistableModel<ExportResourceGroup>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ExportQueryTerraform IPersistableModel<ExportQueryTerraform>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportResourceGroup>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportQueryTerraform>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeExportResourceGroup(document.RootElement, options);
+                        return DeserializeExportQueryTerraform(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportResourceGroup)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportQueryTerraform)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ExportResourceGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExportQueryTerraform>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Terraform.Models
 {
     /// <summary> Export parameter for a resource group. </summary>
-    public partial class ExportResourceGroup : CommonExportProperties
+    public partial class ExportResourceGroupTerraform : CommonExportProperties
     {
-        /// <summary> Initializes a new instance of <see cref="ExportResourceGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportResourceGroupTerraform"/>. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to be exported. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public ExportResourceGroup(string resourceGroupName)
+        public ExportResourceGroupTerraform(string resourceGroupName)
         {
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
 
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Terraform.Models
             Type = Type.ExportResourceGroup;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportResourceGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportResourceGroupTerraform"/>. </summary>
         /// <param name="type"> The parameter type. </param>
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
         /// <param name="fullProperties"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
@@ -32,15 +32,15 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceGroupName"> The name of the resource group to be exported. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
-        internal ExportResourceGroup(Type type, TargetTerraformProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceGroupName, string namePattern) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
+        internal ExportResourceGroupTerraform(Type type, TargetTerraformProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceGroupName, string namePattern) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
         {
             ResourceGroupName = resourceGroupName;
             NamePattern = namePattern;
             Type = type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportResourceGroup"/> for deserialization. </summary>
-        internal ExportResourceGroup()
+        /// <summary> Initializes a new instance of <see cref="ExportResourceGroupTerraform"/> for deserialization. </summary>
+        internal ExportResourceGroupTerraform()
         {
         }
 

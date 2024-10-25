@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Terraform.Models
 {
     /// <summary> Export parameter for resources queried by ARG (Azure Resource Graph). </summary>
-    public partial class ExportQuery : CommonExportProperties
+    public partial class ExportQueryTerraform : CommonExportProperties
     {
-        /// <summary> Initializes a new instance of <see cref="ExportQuery"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportQueryTerraform"/>. </summary>
         /// <param name="query"> The ARG where predicate. Note that you can combine multiple conditions in one `where` predicate, e.g. `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public ExportQuery(string query)
+        public ExportQueryTerraform(string query)
         {
             Argument.AssertNotNull(query, nameof(query));
 
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Terraform.Models
             Type = Type.ExportQuery;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportQuery"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportQueryTerraform"/>. </summary>
         /// <param name="type"> The parameter type. </param>
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
         /// <param name="fullProperties"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="query"> The ARG where predicate. Note that you can combine multiple conditions in one `where` predicate, e.g. `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
         /// <param name="recursive"> Whether to recursively list child resources of the query result. </param>
-        internal ExportQuery(Type type, TargetTerraformProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData, string query, string namePattern, bool? recursive) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
+        internal ExportQueryTerraform(Type type, TargetTerraformProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData, string query, string namePattern, bool? recursive) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
         {
             Query = query;
             NamePattern = namePattern;
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Terraform.Models
             Type = type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportQuery"/> for deserialization. </summary>
-        internal ExportQuery()
+        /// <summary> Initializes a new instance of <see cref="ExportQueryTerraform"/> for deserialization. </summary>
+        internal ExportQueryTerraform()
         {
         }
 

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Terraform.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            CommonExportProperties body = new ExportResourceGroup("rg1");
+            CommonExportProperties body = new ExportResourceGroupTerraform("rg1");
             ArmOperation<TerraformOperationStatus> lro = await subscriptionResource.ExportTerraformAsync(WaitUntil.Completed, body);
             TerraformOperationStatus result = lro.Value;
 
