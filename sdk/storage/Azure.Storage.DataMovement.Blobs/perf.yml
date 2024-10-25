@@ -31,7 +31,7 @@ extends:
   template: /eng/pipelines/templates/jobs/perf.yml
   parameters:
     LanguageVersion: ${{ parameters.LanguageVersion }}
-    ServiceDirectory: storage/Azure.Storage.Blobs
+    ServiceDirectory: storage/Azure.Storage.DataMovement.Blobs
     PackageVersions: ${{ parameters.PackageVersions }}
     Tests: ${{ parameters.Tests }}
     Arguments: ${{ parameters.Arguments }}
